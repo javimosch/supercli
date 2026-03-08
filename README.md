@@ -81,6 +81,11 @@ supercli skills list --json                # Minimal skill metadata (name, descr
 supercli skills get <ns.res.act>           # Emit SKILL.md (default format)
 supercli skills teach                      # Emit starter meta-skill (default format)
 supercli skills get <ns.res.act> --show-dag
+supercli skills providers list --json      # List local skill providers
+supercli skills sync --json                # Rebuild local skill catalog index
+supercli skills list --catalog --json      # List catalog skills as provider:id
+supercli skills get <provider:id>          # Read SKILL.md from local catalog
+supercli skills search --query "plan" --json
 
 # Natural Language (AI)
 export OPENAI_BASE_URL=https://api.openai.com/v1     # Enable local AI resolution
@@ -98,17 +103,13 @@ supercli mcp remove summarize-local
 
 # Plugins
 supercli plugins list
-supercli plugins install beads
-supercli plugins install gwc
-supercli plugins show beads
-supercli plugins show gwc
-supercli beads install steps --json
-supercli gwc install steps --json
-
-# Google Workspace CLI passthrough (after plugin install)
-supercli gwc --help
-supercli gwc schema drive.files.list
-supercli gwc drive files list --params '{"pageSize": 5}'
+supercli plugins explore
+supercli plugins explore --name commiat
+supercli plugins explore --tags git,ai
+supercli plugins install commiat
+supercli plugins install --git https://github.com/org/repo.git --manifest-path plugins/supercli/plugin.json --ref main
+supercli plugins show commiat
+supercli plugins doctor commiat
 
 # Stdio MCP demo (no server required)
 node examples/mcp-stdio/install-demo.js
