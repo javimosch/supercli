@@ -134,6 +134,18 @@ test("help --json returns namespaces", () => {
   assert(Array.isArray(d.namespaces), "should have namespaces array");
 });
 
+test("no-args non-tty returns agent bootstrap payload", () => {
+  const r = runNoServer("--json");
+  assert(r.ok, "no-args json should succeed");
+  const d = JSON.parse(r.output);
+  assert(d.mode === "agent_bootstrap", "should return agent bootstrap mode");
+  assert(Array.isArray(d.next), "should include next commands");
+  assert(
+    d.next.includes("supercli skills teach --format skill.md"),
+    "should point agents to skills teach",
+  );
+});
+
 // ── --help-json ──
 test("--help-json returns capability discovery", () => {
   run("sync --json");
@@ -163,8 +175,8 @@ test("sync is unavailable when SUPERCLI_SERVER is not set", () => {
 });
 
 test("plan works in local mode without SUPERCLI_SERVER", () => {
-  run("sync --json");
-  const r = runNoServer("plan test items list --json");
+  runNoServer("plugins install beads --json");
+  const r = runNoServer("plan beads install steps --json");
   assert(r.ok, "local plan should succeed");
   const d = JSON.parse(r.output);
   assert(d.execution_mode === "local", "execution_mode should be local");
@@ -173,6 +185,7 @@ test("plan works in local mode without SUPERCLI_SERVER", () => {
     Array.isArray(d.steps) && d.steps.length > 0,
     "should include plan steps",
   );
+  runNoServer("plugins remove beads --json");
 });
 
 test("local mcp registry can add/list/remove without SUPERCLI_SERVER", () => {
@@ -195,6 +208,42 @@ test("local mcp registry can add/list/remove without SUPERCLI_SERVER", () => {
 
   const remove = runNoServer("mcp remove local-demo --json");
   assert(remove.ok, "mcp remove should succeed");
+});
+
+test("plugins install/list/show/remove works locally", () => {
+  const install = runNoServer("plugins install ./plugins/beads --json");
+  assert(install.ok, "plugins install should succeed");
+  const installData = JSON.parse(install.output);
+  assert(installData.ok === true, "install should return ok");
+
+  const list = runNoServer("plugins list --json");
+  assert(list.ok, "plugins list should succeed");
+  const listData = JSON.parse(list.output);
+  assert(Array.isArray(listData.plugins), "plugins list should return array");
+  assert(listData.plugins.find((p) => p.name === "beads"), "beads plugin should be listed");
+
+  const show = runNoServer("plugins show beads --json");
+  assert(show.ok, "plugins show should succeed");
+  const showData = JSON.parse(show.output);
+  assert(showData.plugin.name === "beads", "plugins show should return beads plugin");
+
+  const doctor = runNoServer("plugins doctor beads --json");
+  assert(doctor.ok, "plugins doctor should succeed");
+  const doctorData = JSON.parse(doctor.output);
+  assert(doctorData.plugin === "beads", "doctor should target beads plugin");
+  assert(Array.isArray(doctorData.checks), "doctor should include checks array");
+
+  const remove = runNoServer("plugins remove beads --json");
+  assert(remove.ok, "plugins remove should succeed");
+});
+
+test("beads install steps command works after plugin install", () => {
+  runNoServer("plugins install beads --json");
+  const r = runNoServer("beads install steps --json");
+  assert(r.ok, "beads install steps should succeed");
+  const d = JSON.parse(r.output);
+  assert(d.data && Array.isArray(d.data.install_steps), "should include install steps array");
+  runNoServer("plugins remove beads --json");
 });
 
 // ── config show ──
