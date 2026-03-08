@@ -1,0 +1,72 @@
+<%- include("partials/head", { title: "Jobs" }) %>
+
+<div id="jobs-app">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Execution History</h1>
+    <button @click="loadStats" class="btn btn-ghost btn-sm">📊 Stats</button>
+  </div>
+
+  <!-- Stats panel -->
+  <div v-if="stats" class="grid grid-cols-4 gap-4 mb-6">
+    <div class="stat bg-base-300 rounded-lg p-4">
+      <div class="stat-title">Total</div>
+      <div class="stat-value text-primary">{{ stats.total }}</div>
+    </div>
+    <div class="stat bg-base-300 rounded-lg p-4">
+      <div class="stat-title">Success</div>
+      <div class="stat-value text-success">{{ stats.success }}</div>
+    </div>
+    <div class="stat bg-base-300 rounded-lg p-4">
+      <div class="stat-title">Failed</div>
+      <div class="stat-value text-error">{{ stats.failed }}</div>
+    </div>
+    <div class="stat bg-base-300 rounded-lg p-4">
+      <div class="stat-title">Failure Rate</div>
+      <div class="stat-value">{{ stats.failure_rate }}</div>
+    </div>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full table-sm">
+      <thead>
+        <tr>
+          <th>Command</th>
+          <th>Status</th>
+          <th>Duration</th>
+          <th>Timestamp</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="jobs.length===0"><td colspan="4" class="text-center opacity-60">No executions recorded yet.</td></tr>
+        <tr v-for="j in jobs" :key="j._id">
+          <td><code>{{ j.command }}</code></td>
+          <td>
+            <span class="badge badge-sm" :class="j.status==='success' ? 'badge-success' : 'badge-error'">
+              {{ j.status }}
+            </span>
+          </td>
+          <td>{{ j.duration_ms }}ms</td>
+          <td class="opacity-70">{{ new Date(j.timestamp).toLocaleString() }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const initialJobs = <%- JSON.stringify(jobs) %>;
+
+  Vue.createApp({
+    data() {
+      return { jobs: initialJobs, stats: null }
+    },
+    methods: {
+      async loadStats() {
+        const r = await fetch('/api/jobs/stats')
+        this.stats = await r.json()
+      }
+    }
+  }).mount('#jobs-app')
+</script>
+
+<%- include("partials/foot") %>

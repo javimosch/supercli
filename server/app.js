@@ -6,6 +6,8 @@ const commandsRouter = require("./routes/commands")
 const configRouter = require("./routes/config")
 const specsRouter = require("./routes/specs")
 const mcpRouter = require("./routes/mcp")
+const plansRouter = require("./routes/plans")
+const jobsRouter = require("./routes/jobs")
 
 const PORT = process.env.PORT || 3000
 
@@ -24,6 +26,8 @@ app.use("/api/config", configRouter)
 app.use("/api/commands", commandsRouter)
 app.use("/api/specs", specsRouter)
 app.use("/api/mcp", mcpRouter)
+app.use("/api/plans", plansRouter)
+app.use("/api/jobs", jobsRouter)
 
 // Tree/command endpoints under /api (config router handles them)
 app.use("/api", configRouter)
@@ -34,11 +38,17 @@ app.get("/commands", (req, res) => res.redirect("/api/commands"))
 app.get("/commands/new", (req, res) => res.redirect("/api/commands/new"))
 app.get("/specs", (req, res) => res.redirect("/api/specs"))
 app.get("/mcp", (req, res) => res.redirect("/api/mcp"))
+app.get("/jobs", (req, res) => res.redirect("/api/jobs"))
 
 async function start() {
   try {
     await connect()
     console.log("Connected to MongoDB")
+
+    // Create TTL index for plans auto-expiry
+    const db = require("./db").getDb()
+    await db.collection("plans").createIndex({ expires_at: 1 }, { expireAfterSeconds: 0 }).catch(() => {})
+
     app.listen(PORT, () => {
       console.log(`DCLI server running on http://localhost:${PORT}`)
     })
