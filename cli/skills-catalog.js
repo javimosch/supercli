@@ -1,6 +1,7 @@
 const fs = require("fs")
 const os = require("os")
 const path = require("path")
+const { spawnSync } = require("child_process")
 
 function dcliDir() {
   return process.env.SUPERCLI_HOME || path.join(os.homedir(), ".dcli")
@@ -128,6 +129,24 @@ function syncCatalog() {
 
   for (const provider of providers) {
     if (!provider.enabled) continue
+
+    if (provider.type === "remote_static") {
+      const entries = Array.isArray(provider.entries) ? provider.entries : []
+      for (const entry of entries) {
+        if (!entry || !entry.id || !entry.source_url) continue
+        skills.push({
+          id: `${provider.name}:${entry.id}`,
+          provider: provider.name,
+          name: entry.name || entry.id,
+          description: entry.description || "",
+          source_url: entry.source_url,
+          tags: Array.isArray(entry.tags) ? entry.tags : [],
+          updated_at: new Date().toISOString()
+        })
+      }
+      continue
+    }
+
     const roots = Array.isArray(provider.roots) ? provider.roots : []
     for (const root of roots) {
       const files = walkDir(root)
@@ -186,8 +205,19 @@ function getCatalogSkill(providerId) {
   const idx = readIndex()
   const hit = (idx.skills || []).find(s => s.id === providerId)
   if (!hit) return null
-  if (!fs.existsSync(hit.source_path)) return null
-  const markdown = fs.readFileSync(hit.source_path, "utf-8")
+  let markdown = null
+
+  if (hit.source_path) {
+    if (!fs.existsSync(hit.source_path)) return null
+    markdown = fs.readFileSync(hit.source_path, "utf-8")
+  } else if (hit.source_url) {
+    const res = spawnSync("curl", ["-fsSL", hit.source_url], { encoding: "utf-8", timeout: 15000 })
+    if (res.error || res.status !== 0) return null
+    markdown = (res.stdout || "").trim()
+  }
+
+  if (!markdown) return null
+
   return {
     ...hit,
     markdown
