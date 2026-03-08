@@ -8,6 +8,7 @@ jest.mock("fs")
 jest.mock("child_process")
 jest.mock("../cli/plugins-store")
 jest.mock("../cli/plugins-registry")
+jest.mock("../cli/plugin-agency-agents")
 
 const {
   installPlugin,
@@ -26,6 +27,7 @@ const {
 } = require("../cli/plugins-store")
 
 const { getRegistryPlugin } = require("../cli/plugins-registry")
+const { installAgencyAgentsSkillProvider } = require("../cli/plugin-agency-agents")
 
 describe("plugins-manager", () => {
   beforeEach(() => {
@@ -228,6 +230,14 @@ describe("plugins-manager", () => {
       fs.existsSync.mockReturnValue(true)
       fs.statSync.mockReturnValue({ isDirectory: () => false })
       fs.readFileSync.mockReturnValue(JSON.stringify(manifest))
+      installAgencyAgentsSkillProvider.mockReturnValue({ provider: "agency-agents", entries: 1, synced_skills: 1 })
+    })
+
+    test("runs agency-agents post install mapping", () => {
+      fs.readFileSync.mockReturnValue(JSON.stringify({ name: "agency-agents", commands: [] }))
+      const result = installPlugin("agency-agents")
+      expect(installAgencyAgentsSkillProvider).toHaveBeenCalled()
+      expect(result.post_install).toEqual({ provider: "agency-agents", entries: 1, synced_skills: 1 })
     })
 
     test("throws on invalid onConflict", () => {
