@@ -34,12 +34,6 @@ function writeCache(config) {
   return data
 }
 
-function ttlValid(cache) {
-  if (!cache || !cache.fetchedAt) return false
-  const ttl = (cache.ttl || 3600) * 1000
-  return (Date.now() - cache.fetchedAt) < ttl
-}
-
 async function fetchRemoteConfig(server) {
   if (!server) throw new Error("SUPERCLI_SERVER is not configured")
   const url = `${server}/api/config`
@@ -101,7 +95,9 @@ async function setMcpServer(name, url) {
   const next = { name, url }
   if (idx >= 0) servers[idx] = next
   else servers.push(next)
-  cfg.mcp_servers = servers.sort((a, b) => a.name.localeCompare(b.name))
+  cfg.mcp_servers = servers
+    .filter(s => s && typeof s.name === "string")
+    .sort((a, b) => a.name.localeCompare(b.name))
   return writeCache(cfg)
 }
 

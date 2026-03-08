@@ -12,7 +12,8 @@ const {
 
 const BUNDLED_PLUGINS = {
   beads: path.resolve(__dirname, "..", "plugins", "beads", "plugin.json"),
-  gwc: path.resolve(__dirname, "..", "plugins", "gwc", "plugin.json")
+  gwc: path.resolve(__dirname, "..", "plugins", "gwc", "plugin.json"),
+  docker: path.resolve(__dirname, "..", "plugins", "docker", "plugin.json")
 }
 
 const PLUGIN_INSTALL_GUIDANCE = {
@@ -45,6 +46,15 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "commiat --version"
     ],
     note: "Installation is intentionally delegated to your LLM/automation flow (dcli/scli/supercli)."
+  },
+  docker: {
+    plugin: "docker",
+    binary: "docker",
+    check: "docker --version",
+    install_steps: [
+      "docker --version"
+    ],
+    note: "Install Docker Engine/Desktop using your OS package manager, then verify with docker --version."
   }
 }
 

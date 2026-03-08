@@ -35,6 +35,7 @@ function buildCapabilities(config, hasServer) {
     },
     exit_codes: {
       "0": "success",
+      "91": "safety_violation",
       "82": "validation_error",
       "85": "invalid_argument",
       "92": "resource_not_found",
