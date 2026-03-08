@@ -1,4 +1,4 @@
-# DCLI — Dynamic CLI
+# DCLI — Dynamic CLI - SuperCLI - SCLI
 
 Config-driven, AI-friendly CLI that dynamically generates commands from cloud configuration.
 
