@@ -1,6 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 const os = require("os")
+const { getInstalledPluginCommands, listInstalledPlugins } = require("./plugins-store")
 
 const CACHE_DIR = path.join(os.homedir(), ".supercli")
 const CACHE_FILE = path.join(CACHE_DIR, "config.json")
@@ -59,8 +60,13 @@ function emptyConfig() {
 
 async function loadConfig() {
   const cache = readCache()
-  if (cache) return cache
-  return emptyConfig()
+  const base = cache || emptyConfig()
+  const pluginCommands = getInstalledPluginCommands()
+  const merged = {
+    ...base,
+    commands: [...(base.commands || []), ...pluginCommands]
+  }
+  return merged
 }
 
 async function syncConfig(server) {
@@ -124,6 +130,7 @@ async function showConfig() {
     ttl: cache.ttl,
     fetchedAt: new Date(cache.fetchedAt).toISOString(),
     commands: cache.commands ? cache.commands.length : 0,
+    plugins: listInstalledPlugins().length,
     mcp_servers: cache.mcp_servers ? cache.mcp_servers.length : 0,
     specs: cache.specs ? cache.specs.length : 0,
     cacheFile: CACHE_FILE

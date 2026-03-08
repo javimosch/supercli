@@ -4,7 +4,9 @@ const path = require("path")
 const ADAPTERS = {
   openapi: () => require("./adapters/openapi"),
   mcp: () => require("./adapters/mcp"),
-  http: () => require("./adapters/http")
+  http: () => require("./adapters/http"),
+  process: () => require("./adapters/process"),
+  builtin: () => require("./adapters/builtin")
 }
 
 async function execute(cmd, flags, context) {

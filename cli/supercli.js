@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-require("dotenv").config();
+require("dotenv").config({ quiet: true });
 const {
   loadConfig,
   syncConfig,
@@ -12,6 +12,7 @@ const {
 const { execute } = require("./executor");
 const { buildCapabilities } = require("./help-json");
 const { handleMcpRegistryCommand } = require("./mcp-local");
+const { handlePluginsCommand } = require("./plugins-command");
 const {
   buildLocalPlan,
   annotateServerPlan,
@@ -57,6 +58,7 @@ const RESERVED_FLAGS = [
   "no-color",
   "show-dag",
   "format",
+  "on-conflict",
 ];
 
 function compactKeys(obj) {
@@ -126,9 +128,12 @@ function outputHumanTable(rows, columns) {
 }
 
 function outputError(error) {
+  const numericCode = Number.isInteger(error.code)
+    ? error.code
+    : Number.parseInt(error.code, 10) || 110;
   const envelope = {
     error: {
-      code: error.code || 110,
+      code: numericCode,
       type: error.type || "internal_error",
       message: error.message,
       recoverable: error.recoverable || false,
@@ -167,6 +172,59 @@ function userFlags() {
     if (!RESERVED_FLAGS.includes(k)) f[k] = v;
   }
   return f;
+}
+
+function renderTopLevelHelp(config) {
+  const namespaces = [...new Set(config.commands.map((c) => c.namespace))];
+  if (humanMode) {
+    console.log("\n  ⚡ SuperCLI\n");
+    console.log("  Namespaces:\n");
+    namespaces.forEach((ns) => {
+      const resources = [
+        ...new Set(
+          config.commands.filter((c) => c.namespace === ns).map((c) => c.resource),
+        ),
+      ];
+      console.log(`    ${ns}`);
+      resources.forEach((r) => {
+        const actions = config.commands
+          .filter((c) => c.namespace === ns && c.resource === r)
+          .map((c) => c.action);
+        console.log(`      └─ ${r}: ${actions.join(", ")}`);
+      });
+    });
+    console.log("\n  Usage: supercli <namespace> <resource> <action> [--args]");
+    if (hasServer) console.log("  Sync: supercli sync");
+    console.log(
+      "  Plugins: supercli plugins list | supercli plugins install beads | supercli plugins show beads",
+    );
+    console.log(
+      "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp remove <name>",
+    );
+    console.log(
+      "  Skills: supercli skills list | supercli skills get <ns.res.act> | supercli skills teach",
+    );
+    if (config.features?.ask || process.env.OPENAI_BASE_URL) {
+      console.log('  AI: supercli ask "<your natural language query>"');
+    }
+    console.log("  Server: supercli --server");
+    console.log(
+      "  Flags: --json | --human | --compact | --schema | --help-json | --server\n",
+    );
+    return;
+  }
+
+  output({
+    version: "1.0",
+    namespaces: namespaces.map((ns) => ({
+      name: ns,
+      resources: [...new Set(config.commands.filter((c) => c.namespace === ns).map((c) => c.resource))]
+        .map((r) => ({
+          name: r,
+          actions: config.commands.filter((c) => c.namespace === ns && c.resource === r).map((c) => c.action),
+        })),
+    })),
+  });
 }
 
 async function readStdin() {
@@ -227,65 +285,29 @@ async function main() {
       return;
     }
 
-    if (positional.length === 0 || positional[0] === "help") {
-      const config = await loadConfig(SERVER);
-      const namespaces = [...new Set(config.commands.map((c) => c.namespace))];
-      if (humanMode) {
-        console.log("\n  ⚡ SuperCLI\n");
-        console.log("  Namespaces:\n");
-        namespaces.forEach((ns) => {
-          const resources = [
-            ...new Set(
-              config.commands
-                .filter((c) => c.namespace === ns)
-                .map((c) => c.resource),
-            ),
-          ];
-          console.log(`    ${ns}`);
-          resources.forEach((r) => {
-            const actions = config.commands
-              .filter((c) => c.namespace === ns && c.resource === r)
-              .map((c) => c.action);
-            console.log(`      └─ ${r}: ${actions.join(", ")}`);
-          });
-        });
-        console.log(
-          "\n  Usage: supercli <namespace> <resource> <action> [--args]",
-        );
-        if (hasServer) console.log("  Sync: supercli sync");
-        console.log(
-          "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp remove <name>",
-        );
-        console.log(
-          "  Skills: supercli skills list | supercli skills get <ns.res.act> | supercli skills teach",
-        );
-        if (config.features?.ask || process.env.OPENAI_BASE_URL) {
-          console.log('  AI: supercli ask "<your natural language query>"');
-        }
-        console.log("  Server: supercli --server");
-        console.log(
-          "  Flags: --json | --human | --compact | --schema | --help-json | --server\n",
-        );
-      } else {
+    if (positional.length === 0) {
+      if (!humanMode) {
         output({
           version: "1.0",
-          namespaces: namespaces.map((ns) => ({
-            name: ns,
-            resources: [
-              ...new Set(
-                config.commands
-                  .filter((c) => c.namespace === ns)
-                  .map((c) => c.resource),
-              ),
-            ].map((r) => ({
-              name: r,
-              actions: config.commands
-                .filter((c) => c.namespace === ns && c.resource === r)
-                .map((c) => c.action),
-            })),
-          })),
+          mode: "agent_bootstrap",
+          goal: "Use skills for command-safe execution",
+          next: [
+            "supercli skills teach --format skill.md",
+            "supercli skills list --json",
+            "supercli skills get <namespace.resource.action> --format skill.md"
+          ],
+          note: "Use skills teach first, then fetch only the skill you need."
         });
+        return;
       }
+      const config = await loadConfig(SERVER);
+      renderTopLevelHelp(config);
+      return;
+    }
+
+    if (positional[0] === "help") {
+      const config = await loadConfig(SERVER);
+      renderTopLevelHelp(config);
       return;
     }
 
@@ -335,6 +357,18 @@ async function main() {
         setMcpServer,
         removeMcpServer,
         listMcpServers,
+      });
+      return;
+    }
+
+    if (positional[0] === "plugins") {
+      await handlePluginsCommand({
+        positional,
+        flags,
+        humanMode,
+        output,
+        outputHumanTable,
+        outputError,
       });
       return;
     }

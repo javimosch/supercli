@@ -2,6 +2,7 @@ function buildCapabilities(config, hasServer) {
   const commands = {
     help: { description: "List namespaces and commands" },
     config: { subcommands: ["show"] },
+    plugins: { subcommands: ["list", "install", "remove", "show", "doctor"], description: "Manage local command plugins" },
     mcp: { subcommands: ["list", "add", "remove"], description: "Manage local MCP server registry" },
     commands: { description: "List all commands" },
     inspect: { description: "Inspect command details", usage: "supercli inspect <ns> <res> <act>" },
