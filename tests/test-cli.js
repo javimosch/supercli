@@ -341,6 +341,10 @@ test("skills list --json returns minimal metadata", () => {
     Object.keys(first).sort().join(",") === "description,name",
     "skill metadata should only include name and description",
   );
+  assert(
+    d.skills.some((s) => s.name === "plugins.registry.usage"),
+    "skills list should include plugins registry usage skill",
+  );
 });
 
 // ── skills teach ──
@@ -369,6 +373,12 @@ test("skills get can include DAG section", () => {
   const r = run("skills get test.items.list --show-dag");
   assert(r.ok, "skills get with dag should succeed");
   assert(r.output.includes("dag:"), "should include dag section");
+});
+
+test("skills get plugins registry usage skill", () => {
+  const r = run("skills get plugins.registry.usage");
+  assert(r.ok, "plugins registry skill should succeed");
+  assert(r.output.includes("plugins explore"), "plugins registry skill should include explore guidance");
 });
 
 // ── namespace listing ──
