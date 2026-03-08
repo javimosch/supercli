@@ -6,6 +6,8 @@
  */
 
 const { execSync } = require("child_process");
+const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
 const SERVER = process.env.SUPERCLI_SERVER || "http://127.0.0.1:3000";
@@ -244,6 +246,59 @@ test("beads install steps command works after plugin install", () => {
   const d = JSON.parse(r.output);
   assert(d.data && Array.isArray(d.data.install_steps), "should include install steps array");
   runNoServer("plugins remove beads --json");
+});
+
+test("gwc plugin supports install/show/doctor and passthrough", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "dcli-gws-"));
+  const gwsPath = path.join(dir, "gws");
+  fs.writeFileSync(
+    gwsPath,
+    [
+      "#!/usr/bin/env node",
+      "const args = process.argv.slice(2);",
+      "if (args.includes('--version')) { console.log('gws 0.0.0-test'); process.exit(0); }",
+      "if (args.length === 0 || args.includes('--help')) { console.log('gws-help-ok'); process.exit(0); }",
+      "console.log(JSON.stringify({ ok: true, args }));"
+    ].join("\n"),
+    "utf-8",
+  );
+  fs.chmodSync(gwsPath, 0o755);
+
+  const env = { ...process.env, PATH: `${dir}:${process.env.PATH || ""}` };
+
+  const install = runNoServer("plugins install ./plugins/gwc --json", { env });
+  assert(install.ok, "gwc install should succeed");
+
+  const show = runNoServer("plugins show gwc --json", { env });
+  assert(show.ok, "plugins show gwc should succeed");
+  const showData = JSON.parse(show.output);
+  assert(showData.plugin.name === "gwc", "plugins show should return gwc plugin");
+
+  const doctor = runNoServer("plugins doctor gwc --json", { env });
+  assert(doctor.ok, "plugins doctor gwc should succeed");
+  const doctorData = JSON.parse(doctor.output);
+  assert(doctorData.ok === true, "gwc doctor should pass with mocked gws binary");
+
+  const passthroughHelp = runNoServer("gwc --help --json", { env });
+  assert(passthroughHelp.ok, "gwc passthrough help should succeed");
+  const helpData = JSON.parse(passthroughHelp.output);
+  assert(helpData.data && helpData.data.raw.includes("gws-help-ok"), "gwc help should passthrough to gws");
+
+  const passthrough = runNoServer("gwc drive files list --params '{\"pageSize\":1}' --json", { env });
+  assert(passthrough.ok, "gwc passthrough call should succeed");
+  const passData = JSON.parse(passthrough.output);
+  assert(passData.data && passData.data.ok === true, "gwc passthrough should return gws JSON");
+  assert(Array.isArray(passData.data.args), "gwc passthrough should include forwarded args");
+  assert(passData.data.args[0] === "drive", "gwc passthrough should preserve positional args");
+
+  const installSteps = runNoServer("gwc install steps --json", { env });
+  assert(installSteps.ok, "gwc install steps should use builtin command");
+  const installData = JSON.parse(installSteps.output);
+  assert(Array.isArray(installData.data.install_steps), "gwc install steps should include install steps");
+
+  const remove = runNoServer("plugins remove gwc --json", { env });
+  assert(remove.ok, "plugins remove gwc should succeed");
+  fs.rmSync(dir, { recursive: true, force: true });
 });
 
 // ── config show ──
