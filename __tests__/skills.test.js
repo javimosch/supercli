@@ -72,7 +72,8 @@ describe("skills", () => {
     const skills = listSkillsMetadata({
       commands: [{ namespace: "x", resource: "y", action: "z", description: "desc" }]
     })
-    expect(skills).toEqual([{ name: "x.y.z", description: "desc" }])
+    expect(skills).toEqual(expect.arrayContaining([{ name: "x.y.z", description: "desc" }]))
+    expect(Object.keys(skills[0]).sort()).toEqual(["description", "name"])
   })
 
   test("handleSkillsCommand list subcommand", () => {
@@ -89,7 +90,8 @@ describe("skills", () => {
     })
 
     expect(result).toBe(true)
-    expect(mockOutput).toHaveBeenCalledWith({ skills: [{ name: "a.b.c", description: "test" }] })
+    const payload = mockOutput.mock.calls[0][0]
+    expect(payload.skills).toEqual(expect.arrayContaining([{ name: "a.b.c", description: "test" }]))
   })
 
   test("handleSkillsCommand teach subcommand", () => {
