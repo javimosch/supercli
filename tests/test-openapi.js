@@ -8,7 +8,7 @@
 const { execSync } = require("child_process")
 const path = require("path")
 
-const SERVER = process.env.DCLI_SERVER || "http://localhost:3000"
+const SERVER = process.env.DCLI_SERVER || "http://127.0.0.1:3000"
 const CLI = path.join(__dirname, "..", "cli", "dcli.js")
 
 let passed = 0, failed = 0
@@ -51,9 +51,9 @@ test("create command bound to spec", () => {
   assert(r.namespace === "oapi", "should create command")
 })
 
-test("CLI config refresh", () => {
-  const r = cli("config refresh --json")
-  assert(r.ok, "refresh should succeed")
+test("CLI config sync", () => {
+  const r = cli("sync --json")
+  assert(r.ok, "sync should succeed")
 })
 
 test("execute openapi-bound command", () => {

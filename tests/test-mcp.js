@@ -11,7 +11,7 @@ const util = require("util")
 const path = require("path")
 
 const execAsync = util.promisify(exec)
-const SERVER = process.env.DCLI_SERVER || "http://localhost:3000"
+const SERVER = process.env.DCLI_SERVER || "http://127.0.0.1:3000"
 const CLI = path.join(__dirname, "..", "cli", "dcli.js")
 const MCP_PORT = 4567
 
@@ -34,6 +34,17 @@ async function api(method, urlPath, body) {
 async function cli(args) {
   try {
     const { stdout } = await execAsync(`DCLI_SERVER=${SERVER} node ${CLI} ${args}`, { encoding: "utf-8", timeout: 15000, env: { ...process.env, DCLI_SERVER: SERVER } })
+    return { ok: true, data: JSON.parse(stdout.trim()) }
+  } catch (e) {
+    return { ok: false, output: (e.stdout || "").trim(), code: e.code || e.status }
+  }
+}
+
+async function cliLocal(args) {
+  try {
+    const env = { ...process.env }
+    delete env.DCLI_SERVER
+    const { stdout } = await execAsync(`node ${CLI} ${args}`, { encoding: "utf-8", timeout: 15000, env })
     return { ok: true, data: JSON.parse(stdout.trim()) }
   } catch (e) {
     return { ok: false, output: (e.stdout || "").trim(), code: e.code || e.status }
@@ -80,9 +91,9 @@ async function run() {
     assert(r.namespace === "ai", "should create command")
   })
 
-  await test("refresh CLI config", async () => {
-    const r = await cli("config refresh --json")
-    assert(r.ok, "refresh should succeed")
+  await test("sync CLI config", async () => {
+    const r = await cli("sync --json")
+    assert(r.ok, "sync should succeed")
   })
 
   await test("inspect MCP command", async () => {
@@ -94,6 +105,14 @@ async function run() {
   await test("execute MCP command", async () => {
     const r = await cli("ai text summarize --text helloworld --json")
     assert(r.ok, "execute should succeed. output: " + (r.output || "none") + " code: " + r.code)
+    assert(r.data.command === "ai.text.summarize", "command should match")
+    assert(r.data.data.tool === "summarize", "tool should match")
+    assert(r.data.data.result, "should have result")
+  })
+
+  await test("execute MCP command in local mode", async () => {
+    const r = await cliLocal("ai text summarize --text localmode --json")
+    assert(r.ok, "local execute should succeed. output: " + (r.output || "none") + " code: " + r.code)
     assert(r.data.command === "ai.text.summarize", "command should match")
     assert(r.data.data.tool === "summarize", "tool should match")
     assert(r.data.data.result, "should have result")

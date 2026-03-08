@@ -8,7 +8,7 @@
 const { execSync } = require("child_process")
 const path = require("path")
 
-const SERVER = process.env.DCLI_SERVER || "http://localhost:3000"
+const SERVER = process.env.DCLI_SERVER || "http://127.0.0.1:3000"
 const CLI = path.join(__dirname, "..", "cli", "dcli.js")
 const run = (args, opts = {}) => {
   try {
@@ -16,6 +16,22 @@ const run = (args, opts = {}) => {
       encoding: "utf-8",
       timeout: 15000,
       env: { ...process.env, DCLI_SERVER: SERVER },
+      ...opts
+    })
+    return { ok: true, output: result.trim() }
+  } catch (err) {
+    return { ok: false, output: (err.stdout || "").trim(), stderr: (err.stderr || "").trim(), code: err.status }
+  }
+}
+
+const runNoServer = (args, opts = {}) => {
+  try {
+    const env = { ...process.env }
+    delete env.DCLI_SERVER
+    const result = execSync(`node ${CLI} ${args}`, {
+      encoding: "utf-8",
+      timeout: 15000,
+      env,
       ...opts
     })
     return { ok: true, output: result.trim() }
@@ -79,6 +95,7 @@ test("help --json returns namespaces", () => {
 
 // ── --help-json ──
 test("--help-json returns capability discovery", () => {
+  run("sync --json")
   const r = run("--help-json")
   assert(r.ok, "help-json should succeed")
   const d = parse(r)
@@ -88,15 +105,49 @@ test("--help-json returns capability discovery", () => {
   assert(d.total_commands > 0, "should have commands")
 })
 
+test("--help-json hides sync when DCLI_SERVER is not set", () => {
+  const r = runNoServer("--help-json")
+  assert(r.ok, "help-json without server should succeed")
+  const d = JSON.parse(r.output)
+  assert(!d.commands.sync, "sync should not be exposed without DCLI_SERVER")
+})
+
+test("sync is unavailable when DCLI_SERVER is not set", () => {
+  const r = runNoServer("sync --json")
+  assert(!r.ok, "sync should fail without DCLI_SERVER")
+  assert(r.code === 92, "sync should be treated as unknown command")
+})
+
+test("local mcp registry can add/list/remove without DCLI_SERVER", () => {
+  const add = runNoServer("mcp add local-demo --url http://127.0.0.1:7777 --json")
+  assert(add.ok, "mcp add should succeed")
+
+  const list = runNoServer("mcp list --json")
+  assert(list.ok, "mcp list should succeed")
+  const listData = JSON.parse(list.output)
+  assert(Array.isArray(listData.mcp_servers), "list should include mcp_servers")
+  assert(listData.mcp_servers.find(s => s.name === "local-demo"), "list should include local-demo")
+
+  const remove = runNoServer("mcp remove local-demo --json")
+  assert(remove.ok, "mcp remove should succeed")
+})
+
 // ── config show ──
 test("config show returns cache info", () => {
-  // First refresh
-  run("config refresh --json")
+  // First sync
+  run("sync --json")
   const r = run("config show --json")
   assert(r.ok, "config show should succeed")
   const d = parse(r)
   assert(d.version, "should have version")
   assert(d.cacheFile, "should have cacheFile")
+})
+
+test("sync command refreshes local config", () => {
+  const r = run("sync --json")
+  assert(r.ok, "sync should succeed")
+  const d = parse(r)
+  assert(d.ok === true, "sync should return ok")
 })
 
 // ── commands ──
