@@ -30,5 +30,17 @@ supercli skills get opencode:plan-changes
 ## Notes
 
 - IDs are always provider-qualified (`provider:id`) for future-proof disambiguation.
-- Current scope is local-only providers (`local_fs`, `repo_fs`).
+- Current provider types include `local_fs`, `repo_fs`, and `remote_static`.
 - Existing command-skill flow remains available (`skills list`, `skills get <ns.res.act>`, `skills teach`).
+
+## Remote Provider Example: agency-agents
+
+```bash
+supercli plugins install agency-agents --json
+supercli skills list --catalog --provider agency-agents --json
+supercli skills get agency-agents:engineering.engineering-frontend-developer
+```
+
+`agency-agents` maps skills one-to-one to upstream `.md` files in
+`msitarzewski/agency-agents`. If upstream paths change or files are removed,
+individual skills may stop resolving until reinstalled/refreshed.

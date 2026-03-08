@@ -39,3 +39,4 @@ Default is `fail`.
 - `plugins list` shows installed plugins.
 - `plugins explore` shows discoverable plugins from `plugins/plugins.json`.
 - `plugins install` supports local path, registry name, and direct remote git manifest installs.
+- `agency-agents` is a bundled zero-command plugin. Installing it adds a remote skills provider named `agency-agents` and refreshes the local skills catalog.
