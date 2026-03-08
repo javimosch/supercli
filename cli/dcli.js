@@ -5,36 +5,69 @@ const { execute } = require("./executor")
 
 const SERVER = process.env.DCLI_SERVER || "http://localhost:3000"
 const isTTY = process.stdout.isTTY
-const args = process.argv.slice(2)
+const rawArgs = process.argv.slice(2)
 
-// Parse flags
+// ─── Arg Parsing ────────────────────────────────────────────────
 const flags = {}
 const positional = []
-for (let i = 0; i < args.length; i++) {
-  if (args[i].startsWith("--")) {
-    const key = args[i].slice(2)
-    if (i + 1 < args.length && !args[i + 1].startsWith("--")) {
-      flags[key] = args[++i]
+for (let i = 0; i < rawArgs.length; i++) {
+  if (rawArgs[i].startsWith("--")) {
+    const key = rawArgs[i].slice(2)
+    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("--")) {
+      flags[key] = rawArgs[++i]
     } else {
       flags[key] = true
     }
   } else {
-    positional.push(args[i])
+    positional.push(rawArgs[i])
   }
 }
 
-const humanMode = flags.human || (isTTY && !flags.json)
+const humanMode = flags.human || (isTTY && !flags.json && !flags.compact && !flags.schema && !flags["help-json"])
+const compactMode = !!flags.compact
+const RESERVED_FLAGS = ["human", "json", "compact", "schema", "help-json", "no-color", "show-dag"]
+
+// ─── Output Helpers ─────────────────────────────────────────────
+
+function compactKeys(obj) {
+  if (Array.isArray(obj)) return obj.map(compactKeys)
+  if (obj && typeof obj === "object") {
+    const map = { version: "v", command: "c", duration_ms: "ms", data: "d", namespace: "ns", resource: "r", action: "a", description: "desc", adapter: "ad", commands: "cmds", error: "err", message: "msg", suggestions: "sug" }
+    const out = {}
+    for (const [k, v] of Object.entries(obj)) {
+      out[map[k] || k] = compactKeys(v)
+    }
+    return out
+  }
+  return obj
+}
 
 function output(data) {
-  if (humanMode) {
-    if (typeof data === "string") {
-      console.log(data)
-    } else {
-      console.log(JSON.stringify(data, null, 2))
-    }
-  } else {
-    console.log(JSON.stringify(data))
+  const str = compactMode
+    ? JSON.stringify(compactKeys(data))
+    : humanMode
+      ? (typeof data === "string" ? data : JSON.stringify(data, null, 2))
+      : JSON.stringify(data)
+  console.log(str)
+}
+
+function outputHumanTable(rows, columns) {
+  if (!humanMode) return false
+  if (!rows || rows.length === 0) {
+    console.log("  (empty)")
+    return true
   }
+  // Calculate column widths
+  const widths = columns.map(col => Math.max(col.label.length, ...rows.map(r => String(r[col.key] || "").length)))
+  const header = columns.map((col, i) => col.label.padEnd(widths[i])).join("  ")
+  const sep = columns.map((_, i) => "─".repeat(widths[i])).join("──")
+  console.log(`  ${header}`)
+  console.log(`  ${sep}`)
+  rows.forEach(row => {
+    const line = columns.map((col, i) => String(row[col.key] || "").padEnd(widths[i])).join("  ")
+    console.log(`  ${line}`)
+  })
+  return true
 }
 
 function outputError(error) {
@@ -48,23 +81,116 @@ function outputError(error) {
     }
   }
   if (humanMode) {
-    console.error(`${envelope.error.type}: ${envelope.error.message}`)
+    process.stderr.write(`${envelope.error.type}: ${envelope.error.message}\n`)
     if (envelope.error.suggestions.length) {
-      envelope.error.suggestions.forEach(s => console.error(`  → ${s}`))
+      envelope.error.suggestions.forEach(s => process.stderr.write(`  → ${s}\n`))
     }
   } else {
-    console.log(JSON.stringify(envelope))
+    console.log(JSON.stringify(compactMode ? compactKeys(envelope) : envelope))
   }
   process.exit(envelope.error.code)
 }
 
+function userFlags() {
+  const f = {}
+  for (const [k, v] of Object.entries(flags)) {
+    if (!RESERVED_FLAGS.includes(k)) f[k] = v
+  }
+  return f
+}
+
+// ─── Stdin Reader ───────────────────────────────────────────────
+
+async function readStdin() {
+  // Only read stdin if data is actually being piped
+  if (process.stdin.isTTY) return null
+  return new Promise((resolve) => {
+    let data = ""
+    let resolved = false
+    process.stdin.setEncoding("utf-8")
+    process.stdin.on("data", chunk => { data += chunk })
+    process.stdin.on("end", () => {
+      if (resolved) return
+      resolved = true
+      if (!data.trim()) return resolve(null)
+      try { resolve(JSON.parse(data)) } catch { resolve({ _stdin: data.trim() }) }
+    })
+    process.stdin.on("error", () => { if (!resolved) { resolved = true; resolve(null) } })
+    // Short timeout — if no data arrives, stdin is not being piped
+    setTimeout(() => {
+      if (!resolved) { resolved = true; process.stdin.destroy(); resolve(null) }
+    }, 50)
+  })
+}
+
+// ─── Main ───────────────────────────────────────────────────────
+
 async function main() {
   try {
-    // No args — show help
+    // Read stdin if piped
+    const stdinData = await readStdin()
+    if (stdinData) {
+      for (const [k, v] of Object.entries(stdinData)) {
+        if (!flags[k] && k !== "_stdin") flags[k] = v
+      }
+    }
+
+    // ── --help-json: full capability discovery ──
+    if (flags["help-json"]) {
+      const config = await loadConfig(SERVER)
+      output({
+        version: "1.0",
+        name: "dcli",
+        description: "Config-driven, AI-friendly dynamic CLI",
+        commands: {
+          help: { description: "List namespaces and commands" },
+          config: { subcommands: ["refresh", "show"] },
+          commands: { description: "List all commands" },
+          inspect: { description: "Inspect command details", usage: "dcli inspect <ns> <res> <act>" },
+          plan: { description: "Create execution plan", usage: "dcli plan <ns> <res> <act> [--args]" },
+          execute: { description: "Execute a stored plan", usage: "dcli execute <plan_id>" }
+        },
+        namespaces: [...new Set(config.commands.map(c => c.namespace))],
+        total_commands: config.commands.length,
+        output_formats: ["json", "human", "compact"],
+        flags: {
+          "--json": "Force JSON output",
+          "--human": "Force human-readable output",
+          "--compact": "Compressed JSON for token optimization",
+          "--schema": "Show input/output schema for a command",
+          "--help-json": "Machine-readable capability discovery",
+          "--show-dag": "Include execution DAG in output"
+        },
+        exit_codes: {
+          "0": "success",
+          "82": "validation_error",
+          "85": "invalid_argument",
+          "92": "resource_not_found",
+          "105": "integration_error",
+          "110": "internal_error"
+        }
+      })
+      return
+    }
+
+    // ── help / no args ──
     if (positional.length === 0 || positional[0] === "help") {
       const config = await loadConfig(SERVER)
       const namespaces = [...new Set(config.commands.map(c => c.namespace))]
-      if (flags.json || !humanMode) {
+      if (humanMode) {
+        console.log("\n  ⚡ DCLI — Dynamic CLI\n")
+        console.log("  Namespaces:\n")
+        namespaces.forEach(ns => {
+          const resources = [...new Set(config.commands.filter(c => c.namespace === ns).map(c => c.resource))]
+          console.log(`    ${ns}`)
+          resources.forEach(r => {
+            const actions = config.commands.filter(c => c.namespace === ns && c.resource === r).map(c => c.action)
+            console.log(`      └─ ${r}: ${actions.join(", ")}`)
+          })
+        })
+        console.log("\n  Usage: dcli <namespace> <resource> <action> [--args]")
+        console.log("  Flags: --json | --human | --compact | --schema | --help-json\n")
+      } else {
         output({
           version: "1.0",
           namespaces: namespaces.map(ns => ({
@@ -76,16 +202,11 @@ async function main() {
               }))
           }))
         })
-      } else {
-        console.log("\n  ⚡ DCLI — Dynamic CLI\n")
-        console.log("  Namespaces:\n")
-        namespaces.forEach(ns => console.log(`    ${ns}`))
-        console.log("\n  Usage: dcli <namespace> <resource> <action> [--args]\n")
       }
       return
     }
 
-    // Built-in: config
+    // ── config ──
     if (positional[0] === "config") {
       if (positional[1] === "refresh") {
         await refreshConfig(SERVER)
@@ -101,22 +222,31 @@ async function main() {
       return
     }
 
-    // Built-in: commands — list all
+    // ── commands ──
     if (positional[0] === "commands") {
       const config = await loadConfig(SERVER)
-      output({
-        version: "1.0",
-        commands: config.commands.map(c => ({
-          command: `${c.namespace} ${c.resource} ${c.action}`,
-          description: c.description,
-          adapter: c.adapter,
-          args: c.args
-        }))
-      })
+      const rows = config.commands.map(c => ({
+        command: `${c.namespace} ${c.resource} ${c.action}`,
+        description: c.description || "",
+        adapter: c.adapter,
+        args: (c.args || []).map(a => `--${a.name}${a.required ? "*" : ""}`).join(" ")
+      }))
+      if (humanMode) {
+        console.log("\n  ⚡ Commands\n")
+        outputHumanTable(rows, [
+          { key: "command", label: "Command" },
+          { key: "adapter", label: "Adapter" },
+          { key: "args", label: "Args" },
+          { key: "description", label: "Description" }
+        ])
+        console.log("")
+      } else {
+        output({ version: "1.0", commands: rows })
+      }
       return
     }
 
-    // Built-in: inspect <ns> <res> <act>
+    // ── inspect <ns> <res> <act> ──
     if (positional[0] === "inspect") {
       if (positional.length < 4) {
         outputError({ code: 85, type: "invalid_argument", message: "Usage: dcli inspect <namespace> <resource> <action>", recoverable: false })
@@ -127,75 +257,172 @@ async function main() {
         c.namespace === positional[1] && c.resource === positional[2] && c.action === positional[3]
       )
       if (!cmd) {
-        outputError({
-          code: 92, type: "resource_not_found",
-          message: `Command ${positional[1]}.${positional[2]}.${positional[3]} not found`,
-          suggestions: ["Run: dcli commands"]
-        })
+        outputError({ code: 92, type: "resource_not_found", message: `Command ${positional[1]}.${positional[2]}.${positional[3]} not found`, suggestions: ["Run: dcli commands"] })
         return
       }
-      output({
+      const spec = {
         version: "1.0",
         command: `${cmd.namespace}.${cmd.resource}.${cmd.action}`,
         description: cmd.description,
         adapter: cmd.adapter,
         adapterConfig: cmd.adapterConfig,
-        args: cmd.args
-      })
+        args: cmd.args,
+        input_schema: {
+          type: "object",
+          properties: (cmd.args || []).reduce((acc, a) => {
+            acc[a.name] = { type: a.type || "string" }
+            return acc
+          }, {}),
+          required: (cmd.args || []).filter(a => a.required).map(a => a.name)
+        },
+        side_effects: !!(cmd.mutation),
+        risk_level: cmd.risk_level || "safe"
+      }
+      if (humanMode) {
+        console.log(`\n  ⚡ ${spec.command}\n`)
+        console.log(`  Description: ${spec.description || "(none)"}`)
+        console.log(`  Adapter:     ${spec.adapter}`)
+        console.log(`  Risk:        ${spec.risk_level}`)
+        console.log(`  Side effects: ${spec.side_effects ? "yes" : "no"}`)
+        if (cmd.args && cmd.args.length) {
+          console.log("\n  Arguments:")
+          cmd.args.forEach(a => console.log(`    --${a.name} (${a.type || "string"})${a.required ? " [required]" : ""}`))
+        }
+        console.log("")
+      } else {
+        output(spec)
+      }
       return
     }
 
-    // 1 positional = namespace listing
-    if (positional.length === 1) {
-      const config = await loadConfig(SERVER)
-      const resources = [...new Set(config.commands.filter(c => c.namespace === positional[0]).map(c => c.resource))]
-      if (resources.length === 0) {
-        outputError({
-          code: 92, type: "resource_not_found",
-          message: `Namespace '${positional[0]}' not found`,
-          suggestions: ["Run: dcli help"]
-        })
+    // ── plan <ns> <res> <act> [--args] ──
+    if (positional[0] === "plan") {
+      if (positional.length < 4) {
+        outputError({ code: 85, type: "invalid_argument", message: "Usage: dcli plan <namespace> <resource> <action> [--args]", recoverable: false })
         return
       }
-      output({ namespace: positional[0], resources })
+      const config = await loadConfig(SERVER)
+      const cmd = config.commands.find(c =>
+        c.namespace === positional[1] && c.resource === positional[2] && c.action === positional[3]
+      )
+      if (!cmd) {
+        outputError({ code: 92, type: "resource_not_found", message: `Command ${positional[1]}.${positional[2]}.${positional[3]} not found`, suggestions: ["Run: dcli commands"] })
+        return
+      }
+      // Create plan via server
+      try {
+        const r = await fetch(`${SERVER}/api/plans`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ command: `${cmd.namespace}.${cmd.resource}.${cmd.action}`, args: userFlags(), cmd })
+        })
+        const plan = await r.json()
+        if (humanMode) {
+          console.log(`\n  ⚡ Execution Plan: ${plan.plan_id}\n`)
+          console.log(`  Command: ${plan.command}`)
+          console.log(`  Risk:    ${plan.risk_level}`)
+          console.log(`  Side effects: ${plan.side_effects ? "yes" : "no"}\n`)
+          console.log("  Steps:")
+          plan.steps.forEach((s, i) => console.log(`    ${i + 1}. [${s.type}] ${s.description || s.method || ""} ${s.url || ""}`))
+          console.log(`\n  Execute: dcli execute ${plan.plan_id}\n`)
+        } else {
+          output(plan)
+        }
+      } catch (err) {
+        outputError({ code: 105, type: "integration_error", message: `Failed to create plan: ${err.message}`, recoverable: true })
+      }
       return
     }
 
-    // 2 positional = action listing
+    // ── execute <plan_id> ──
+    if (positional[0] === "execute" && positional.length === 2) {
+      const planId = positional[1]
+      try {
+        const r = await fetch(`${SERVER}/api/plans/${planId}/execute`, { method: "POST" })
+        const result = await r.json()
+        output(result)
+      } catch (err) {
+        outputError({ code: 105, type: "integration_error", message: `Failed to execute plan: ${err.message}`, recoverable: true })
+      }
+      return
+    }
+
+    // ── 1 positional = namespace listing ──
+    if (positional.length === 1) {
+      const config = await loadConfig(SERVER)
+      const cmds = config.commands.filter(c => c.namespace === positional[0])
+      const resources = [...new Set(cmds.map(c => c.resource))]
+      if (resources.length === 0) {
+        outputError({ code: 92, type: "resource_not_found", message: `Namespace '${positional[0]}' not found`, suggestions: ["Run: dcli help"] })
+        return
+      }
+      if (humanMode) {
+        console.log(`\n  ⚡ ${positional[0]}\n`)
+        console.log("  Resources:\n")
+        resources.forEach(r => {
+          const actions = cmds.filter(c => c.resource === r).map(c => c.action)
+          console.log(`    ${r}: ${actions.join(", ")}`)
+        })
+        console.log("")
+      } else {
+        output({ namespace: positional[0], resources })
+      }
+      return
+    }
+
+    // ── 2 positional = action listing ──
     if (positional.length === 2) {
       const config = await loadConfig(SERVER)
       const actions = config.commands
         .filter(c => c.namespace === positional[0] && c.resource === positional[1])
         .map(c => c.action)
       if (actions.length === 0) {
-        outputError({
-          code: 92, type: "resource_not_found",
-          message: `Resource '${positional[0]}.${positional[1]}' not found`,
-          suggestions: [`Run: dcli ${positional[0]}`]
-        })
+        outputError({ code: 92, type: "resource_not_found", message: `Resource '${positional[0]}.${positional[1]}' not found`, suggestions: [`Run: dcli ${positional[0]}`] })
         return
       }
-      output({ namespace: positional[0], resource: positional[1], actions })
+      if (humanMode) {
+        console.log(`\n  ⚡ ${positional[0]}.${positional[1]}\n`)
+        console.log("  Actions:\n")
+        actions.forEach(a => console.log(`    ${a}`))
+        console.log("")
+      } else {
+        output({ namespace: positional[0], resource: positional[1], actions })
+      }
       return
     }
 
-    // 3+ positional = execute command
+    // ── 3+ positional = execute command ──
     const [namespace, resource, action] = positional
     const config = await loadConfig(SERVER)
     const cmd = config.commands.find(c =>
       c.namespace === namespace && c.resource === resource && c.action === action
     )
     if (!cmd) {
-      outputError({
-        code: 92, type: "resource_not_found",
-        message: `Command ${namespace}.${resource}.${action} not found`,
-        suggestions: ["Run: dcli commands", `Run: dcli ${namespace} ${resource}`]
+      outputError({ code: 92, type: "resource_not_found", message: `Command ${namespace}.${resource}.${action} not found`, suggestions: ["Run: dcli commands", `Run: dcli ${namespace} ${resource}`] })
+      return
+    }
+
+    // ── --schema: show input/output schema ──
+    if (flags.schema) {
+      output({
+        version: "1.0",
+        command: `${namespace}.${resource}.${action}`,
+        input_schema: {
+          type: "object",
+          properties: (cmd.args || []).reduce((acc, a) => {
+            acc[a.name] = { type: a.type || "string" }
+            return acc
+          }, {}),
+          required: (cmd.args || []).filter(a => a.required).map(a => a.name)
+        },
+        output_schema: cmd.output || { type: "object" }
       })
       return
     }
 
     // Validate required args
-    const missingArgs = (cmd.args || []).filter(a => a.required && !flags[a.name])
+    const uFlags = userFlags()
+    const missingArgs = (cmd.args || []).filter(a => a.required && !uFlags[a.name])
     if (missingArgs.length > 0) {
       outputError({
         code: 82, type: "validation_error",
@@ -206,15 +433,44 @@ async function main() {
     }
 
     const start = Date.now()
-    const result = await execute(cmd, flags, { server: SERVER })
+    const result = await execute(cmd, uFlags, { server: SERVER })
     const duration = Date.now() - start
 
-    output({
+    const envelope = {
       version: "1.0",
       command: `${namespace}.${resource}.${action}`,
       duration_ms: duration,
       data: result
-    })
+    }
+
+    // Post job record (async, non-blocking)
+    fetch(`${SERVER}/api/jobs`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        command: `${namespace}.${resource}.${action}`,
+        args: uFlags,
+        status: "success",
+        duration_ms: duration,
+        timestamp: new Date().toISOString()
+      })
+    }).catch(() => {}) // silent fail
+
+    if (humanMode) {
+      process.stderr.write(`  ⚡ ${namespace}.${resource}.${action} (${duration}ms)\n`)
+      if (Array.isArray(result)) {
+        outputHumanTable(result.slice(0, 20), Object.keys(result[0] || {}).slice(0, 6).map(k => ({ key: k, label: k })))
+        if (result.length > 20) console.log(`  ... and ${result.length - 20} more`)
+      } else if (typeof result === "object") {
+        for (const [k, v] of Object.entries(result)) {
+          const val = typeof v === "object" ? JSON.stringify(v) : v
+          console.log(`  ${k}: ${val}`)
+        }
+      }
+      console.log("")
+    } else {
+      output(envelope)
+    }
 
   } catch (err) {
     outputError({ code: 110, type: "internal_error", message: err.message })
