@@ -7,6 +7,7 @@ const router = Router()
 router.get("/", async (req, res) => {
   try {
     const config = await configService.getCLIConfig()
+    config.features = { ask: !!process.env.OPENAI_BASE_URL }
     res.json(config)
   } catch (err) {
     res.status(500).json({ error: err.message })

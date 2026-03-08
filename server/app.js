@@ -8,6 +8,7 @@ const specsRouter = require("./routes/specs")
 const mcpRouter = require("./routes/mcp")
 const plansRouter = require("./routes/plans")
 const jobsRouter = require("./routes/jobs")
+const askRouter = require("./routes/ask")
 
 const PORT = process.env.PORT || 3000
 
@@ -28,6 +29,7 @@ app.use("/api/specs", specsRouter)
 app.use("/api/mcp", mcpRouter)
 app.use("/api/plans", plansRouter)
 app.use("/api/jobs", jobsRouter)
+app.use("/api/ask", askRouter)
 
 // Tree/command endpoints under /api (config router handles them)
 app.use("/api", configRouter)
