@@ -1,0 +1,35 @@
+{
+  "name": "gwc",
+  "version": "0.1.0",
+  "description": "Wrap Google Workspace CLI (gws) with passthrough support",
+  "source": "https://github.com/googleworkspace/cli",
+  "checks": [
+    { "type": "binary", "name": "gws" }
+  ],
+  "commands": [
+    {
+      "namespace": "gwc",
+      "resource": "install",
+      "action": "steps",
+      "description": "Show gws installation steps for LLM automation",
+      "adapter": "builtin",
+      "adapterConfig": { "builtin": "gwc_install_steps" },
+      "args": []
+    },
+    {
+      "namespace": "gwc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gws CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gws",
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Run: dcli gwc install steps"
+      },
+      "args": []
+    }
+  ]
+}
