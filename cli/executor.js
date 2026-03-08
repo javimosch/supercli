@@ -33,6 +33,14 @@ async function execute(cmd, flags, context) {
 }
 
 async function executeWorkflow(workflow, flags, context) {
+  if (!context.server) {
+    throw Object.assign(new Error("Workflow commands require DCLI_SERVER"), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false
+    })
+  }
+
   const results = []
   let prevOutput = null
 
