@@ -1,0 +1,80 @@
+<%- include("partials/head", { title: "MCP Servers" }) %>
+
+<div id="mcp-app">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">MCP Servers</h1>
+    <button @click="showForm=!showForm" class="btn btn-primary btn-sm">+ Add Server</button>
+  </div>
+
+  <!-- Add form -->
+  <div v-if="showForm" class="card bg-base-300 p-4 mb-6">
+    <form @submit.prevent="create" class="flex gap-4 items-end">
+      <div class="form-control flex-1">
+        <label class="label"><span class="label-text">Name</span></label>
+        <input v-model="form.name" class="input input-bordered input-sm" required placeholder="e.g. ai-tools">
+      </div>
+      <div class="form-control flex-1">
+        <label class="label"><span class="label-text">URL</span></label>
+        <input v-model="form.url" class="input input-bordered input-sm" required placeholder="https://mcp.example.com">
+      </div>
+      <button type="submit" class="btn btn-primary btn-sm">Save</button>
+      <button type="button" @click="showForm=false" class="btn btn-ghost btn-sm">Cancel</button>
+    </form>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>URL</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-if="servers.length===0"><td colspan="3" class="text-center opacity-60">No MCP servers registered.</td></tr>
+        <tr v-for="s in servers" :key="s._id">
+          <td><code>{{ s.name }}</code></td>
+          <td class="max-w-xs truncate opacity-70">{{ s.url }}</td>
+          <td>
+            <button @click="remove(s._id)" class="btn btn-xs btn-error btn-outline">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const initialServers = <%- JSON.stringify(servers) %>;
+
+  Vue.createApp({
+    data() {
+      return {
+        servers: initialServers,
+        showForm: false,
+        form: { name: '', url: '' }
+      }
+    },
+    methods: {
+      async create() {
+        const r = await fetch('/api/mcp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.form)
+        })
+        const doc = await r.json()
+        this.servers.push(doc)
+        this.form = { name: '', url: '' }
+        this.showForm = false
+      },
+      async remove(id) {
+        if (!confirm('Delete this server?')) return
+        await fetch('/api/mcp/' + id, { method: 'DELETE' })
+        this.servers = this.servers.filter(s => s._id !== id)
+      }
+    }
+  }).mount('#mcp-app')
+</script>
+
+<%- include("partials/foot") %>

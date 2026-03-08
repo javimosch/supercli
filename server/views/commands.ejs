@@ -1,0 +1,49 @@
+<%- include("partials/head", { title: "Commands" }) %>
+
+<div class="flex justify-between items-center mb-6">
+  <h1 class="text-2xl font-bold">Commands</h1>
+  <a href="/api/commands/new" class="btn btn-primary btn-sm">+ Create Command</a>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra w-full">
+    <thead>
+      <tr>
+        <th>Namespace</th>
+        <th>Resource</th>
+        <th>Action</th>
+        <th>Adapter</th>
+        <th>Description</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (commands.length === 0) { %>
+        <tr><td colspan="6" class="text-center opacity-60">No commands yet. Create one to get started.</td></tr>
+      <% } %>
+      <% commands.forEach(c => { %>
+        <tr>
+          <td><span class="badge badge-outline"><%= c.namespace %></span></td>
+          <td><%= c.resource %></td>
+          <td><code><%= c.action %></code></td>
+          <td><span class="badge badge-ghost badge-sm"><%= c.adapter %></span></td>
+          <td class="max-w-xs truncate opacity-70"><%= c.description || '-' %></td>
+          <td class="flex gap-1">
+            <a href="/api/commands/<%= c._id %>/edit" class="btn btn-xs btn-outline">Edit</a>
+            <button onclick="deleteCommand('<%= c._id %>')" class="btn btn-xs btn-error btn-outline">Delete</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+async function deleteCommand(id) {
+  if (!confirm('Delete this command?')) return
+  await fetch('/api/commands/' + id, { method: 'DELETE' })
+  location.reload()
+}
+</script>
+
+<%- include("partials/foot") %>

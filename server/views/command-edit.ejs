@@ -1,0 +1,110 @@
+<%- include("partials/head", { title: command ? "Edit Command" : "New Command" }) %>
+
+<div class="max-w-2xl">
+  <h1 class="text-2xl font-bold mb-6"><%= command ? "Edit Command" : "New Command" %></h1>
+
+  <div id="cmd-editor">
+    <form @submit.prevent="save" class="flex flex-col gap-4">
+
+      <div class="grid grid-cols-3 gap-4">
+        <div class="form-control">
+          <label class="label"><span class="label-text">Namespace</span></label>
+          <input v-model="form.namespace" class="input input-bordered input-sm" required placeholder="e.g. referential">
+        </div>
+        <div class="form-control">
+          <label class="label"><span class="label-text">Resource</span></label>
+          <input v-model="form.resource" class="input input-bordered input-sm" required placeholder="e.g. users">
+        </div>
+        <div class="form-control">
+          <label class="label"><span class="label-text">Action</span></label>
+          <input v-model="form.action" class="input input-bordered input-sm" required placeholder="e.g. fetch">
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label class="label"><span class="label-text">Description</span></label>
+        <input v-model="form.description" class="input input-bordered input-sm" placeholder="What does this command do?">
+      </div>
+
+      <div class="form-control">
+        <label class="label"><span class="label-text">Adapter</span></label>
+        <select v-model="form.adapter" class="select select-bordered select-sm">
+          <option value="http">http</option>
+          <option value="openapi">openapi</option>
+          <option value="mcp">mcp</option>
+          <option value="shell">shell</option>
+          <option value="custom">custom</option>
+        </select>
+      </div>
+
+      <div class="form-control">
+        <label class="label"><span class="label-text">Adapter Config (JSON)</span></label>
+        <textarea v-model="adapterConfigStr" class="textarea textarea-bordered textarea-sm font-mono" rows="4" placeholder='{"method":"GET","url":"https://..."}'></textarea>
+      </div>
+
+      <!-- Arguments -->
+      <div class="form-control">
+        <label class="label"><span class="label-text">Arguments</span></label>
+        <div v-for="(arg, i) in form.args" :key="i" class="flex gap-2 mb-2 items-center">
+          <input v-model="arg.name" class="input input-bordered input-xs flex-1" placeholder="name">
+          <select v-model="arg.type" class="select select-bordered select-xs">
+            <option value="string">string</option>
+            <option value="number">number</option>
+            <option value="boolean">boolean</option>
+          </select>
+          <label class="cursor-pointer flex items-center gap-1">
+            <input type="checkbox" v-model="arg.required" class="checkbox checkbox-xs">
+            <span class="text-xs">req</span>
+          </label>
+          <button type="button" @click="form.args.splice(i,1)" class="btn btn-xs btn-ghost text-error">✕</button>
+        </div>
+        <button type="button" @click="form.args.push({name:'',type:'string',required:false})" class="btn btn-xs btn-outline btn-primary w-fit">+ Add Arg</button>
+      </div>
+
+      <div class="flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary btn-sm">{{ editId ? 'Update' : 'Create' }}</button>
+        <a href="/api/commands" class="btn btn-ghost btn-sm">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  const editData = <%- JSON.stringify(command) %>;
+
+  Vue.createApp({
+    data() {
+      return {
+        editId: editData ? editData._id : null,
+        form: {
+          namespace: editData ? editData.namespace : '',
+          resource: editData ? editData.resource : '',
+          action: editData ? editData.action : '',
+          description: editData ? editData.description : '',
+          adapter: editData ? editData.adapter : 'http',
+          args: editData && editData.args ? editData.args : []
+        },
+        adapterConfigStr: editData && editData.adapterConfig ? JSON.stringify(editData.adapterConfig, null, 2) : '{}'
+      }
+    },
+    methods: {
+      async save() {
+        const body = {
+          ...this.form,
+          adapterConfig: JSON.parse(this.adapterConfigStr || '{}')
+        }
+        const url = this.editId ? '/api/commands/' + this.editId : '/api/commands'
+        const method = this.editId ? 'PUT' : 'POST'
+        await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        })
+        window.location.href = '/api/commands'
+      }
+    }
+  }).mount('#cmd-editor')
+</script>
+
+<%- include("partials/foot") %>
