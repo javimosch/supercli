@@ -1,4 +1,5 @@
 const path = require("path")
+const { validateAdapterConfig } = require("./adapter-schema")
 
 // Adapter registry — lazy-loaded
 const ADAPTERS = {
@@ -6,7 +7,8 @@ const ADAPTERS = {
   mcp: () => require("./adapters/mcp"),
   http: () => require("./adapters/http"),
   process: () => require("./adapters/process"),
-  builtin: () => require("./adapters/builtin")
+  builtin: () => require("./adapters/builtin"),
+  shell: () => require("./adapters/shell")
 }
 
 async function execute(cmd, flags, context) {
@@ -17,6 +19,7 @@ async function execute(cmd, flags, context) {
   }
 
   const adapterName = cmd.adapter
+  validateAdapterConfig(cmd)
 
   if (!ADAPTERS[adapterName]) {
     try {
