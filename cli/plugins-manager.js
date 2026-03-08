@@ -2,6 +2,7 @@ const fs = require("fs")
 const path = require("path")
 const os = require("os")
 const { spawnSync } = require("child_process")
+const { installAgencyAgentsSkillProvider } = require("./plugin-agency-agents")
 const { SUPPORTED_ADAPTERS } = require("./adapter-schema")
 const { getRegistryPlugin } = require("./plugins-registry")
 const {
@@ -13,7 +14,8 @@ const {
 const BUNDLED_PLUGINS = {
   beads: path.resolve(__dirname, "..", "plugins", "beads", "plugin.json"),
   gwc: path.resolve(__dirname, "..", "plugins", "gwc", "plugin.json"),
-  docker: path.resolve(__dirname, "..", "plugins", "docker", "plugin.json")
+  docker: path.resolve(__dirname, "..", "plugins", "docker", "plugin.json"),
+  "agency-agents": path.resolve(__dirname, "..", "plugins", "agency-agents", "plugin.json")
 }
 
 const PLUGIN_INSTALL_GUIDANCE = {
@@ -66,6 +68,17 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "stripe login"
     ],
     note: "Install Stripe CLI and authenticate with stripe login before running API commands."
+  },
+  "agency-agents": {
+    plugin: "agency-agents",
+    binary: "curl",
+    check: "curl --version",
+    install_steps: [
+      "supercli plugins install agency-agents",
+      "supercli skills list --catalog --provider agency-agents --json",
+      "supercli skills get agency-agents:engineering.engineering-frontend-developer"
+    ],
+    note: "Install indexes remote markdown skills from https://github.com/msitarzewski/agency-agents (best effort, upstream paths may change)."
   }
 }
 
@@ -436,12 +449,18 @@ function installPlugin(ref, options = {}) {
     checks: manifest.checks || []
   }
 
+  let postInstall = null
+  if (manifest.name === "agency-agents") {
+    postInstall = installAgencyAgentsSkillProvider()
+  }
+
   writePluginsLock(lock)
   return {
     plugin: manifest.name,
     version: manifest.version || "0.0.0",
     installed_commands: installedCommands.length,
-    conflicts
+    conflicts,
+    post_install: postInstall
   }
 }
 
