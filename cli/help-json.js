@@ -2,7 +2,7 @@ function buildCapabilities(config, hasServer) {
   const commands = {
     help: { description: "List namespaces and commands" },
     config: { subcommands: ["show"] },
-    plugins: { subcommands: ["list", "install", "remove", "show", "doctor"], description: "Manage local command plugins" },
+    plugins: { subcommands: ["list", "explore", "install", "remove", "show", "doctor"], description: "Manage local and remote command plugins" },
     mcp: { subcommands: ["list", "add", "remove"], description: "Manage local MCP server registry" },
     commands: { description: "List all commands" },
     inspect: { description: "Inspect command details", usage: "supercli inspect <ns> <res> <act>" },
@@ -10,7 +10,7 @@ function buildCapabilities(config, hasServer) {
     execute: { description: "Execute a stored plan", usage: "supercli execute <plan_id>" },
     skills: {
       description: "Skill discovery and SKILL.md generation",
-      subcommands: ["list", "get", "teach"]
+      subcommands: ["list", "get", "teach", "sync", "search", "providers"]
     }
   }
   if (hasServer) commands.sync = { description: "Sync local config from SUPERCLI_SERVER" }
