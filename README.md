@@ -96,6 +96,12 @@ supercli mcp list
 supercli mcp add summarize-local --url http://127.0.0.1:8787
 supercli mcp remove summarize-local
 
+# Plugins
+supercli plugins list
+supercli plugins install beads
+supercli plugins show beads
+supercli beads install steps --json
+
 # Stdio MCP demo (no server required)
 node examples/mcp-stdio/install-demo.js
 supercli ai text summarize --text "Hello world" --json
