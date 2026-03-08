@@ -398,5 +398,6 @@ module.exports = {
   buildTeachSkillMarkdown,
   buildPluginsUsageSkillMarkdown,
   listSkillsMetadata,
-  handleSkillsCommand
+  handleSkillsCommand,
+  renderYamlObject // Export for testing coverage
 }
