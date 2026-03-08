@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
-const { loadConfig, refreshConfig, showConfig } = require("./config")
+const { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers } = require("./config")
 const { execute } = require("./executor")
+const { buildCapabilities } = require("./help-json")
+const { handleMcpRegistryCommand } = require("./mcp-local")
 const {
   handleSkillsCommand
 } = require("./skills")
 
-const SERVER = process.env.DCLI_SERVER || "http://localhost:3000"
+const SERVER = process.env.DCLI_SERVER
+const hasServer = !!SERVER
 const isTTY = process.stdout.isTTY
 const rawArgs = process.argv.slice(2)
 
-// ─── Arg Parsing ────────────────────────────────────────────────
 const flags = {}
 const positional = []
 for (let i = 0; i < rawArgs.length; i++) {
@@ -29,8 +31,6 @@ for (let i = 0; i < rawArgs.length; i++) {
 const humanMode = flags.human || (isTTY && !flags.json && !flags.compact && !flags.schema && !flags["help-json"])
 const compactMode = !!flags.compact
 const RESERVED_FLAGS = ["human", "json", "compact", "schema", "help-json", "no-color", "show-dag", "format"]
-
-// ─── Output Helpers ─────────────────────────────────────────────
 
 function compactKeys(obj) {
   if (Array.isArray(obj)) return obj.map(compactKeys)
@@ -94,6 +94,17 @@ function outputError(error) {
   process.exit(envelope.error.code)
 }
 
+function requireServer() {
+  if (hasServer) return true
+  outputError({
+    code: 85,
+    type: "invalid_argument",
+    message: "This command requires DCLI_SERVER. Export DCLI_SERVER and run: dcli sync",
+    recoverable: false
+  })
+  return false
+}
+
 function userFlags() {
   const f = {}
   for (const [k, v] of Object.entries(flags)) {
@@ -101,8 +112,6 @@ function userFlags() {
   }
   return f
 }
-
-// ─── Stdin Reader ───────────────────────────────────────────────
 
 async function readStdin() {
   // Only read stdin if data is actually being piped
@@ -126,10 +135,13 @@ async function readStdin() {
   })
 }
 
-// ─── Main ───────────────────────────────────────────────────────
-
 async function main() {
   try {
+    if (flags.server) {
+      require("../server/app.js")
+      return
+    }
+
     // Read stdin if piped
     const stdinData = await readStdin()
     if (stdinData) {
@@ -138,50 +150,12 @@ async function main() {
       }
     }
 
-    // ── --help-json: full capability discovery ──
     if (flags["help-json"]) {
       const config = await loadConfig(SERVER)
-      output({
-        version: "1.0",
-        name: "dcli",
-        description: "Config-driven, AI-friendly dynamic CLI",
-        commands: {
-          help: { description: "List namespaces and commands" },
-          config: { subcommands: ["refresh", "show"] },
-          commands: { description: "List all commands" },
-          inspect: { description: "Inspect command details", usage: "dcli inspect <ns> <res> <act>" },
-          plan: { description: "Create execution plan", usage: "dcli plan <ns> <res> <act> [--args]" },
-          execute: { description: "Execute a stored plan", usage: "dcli execute <plan_id>" },
-          skills: {
-            description: "Skill discovery and SKILL.md generation",
-            subcommands: ["list", "get", "teach"]
-          }
-        },
-        namespaces: [...new Set(config.commands.map(c => c.namespace))],
-        total_commands: config.commands.length,
-        output_formats: ["json", "human", "compact"],
-        flags: {
-          "--json": "Force JSON output",
-          "--human": "Force human-readable output",
-          "--compact": "Compressed JSON for token optimization",
-          "--schema": "Show input/output schema for a command",
-          "--help-json": "Machine-readable capability discovery",
-          "--show-dag": "Include execution DAG in output",
-          "--format": "Output format for selected commands"
-        },
-        exit_codes: {
-          "0": "success",
-          "82": "validation_error",
-          "85": "invalid_argument",
-          "92": "resource_not_found",
-          "105": "integration_error",
-          "110": "internal_error"
-        }
-      })
+      output(buildCapabilities(config, hasServer))
       return
     }
 
-    // ── help / no args ──
     if (positional.length === 0 || positional[0] === "help") {
       const config = await loadConfig(SERVER)
       const namespaces = [...new Set(config.commands.map(c => c.namespace))]
@@ -197,8 +171,11 @@ async function main() {
           })
         })
         console.log("\n  Usage: dcli <namespace> <resource> <action> [--args]")
+        if (hasServer) console.log("  Sync: dcli sync")
+        console.log("  MCP: dcli mcp list | dcli mcp add <name> --url <url> | dcli mcp remove <name>")
         console.log("  Skills: dcli skills list | dcli skills get <ns.res.act> | dcli skills teach")
-        console.log("  Flags: --json | --human | --compact | --schema | --help-json\n")
+        console.log("  Server: dcli --server")
+        console.log("  Flags: --json | --human | --compact | --schema | --help-json | --server\n")
       } else {
         output({
           version: "1.0",
@@ -215,30 +192,43 @@ async function main() {
       return
     }
 
-    // ── config ──
     if (positional[0] === "config") {
-      if (positional[1] === "refresh") {
-        await refreshConfig(SERVER)
-        output({ ok: true, message: "Config refreshed" })
-        return
-      }
       if (positional[1] === "show") {
         const info = await showConfig()
         output(info)
         return
       }
-      outputError({ code: 85, type: "invalid_argument", message: "Unknown config subcommand. Use: refresh, show", recoverable: false })
+      outputError({ code: 85, type: "invalid_argument", message: "Unknown config subcommand. Use: show", recoverable: false })
       return
     }
 
-    // ── skills ──
+    if (hasServer && positional[0] === "sync") {
+      await syncConfig(SERVER)
+      output({ ok: true, message: "Config synced" })
+      return
+    }
+
+    if (positional[0] === "mcp") {
+      await handleMcpRegistryCommand({
+        positional,
+        flags,
+        humanMode,
+        output,
+        outputHumanTable,
+        outputError,
+        setMcpServer,
+        removeMcpServer,
+        listMcpServers
+      })
+      return
+    }
+
     if (positional[0] === "skills") {
       const config = await loadConfig(SERVER)
       handleSkillsCommand({ positional, flags, config, humanMode, output, outputHumanTable, outputError })
       return
     }
 
-    // ── commands ──
     if (positional[0] === "commands") {
       const config = await loadConfig(SERVER)
       const rows = config.commands.map(c => ({
@@ -262,7 +252,6 @@ async function main() {
       return
     }
 
-    // ── inspect <ns> <res> <act> ──
     if (positional[0] === "inspect") {
       if (positional.length < 4) {
         outputError({ code: 85, type: "invalid_argument", message: "Usage: dcli inspect <namespace> <resource> <action>", recoverable: false })
@@ -311,8 +300,8 @@ async function main() {
       return
     }
 
-    // ── plan <ns> <res> <act> [--args] ──
     if (positional[0] === "plan") {
+      if (!requireServer()) return
       if (positional.length < 4) {
         outputError({ code: 85, type: "invalid_argument", message: "Usage: dcli plan <namespace> <resource> <action> [--args]", recoverable: false })
         return
@@ -350,8 +339,8 @@ async function main() {
       return
     }
 
-    // ── execute <plan_id> ──
     if (positional[0] === "execute" && positional.length === 2) {
+      if (!requireServer()) return
       const planId = positional[1]
       try {
         const r = await fetch(`${SERVER}/api/plans/${planId}/execute`, { method: "POST" })
@@ -363,7 +352,6 @@ async function main() {
       return
     }
 
-    // ── 1 positional = namespace listing ──
     if (positional.length === 1) {
       const config = await loadConfig(SERVER)
       const cmds = config.commands.filter(c => c.namespace === positional[0])
@@ -386,7 +374,6 @@ async function main() {
       return
     }
 
-    // ── 2 positional = action listing ──
     if (positional.length === 2) {
       const config = await loadConfig(SERVER)
       const actions = config.commands
@@ -407,7 +394,6 @@ async function main() {
       return
     }
 
-    // ── 3+ positional = execute command ──
     const [namespace, resource, action] = positional
     const config = await loadConfig(SERVER)
     const cmd = config.commands.find(c =>
@@ -418,7 +404,6 @@ async function main() {
       return
     }
 
-    // ── --schema: show input/output schema ──
     if (flags.schema) {
       output({
         version: "1.0",
@@ -449,7 +434,7 @@ async function main() {
     }
 
     const start = Date.now()
-    const result = await execute(cmd, uFlags, { server: SERVER })
+    const result = await execute(cmd, uFlags, { server: SERVER || "", config })
     const duration = Date.now() - start
 
     const envelope = {
@@ -460,17 +445,19 @@ async function main() {
     }
 
     // Post job record (async, non-blocking)
-    fetch(`${SERVER}/api/jobs`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        command: `${namespace}.${resource}.${action}`,
-        args: uFlags,
-        status: "success",
-        duration_ms: duration,
-        timestamp: new Date().toISOString()
-      })
-    }).catch(() => {}) // silent fail
+    if (hasServer) {
+      fetch(`${SERVER}/api/jobs`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          command: `${namespace}.${resource}.${action}`,
+          args: uFlags,
+          status: "success",
+          duration_ms: duration,
+          timestamp: new Date().toISOString()
+        })
+      }).catch(() => {}) // silent fail
+    }
 
     if (humanMode) {
       process.stderr.write(`  ⚡ ${namespace}.${resource}.${action} (${duration}ms)\n`)
@@ -489,7 +476,13 @@ async function main() {
     }
 
   } catch (err) {
-    outputError({ code: 110, type: "internal_error", message: err.message })
+    outputError({
+      code: err.code || 110,
+      type: err.type || "internal_error",
+      message: err.message,
+      recoverable: !!err.recoverable,
+      suggestions: err.suggestions || []
+    })
   }
 }
 
