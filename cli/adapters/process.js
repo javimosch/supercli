@@ -83,6 +83,7 @@ async function execute(cmd, flags) {
   if (!binary) throw new Error("Process adapter requires adapterConfig.command")
 
   const baseArgs = Array.isArray(cfg.baseArgs) ? cfg.baseArgs.slice() : []
+  const nonTtyBaseArgs = Array.isArray(cfg.nonTtyBaseArgs) ? cfg.nonTtyBaseArgs.slice() : []
   const passthroughMode = cfg.passthrough === true
   const positionalNames = Array.isArray(cfg.positionalArgs) ? cfg.positionalArgs : []
   const parsedAsJson = cfg.parseJson !== false
@@ -105,6 +106,9 @@ async function execute(cmd, flags) {
 
   const remainingFlags = { ...flags }
   const args = [...baseArgs]
+  if (!process.stdout.isTTY && nonTtyBaseArgs.length > 0) {
+    args.push(...nonTtyBaseArgs)
+  }
 
   if (passthroughMode) {
     const passthroughArgs = Array.isArray(flags.__rawArgs) ? flags.__rawArgs : []
