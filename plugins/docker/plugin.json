@@ -1,0 +1,266 @@
+{
+  "name": "docker",
+  "version": "0.1.0",
+  "description": "Core Docker harness commands with non-TTY safety metadata",
+  "source": "https://www.docker.com/",
+  "checks": [
+    { "type": "binary", "name": "docker" }
+  ],
+  "commands": [
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "run",
+      "description": "Run a container",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "docker",
+        "baseArgs": ["run"],
+        "positionalArgs": ["image", "cmd"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "safetyLevel": "guarded",
+        "interactiveFlags": ["-i", "-t", "--interactive", "--tty"],
+        "missingDependencyHelp": "Install Docker and run: docker --version"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": true },
+        { "name": "cmd", "type": "string" },
+        { "name": "detach", "type": "boolean" },
+        { "name": "publish", "type": "string" },
+        { "name": "volume", "type": "string" },
+        { "name": "env", "type": "string" },
+        { "name": "name", "type": "string" },
+        { "name": "rm", "type": "boolean" },
+        { "name": "interactive", "type": "boolean" },
+        { "name": "tty", "type": "boolean" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "ps",
+      "description": "List running containers",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["ps"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "all", "type": "boolean" },
+        { "name": "format", "type": "string" },
+        { "name": "filter", "type": "string" },
+        { "name": "last", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "ls",
+      "description": "Alias to docker ps",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["ps"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "all", "type": "boolean" },
+        { "name": "format", "type": "string" },
+        { "name": "filter", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "start",
+      "description": "Start one or more stopped containers",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["start"], "positionalArgs": ["container"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "container", "type": "string", "required": true } ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "stop",
+      "description": "Stop one or more running containers",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["stop"], "positionalArgs": ["container"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "container", "type": "string", "required": true },
+        { "name": "time", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "restart",
+      "description": "Restart one or more containers",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["restart"], "positionalArgs": ["container"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "container", "type": "string", "required": true } ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "rm",
+      "description": "Remove one or more containers",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["rm"], "positionalArgs": ["container"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "container", "type": "string", "required": true },
+        { "name": "force", "type": "boolean" },
+        { "name": "volumes", "type": "boolean" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "exec",
+      "description": "Run a command in a running container",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "docker",
+        "baseArgs": ["exec"],
+        "positionalArgs": ["container", "cmd"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "safetyLevel": "guarded",
+        "interactiveFlags": ["-i", "-t", "--interactive", "--tty"],
+        "missingDependencyHelp": "Install Docker and run: docker --version"
+      },
+      "args": [
+        { "name": "container", "type": "string", "required": true },
+        { "name": "cmd", "type": "string", "required": true },
+        { "name": "interactive", "type": "boolean" },
+        { "name": "tty", "type": "boolean" },
+        { "name": "env", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "logs",
+      "description": "Fetch container logs",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["logs"], "positionalArgs": ["container"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "container", "type": "string", "required": true },
+        { "name": "follow", "type": "boolean" },
+        { "name": "tail", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "container",
+      "action": "inspect",
+      "description": "Display detailed container information",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["inspect"], "positionalArgs": ["container"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "container", "type": "string", "required": true } ]
+    },
+
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "build",
+      "description": "Build an image from a Dockerfile",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["build"], "positionalArgs": ["context"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "context", "type": "string", "required": true },
+        { "name": "tag", "type": "string" },
+        { "name": "file", "type": "string" },
+        { "name": "build-arg", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "images",
+      "description": "List images",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["images"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "all", "type": "boolean" },
+        { "name": "digests", "type": "boolean" },
+        { "name": "format", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "ls",
+      "description": "Alias to docker images",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["images"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "all", "type": "boolean" },
+        { "name": "format", "type": "string" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "pull",
+      "description": "Pull an image from a registry",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["pull"], "positionalArgs": ["image"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "image", "type": "string", "required": true } ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "push",
+      "description": "Push an image to a registry",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["push"], "positionalArgs": ["image"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "image", "type": "string", "required": true } ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "rmi",
+      "description": "Remove one or more images",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["rmi"], "positionalArgs": ["image"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "image", "type": "string", "required": true },
+        { "name": "force", "type": "boolean" }
+      ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "image",
+      "action": "tag",
+      "description": "Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["tag"], "positionalArgs": ["source", "target"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [
+        { "name": "source", "type": "string", "required": true },
+        { "name": "target", "type": "string", "required": true }
+      ]
+    },
+
+    {
+      "namespace": "docker",
+      "resource": "system",
+      "action": "info",
+      "description": "Display system-wide information",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["info"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "format", "type": "string" } ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "system",
+      "action": "version",
+      "description": "Show the Docker version information",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["version"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "format", "type": "string" } ]
+    },
+    {
+      "namespace": "docker",
+      "resource": "system",
+      "action": "df",
+      "description": "Show Docker disk usage",
+      "adapter": "process",
+      "adapterConfig": { "command": "docker", "baseArgs": ["system", "df"], "parseJson": true, "timeout_ms": 15000, "missingDependencyHelp": "Install Docker and run: docker --version" },
+      "args": [ { "name": "verbose", "type": "boolean" } ]
+    }
+  ]
+}
