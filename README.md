@@ -21,23 +21,32 @@ Config-driven, AI-friendly CLI that dynamically generates commands from cloud co
 ## Quick Start
 
 ```bash
+# Quick usage (no install, local-only by default)
+npx dcli help
+npx dcli skills teach
+
 # Install
 npm install
 
 # Configure (copy and edit)
 cp .env.example .env
 
-# Start server (requires MongoDB)
+# Start server (defaults to local JSON files, no MongoDB required!)
 npm start
+# Or alternatively, start via CLI:
+# dcli --server
 
 # Open Web UI
 open http://localhost:3000
 
 # CLI usage
-export DCLI_SERVER=http://localhost:3000
 node cli/dcli.js help
 node cli/dcli.js commands
 node cli/dcli.js <namespace> <resource> <action> [--args]
+
+# Optional: sync commands from a remote DCLI server
+export DCLI_SERVER=http://localhost:3000
+node cli/dcli.js sync
 ```
 
 ## CLI Usage
@@ -66,9 +75,19 @@ dcli skills get <ns.res.act>           # Emit SKILL.md (default format)
 dcli skills teach                      # Emit starter meta-skill (default format)
 dcli skills get <ns.res.act> --show-dag
 
-# Config
-dcli config refresh                    # Force config reload
+# Config & Server
+dcli sync                              # Sync local cache from DCLI_SERVER (when set)
 dcli config show                       # Show cache info
+
+# Local MCP registry (no server required)
+dcli mcp list
+dcli mcp add summarize-local --url http://127.0.0.1:8787
+dcli mcp remove summarize-local
+
+# Stdio MCP demo (no server required)
+node examples/mcp-stdio/install-demo.js
+dcli ai text summarize --text "Hello world" --json
+dcli --server                          # Start the DCLI backend server directly
 
 # Agent capability discovery
 dcli --help-json                       # Machine-readable capabilities
@@ -132,7 +151,7 @@ Every command returns a deterministic envelope:
 ## Tech Stack
 
 - NodeJS + Express
-- MongoDB (native driver, no ODM)
+- Pluggable KV Storage (Local JSON files by default, MongoDB optional)
 - EJS + Vue3 CDN + Tailwind CDN + DaisyUI CDN
 - Zero build tools
 
