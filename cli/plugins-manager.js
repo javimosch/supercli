@@ -55,6 +55,17 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "docker --version"
     ],
     note: "Install Docker Engine/Desktop using your OS package manager, then verify with docker --version."
+  },
+  stripe: {
+    plugin: "stripe",
+    binary: "stripe",
+    check: "stripe --version",
+    install_steps: [
+      "brew install stripe/stripe-cli/stripe",
+      "stripe --version",
+      "stripe login"
+    ],
+    note: "Install Stripe CLI and authenticate with stripe login before running API commands."
   }
 }
 

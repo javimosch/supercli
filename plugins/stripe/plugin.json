@@ -1,0 +1,52 @@
+{
+  "name": "stripe",
+  "version": "0.1.0",
+  "description": "Stripe CLI plugin for dcli",
+  "source": "https://stripe.com/docs/stripe-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "stripe"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "stripe",
+      "resource": "customers",
+      "action": "list",
+      "description": "List existing Stripe customers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stripe",
+        "baseArgs": ["customers", "list"],
+        "optionalArgs": {
+          "limit": "--limit"
+        },
+        "parseJson": true,
+        "missingDependencyHelp": "Please install the Stripe CLI to use this command."
+      },
+      "args": [
+        {
+          "name": "limit",
+          "type": "integer",
+          "required": false,
+          "description": "Limit the number of customers returned"
+        }
+      ]
+    },
+    {
+      "namespace": "stripe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any Stripe CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stripe",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Please install the Stripe CLI to use this command."
+      },
+      "args": []
+    }
+  ]
+}
