@@ -1,0 +1,64 @@
+{
+  "name": "nullclaw",
+  "version": "0.1.0",
+  "description": "Remote docs and agent guidance index for nullclaw/nullclaw",
+  "source": "https://github.com/nullclaw/nullclaw",
+  "checks": [
+    { "type": "binary", "name": "curl" },
+    { "type": "binary", "name": "nullclaw" }
+  ],
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "nullclaw",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show nullclaw CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nullclaw",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install nullclaw to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "nullclaw",
+      "resource": "system",
+      "action": "status",
+      "description": "Show nullclaw system status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nullclaw",
+        "baseArgs": ["status"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install nullclaw to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "nullclaw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any nullclaw CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nullclaw",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Please install nullclaw to use this command."
+      },
+      "args": []
+    }
+  ]
+}
