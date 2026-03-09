@@ -1,0 +1,42 @@
+{
+  "name": "aws",
+  "version": "0.1.0",
+  "description": "AWS CLI plugin for dcli",
+  "source": "https://docs.aws.amazon.com/cli/latest/reference/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "aws"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "aws",
+      "resource": "account",
+      "action": "identity",
+      "description": "Show AWS caller identity for the active credentials",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aws",
+        "baseArgs": ["sts", "get-caller-identity"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please install AWS CLI to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "aws",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any AWS CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aws",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Please install AWS CLI to use this command."
+      },
+      "args": []
+    }
+  ]
+}
