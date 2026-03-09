@@ -84,6 +84,178 @@ const PLUGIN_INSTALL_GUIDANCE = {
     ],
     note: "If installed locally, use npx --no-install railway and ensure node_modules/.bin is in PATH for dcli plugin execution."
   },
+  supabase: {
+    plugin: "supabase",
+    binary: "supabase",
+    check: "supabase --version",
+    install_steps: [
+      "npm install -g supabase",
+      "npm install -D supabase",
+      "supabase --version",
+      "supabase login"
+    ],
+    note: "If installed locally, use npx --no-install supabase and ensure node_modules/.bin is in PATH for dcli plugin execution."
+  },
+  gh: {
+    plugin: "gh",
+    binary: "gh",
+    check: "gh --version",
+    install_steps: [
+      "gh --version",
+      "gh auth login"
+    ],
+    note: "Install GitHub CLI with your platform package manager and authenticate with gh auth login before using account or repo commands."
+  },
+  kubectl: {
+    plugin: "kubectl",
+    binary: "kubectl",
+    check: "kubectl version --client",
+    install_steps: [
+      "kubectl version --client",
+      "kubectl config current-context"
+    ],
+    note: "Install kubectl with your platform package manager and ensure your kubeconfig is already configured before using cluster commands."
+  },
+  terraform: {
+    plugin: "terraform",
+    binary: "terraform",
+    check: "terraform version -json",
+    install_steps: [
+      "terraform version -json",
+      "terraform init"
+    ],
+    note: "Install Terraform with your platform package manager. For state-dependent commands, run inside an initialized Terraform working directory."
+  },
+  aws: {
+    plugin: "aws",
+    binary: "aws",
+    check: "aws --version",
+    install_steps: [
+      "aws --version",
+      "aws configure"
+    ],
+    note: "Install AWS CLI with your platform package manager and configure credentials before using account or service commands."
+  },
+  gcloud: {
+    plugin: "gcloud",
+    binary: "gcloud",
+    check: "gcloud --version",
+    install_steps: [
+      "gcloud --version",
+      "gcloud auth login"
+    ],
+    note: "Install Google Cloud CLI with your platform package manager and authenticate with gcloud auth login before using account or project commands."
+  },
+  az: {
+    plugin: "az",
+    binary: "az",
+    check: "az version",
+    install_steps: [
+      "az version",
+      "az login"
+    ],
+    note: "Install Azure CLI with your platform package manager and authenticate with az login before using account or resource commands."
+  },
+  helm: {
+    plugin: "helm",
+    binary: "helm",
+    check: "helm version --short",
+    install_steps: [
+      "helm version --short",
+      "kubectl config current-context"
+    ],
+    note: "Install Helm with your platform package manager. For release and cluster-backed commands, ensure your Kubernetes context is already configured."
+  },
+  npm: {
+    plugin: "npm",
+    binary: "npm",
+    check: "npm --version",
+    install_steps: [
+      "npm --version",
+      "npm login"
+    ],
+    note: "npm is usually installed with Node.js. Run npm login only if you need authenticated registry operations."
+  },
+  pulumi: {
+    plugin: "pulumi",
+    binary: "pulumi",
+    check: "pulumi version",
+    install_steps: [
+      "pulumi version",
+      "pulumi login"
+    ],
+    note: "Install Pulumi with your platform package manager and authenticate with pulumi login before using stack or cloud-backed commands."
+  },
+  pnpm: {
+    plugin: "pnpm",
+    binary: "pnpm",
+    check: "pnpm --version",
+    install_steps: [
+      "pnpm --version",
+      "pnpm login"
+    ],
+    note: "Install pnpm with your platform package manager or via corepack. Run pnpm login only if you need authenticated registry operations."
+  },
+  uv: {
+    plugin: "uv",
+    binary: "uv",
+    check: "uv --version",
+    install_steps: [
+      "curl -LsSf https://astral.sh/uv/install.sh | sh",
+      "uv --version"
+    ],
+    note: "Install uv with the official installer or your platform package manager. Run uv auth login only if you need private index authentication."
+  },
+  poetry: {
+    plugin: "poetry",
+    binary: "poetry",
+    check: "poetry --version",
+    install_steps: [
+      "curl -sSL https://install.python-poetry.org | python3 -",
+      "poetry --version"
+    ],
+    note: "Install Poetry with the official installer or pipx. Configure repository credentials only if you need private package publishing or installs."
+  },
+  eza: {
+    plugin: "eza",
+    binary: "eza",
+    check: "eza --version",
+    install_steps: [
+      "cargo install eza",
+      "eza --version"
+    ],
+    note: "Install eza with your platform package manager or cargo. It is a non-interactive ls replacement, so no login or account setup is required."
+  },
+  just: {
+    plugin: "just",
+    binary: "just",
+    check: "just --version",
+    install_steps: [
+      "cargo install just",
+      "just --version"
+    ],
+    note: "Install just with your platform package manager or cargo. Most useful commands operate on a nearby justfile, but help and version commands work anywhere."
+  },
+  watchexec: {
+    plugin: "watchexec",
+    binary: "watchexec",
+    check: "watchexec --version",
+    install_steps: [
+      "cargo install --locked watchexec-cli",
+      "watchexec --version"
+    ],
+    note: "Install watchexec with your platform package manager, cargo binstall, or cargo. It is non-interactive and works well for scripted file-watching workflows."
+  },
+  nextest: {
+    plugin: "nextest",
+    binary: "cargo-nextest",
+    check: "cargo-nextest --version",
+    install_steps: [
+      "cargo install cargo-nextest --locked",
+      "cargo-nextest --version"
+    ],
+    note: "Install cargo-nextest with prebuilt binaries or cargo. Most commands are intended for Rust workspaces, but version and help commands work anywhere."
+  },
   "agency-agents": {
     plugin: "agency-agents",
     binary: "curl",
