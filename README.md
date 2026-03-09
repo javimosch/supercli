@@ -8,6 +8,7 @@ Discover and execute skills across CLIs, APIs, MCP servers, workflows, and custo
 - supercli (Brand)
 - scli (Brand smaller)
 - superacli (What was available) (Super Agent/ic CLI)
+- sc (For lazy people)
 
 ## What Is a Skill Layer?
 
