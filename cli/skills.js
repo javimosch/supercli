@@ -317,13 +317,23 @@ function handleSkillsCommand(options) {
   }
 
   if (subcommand === "list") {
-    if (flags.catalog === true || flags.catalog === "true") {
-      const skills = listCatalogSkills({ provider: flags.provider })
-      output({ skills, index: { updated_at: readIndex().updated_at } })
+    const useCatalog = flags.catalog === true || flags.catalog === "true" || !!flags.provider
+    if (flags["no-catalog"] || flags.catalog === false || flags.catalog === "false" || !useCatalog) {
+      const skills = listSkillsMetadata(config)
+      if (humanMode && !flags.json) {
+        console.log("\n  ⚡ Skills (command-level only)\n")
+        outputHumanTable(skills, [
+          { key: "name", label: "Name" },
+          { key: "description", label: "Description" }
+        ])
+        console.log("")
+      } else {
+        output({ skills })
+      }
       return true
     }
 
-    const skills = listSkillsMetadata(config)
+    const skills = listCatalogSkills({ provider: flags.provider })
     if (humanMode && !flags.json) {
       console.log("\n  ⚡ Skills\n")
       outputHumanTable(skills, [
@@ -332,7 +342,8 @@ function handleSkillsCommand(options) {
       ])
       console.log("")
     } else {
-      output({ skills })
+      const index = readIndex() || {}
+      output({ skills, index: { updated_at: index.updated_at || null } })
     }
     return true
   }
