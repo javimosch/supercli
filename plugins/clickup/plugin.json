@@ -1,0 +1,38 @@
+{
+  "name": "clickup",
+  "version": "0.1.0",
+  "description": "ClickUp CLI (cu) for AI agents - task management, sprint tracking, and project workflows",
+  "source": "https://github.com/krodak/clickup-cli",
+  "tags": ["clickup", "tasks", "project-management", "sprint", "ai-agents"],
+  "checks": [
+    { "type": "binary", "name": "cu" }
+  ],
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "clickup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any cu CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cu",
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install clickup-cli: npm install -g @krodak/clickup-cli, then run: cu init"
+      },
+      "args": []
+    }
+  ]
+}
+
