@@ -1,5 +1,5 @@
 const { spawnSync } = require("child_process")
-const { addProvider, syncCatalog } = require("./skills-catalog")
+const { addProvider, syncCatalog } = require("../../../cli/skills-catalog")
 
 const OWNER = "msitarzewski"
 const REPO = "agency-agents"
@@ -82,7 +82,7 @@ function buildRemoteEntriesFromTree(treeResponse) {
   return entries
 }
 
-function installAgencyAgentsSkillProvider() {
+function run() {
   const treeResponse = fetchJson(TREE_URL)
   const entries = buildRemoteEntriesFromTree(treeResponse)
   if (entries.length === 0) {
@@ -106,7 +106,17 @@ function installAgencyAgentsSkillProvider() {
   }
 }
 
+if (require.main === module) {
+  try {
+    const result = run()
+    process.stdout.write(JSON.stringify(result))
+  } catch (err) {
+    process.stderr.write(err.message)
+    process.exit(1)
+  }
+}
+
 module.exports = {
-  installAgencyAgentsSkillProvider,
+  run,
   buildRemoteEntriesFromTree
 }
