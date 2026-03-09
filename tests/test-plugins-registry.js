@@ -78,6 +78,21 @@ assert(stripeExplore.ok, "stripe explore should succeed")
 const stripeExploreData = JSON.parse(stripeExplore.output)
 assert(stripeExploreData.plugins.some(p => p.name === "stripe"), "explore filters should find stripe")
 
+const vercelExplore = runNoServer("plugins explore --name vercel --tags hosting --json")
+assert(vercelExplore.ok, "vercel explore should succeed")
+const vercelExploreData = JSON.parse(vercelExplore.output)
+assert(vercelExploreData.plugins.some(p => p.name === "vercel"), "explore filters should find vercel")
+
+const linearExplore = runNoServer("plugins explore --name linear --tags issues --json")
+assert(linearExplore.ok, "linear explore should succeed")
+const linearExploreData = JSON.parse(linearExplore.output)
+assert(linearExploreData.plugins.some(p => p.name === "linear"), "explore filters should find linear")
+
+const railwayExplore = runNoServer("plugins explore --name railway --tags infrastructure --json")
+assert(railwayExplore.ok, "railway explore should succeed")
+const railwayExploreData = JSON.parse(railwayExplore.output)
+assert(railwayExploreData.plugins.some(p => p.name === "railway"), "explore filters should find railway")
+
 const repoPath = makeRemotePluginRepo()
 const install = runNoServer(`plugins install --git ${repoPath} --manifest-path plugins/supercli/plugin.json --ref main --json`)
 assert(install.ok, "remote git install should succeed")
