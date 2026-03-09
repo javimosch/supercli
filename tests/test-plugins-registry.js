@@ -93,6 +93,91 @@ assert(railwayExplore.ok, "railway explore should succeed")
 const railwayExploreData = JSON.parse(railwayExplore.output)
 assert(railwayExploreData.plugins.some(p => p.name === "railway"), "explore filters should find railway")
 
+const supabaseExplore = runNoServer("plugins explore --name supabase --tags database --json")
+assert(supabaseExplore.ok, "supabase explore should succeed")
+const supabaseExploreData = JSON.parse(supabaseExplore.output)
+assert(supabaseExploreData.plugins.some(p => p.name === "supabase"), "explore filters should find supabase")
+
+const ghExplore = runNoServer("plugins explore --name gh --tags github --json")
+assert(ghExplore.ok, "gh explore should succeed")
+const ghExploreData = JSON.parse(ghExplore.output)
+assert(ghExploreData.plugins.some(p => p.name === "gh"), "explore filters should find gh")
+
+const kubectlExplore = runNoServer("plugins explore --name kubectl --tags kubernetes --json")
+assert(kubectlExplore.ok, "kubectl explore should succeed")
+const kubectlExploreData = JSON.parse(kubectlExplore.output)
+assert(kubectlExploreData.plugins.some(p => p.name === "kubectl"), "explore filters should find kubectl")
+
+const terraformExplore = runNoServer("plugins explore --name terraform --tags iac --json")
+assert(terraformExplore.ok, "terraform explore should succeed")
+const terraformExploreData = JSON.parse(terraformExplore.output)
+assert(terraformExploreData.plugins.some(p => p.name === "terraform"), "explore filters should find terraform")
+
+const awsExplore = runNoServer("plugins explore --name aws --tags cloud --json")
+assert(awsExplore.ok, "aws explore should succeed")
+const awsExploreData = JSON.parse(awsExplore.output)
+assert(awsExploreData.plugins.some(p => p.name === "aws"), "explore filters should find aws")
+
+const gcloudExplore = runNoServer("plugins explore --name gcloud --tags google-cloud --json")
+assert(gcloudExplore.ok, "gcloud explore should succeed")
+const gcloudExploreData = JSON.parse(gcloudExplore.output)
+assert(gcloudExploreData.plugins.some(p => p.name === "gcloud"), "explore filters should find gcloud")
+
+const azExplore = runNoServer("plugins explore --name az --tags azure --json")
+assert(azExplore.ok, "az explore should succeed")
+const azExploreData = JSON.parse(azExplore.output)
+assert(azExploreData.plugins.some(p => p.name === "az"), "explore filters should find az")
+
+const helmExplore = runNoServer("plugins explore --name helm --tags kubernetes --json")
+assert(helmExplore.ok, "helm explore should succeed")
+const helmExploreData = JSON.parse(helmExplore.output)
+assert(helmExploreData.plugins.some(p => p.name === "helm"), "explore filters should find helm")
+
+const npmExplore = runNoServer("plugins explore --name npm --tags javascript --json")
+assert(npmExplore.ok, "npm explore should succeed")
+const npmExploreData = JSON.parse(npmExplore.output)
+assert(npmExploreData.plugins.some(p => p.name === "npm"), "explore filters should find npm")
+
+const pulumiExplore = runNoServer("plugins explore --name pulumi --tags iac --json")
+assert(pulumiExplore.ok, "pulumi explore should succeed")
+const pulumiExploreData = JSON.parse(pulumiExplore.output)
+assert(pulumiExploreData.plugins.some(p => p.name === "pulumi"), "explore filters should find pulumi")
+
+const pnpmExplore = runNoServer("plugins explore --name pnpm --tags javascript --json")
+assert(pnpmExplore.ok, "pnpm explore should succeed")
+const pnpmExploreData = JSON.parse(pnpmExplore.output)
+assert(pnpmExploreData.plugins.some(p => p.name === "pnpm"), "explore filters should find pnpm")
+
+const uvExplore = runNoServer("plugins explore --name uv --tags python --json")
+assert(uvExplore.ok, "uv explore should succeed")
+const uvExploreData = JSON.parse(uvExplore.output)
+assert(uvExploreData.plugins.some(p => p.name === "uv"), "explore filters should find uv")
+
+const poetryExplore = runNoServer("plugins explore --name poetry --tags python --json")
+assert(poetryExplore.ok, "poetry explore should succeed")
+const poetryExploreData = JSON.parse(poetryExplore.output)
+assert(poetryExploreData.plugins.some(p => p.name === "poetry"), "explore filters should find poetry")
+
+const ezaExplore = runNoServer("plugins explore --name eza --tags rust --json")
+assert(ezaExplore.ok, "eza explore should succeed")
+const ezaExploreData = JSON.parse(ezaExplore.output)
+assert(ezaExploreData.plugins.some(p => p.name === "eza"), "explore filters should find eza")
+
+const justExplore = runNoServer("plugins explore --name just --tags task-runner --json")
+assert(justExplore.ok, "just explore should succeed")
+const justExploreData = JSON.parse(justExplore.output)
+assert(justExploreData.plugins.some(p => p.name === "just"), "explore filters should find just")
+
+const watchexecExplore = runNoServer("plugins explore --name watchexec --tags file-watchers --json")
+assert(watchexecExplore.ok, "watchexec explore should succeed")
+const watchexecExploreData = JSON.parse(watchexecExplore.output)
+assert(watchexecExploreData.plugins.some(p => p.name === "watchexec"), "explore filters should find watchexec")
+
+const nextestExplore = runNoServer("plugins explore --name nextest --tags testing --json")
+assert(nextestExplore.ok, "nextest explore should succeed")
+const nextestExploreData = JSON.parse(nextestExplore.output)
+assert(nextestExploreData.plugins.some(p => p.name === "nextest"), "explore filters should find nextest")
+
 const repoPath = makeRemotePluginRepo()
 const install = runNoServer(`plugins install --git ${repoPath} --manifest-path plugins/supercli/plugin.json --ref main --json`)
 assert(install.ok, "remote git install should succeed")
