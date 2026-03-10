@@ -3,6 +3,7 @@ const {
   buildCommandSkillMarkdown,
   buildTeachSkillMarkdown,
   buildPluginsUsageSkillMarkdown,
+  buildPluginCreationSkillMarkdown,
   listSkillsMetadata,
   handleSkillsCommand,
   renderYamlObject
@@ -97,11 +98,22 @@ describe("skills", () => {
     expect(md).toContain("# Instruction")
   })
 
+  test("buildPluginCreationSkillMarkdown returns markdown", () => {
+    const md = buildPluginCreationSkillMarkdown({ showDag: true })
+    expect(md).toContain("skill_name: \"plugins_harness_create\"")
+    expect(md).toContain("dag:")
+    expect(md).toContain("# Instruction")
+  })
+
   test("listSkillsMetadata keeps name and description only", () => {
     const skills = listSkillsMetadata({
       commands: [{ namespace: "x", resource: "y", action: "z", description: "desc" }]
     })
     expect(skills).toEqual(expect.arrayContaining([{ name: "x.y.z", description: "desc" }]))
+    expect(skills).toEqual(expect.arrayContaining([
+      { name: "plugins.registry.usage", description: expect.any(String) },
+      { name: "plugins.harness.create", description: expect.any(String) }
+    ]))
     const item = skills.find(s => s.name === "x.y.z")
     expect(item.description).toBe("desc")
   })
@@ -217,6 +229,20 @@ describe("skills", () => {
 
       expect(result).toBe(true)
       expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("skill_name: \"plugins_registry_usage\""))
+      consoleSpy.mockRestore()
+    })
+
+    test("get subcommand (plugin creation)", () => {
+      const consoleSpy = jest.spyOn(console, "log").mockImplementation()
+      const result = handleSkillsCommand({
+        positional: ["skills", "get", "plugins.harness.create"],
+        flags: { format: "skill.md" },
+        config: {},
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("skill_name: \"plugins_harness_create\""))
       consoleSpy.mockRestore()
     })
 
