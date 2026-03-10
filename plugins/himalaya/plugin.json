@@ -1,0 +1,157 @@
+{
+  "name": "himalaya",
+  "version": "0.1.0",
+  "description": "Himalaya email CLI plugin with safe read-only wrappers and passthrough",
+  "source": "https://github.com/pimalaya/himalaya",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "himalaya"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "himalaya",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show Himalaya CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "account",
+      "action": "list",
+      "description": "List configured email accounts as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["--output", "json", "account", "list"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "account",
+      "action": "doctor",
+      "description": "Inspect a configured account without applying fixes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["account", "doctor"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": [
+        { "name": "account", "type": "string", "required": true }
+      ]
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "folder",
+      "action": "list",
+      "description": "List folders for a configured account as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["--output", "json", "folder", "list"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": [
+        { "name": "account", "type": "string", "required": true },
+        { "name": "page", "type": "integer", "required": false },
+        { "name": "page-size", "type": "integer", "required": false }
+      ]
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "envelope",
+      "action": "list",
+      "description": "List message envelopes for an account and folder as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["--output", "json", "envelope", "list"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": [
+        { "name": "account", "type": "string", "required": true },
+        { "name": "folder", "type": "string", "required": true },
+        { "name": "page", "type": "integer", "required": false },
+        { "name": "page-size", "type": "integer", "required": false },
+        { "name": "query", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "envelope",
+      "action": "thread",
+      "description": "Inspect an envelope thread as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["--output", "json", "envelope", "thread"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": [
+        { "name": "account", "type": "string", "required": true },
+        { "name": "folder", "type": "string", "required": true },
+        { "name": "id", "type": "integer", "required": true }
+      ]
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "message",
+      "action": "read-preview",
+      "description": "Read a message preview as JSON without marking it seen",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "baseArgs": ["--output", "json", "message", "read", "--preview"],
+        "positionalArgs": ["id"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": [
+        { "name": "account", "type": "string", "required": true },
+        { "name": "folder", "type": "string", "required": true },
+        { "name": "id", "type": "integer", "required": true },
+        { "name": "header", "type": "string[]", "required": false },
+        { "name": "no-headers", "type": "boolean", "required": false }
+      ]
+    },
+    {
+      "namespace": "himalaya",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any Himalaya CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "himalaya",
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install Himalaya to use this command."
+      },
+      "args": []
+    }
+  ]
+}
