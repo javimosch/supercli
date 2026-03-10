@@ -178,6 +178,21 @@ assert(nextestExplore.ok, "nextest explore should succeed")
 const nextestExploreData = JSON.parse(nextestExplore.output)
 assert(nextestExploreData.plugins.some(p => p.name === "nextest"), "explore filters should find nextest")
 
+const mysqlExplore = runNoServer("plugins explore --name mysql --tags sql --json")
+assert(mysqlExplore.ok, "mysql explore should succeed")
+const mysqlExploreData = JSON.parse(mysqlExplore.output)
+assert(mysqlExploreData.plugins.some(p => p.name === "mysql"), "explore filters should find mysql")
+
+const mongoshExplore = runNoServer("plugins explore --name mongosh --tags mongodb --json")
+assert(mongoshExplore.ok, "mongosh explore should succeed")
+const mongoshExploreData = JSON.parse(mongoshExplore.output)
+assert(mongoshExploreData.plugins.some(p => p.name === "mongosh"), "explore filters should find mongosh")
+
+const blogwatcherExplore = runNoServer("plugins explore --name blogwatcher --tags rss --json")
+assert(blogwatcherExplore.ok, "blogwatcher explore should succeed")
+const blogwatcherExploreData = JSON.parse(blogwatcherExplore.output)
+assert(blogwatcherExploreData.plugins.some(p => p.name === "blogwatcher"), "explore filters should find blogwatcher")
+
 const clineExplore = runNoServer("plugins explore --name cline --tags streaming --json")
 assert(clineExplore.ok, "cline explore should succeed")
 const clineExploreData = JSON.parse(clineExplore.output)
