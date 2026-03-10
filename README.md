@@ -244,6 +244,8 @@ A **plugin harness** bridges dcli to an external CLI tool. Each plugin:
 - Docker (`docker`)
 - Kubernetes (`kubectl`)
 - Terraform (`terraform`)
+- MySQL (`mysql`)
+- MongoDB Shell (`mongosh`)
 - npm, pip, cargo (package managers)
 - git, git-cliff (version control)
 - And many more...
