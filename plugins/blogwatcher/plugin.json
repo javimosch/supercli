@@ -1,0 +1,195 @@
+{
+  "name": "blogwatcher",
+  "version": "0.1.0",
+  "description": "Hybrid BlogWatcher plugin with remote agent docs plus local CLI wrappers",
+  "source": "https://github.com/Hyaxia/blogwatcher",
+  "checks": [
+    { "type": "binary", "name": "curl" },
+    { "type": "binary", "name": "blogwatcher" }
+  ],
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "blogwatcher",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show BlogWatcher CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "blogs",
+      "action": "list",
+      "description": "List tracked blogs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["blogs"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "blogs",
+      "action": "add",
+      "description": "Add a blog to BlogWatcher",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["add"],
+        "positionalArgs": ["name", "url"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true },
+        { "name": "url", "type": "string", "required": true },
+        { "name": "feed-url", "type": "string", "required": false },
+        { "name": "scrape-selector", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "blogs",
+      "action": "remove",
+      "description": "Remove a tracked blog without prompting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["remove", "--yes"],
+        "positionalArgs": ["name"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan blogs for new articles in non-interactive mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["scan", "--silent"],
+        "positionalArgs": ["blog"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "blog", "type": "string", "required": false },
+        { "name": "workers", "type": "integer", "required": false }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "articles",
+      "action": "list",
+      "description": "List tracked articles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["articles"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "all", "type": "boolean", "required": false },
+        { "name": "blog", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "articles",
+      "action": "read",
+      "description": "Mark an article as read",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["read"],
+        "positionalArgs": ["article_id"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "article_id", "type": "integer", "required": true }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "articles",
+      "action": "unread",
+      "description": "Mark an article as unread",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["unread"],
+        "positionalArgs": ["article_id"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "article_id", "type": "integer", "required": true }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "articles",
+      "action": "read-all",
+      "description": "Mark unread articles as read without prompting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "baseArgs": ["read-all", "--yes"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": [
+        { "name": "blog", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "blogwatcher",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any BlogWatcher CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogwatcher",
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install blogwatcher to use this command."
+      },
+      "args": []
+    }
+  ]
+}
