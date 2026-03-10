@@ -22,4 +22,10 @@ supercli skills get oapi.todos.list
 
 # Same as above, but instruct the AI on execution planning
 supercli skills get oapi.todos.list --show-dag
+
+# Get the baked plugin discovery/install skill
+supercli skills get plugins.registry.usage --format skill.md
+
+# Get the baked plugin creation skill
+supercli skills get plugins.harness.create --format skill.md
 ```

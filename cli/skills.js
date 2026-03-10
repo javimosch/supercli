@@ -1,6 +1,7 @@
 const { createPlan } = require("./planner")
 
 const PLUGINS_USAGE_SKILL_ID = "plugins.registry.usage"
+const PLUGIN_CREATION_SKILL_ID = "plugins.harness.create"
 const {
   listProviders,
   addProvider,
@@ -176,7 +177,7 @@ function buildTeachSkillMarkdown(options = {}) {
     ]
   }
 
-  return `---\n${renderYamlObject(frontmatter)}\n---\n\n# Instruction\n\nThis skill teaches LLMs how to discover and use SuperCLI skills:\n\n1. List available skills:\n\n\`\`\`bash\nsupercli skills list --json\n\`\`\`\n\n2. Fetch a specific skill:\n\n\`\`\`bash\nsupercli skills get <namespace.resource.action> --format skill.md\n\`\`\`\n\n3. Parse YAML frontmatter to understand command, arguments, output schema, and metadata.\n\n4. Execute the command with validated arguments:\n\n\`\`\`bash\nsupercli <namespace> <resource> <action> --arg value --json\n\`\`\`\n\n5. For plugin discovery and remote plugin installs, use:\n\n\`\`\`bash\nsupercli skills get ${PLUGINS_USAGE_SKILL_ID} --format skill.md\n\`\`\`\n\n6. To index skills from a local directory (e.g., a project with docs/skills):\n\n\`\`\`bash\n# List current providers\nsupercli skills providers list --json\n\n# Add a local provider for a project\nsupercli skills providers add --name myproject --type local_fs --roots ./myproject/docs/skills\n\n# Sync the catalog to index new skills\nsupercli skills sync\n\n# Search skills from the new provider\nsupercli skills search <query> --provider myproject\n\n# Remove a provider if needed\nsupercli skills providers remove --name myproject\n\`\`\`\n\n# Examples\n\n\`\`\`bash\nsupercli skills teach --format skill.md\nsupercli skills teach --format skill.md --show-dag\nsupercli skills providers add --name myproject --type local_fs --roots ./myproject/docs/skills\nsupercli skills sync\nsupercli skills search btc --provider myproject\n\`\`\``
+  return `---\n${renderYamlObject(frontmatter)}\n---\n\n# Instruction\n\nThis skill teaches LLMs how to discover and use SuperCLI skills:\n\n1. List available skills:\n\n\`\`\`bash\nsupercli skills list --json\n\`\`\`\n\n2. Fetch a specific skill:\n\n\`\`\`bash\nsupercli skills get <namespace.resource.action> --format skill.md\n\`\`\`\n\n3. Parse YAML frontmatter to understand command, arguments, output schema, and metadata.\n\n4. Execute the command with validated arguments:\n\n\`\`\`bash\nsupercli <namespace> <resource> <action> --arg value --json\n\`\`\`\n\n5. For plugin discovery and remote plugin installs, use:\n\n\`\`\`bash\nsupercli skills get ${PLUGINS_USAGE_SKILL_ID} --format skill.md\n\`\`\`\n\n6. For plugin harness authoring, use:\n\n\`\`\`bash\nsupercli skills get ${PLUGIN_CREATION_SKILL_ID} --format skill.md\n\`\`\`\n\n7. To index skills from a local directory (e.g., a project with docs/skills):\n\n\`\`\`bash\n# List current providers\nsupercli skills providers list --json\n\n# Add a local provider for a project\nsupercli skills providers add --name myproject --type local_fs --roots ./myproject/docs/skills\n\n# Sync the catalog to index new skills\nsupercli skills sync\n\n# Search skills from the new provider\nsupercli skills search <query> --provider myproject\n\n# Remove a provider if needed\nsupercli skills providers remove --name myproject\n\`\`\`\n\n# Examples\n\n\`\`\`bash\nsupercli skills teach --format skill.md\nsupercli skills teach --format skill.md --show-dag\nsupercli skills get ${PLUGIN_CREATION_SKILL_ID} --format skill.md\nsupercli skills providers add --name myproject --type local_fs --roots ./myproject/docs/skills\nsupercli skills sync\nsupercli skills search btc --provider myproject\n\`\`\``
 }
 
 function buildPluginsUsageSkillMarkdown(options = {}) {
@@ -221,6 +222,49 @@ function buildPluginsUsageSkillMarkdown(options = {}) {
   return `---\n${renderYamlObject(frontmatter)}\n---\n\n# Instruction\n\nUse this workflow for plugin discovery and installation:\n\n1. Explore registry metadata (name/description/tags):\n\n\`\`\`bash\nsupercli plugins explore --json\nsupercli plugins explore --name commiat --json\nsupercli plugins explore --tags git,ai --json\n\`\`\`\n\n2. Install by registry name:\n\n\`\`\`bash\nsupercli plugins install commiat --json\n\`\`\`\n\n3. Install directly from a remote git repository:\n\n\`\`\`bash\nsupercli plugins install --git https://github.com/org/repo.git --manifest-path plugins/supercli/plugin.json --ref main --json\n\`\`\`\n\n4. Validate installed plugin health and guidance:\n\n\`\`\`bash\nsupercli plugins doctor commiat --json\nsupercli plugins show commiat --json\n\`\`\`\n\n5. Use the namespace command exposed by the plugin.\n\n# Examples\n\n\`\`\`bash\nsupercli skills get ${PLUGINS_USAGE_SKILL_ID} --format skill.md\nsupercli skills get ${PLUGINS_USAGE_SKILL_ID} --format skill.md --show-dag\n\`\`\``
 }
 
+function buildPluginCreationSkillMarkdown(options = {}) {
+  const includeDag = !!options.showDag
+  const frontmatter = {
+    skill_name: "plugins_harness_create",
+    description: "Teaches agents how to create, test, and publish a SuperCLI plugin harness.",
+    command: `skills get ${PLUGIN_CREATION_SKILL_ID}`,
+    arguments: [
+      {
+        name: "format",
+        type: "string",
+        required: false,
+        description: "Output format, default skill.md"
+      },
+      {
+        name: "show-dag",
+        type: "boolean",
+        required: false,
+        description: "Include internal DAG for agent reasoning"
+      }
+    ],
+    output_schema: {
+      instruction: "string",
+      examples: "array"
+    },
+    metadata: {
+      side_effects: false,
+      risk_level: "safe",
+      dag_supported: true
+    }
+  }
+
+  if (includeDag) {
+    frontmatter.dag = [
+      { id: 1, type: "scaffold_plugin_directory" },
+      { id: 2, type: "author_plugin_manifest", depends_on: [1] },
+      { id: 3, type: "validate_and_install_plugin", depends_on: [2] },
+      { id: 4, type: "publish_plugin", depends_on: [3] }
+    ]
+  }
+
+  return `---\n${renderYamlObject(frontmatter)}\n---\n\n# Instruction\n\nUse this workflow to create a plugin harness for any CLI:\n\n1. Scaffold a plugin folder with a required manifest:\n\n\`\`\`bash\nmkdir -p my-plugin\n# create my-plugin/plugin.json\n\`\`\`\n\n2. Define plugin metadata and dependency checks in \`plugin.json\`:\n\n- include \`name\`, \`version\`, \`description\`, and \`source\`\n- add \`checks\` for required binaries (for example, \`my-cli\`)\n\n3. Map commands to adapters:\n\n- for selective commands, use \`adapter: \"process\"\` with \`command\`, \`baseArgs\`, \`positionalArgs\`, and optional \`optionalArgs\`\n- for full passthrough, set \`resource: \"_\"\`, \`action: \"_\"\`, and \`adapterConfig.passthrough: true\`\n- prefer JSON output where possible using \`jsonFlag\` and \`parseJson: true\`\n\n4. Add optional post-install indexing (if your plugin syncs remote skills):\n\n- define \`post_install.script\`, optional \`runtime\`, and \`timeout_ms\`\n- keep post-install scripts deterministic and short-lived\n\n5. Test locally and validate behavior:\n\n\`\`\`bash\nsupercli plugins install ./my-plugin\nsupercli plugins show my-plugin\nsupercli plugins doctor my-plugin\n\`\`\`\n\n6. Publish when ready:\n\n\`\`\`bash\nsupercli plugins publish ./my-plugin\n\`\`\`\n\nFor complete field references and real-world examples, see \`docs/plugin-harness-guide.md\`.\n\n# Examples\n\n\`\`\`bash\nsupercli skills get ${PLUGIN_CREATION_SKILL_ID} --format skill.md\nsupercli skills get ${PLUGIN_CREATION_SKILL_ID} --format skill.md --show-dag\n\`\`\``
+}
+
 function listSkillsMetadata(config) {
   const commandSkills = (config.commands || []).map(cmd => ({
     name: `${cmd.namespace}.${cmd.resource}.${cmd.action}`,
@@ -229,6 +273,10 @@ function listSkillsMetadata(config) {
   commandSkills.push({
     name: PLUGINS_USAGE_SKILL_ID,
     description: "Discover and install plugins from the registry or remote git repos"
+  })
+  commandSkills.push({
+    name: PLUGIN_CREATION_SKILL_ID,
+    description: "Create and validate a plugin harness manifest and command mappings"
   })
   return commandSkills
 }
@@ -386,6 +434,11 @@ function handleSkillsCommand(options) {
       return true
     }
 
+    if (parsed.id === PLUGIN_CREATION_SKILL_ID) {
+      console.log(buildPluginCreationSkillMarkdown({ showDag: !!flags["show-dag"] }))
+      return true
+    }
+
     const cmd = config.commands.find(c =>
       c.namespace === parsed.namespace && c.resource === parsed.resource && c.action === parsed.action
     )
@@ -404,10 +457,12 @@ function handleSkillsCommand(options) {
 
 module.exports = {
   PLUGINS_USAGE_SKILL_ID,
+  PLUGIN_CREATION_SKILL_ID,
   normalizeSkillId,
   buildCommandSkillMarkdown,
   buildTeachSkillMarkdown,
   buildPluginsUsageSkillMarkdown,
+  buildPluginCreationSkillMarkdown,
   listSkillsMetadata,
   handleSkillsCommand,
   renderYamlObject // Export for testing coverage

@@ -42,3 +42,4 @@ Default is `fail`.
 - Plugin manifests can define `post_install` hooks (`script`, optional `runtime`, optional `timeout_ms`) that execute from the plugin folder after install.
 - `agency-agents` is a bundled zero-command plugin. Installing it adds a remote skills provider named `agency-agents` and refreshes the local skills catalog.
 - `visual-explainer` is a bundled zero-command plugin. Installing it adds a remote skills provider named `visual-explainer` sourced from normalized markdown skills in `javimosch/visual-explainer` and refreshes the local skills catalog.
+- For baked AI guidance: use `supercli skills get plugins.registry.usage --format skill.md` for plugin install workflows and `supercli skills get plugins.harness.create --format skill.md` for plugin creation workflows.
