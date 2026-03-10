@@ -256,6 +256,46 @@ const PLUGIN_INSTALL_GUIDANCE = {
     ],
     note: "Install cargo-nextest with prebuilt binaries or cargo. Most commands are intended for Rust workspaces, but version and help commands work anywhere."
   },
+  mysql: {
+    plugin: "mysql",
+    binary: "mysql",
+    check: "mysql --version",
+    install_steps: [
+      "mysql --version",
+      "supercli plugins install mysql",
+      "supercli mysql cli version --json",
+      "supercli mysql query execute --execute \"select 1\" --host 127.0.0.1 --user root --database mysql --json"
+    ],
+    note: "Install the MySQL client with your platform package manager. The wrapped query command is tuned for batch output and works best when connection settings come from flags or standard MySQL environment variables like MYSQL_HOST, MYSQL_USER, MYSQL_DATABASE, and MYSQL_PWD."
+  },
+  mongosh: {
+    plugin: "mongosh",
+    binary: "mongosh",
+    check: "mongosh --version",
+    install_steps: [
+      "mongosh --version",
+      "supercli plugins install mongosh",
+      "supercli mongosh cli version --json",
+      "supercli mongosh server ping --host 127.0.0.1 --port 27017 --json",
+      "supercli mongosh eval run --javascript \"db.adminCommand({ ping: 1 })\" --json"
+    ],
+    note: "This plugin targets the current mongosh shell rather than the legacy mongo shell. Wrapped commands prefer relaxed JSON output for automation, while raw passthrough remains available for connection-string-based flows."
+  },
+  blogwatcher: {
+    plugin: "blogwatcher",
+    binary: "blogwatcher",
+    check: "blogwatcher --version",
+    install_steps: [
+      "brew install Hyaxia/tap/blogwatcher",
+      "go install github.com/Hyaxia/blogwatcher/cmd/blogwatcher@latest",
+      "blogwatcher --version",
+      "supercli plugins install blogwatcher",
+      "supercli skills list --catalog --provider blogwatcher --json",
+      "supercli skills get blogwatcher:root.skill",
+      "supercli blogwatcher blogs list --json"
+    ],
+    note: "This hybrid plugin indexes the upstream BlogWatcher README and SKILL documents into the skills catalog and exposes non-interactive wrappers for the local CLI. BlogWatcher stores data under ~/.blogwatcher, so use an isolated HOME when you want disposable test data."
+  },
   cline: {
     plugin: "cline",
     binary: "cline",
