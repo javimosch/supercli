@@ -198,6 +198,11 @@ assert(himalayaExplore.ok, "himalaya explore should succeed")
 const himalayaExploreData = JSON.parse(himalayaExplore.output)
 assert(himalayaExploreData.plugins.some(p => p.name === "himalaya"), "explore filters should find himalaya")
 
+const wacliExplore = runNoServer("plugins explore --name wacli --tags whatsapp --json")
+assert(wacliExplore.ok, "wacli explore should succeed")
+const wacliExploreData = JSON.parse(wacliExplore.output)
+assert(wacliExploreData.plugins.some(p => p.name === "wacli"), "explore filters should find wacli")
+
 const clineExplore = runNoServer("plugins explore --name cline --tags streaming --json")
 assert(clineExplore.ok, "cline explore should succeed")
 const clineExploreData = JSON.parse(clineExplore.output)
