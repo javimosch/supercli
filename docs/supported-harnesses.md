@@ -209,6 +209,15 @@ These harnesses are in active development and will be available as plugins. Stat
 
 ---
 
+### Databases
+
+| Harness | CLI | Status | Purpose |
+|---------|-----|--------|---------|
+| **mysql** | mysql | Available via plugin | MySQL client version checks, one-off queries, passthrough |
+| **mongosh** | mongosh | Available via plugin | MongoDB shell ping, eval, and passthrough |
+
+---
+
 ### Version Control & Release
 
 | Harness | CLI | Status | Purpose |

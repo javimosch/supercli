@@ -69,6 +69,19 @@ supercli skills get nullclaw:docs.en.commands
 project overview, operator docs, security guidance, and implementation notes on demand.
 It also exposes the local `nullclaw` binary through wrapped commands and full passthrough.
 
+## Remote Provider Example: blogwatcher
+
+```bash
+supercli plugins install blogwatcher --json
+supercli skills list --catalog --provider blogwatcher --json
+supercli skills get blogwatcher:root.skill
+supercli skills get blogwatcher:root.readme
+```
+
+`blogwatcher` indexes the upstream `SKILL.md` and `README.md` from `Hyaxia/blogwatcher`
+so agents can learn the CLI workflow, storage model, and testing expectations on demand.
+It also exposes the local `blogwatcher` binary through wrapped commands and passthrough.
+
 ## Local Repo Skill Example: cline-non-interactive
 
 ```bash
