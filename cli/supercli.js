@@ -212,7 +212,7 @@ function renderTopLevelHelp(config) {
       "  Plugins: supercli plugins explore | supercli plugins install <name|path> | supercli plugins install --git <repo>",
     );
     console.log(
-      "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp remove <name>",
+      "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp add <name> --command <cmd> --args-json '[]' | supercli mcp remove <name>",
     );
     console.log(
       "  Skills: supercli skills list | supercli skills get <id> | supercli skills search --query <q> | supercli skills sync",

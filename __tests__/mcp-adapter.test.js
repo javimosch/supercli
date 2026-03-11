@@ -42,6 +42,45 @@ describe("mcp adapter", () => {
       expect(mockChild.stdin.write).toHaveBeenCalledWith(expect.stringContaining('"tool":"calc"'))
     })
 
+    test("resolves stdio command from named server and merges args/env", async () => {
+      const promise = execute(
+        {
+          adapterConfig: {
+            tool: "calc",
+            server: "browser-use",
+            args: ["--header", "X-Test: 1"],
+            env: { MCP_CLIENT: "yes" }
+          }
+        },
+        {},
+        {
+          config: {
+            mcp_servers: [
+              {
+                name: "browser-use",
+                command: "npx",
+                args: ["mcp-remote", "https://api.browser-use.com/mcp"],
+                env: { MCP_SERVER: "yes" }
+              }
+            ]
+          }
+        }
+      )
+
+      await Promise.resolve()
+      mockChild.stdout.emit("data", '{"ok":true}')
+      mockChild.emit("close", 0)
+
+      await expect(promise).resolves.toEqual({ ok: true })
+      expect(spawn).toHaveBeenCalledWith(
+        "npx",
+        ["mcp-remote", "https://api.browser-use.com/mcp", "--header", "X-Test: 1"],
+        expect.objectContaining({
+          env: expect.objectContaining({ MCP_SERVER: "yes", MCP_CLIENT: "yes" })
+        })
+      )
+    })
+
     test("handles stdio tool error exit", async () => {
       const promise = execute({
         adapterConfig: { tool: "calc", command: "node" }
@@ -114,6 +153,46 @@ describe("mcp adapter", () => {
         })
       )
       expect(result).toEqual({ data: "ok" })
+    })
+
+    test("merges server and command headers in http mode", async () => {
+      global.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({ ok: true })
+      })
+
+      await execute(
+        {
+          adapterConfig: {
+            tool: "t1",
+            server: "s1",
+            headers: { "X-Cmd": "2" }
+          }
+        },
+        {},
+        {
+          config: {
+            mcp_servers: [
+              {
+                name: "s1",
+                url: "http://server1",
+                headers: { "X-Server": "1" }
+              }
+            ]
+          }
+        }
+      )
+
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://server1/tool",
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            "Content-Type": "application/json",
+            "X-Server": "1",
+            "X-Cmd": "2"
+          })
+        })
+      )
     })
 
     test("resolves server url from local context", async () => {

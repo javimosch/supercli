@@ -32,7 +32,7 @@ describe("configService", () => {
     })
     mockStorage.get.mockImplementation((key) => {
       if (key === "command:n.r.a") return { namespace: "n", resource: "r", action: "a", adapter: "builtin" }
-      if (key === "mcp:s1") return { name: "s1", url: "u1" }
+      if (key === "mcp:s1") return { name: "s1", command: "npx", args: ["mcp-remote", "u1"], headers: { H: "v" }, env: { E: "1" } }
       if (key === "spec:sp1") return { name: "sp1", url: "u2", auth: "none" }
       if (key === "settings:config_version") return "10"
       return null
@@ -42,6 +42,13 @@ describe("configService", () => {
     expect(config.version).toBe("10")
     expect(config.commands).toHaveLength(1)
     expect(config.mcp_servers).toHaveLength(1)
+    expect(config.mcp_servers[0]).toEqual(expect.objectContaining({
+      name: "s1",
+      command: "npx",
+      args: ["mcp-remote", "u1"],
+      headers: { H: "v" },
+      env: { E: "1" }
+    }))
     expect(config.specs).toHaveLength(1)
   })
 

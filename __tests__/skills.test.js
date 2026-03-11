@@ -1,8 +1,10 @@
 const {
+  MCP_SERVERS_USAGE_SKILL_ID,
   normalizeSkillId,
   buildCommandSkillMarkdown,
   buildTeachSkillMarkdown,
   buildPluginsUsageSkillMarkdown,
+  buildMcpServersUsageSkillMarkdown,
   listSkillsMetadata,
   handleSkillsCommand,
   renderYamlObject
@@ -97,6 +99,14 @@ describe("skills", () => {
     expect(md).toContain("# Instruction")
   })
 
+  test("buildMcpServersUsageSkillMarkdown returns markdown", () => {
+    const md = buildMcpServersUsageSkillMarkdown({ showDag: true })
+    expect(md).toContain("skill_name: \"mcp_servers_usage\"")
+    expect(md).toContain("supercli mcp add browser-use --command npx")
+    expect(md).toContain("X-Browser-Use-API-Key")
+    expect(md).toContain("dag:")
+  })
+
   test("listSkillsMetadata keeps name and description only", () => {
     const skills = listSkillsMetadata({
       commands: [{ namespace: "x", resource: "y", action: "z", description: "desc" }]
@@ -104,6 +114,8 @@ describe("skills", () => {
     expect(skills).toEqual(expect.arrayContaining([{ name: "x.y.z", description: "desc" }]))
     const item = skills.find(s => s.name === "x.y.z")
     expect(item.description).toBe("desc")
+    const mcpSkill = skills.find(s => s.name === MCP_SERVERS_USAGE_SKILL_ID)
+    expect(mcpSkill).toBeTruthy()
   })
 
   describe("handleSkillsCommand", () => {
@@ -217,6 +229,20 @@ describe("skills", () => {
 
       expect(result).toBe(true)
       expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("skill_name: \"plugins_registry_usage\""))
+      consoleSpy.mockRestore()
+    })
+
+    test("get subcommand (mcp servers usage)", () => {
+      const consoleSpy = jest.spyOn(console, "log").mockImplementation()
+      const result = handleSkillsCommand({
+        positional: ["skills", "get", "mcp.servers.usage"],
+        flags: { format: "skill.md" },
+        config: {},
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("skill_name: \"mcp_servers_usage\""))
       consoleSpy.mockRestore()
     })
 

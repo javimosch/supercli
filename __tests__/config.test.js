@@ -70,6 +70,30 @@ describe("config", () => {
       const config = await loadConfig()
       expect(config.commands).toEqual([])
     })
+
+    test("normalizes claude-style mcpServers object", async () => {
+      fs.existsSync.mockReturnValue(true)
+      fs.readFileSync.mockReturnValue(
+        JSON.stringify({
+          version: "2",
+          mcpServers: {
+            "browser-use": {
+              command: "npx",
+              args: ["mcp-remote", "https://api.browser-use.com/mcp"]
+            }
+          }
+        })
+      )
+
+      const config = await loadConfig()
+      expect(config.mcp_servers).toEqual([
+        {
+          name: "browser-use",
+          command: "npx",
+          args: ["mcp-remote", "https://api.browser-use.com/mcp"]
+        }
+      ])
+    })
   })
 
   describe("syncConfig", () => {
@@ -192,6 +216,27 @@ describe("config", () => {
       expect(lastWrite.mcp_servers).toEqual([{ name: "s1", url: "u1" }])
     })
 
+    test("setMcpServer supports command, args, headers, env", async () => {
+      fs.existsSync.mockReturnValue(false)
+      await setMcpServer("browser-use", {
+        command: "npx",
+        args: ["mcp-remote", "https://api.browser-use.com/mcp"],
+        headers: { "X-Browser-Use-API-Key": "key" },
+        env: { BROWSER_USE_API_KEY: "key" },
+      })
+
+      const lastWrite = JSON.parse(fs.writeFileSync.mock.calls[0][1])
+      expect(lastWrite.mcp_servers).toContainEqual(
+        expect.objectContaining({
+          name: "browser-use",
+          command: "npx",
+          args: ["mcp-remote", "https://api.browser-use.com/mcp"],
+          headers: { "X-Browser-Use-API-Key": "key" },
+          env: { BROWSER_USE_API_KEY: "key" }
+        })
+      )
+    })
+
     test("removeMcpServer removes existing server", async () => {
       fs.existsSync.mockReturnValue(true)
       fs.readFileSync.mockReturnValue(JSON.stringify({
@@ -268,7 +313,7 @@ describe("config", () => {
         ttl: 3600,
         fetchedAt: 1000000,
         commands: [1, 2],
-        mcp_servers: [1],
+        mcp_servers: [{ name: "s1", url: "http://s1" }],
         specs: [1, 2, 3]
       }))
       listInstalledPlugins.mockReturnValue([1, 2, 3, 4])

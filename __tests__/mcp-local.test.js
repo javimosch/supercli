@@ -52,10 +52,52 @@ describe("mcp-local", () => {
       setMcpServer: mockSetMcpServer,
     });
 
-    expect(mockSetMcpServer).toHaveBeenCalledWith("s1", "u1");
+    expect(mockSetMcpServer).toHaveBeenCalledWith("s1", expect.objectContaining({ url: "u1" }));
     expect(mockOutput).toHaveBeenCalledWith(
       expect.objectContaining({ ok: true }),
     );
+  });
+
+  test("add subcommand supports command and JSON fields", async () => {
+    await handleMcpRegistryCommand({
+      positional: ["mcp", "add", "browser-use"],
+      flags: {
+        command: "npx",
+        "args-json": '["mcp-remote","https://api.browser-use.com/mcp"]',
+        "headers-json": '{"X-Browser-Use-API-Key":"k"}',
+        "env-json": '{"BROWSER_USE_API_KEY":"k"}',
+        "timeout-ms": "12000"
+      },
+      output: mockOutput,
+      setMcpServer: mockSetMcpServer,
+      outputError: mockOutputError
+    });
+
+    expect(mockSetMcpServer).toHaveBeenCalledWith(
+      "browser-use",
+      expect.objectContaining({
+        command: "npx",
+        args: ["mcp-remote", "https://api.browser-use.com/mcp"],
+        headers: { "X-Browser-Use-API-Key": "k" },
+        env: { BROWSER_USE_API_KEY: "k" },
+        timeout_ms: 12000
+      })
+    );
+    expect(mockOutputError).not.toHaveBeenCalled();
+  });
+
+  test("add subcommand reports invalid JSON flags", async () => {
+    await handleMcpRegistryCommand({
+      positional: ["mcp", "add", "s1"],
+      flags: { command: "npx", "args-json": "[" },
+      outputError: mockOutputError,
+      setMcpServer: mockSetMcpServer,
+    });
+
+    expect(mockOutputError).toHaveBeenCalledWith(
+      expect.objectContaining({ code: 85 }),
+    );
+    expect(mockSetMcpServer).not.toHaveBeenCalled();
   });
 
   test("add subcommand validation error", async () => {
