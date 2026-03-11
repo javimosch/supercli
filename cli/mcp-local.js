@@ -10,8 +10,25 @@ async function handleMcpRegistryCommand(options) {
     removeMcpServer,
     listMcpServers,
   } = options;
+  const cliFlags = flags || {};
 
   const subcommand = positional[1];
+
+  function parseJsonFlag(name, raw) {
+    if (raw === undefined) return undefined;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      outputError({
+        code: 85,
+        type: "invalid_argument",
+        message: `Invalid JSON for --${name}`,
+        recoverable: false,
+      });
+      return null;
+    }
+  }
+
   if (subcommand === "list") {
     const servers = await listMcpServers();
     if (humanMode) {
@@ -29,17 +46,46 @@ async function handleMcpRegistryCommand(options) {
 
   if (subcommand === "add") {
     const name = positional[2];
-    const url = flags.url;
-    if (!name || !url) {
+    const url = cliFlags.url;
+    const command = cliFlags.command;
+
+    if (!name || (!url && !command)) {
       outputError({
         code: 85,
         type: "invalid_argument",
-        message: "Usage: supercli mcp add <name> --url <mcp_url>",
+        message:
+          "Usage: supercli mcp add <name> (--url <mcp_url> | --command <binary>) [--args-json '[]'] [--headers-json '{}'] [--env-json '{}'] [--timeout-ms <ms>]",
         recoverable: false,
       });
       return true;
     }
-    await setMcpServer(name, url);
+
+    const args = parseJsonFlag("args-json", cliFlags["args-json"]);
+    if (args === null) return true;
+    const headers = parseJsonFlag("headers-json", cliFlags["headers-json"]);
+    if (headers === null) return true;
+    const env = parseJsonFlag("env-json", cliFlags["env-json"]);
+    if (env === null) return true;
+    const timeoutMs =
+      cliFlags["timeout-ms"] !== undefined ? Number(cliFlags["timeout-ms"]) : undefined;
+    if (cliFlags["timeout-ms"] !== undefined && (!Number.isFinite(timeoutMs) || timeoutMs <= 0)) {
+      outputError({
+        code: 85,
+        type: "invalid_argument",
+        message: "--timeout-ms must be a positive number",
+        recoverable: false,
+      });
+      return true;
+    }
+
+    await setMcpServer(name, {
+      url,
+      command,
+      args,
+      headers,
+      env,
+      timeout_ms: timeoutMs,
+    });
     output({ ok: true, message: `MCP server '${name}' saved locally` });
     return true;
   }

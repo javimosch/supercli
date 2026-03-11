@@ -16,7 +16,8 @@ function readCache() {
   try {
     if (fs.existsSync(CACHE_FILE)) {
       const raw = fs.readFileSync(CACHE_FILE, "utf-8")
-      return JSON.parse(raw)
+      const parsed = JSON.parse(raw)
+      return normalizeConfig(parsed)
     }
   } catch (e) {
     // Corrupted cache, ignore
@@ -24,10 +25,60 @@ function readCache() {
   return null
 }
 
+function normalizeMcpServerEntry(name, entry) {
+  if (!name || typeof name !== "string") return null
+  if (!entry || typeof entry !== "object" || Array.isArray(entry)) return null
+  const out = { name }
+  if (typeof entry.url === "string") out.url = entry.url
+  if (typeof entry.command === "string") out.command = entry.command
+  if (Array.isArray(entry.args)) out.args = entry.args.filter(v => typeof v === "string")
+  if (Array.isArray(entry.commandArgs)) out.commandArgs = entry.commandArgs.filter(v => typeof v === "string")
+  if (entry.headers && typeof entry.headers === "object" && !Array.isArray(entry.headers)) {
+    out.headers = Object.fromEntries(Object.entries(entry.headers).filter(([k, v]) => typeof k === "string" && typeof v === "string"))
+  }
+  if (entry.env && typeof entry.env === "object" && !Array.isArray(entry.env)) {
+    out.env = Object.fromEntries(Object.entries(entry.env).filter(([k, v]) => typeof k === "string" && typeof v === "string"))
+  }
+  if (typeof entry.timeout_ms === "number" && entry.timeout_ms > 0) out.timeout_ms = entry.timeout_ms
+  return out
+}
+
+function normalizeMcpServers(config) {
+  const out = []
+  const byName = new Map()
+
+  if (config && config.mcpServers && typeof config.mcpServers === "object" && !Array.isArray(config.mcpServers)) {
+    for (const [name, value] of Object.entries(config.mcpServers)) {
+      const normalized = normalizeMcpServerEntry(name, value)
+      if (normalized) byName.set(name, normalized)
+    }
+  }
+
+  if (Array.isArray(config && config.mcp_servers)) {
+    for (const entry of config.mcp_servers) {
+      if (!entry || typeof entry !== "object") continue
+      const normalized = normalizeMcpServerEntry(entry.name, entry)
+      if (normalized) byName.set(normalized.name, normalized)
+    }
+  }
+
+  for (const value of byName.values()) out.push(value)
+  out.sort((a, b) => a.name.localeCompare(b.name))
+  return out
+}
+
+function normalizeConfig(config) {
+  const base = config && typeof config === "object" ? { ...config } : emptyConfig()
+  base.mcp_servers = normalizeMcpServers(base)
+  if (!Array.isArray(base.specs)) base.specs = []
+  if (!Array.isArray(base.commands)) base.commands = []
+  return base
+}
+
 function writeCache(config) {
   ensureCacheDir()
   const data = {
-    ...config,
+    ...normalizeConfig(config),
     fetchedAt: Date.now()
   }
   fs.writeFileSync(CACHE_FILE, JSON.stringify(data, null, 2))
@@ -85,19 +136,25 @@ async function syncConfig(server) {
   }
 
   if (!Array.isArray(config.commands)) config.commands = []
-  return writeCache(config)
+  return writeCache(normalizeConfig(config))
 }
 
-async function setMcpServer(name, url) {
+async function setMcpServer(name, value) {
   const cfg = readCache() || emptyConfig()
   const servers = Array.isArray(cfg.mcp_servers) ? cfg.mcp_servers.slice() : []
   const idx = servers.findIndex(s => s && s.name === name)
-  const next = { name, url }
+  const incoming = typeof value === "string" ? { url: value } : (value && typeof value === "object" ? value : {})
+  const next = normalizeMcpServerEntry(name, { name, ...incoming })
+  if (!next) {
+    throw Object.assign(new Error("Invalid MCP server definition"), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false
+    })
+  }
   if (idx >= 0) servers[idx] = next
   else servers.push(next)
-  cfg.mcp_servers = servers
-    .filter(s => s && typeof s.name === "string")
-    .sort((a, b) => a.name.localeCompare(b.name))
+  cfg.mcp_servers = normalizeMcpServers({ mcp_servers: servers })
   return writeCache(cfg)
 }
 
