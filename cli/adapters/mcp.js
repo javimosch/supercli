@@ -3,11 +3,63 @@
 
 const { spawn } = require("child_process");
 
-async function callStdioTool(command, args, payload, timeoutMs) {
+function asObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? value
+    : {};
+}
+
+function asStringMap(value) {
+  const obj = asObject(value);
+  const out = {};
+  for (const [k, v] of Object.entries(obj)) {
+    if (typeof k === "string" && typeof v === "string") out[k] = v;
+  }
+  return out;
+}
+
+function asStringArray(value) {
+  if (!Array.isArray(value)) return [];
+  return value.filter((v) => typeof v === "string");
+}
+
+function mergeMcpConfig(cmdConfig, serverEntry) {
+  const mergedHeaders = {
+    ...asStringMap(serverEntry && serverEntry.headers),
+    ...asStringMap(cmdConfig.headers),
+  };
+  const mergedEnv = {
+    ...asStringMap(serverEntry && serverEntry.env),
+    ...asStringMap(cmdConfig.env),
+  };
+  const mergedArgs = [
+    ...asStringArray(serverEntry && serverEntry.args),
+    ...asStringArray(serverEntry && serverEntry.commandArgs),
+    ...asStringArray(cmdConfig.args),
+    ...asStringArray(cmdConfig.commandArgs),
+  ];
+
+  return {
+    tool: cmdConfig.tool,
+    server: cmdConfig.server,
+    url: cmdConfig.url || (serverEntry && serverEntry.url),
+    command: cmdConfig.command || (serverEntry && serverEntry.command),
+    timeout_ms:
+      cmdConfig.timeout_ms !== undefined
+        ? cmdConfig.timeout_ms
+        : serverEntry && serverEntry.timeout_ms,
+    headers: mergedHeaders,
+    env: mergedEnv,
+    args: mergedArgs,
+  };
+}
+
+async function callStdioTool(command, args, payload, timeoutMs, env) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args || [], {
       stdio: ["pipe", "pipe", "pipe"],
       shell: !Array.isArray(args) || args.length === 0,
+      env: env && typeof env === "object" ? { ...process.env, ...env } : process.env,
     });
 
     let stdout = "";
@@ -95,17 +147,15 @@ async function callStdioTool(command, args, payload, timeoutMs) {
   });
 }
 
-async function resolveHttpServerUrl(config, context) {
-  if (config.url) return config.url;
-
-  if (context.config && Array.isArray(context.config.mcp_servers)) {
+async function resolveServerEntry(config, context) {
+  if (config.server && context.config && Array.isArray(context.config.mcp_servers)) {
     const local = context.config.mcp_servers.find(
       (s) => s && s.name === config.server,
     );
-    if (local) return local.url;
+    if (local) return local;
   }
 
-  if (context.server) {
+  if (config.server && context.server) {
     const r = await fetch(`${context.server}/api/mcp?format=json`);
     if (!r.ok) {
       throw Object.assign(
@@ -118,9 +168,11 @@ async function resolveHttpServerUrl(config, context) {
       );
     }
     const servers = await r.json();
-    const srv = servers.find((s) => s.name === config.server);
-    if (srv) return srv.url;
+    const srv = servers.find((s) => s && s.name === config.server);
+    if (srv) return srv;
   }
+
+  if (config.url || config.command) return {};
 
   throw Object.assign(
     new Error(
@@ -135,16 +187,22 @@ async function resolveHttpServerUrl(config, context) {
 }
 
 async function execute(cmd, flags, context) {
-  const config = cmd.adapterConfig || {};
-  const toolName = config.tool;
-  const hasHttpSource = !!(config.server || config.url);
-  const hasStdioSource = !!config.command;
+  const cmdConfig = cmd.adapterConfig || {};
+  const toolName = cmdConfig.tool;
+  const hasDeclaredSource = !!(cmdConfig.server || cmdConfig.url || cmdConfig.command);
 
-  if (!toolName || (!hasHttpSource && !hasStdioSource)) {
+  if (!toolName || !hasDeclaredSource) {
     throw new Error(
       "MCP adapter requires 'tool' and one of: 'server', 'url', or 'command' in adapterConfig",
     );
   }
+
+  const serverEntry = cmdConfig.server
+    ? await resolveServerEntry(cmdConfig, context)
+    : {};
+  const config = mergeMcpConfig(cmdConfig, serverEntry);
+  const hasStdioSource = !!config.command;
+  const hasHttpSource = !!config.url;
 
   const input = {};
   for (const [k, v] of Object.entries(flags)) {
@@ -154,9 +212,7 @@ async function execute(cmd, flags, context) {
   }
 
   if (hasStdioSource) {
-    const commandArgs = Array.isArray(config.commandArgs)
-      ? config.commandArgs
-      : [];
+    const commandArgs = Array.isArray(config.args) ? config.args : [];
     const timeoutMs =
       Number(config.timeout_ms) > 0 ? Number(config.timeout_ms) : 10000;
     return callStdioTool(
@@ -164,14 +220,20 @@ async function execute(cmd, flags, context) {
       commandArgs,
       { tool: toolName, input },
       timeoutMs,
+      config.env,
     );
   }
 
-  const resolvedUrl = await resolveHttpServerUrl(config, context);
-  const toolUrl = resolvedUrl.replace(/\/+$/, "");
+  if (!hasHttpSource) {
+    throw new Error(
+      "MCP adapter could not resolve a source. Define adapterConfig.url/command or configure the named server with url/command.",
+    );
+  }
+
+  const toolUrl = config.url.replace(/\/+$/, "");
   const tr = await fetch(`${toolUrl}/tool`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...(config.headers || {}) },
     body: JSON.stringify({ tool: toolName, input }),
   });
 

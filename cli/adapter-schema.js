@@ -69,6 +69,13 @@ function validateAdapterConfig(cmd) {
     if (!config.tool || typeof config.tool !== "string") throw asInvalid("MCP adapter requires adapterConfig.tool")
     const sources = [config.server, config.url, config.command].filter(Boolean)
     if (sources.length === 0) throw asInvalid("MCP adapter requires one source: adapterConfig.server, adapterConfig.url, or adapterConfig.command")
+    if (config.server !== undefined && typeof config.server !== "string") throw asInvalid("adapterConfig.server must be string")
+    if (config.url !== undefined && typeof config.url !== "string") throw asInvalid("adapterConfig.url must be string")
+    if (config.command !== undefined && typeof config.command !== "string") throw asInvalid("adapterConfig.command must be string")
+    if (config.args !== undefined && !Array.isArray(config.args)) throw asInvalid("adapterConfig.args must be an array")
+    if (config.commandArgs !== undefined && !Array.isArray(config.commandArgs)) throw asInvalid("adapterConfig.commandArgs must be an array")
+    if (config.headers !== undefined && (typeof config.headers !== "object" || Array.isArray(config.headers))) throw asInvalid("adapterConfig.headers must be object")
+    if (config.env !== undefined && (typeof config.env !== "object" || Array.isArray(config.env))) throw asInvalid("adapterConfig.env must be object")
     return
   }
 
