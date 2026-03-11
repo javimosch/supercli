@@ -15,7 +15,15 @@ async function getCLIConfig() {
     ttl: 3600,
     mcp_servers: mcpServers
       .filter(Boolean)
-      .map(s => ({ name: s.name, url: s.url })),
+      .map(s => ({
+        name: s.name,
+        url: s.url,
+        command: s.command,
+        args: Array.isArray(s.args) ? s.args : undefined,
+        headers: s.headers && typeof s.headers === "object" ? s.headers : undefined,
+        env: s.env && typeof s.env === "object" ? s.env : undefined,
+        timeout_ms: typeof s.timeout_ms === "number" ? s.timeout_ms : undefined
+      })),
     specs: specs
       .filter(Boolean)
       .map(s => ({ name: s.name, url: s.url, auth: s.auth || "none" })),

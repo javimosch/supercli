@@ -4,6 +4,23 @@ const { bumpVersion } = require("../services/configService")
 
 const router = Router()
 
+function sanitizeMcpPayload(payload, fallbackName) {
+  const name = typeof payload.name === "string" ? payload.name : fallbackName
+  if (!name) return null
+  const out = { name }
+  if (typeof payload.url === "string") out.url = payload.url
+  if (typeof payload.command === "string") out.command = payload.command
+  if (Array.isArray(payload.args)) out.args = payload.args.filter(v => typeof v === "string")
+  if (payload.headers && typeof payload.headers === "object" && !Array.isArray(payload.headers)) {
+    out.headers = Object.fromEntries(Object.entries(payload.headers).filter(([k, v]) => typeof k === "string" && typeof v === "string"))
+  }
+  if (payload.env && typeof payload.env === "object" && !Array.isArray(payload.env)) {
+    out.env = Object.fromEntries(Object.entries(payload.env).filter(([k, v]) => typeof k === "string" && typeof v === "string"))
+  }
+  if (typeof payload.timeout_ms === "number" && payload.timeout_ms > 0) out.timeout_ms = payload.timeout_ms
+  return out
+}
+
 async function getAllMCPs() {
   const storage = getStorage()
   const keys = await storage.listKeys("mcp:")
@@ -28,9 +45,13 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const storage = getStorage()
-    const { name, url } = req.body
+    const sanitized = sanitizeMcpPayload(req.body || {})
+    if (!sanitized || (!sanitized.url && !sanitized.command)) {
+      return res.status(400).json({ error: "MCP server requires name and one of: url or command" })
+    }
+    const { name } = sanitized
     const key = `mcp:${name}`
-    const doc = { _id: key, name, url, createdAt: new Date() }
+    const doc = { _id: key, ...sanitized, createdAt: new Date() }
     await storage.set(key, doc)
     await bumpVersion()
     if (req.headers["content-type"]?.includes("urlencoded")) {
@@ -47,14 +68,19 @@ router.put("/:id", async (req, res) => {
   try {
     const storage = getStorage()
     const id = decodeURIComponent(req.params.id)
-    const { name, url } = req.body
+    const currentName = id.startsWith("mcp:") ? id.slice(4) : undefined
+    const sanitized = sanitizeMcpPayload(req.body || {}, currentName)
+    if (!sanitized || (!sanitized.url && !sanitized.command)) {
+      return res.status(400).json({ error: "MCP server requires name and one of: url or command" })
+    }
+    const { name } = sanitized
     
     const newKey = `mcp:${name}`
     if (newKey !== id) {
       await storage.delete(id)
     }
 
-    const doc = { _id: newKey, name, url }
+    const doc = { _id: newKey, ...sanitized }
     await storage.set(newKey, doc)
     await bumpVersion()
     res.json({ ok: true })
