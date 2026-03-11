@@ -27,6 +27,16 @@ supercli skills search --query "planning" --json
 supercli skills get opencode:plan-changes
 ```
 
+## Built-in MCP Usage Skill (Agent-Friendly)
+
+```bash
+supercli skills get mcp.servers.usage
+```
+
+This built-in skill teaches non-human agents how to register, verify, and use MCP servers
+through SuperCLI, including a browser-use style `mcp-remote` SSE bridge pattern with
+runtime API-key passing.
+
 ## Notes
 
 - IDs are always provider-qualified (`provider:id`) for future-proof disambiguation.
@@ -81,6 +91,33 @@ supercli skills get blogwatcher:root.readme
 `blogwatcher` indexes the upstream `SKILL.md` and `README.md` from `Hyaxia/blogwatcher`
 so agents can learn the CLI workflow, storage model, and testing expectations on demand.
 It also exposes the local `blogwatcher` binary through wrapped commands and passthrough.
+
+## Remote Provider Example: xurl
+
+```bash
+supercli plugins install xurl --json
+supercli skills list --catalog --provider xurl --json
+supercli skills get xurl:root.skill
+supercli skills get xurl:root.readme
+```
+
+`xurl` indexes the upstream `SKILL.md` and `README.md` from `xdevplatform/xurl`
+so agents can learn safe X API workflows, auth constraints, and shortcut command patterns
+without reading local token storage. It also exposes curated read-only wrappers for the local
+`xurl` binary.
+
+## Remote Provider Example: clix
+
+```bash
+supercli plugins install clix --json
+supercli skills list --catalog --provider clix --json
+supercli skills get clix:root.skill
+supercli skills get clix:root.readme
+```
+
+`clix` indexes the upstream `SKILL.md` and `README.md` from `spideystreet/clix`
+so agents can learn safe cookie-auth X workflows, JSON usage, and agent-mode guidance.
+It also exposes curated read-only wrappers for the local `clix` binary.
 
 ## Local Repo Skill Example: cline-non-interactive
 
