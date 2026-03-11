@@ -1,0 +1,239 @@
+{
+  "name": "xurl",
+  "version": "0.1.0",
+  "description": "Hybrid xurl plugin with remote agent docs and safe read-only X API wrappers",
+  "source": "https://github.com/xdevplatform/xurl",
+  "checks": [
+    { "type": "binary", "name": "curl" },
+    { "type": "binary", "name": "xurl" }
+  ],
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "xurl",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show xurl CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "xurl",
+      "resource": "auth",
+      "action": "status",
+      "description": "Show xurl authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["auth", "status"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "xurl",
+      "resource": "apps",
+      "action": "list",
+      "description": "List registered xurl apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["auth", "apps", "list"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "xurl",
+      "resource": "account",
+      "action": "whoami",
+      "description": "Show the authenticated X account as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["whoami"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "users",
+      "action": "show",
+      "description": "Look up an X user by username as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["user"],
+        "positionalArgs": ["target"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "posts",
+      "action": "show",
+      "description": "Read a post by ID or URL as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["read"],
+        "positionalArgs": ["target"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "posts",
+      "action": "search",
+      "description": "Search recent posts as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true },
+        { "name": "max-results", "type": "integer", "required": false },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "timeline",
+      "action": "list",
+      "description": "Show the home timeline as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["timeline"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "max-results", "type": "integer", "required": false },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "mentions",
+      "action": "list",
+      "description": "Show mentions as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["mentions"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "max-results", "type": "integer", "required": false },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "social",
+      "action": "followers",
+      "description": "List followers as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["followers"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "of", "type": "string", "required": false },
+        { "name": "max-results", "type": "integer", "required": false },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "xurl",
+      "resource": "social",
+      "action": "following",
+      "description": "List following accounts as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xurl",
+        "baseArgs": ["following"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "env": { "NO_COLOR": "1" },
+        "missingDependencyHelp": "Please install xurl to use this command."
+      },
+      "args": [
+        { "name": "of", "type": "string", "required": false },
+        { "name": "max-results", "type": "integer", "required": false },
+        { "name": "app", "type": "string", "required": false },
+        { "name": "auth", "type": "string", "required": false },
+        { "name": "username", "type": "string", "required": false }
+      ]
+    }
+  ]
+}
