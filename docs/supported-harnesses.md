@@ -224,6 +224,8 @@ These harnesses are in active development and will be available as plugins. Stat
 |---------|-----|--------|---------|
 | **himalaya** | himalaya | Available via plugin | Read-only email account, folder, envelope, and preview workflows |
 | **wacli** | wacli | Available via plugin | Read-only WhatsApp diagnostics, chats, messages, contacts, and groups |
+| **xurl** | xurl | Available via plugin | Read-only X account, timeline, search, and social graph workflows |
+| **clix** | clix | Available via plugin | Read-only X timeline, search, user, tweet, and bookmarks workflows |
 
 ---
 
