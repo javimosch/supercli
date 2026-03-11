@@ -16,10 +16,13 @@ For `adapter: mcp`, SUPERCLI resolves the tool endpoint in this order:
 ```bash
 supercli mcp list
 supercli mcp add summarize-local --url http://127.0.0.1:8787
+supercli mcp add browser-use --command npx --args-json '["mcp-remote","https://api.browser-use.com/mcp","--header","X-Browser-Use-API-Key: your-api-key"]'
 supercli mcp remove summarize-local
 ```
 
 These commands only update local cache (`~/.supercli/config.json`).
+
+Local config also accepts a Claude-style `mcpServers` object and normalizes it to `mcp_servers` internally.
 
 ## Demo: `ai text summarize` with stdio MCP (no server)
 
