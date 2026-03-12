@@ -1,0 +1,69 @@
+{
+  "name": "monty",
+  "version": "0.1.0",
+  "description": "Hybrid Monty plugin: sandboxed Python via @pydantic/monty and remote agent skills",
+  "source": "https://github.com/pydantic/monty",
+  "checks": [
+    { "type": "binary", "name": "node" },
+    { "type": "binary", "name": "npm" }
+  ],
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "monty",
+      "resource": "cli",
+      "action": "setup",
+      "description": "Install @pydantic/monty dependency globally",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/setup-monty.js"],
+        "parseJson": false,
+        "timeout_ms": 60000
+      },
+      "args": []
+    },
+    {
+      "namespace": "monty",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show monty plugin version and dependency status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-python.js", "--version"],
+        "parseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "monty",
+      "resource": "python",
+      "action": "run",
+      "description": "Run sandboxed Python code via Monty",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-python.js"],
+        "positionalArgs": ["code"],
+        "parseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": true },
+        { "name": "inputs", "type": "string", "required": false },
+        { "name": "typeCheck", "type": "boolean", "required": false }
+      ]
+    }
+  ]
+}

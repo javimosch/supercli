@@ -356,6 +356,18 @@ const PLUGIN_INSTALL_GUIDANCE = {
     ],
     note: "This hybrid plugin indexes upstream clix docs and exposes curated read-only wrappers. Use upstream clix directly for cookie login, account switching, posting, deleting, likes, retweets, and bookmark mutations."
   },
+  monty: {
+    plugin: "monty",
+    binary: "node",
+    check: "supercli monty cli version --json",
+    install_steps: [
+      "supercli plugins install monty",
+      "supercli monty cli setup",
+      "supercli skills list --catalog --provider monty --json",
+      "supercli monty python run \"1 + 2\" --json"
+    ],
+    note: "This hybrid plugin indexes the upstream Monty README and CLAUDE (skills) documents and provides a sandboxed Python execution environment. It manages its own @pydantic/monty dependency globally."
+  },
   cline: {
     plugin: "cline",
     binary: "cline",
