@@ -36,8 +36,9 @@ function validateCommonConfig(adapterName, config) {
     if (typeof config.timeout_ms !== "number" || Number.isNaN(config.timeout_ms) || config.timeout_ms <= 0) {
       throw asInvalid("adapterConfig.timeout_ms must be a positive number")
     }
-    if (config.timeout_ms > 15000) {
-      throw asInvalid("adapterConfig.timeout_ms cannot exceed 15000ms")
+    const maxTimeoutMs = ["mcp", "process", "shell"].includes(adapterName) ? 180000 : 15000
+    if (config.timeout_ms > maxTimeoutMs) {
+      throw asInvalid(`adapterConfig.timeout_ms cannot exceed ${maxTimeoutMs}ms`)
     }
   }
 

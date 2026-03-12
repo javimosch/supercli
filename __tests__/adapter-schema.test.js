@@ -44,6 +44,8 @@ describe("adapter-schema", () => {
     expect(() => validateAdapterConfig({ adapter: "mcp", adapterConfig: { tool: 1 } })).toThrow(/requires adapterConfig.tool/)
     expect(() => validateAdapterConfig({ adapter: "mcp", adapterConfig: { tool: "t" } })).toThrow(/requires one source/)
     expect(() => validateAdapterConfig({ adapter: "mcp", adapterConfig: { tool: "t", server: "s" } })).not.toThrow()
+    expect(() => validateAdapterConfig({ adapter: "mcp", adapterConfig: { tool: "t", server: "s", timeout_ms: 180000 } })).not.toThrow()
+    expect(() => validateAdapterConfig({ adapter: "mcp", adapterConfig: { tool: "t", server: "s", timeout_ms: 180001 } })).toThrow(/cannot exceed 180000ms/)
   })
 
   test("process adapter validation", () => {
