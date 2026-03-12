@@ -1,12 +1,12 @@
 ---
 skill_name: resend.quickstart
-description: Agent workflow to install, setup, authenticate, and send emails via Resend CLI.
-tags: resend,email,api,agents,usage
+description: Agent workflow to manage emails, domains, API keys, and contacts via Resend CLI.
+tags: resend,email,domains,api-keys,contacts,agents,usage
 ---
 
 # Resend CLI Quickstart
 
-Use this when you need to send emails or check Resend environment health.
+Use this when you need to send emails, manage domains, API keys, or audience contacts.
 
 ## 1) Install the plugin
 
@@ -41,21 +41,40 @@ supercli resend emails send --api-key re_xxx ...
 supercli resend login --key re_xxx
 ```
 
-## 4) Verify health
+## 4) Core Operations
 
-```bash
-supercli resend cli doctor --json
-```
-
-## 5) Send an email
-
+### Emails
 ```bash
 supercli resend emails send \
   --from "you@yourdomain.com" \
   --to "recipient@example.com" \
-  --subject "Hello from SuperCLI" \
-  --text "Body text here" \
+  --subject "Hello" \
+  --text "Body text" \
   --json
 ```
 
-For HTML emails, use `--html "<h1>Hello</h1>"` or `--html-file ./path/to/file.html`.
+### Domains
+```bash
+supercli resend domains list --json
+supercli resend domains create --name "example.com" --json
+supercli resend domains verify --id "dom_123" --json
+```
+
+### API Keys
+```bash
+supercli resend api-keys list --json
+supercli resend api-keys create --name "Production Key" --permission full_access --json
+```
+
+### Audience Contacts
+```bash
+supercli resend contacts list --audience-id "aud_123" --json
+supercli resend contacts create --audience-id "aud_123" --email "user@example.com" --json
+```
+
+## 5) Diagnostics
+
+```bash
+supercli resend auth whoami --json
+supercli resend cli doctor --json
+```
