@@ -111,8 +111,12 @@ async function execute(cmd, flags, context = {}) {
   const timeoutMs = Number(cfg.timeout_ms) > 0 ? Number(cfg.timeout_ms) : 15000
   const flagsBeforePositionals = cfg.flagsBeforePositionals === true || binary === "docker"
   const passthroughInteractive = passthroughMode && flags.__passthroughInteractive === true
-  const cwd = typeof cfg.cwd === "string" ? cfg.cwd : undefined
-  const env = (cfg.env && typeof cfg.env === "object") ? { ...process.env, ...cfg.env } : process.env
+  const defaultCwd = cmd.plugin_dir || undefined
+  const cwd = typeof cfg.cwd === "string" ? cfg.cwd : defaultCwd
+  const pluginEnv = {}
+  if (cmd.plugin_dir) pluginEnv.SUPERCLI_PLUGIN_DIR = cmd.plugin_dir
+  if (cmd.plugin_name) pluginEnv.SUPERCLI_PLUGIN_NAME = cmd.plugin_name
+  const env = (cfg.env && typeof cfg.env === "object") ? { ...process.env, ...cfg.env, ...pluginEnv } : { ...process.env, ...pluginEnv }
   const streamMode = cfg.stream || null
   const onStreamEvent = typeof context.onStreamEvent === "function" ? context.onStreamEvent : null
 
@@ -215,11 +219,34 @@ async function execute(cmd, flags, context = {}) {
       settled = true
       clearTimeout(timer)
       if (code !== 0) {
-        reject(Object.assign(new Error(`Process adapter failed (${binary} ${args.join(" ")}): ${err.trim()}`), {
-          code: 105,
-          type: "integration_error",
-          recoverable: true
-        }))
+        const errorText = err.trim()
+        let parsedError = null
+        try {
+          const possibleJson = errorText.match(/\{.*\}/s)
+          if (possibleJson) {
+            parsedError = JSON.parse(possibleJson[0])
+          }
+        } catch {
+          // ignore
+        }
+
+        const baseMsg = `Process adapter failed (${binary} ${args.join(" ")})`
+        const finalMsg = parsedError && parsedError.error && parsedError.error.message
+          ? parsedError.error.message
+          : (parsedError && parsedError.message ? parsedError.message : errorText || baseMsg)
+
+        const errorObj = Object.assign(new Error(finalMsg), {
+          code: (parsedError && parsedError.error && parsedError.error.code) || (parsedError && parsedError.code) || 105,
+          type: (parsedError && parsedError.error && parsedError.error.type) || (parsedError && parsedError.type) || "integration_error",
+          recoverable: (parsedError && parsedError.error && typeof parsedError.error.recoverable === "boolean") 
+            ? parsedError.error.recoverable 
+            : ((parsedError && typeof parsedError.recoverable === "boolean") ? parsedError.recoverable : true),
+          suggestions: (parsedError && parsedError.error && Array.isArray(parsedError.error.suggestions))
+            ? parsedError.error.suggestions
+            : (Array.isArray(parsedError && parsedError.suggestions) ? parsedError.suggestions : [])
+        })
+
+        reject(errorObj)
         return
       }
 
