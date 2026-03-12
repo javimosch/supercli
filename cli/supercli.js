@@ -8,6 +8,7 @@ const {
   setMcpServer,
   removeMcpServer,
   listMcpServers,
+  upsertCommand,
 } = require("./config");
 const { execute } = require("./executor");
 const { buildCapabilities } = require("./help-json");
@@ -212,7 +213,7 @@ function renderTopLevelHelp(config) {
       "  Plugins: supercli plugins explore | supercli plugins install <name|path> | supercli plugins install --git <repo>",
     );
     console.log(
-      "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp add <name> --command <cmd> --args-json '[]' | supercli mcp remove <name>",
+      "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp tools --mcp-server <name> | supercli mcp call --mcp-server <name> --tool <tool> | supercli mcp bind --mcp-server <name> --tool <tool> --as <ns.res.act> | supercli mcp doctor --mcp-server <name> | supercli mcp remove <name>",
     );
     console.log(
       "  Skills: supercli skills list | supercli skills get <id> | supercli skills search --query <q> | supercli skills sync",
@@ -370,6 +371,10 @@ async function main() {
         setMcpServer,
         removeMcpServer,
         listMcpServers,
+        loadConfig,
+        executeCommand: execute,
+        upsertCommand,
+        serverUrl: SERVER || "",
       });
       return;
     }
