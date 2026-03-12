@@ -22,6 +22,7 @@ const {
 const { handleAskCommand } = require("./ask");
 const { handleSkillsCommand } = require("./skills");
 const { findNamespacePassthrough } = require("./namespace-passthrough");
+const { discoverPluginsByIntent } = require("./discover");
 
 const SERVER = process.env.SUPERCLI_SERVER;
 const hasServer = !!SERVER;
@@ -213,6 +214,9 @@ function renderTopLevelHelp(config) {
       "  Plugins: supercli plugins explore | supercli plugins learn <name> | supercli plugins install <name|path> | supercli plugins install --git <repo>",
     );
     console.log(
+      '  Discover: supercli discover --intent "<task>" [--limit <n>] [--json]',
+    );
+    console.log(
       "  MCP: supercli mcp list | supercli mcp add <name> --url <url> | supercli mcp tools --mcp-server <name> | supercli mcp call --mcp-server <name> --tool <tool> | supercli mcp bind --mcp-server <name> --tool <tool> --as <ns.res.act> | supercli mcp doctor --mcp-server <name> | supercli mcp remove <name>",
     );
     console.log(
@@ -304,13 +308,30 @@ async function main() {
         output({
           version: "1.0",
           mode: "agent_bootstrap",
-          goal: "Use skills for command-safe execution",
-          next: [
-            "supercli skills teach --format skill.md",
-            "supercli skills list --json",
-            "supercli skills get <namespace.resource.action> --format skill.md"
+          name: "supercli",
+          what_is_supercli:
+            "Deterministic command router for namespace.resource.action commands, plugin capabilities, MCP tool bindings, and skills.",
+          core_capabilities: ["commands", "plugins", "mcp", "skills"],
+          first_steps: [
+            "supercli --help-json",
+            "supercli discover --intent \"<task>\" --json",
+            "supercli plugins learn <name> --json",
+            "supercli plugins install <name>",
+            "supercli commands --query <keyword> --limit 50 --json",
+            "supercli inspect <namespace> <resource> <action> --json"
           ],
-          note: "Use skills teach first, then fetch only the skill you need."
+          intent_workflow:
+            "If task command is unknown, use discover -> plugins learn -> plugins install -> commands/inspect -> execute.",
+          examples: {
+            send_email: [
+              'supercli discover --intent "send email" --json',
+              "supercli plugins learn resend --json",
+              "supercli plugins install resend",
+              "supercli commands --namespace resend --json"
+            ]
+          },
+          no_llm_discovery: true,
+          note: "Intent discovery is deterministic and does not call an LLM."
         });
         return;
       }
@@ -391,6 +412,13 @@ async function main() {
       return;
     }
 
+    if (positional[0] === "discover") {
+      const intent = flags.intent ? String(flags.intent) : ""
+      const result = discoverPluginsByIntent(intent, { limit: flags.limit })
+      output(result)
+      return;
+    }
+
     if (positional[0] === "skills") {
       const config = await loadConfig(SERVER);
       handleSkillsCommand({
@@ -407,14 +435,47 @@ async function main() {
 
     if (positional[0] === "commands") {
       const config = await loadConfig(SERVER);
-      const rows = config.commands.map((c) => ({
+      const namespaceFilter = flags.namespace ? String(flags.namespace).toLowerCase().trim() : ""
+      const resourceFilter = flags.resource ? String(flags.resource).toLowerCase().trim() : ""
+      const actionFilter = flags.action ? String(flags.action).toLowerCase().trim() : ""
+      const queryFilter = flags.query ? String(flags.query).toLowerCase().trim() : ""
+      const limit = flags.limit === undefined ? null : Number(flags.limit)
+      if (flags.limit !== undefined && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
+        outputError({
+          code: 85,
+          type: "invalid_argument",
+          message: "Invalid --limit. Use a positive integer",
+          recoverable: false,
+        });
+        return;
+      }
+
+      let rows = config.commands.map((c) => ({
         command: `${c.namespace} ${c.resource} ${c.action}`,
+        namespace: c.namespace,
+        resource: c.resource,
+        action: c.action,
         description: c.description || "",
         adapter: c.adapter,
         args: (c.args || [])
           .map((a) => `--${a.name}${a.required ? "*" : ""}`)
           .join(" "),
       }));
+
+      rows = rows.filter((row) => {
+        if (namespaceFilter && row.namespace.toLowerCase() !== namespaceFilter) return false
+        if (resourceFilter && row.resource.toLowerCase() !== resourceFilter) return false
+        if (actionFilter && row.action.toLowerCase() !== actionFilter) return false
+        if (queryFilter) {
+          const haystack = `${row.command} ${row.description} ${row.adapter} ${row.args}`.toLowerCase()
+          if (!haystack.includes(queryFilter)) return false
+        }
+        return true
+      })
+
+      const total = rows.length
+      if (limit !== null) rows = rows.slice(0, limit)
+
       if (humanMode) {
         console.log("\n  ⚡ Commands\n");
         outputHumanTable(rows, [
@@ -423,9 +484,22 @@ async function main() {
           { key: "args", label: "Args" },
           { key: "description", label: "Description" },
         ]);
+        console.log(`  Returned: ${rows.length}/${total}`)
         console.log("");
       } else {
-        output({ version: "1.0", commands: rows });
+        output({
+          version: "1.0",
+          total,
+          returned: rows.length,
+          filters: {
+            namespace: namespaceFilter || null,
+            resource: resourceFilter || null,
+            action: actionFilter || null,
+            query: queryFilter || null,
+            limit: limit === null ? null : limit,
+          },
+          commands: rows,
+        });
       }
       return;
     }
@@ -691,6 +765,8 @@ async function main() {
         suggestions: [
           "Run: supercli commands",
           `Run: supercli ${namespace} ${resource}`,
+          `Run: supercli discover --intent "${namespace} ${resource} ${action}" --json`,
+          `Run: supercli plugins explore --name ${resource} --json`,
         ],
       });
       return;
