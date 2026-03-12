@@ -34,6 +34,7 @@ function writeFakeCurlBinary(dir) {
     "if (args.includes('--version')) { console.log('curl 8.0.0-test'); process.exit(0); }",
     "if (url.endsWith('/CLAUDE.md')) { console.log('---\\nskill_name: monty-sandbox\\n---\\n# Monty Sandbox'); process.exit(0); }",
     "if (url.endsWith('/README.md')) { console.log('# Monty\\n\\nTest readme.'); process.exit(0); }",
+    "if (url.endsWith('/docs/usage-guide.md')) { console.log('# Monty Usage\\n\\nTest usage guide.'); process.exit(0); }",
     "process.exit(22);"
   ].join("\n"), "utf-8")
   fs.chmodSync(bin, 0o755)
@@ -76,6 +77,7 @@ describe("monty hybrid plugin", () => {
     const listData = JSON.parse(list.output)
     expect(listData.skills.some(skill => skill.id === "monty:root.skill")).toBe(true)
     expect(listData.skills.some(skill => skill.id === "monty:root.readme")).toBe(true)
+    expect(listData.skills.some(skill => skill.id === "monty:root.usage")).toBe(true)
   })
 
   test("fetches indexed remote skill markdown", () => {
@@ -85,8 +87,10 @@ describe("monty hybrid plugin", () => {
   })
 
   test("throws controlled error when @pydantic/monty is missing", () => {
-    // In the test env, @pydantic/monty won't be found
-    const r = runNoServer("monty python run --code \"1 + 1\" --json", { env })
+    // Force dependency missing error via env var
+    const r = runNoServer("monty python run --code \"1 + 1\" --json", { 
+        env: { ...env, MOCK_MISSING_MONTY: "1" } 
+    })
     
     expect(r.ok).toBe(false)
     const data = JSON.parse(r.output || r.stderr)

@@ -11,6 +11,7 @@ function getGlobalNodeModules() {
 }
 
 function resolveMonty() {
+  if (process.env.MOCK_MISSING_MONTY === "1") return null;
   try {
     return require("@pydantic/monty");
   } catch (e) {

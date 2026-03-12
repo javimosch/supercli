@@ -11,8 +11,15 @@ const CATALOG_FILES = [
     id: "root.skill",
     name: "Monty Agent Skill",
     path: "CLAUDE.md",
-    description: "Core guidance for working with the Monty sandboxed Python interpreter, including VM architecture and security mandates.",
-    tags: ["agents", "python", "sandbox", "security"]
+    description: "Core guidance for working with the Monty sandboxed Python interpreter, including VM architecture, security mandates, and SuperCLI agentic patterns.",
+    tags: ["agents", "python", "sandbox", "security", "supercli"]
+  },
+  {
+    id: "root.usage",
+    name: "Monty Usage Guide",
+    path: "docs/usage-guide.md",
+    description: "Comprehensive guide for developers on installing, configuring, and using Monty in Python and JavaScript environments.",
+    tags: ["usage", "guide", "python", "javascript", "examples"]
   },
   {
     id: "root.readme",
