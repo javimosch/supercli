@@ -4,6 +4,11 @@ const EventEmitter = require("events")
 
 jest.mock("child_process")
 
+function frame(obj) {
+  const body = JSON.stringify(obj)
+  return `Content-Length: ${Buffer.byteLength(body, "utf-8")}\r\n\r\n${body}`
+}
+
 describe("mcp adapter", () => {
   beforeEach(() => {
     jest.clearAllMocks()
@@ -43,6 +48,15 @@ describe("mcp adapter", () => {
     })
 
     test("resolves stdio command from named server and merges args/env", async () => {
+      mockChild.stdin.write = jest.fn((data) => {
+        if (String(data).includes('"method":"initialize"')) {
+          mockChild.stdout.emit("data", frame({ jsonrpc: "2.0", id: 1, result: { capabilities: {} } }))
+        }
+        if (String(data).includes('"method":"tools/call"')) {
+          mockChild.stdout.emit("data", frame({ jsonrpc: "2.0", id: 2, result: { ok: true } }))
+        }
+      })
+
       const promise = execute(
         {
           adapterConfig: {
@@ -66,10 +80,6 @@ describe("mcp adapter", () => {
           }
         }
       )
-
-      await Promise.resolve()
-      mockChild.stdout.emit("data", '{"ok":true}')
-      mockChild.emit("close", 0)
 
       await expect(promise).resolves.toEqual({ ok: true })
       expect(spawn).toHaveBeenCalledWith(

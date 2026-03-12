@@ -2,6 +2,10 @@
 // Supports HTTP MCP endpoints and local stdio MCP commands.
 
 const { spawn } = require("child_process");
+const {
+  shouldUseStdioJsonRpc,
+  stdioCallToolJsonRpc,
+} = require("../mcp-stdio-jsonrpc");
 
 function asObject(value) {
   return value && typeof value === "object" && !Array.isArray(value)
@@ -9,18 +13,23 @@ function asObject(value) {
     : {};
 }
 
+function interpolateEnvPlaceholders(text) {
+  if (typeof text !== "string") return text;
+  return text.replace(/\$\{([A-Z0-9_]+)\}/g, (_, name) => process.env[name] || "");
+}
+
 function asStringMap(value) {
   const obj = asObject(value);
   const out = {};
   for (const [k, v] of Object.entries(obj)) {
-    if (typeof k === "string" && typeof v === "string") out[k] = v;
+    if (typeof k === "string" && typeof v === "string") out[k] = interpolateEnvPlaceholders(v);
   }
   return out;
 }
 
 function asStringArray(value) {
   if (!Array.isArray(value)) return [];
-  return value.filter((v) => typeof v === "string");
+  return value.filter((v) => typeof v === "string").map((v) => interpolateEnvPlaceholders(v));
 }
 
 function mergeMcpConfig(cmdConfig, serverEntry) {
@@ -42,7 +51,7 @@ function mergeMcpConfig(cmdConfig, serverEntry) {
   return {
     tool: cmdConfig.tool,
     server: cmdConfig.server,
-    url: cmdConfig.url || (serverEntry && serverEntry.url),
+    url: interpolateEnvPlaceholders(cmdConfig.url || (serverEntry && serverEntry.url)),
     command: cmdConfig.command || (serverEntry && serverEntry.command),
     timeout_ms:
       cmdConfig.timeout_ms !== undefined
@@ -215,6 +224,16 @@ async function execute(cmd, flags, context) {
     const commandArgs = Array.isArray(config.args) ? config.args : [];
     const timeoutMs =
       Number(config.timeout_ms) > 0 ? Number(config.timeout_ms) : 10000;
+    if (shouldUseStdioJsonRpc(config)) {
+      return stdioCallToolJsonRpc({
+        command: config.command,
+        args: commandArgs,
+        timeoutMs,
+        env: config.env,
+        tool: toolName,
+        input,
+      });
+    }
     return callStdioTool(
       config.command,
       commandArgs,
