@@ -4,6 +4,14 @@
   <h1 class="text-2xl font-bold mb-6"><%= command ? "Edit Command" : "New Command" %></h1>
 
   <div id="cmd-editor">
+    <div v-if="message.text" :class="['alert mb-4', message.type === 'error' ? 'alert-error' : 'alert-success']">
+      <span>{{ message.text }}</span>
+    </div>
+
+    <div class="alert alert-info mb-4">
+      <span>Tip: run <code>SUPERCLI_SERVER=http://localhost:3001 sc sync</code> after saving to refresh your local CLI cache.</span>
+    </div>
+
     <form @submit.prevent="save" class="flex flex-col gap-4">
 
       <div class="grid grid-cols-3 gap-4">
@@ -28,18 +36,36 @@
 
       <div class="form-control">
         <label class="label"><span class="label-text">Adapter</span></label>
-        <select v-model="form.adapter" class="select select-bordered select-sm">
+        <select v-model="form.adapter" @change="onAdapterChange" class="select select-bordered select-sm">
           <option value="http">http</option>
           <option value="openapi">openapi</option>
           <option value="mcp">mcp</option>
           <option value="shell">shell</option>
+          <option value="process">process</option>
+          <option value="builtin">builtin</option>
           <option value="custom">custom</option>
         </select>
       </div>
 
+      <div class="rounded border border-base-300 p-3 bg-base-100">
+        <div class="text-sm font-semibold">Adapter Guide</div>
+        <div class="text-xs opacity-80 mt-1">{{ adapterGuide.help }}</div>
+        <div class="text-xs mt-2">
+          <span class="font-semibold">Required:</span>
+          <span>{{ adapterGuide.required }}</span>
+        </div>
+      </div>
+
       <div class="form-control">
         <label class="label"><span class="label-text">Adapter Config (JSON)</span></label>
-        <textarea v-model="adapterConfigStr" class="textarea textarea-bordered textarea-sm font-mono" rows="4" placeholder='{"method":"GET","url":"https://..."}'></textarea>
+        <textarea v-model="adapterConfigStr" class="textarea textarea-bordered textarea-sm font-mono" rows="7" placeholder='{"method":"GET","url":"https://..."}'></textarea>
+        <div class="flex gap-2 mt-2">
+          <button type="button" @click="loadTemplate(true)" class="btn btn-xs btn-outline">Load Template</button>
+          <button type="button" @click="validateConfig" class="btn btn-xs btn-outline btn-primary">Validate Config</button>
+        </div>
+        <div v-if="validationResult" class="text-xs mt-2" :class="validationResult.ok ? 'text-success' : 'text-error'">
+          {{ validationResult.message }}
+        </div>
       </div>
 
       <!-- Arguments -->
@@ -72,6 +98,69 @@
 
 <script>
   const editData = <%- JSON.stringify(command) %>;
+  const ADAPTER_GUIDES = {
+    http: {
+      required: "adapterConfig.url",
+      help: "Use for REST endpoints. Optional method defaults to GET.",
+      template: {
+        method: "GET",
+        url: "https://api.example.com/health",
+        parseJson: true,
+        timeout_ms: 5000
+      }
+    },
+    openapi: {
+      required: "adapterConfig.spec, adapterConfig.operationId",
+      help: "Use OpenAPI operation ID from an indexed spec.",
+      template: {
+        spec: "petstore",
+        operationId: "listPets",
+        parseJson: true,
+        timeout_ms: 5000
+      }
+    },
+    mcp: {
+      required: "adapterConfig.tool and one of adapterConfig.server/url/command",
+      help: "Invoke MCP tools from a registered server or direct endpoint.",
+      template: {
+        server: "browser-use",
+        tool: "list_skills",
+        timeout_ms: 60000
+      }
+    },
+    shell: {
+      required: "adapterConfig.unsafe=true and adapterConfig.script",
+      help: "Runs a shell script via bash -lc. Keep scripts short and deterministic.",
+      template: {
+        unsafe: true,
+        script: "ls -lrt",
+        parseJson: false,
+        timeout_ms: 5000
+      }
+    },
+    process: {
+      required: "adapterConfig.command",
+      help: "Runs a binary directly with base args plus dynamic flags.",
+      template: {
+        command: "ls",
+        baseArgs: ["-lrt"],
+        parseJson: false,
+        timeout_ms: 5000
+      }
+    },
+    builtin: {
+      required: "adapterConfig.builtin",
+      help: "Runs internal built-in behavior.",
+      template: {
+        builtin: "noop"
+      }
+    },
+    custom: {
+      required: "Depends on your custom adapter",
+      help: "Use when loading adapters/<name>.js from the CLI workspace.",
+      template: {}
+    }
+  };
 
   Vue.createApp({
     data() {
@@ -85,23 +174,116 @@
           adapter: editData ? editData.adapter : 'http',
           args: editData && editData.args ? editData.args : []
         },
-        adapterConfigStr: editData && editData.adapterConfig ? JSON.stringify(editData.adapterConfig, null, 2) : '{}'
+        adapterConfigStr: editData && editData.adapterConfig ? JSON.stringify(editData.adapterConfig, null, 2) : '{}',
+        message: { type: '', text: '' },
+        validationResult: null,
+      }
+    },
+    computed: {
+      adapterGuide() {
+        return ADAPTER_GUIDES[this.form.adapter] || ADAPTER_GUIDES.http
+      }
+    },
+    mounted() {
+      if (!this.editId && this.adapterConfigStr.trim() === '{}') {
+        this.loadTemplate(false)
       }
     },
     methods: {
-      async save() {
-        const body = {
-          ...this.form,
-          adapterConfig: JSON.parse(this.adapterConfigStr || '{}')
+      setMessage(type, text) {
+        this.message = { type, text }
+      },
+      clearMessage() {
+        this.message = { type: '', text: '' }
+      },
+      onAdapterChange() {
+        this.validationResult = null
+      },
+      loadTemplate(force) {
+        const current = this.adapterConfigStr.trim()
+        if (!force && current && current !== '{}') return
+        this.adapterConfigStr = JSON.stringify(this.adapterGuide.template, null, 2)
+        this.validationResult = null
+      },
+      parseAdapterConfig() {
+        try {
+          return JSON.parse(this.adapterConfigStr || '{}')
+        } catch (err) {
+          throw new Error('Adapter Config is not valid JSON: ' + err.message)
         }
-        const url = this.editId ? '/api/commands/' + this.editId : '/api/commands'
-        const method = this.editId ? 'PUT' : 'POST'
-        await fetch(url, {
-          method,
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
-        })
-        window.location.href = '/api/commands'
+      },
+      buildPayload() {
+        const adapterConfig = this.parseAdapterConfig()
+        return {
+          ...this.form,
+          adapterConfig,
+        }
+      },
+      validateLocally(payload) {
+        if (!payload.namespace || !payload.resource || !payload.action) {
+          throw new Error('Namespace, Resource, and Action are required')
+        }
+        if (payload.adapter === 'shell') {
+          if (payload.adapterConfig.unsafe !== true) {
+            throw new Error('Shell adapter requires adapterConfig.unsafe=true')
+          }
+          if (!payload.adapterConfig.script || typeof payload.adapterConfig.script !== 'string') {
+            throw new Error('Shell adapter requires adapterConfig.script')
+          }
+        }
+      },
+      async parseErrorMessage(response) {
+        let msg = 'Request failed'
+        try {
+          const body = await response.json()
+          if (body && body.error) msg = body.error
+        } catch {
+          msg = response.status + ' ' + response.statusText
+        }
+        return msg
+      },
+      async validateConfig() {
+        this.clearMessage()
+        this.validationResult = null
+        try {
+          const payload = this.buildPayload()
+          this.validateLocally(payload)
+          const response = await fetch('/api/commands/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          })
+          if (!response.ok) {
+            const msg = await this.parseErrorMessage(response)
+            this.validationResult = { ok: false, message: msg }
+            return
+          }
+          this.validationResult = { ok: true, message: 'Adapter config is valid' }
+        } catch (err) {
+          this.validationResult = { ok: false, message: err.message }
+        }
+      },
+      async save() {
+        this.clearMessage()
+        try {
+          const body = this.buildPayload()
+          this.validateLocally(body)
+          const url = this.editId ? '/api/commands/' + this.editId : '/api/commands'
+          const method = this.editId ? 'PUT' : 'POST'
+          const response = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+          })
+          if (!response.ok) {
+            const msg = await this.parseErrorMessage(response)
+            this.setMessage('error', msg)
+            return
+          }
+          window.location.href = '/api/commands'
+        } catch (err) {
+          this.setMessage('error', err.message)
+        }
       }
     }
   }).mount('#cmd-editor')
