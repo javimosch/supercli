@@ -4,6 +4,7 @@ const path = require("path")
 const { execSync } = require("child_process")
 
 const CLI = path.join(__dirname, "..", "cli", "supercli.js")
+const nodeDir = path.dirname(process.execPath)
 
 function runNoServer(args, options = {}) {
   try {
@@ -83,11 +84,31 @@ describe("resend hybrid plugin", () => {
   })
 
   test("fails with helpful message when resend binary is missing", () => {
-    const r = runNoServer("resend cli doctor --json", { env })
+    // Ensure 'resend' is not found, but keep 'node' available
+    const r = runNoServer("resend cli doctor --json", { 
+        env: { ...env, PATH: `${fakeBinDir}:${nodeDir}` } 
+    })
     expect(r.ok).toBe(false)
     const data = JSON.parse(r.output || r.stderr)
     expect(data.error.message).toContain("Missing dependency 'resend'")
     expect(data.error.message).toContain("Please run 'dcli resend cli setup'")
+  })
+
+  test("exposes expanded structured commands", () => {
+    const help = runNoServer("help resend --json", { env })
+    expect(help.ok).toBe(true)
+    const data = JSON.parse(help.output)
+    
+    const resendNamespace = data.namespaces.find(n => n.name === "resend")
+    expect(resendNamespace).toBeDefined()
+
+    const resources = new Set(resendNamespace.resources.map(r => r.name))
+    
+    expect(resources.has("domains")).toBe(true)
+    expect(resources.has("api-keys")).toBe(true)
+    expect(resources.has("webhooks")).toBe(true)
+    expect(resources.has("contacts")).toBe(true)
+    expect(resources.has("auth")).toBe(true)
   })
 
   test("doctor reports node and npm dependencies as healthy", () => {
