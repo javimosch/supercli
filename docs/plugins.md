@@ -42,3 +42,4 @@ Default is `fail`.
 - Plugin manifests can define `post_install` hooks (`script`, optional `runtime`, optional `timeout_ms`) that execute from the plugin folder after install.
 - `agency-agents` is a bundled zero-command plugin. Installing it adds a remote skills provider named `agency-agents` and refreshes the local skills catalog.
 - `visual-explainer` is a bundled zero-command plugin. Installing it adds a remote skills provider named `visual-explainer` sourced from normalized markdown skills in `javimosch/visual-explainer` and refreshes the local skills catalog.
+- `browser-use` is a bundled hybrid plugin. Installing it auto-registers a `browser-use` MCP server, discovers and binds Browser Use MCP tools into direct `browseruse.tool.*` commands, and installs local Browser Use skills from the plugin folder.
