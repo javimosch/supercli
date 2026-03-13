@@ -71,7 +71,36 @@ describe("process adapter", () => {
     const promise = execute({ adapterConfig: { command: "node" } }, {})
     mockChild.stderr.emit("data", "error")
     mockChild.emit("close", 1)
-    await expect(promise).rejects.toThrow("Process adapter failed")
+    await expect(promise).rejects.toThrow("error")
+  })
+
+  test("rewrites matched integration errors with friendlier guidance", async () => {
+    const promise = execute({
+      adapterConfig: {
+        command: "node",
+        errorMatchers: [
+          {
+            match: "No provider configured",
+            message: "Goose is installed but not configured with a provider. Escalate to a human to run `goose configure`.",
+            suggestions: [
+              "Ask a human to run `goose configure` and set a provider.",
+              "Retry after Goose provider setup is complete."
+            ],
+            recoverable: true
+          }
+        ]
+      }
+    }, {})
+    mockChild.stderr.emit("data", JSON.stringify({ error: { message: "No provider configured. Run 'goose configure' first" } }))
+    mockChild.emit("close", 1)
+    await expect(promise).rejects.toMatchObject({
+      message: "Goose is installed but not configured with a provider. Escalate to a human to run `goose configure`.",
+      suggestions: [
+        "Ask a human to run `goose configure` and set a provider.",
+        "Retry after Goose provider setup is complete."
+      ],
+      recoverable: true
+    })
   })
   
   test("handles passthroughInteractive", async () => {
@@ -112,6 +141,26 @@ describe("process adapter", () => {
     mockChild.emit("close", 0)
     const result = await promise
     expect(result.raw).toBe("text")
+  })
+
+  test("uses invoke cwd when configured", async () => {
+    const promise = execute({
+      adapterConfig: { command: "node", cwd: "invoke_cwd" },
+      plugin_dir: "/tmp/plugin-dir"
+    }, {})
+    mockChild.emit("close", 0)
+    await promise
+    expect(spawn).toHaveBeenCalledWith("node", [], expect.objectContaining({ cwd: process.cwd() }))
+  })
+
+  test("defaults cwd to plugin dir when not configured", async () => {
+    const promise = execute({
+      adapterConfig: { command: "node" },
+      plugin_dir: "/tmp/plugin-dir"
+    }, {})
+    mockChild.emit("close", 0)
+    await promise
+    expect(spawn).toHaveBeenCalledWith("node", [], expect.objectContaining({ cwd: "/tmp/plugin-dir" }))
   })
 
   test("streams jsonl events incrementally", async () => {

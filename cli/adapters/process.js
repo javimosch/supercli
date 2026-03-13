@@ -97,6 +97,44 @@ function flushStreamBuffer(buffer, onLine) {
   return pending
 }
 
+function normalizeErrorMatchers(cfg) {
+  return Array.isArray(cfg.errorMatchers) ? cfg.errorMatchers.filter(Boolean) : []
+}
+
+function applyErrorMatchers(message, errorText, parsedError, cfg) {
+  const haystack = [message, errorText]
+  if (parsedError && parsedError.error && parsedError.error.message) haystack.push(parsedError.error.message)
+  if (parsedError && parsedError.message) haystack.push(parsedError.message)
+  const source = haystack.filter(Boolean).join("\n")
+
+  for (const matcher of normalizeErrorMatchers(cfg)) {
+    if (!matcher || !matcher.match) continue
+    let regex = null
+    try {
+      regex = new RegExp(String(matcher.match), matcher.flags || "")
+    } catch {
+      continue
+    }
+    if (!regex.test(source)) continue
+    return {
+      message: matcher.message || message,
+      code: Number.isInteger(matcher.code) ? matcher.code : undefined,
+      type: matcher.type,
+      recoverable: typeof matcher.recoverable === "boolean" ? matcher.recoverable : undefined,
+      suggestions: Array.isArray(matcher.suggestions) ? matcher.suggestions : undefined
+    }
+  }
+
+  return null
+}
+
+function resolveCwd(cfg, cmd) {
+  if (cfg.cwd === "invoke_cwd") return process.cwd()
+  if (cfg.cwd === "plugin_dir") return cmd.plugin_dir || undefined
+  if (typeof cfg.cwd === "string" && cfg.cwd.trim()) return cfg.cwd
+  return cmd.plugin_dir || undefined
+}
+
 async function execute(cmd, flags, context = {}) {
   const cfg = cmd.adapterConfig || {}
   const binary = cfg.command
@@ -111,8 +149,7 @@ async function execute(cmd, flags, context = {}) {
   const timeoutMs = Number(cfg.timeout_ms) > 0 ? Number(cfg.timeout_ms) : 15000
   const flagsBeforePositionals = cfg.flagsBeforePositionals === true || binary === "docker"
   const passthroughInteractive = passthroughMode && flags.__passthroughInteractive === true
-  const defaultCwd = cmd.plugin_dir || undefined
-  const cwd = typeof cfg.cwd === "string" ? cfg.cwd : defaultCwd
+  const cwd = resolveCwd(cfg, cmd)
   const pluginEnv = {}
   if (cmd.plugin_dir) pluginEnv.SUPERCLI_PLUGIN_DIR = cmd.plugin_dir
   if (cmd.plugin_name) pluginEnv.SUPERCLI_PLUGIN_NAME = cmd.plugin_name
@@ -235,6 +272,7 @@ async function execute(cmd, flags, context = {}) {
         const finalMsg = parsedError && parsedError.error && parsedError.error.message
           ? parsedError.error.message
           : (parsedError && parsedError.message ? parsedError.message : errorText || baseMsg)
+        const matchedError = applyErrorMatchers(finalMsg, errorText, parsedError, cfg)
 
         const errorObj = Object.assign(new Error(finalMsg), {
           code: (parsedError && parsedError.error && parsedError.error.code) || (parsedError && parsedError.code) || 105,
@@ -246,6 +284,14 @@ async function execute(cmd, flags, context = {}) {
             ? parsedError.error.suggestions
             : (Array.isArray(parsedError && parsedError.suggestions) ? parsedError.suggestions : [])
         })
+
+        if (matchedError) {
+          if (matchedError.message) errorObj.message = matchedError.message
+          if (matchedError.code !== undefined) errorObj.code = matchedError.code
+          if (matchedError.type) errorObj.type = matchedError.type
+          if (matchedError.recoverable !== undefined) errorObj.recoverable = matchedError.recoverable
+          if (matchedError.suggestions) errorObj.suggestions = matchedError.suggestions
+        }
 
         reject(errorObj)
         return
