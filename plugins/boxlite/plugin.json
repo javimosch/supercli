@@ -1,13 +1,11 @@
 {
   "name": "boxlite",
-  "version": "0.1.0",
-  "description": "BoxLite agent-first CLI plugin using boxcli",
+  "version": "0.2.0",
+  "description": "BoxLite Docker-backed plugin using boxcli",
   "source": "https://github.com/javimosch/boxlite",
   "checks": [
-    {
-      "type": "binary",
-      "name": "boxcli"
-    }
+    { "type": "binary", "name": "node" },
+    { "type": "binary", "name": "docker" }
   ],
   "commands": [
     {
@@ -17,11 +15,11 @@
       "description": "Show boxcli capabilities",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "capabilities"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "capabilities"],
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": []
     },
@@ -32,11 +30,11 @@
       "description": "Show runtime info",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "runtime", "info"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "runtime", "info"],
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": [
         { "name": "home", "type": "string", "required": false },
@@ -50,11 +48,11 @@
       "description": "List cached images",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "image", "list"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "image", "list"],
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": []
     },
@@ -65,12 +63,12 @@
       "description": "Pull image into local cache",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "image", "pull"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "image", "pull"],
         "positionalArgs": ["image"],
         "parseJson": true,
         "timeout_ms": 120000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": [
         { "name": "image", "type": "string", "required": true }
@@ -83,12 +81,12 @@
       "description": "Check if image exists in local cache",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "image", "exists"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "image", "exists"],
         "positionalArgs": ["image"],
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": [
         { "name": "image", "type": "string", "required": true }
@@ -101,11 +99,11 @@
       "description": "List boxes",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "box", "list"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "box", "list"],
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": []
     },
@@ -116,12 +114,12 @@
       "description": "Get one box by id or name",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "box", "get"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "box", "get"],
         "positionalArgs": ["target"],
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": [
         { "name": "target", "type": "string", "required": true }
@@ -134,8 +132,8 @@
       "description": "Create a new box with image preflight",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "box", "create"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "box", "create"],
         "optionalArgs": {
           "image": "--image",
           "name": "--name",
@@ -145,7 +143,7 @@
         },
         "parseJson": true,
         "timeout_ms": 120000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": [
         { "name": "image", "type": "string", "required": true },
@@ -162,8 +160,8 @@
       "description": "Remove a box",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
-        "baseArgs": ["--output", "json", "box", "remove"],
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js", "--output", "json", "box", "remove"],
         "positionalArgs": ["target"],
         "optionalArgs": {
           "force": "--force",
@@ -171,7 +169,7 @@
         },
         "parseJson": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": [
         { "name": "target", "type": "string", "required": true },
@@ -186,11 +184,12 @@
       "description": "Passthrough to boxcli for advanced commands",
       "adapter": "process",
       "adapterConfig": {
-        "command": "boxcli",
+        "command": "node",
+        "baseArgs": ["scripts/run-boxlite.js"],
         "passthrough": true,
         "parseJson": false,
         "timeout_ms": 120000,
-        "missingDependencyHelp": "Install @javimosch/boxlite and ensure boxcli is on PATH"
+        "missingDependencyHelp": "Install Docker and run: docker --version"
       },
       "args": []
     }
