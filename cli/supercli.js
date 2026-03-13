@@ -376,8 +376,8 @@ async function main() {
     }
 
     if (hasServer && positional[0] === "sync") {
-      await syncConfig(SERVER);
-      output({ ok: true, message: "Config synced" });
+      const result = await syncConfig(SERVER);
+      output({ ok: true, message: "Config synced", server_plugins: result.server_plugins || null });
       return;
     }
 
