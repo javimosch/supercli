@@ -29,6 +29,7 @@ jest.mock("express", () => {
   mExpress.Router = jest.fn(() => ({
     get: jest.fn(),
     post: jest.fn(),
+    patch: jest.fn(),
     put: jest.fn(),
     delete: jest.fn(),
     use: jest.fn(),

@@ -39,12 +39,30 @@ describe("server routes - commands", () => {
   })
 
   test("POST / success", async () => {
-    await getHandler(commandsRouter, "post", "/")({ body: { namespace: "n", resource: "r", action: "a" }, headers: {} }, res)
+    await getHandler(commandsRouter, "post", "/")({
+      body: {
+        namespace: "n",
+        resource: "r",
+        action: "a",
+        adapter: "http",
+        adapterConfig: { url: "https://example.com" },
+      },
+      headers: {},
+    }, res)
     expect(res.status).toHaveBeenCalledWith(201)
   })
 
   test("PUT / success", async () => {
-    await getHandler(commandsRouter, "put", "/:id")({ params: { id: "old" }, body: { namespace: "n", resource: "r", action: "a" } }, res)
+    await getHandler(commandsRouter, "put", "/:id")({
+      params: { id: "old" },
+      body: {
+        namespace: "n",
+        resource: "r",
+        action: "a",
+        adapter: "http",
+        adapterConfig: { url: "https://example.com" },
+      },
+    }, res)
     expect(res.json).toHaveBeenCalledWith({ ok: true })
   })
 

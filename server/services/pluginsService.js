@@ -197,10 +197,11 @@ async function upsertJsonPlugin(payload) {
 async function upsertZipPlugin(payload) {
   const common = normalizeCommonPayload(payload)
   const manifest = sanitizeManifest(payload.manifest, common.name)
-  const archiveBase64 = String(payload.archive_base64 || "").trim()
-  if (!archiveBase64) throw invalid("archive_base64 is required")
+  const archiveBase64 = payload.archive_base64 ? String(payload.archive_base64).trim() : ""
+  const archiveBuffer = Buffer.isBuffer(payload.archive_buffer) ? payload.archive_buffer : null
+  if (!archiveBase64 && !archiveBuffer) throw invalid("ZIP payload is required")
 
-  const buffer = Buffer.from(archiveBase64, "base64")
+  const buffer = archiveBuffer || Buffer.from(archiveBase64, "base64")
   if (!buffer.length) throw invalid("archive_base64 is empty or invalid")
 
   const settings = await getSettings()
@@ -221,7 +222,7 @@ async function upsertZipPlugin(payload) {
     ...common,
     source_type: "zip",
     manifest,
-    archive_base64: archiveBase64,
+    archive_base64: buffer.toString("base64"),
     checksum: hashBuffer(buffer),
     size_bytes: buffer.length,
     updated_at: now,

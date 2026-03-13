@@ -18,6 +18,135 @@ function handleError(res, err) {
   res.status(status).json({ error: err.message, type: err.type || "internal_error" })
 }
 
+function parseBoolean(raw, fallback = true) {
+  if (raw === undefined || raw === null || raw === "") return fallback
+  const text = String(raw).trim().toLowerCase()
+  if (text === "true") return true
+  if (text === "false") return false
+  return fallback
+}
+
+async function readRequestBuffer(req) {
+  return new Promise((resolve, reject) => {
+    const chunks = []
+    req.on("data", chunk => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)))
+    req.on("end", () => resolve(Buffer.concat(chunks)))
+    req.on("error", reject)
+  })
+}
+
+function parseMultipartParts(buffer, boundary) {
+  const delimiter = Buffer.from(`--${boundary}`)
+  const closeDelimiter = Buffer.from(`--${boundary}--`)
+  const parts = []
+  let index = 0
+
+  while (index < buffer.length) {
+    const start = buffer.indexOf(delimiter, index)
+    if (start < 0) break
+    index = start + delimiter.length
+
+    if (buffer.slice(index, index + 2).equals(Buffer.from("--"))) break
+    if (buffer.slice(index, index + 2).equals(Buffer.from("\r\n"))) index += 2
+
+    const headerEnd = buffer.indexOf(Buffer.from("\r\n\r\n"), index)
+    if (headerEnd < 0) break
+    const headerRaw = buffer.slice(index, headerEnd).toString("utf-8")
+    const bodyStart = headerEnd + 4
+
+    let nextBoundary = buffer.indexOf(delimiter, bodyStart)
+    if (nextBoundary < 0) {
+      nextBoundary = buffer.indexOf(closeDelimiter, bodyStart)
+      if (nextBoundary < 0) nextBoundary = buffer.length
+    }
+
+    let body = buffer.slice(bodyStart, nextBoundary)
+    if (body.slice(-2).equals(Buffer.from("\r\n"))) body = body.slice(0, -2)
+    parts.push({ headerRaw, body })
+    index = nextBoundary
+  }
+
+  return parts
+}
+
+function parseDisposition(headerRaw) {
+  const line = headerRaw
+    .split("\r\n")
+    .find(item => item.toLowerCase().startsWith("content-disposition:"))
+  if (!line) return {}
+
+  const nameMatch = line.match(/name="([^"]+)"/)
+  const fileMatch = line.match(/filename="([^"]*)"/)
+  return {
+    name: nameMatch ? nameMatch[1] : "",
+    filename: fileMatch ? fileMatch[1] : "",
+  }
+}
+
+async function parseMultipartFormData(req) {
+  const contentType = String(req.headers["content-type"] || "")
+  const boundaryMatch = contentType.match(/boundary=([^;]+)/i)
+  if (!boundaryMatch) {
+    throw Object.assign(new Error("Multipart boundary is required"), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false,
+    })
+  }
+  const boundary = boundaryMatch[1].trim().replace(/^"|"$/g, "")
+  const raw = await readRequestBuffer(req)
+  const parts = parseMultipartParts(raw, boundary)
+  const fields = {}
+  let archiveBuffer = null
+
+  for (const part of parts) {
+    const disposition = parseDisposition(part.headerRaw)
+    if (!disposition.name) continue
+    if (disposition.filename) {
+      if (disposition.name === "archive") archiveBuffer = part.body
+      continue
+    }
+    fields[disposition.name] = part.body.toString("utf-8")
+  }
+
+  if (!archiveBuffer || archiveBuffer.length === 0) {
+    throw Object.assign(new Error("Missing archive file in multipart payload"), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false,
+    })
+  }
+
+  let manifest = null
+  try {
+    manifest = JSON.parse(String(fields.manifest || "{}"))
+  } catch (err) {
+    throw Object.assign(new Error(`Invalid manifest JSON: ${err.message}`), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false,
+    })
+  }
+
+  return {
+    name: String(fields.name || "").trim(),
+    version: String(fields.version || "0.0.0").trim(),
+    description: String(fields.description || ""),
+    enabled: parseBoolean(fields.enabled, true),
+    hooks_policy: String(fields.hooks_policy || "inherit").trim().toLowerCase(),
+    tags: fields.tags
+      ? String(fields.tags)
+        .split(",")
+        .map(v => v.trim())
+        .filter(Boolean)
+      : [],
+    has_learn: parseBoolean(fields.has_learn, false),
+    source_type: "zip",
+    manifest,
+    archive_buffer: archiveBuffer,
+  }
+}
+
 router.get("/", async (req, res) => {
   try {
     const plugins = await listServerPlugins()
@@ -63,7 +192,11 @@ router.post("/", async (req, res) => {
 
 router.post("/upload", async (req, res) => {
   try {
-    const plugin = await upsertZipPlugin({ ...(req.body || {}), source_type: "zip" })
+    const contentType = String(req.headers["content-type"] || "")
+    const payload = contentType.includes("multipart/form-data")
+      ? await parseMultipartFormData(req)
+      : { ...(req.body || {}), source_type: "zip" }
+    const plugin = await upsertZipPlugin(payload)
     res.status(201).json({ ok: true, plugin })
   } catch (err) {
     handleError(res, err)

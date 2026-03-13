@@ -142,7 +142,7 @@
           description: '',
           enabled: true,
           hooks_policy: 'inherit',
-          archive_base64: '',
+          archive_file: null,
           manifestStr: '{\n  "name": "my-plugin",\n  "version": "0.0.0",\n  "commands": []\n}',
         },
       }
@@ -201,26 +201,30 @@
       async onZipChange(event) {
         const file = event.target.files && event.target.files[0]
         if (!file) return
-        const buffer = await file.arrayBuffer()
-        const bytes = new Uint8Array(buffer)
-        let binary = ''
-        for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i])
-        this.zipForm.archive_base64 = btoa(binary)
+        this.zipForm.archive_file = file
       },
       async uploadZipPlugin() {
         try {
-          if (!this.zipForm.archive_base64) throw new Error('Choose a ZIP file first')
+          if (!this.zipForm.archive_file) throw new Error('Choose a ZIP file first')
           const manifest = JSON.parse(this.zipForm.manifestStr)
-          await this.api('/api/plugins/upload', 'POST', {
-            source_type: 'zip',
-            name: this.zipForm.name,
-            version: this.zipForm.version,
-            description: this.zipForm.description,
-            enabled: this.zipForm.enabled,
-            hooks_policy: this.zipForm.hooks_policy,
-            manifest,
-            archive_base64: this.zipForm.archive_base64,
+          const formData = new FormData()
+          formData.append('name', this.zipForm.name)
+          formData.append('version', this.zipForm.version)
+          formData.append('description', this.zipForm.description)
+          formData.append('enabled', String(this.zipForm.enabled))
+          formData.append('hooks_policy', this.zipForm.hooks_policy)
+          formData.append('manifest', JSON.stringify(manifest))
+          formData.append('archive', this.zipForm.archive_file)
+
+          const response = await fetch('/api/plugins/upload', {
+            method: 'POST',
+            body: formData,
           })
+          let parsed = null
+          try { parsed = await response.json() } catch { parsed = null }
+          if (!response.ok) {
+            throw new Error((parsed && parsed.error) || `${response.status} ${response.statusText}`)
+          }
           this.setMessage('success', `Uploaded ZIP plugin '${this.zipForm.name}'`)
           await this.reloadPlugins()
         } catch (err) {
