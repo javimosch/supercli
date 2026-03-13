@@ -233,6 +233,26 @@ assert(jsonServerExplore.ok, "json-server explore should succeed")
 const jsonServerExploreData = JSON.parse(jsonServerExplore.output)
 assert(jsonServerExploreData.plugins.some(p => p.name === "json-server"), "explore filters should find json-server")
 
+const geminiExplore = runNoServer("plugins explore --name gemini --tags ai,headless --has-learn true --json")
+assert(geminiExplore.ok, "gemini explore should succeed")
+const geminiExploreData = JSON.parse(geminiExplore.output)
+assert(geminiExploreData.plugins.some(p => p.name === "gemini"), "explore filters should find gemini")
+
+const copilotExplore = runNoServer("plugins explore --name copilot --tags github,headless --has-learn true --json")
+assert(copilotExplore.ok, "copilot explore should succeed")
+const copilotExploreData = JSON.parse(copilotExplore.output)
+assert(copilotExploreData.plugins.some(p => p.name === "copilot"), "explore filters should find copilot")
+
+const openhandsExplore = runNoServer("plugins explore --name openhands --tags agents,headless --has-learn true --json")
+assert(openhandsExplore.ok, "openhands explore should succeed")
+const openhandsExploreData = JSON.parse(openhandsExplore.output)
+assert(openhandsExploreData.plugins.some(p => p.name === "openhands"), "explore filters should find openhands")
+
+const uipathcliExplore = runNoServer("plugins explore --name uipathcli --tags rpa,cicd --has-learn true --json")
+assert(uipathcliExplore.ok, "uipathcli explore should succeed")
+const uipathcliExploreData = JSON.parse(uipathcliExplore.output)
+assert(uipathcliExploreData.plugins.some(p => p.name === "uipathcli"), "explore filters should find uipathcli")
+
 const repoPath = makeRemotePluginRepo()
 const install = runNoServer(`plugins install --git ${repoPath} --manifest-path plugins/supercli/plugin.json --ref main --json`)
 assert(install.ok, "remote git install should succeed")
