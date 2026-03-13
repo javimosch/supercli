@@ -29,7 +29,7 @@ supercli plugins install agent-browser --json
 ```bash
 supercli agent-browser cli version
 supercli agent-browser browser install
-supercli agent-browser browser open https://example.com
+supercli agent-browser browser open --url https://example.com
 supercli agent-browser browser snapshot
 supercli agent-browser browser close
 ```
@@ -47,11 +47,20 @@ supercli agent-browser close
 
 ## Recommended Human Workflow
 
-1. Open page: `supercli agent-browser open <url>`
+1. Open page: `supercli agent-browser open <url>` or `supercli agent-browser browser open --url <url>`
 2. Capture refs: `supercli agent-browser snapshot -i`
 3. Interact with refs: `click @eN`, `fill @eN "..."`
 4. Re-snapshot after page changes
 5. Close when done: `supercli agent-browser close`
+
+## Important Caveats
+
+- `browser open` wrapper requires `--url` (named argument). Check schema with `supercli inspect agent-browser browser open --json`.
+- Wrappers are intentionally minimal. Use passthrough (`supercli agent-browser <upstream args...>`) for full upstream options.
+- Ref ids (`@e1`, `@e2`, etc.) are snapshot-scoped and can change after navigation or refresh. Run a fresh `snapshot -i` before using refs.
+- `browser snapshot` returns a full accessibility tree; `snapshot -i` returns a compact refs map and is better for click/fill automation loops.
+- Real pages may expose noisy or translated link labels (social embeds, widgets). Prefer ref-based actions over brittle text matching.
+- After `browser close`, `browser snapshot` may return a minimal empty document. Re-open a URL before continuing automation.
 
 ## Notes
 
