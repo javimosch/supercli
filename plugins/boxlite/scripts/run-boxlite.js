@@ -3,6 +3,7 @@
 const { spawnSync } = require("child_process")
 const path = require("path")
 const os = require("os")
+const fs = require("fs")
 
 const IMAGE_NAME = "dcli-boxlite"
 const IMAGE_TAG = "1.1.0"
@@ -56,6 +57,7 @@ function run() {
   const home = os.homedir()
   const hostRuntimeDir = process.env.BOXLITE_RUNTIME_HOME || path.join(home, ".boxlite")
   const hostWorkspace = process.cwd()
+  const hostSdkDir = process.env.BOXLITE_SDK_DIR
 
   ensureImage(pluginDir)
 
@@ -85,7 +87,17 @@ function run() {
     dockerArgs.push("--env", `RUST_LOG=${process.env.RUST_LOG}`)
   }
 
-  dockerArgs.push(FULL_IMAGE, "boxcli", ...passthroughArgs)
+  let containerCommand = ["boxcli", ...passthroughArgs]
+
+  if (hostSdkDir) {
+    const cliEntry = path.join(hostSdkDir, "dist/cli/index.js")
+    if (fs.existsSync(cliEntry)) {
+      dockerArgs.push("--volume", `${hostSdkDir}:/opt/boxlite-sdk:ro`)
+      containerCommand = ["node", "/opt/boxlite-sdk/dist/cli/index.js", ...passthroughArgs]
+    }
+  }
+
+  dockerArgs.push(FULL_IMAGE, ...containerCommand)
 
   const result = runDocker(dockerArgs, { timeout: 600000 })
   exitWithResult(result, "Failed to run boxlite Docker container")
