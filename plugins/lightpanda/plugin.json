@@ -1,0 +1,116 @@
+{
+  "name": "lightpanda",
+  "version": "0.1.0",
+  "description": "Lightpanda plugin with agent-friendly scripted browser automation via puppeteer-core",
+  "source": "https://lightpanda.io/docs/",
+  "checks": [
+    { "type": "binary", "name": "node" },
+    { "type": "binary", "name": "npm" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lightpanda",
+      "resource": "cli",
+      "action": "setup",
+      "description": "Install Lightpanda plugin runtime dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/setup-lightpanda.js"],
+        "parseJson": false,
+        "timeout_ms": 120000
+      },
+      "args": []
+    },
+    {
+      "namespace": "lightpanda",
+      "resource": "cli",
+      "action": "help-json",
+      "description": "Show machine-readable command help for the Lightpanda wrapper",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/lightpanda-wrapper.js", "help-json"],
+        "parseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "lightpanda",
+      "resource": "script",
+      "action": "run",
+      "description": "Run dynamic Lightpanda automation code with injected browser and page objects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/lightpanda-wrapper.js", "run"],
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Please run 'dcli lightpanda cli setup' to install the Lightpanda runtime."
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": false, "description": "JavaScript function body to execute" },
+        { "name": "file", "type": "string", "required": false, "description": "Absolute path to a JavaScript file to execute" },
+        { "name": "url", "type": "string", "required": false, "description": "Optional URL to open before running the script" },
+        { "name": "wait-until", "type": "string", "required": false, "description": "Navigation waitUntil mode (load, domcontentloaded, networkidle0, networkidle2)" },
+        { "name": "timeout-ms", "type": "number", "required": false, "description": "Overall execution timeout in milliseconds" },
+        { "name": "navigation-timeout-ms", "type": "number", "required": false, "description": "Navigation timeout in milliseconds" },
+        { "name": "host", "type": "string", "required": false, "description": "Lightpanda host to bind" },
+        { "name": "port", "type": "number", "required": false, "description": "Lightpanda port to bind" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Forward Lightpanda process logs to stderr" }
+      ]
+    },
+    {
+      "namespace": "lightpanda",
+      "resource": "extract",
+      "action": "run",
+      "description": "Run generic extraction code with browser, cheerio, and resilient navigation context",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/lightpanda-generic-extract.js", "run"],
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Please run 'dcli lightpanda cli setup' to install the Lightpanda runtime."
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": false, "description": "JavaScript extraction body to execute" },
+        { "name": "file", "type": "string", "required": false, "description": "Absolute path to a JavaScript extraction file" },
+        { "name": "url", "type": "string", "required": false, "description": "Optional target URL to load before executing code" },
+        { "name": "timeout-ms", "type": "number", "required": false, "description": "Overall extraction timeout in milliseconds" },
+        { "name": "navigation-timeout-ms", "type": "number", "required": false, "description": "Navigation timeout in milliseconds" },
+        { "name": "wait-until", "type": "string", "required": false, "description": "Navigation waitUntil mode" },
+        { "name": "host", "type": "string", "required": false, "description": "Lightpanda host to bind" },
+        { "name": "port", "type": "number", "required": false, "description": "Lightpanda port to bind" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Forward Lightpanda process logs to stderr" }
+      ]
+    },
+    {
+      "namespace": "lightpanda",
+      "resource": "contacts",
+      "action": "discover",
+      "description": "Discover owner contact channels with a focused multi-page crawl",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/lightpanda-contacts.js", "run"],
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Please run 'dcli lightpanda cli setup' to install the Lightpanda runtime."
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Target site URL" },
+        { "name": "max-pages", "type": "number", "required": false, "description": "Maximum number of pages to scan" },
+        { "name": "timeout-ms", "type": "number", "required": false, "description": "Overall extraction timeout in milliseconds" },
+        { "name": "navigation-timeout-ms", "type": "number", "required": false, "description": "Navigation timeout in milliseconds" },
+        { "name": "host", "type": "string", "required": false, "description": "Lightpanda host to bind" },
+        { "name": "port", "type": "number", "required": false, "description": "Lightpanda port to bind" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Forward Lightpanda process logs to stderr" }
+      ]
+    }
+  ]
+}
