@@ -1,0 +1,150 @@
+{
+  "name": "cass",
+  "version": "0.1.0",
+  "description": "Coding Agent Session Search (cass) - Unified indexing and search for local coding agent history",
+  "source": "https://github.com/Dicklesworthstone/coding_agent_session_search",
+  "checks": [
+    { "type": "binary", "name": "node" },
+    { "type": "binary", "name": "npm" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cass",
+      "resource": "cli",
+      "action": "setup",
+      "description": "Install coding-agent-search (cass) dependency",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/setup-cass.js"],
+        "parseJson": false,
+        "timeout_ms": 180000
+      },
+      "args": []
+    },
+    {
+      "namespace": "cass",
+      "resource": "index",
+      "action": "health",
+      "description": "Check if the search index is healthy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["health", "--json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": []
+    },
+    {
+      "namespace": "cass",
+      "resource": "index",
+      "action": "run",
+      "description": "Rebuild or update the search index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["index", "--json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": [
+        { "name": "full", "type": "boolean", "required": false, "description": "Perform a full rebuild" },
+        { "name": "force-rebuild", "type": "boolean", "required": false, "description": "Force rebuild even if index exists" }
+      ]
+    },
+    {
+      "namespace": "cass",
+      "resource": "search",
+      "action": "run",
+      "description": "Search across all agent history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["search", "--robot"],
+        "positionalArgs": ["query"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" },
+        { "name": "limit", "type": "number", "required": false, "description": "Cap result count" },
+        { "name": "agent", "type": "string", "required": false, "description": "Filter by agent type" },
+        { "name": "days", "type": "number", "required": false, "description": "Limit to recent N days" },
+        { "name": "mode", "type": "string", "required": false, "description": "Search mode: lexical, semantic, hybrid" },
+        { "name": "fields", "type": "string", "required": false, "description": "Fields to return: minimal, summary, or custom list" }
+      ]
+    },
+    {
+      "namespace": "cass",
+      "resource": "session",
+      "action": "view",
+      "description": "View a specific session by path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["view", "--json"],
+        "positionalArgs": ["path"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to session file" },
+        { "name": "line-number", "alias": "n", "type": "number", "required": false, "description": "Line number to focus on" }
+      ]
+    },
+    {
+      "namespace": "cass",
+      "resource": "session",
+      "action": "expand",
+      "description": "Expand context around a search hit",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["expand", "--json"],
+        "positionalArgs": ["path"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to session file" },
+        { "name": "line-number", "alias": "n", "type": "number", "required": true, "description": "Line number" },
+        { "name": "context", "alias": "C", "type": "number", "required": false, "description": "Number of lines of context" }
+      ]
+    },
+    {
+      "namespace": "cass",
+      "resource": "activity",
+      "action": "stats",
+      "description": "Show aggregate history statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["stats", "--json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": []
+    },
+    {
+      "namespace": "cass",
+      "resource": "activity",
+      "action": "timeline",
+      "description": "Display activity timeline",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cass",
+        "baseArgs": ["timeline", "--json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Please run 'dcli cass cli setup' to install cass."
+      },
+      "args": [
+        { "name": "days", "type": "number", "required": false, "description": "Limit to recent N days" },
+        { "name": "group-by", "type": "string", "required": false, "description": "Group results by: hour, day" }
+      ]
+    }
+  ]
+}
