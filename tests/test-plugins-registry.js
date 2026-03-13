@@ -223,6 +223,11 @@ assert(nullclawExplore.ok, "nullclaw explore should succeed")
 const nullclawExploreData = JSON.parse(nullclawExplore.output)
 assert(nullclawExploreData.plugins.some(p => p.name === "nullclaw"), "explore filters should find nullclaw")
 
+const agentBrowserExplore = runNoServer("plugins explore --name agent-browser --tags browser,automation --has-learn true --json")
+assert(agentBrowserExplore.ok, "agent-browser explore should succeed")
+const agentBrowserExploreData = JSON.parse(agentBrowserExplore.output)
+assert(agentBrowserExploreData.plugins.some(p => p.name === "agent-browser"), "explore filters should find agent-browser")
+
 const repoPath = makeRemotePluginRepo()
 const install = runNoServer(`plugins install --git ${repoPath} --manifest-path plugins/supercli/plugin.json --ref main --json`)
 assert(install.ok, "remote git install should succeed")
