@@ -1,0 +1,98 @@
+{
+  "name": "gemini",
+  "version": "0.1.0",
+  "description": "Gemini CLI plugin with headless JSON wrappers and passthrough",
+  "source": "https://github.com/google-gemini/gemini-cli",
+  "checks": [
+    { "type": "binary", "name": "gemini" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gemini",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show installed Gemini CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gemini",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Install with: npm install -g @google/gemini-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gemini",
+      "resource": "task",
+      "action": "text",
+      "description": "Run a headless Gemini prompt and return text output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gemini",
+        "baseArgs": [],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install with: npm install -g @google/gemini-cli"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "Prompt to run in headless mode" },
+        { "name": "model", "type": "string", "required": false, "description": "Model id (for example gemini-3-pro)" }
+      ]
+    },
+    {
+      "namespace": "gemini",
+      "resource": "task",
+      "action": "ask",
+      "description": "Run a headless Gemini prompt and return structured JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gemini",
+        "baseArgs": ["--output-format", "json"],
+        "parseJson": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install with: npm install -g @google/gemini-cli"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "Prompt to run in headless mode" },
+        { "name": "model", "type": "string", "required": false, "description": "Model id (for example gemini-3-pro)" }
+      ]
+    },
+    {
+      "namespace": "gemini",
+      "resource": "task",
+      "action": "stream",
+      "description": "Run a headless Gemini prompt with stream-json events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gemini",
+        "baseArgs": ["--output-format", "stream-json"],
+        "stream": "jsonl",
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install with: npm install -g @google/gemini-cli"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "Prompt to run in headless mode" },
+        { "name": "model", "type": "string", "required": false, "description": "Model id (for example gemini-3-pro)" }
+      ]
+    },
+    {
+      "namespace": "gemini",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any Gemini CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gemini",
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install with: npm install -g @google/gemini-cli"
+      },
+      "args": []
+    }
+  ]
+}
