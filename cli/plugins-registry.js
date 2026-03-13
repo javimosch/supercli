@@ -2,6 +2,7 @@ const fs = require("fs")
 const path = require("path")
 
 const REGISTRY_FILE = path.resolve(__dirname, "..", "plugins", "plugins.json")
+const BUNDLED_PLUGINS_DIR = path.resolve(__dirname, "..", "plugins")
 
 function invalid(message) {
   return Object.assign(new Error(message), {
@@ -31,24 +32,89 @@ function readRegistry() {
 }
 
 function normalizePlugin(entry) {
+  const source = entry.source && typeof entry.source === "object" ? entry.source : {}
   return {
     name: entry.name,
     description: entry.description || "",
     tags: Array.isArray(entry.tags) ? entry.tags.map(t => String(t)) : [],
-    source: entry.source && typeof entry.source === "object" ? entry.source : {},
-    has_learn: entry.has_learn === true
+    source,
+    has_learn: entry.has_learn === true,
+    install_guidance: entry.install_guidance && typeof entry.install_guidance === "object"
+      ? entry.install_guidance
+      : null,
   }
 }
 
-function listRegistryPlugins(filters = {}) {
+function readManifest(filePath) {
+  try {
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf-8"))
+    if (!parsed || typeof parsed !== "object" || !parsed.name || !Array.isArray(parsed.commands)) return null
+    return parsed
+  } catch {
+    return null
+  }
+}
+
+function discoverBundledPlugins() {
+  if (!fs.existsSync(BUNDLED_PLUGINS_DIR)) return []
+  let entries
+  try {
+    entries = fs.readdirSync(BUNDLED_PLUGINS_DIR, { withFileTypes: true })
+  } catch {
+    return []
+  }
+  if (!Array.isArray(entries)) return []
+  const plugins = []
+
+  for (const entry of entries) {
+    if (!entry || !entry.isDirectory()) continue
+    const manifestPath = path.join(BUNDLED_PLUGINS_DIR, entry.name, "plugin.json")
+    if (!fs.existsSync(manifestPath)) continue
+    const manifest = readManifest(manifestPath)
+    if (!manifest) continue
+    plugins.push({
+      name: manifest.name,
+      description: manifest.description || "",
+      tags: Array.isArray(manifest.tags) ? manifest.tags.map(t => String(t)) : [],
+      source: {
+        type: "bundled",
+        manifest_path: path.relative(path.resolve(__dirname, ".."), manifestPath).replace(/\\/g, "/")
+      },
+      has_learn: !!manifest.learn,
+      install_guidance: manifest.install_guidance && typeof manifest.install_guidance === "object"
+        ? manifest.install_guidance
+        : null,
+    })
+  }
+
+  return plugins
+}
+
+function mergedRegistryPlugins() {
   const registry = readRegistry()
+  const discovered = discoverBundledPlugins()
+  const merged = new Map()
+
+  for (const plugin of discovered) {
+    const normalized = normalizePlugin(plugin)
+    merged.set(String(normalized.name || "").toLowerCase(), normalized)
+  }
+
+  for (const plugin of (registry.plugins || [])) {
+    const normalized = normalizePlugin(plugin)
+    merged.set(String(normalized.name || "").toLowerCase(), normalized)
+  }
+
+  return Array.from(merged.values())
+}
+
+function listRegistryPlugins(filters = {}) {
   const nameQuery = (filters.name || "").toLowerCase().trim()
   const tagQueries = (filters.tags || [])
     .map(t => String(t || "").toLowerCase().trim())
     .filter(Boolean)
 
-  return registry.plugins
-    .map(normalizePlugin)
+  return mergedRegistryPlugins()
     .filter(entry => {
       if (nameQuery) {
         const text = `${entry.name} ${entry.description}`.toLowerCase()
@@ -68,14 +134,14 @@ function listRegistryPlugins(filters = {}) {
 function getRegistryPlugin(name) {
   const lower = String(name || "").toLowerCase()
   if (!lower) return null
-  const registry = readRegistry()
-  const found = registry.plugins.find(p => String(p.name || "").toLowerCase() === lower)
-  return found ? normalizePlugin(found) : null
+  return mergedRegistryPlugins().find(p => String(p.name || "").toLowerCase() === lower) || null
 }
 
 module.exports = {
   REGISTRY_FILE,
+  BUNDLED_PLUGINS_DIR,
   readRegistry,
+  discoverBundledPlugins,
   listRegistryPlugins,
   getRegistryPlugin
 }

@@ -52,6 +52,7 @@ describe("plugins-registry", () => {
     beforeEach(() => {
       fs.existsSync.mockReturnValue(true)
       fs.readFileSync.mockReturnValue(JSON.stringify(mockRegistry))
+      fs.readdirSync.mockReturnValue([])
     })
 
     test("returns all plugins normalized", () => {
@@ -89,6 +90,49 @@ describe("plugins-registry", () => {
     test("returns empty if no match", () => {
       const list = listRegistryPlugins({ name: "nomatch" })
       expect(list).toHaveLength(0)
+    })
+
+    test("includes auto-discovered bundled plugin not in registry file", () => {
+      fs.readdirSync.mockReturnValue([
+        { name: "autop", isDirectory: () => true }
+      ])
+      fs.existsSync.mockImplementation((p) => (
+        String(p).includes("plugins/autop/plugin.json") ||
+        String(p).endsWith("plugins.json") ||
+        /[\\/]plugins$/.test(String(p))
+      ))
+      fs.readFileSync.mockImplementation((p) => {
+        if (String(p).endsWith("plugins.json")) return JSON.stringify({ version: 1, plugins: [] })
+        return JSON.stringify({ name: "autop", description: "auto", commands: [], learn: { file: "skills/quickstart/SKILL.md" } })
+      })
+
+      const list = listRegistryPlugins({ name: "autop" })
+      expect(list).toHaveLength(1)
+      expect(list[0].name).toBe("autop")
+      expect(list[0].has_learn).toBe(true)
+      expect(list[0].source).toEqual({ type: "bundled", manifest_path: "plugins/autop/plugin.json" })
+    })
+
+    test("registry entry overrides discovered metadata by name", () => {
+      fs.readdirSync.mockReturnValue([{ name: "p1", isDirectory: () => true }])
+      fs.existsSync.mockImplementation((p) => (
+        String(p).includes("plugins/p1/plugin.json") ||
+        String(p).endsWith("plugins.json") ||
+        /[\\/]plugins$/.test(String(p))
+      ))
+      fs.readFileSync.mockImplementation((p) => {
+        if (String(p).endsWith("plugins.json")) {
+          return JSON.stringify({
+            version: 1,
+            plugins: [{ name: "p1", description: "registry-desc", tags: ["registry"] }],
+          })
+        }
+        return JSON.stringify({ name: "p1", description: "discovered-desc", commands: [] })
+      })
+
+      const plugin = getRegistryPlugin("p1")
+      expect(plugin.description).toBe("registry-desc")
+      expect(plugin.tags).toEqual(["registry"])
     })
   })
 
