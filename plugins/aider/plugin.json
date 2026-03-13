@@ -1,0 +1,105 @@
+{
+  "name": "aider",
+  "version": "0.1.0",
+  "description": "Aider CLI plugin with one-shot non-interactive coding wrappers",
+  "source": "https://aider.chat/docs/scripting.html",
+  "checks": [
+    { "type": "binary", "name": "python3" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aider",
+      "resource": "cli",
+      "action": "setup",
+      "description": "Install aider-chat for one-shot use",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/setup-aider.js"],
+        "parseJson": false,
+        "timeout_ms": 120000
+      },
+      "args": []
+    },
+    {
+      "namespace": "aider",
+      "resource": "cli",
+      "action": "help-json",
+      "description": "Show machine-readable help for the aider wrapper",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/aider-wrapper.js", "help-json"],
+        "parseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "aider",
+      "resource": "models",
+      "action": "list",
+      "description": "List aider models matching a partial query",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/aider-wrapper.js", "models"],
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Please run 'dcli aider cli setup' to install aider-chat."
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Partial model name to search" }
+      ]
+    },
+    {
+      "namespace": "aider",
+      "resource": "code",
+      "action": "apply",
+      "description": "Run a one-shot aider coding task that may modify files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/aider-wrapper.js", "apply"],
+        "parseJson": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Please run 'dcli aider cli setup' to install aider-chat."
+      },
+      "args": [
+        { "name": "cwd", "type": "string", "required": true, "description": "Absolute path to the target project directory" },
+        { "name": "prompt", "type": "string", "required": true, "description": "One-shot natural language instruction" },
+        { "name": "model", "type": "string", "required": false, "description": "Optional aider model name" },
+        { "name": "files", "type": "string", "required": false, "description": "Comma-separated editable files" },
+        { "name": "read", "type": "string", "required": false, "description": "Comma-separated read-only files" },
+        { "name": "timeout-seconds", "type": "number", "required": false, "description": "Aider API timeout in seconds" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Enable verbose aider output" }
+      ]
+    },
+    {
+      "namespace": "aider",
+      "resource": "code",
+      "action": "dry-run",
+      "description": "Run a one-shot aider coding task without modifying files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/aider-wrapper.js", "dry-run"],
+        "parseJson": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Please run 'dcli aider cli setup' to install aider-chat."
+      },
+      "args": [
+        { "name": "cwd", "type": "string", "required": true, "description": "Absolute path to the target project directory" },
+        { "name": "prompt", "type": "string", "required": true, "description": "One-shot natural language instruction" },
+        { "name": "model", "type": "string", "required": false, "description": "Optional aider model name" },
+        { "name": "files", "type": "string", "required": false, "description": "Comma-separated editable files" },
+        { "name": "read", "type": "string", "required": false, "description": "Comma-separated read-only files" },
+        { "name": "timeout-seconds", "type": "number", "required": false, "description": "Aider API timeout in seconds" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Enable verbose aider output" }
+      ]
+    }
+  ]
+}
