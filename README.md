@@ -1,6 +1,11 @@
-# supercli — Universal Skill Router for AI Agents
+# supercli — Universal Capability Router for AI Agents
 
-Discover and execute skills across CLIs, APIs, MCP servers, workflows, and custom automations through a single agent-friendly interface.
+Discover and execute capabilities across CLIs, APIs, MCP servers, workflows, and custom automations through a single agent-friendly interface.
+
+## Terminology
+
+- **Capability**: Any executable unit exposed by Supercli (command, OpenAPI operation, MCP tool binding, HTTP integration, workflow step).
+- **Skill document**: Agent-facing guidance in `SKILL.md` format, indexed by the `skills` catalog commands.
 
 ## BIN Aliases
 
@@ -10,44 +15,44 @@ Discover and execute skills across CLIs, APIs, MCP servers, workflows, and custo
 - superacli (What was available) (Super Agent/ic CLI)
 - sc (For lazy people)
 
-## What Is a Skill Layer?
+## What Is a Capability Layer?
 
-Everything the system exposes becomes a **skill**:
+Everything the system exposes becomes a **capability**:
 
 | Source | Turns into |
 | --- | --- |
-| CLI command | Skill |
-| OpenAPI endpoint | Skill |
-| MCP tool | Skill |
-| HTTP request | Skill |
-| Workflow / plan step | Skill |
+| CLI command | Capability |
+| OpenAPI endpoint | Capability |
+| MCP tool | Capability |
+| HTTP request | Capability |
+| Workflow / plan step | Capability |
 
-Agents query the skill layer once, and supercli handles discovery, routing, and execution across every connected ecosystem. Skills are addressable (e.g., `beads.issue.list` or `docker.container.ps`), searchable, and consistently described so agents never need bespoke integrations per tool.
+Agents query the capability layer once, and supercli handles discovery, routing, and execution across every connected ecosystem. Capabilities are addressable (e.g., `beads.issue.list` or `docker.container.ps`), searchable, and consistently described so agents never need bespoke integrations per tool.
 
 ### Core Responsibilities
 
-1. **Discovery** – build a real-time catalog of skills across bundled harnesses, adapters, and plugins.
-2. **Routing** – resolve the right execution adapter (CLI, HTTP, MCP, custom runtime) from an incoming skill ID.
+1. **Discovery** – build a real-time catalog of capabilities across bundled harnesses, adapters, and plugins.
+2. **Routing** – resolve the right execution adapter (CLI, HTTP, MCP, custom runtime) from an incoming capability ID.
 3. **Execution** – normalize inputs/outputs, enforce envelopes, and surface deterministic status codes.
-4. **Extension** – let teams add new skills by dropping in manifests, OpenAPI specs, or plugin harnesses.
+4. **Extension** – let teams add new capabilities by dropping in manifests, OpenAPI specs, or plugin harnesses.
 
-Example skill executions:
+Example capability executions:
 
 ```bash
-supercli beads issue list              # Calls beads skill adapter
+supercli beads issue list              # Calls beads capability adapter
 supercli gwc drive files list          # Calls Google Workspace adapter
 supercli docker container ps           # Calls Docker plugin (when installed)
 ```
 
-## Skill Sources
+## Capability Sources
 
-supercli generates skills from six primary channels:
+supercli generates capabilities from six primary channels:
 
 - **Bundled Harnesses** – beads (tasks/issues), gwc (Google Workspace), commiat (commit automation)
 - **Built-in Adapters** – OpenAPI specs, raw HTTP integrations, MCP (Model Context Protocol) servers
 - **Plugin Harnesses** – community or internal CLIs installed via `supercli plugins install`
-- **AI & Plans** – natural-language `ask` commands create execution DAGs composed of skills
-- **Workflows** – repeatable plans and stored executions referenced as skills
+- **AI & Plans** – natural-language `ask` commands create execution DAGs composed of capabilities
+- **Workflows** – repeatable plans and stored executions referenced as capabilities
 - **Future Extensions** – popular CLIs such as gh, aws, docker, kubectl, terraform, etc.
 
 ## Architecture
@@ -57,9 +62,9 @@ supercli generates skills from six primary channels:
                   │
             supercli runtime
                   │
-            Skill Discovery Layer
+          Capability Discovery Layer
                   │
-             Skill Router Core
+           Capability Router Core
                   │
    ┌──────────────┼──────────────┬───────────────┐
    │              │              │               │
@@ -67,61 +72,67 @@ supercli generates skills from six primary channels:
 ```
 
 The router intelligently:
-- **Discovers** available skills from every adapter and caches metadata for fast lookup
+- **Discovers** available capabilities from every adapter and caches metadata for fast lookup
 - **Routes** commands to the correct harness based on namespace and capability metadata
 - **Executes** with unified error handling, envelopes, and output formatting
-- **Surfaces** machine-readable descriptions so agents can plan against the skill graph
+- **Surfaces** machine-readable descriptions so agents can plan against the capability graph
 
-## Why Skills Matter
+## Why Capabilities Matter
 
-Traditional CLIs force agents to learn tool-specific syntax. supercli replaces that effort with a discoverable skill graph so agents can:
+Traditional CLIs force agents to learn tool-specific syntax. supercli replaces that effort with a discoverable capability graph so agents can:
 
 - Search (`supercli skills search "database"`) to find relevant capabilities instantly
 - Inspect (`supercli skills get beads.issue.create`) to pull schema-rich metadata
-- Compose (`supercli plan …`) to build DAGs out of skills without writing glue code
+- Compose (`supercli plan …`) to build DAGs out of capabilities without writing glue code
 - Delegate execution to the same router regardless of whether the source is a CLI, API, or MCP tool
 
-## Skill Mesh Vision
+## Capability Mesh Vision
 
-supercli is steadily evolving toward a broader **skill mesh** that provides discovery, routing, execution, composition, and governance across every tool in the stack. Near-term focus areas include:
+supercli is steadily evolving toward a broader **capability mesh** that provides discovery, routing, execution, composition, and governance across every tool in the stack. Near-term focus areas include:
 
-- **Deeper skill registry** with richer metadata, tagging, and policy controls
-- **Graph-native discovery** so agents can traverse related skills and capability clusters
-- **Execution DAG observability** for multi-skill plans with retries and status streaming
+- **Deeper capability registry** with richer metadata, tagging, and policy controls
+- **Graph-native discovery** so agents can traverse related capabilities and capability clusters
+- **Execution DAG observability** for multi-capability plans with retries and status streaming
 - **Agent endpoints** that expose the router over HTTP/webhooks for direct agent access beyond the CLI
 
 These directional goals keep the README aligned with the system’s trajectory without overpromising unshipped features.
 
+## Operating Modes
+
+Supercli supports two runtime modes:
+
+| Mode | What it means | Best for |
+| --- | --- | --- |
+| Local-only (default) | CLI runs directly from local config/cache and installed plugins. No Supercli server required. | Personal workflows, offline/local development, quick setup |
+| Server mode | A Supercli server hosts shared config/plugins via API; clients connect with `SUPERCLI_SERVER` and run `supercli sync`. | Team-shared capabilities/plugins, centralized governance, multi-client consistency |
+
+Notes:
+- `supercli sync` is only relevant when `SUPERCLI_SERVER` is configured.
+- Local plugins still take precedence over server-synced plugins when names collide.
+- Server plugin behavior and policies are documented in [docs/features/server-plugins.md](docs/features/server-plugins.md).
+
 ## Quick Start
 
 ```bash
-# Quick usage (no install, local-only by default)
+# Path A: Local-only mode (default, no server required)
 npx supercli help                      # List available harnesses
 npx supercli skills teach
 
 # Install
 npm install
 
-# Configure (copy and edit)
+# Optional local config
 cp .env.example .env
 
-# Start server (defaults to local JSON files, no MongoDB required!)
-npm start
-# Or alternatively, start via CLI:
-# supercli --server
-
-# Open Web UI
-open http://localhost:3000
-
-# CLI usage - Multi-harness routing
+# Local CLI usage - Multi-harness routing
 supercli help                          # List all harnesses
-supercli beads                         # List beads skills
-supercli gwc                           # List Google Workspace skills
+supercli beads                         # List beads capabilities
+supercli gwc                           # List Google Workspace capabilities
 supercli beads issue list              # Execute beads command
 supercli gwc drive files list          # Execute Google Workspace command
 
-# Skills discovery across harnesses
-supercli skills list                   # All skills from all harnesses
+# Capabilities discovery across harnesses
+supercli skills list                   # Capability docs from all harnesses
 supercli skills search "database"      # Full-text search across harnesses
 
 # AI-driven multi-harness execution
@@ -131,6 +142,19 @@ supercli ask "show my tasks and recent commits"
 supercli plugins list
 supercli plugins explore               # Browse available plugins
 supercli plugins install commiat       # Install community plugin
+
+# Path B: Server mode (optional, shared backend)
+# Start server (local JSON storage by default; MongoDB optional)
+npm start
+# Or alternatively, start via CLI:
+# supercli --server
+
+# Point CLI clients to the server, then sync shared config/plugins
+export SUPERCLI_SERVER=http://localhost:3000
+supercli sync
+
+# Open Web UI
+open http://localhost:3000
 ```
 
 ## CLI Usage
@@ -139,8 +163,8 @@ supercli plugins install commiat       # Install community plugin
 
 ```bash
 # Basic harness routing
-supercli <harness>                          # List skills in harness
-supercli <harness> <skill-group> <action>   # Execute skill
+supercli <harness>                          # List capabilities in harness
+supercli <harness> <capability-group> <action>   # Execute capability
 
 # Examples across different harnesses
 supercli beads issue create --title "Fix bug"
@@ -150,13 +174,13 @@ supercli commiat validate --commit-msg "my message"
 
 # Discovery
 supercli help                              # List all harnesses
-supercli skills list                       # List all skills from all harnesses
+supercli skills list                       # List capability docs from all harnesses
 supercli skills search --harness beads     # Search within harness
 supercli skills search "database"          # Full-text search across harnesses
 
 # Inspection
 supercli inspect beads issue create        # Command details + schema
-supercli skills get beads.issue.create     # Get skill metadata
+supercli skills get beads.issue.create     # Get capability documentation
 
 # Execution
 supercli beads issue create --title "New task"      # Standard execution
@@ -172,9 +196,9 @@ export OPENAI_BASE_URL=https://api.openai.com/v1   # Enable AI resolution
 supercli ask "list my tasks and summarize them"     # Execute across harnesses
 
 # Config & Server
-supercli sync                              # Sync local cache from server
+supercli sync                              # Server mode only: sync cache from SUPERCLI_SERVER
 supercli config show                       # Show cache info
-supercli --server                          # Start backend server
+supercli --server                          # Start backend server (server mode)
 
 # Plugin Harness Management
 supercli plugins list                      # List installed harnesses
@@ -221,7 +245,7 @@ supercli --help-json                       # Machine-readable capabilities
 A **plugin harness** bridges dcli to an external CLI tool. Each plugin:
 - Defines a manifest (`plugin.json`) with available commands
 - Maps CLI arguments to dcli's command structure
-- Supports command wrapping, passthrough, remote skills catalogs, or any combination of those patterns
+- Supports command wrapping, passthrough, remote skill-document catalogs, or any combination of those patterns
 - Includes dependency checks and installation guidance
 
 ### Currently Supported Harnesses

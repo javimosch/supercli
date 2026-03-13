@@ -2,6 +2,8 @@
 
 SuperCLI can discover SKILL.md files from multiple local providers and expose them with stable `provider:id` identifiers.
 
+This catalog is for **skill documents** (agent instructions), not executable command capabilities. Executable capabilities are still discovered/executed via normal command routing (`supercli <namespace> <resource> <action>` and `supercli inspect ...`).
+
 ## Provider Commands
 
 ```bash
@@ -41,7 +43,7 @@ runtime API-key passing.
 
 - IDs are always provider-qualified (`provider:id`) for future-proof disambiguation.
 - Current provider types include `local_fs`, `repo_fs`, and `remote_static`.
-- Existing command-skill flow remains available (`skills list`, `skills get <ns.res.act>`, `skills teach`).
+- Existing capability-doc flow remains available (`skills list`, `skills get <ns.res.act>`, `skills teach`).
 
 ## Remote Provider Example: agency-agents
 

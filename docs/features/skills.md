@@ -1,12 +1,16 @@
-# AI Skills Support
+# Skill Documents (SKILL.md)
 
-SUPERCLI natively integrates a teaching mechanism to empower local LLMs/agents with context about the application's CLI interface.
+SUPERCLI includes a SKILL.md teaching/catalog system for local LLMs and agents.
+
+Terminology:
+- **Capability**: executable command endpoint (commands, MCP tool bindings, OpenAPI-backed operations, workflows).
+- **Skill document**: instruction artifact returned by `supercli skills ...` commands.
 
 ## Key Features
 
-- **Bootstrapping Skills (`teach`)**: Emits a meta-skill document (in Markdown format compatible with Anthropic/OpenAI instructions) detailing the core architectural design of SUPERCLI and dynamically listing the namespaces and resources available.
-- **Micro-Skills Extraction (`get <cmd>`)**: Automatically pulls a specific SUPERCLI command's capabilities and formats it into a self-contained AI-actionable tool instruction (e.g., Markdown schema).
-- **Embedded DAG Planning**: Optionally injects execution plan information (`--show-dag`) into a skill's document to teach agents how to handle dry-runs for risky operations before execution.
+- **Bootstrapping Skill Docs (`teach`)**: Emits a meta-skill document (Markdown compatible with Anthropic/OpenAI instructions) describing SuperCLI and available namespaces/resources.
+- **Capability Doc Extraction (`get <cmd>`)**: Pulls one command capability and formats it as a self-contained agent instruction document.
+- **Embedded DAG Planning**: Optionally injects execution plan information (`--show-dag`) into the generated skill document to teach dry-run-first workflows.
 
 ## Usage
 
