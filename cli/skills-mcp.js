@@ -93,7 +93,7 @@ function buildMcpServersUsageSkillMarkdown(options = {}) {
     "- Prefer passing secrets via runtime environment variables and CLI args, not committed files.",
     "- If your MCP args/env contain ${ENV_VAR} placeholders, export them before running mcp tools/call/doctor.",
     "- For named MCP servers, command-level adapter settings override server-level defaults on conflicts.",
-    "- Use `supercli skills teach --format skill.md` for general skills discovery guidance.",
+    "- Use `supercli skills teach --format skill.md` for general capability and skill-document discovery guidance.",
   ];
 
   return `---\n${renderYamlObject(frontmatter)}\n---\n\n${body.join("\n")}`;

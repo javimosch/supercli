@@ -143,7 +143,7 @@ function buildTeachSkillMarkdown(options = {}) {
 
   const frontmatter = {
     skill_name: "teach_skills_usage",
-    description: "Introduces LLMs to SuperCLI skills commands and explains how to request and execute skills.",
+    description: "Introduces LLMs to SuperCLI capability and skill-document commands, and explains how to request capability docs and execute capabilities.",
     command: "skills teach",
     arguments: [
       {

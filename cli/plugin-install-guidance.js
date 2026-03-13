@@ -294,7 +294,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "supercli skills get blogwatcher:root.skill",
       "supercli blogwatcher blogs list --json"
     ],
-    note: "This hybrid plugin indexes the upstream BlogWatcher README and SKILL documents into the skills catalog and exposes non-interactive wrappers for the local CLI. BlogWatcher stores data under ~/.blogwatcher, so use an isolated HOME when you want disposable test data."
+    note: "This hybrid plugin indexes the upstream BlogWatcher README and SKILL documents into the skill-doc catalog and exposes non-interactive wrappers for the local CLI. BlogWatcher stores data under ~/.blogwatcher, so use an isolated HOME when you want disposable test data."
   },
   himalaya: {
     plugin: "himalaya",
@@ -366,7 +366,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "supercli skills list --catalog --provider monty --json",
       "supercli monty python run \"1 + 2\" --json"
     ],
-    note: "This hybrid plugin indexes the upstream Monty README and CLAUDE (skills) documents and provides a sandboxed Python execution environment. It manages its own @pydantic/monty dependency globally."
+    note: "This hybrid plugin indexes the upstream Monty README and CLAUDE skill documents and provides a sandboxed Python execution environment. It manages its own @pydantic/monty dependency globally."
   },
   cline: {
     plugin: "cline",
@@ -397,7 +397,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "supercli nullclaw cli version --json",
       "supercli nullclaw system status --json"
     ],
-    note: "This hybrid plugin indexes remote NullClaw docs into the local skills catalog and exposes the local nullclaw binary through wrapped commands plus passthrough. curl is required for remote doc retrieval."
+    note: "This hybrid plugin indexes remote NullClaw docs into the local skill-doc catalog and exposes the local nullclaw binary through wrapped commands plus passthrough. curl is required for remote doc retrieval."
   },
   "agency-agents": {
     plugin: "agency-agents",
@@ -408,7 +408,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "supercli skills list --catalog --provider agency-agents --json",
       "supercli skills get agency-agents:engineering.engineering-frontend-developer"
     ],
-    note: "Install indexes remote markdown skills from https://github.com/msitarzewski/agency-agents (best effort, upstream paths may change)."
+    note: "Install indexes remote markdown skill documents from https://github.com/msitarzewski/agency-agents (best effort, upstream paths may change)."
   },
   "visual-explainer": {
     plugin: "visual-explainer",
@@ -419,7 +419,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "supercli skills list --catalog --provider visual-explainer --json",
       "supercli skills get visual-explainer:visual-explainer.skill"
     ],
-    note: "Install indexes normalized markdown skills from https://github.com/javimosch/visual-explainer (plugins/visual-explainer-normalized)."
+    note: "Install indexes normalized markdown skill documents from https://github.com/javimosch/visual-explainer (plugins/visual-explainer-normalized)."
   },
   resend: {
     plugin: "resend",
@@ -431,7 +431,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
       "supercli resend login",
       "supercli resend cli doctor --json"
     ],
-    note: "This hybrid plugin indexes the upstream resend-cli README into the skills catalog and provides a wrapped interface for sending emails and checking environment health. It manages its own resend-cli dependency globally."
+    note: "This hybrid plugin indexes the upstream resend-cli README into the skill-doc catalog and provides a wrapped interface for sending emails and checking environment health. It manages its own resend-cli dependency globally."
   }
 
 }
