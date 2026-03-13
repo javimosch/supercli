@@ -1,0 +1,59 @@
+{
+  "name": "cocoindex-code",
+  "version": "0.1.0",
+  "description": "Hybrid cocoindex-code plugin: auto-register local MCP server, bind semantic search capability, and add quickstart skill docs",
+  "source": "https://github.com/cocoindex-io/cocoindex-code",
+  "checks": [
+    { "type": "binary", "name": "cocoindex-code" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "cocoindex",
+      "resource": "code",
+      "action": "search",
+      "description": "Semantic code search via cocoindex-code MCP",
+      "adapter": "mcp",
+      "adapterConfig": {
+        "server": "cocoindex-code",
+        "tool": "search",
+        "mcp_protocol": "jsonrpc",
+        "mcp_wire": "jsonl",
+        "timeout_ms": 180000
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Natural language query or code snippet" },
+        { "name": "limit", "type": "integer", "required": false, "description": "Maximum results to return" },
+        { "name": "offset", "type": "integer", "required": false, "description": "Pagination offset" },
+        { "name": "refresh_index", "type": "boolean", "required": false, "description": "Refresh index before search (default true)" }
+      ]
+    },
+    {
+      "namespace": "cocoindex",
+      "resource": "index",
+      "action": "build",
+      "description": "Build or refresh cocoindex-code local index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cocoindex-code",
+        "baseArgs": ["index"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install with: pipx install cocoindex-code"
+      },
+      "args": []
+    }
+  ]
+}
