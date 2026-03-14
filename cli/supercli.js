@@ -104,15 +104,15 @@ function output(data) {
 }
 
 function makeStreamEmitter(commandName) {
-  if (humanMode) return null
+  if (humanMode) return null;
   return (event) => {
     output({
       version: "1.0",
       command: commandName,
       stream: true,
       data: event,
-    })
-  }
+    });
+  };
 }
 
 function outputHumanTable(rows, columns) {
@@ -194,12 +194,16 @@ function renderTopLevelHelp(config) {
   const namespaces = [...new Set(config.commands.map((c) => c.namespace))];
   if (humanMode) {
     console.log("\n  ⚡ SuperCLI\n");
-    console.log("  Deterministic capability router for namespace.resource.action commands, plugin capabilities, MCP tool bindings, and SKILL.md skill documents.\n");
+    console.log(
+      "  Deterministic capability router for namespace.resource.action commands, plugin capabilities, MCP tool bindings, and SKILL.md skill documents.\n",
+    );
     console.log("  Namespaces:\n");
     namespaces.forEach((ns) => {
       const resources = [
         ...new Set(
-          config.commands.filter((c) => c.namespace === ns).map((c) => c.resource),
+          config.commands
+            .filter((c) => c.namespace === ns)
+            .map((c) => c.resource),
         ),
       ];
       console.log(`    ${ns}`);
@@ -238,11 +242,18 @@ function renderTopLevelHelp(config) {
     version: "1.0",
     namespaces: namespaces.map((ns) => ({
       name: ns,
-      resources: [...new Set(config.commands.filter((c) => c.namespace === ns).map((c) => c.resource))]
-        .map((r) => ({
-          name: r,
-          actions: config.commands.filter((c) => c.namespace === ns && c.resource === r).map((c) => c.action),
-        })),
+      resources: [
+        ...new Set(
+          config.commands
+            .filter((c) => c.namespace === ns)
+            .map((c) => c.resource),
+        ),
+      ].map((r) => ({
+        name: r,
+        actions: config.commands
+          .filter((c) => c.namespace === ns && c.resource === r)
+          .map((c) => c.action),
+      })),
     })),
   });
 }
@@ -291,20 +302,73 @@ async function main() {
       return;
     }
 
-     // Read stdin if piped
-     const stdinData = await readStdin();
-     if (stdinData) {
-       for (const [k, v] of Object.entries(stdinData)) {
-         if (!flags[k] && k !== "_stdin") flags[k] = v;
-       }
-     }
+    // Read stdin if piped
+    const stdinData = await readStdin();
+    if (stdinData) {
+      for (const [k, v] of Object.entries(stdinData)) {
+        if (!flags[k] && k !== "_stdin") flags[k] = v;
+      }
+    }
 
-     if (flags.help) {
-       displayComprehensiveHelp();
-       return;
-     }
+    // Check for namespace passthrough before handling --help
+    // This allows commands like "cline --help --json" to pass through
+    {
+      const config = await loadConfig(SERVER);
+      const passthrough = findNamespacePassthrough(config, positional, rawArgs);
+      if (passthrough) {
+        const start = Date.now();
+        const result = await execute(
+          passthrough.command,
+          {
+            __rawArgs: passthrough.passthroughArgs,
+            __passthroughInteractive: humanMode && isTTY,
+          },
+          {
+            server: SERVER || "",
+            config,
+            onStreamEvent:
+              passthrough.command.adapterConfig &&
+              passthrough.command.adapterConfig.stream === "jsonl"
+                ? makeStreamEmitter(`${passthrough.namespace}.passthrough`)
+                : null,
+          },
+        );
+        const duration = Date.now() - start;
+        const envelope = {
+          version: "1.0",
+          command: `${passthrough.namespace}.passthrough`,
+          duration_ms: duration,
+          data: result,
+        };
 
-     if (flags["help-json"]) {
+        if (
+          humanMode &&
+          result &&
+          typeof result === "object" &&
+          result.passthrough === true
+        ) {
+          return;
+        }
+        if (
+          humanMode &&
+          result &&
+          typeof result === "object" &&
+          typeof result.raw === "string"
+        ) {
+          console.log(result.raw);
+        } else {
+          output(envelope);
+        }
+        return;
+      }
+    }
+
+    if (flags.help) {
+      displayComprehensiveHelp();
+      return;
+    }
+
+    if (flags["help-json"]) {
       const config = await loadConfig(SERVER);
       output(buildCapabilities(config, hasServer));
       return;
@@ -321,11 +385,11 @@ async function main() {
           core_capabilities: ["commands", "plugins", "mcp", "skill_docs"],
           first_steps: [
             "supercli --help-json",
-            "supercli discover --intent \"<task>\" --json",
+            'supercli discover --intent "<task>" --json',
             "supercli plugins learn <name> --json",
             "supercli plugins install <name>",
             "supercli commands --query <keyword> --limit 50 --json",
-            "supercli inspect <namespace> <resource> <action> --json"
+            "supercli inspect <namespace> <resource> <action> --json",
           ],
           intent_workflow:
             "If task command is unknown, use discover -> plugins learn -> plugins install -> commands/inspect -> execute.",
@@ -334,11 +398,11 @@ async function main() {
               'supercli discover --intent "send email" --json',
               "supercli plugins learn resend --json",
               "supercli plugins install resend",
-              "supercli commands --namespace resend --json"
-            ]
+              "supercli commands --namespace resend --json",
+            ],
           },
           no_llm_discovery: true,
-          note: "Intent discovery is deterministic and does not call an LLM."
+          note: "Intent discovery is deterministic and does not call an LLM.",
         });
         return;
       }
@@ -384,7 +448,11 @@ async function main() {
 
     if (hasServer && positional[0] === "sync") {
       const result = await syncConfig(SERVER);
-      output({ ok: true, message: "Config synced", server_plugins: result.server_plugins || null });
+      output({
+        ok: true,
+        message: "Config synced",
+        server_plugins: result.server_plugins || null,
+      });
       return;
     }
 
@@ -420,9 +488,9 @@ async function main() {
     }
 
     if (positional[0] === "discover") {
-      const intent = flags.intent ? String(flags.intent) : ""
-      const result = discoverPluginsByIntent(intent, { limit: flags.limit })
-      output(result)
+      const intent = flags.intent ? String(flags.intent) : "";
+      const result = discoverPluginsByIntent(intent, { limit: flags.limit });
+      output(result);
       return;
     }
 
@@ -442,12 +510,23 @@ async function main() {
 
     if (positional[0] === "commands") {
       const config = await loadConfig(SERVER);
-      const namespaceFilter = flags.namespace ? String(flags.namespace).toLowerCase().trim() : ""
-      const resourceFilter = flags.resource ? String(flags.resource).toLowerCase().trim() : ""
-      const actionFilter = flags.action ? String(flags.action).toLowerCase().trim() : ""
-      const queryFilter = flags.query ? String(flags.query).toLowerCase().trim() : ""
-      const limit = flags.limit === undefined ? null : Number(flags.limit)
-      if (flags.limit !== undefined && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
+      const namespaceFilter = flags.namespace
+        ? String(flags.namespace).toLowerCase().trim()
+        : "";
+      const resourceFilter = flags.resource
+        ? String(flags.resource).toLowerCase().trim()
+        : "";
+      const actionFilter = flags.action
+        ? String(flags.action).toLowerCase().trim()
+        : "";
+      const queryFilter = flags.query
+        ? String(flags.query).toLowerCase().trim()
+        : "";
+      const limit = flags.limit === undefined ? null : Number(flags.limit);
+      if (
+        flags.limit !== undefined &&
+        (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))
+      ) {
         outputError({
           code: 85,
           type: "invalid_argument",
@@ -470,18 +549,22 @@ async function main() {
       }));
 
       rows = rows.filter((row) => {
-        if (namespaceFilter && row.namespace.toLowerCase() !== namespaceFilter) return false
-        if (resourceFilter && row.resource.toLowerCase() !== resourceFilter) return false
-        if (actionFilter && row.action.toLowerCase() !== actionFilter) return false
+        if (namespaceFilter && row.namespace.toLowerCase() !== namespaceFilter)
+          return false;
+        if (resourceFilter && row.resource.toLowerCase() !== resourceFilter)
+          return false;
+        if (actionFilter && row.action.toLowerCase() !== actionFilter)
+          return false;
         if (queryFilter) {
-          const haystack = `${row.command} ${row.description} ${row.adapter} ${row.args}`.toLowerCase()
-          if (!haystack.includes(queryFilter)) return false
+          const haystack =
+            `${row.command} ${row.description} ${row.adapter} ${row.args}`.toLowerCase();
+          if (!haystack.includes(queryFilter)) return false;
         }
-        return true
-      })
+        return true;
+      });
 
-      const total = rows.length
-      if (limit !== null) rows = rows.slice(0, limit)
+      const total = rows.length;
+      if (limit !== null) rows = rows.slice(0, limit);
 
       if (humanMode) {
         console.log("\n  ⚡ Commands\n");
@@ -491,7 +574,7 @@ async function main() {
           { key: "args", label: "Args" },
           { key: "description", label: "Description" },
         ]);
-        console.log(`  Returned: ${rows.length}/${total}`)
+        console.log(`  Returned: ${rows.length}/${total}`);
         console.log("");
       } else {
         output({
@@ -661,45 +744,6 @@ async function main() {
       return;
     }
 
-    {
-      const config = await loadConfig(SERVER);
-      const passthrough = findNamespacePassthrough(config, positional, rawArgs);
-      if (passthrough) {
-        const start = Date.now();
-        const result = await execute(
-          passthrough.command,
-          {
-            __rawArgs: passthrough.passthroughArgs,
-            __passthroughInteractive: humanMode && isTTY,
-          },
-          {
-            server: SERVER || "",
-            config,
-            onStreamEvent: passthrough.command.adapterConfig && passthrough.command.adapterConfig.stream === "jsonl"
-              ? makeStreamEmitter(`${passthrough.namespace}.passthrough`)
-              : null,
-          },
-        );
-        const duration = Date.now() - start;
-        const envelope = {
-          version: "1.0",
-          command: `${passthrough.namespace}.passthrough`,
-          duration_ms: duration,
-          data: result,
-        };
-
-        if (humanMode && result && typeof result === "object" && result.passthrough === true) {
-          return;
-        }
-        if (humanMode && result && typeof result === "object" && typeof result.raw === "string") {
-          console.log(result.raw);
-        } else {
-          output(envelope);
-        }
-        return;
-      }
-    }
-
     if (positional.length === 1) {
       const config = await loadConfig(SERVER);
       const cmds = config.commands.filter((c) => c.namespace === positional[0]);
@@ -819,9 +863,10 @@ async function main() {
     const result = await execute(cmd, uFlags, {
       server: SERVER || "",
       config,
-      onStreamEvent: cmd.adapterConfig && cmd.adapterConfig.stream === "jsonl"
-        ? makeStreamEmitter(`${namespace}.${resource}.${action}`)
-        : null,
+      onStreamEvent:
+        cmd.adapterConfig && cmd.adapterConfig.stream === "jsonl"
+          ? makeStreamEmitter(`${namespace}.${resource}.${action}`)
+          : null,
     });
     const duration = Date.now() - start;
 
@@ -870,65 +915,79 @@ async function main() {
     } else {
       output(envelope);
     }
-   } catch (err) {
-     outputError({
-       code: err.code || 110,
-       type: err.type || "internal_error",
-       message: err.message,
-       recoverable: !!err.recoverable,
-       suggestions: err.suggestions || [],
-     });
-   }
- }
+  } catch (err) {
+    outputError({
+      code: err.code || 110,
+      type: err.type || "internal_error",
+      message: err.message,
+      recoverable: !!err.recoverable,
+      suggestions: err.suggestions || [],
+    });
+  }
+}
 
- function displayComprehensiveHelp() {
-   console.log("\n  ⚡ SuperCLI - Universal Capability Router for AI Agents\n");
-   console.log("  Repository: https://github.com/javimosch/supercli\n");
-   console.log("  Discover and execute capabilities across CLIs, APIs, MCP servers, workflows, and custom automations through a single agent-friendly interface.\n");
-   
-   console.log("  📋 QUICK OVERVIEW:");
-   console.log("    • Capabilities: namespace.resource.action commands");
-   console.log("    • Plugin System: Install external CLIs as harnesses");
-   console.log("    • MCP Support: Model Context Protocol server integration");
-   console.log("    • Skill Docs: Agent-facing guidance in SKILL.md format");
-   console.log("    • AI Integration: Natural language query execution\n");
-   
-   console.log("  🚀 GETTING STARTED:");
-   console.log("    supercli help                  # List available harnesses");
-   console.log("    supercli skills teach          # Learn about skill documents");
-   console.log("    supercli plugins explore       # Browse available plugins");
-   console.log("    supercli discover --intent \"<task>\"  # Find capabilities for a task\n");
-   
-   console.log("  🔧 CORE COMMANDS:");
-   console.log("    supercli <namespace> <resource> <action>  # Execute capability");
-   console.log("    supercli inspect <ns> <res> <act>       # View command details");
-   console.log("    supercli plan <ns> <res> <act>          # Create execution plan");
-   console.log("    supercli execute <plan_id>              # Run stored plan");
-   console.log("    supercli ask \"<query>\"                  # Natural language execution\n");
-   
-   console.log("  🧩 PLUGIN MANAGEMENT:");
-   console.log("    supercli plugins list           # Show installed plugins");
-   console.log("    supercli plugins install <name> # Install a plugin");
-   console.log("    supercli plugins explore        # Browse plugin registry\n");
-   
-   console.log("  📖 DOCUMENTATION & RESOURCES:");
-   console.log("    Full README: https://github.com/javimosch/supercli#readme");
-   console.log("    Supported Harnesses: docs/supported-harnesses.md");
-   console.log("    Plugin Creation Guide: docs/plugin-harness-guide.md\n");
-   
-   console.log("  🏷️  OUTPUT MODES:");
-   console.log("    (default)   JSON if piped, human-readable if TTY");
-   console.log("    --json      Structured JSON envelope");
-   console.log("    --human     Formatted tables and key-value output");
-   console.log("    --compact   Compressed JSON (shortened keys)\n");
-   
-   console.log("  🐛 EXIT CODES:");
-   console.log("    0  success");
-   console.log("    82 validation_error");
-   console.log("    85 invalid_argument");
-   console.log("    92 resource_not_found");
-   console.log("    105 integration_error");
-   console.log("    110 internal_error\n");
- }
+function displayComprehensiveHelp() {
+  console.log("\n  ⚡ SuperCLI - Universal Capability Router for AI Agents\n");
+  console.log("  Repository: https://github.com/javimosch/supercli\n");
+  console.log(
+    "  Discover and execute capabilities across CLIs, APIs, MCP servers, workflows, and custom automations through a single agent-friendly interface.\n",
+  );
 
- main();
+  console.log("  📋 QUICK OVERVIEW:");
+  console.log("    • Capabilities: namespace.resource.action commands");
+  console.log("    • Plugin System: Install external CLIs as harnesses");
+  console.log("    • MCP Support: Model Context Protocol server integration");
+  console.log("    • Skill Docs: Agent-facing guidance in SKILL.md format");
+  console.log("    • AI Integration: Natural language query execution\n");
+
+  console.log("  🚀 GETTING STARTED:");
+  console.log("    supercli help                  # List available harnesses");
+  console.log(
+    "    supercli skills teach          # Learn about skill documents",
+  );
+  console.log("    supercli plugins explore       # Browse available plugins");
+  console.log(
+    '    supercli discover --intent "<task>"  # Find capabilities for a task\n',
+  );
+
+  console.log("  🔧 CORE COMMANDS:");
+  console.log(
+    "    supercli <namespace> <resource> <action>  # Execute capability",
+  );
+  console.log(
+    "    supercli inspect <ns> <res> <act>       # View command details",
+  );
+  console.log(
+    "    supercli plan <ns> <res> <act>          # Create execution plan",
+  );
+  console.log("    supercli execute <plan_id>              # Run stored plan");
+  console.log(
+    '    supercli ask "<query>"                  # Natural language execution\n',
+  );
+
+  console.log("  🧩 PLUGIN MANAGEMENT:");
+  console.log("    supercli plugins list           # Show installed plugins");
+  console.log("    supercli plugins install <name> # Install a plugin");
+  console.log("    supercli plugins explore        # Browse plugin registry\n");
+
+  console.log("  📖 DOCUMENTATION & RESOURCES:");
+  console.log("    Full README: https://github.com/javimosch/supercli#readme");
+  console.log("    Supported Harnesses: docs/supported-harnesses.md");
+  console.log("    Plugin Creation Guide: docs/plugin-harness-guide.md\n");
+
+  console.log("  🏷️  OUTPUT MODES:");
+  console.log("    (default)   JSON if piped, human-readable if TTY");
+  console.log("    --json      Structured JSON envelope");
+  console.log("    --human     Formatted tables and key-value output");
+  console.log("    --compact   Compressed JSON (shortened keys)\n");
+
+  console.log("  🐛 EXIT CODES:");
+  console.log("    0  success");
+  console.log("    82 validation_error");
+  console.log("    85 invalid_argument");
+  console.log("    92 resource_not_found");
+  console.log("    105 integration_error");
+  console.log("    110 internal_error\n");
+}
+
+main();
