@@ -58,6 +58,7 @@ const RESERVED_FLAGS = [
   "compact",
   "schema",
   "help-json",
+  "help",
   "no-color",
   "show-dag",
   "format",
@@ -193,6 +194,7 @@ function renderTopLevelHelp(config) {
   const namespaces = [...new Set(config.commands.map((c) => c.namespace))];
   if (humanMode) {
     console.log("\n  ⚡ SuperCLI\n");
+    console.log("  Deterministic capability router for namespace.resource.action commands, plugin capabilities, MCP tool bindings, and SKILL.md skill documents.\n");
     console.log("  Namespaces:\n");
     namespaces.forEach((ns) => {
       const resources = [
@@ -227,7 +229,7 @@ function renderTopLevelHelp(config) {
     }
     console.log("  Server: supercli --server");
     console.log(
-      "  Flags: --json | --human | --compact | --schema | --help-json | --server\n",
+      "  Flags: --help | --json | --human | --compact | --schema | --help-json | --server\n",
     );
     return;
   }
@@ -289,15 +291,20 @@ async function main() {
       return;
     }
 
-    // Read stdin if piped
-    const stdinData = await readStdin();
-    if (stdinData) {
-      for (const [k, v] of Object.entries(stdinData)) {
-        if (!flags[k] && k !== "_stdin") flags[k] = v;
-      }
-    }
+     // Read stdin if piped
+     const stdinData = await readStdin();
+     if (stdinData) {
+       for (const [k, v] of Object.entries(stdinData)) {
+         if (!flags[k] && k !== "_stdin") flags[k] = v;
+       }
+     }
 
-    if (flags["help-json"]) {
+     if (flags.help) {
+       displayComprehensiveHelp();
+       return;
+     }
+
+     if (flags["help-json"]) {
       const config = await loadConfig(SERVER);
       output(buildCapabilities(config, hasServer));
       return;
@@ -863,15 +870,65 @@ async function main() {
     } else {
       output(envelope);
     }
-  } catch (err) {
-    outputError({
-      code: err.code || 110,
-      type: err.type || "internal_error",
-      message: err.message,
-      recoverable: !!err.recoverable,
-      suggestions: err.suggestions || [],
-    });
-  }
-}
+   } catch (err) {
+     outputError({
+       code: err.code || 110,
+       type: err.type || "internal_error",
+       message: err.message,
+       recoverable: !!err.recoverable,
+       suggestions: err.suggestions || [],
+     });
+   }
+ }
 
-main();
+ function displayComprehensiveHelp() {
+   console.log("\n  ⚡ SuperCLI - Universal Capability Router for AI Agents\n");
+   console.log("  Repository: https://github.com/javimosch/supercli\n");
+   console.log("  Discover and execute capabilities across CLIs, APIs, MCP servers, workflows, and custom automations through a single agent-friendly interface.\n");
+   
+   console.log("  📋 QUICK OVERVIEW:");
+   console.log("    • Capabilities: namespace.resource.action commands");
+   console.log("    • Plugin System: Install external CLIs as harnesses");
+   console.log("    • MCP Support: Model Context Protocol server integration");
+   console.log("    • Skill Docs: Agent-facing guidance in SKILL.md format");
+   console.log("    • AI Integration: Natural language query execution\n");
+   
+   console.log("  🚀 GETTING STARTED:");
+   console.log("    supercli help                  # List available harnesses");
+   console.log("    supercli skills teach          # Learn about skill documents");
+   console.log("    supercli plugins explore       # Browse available plugins");
+   console.log("    supercli discover --intent \"<task>\"  # Find capabilities for a task\n");
+   
+   console.log("  🔧 CORE COMMANDS:");
+   console.log("    supercli <namespace> <resource> <action>  # Execute capability");
+   console.log("    supercli inspect <ns> <res> <act>       # View command details");
+   console.log("    supercli plan <ns> <res> <act>          # Create execution plan");
+   console.log("    supercli execute <plan_id>              # Run stored plan");
+   console.log("    supercli ask \"<query>\"                  # Natural language execution\n");
+   
+   console.log("  🧩 PLUGIN MANAGEMENT:");
+   console.log("    supercli plugins list           # Show installed plugins");
+   console.log("    supercli plugins install <name> # Install a plugin");
+   console.log("    supercli plugins explore        # Browse plugin registry\n");
+   
+   console.log("  📖 DOCUMENTATION & RESOURCES:");
+   console.log("    Full README: https://github.com/javimosch/supercli#readme");
+   console.log("    Supported Harnesses: docs/supported-harnesses.md");
+   console.log("    Plugin Creation Guide: docs/plugin-harness-guide.md\n");
+   
+   console.log("  🏷️  OUTPUT MODES:");
+   console.log("    (default)   JSON if piped, human-readable if TTY");
+   console.log("    --json      Structured JSON envelope");
+   console.log("    --human     Formatted tables and key-value output");
+   console.log("    --compact   Compressed JSON (shortened keys)\n");
+   
+   console.log("  🐛 EXIT CODES:");
+   console.log("    0  success");
+   console.log("    82 validation_error");
+   console.log("    85 invalid_argument");
+   console.log("    92 resource_not_found");
+   console.log("    105 integration_error");
+   console.log("    110 internal_error\n");
+ }
+
+ main();
