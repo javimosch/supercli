@@ -2,6 +2,31 @@
 
 Discover and execute capabilities across CLIs, APIs, MCP servers, workflows, and custom automations through a single agent-friendly interface.
 
+## Why Supercli?
+
+### For Humans
+Stop context-switching between CLI tools. supercli gives you one consistent interface to AWS, GitHub, Docker, Kubernetes, and 50+ other platforms—so you spend less time learning syntax and more time solving problems.
+
+### For AI Agents
+Access a standardized skill graph where every capability follows predictable input/output envelopes. Discover, compose, and execute workflows with machine-readable metadata that enables reliable automation.
+
+### For Supervisors
+Trust that your AI agents have explicit boundaries. Every skill declares its capabilities, inputs, outputs, and safety profile—no hidden behavior. Agents must explicitly opt-in to raw CLI power via passthrough, and every invocation follows predictable error patterns.
+
+### Shared Value
+
+| Scenario | Direct CLI Approach | Supercli Approach |
+|----------|-------------------|-------------------|
+| Learning a new tool | Read 50-page docs, memorize flags | `supercli skills get <tool>.*` with examples |
+| Cross-tool workflows | Manual context passing between commands | Automatic context propagation |
+| Finding capabilities | Google/search multiple docs sites | `supercli skills search <query>` |
+| Safe automation | Risk of accidental destructive commands | Agent-friendly wrappers with safeguards |
+| Writing scripts | Parse inconsistent text output | Consistent JSON envelopes |
+
+**Same command structure everywhere:** `supercli <plugin> <action> ...`
+
+Whether you're human or agent, supercli reduces cognitive load through consistent skill invocation patterns while maintaining access to full CLI power via passthrough (`supercli <plugin> -- <raw-args>`).
+
 ## Terminology
 
 - **Capability**: Any executable unit exposed by Supercli (command, OpenAPI operation, MCP tool binding, HTTP integration, workflow step).
@@ -86,6 +111,30 @@ Traditional CLIs force agents to learn tool-specific syntax. supercli replaces t
 - Compose (`supercli plan …`) to build DAGs out of capabilities without writing glue code
 - Delegate execution to the same router regardless of whether the source is a CLI, API, or MCP tool
 
+### Safety & Trust for Agents
+
+**Why supervisors can trust supercli with AI agents:**
+
+- **Explicit Boundaries:** Each skill declares its capabilities, inputs, and outputs—nothing hidden
+- **Consistent Wrappers:** Agent-friendly modes (`--json`, `--silent`) prevent interactive prompts
+- **Audit Trail:** Every invocation logs plugin, action, inputs, and outputs
+- **Opt-In Power:** Full CLI access requires explicit passthrough (`supercli <plugin> -- <raw-args>`)
+- **Predictable Errors:** Standardized error envelopes with machine-readable codes
+- **No Side Effects:** Skills declare whether they're read-only or state-modifying
+
+**Agent workflow example:**
+
+```bash
+# 1. Find relevant capabilities
+supercli skills search "deployment" --json
+
+# 2. Inspect exact requirements
+supercli skills get aws.cfn.deploy --json
+
+# 3. Execute with predictable output
+supercli aws cfn deploy --stack-name my-stack --template-file template.yaml --json
+```
+
 ## Capability Mesh Vision
 
 supercli is steadily evolving toward a broader **capability mesh** that provides discovery, routing, execution, composition, and governance across every tool in the stack. Near-term focus areas include:
@@ -124,6 +173,7 @@ npm install
 # Optional local config
 cp .env.example .env
 
+# === Human Perspective ===
 # Local CLI usage - Multi-harness routing
 supercli help                          # List all harnesses
 supercli beads                         # List beads capabilities
@@ -142,6 +192,19 @@ supercli ask "show my tasks and recent commits"
 supercli plugins list
 supercli plugins explore               # Browse available plugins
 supercli plugins install commiat       # Install community plugin
+
+# === Agent Perspective ===
+# Programmatic capability discovery (machine-readable)
+supercli --help-json                   # Full capability manifest in JSON
+supercli skills list --json           # All skills with metadata
+supercli skills search "deployment" --json  # Filtered capabilities
+
+# Predictable execution with JSON output
+supercli aws sts get-caller-identity --json
+supercli gh issue list --json
+
+# Inspect specific capabilities before execution
+supercli skills get aws.cfn.deploy --json
 
 # Path B: Server mode (optional, shared backend)
 # Start server (local JSON storage by default; MongoDB optional)
