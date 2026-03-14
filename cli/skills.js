@@ -13,7 +13,9 @@ const {
   syncCatalog,
   listCatalogSkills,
   searchCatalog,
-  getCatalogSkill
+  getCatalogSkill,
+  getCatalogInfo,
+  describeProviderTypes
 } = require("./skills-catalog")
 
 function normalizeSkillId(input) {
@@ -339,7 +341,48 @@ function handleSkillsCommand(options) {
       return true
     }
 
-    outputError({ code: 85, type: "invalid_argument", message: "Unknown providers subcommand. Use: list, add, remove, show", recoverable: false })
+    if (action === "describe") {
+      const types = describeProviderTypes()
+      if (humanMode && !flags.json) {
+        console.log("\n  ⚡ Skill Provider Types\n")
+        for (const t of types.provider_types) {
+          console.log("  " + t.name + ":")
+          console.log("    " + t.description)
+          console.log("    Example:")
+          console.log("      " + JSON.stringify(t.example, null, 6))
+          console.log("")
+        }
+      } else {
+        output(types)
+      }
+      return true
+    }
+
+    outputError({ code: 85, type: "invalid_argument", message: "Unknown providers subcommand. Use: list, add, remove, show, describe", recoverable: false })
+    return true
+  }
+
+  if (subcommand === "catalog") {
+    const action = positional[2]
+    if (action === "info") {
+      const info = getCatalogInfo()
+      if (humanMode && !flags.json) {
+        console.log("\n  ⚡ Skills Catalog Info\n")
+        console.log("  Index:")
+        console.log("    Version:", info.index.version)
+        console.log("    Updated:", info.index.updated_at)
+        console.log("    Total Skills:", info.index.total_skills)
+        console.log("\n  Providers:")
+        for (const p of info.providers) {
+          console.log("    - " + p.name + " (" + p.type + "): " + p.skills_count + " skills [" + p.status + "]")
+        }
+        console.log("")
+      } else {
+        output({ catalog: info })
+      }
+      return true
+    }
+    outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills catalog info [--json]", recoverable: false })
     return true
   }
 
