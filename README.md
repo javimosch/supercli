@@ -386,7 +386,7 @@ The dcli community is actively developing plugins for popular CLIs:
 - **Monitoring**: datadog, prometheus CLIs
 - Many others based on community requests
 
-Want to contribute a plugin harness? [See plugin guide](docs/plugin-harness-guide.md) and submit to the registry!
+Want to contribute? See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on contributing code, documentation, and plugin harnesses.
 
 ## Output Envelope
 
