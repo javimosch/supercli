@@ -1,0 +1,123 @@
+{
+  "name": "pplx",
+  "version": "1.0.0",
+  "description": "Perplexity API CLI - Fast, non-interactive, agent-first CLI for online search and research with citations",
+  "source": "https://github.com/javimosch/pplx",
+  "tags": ["perplexity", "ai", "search", "research", "llm", "citations"],
+  "has_learn": true,
+  "learn": {
+    "file": "skills/usage/SKILL.md",
+    "remote": {
+      "repo": "https://github.com/javimosch/pplx",
+      "path": ".agents/skills/pplx-usage/SKILL.md",
+      "sync": true
+    }
+  },
+  "checks": [
+    { "type": "binary", "name": "node" },
+    { "type": "env", "name": "PERPLEXITY_API_KEY", "required": false }
+  ],
+  "commands": [
+    {
+      "namespace": "pplx",
+      "resource": "chat",
+      "action": "send",
+      "description": "Send a chat completion request to Perplexity API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["cli/bin/pplx.js", "chat"],
+        "positionalArgs": ["message"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Set PERPLEXITY_API_KEY env var or use --api-key flag",
+        "pluginDir": "plugins/pplx"
+      },
+      "args": [
+        { "name": "message", "type": "string", "required": true, "description": "The message to send" },
+        { "name": "model", "type": "string", "required": false, "description": "Model to use (sonar, sonar-pro, sonar-deep-research, sonar-reasoning, sonar-reasoning-pro)", "flag": "--model", "default": "sonar" },
+        { "name": "api-key", "type": "string", "required": false, "description": "API key override (overrides PERPLEXITY_API_KEY env var)", "flag": "--api-key" },
+        { "name": "citations", "type": "boolean", "required": false, "description": "Return citations for verification", "flag": "--citations" },
+        { "name": "images", "type": "boolean", "required": false, "description": "Return images", "flag": "--images" },
+        { "name": "related-questions", "type": "boolean", "required": false, "description": "Return related questions", "flag": "--related-questions" },
+        { "name": "search-queries", "type": "boolean", "required": false, "description": "Return search queries used", "flag": "--search-queries" },
+        { "name": "system", "type": "string", "required": false, "description": "System prompt", "flag": "--system" },
+        { "name": "temperature", "type": "number", "required": false, "description": "Temperature (0-1)", "flag": "--temperature" },
+        { "name": "max-tokens", "type": "integer", "required": false, "description": "Maximum tokens in response", "flag": "--max-tokens" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format", "flag": "--json" }
+      ]
+    },
+    {
+      "namespace": "pplx",
+      "resource": "ask",
+      "action": "send",
+      "description": "Ask a question (simplified chat for Q&A)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["cli/bin/pplx.js", "ask"],
+        "positionalArgs": ["question"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Set PERPLEXITY_API_KEY env var or use --api-key flag",
+        "pluginDir": "plugins/pplx"
+      },
+      "args": [
+        { "name": "question", "type": "string", "required": true, "description": "The question to ask" },
+        { "name": "model", "type": "string", "required": false, "description": "Model to use", "flag": "--model", "default": "sonar" },
+        { "name": "api-key", "type": "string", "required": false, "description": "API key override", "flag": "--api-key" },
+        { "name": "citations", "type": "boolean", "required": false, "description": "Return citations", "flag": "--citations" },
+        { "name": "system", "type": "string", "required": false, "description": "System prompt", "flag": "--system" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format", "flag": "--json" }
+      ]
+    },
+    {
+      "namespace": "pplx",
+      "resource": "models",
+      "action": "list",
+      "description": "List available Perplexity models",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["cli/bin/pplx.js", "models"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Set PERPLEXITY_API_KEY env var or use --api-key flag",
+        "pluginDir": "plugins/pplx"
+      },
+      "args": [
+        { "name": "api-key", "type": "string", "required": false, "description": "API key override", "flag": "--api-key" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format", "flag": "--json" }
+      ]
+    },
+    {
+      "namespace": "pplx",
+      "resource": "help",
+      "action": "json",
+      "description": "Get machine-readable help schema",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["cli/bin/pplx.js", "help-json"],
+        "parseJson": true,
+        "pluginDir": "plugins/pplx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pplx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to execute any pplx CLI command directly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["cli/bin/pplx.js"],
+        "passthrough": true,
+        "parseJson": false,
+        "pluginDir": "plugins/pplx"
+      },
+      "args": []
+    }
+  ]
+}
