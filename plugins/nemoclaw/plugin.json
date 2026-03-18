@@ -1,0 +1,338 @@
+{
+  "name": "nemoclaw",
+  "version": "0.1.0",
+  "description": "Hybrid NemoClaw plugin with curated host wrappers, sandbox actions, passthrough, and remote docs indexing",
+  "source": "https://github.com/NVIDIA/NemoClaw",
+  "has_learn": true,
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "checks": [
+    { "type": "binary", "name": "curl" },
+    { "type": "binary", "name": "nemoclaw", "args": ["help"] },
+    { "type": "binary", "name": "openshell" }
+  ],
+  "install_guidance": {
+    "plugin": "nemoclaw",
+    "binary": "nemoclaw",
+    "check": "nemoclaw help",
+    "install_steps": [
+      "curl -fsSL https://nvidia.com/nemoclaw.sh | bash",
+      "nemoclaw help",
+      "supercli plugins install nemoclaw"
+    ],
+    "note": "NemoClaw is alpha and Linux-first. Run host setup with `nemoclaw onboard` before sandbox commands."
+  },
+  "post_install": {
+    "script": "scripts/post-install.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "post_uninstall": {
+    "script": "scripts/post-uninstall.js",
+    "runtime": "node",
+    "timeout_ms": 15000
+  },
+  "commands": [
+    {
+      "namespace": "nemoclaw",
+      "resource": "self",
+      "action": "version",
+      "description": "Show installed NemoClaw CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-version.js"],
+        "parseJson": false,
+        "pluginDir": "plugins/nemoclaw",
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "sandbox",
+      "action": "list",
+      "description": "List registered NemoClaw sandboxes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["list"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "system",
+      "action": "status",
+      "description": "Show overall NemoClaw status and services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["status"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "service",
+      "action": "start",
+      "description": "Start NemoClaw auxiliary services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["start"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "service",
+      "action": "stop",
+      "description": "Stop NemoClaw auxiliary services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["stop"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "host",
+      "action": "onboard",
+      "description": "Run NemoClaw interactive host onboarding wizard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["onboard"],
+        "requiresInteractive": true,
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "host",
+      "action": "onboard-auto",
+      "description": "Run NemoClaw onboarding in non-interactive mode for automation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-onboard.js"],
+        "optionalArgs": {
+          "non-interactive": "--non-interactive",
+          "provider": "--provider",
+          "model": "--model",
+          "sandbox-name": "--sandbox-name",
+          "policy-mode": "--policy-mode",
+          "policy-presets": "--policy-presets",
+          "recreate": "--recreate",
+          "api-key": "--api-key"
+        },
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "pluginDir": "plugins/nemoclaw",
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": [
+        {
+          "name": "non-interactive",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable non-interactive onboarding mode"
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "required": false,
+          "description": "Inference provider: cloud, openrouter, ollama, vllm, or nim"
+        },
+        {
+          "name": "model",
+          "type": "string",
+          "required": false,
+          "description": "Model ID for selected provider"
+        },
+        {
+          "name": "sandbox-name",
+          "type": "string",
+          "required": false,
+          "description": "Sandbox name to create or reuse"
+        },
+        {
+          "name": "policy-mode",
+          "type": "string",
+          "required": false,
+          "description": "Policy mode: suggested, custom, or skip"
+        },
+        {
+          "name": "policy-presets",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated policy preset names"
+        },
+        {
+          "name": "recreate",
+          "type": "boolean",
+          "required": false,
+          "description": "Recreate sandbox if it already exists"
+        },
+        {
+          "name": "api-key",
+          "type": "string",
+          "required": false,
+          "description": "API key (NVIDIA for cloud, OpenRouter for openrouter)"
+        }
+      ]
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "host",
+      "action": "setup-spark",
+      "description": "Run NemoClaw DGX Spark setup command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["setup-spark"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "deploy",
+      "action": "instance",
+      "description": "Deploy NemoClaw to a named Brev instance",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "baseArgs": ["deploy"],
+        "positionalArgs": ["instance"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": [
+        {
+          "name": "instance",
+          "type": "string",
+          "required": true,
+          "description": "Brev instance name"
+        }
+      ]
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "sandbox",
+      "action": "status",
+      "description": "Show sandbox status by name",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-sandbox-action.js", "status"],
+        "positionalArgs": ["name"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "pluginDir": "plugins/nemoclaw",
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Sandbox name"
+        }
+      ]
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "sandbox",
+      "action": "logs",
+      "description": "Show sandbox logs by name",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-sandbox-action.js", "logs"],
+        "positionalArgs": ["name"],
+        "optionalArgs": {
+          "follow": "--follow"
+        },
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "pluginDir": "plugins/nemoclaw",
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Sandbox name"
+        },
+        {
+          "name": "follow",
+          "type": "boolean",
+          "required": false,
+          "description": "Follow sandbox logs"
+        }
+      ]
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "sandbox",
+      "action": "connect",
+      "description": "Connect to sandbox shell by name",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["scripts/run-sandbox-action.js", "connect"],
+        "positionalArgs": ["name"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "pluginDir": "plugins/nemoclaw",
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Sandbox name"
+        }
+      ]
+    },
+    {
+      "namespace": "nemoclaw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any nemoclaw CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nemoclaw",
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install NemoClaw first: curl -fsSL https://nvidia.com/nemoclaw.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
