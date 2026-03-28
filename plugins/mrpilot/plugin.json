@@ -1,0 +1,49 @@
+{
+  "name": "mrpilot",
+  "version": "1.2.0",
+  "description": "AI code review for GitLab MRs and GitHub PRs using mr-pilot CLI",
+  "source": "https://github.com/javimosch/mr-pilot",
+  "tags": ["code-review", "ai", "gitlab", "github", "merge-request", "lint"],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "install_guidance": {
+    "plugin": "mrpilot",
+    "binary": "mr-pilot",
+    "check": "mr-pilot --help",
+    "install_steps": [
+      "npm i -g mr-pilot",
+      "supercli mrpilot -- <mr-url> --platform github"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mrpilot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mr-pilot CLI. Use --env-file <path> to load env vars, or export tokens before running.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "passthrough": true,
+        "parseJson": false,
+        "cwd": ".",
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Run: npm i -g mr-pilot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mrpilot",
+      "resource": "config",
+      "action": "doctor",
+      "description": "Validate mr-pilot configuration and environment",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "echo '=== mr-pilot Configuration Check ===' && echo '' && echo '1. Checking mr-pilot binary:' && which mr-pilot && mr-pilot --version 2>/dev/null || echo 'mr-pilot not found - run: npm i -g mr-pilot' && echo '' && echo '2. Checking parent process environment (set via export or prefix):' && ( [ -n \"$GITLAB_TOKEN\" ] && echo '✓ GITLAB_TOKEN available' || echo '✗ GITLAB_TOKEN not set' ) && ( [ -n \"$GITHUB_TOKEN\" ] && echo '✓ GITHUB_TOKEN available' || echo '✗ GITHUB_TOKEN not set' ) && ( [ -n \"$OPENROUTER_API_KEY\" ] && echo '✓ OPENROUTER_API_KEY available' || echo '✗ OPENROUTER_API_KEY not set' ) && echo '' && echo 'Usage:' && echo '  # Option 1: Export tokens' && echo '  export GITLAB_TOKEN=glpat-xxx' && echo '  export GITHUB_TOKEN=ghp_xxx' && echo '  export OPENROUTER_API_KEY=sk-or-xxx' && echo '  supercli mrpilot -- <mr-url> --platform github' && echo '' && echo '  # Option 2: Use env-file' && echo '  supercli mrpilot -- <mr-url> --platform github --env-file /path/to/.env'",
+        "unsafe": true
+      },
+      "args": []
+    }
+  ]
+}
