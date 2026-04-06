@@ -3,17 +3,11 @@ const path = require("path")
 const { readPluginsLock } = require("./plugins-store")
 const { getRegistryPlugin } = require("./plugins-registry")
 
+// NOTE: Do not add new plugin entries here. New plugins should use
+// plugins/<name>/meta.json or plugins/<name>/install-guidance.json
+// for install guidance. This map is kept for legacy compatibility only.
+
 const PLUGIN_INSTALL_GUIDANCE = {
-  beads: {
-    plugin: "beads",
-    binary: "br",
-    check: "br --version",
-    install_steps: [
-      "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh?$(date +%s)\" | bash",
-      "br --version"
-    ],
-    note: "Installation is intentionally delegated to your LLM/automation flow (dcli/scli/supercli)."
-  },
   gwc: { plugin: "gwc", binary: "gws", check: "gws --version", install_steps: ["npm install -g @googleworkspace/cli", "gws --version"], note: "Installation is intentionally delegated to your LLM/automation flow (dcli/scli/supercli)." },
   commiat: { plugin: "commiat", binary: "commiat", check: "commiat --version", install_steps: ["npm install -g commiat", "commiat --version"], note: "Installation is intentionally delegated to your LLM/automation flow (dcli/scli/supercli)." },
   humanenv: { plugin: "humanenv", binary: "humanenv", check: "humanenv", install_steps: ["npm install -g humanenv", "humanenv"], note: "Human must run humanenv server first and create a project in the admin UI before agent can authenticate." },
@@ -453,6 +447,17 @@ function readManifestGuidance(manifestPath, pluginName) {
   }
 }
 
+function readInstallGuidanceFile(filePath) {
+  if (!filePath || !fs.existsSync(filePath)) return null
+  try {
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf-8"))
+    const pluginName = path.basename(path.dirname(filePath))
+    return normalizeInstallGuidance(parsed, pluginName)
+  } catch {
+    return null
+  }
+}
+
 function findInstalledPlugin(name) {
   const lower = String(name || "").toLowerCase().trim()
   if (!lower) return null
@@ -488,7 +493,15 @@ function getPluginInstallGuidance(name) {
     if (fromManifest) return fromManifest
   }
 
-  const bundledManifest = path.resolve(__dirname, "..", "plugins", lower, "plugin.json")
+  const pluginDir = path.resolve(__dirname, "..", "plugins", lower)
+
+  const fromMeta = readInstallGuidanceFile(path.join(pluginDir, "meta.json"))
+  if (fromMeta) return fromMeta
+
+  const fromGuidanceFile = readInstallGuidanceFile(path.join(pluginDir, "install-guidance.json"))
+  if (fromGuidanceFile) return fromGuidanceFile
+
+  const bundledManifest = path.join(pluginDir, "plugin.json")
   const bundled = readManifestGuidance(bundledManifest, lower)
   if (bundled) return bundled
 
