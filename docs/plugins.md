@@ -1,14 +1,41 @@
 # Plugins
 
-supercli supports plugin discovery through `plugins/plugins.json` plus auto-discovery of bundled manifests at `plugins/*/plugin.json`.
+supercli supports plugin discovery through auto-discovery of bundled manifests at `plugins/*/plugin.json` plus optional per-plugin metadata files.
 
-Plugin owners can submit PRs that add or update metadata in this registry:
+## How Discovery Works
 
-- `name`
-- `description`
-- `tags`
-- `source` (`bundled` path or remote `git` repo + manifest path)
-- `install_guidance` (optional plugin-specific dependency/setup hints)
+### Bundled plugins (auto-discovered)
+
+Any directory under `plugins/` containing a `plugin.json` is automatically discovered as a bundled plugin.
+
+For registry metadata (description, tags, learn content), the system checks:
+
+1. **`plugins/<name>/meta.json`** (preferred — isolated, no shared file edits)
+2. **`plugins/<name>/plugin.json`** (fallback for description and install_guidance)
+
+### Registry entries (legacy + remote)
+
+`plugins/plugins.json` contains curated registry entries. This file is used for:
+- Legacy bundled plugins that haven't migrated to `meta.json`
+- Remote git-sourced plugins (type: "git")
+
+**Do not add new bundled plugin entries to this file.** Use `meta.json` in the plugin directory instead.
+
+## Adding a New Bundled Plugin
+
+Create files ONLY inside `plugins/<name>/`:
+
+```
+plugins/my-plugin/
+├── plugin.json              # Required: manifest
+├── meta.json                # Required: description, tags, has_learn
+├── install-guidance.json    # Optional: install steps
+└── skills/quickstart/SKILL.md  # Optional: agent guide
+```
+
+No edits to `plugins/plugins.json` or `cli/plugin-install-guidance.js` are needed.
+
+See [AGENTS.md](../AGENTS.md) for the full isolated plugin convention.
 
 ## Plugin Commands
 
