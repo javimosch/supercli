@@ -1,0 +1,65 @@
+{
+  "name": "humanenv",
+  "version": "0.1.0",
+  "description": "Secure environment variable injection - secrets for humans only",
+  "source": "https://github.com/javamosch/humanenv",
+  "checks": [
+    { "type": "binary", "name": "humanenv" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "humanenv",
+      "resource": "env",
+      "action": "get",
+      "description": "Retrieve a single secret from the humanenv server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "humanenv",
+        "baseArgs": ["get"],
+        "positionalArgs": ["key"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install humanenv: npm install -g humanenv"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Environment variable key to retrieve" }
+      ]
+    },
+    {
+      "namespace": "humanenv",
+      "resource": "env",
+      "action": "set",
+      "description": "Create or update a secret on the humanenv server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "humanenv",
+        "baseArgs": ["set"],
+        "positionalArgs": ["key", "value"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install humanenv: npm install -g humanenv"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Environment variable key" },
+        { "name": "value", "type": "string", "required": true, "description": "Environment variable value" }
+      ]
+    },
+    {
+      "namespace": "humanenv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to humanenv CLI for auth, server, and advanced usage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "humanenv",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Install humanenv: npm install -g humanenv"
+      },
+      "args": []
+    }
+  ]
+}

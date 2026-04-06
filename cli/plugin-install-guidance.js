@@ -16,6 +16,7 @@ const PLUGIN_INSTALL_GUIDANCE = {
   },
   gwc: { plugin: "gwc", binary: "gws", check: "gws --version", install_steps: ["npm install -g @googleworkspace/cli", "gws --version"], note: "Installation is intentionally delegated to your LLM/automation flow (dcli/scli/supercli)." },
   commiat: { plugin: "commiat", binary: "commiat", check: "commiat --version", install_steps: ["npm install -g commiat", "commiat --version"], note: "Installation is intentionally delegated to your LLM/automation flow (dcli/scli/supercli)." },
+  humanenv: { plugin: "humanenv", binary: "humanenv", check: "humanenv", install_steps: ["npm install -g humanenv", "humanenv"], note: "Human must run humanenv server first and create a project in the admin UI before agent can authenticate." },
   docker: { plugin: "docker", binary: "docker", check: "docker --version", install_steps: ["docker --version"], note: "Install Docker Engine/Desktop using your OS package manager, then verify with docker --version." },
   stripe: {
     plugin: "stripe",
