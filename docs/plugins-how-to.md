@@ -1,5 +1,98 @@
 # Plugin Harness Development Guide
 
+> **New plugins: use the isolated method.** Create files only inside `plugins/<name>/`.
+> Never edit `plugins/plugins.json` or `cli/plugin-install-guidance.js` for new bundled plugins.
+> See the "Isolated Plugin Structure" section below.
+
+## Isolated Plugin Structure
+
+A bundled plugin is fully self-contained in its own directory. The system auto-discovers
+plugins by scanning `plugins/` for directories containing `plugin.json`.
+
+### File layout
+
+```
+plugins/my-plugin/
+├── plugin.json              # Required: manifest (commands, checks, adapters)
+├── meta.json                # Required: registry metadata (description, tags, has_learn)
+├── install-guidance.json    # Optional: install steps (can also go in meta.json)
+├── skills/quickstart/SKILL.md  # Optional: agent learning content
+├── README.md                # Optional: human documentation
+└── examples/                # Optional: example usage
+```
+
+### meta.json
+
+The `meta.json` file provides registry-level metadata that would previously have required
+editing the shared `plugins/plugins.json` file:
+
+```json
+{
+  "description": "My CLI tool integration for supercli",
+  "tags": ["mytool", "category", "keyword"],
+  "has_learn": true,
+  "install_guidance": {
+    "plugin": "my-plugin",
+    "binary": "mytool",
+    "check": "mytool --version",
+    "install_steps": [
+      "npm install -g mytool",
+      "mytool --version"
+    ],
+    "note": "Optional installation note"
+  }
+}
+```
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `description` | string | Yes | Short description shown in `plugins explore` |
+| `tags` | string[] | Yes | Discovery tags for filtering |
+| `has_learn` | boolean | No | Set to `true` if plugin has a `skills/quickstart/SKILL.md` |
+| `install_guidance` | object | No | Install steps (alternative: use `install-guidance.json`) |
+
+### install-guidance.json (alternative)
+
+If you prefer to keep install guidance separate from metadata, use `install-guidance.json`:
+
+```json
+{
+  "plugin": "my-plugin",
+  "binary": "mytool",
+  "check": "mytool --version",
+  "install_steps": [
+    "npm install -g mytool",
+    "mytool --version"
+  ],
+  "note": "Optional note"
+}
+```
+
+### Resolution priority
+
+When the system looks for plugin metadata and install guidance, it checks in this order:
+
+1. `meta.json` (description, tags, has_learn, install_guidance)
+2. `install-guidance.json` (install guidance only)
+3. `plugin.json` fields (fallback for description, install_guidance)
+4. Legacy: `plugins/plugins.json` registry entries
+5. Legacy: `cli/plugin-install-guidance.js` hardcoded map
+
+### Testing your isolated plugin
+
+```bash
+# Install from local directory
+supercli plugins install ./plugins/my-plugin
+
+# Verify discovery
+supercli plugins explore --name my-plugin
+
+# Check health
+supercli plugins doctor my-plugin
+```
+
+---
+
 Learn how to create plugin harnesses that turn any CLI into a dcli harness.
 
 ## What is a Plugin Harness?
@@ -356,6 +449,7 @@ Once your plugin is tested and working:
    ```
    my-plugin-harness/
    ├── plugin.json
+   ├── meta.json
    ├── README.md
    ├── LICENSE
    └── examples/
@@ -441,6 +535,29 @@ supercli plan my-plugin resource action --arg value
 # Test arg parsing
 supercli inspect my-plugin resource action
 ```
+
+## Legacy Compatibility
+
+> **Note:** This section describes the previous method of registering plugins. It remains
+> functional for existing plugins but should NOT be used for new bundled plugins.
+
+Previously, adding a bundled plugin required editing two shared files:
+
+1. **`plugins/plugins.json`** — Add a registry entry with description, tags, and source
+2. **`cli/plugin-install-guidance.js`** — Add an entry to `PLUGIN_INSTALL_GUIDANCE` map
+
+This approach caused merge conflicts when multiple plugins were added in parallel. The new
+isolated `meta.json` convention eliminates this problem entirely.
+
+If you are maintaining an existing plugin that uses the old method, it will continue to work.
+Consider migrating to the isolated method by:
+
+1. Creating `plugins/<name>/meta.json` with description, tags, and has_learn
+2. Optionally creating `plugins/<name>/install-guidance.json` with install steps
+3. Removing the plugin's entry from `plugins/plugins.json`
+4. Removing the plugin's entry from `cli/plugin-install-guidance.js`
+
+---
 
 ## Contributing to dcli
 
