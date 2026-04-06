@@ -55,6 +55,17 @@ function readManifest(filePath) {
   }
 }
 
+function readMetaFile(metaPath) {
+  try {
+    if (!fs.existsSync(metaPath)) return null
+    const parsed = JSON.parse(fs.readFileSync(metaPath, "utf-8"))
+    if (!parsed || typeof parsed !== "object") return null
+    return parsed
+  } catch {
+    return null
+  }
+}
+
 function discoverBundledPlugins() {
   if (!fs.existsSync(BUNDLED_PLUGINS_DIR)) return []
   let entries
@@ -72,18 +83,26 @@ function discoverBundledPlugins() {
     if (!fs.existsSync(manifestPath)) continue
     const manifest = readManifest(manifestPath)
     if (!manifest) continue
+
+    const metaPath = path.join(BUNDLED_PLUGINS_DIR, entry.name, "meta.json")
+    const meta = readMetaFile(metaPath)
+
     plugins.push({
       name: manifest.name,
-      description: manifest.description || "",
-      tags: Array.isArray(manifest.tags) ? manifest.tags.map(t => String(t)) : [],
+      description: meta && typeof meta.description === "string" ? meta.description : (manifest.description || ""),
+      tags: meta && Array.isArray(meta.tags) ? meta.tags : (Array.isArray(manifest.tags) ? manifest.tags : []),
       source: {
         type: "bundled",
         manifest_path: path.relative(path.resolve(__dirname, ".."), manifestPath).replace(/\\/g, "/")
       },
-      has_learn: !!manifest.learn,
-      install_guidance: manifest.install_guidance && typeof manifest.install_guidance === "object"
-        ? manifest.install_guidance
-        : null,
+      has_learn: meta && meta.has_learn === true
+        ? true
+        : (!!manifest.learn),
+      install_guidance: meta && meta.install_guidance && typeof meta.install_guidance === "object"
+        ? meta.install_guidance
+        : (manifest.install_guidance && typeof manifest.install_guidance === "object"
+          ? manifest.install_guidance
+          : null),
     })
   }
 
