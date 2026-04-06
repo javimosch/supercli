@@ -204,9 +204,11 @@ When creating or updating plugins:
 
 ### Want to Create a New Plugin?
 
+New bundled plugins use an **isolated file convention** — no shared file edits needed.
+
 See our detailed [Plugin Harness Development Guide](docs/plugins-how-to.md) for:
 
-- Plugin manifest structure (`plugin.json`)
+- Isolated plugin structure (`plugin.json` + `meta.json`)
 - Command wrapping vs passthrough patterns
 - Argument mapping configuration
 - Testing and debugging tips
@@ -216,12 +218,14 @@ See our detailed [Plugin Harness Development Guide](docs/plugins-how-to.md) for:
 Before submitting a plugin for inclusion:
 
 - [ ] Plugin has a valid `plugin.json` manifest
+- [ ] Plugin has a `meta.json` with description, tags, and optional has_learn
 - [ ] Binary dependency checks are configured
 - [ ] Commands have clear descriptions
 - [ ] JSON output is supported where applicable
 - [ ] Plugin README includes installation and usage instructions
 - [ ] Tests pass (if applicable)
 - [ ] No hardcoded credentials or secrets
+- [ ] **No edits to `plugins/plugins.json` or `cli/plugin-install-guidance.js`**
 
 ### Publishing Plugins
 
@@ -229,7 +233,7 @@ Once your plugin is ready:
 
 ```bash
 # Install locally for testing
-supercli plugins install ./path/to/my-plugin
+supercli plugins install ./plugins/my-plugin
 
 # Test functionality
 supercli my-plugin --help
