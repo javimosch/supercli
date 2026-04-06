@@ -1,0 +1,79 @@
+{
+  "name": "rtk",
+  "version": "0.1.0",
+  "description": "RTK (Rust Token Killer) - CLI proxy that reduces LLM token consumption by 60-90% on common dev commands",
+  "source": "https://github.com/rtk-ai/rtk",
+  "checks": [
+    { "type": "binary", "name": "rtk" }
+  ],
+  "install_guidance": {
+    "plugin": "rtk",
+    "binary": "rtk",
+    "check": "rtk --version",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh",
+      "echo 'export PATH=\"$HOME/.local/bin:$PATH\"' >> ~/.bashrc  # or ~/.zshrc",
+      "source ~/.bashrc  # or restart your terminal",
+      "rtk --version"
+    ],
+    "note": "After install, run 'supercli rtk self init' to set up OpenCode integration."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rtk",
+      "resource": "self",
+      "action": "version",
+      "description": "Show RTK version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtk",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install RTK: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rtk",
+      "resource": "self",
+      "action": "init",
+      "description": "Initialize RTK OpenCode hook (runs: rtk init -g --opencode)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtk",
+        "baseArgs": ["init", "-g", "--opencode"],
+        "missingDependencyHelp": "Install RTK first: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rtk",
+      "resource": "analytics",
+      "action": "gain",
+      "description": "Show token savings statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtk",
+        "baseArgs": ["gain"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install RTK: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rtk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to RTK CLI (rtk ls, rtk git status, rtk test, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtk",
+        "passthrough": true,
+        "missingDependencyHelp": "Install RTK: curl -fsSL https://raw.githubusercontent.com/rtk-ai/rtk/refs/heads/master/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
