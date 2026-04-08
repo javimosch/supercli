@@ -1,3 +1,9 @@
+---
+skill_name: quickstart
+name: humanenv-usage
+description: Secure environment variable injection - secrets for humans only
+---
+
 # humanenv Usage
 
 Secure environment variable injection. Secrets exist in memory only when explicitly requested — never in `.env` files, never in process environment, never persistent on disk.
@@ -51,3 +57,39 @@ npm install -g humanenv
 ```
 
 Verify: `humanenv` (should show credentials status)
+
+## SDKs
+
+### Python (recommended for Python apps)
+
+```python
+import humanenv
+
+humanenv.config(humanenv.ClientConfig(
+    server_url="http://localhost:3056",
+    project_name="my-app",
+    api_key="optional-api-key"
+))
+
+value = await humanenv.get("API_KEY")
+value = None  # null after use
+```
+
+Install: `pip install humanenv` or `pip install -e sdk/python`
+
+### JavaScript (recommended for Node.js apps)
+
+```javascript
+import humanenv from 'humanenv'
+
+humanenv.config({
+  serverUrl: 'http://localhost:3056',
+  projectName: 'my-app',
+  projectApiKey: 'optional-api-key'
+})
+
+const value = await humanenv.get('API_KEY')
+value = null  // null after use
+```
+
+Install: `npm install humanenv`
