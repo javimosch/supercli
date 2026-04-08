@@ -42,6 +42,55 @@ function defaultProviders() {
   ]
 }
 
+function discoverInstalledPluginProviders() {
+  const pluginsLockPath = path.join(supercliDir(), "plugins", "plugins.lock.json")
+  if (!fs.existsSync(pluginsLockPath)) return []
+  
+  try {
+    const lock = JSON.parse(fs.readFileSync(pluginsLockPath, "utf-8"))
+    if (!lock || !lock.installed) return []
+    
+    const providers = []
+    const addedNames = new Set()
+    
+    for (const [name, plugin] of Object.entries(lock.installed)) {
+      if (addedNames.has(name)) continue
+      
+      const resolvedFrom = plugin.resolved_from || {}
+      let pluginDir = null
+      
+      if (resolvedFrom.type === "bundled") {
+        const bundledDir = path.join(__dirname, "..", "plugins")
+        pluginDir = path.join(bundledDir, name)
+      } else if (resolvedFrom.manifest_path) {
+        pluginDir = path.dirname(resolvedFrom.manifest_path)
+      }
+      
+      if (pluginDir && fs.existsSync(pluginDir)) {
+        const skillsDirs = [
+          path.join(pluginDir, "skills"),
+          path.join(pluginDir, ".agents", "skills")
+        ]
+        const hasSkills = skillsDirs.some(dir => fs.existsSync(dir))
+        
+        if (hasSkills) {
+          providers.push({
+            name: name,
+            type: "plugin_fs",
+            enabled: true,
+            plugin_dir: pluginDir
+          })
+          addedNames.add(name)
+        }
+      }
+    }
+    
+    return providers
+  } catch {
+    return []
+  }
+}
+
 function readJson(file, fallback) {
   try {
     if (!fs.existsSync(file)) return fallback
@@ -58,8 +107,23 @@ function writeJson(file, value) {
 }
 
 function listProviders() {
-  const providers = readJson(providersFile(), defaultProviders())
-  return Array.isArray(providers) ? providers : defaultProviders()
+  const manualProviders = readJson(providersFile(), defaultProviders())
+  const manual = Array.isArray(manualProviders) ? manualProviders : defaultProviders()
+  const discoveredPlugins = discoverInstalledPluginProviders()
+  
+  const merged = new Map()
+  
+  for (const p of manual) {
+    merged.set(p.name, p)
+  }
+  
+  for (const p of discoveredPlugins) {
+    if (!merged.has(p.name)) {
+      merged.set(p.name, p)
+    }
+  }
+  
+  return Array.from(merged.values())
 }
 
 function setProviders(providers) {
@@ -160,8 +224,12 @@ function syncCatalog() {
     if (provider.type === "plugin_fs") {
       const pluginDir = provider.plugin_dir
       if (!pluginDir || !fs.existsSync(pluginDir)) continue
-      const skillsDir = path.join(pluginDir, "skills")
-      if (fs.existsSync(skillsDir)) {
+      const skillDirs = [
+        path.join(pluginDir, "skills"),
+        path.join(pluginDir, ".agents", "skills")
+      ]
+      for (const skillsDir of skillDirs) {
+        if (!fs.existsSync(skillsDir)) continue
         const files = walkDir(skillsDir)
         for (const filePath of files) {
           const markdown = fs.readFileSync(filePath, "utf-8")
@@ -279,15 +347,22 @@ function getCatalogInfo() {
         status = 'missing'
         details.error = 'Plugin directory not found'
       } else {
-        const skillsDir = path.join(pluginDir, 'skills')
-        if (fs.existsSync(skillsDir)) {
-          const files = walkDir(skillsDir)
-          skillsCount = files.length
+        const skillsDirs = [
+          path.join(pluginDir, 'skills'),
+          path.join(pluginDir, '.agents', 'skills')
+        ]
+        for (const skillsDir of skillsDirs) {
+          if (fs.existsSync(skillsDir)) {
+            const files = walkDir(skillsDir)
+            skillsCount += files.length
+          }
+        }
+        if (skillsCount > 0) {
           details.plugin_dir = pluginDir
-          details.skills_dir = skillsDir
+          details.skills_dirs = skillsDirs
         } else {
           status = 'no_skills_dir'
-          details.skills_dir = skillsDir
+          details.skills_dirs = skillsDirs
         }
       }
     } else if (provider.type === 'local_fs' || provider.type === 'repo_fs') {
