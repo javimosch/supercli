@@ -232,7 +232,7 @@ function renderTopLevelHelp(config) {
       "  Skill Docs: supercli skills list | supercli skills get <id> | supercli skills catalog info | supercli skills providers describe | supercli skills search --query <q> | supercli skills sync",
     );
     if (config.features?.ask || process.env.OPENAI_BASE_URL) {
-      console.log('  AI: supercli ask "<your natural language query>"');
+      console.log('  AI: supercli ask "<your natural language query>"   # LLM-powered suggestions (no execution)');
     }
     console.log("  Server: supercli --server");
     console.log(
@@ -385,27 +385,35 @@ async function main() {
           name: "supercli",
           what_is_supercli:
             "Capability router that wraps external CLIs behind namespace.resource.action commands. Workflow: discover → learn → inspect → plan → execute.",
-          core_capabilities: ["commands", "plugins", "mcp", "skill_docs"],
+          core_capabilities: ["commands", "plugins", "mcp", "skill_docs", "ask"],
+          capabilities: {
+            discover: { type: "deterministic", description: "Keyword matching against plugin metadata", llm: false },
+            ask: { type: "llm_suggestions", description: "Natural language to command suggestions (no execution)", llm: true },
+            skills: { type: "documentation", description: "Agent-facing skill documents" },
+            plugins: { type: "discovery", description: "Plugin management and discovery" },
+            commands: { type: "query", description: "Query available commands" },
+            inspect: { type: "introspection", description: "View command schema" },
+            plan: { type: "preview", description: "Preview execution steps" }
+          },
           first_steps: [
             "supercli --help-json",
             'supercli discover --intent "<task>" --json',
+            "supercli ask \"<query>\" --json",
             "supercli plugins learn <name> --json",
-            "supercli plugins install <name>",
             "supercli commands --query <keyword> --limit 50 --json",
             "supercli inspect <namespace> <resource> <action> --json",
           ],
           intent_workflow:
-            "If task command is unknown: discover → learn → inspect → plan → execute.",
+            "If task command is unknown: discover → ask → learn → inspect → plan → execute.",
           examples: {
             send_email: [
               'supercli discover --intent "send email" --json',
+              'supercli ask "send an email" --json',
               "supercli plugins learn resend --json",
-              "supercli plugins install resend",
-              "supercli commands --namespace resend --json",
+              "supercli inspect resend emails send --json",
             ],
           },
-          no_llm_discovery: true,
-          note: "Intent discovery is deterministic and does not call an LLM.",
+          note: "discover is deterministic (no LLM). ask uses LLM for suggestions only (no execution).",
         });
         return;
       }
@@ -1007,7 +1015,7 @@ function displayComprehensiveHelp() {
   );
   console.log("    supercli execute <plan_id>              # Run stored plan");
   console.log(
-    '    supercli ask "<query>"                  # Natural language execution\n',
+    '    supercli ask "<query>"                  # LLM-powered suggestions (no execution)\n',
   );
 
   console.log("  🧩 PLUGIN MANAGEMENT:");
