@@ -1,0 +1,169 @@
+{
+  "name": "codedb",
+  "version": "0.1.0",
+  "description": "Zig code intelligence server and CLI — tree, outline, symbol search, trigram full-text search, O(1) word index, dependency graph, and remote GitHub repo queries",
+  "source": "https://github.com/justrach/codedb",
+  "checks": [
+    { "type": "binary", "name": "codedb" }
+  ],
+  "install_guidance": {
+    "plugin": "codedb",
+    "binary": "codedb",
+    "check": "codedb --version",
+    "install_steps": [
+      "curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "codedb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print codedb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codedb",
+      "resource": "tree",
+      "action": "run",
+      "description": "Show file tree with language and symbol counts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["tree"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codedb",
+      "resource": "outline",
+      "action": "run",
+      "description": "List all symbols in a file (functions, structs, imports, with line numbers)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["outline"],
+        "positionalArgs": ["path"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to the file to outline" }
+      ]
+    },
+    {
+      "namespace": "codedb",
+      "resource": "find",
+      "action": "run",
+      "description": "Find where a symbol is defined across the codebase",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["find"],
+        "positionalArgs": ["name"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Symbol name to find" }
+      ]
+    },
+    {
+      "namespace": "codedb",
+      "resource": "search",
+      "action": "run",
+      "description": "Full-text search (trigram-accelerated, case-insensitive)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" },
+        { "name": "max", "type": "number", "required": false, "description": "Max results to return" }
+      ]
+    },
+    {
+      "namespace": "codedb",
+      "resource": "search",
+      "action": "regex",
+      "description": "Regex search across the codebase",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["search", "--regex"],
+        "positionalArgs": ["pattern"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Regex pattern" }
+      ]
+    },
+    {
+      "namespace": "codedb",
+      "resource": "word",
+      "action": "run",
+      "description": "O(1) exact word lookup via inverted index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["word"],
+        "positionalArgs": ["identifier"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": [
+        { "name": "identifier", "type": "string", "required": true, "description": "Identifier to look up" }
+      ]
+    },
+    {
+      "namespace": "codedb",
+      "resource": "hot",
+      "action": "run",
+      "description": "Show recently modified files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["hot"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codedb",
+      "resource": "nuke",
+      "action": "run",
+      "description": "Remove all codedb data, snapshots, and kill processes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "baseArgs": ["nuke"],
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codedb",
+      "resource": "_",
+      "action": "_",
+      "description": "Catch-all passthrough to codedb CLI (codedb ls, codedb git status, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codedb",
+        "passthrough": true,
+        "missingDependencyHelp": "Install codedb: curl -fsSL https://codedb.codegraff.com/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
