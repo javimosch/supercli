@@ -1,0 +1,413 @@
+{
+  "name": "mmx",
+  "version": "1.0.0",
+  "description": "MiniMax AI Platform CLI — text, image, video, speech, music, vision, and search generation",
+  "source": "https://github.com/MiniMax-AI/cli/",
+  "checks": [
+    { "type": "binary", "name": "mmx" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmx",
+      "resource": "auth",
+      "action": "login",
+      "description": "Authenticate via OAuth or API key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["auth", "login"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": [
+        { "name": "method", "type": "string", "required": false, "description": "Auth method: oauth, api-key", "flag": "--method" },
+        { "name": "api-key", "type": "string", "required": false, "description": "API key to store", "flag": "--api-key" },
+        { "name": "no-browser", "type": "boolean", "required": false, "description": "Use device-code flow instead of browser", "flag": "--no-browser" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["auth", "status"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmx",
+      "resource": "auth",
+      "action": "refresh",
+      "description": "Refresh OAuth credentials",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["auth", "refresh"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmx",
+      "resource": "auth",
+      "action": "logout",
+      "description": "Clear stored credentials",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["auth", "logout"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmx",
+      "resource": "text",
+      "action": "chat",
+      "description": "Send a chat completion request (MiniMax Messages API)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["text", "chat"],
+        "positionalArgs": ["message"],
+        "jsonFlag": "--output",
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "message", "type": "string", "required": true, "description": "Message text (prefix role: to set role, e.g. assistant:Hi)", "flag": "--message" },
+        { "name": "model", "type": "string", "required": false, "description": "Model ID (default: MiniMax-M2.7)", "flag": "--model" },
+        { "name": "system", "type": "string", "required": false, "description": "System prompt", "flag": "--system" },
+        { "name": "messages-file", "type": "string", "required": false, "description": "JSON file with messages array (use - for stdin)", "flag": "--messages-file" },
+        { "name": "max-tokens", "type": "integer", "required": false, "description": "Maximum tokens to generate (default: 4096)", "flag": "--max-tokens" },
+        { "name": "temperature", "type": "number", "required": false, "description": "Sampling temperature (0.0, 1.0]", "flag": "--temperature" },
+        { "name": "top-p", "type": "number", "required": false, "description": "Nucleus sampling threshold", "flag": "--top-p" },
+        { "name": "stream", "type": "boolean", "required": false, "description": "Stream response tokens", "flag": "--stream" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "image",
+      "action": "generate",
+      "description": "Generate images (image-01 / image-01-live)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["image", "generate"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "Image description", "flag": "--prompt" },
+        { "name": "aspect-ratio", "type": "string", "required": false, "description": "Aspect ratio (e.g. 16:9, 1:1)", "flag": "--aspect-ratio" },
+        { "name": "n", "type": "integer", "required": false, "description": "Number of images to generate (default: 1)", "flag": "--n" },
+        { "name": "seed", "type": "integer", "required": false, "description": "Random seed for reproducible output", "flag": "--seed" },
+        { "name": "width", "type": "integer", "required": false, "description": "Custom width in pixels (512-2048, multiple of 8)", "flag": "--width" },
+        { "name": "height", "type": "integer", "required": false, "description": "Custom height in pixels (512-2048, multiple of 8)", "flag": "--height" },
+        { "name": "prompt-optimizer", "type": "boolean", "required": false, "description": "Automatically optimize the prompt", "flag": "--prompt-optimizer" },
+        { "name": "aigc-watermark", "type": "boolean", "required": false, "description": "Embed AI-generated content watermark", "flag": "--aigc-watermark" },
+        { "name": "subject-ref", "type": "string", "required": false, "description": "Subject reference (format: type=character,image=path-or-url)", "flag": "--subject-ref" },
+        { "name": "out-dir", "type": "string", "required": false, "description": "Download images to directory", "flag": "--out-dir" },
+        { "name": "out-prefix", "type": "string", "required": false, "description": "Filename prefix (default: image)", "flag": "--out-prefix" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "video",
+      "action": "generate",
+      "description": "Generate a video (T2V, I2V, S2V modes)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["video", "generate"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": false, "description": "Model ID (default: MiniMax-Hailuo-2.3)", "flag": "--model" },
+        { "name": "prompt", "type": "string", "required": true, "description": "Video description", "flag": "--prompt" },
+        { "name": "first-frame", "type": "string", "required": false, "description": "First frame image (I2V mode)", "flag": "--first-frame" },
+        { "name": "last-frame", "type": "string", "required": false, "description": "Last frame image (SEF mode, requires --first-frame)", "flag": "--last-frame" },
+        { "name": "subject-image", "type": "string", "required": false, "description": "Subject reference image (S2V mode)", "flag": "--subject-image" },
+        { "name": "callback-url", "type": "string", "required": false, "description": "Webhook URL for completion notification", "flag": "--callback-url" },
+        { "name": "download", "type": "string", "required": false, "description": "Save video to file on completion", "flag": "--download" },
+        { "name": "no-wait", "type": "boolean", "required": false, "description": "Return task ID immediately", "flag": "--no-wait" },
+        { "name": "async", "type": "boolean", "required": false, "description": "Return task ID immediately (agent/CI mode)", "flag": "--async" },
+        { "name": "poll-interval", "type": "integer", "required": false, "description": "Polling interval in seconds (default: 5)", "flag": "--poll-interval" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "video",
+      "action": "task-get",
+      "description": "Query video task status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["video", "task", "get"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "task-id", "type": "string", "required": true, "description": "Video generation task ID", "flag": "--task-id" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "video",
+      "action": "download",
+      "description": "Download a completed video by file ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["video", "download"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "file-id", "type": "string", "required": true, "description": "File ID to download", "flag": "--file-id" },
+        { "name": "out", "type": "string", "required": true, "description": "Output file path", "flag": "--out" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "speech",
+      "action": "synthesize",
+      "description": "Text-to-speech synthesis (speech-2.8-hd / 2.6 / 02)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["speech", "synthesize"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": false, "description": "Model ID (default: speech-2.8-hd)", "flag": "--model" },
+        { "name": "text", "type": "string", "required": true, "description": "Text to synthesize", "flag": "--text" },
+        { "name": "text-file", "type": "string", "required": false, "description": "Read text from file (use - for stdin)", "flag": "--text-file" },
+        { "name": "voice", "type": "string", "required": false, "description": "Voice ID (default: English_expressive_narrator)", "flag": "--voice" },
+        { "name": "speed", "type": "number", "required": false, "description": "Speech speed multiplier", "flag": "--speed" },
+        { "name": "volume", "type": "number", "required": false, "description": "Volume level", "flag": "--volume" },
+        { "name": "pitch", "type": "number", "required": false, "description": "Pitch adjustment", "flag": "--pitch" },
+        { "name": "format", "type": "string", "required": false, "description": "Audio format (default: mp3)", "flag": "--format" },
+        { "name": "sample-rate", "type": "integer", "required": false, "description": "Sample rate (default: 32000)", "flag": "--sample-rate" },
+        { "name": "bitrate", "type": "integer", "required": false, "description": "Bitrate (default: 128000)", "flag": "--bitrate" },
+        { "name": "channels", "type": "integer", "required": false, "description": "Audio channels (default: 1)", "flag": "--channels" },
+        { "name": "language", "type": "string", "required": false, "description": "Language boost", "flag": "--language" },
+        { "name": "subtitles", "type": "boolean", "required": false, "description": "Include subtitle timing data", "flag": "--subtitles" },
+        { "name": "pronunciation", "type": "string", "required": false, "description": "Custom pronunciation (format: from/to)", "flag": "--pronunciation" },
+        { "name": "out", "type": "string", "required": false, "description": "Save audio to file", "flag": "--out" },
+        { "name": "stream", "type": "boolean", "required": false, "description": "Stream raw audio to stdout", "flag": "--stream" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "speech",
+      "action": "voices",
+      "description": "List available system voices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["speech", "voices"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "language", "type": "string", "required": false, "description": "Filter voices by language (e.g. english, korean)", "flag": "--language" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "music",
+      "action": "generate",
+      "description": "Generate a song (music-2.6 / music-2.6-free / music-2.5+ / music-2.5)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["music", "generate"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": false, "description": "Music style description", "flag": "--prompt" },
+        { "name": "lyrics", "type": "string", "required": false, "description": "Song lyrics with structure tags", "flag": "--lyrics" },
+        { "name": "lyrics-file", "type": "string", "required": false, "description": "Read lyrics from file", "flag": "--lyrics-file" },
+        { "name": "lyrics-optimizer", "type": "boolean", "required": false, "description": "Auto-generate lyrics from prompt", "flag": "--lyrics-optimizer" },
+        { "name": "instrumental", "type": "boolean", "required": false, "description": "Generate instrumental music", "flag": "--instrumental" },
+        { "name": "vocals", "type": "string", "required": false, "description": "Vocal style description", "flag": "--vocals" },
+        { "name": "genre", "type": "string", "required": false, "description": "Music genre", "flag": "--genre" },
+        { "name": "mood", "type": "string", "required": false, "description": "Mood or emotion", "flag": "--mood" },
+        { "name": "instruments", "type": "string", "required": false, "description": "Instruments to feature", "flag": "--instruments" },
+        { "name": "tempo", "type": "string", "required": false, "description": "Tempo description (fast, slow, moderate)", "flag": "--tempo" },
+        { "name": "bpm", "type": "integer", "required": false, "description": "Exact tempo in BPM", "flag": "--bpm" },
+        { "name": "key", "type": "string", "required": false, "description": "Musical key (e.g. C major)", "flag": "--key" },
+        { "name": "model", "type": "string", "required": false, "description": "Model: music-2.6, music-2.6-free, music-2.5+, music-2.5", "flag": "--model" },
+        { "name": "output-format", "type": "string", "required": false, "description": "Return format: hex (default), url", "flag": "--output-format" },
+        { "name": "aigc-watermark", "type": "boolean", "required": false, "description": "Embed AI-generated content watermark", "flag": "--aigc-watermark" },
+        { "name": "format", "type": "string", "required": false, "description": "Audio format (default: mp3)", "flag": "--format" },
+        { "name": "sample-rate", "type": "integer", "required": false, "description": "Sample rate (default: 44100)", "flag": "--sample-rate" },
+        { "name": "bitrate", "type": "integer", "required": false, "description": "Bitrate (default: 256000)", "flag": "--bitrate" },
+        { "name": "stream", "type": "boolean", "required": false, "description": "Stream raw audio to stdout", "flag": "--stream" },
+        { "name": "out", "type": "string", "required": false, "description": "Save audio to file", "flag": "--out" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "music",
+      "action": "cover",
+      "description": "Generate a cover version of a song (music-cover / music-cover-free)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["music", "cover"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": false, "description": "Model: music-cover, music-cover-free", "flag": "--model" },
+        { "name": "prompt", "type": "string", "required": true, "description": "Target cover style description", "flag": "--prompt" },
+        { "name": "audio", "type": "string", "required": false, "description": "URL of reference audio", "flag": "--audio" },
+        { "name": "audio-file", "type": "string", "required": false, "description": "Local reference audio file", "flag": "--audio-file" },
+        { "name": "lyrics", "type": "string", "required": false, "description": "Cover lyrics", "flag": "--lyrics" },
+        { "name": "lyrics-file", "type": "string", "required": false, "description": "Read lyrics from file", "flag": "--lyrics-file" },
+        { "name": "seed", "type": "integer", "required": false, "description": "Random seed 0-1000000 for reproducible results", "flag": "--seed" },
+        { "name": "format", "type": "string", "required": false, "description": "Audio format: mp3, wav, pcm (default: mp3)", "flag": "--format" },
+        { "name": "sample-rate", "type": "integer", "required": false, "description": "Sample rate (default: 44100)", "flag": "--sample-rate" },
+        { "name": "bitrate", "type": "integer", "required": false, "description": "Bitrate (default: 256000)", "flag": "--bitrate" },
+        { "name": "channel", "type": "integer", "required": false, "description": "Channels: 1 (mono) or 2 (stereo)", "flag": "--channel" },
+        { "name": "stream", "type": "boolean", "required": false, "description": "Stream raw audio to stdout", "flag": "--stream" },
+        { "name": "out", "type": "string", "required": false, "description": "Save audio to file", "flag": "--out" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "search",
+      "action": "query",
+      "description": "Search the web via MiniMax",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["search", "query"],
+        "positionalArgs": ["q"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "q", "type": "string", "required": true, "description": "Search query string", "flag": "--q" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "vision",
+      "action": "describe",
+      "description": "Describe an image using MiniMax VLM",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["vision", "describe"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": false, "description": "Local image path or URL", "flag": "--image" },
+        { "name": "file-id", "type": "string", "required": false, "description": "Pre-uploaded file ID", "flag": "--file-id" },
+        { "name": "prompt", "type": "string", "required": false, "description": "Question about the image (default: Describe the image.)", "flag": "--prompt" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: text, json", "flag": "--output" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "quota",
+      "action": "show",
+      "description": "Show usage quotas and remaining credits",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["quota"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: mmx auth login --api-key sk-xxxxx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmx",
+      "resource": "config",
+      "action": "show",
+      "description": "Show current CLI configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["config", "show"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmx",
+      "resource": "config",
+      "action": "set",
+      "description": "Set a configuration value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["config", "set"],
+        "parseJson": false,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Config key to set (e.g. region)", "flag": "--key" },
+        { "name": "value", "type": "string", "required": true, "description": "Value to set", "flag": "--value" }
+      ]
+    },
+    {
+      "namespace": "mmx",
+      "resource": "config",
+      "action": "export-schema",
+      "description": "Export configuration schema as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": ["config", "export-schema"],
+        "parseJson": true,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to execute any mmx CLI command directly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmx",
+        "baseArgs": [],
+        "passthrough": true,
+        "parseJson": false,
+        "missingDependencyHelp": "Run: npm install -g mmx-cli"
+      },
+      "args": []
+    }
+  ]
+}
