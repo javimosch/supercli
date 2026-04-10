@@ -495,6 +495,66 @@ function handleSkillsCommand(options) {
     return true
   }
 
+  if (!subcommand) {
+    if (humanMode) {
+      console.log("\n  ⚡ SuperCLI Skills\n");
+      console.log("  Skill documents provide agent-facing guidance in SKILL.md format.\n");
+      console.log("  Subcommands:");
+      console.log("    list           List available skills");
+      console.log("    get <id>       Get skill documentation");
+      console.log("    teach          Get the skills usage guide");
+      console.log("    sync           Sync skills catalog");
+      console.log("    search         Search skills catalog");
+      console.log("    providers      Manage skill providers\n");
+      console.log("  Usage:");
+      console.log("    supercli skills list");
+      console.log("    supercli skills get <namespace.resource.action>");
+      console.log("    supercli skills teach");
+      console.log("    supercli skills search --query <text>");
+      console.log("    supercli skills sync");
+      console.log("    supercli skills providers list\n");
+    } else {
+      output({
+        version: "1.0",
+        mode: "skills_help",
+        description: "Skill documents provide agent-facing guidance in SKILL.md format",
+        subcommands: {
+          list: {
+            description: "List available skills (command-level + catalog)",
+            usage: "supercli skills list [--catalog] [--provider <name>]",
+            examples: ["supercli skills list --json", "supercli skills list --catalog --json"]
+          },
+          get: {
+            description: "Get skill documentation for a specific capability",
+            usage: "supercli skills get <namespace.resource.action> [--show-dag]",
+            examples: ["supercli skills get mmx.text.chat --json"]
+          },
+          teach: {
+            description: "Get the skills usage guide (teaches how to use skills system)",
+            usage: "supercli skills teach [--show-dag]",
+            examples: ["supercli skills teach --json"]
+          },
+          sync: {
+            description: "Sync skills catalog from providers",
+            usage: "supercli skills sync",
+            examples: ["supercli skills sync --json"]
+          },
+          search: {
+            description: "Search skills catalog for matching skills",
+            usage: "supercli skills search --query <text> [--provider <name>]",
+            examples: ["supercli skills search --query email --json"]
+          },
+          providers: {
+            description: "Manage skill providers (list, add, remove, show)",
+            usage: "supercli skills providers <action> [--name <provider>] [--roots <paths>]",
+            examples: ["supercli skills providers list --json", "supercli skills providers add --name myproj --roots ./docs/skills --json"]
+          }
+        }
+      });
+    }
+    return true;
+  }
+
   outputError({ code: 85, type: "invalid_argument", message: "Unknown skills subcommand. Use: list, get, teach, sync, search, providers", recoverable: false })
   return true
 }
