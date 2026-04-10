@@ -43,9 +43,29 @@ function resolveBundledManifestPath(pluginName) {
   return path.resolve(__dirname, "..", "plugins", pluginName, "plugin.json")
 }
 
-function resolveLearnMarkdown(manifest, manifestPath) {
+function readMetaFile(metaPath) {
+  try {
+    if (!fs.existsSync(metaPath)) return null
+    const parsed = JSON.parse(fs.readFileSync(metaPath, "utf-8"))
+    if (!parsed || typeof parsed !== "object") return null
+    return parsed
+  } catch {
+    return null
+  }
+}
+
+function resolveLearnMarkdown(manifest, manifestPath, meta = null) {
   const learn = manifest.learn
+
   if (!learn) {
+    const metaPath = path.join(path.dirname(manifestPath), "meta.json")
+    const metaData = meta || readMetaFile(metaPath)
+    if (metaData && metaData.has_learn === true) {
+      const defaultLearnFile = path.join(path.dirname(manifestPath), "skills", "quickstart", "SKILL.md")
+      if (fs.existsSync(defaultLearnFile)) {
+        return fs.readFileSync(defaultLearnFile, "utf-8")
+      }
+    }
     throw notFound(`Plugin '${manifest.name}' does not define learn content`, [
       "Use: supercli plugins show <name>",
       "Use: supercli plugins explore --name <name>",
@@ -162,7 +182,9 @@ function getPluginLearn(pluginName) {
     throw notFound(`Plugin '${pluginName}' not found`, ["Run: supercli plugins explore"])
   }
 
-  const markdown = resolveLearnMarkdown(loaded.manifest, loaded.manifestPath)
+  const metaPath = path.join(path.dirname(loaded.manifestPath), "meta.json")
+  const meta = readMetaFile(metaPath)
+  const markdown = resolveLearnMarkdown(loaded.manifest, loaded.manifestPath, meta)
   return {
     plugin: loaded.manifest.name || pluginName,
     installed: !!installed,
