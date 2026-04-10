@@ -1,7 +1,4 @@
 const { handleAskCommand } = require("../cli/ask")
-const { execute } = require("../cli/executor")
-
-jest.mock("../cli/executor")
 
 describe("ask", () => {
   let mockOutput
@@ -10,6 +7,18 @@ describe("ask", () => {
 
   const mockConfig = {
     commands: [
+      {
+        namespace: "resend",
+        resource: "emails",
+        action: "send",
+        description: "Send an email via the Resend API",
+        args: [
+          { name: "from", required: true },
+          { name: "to", required: true },
+          { name: "subject", required: true },
+          { name: "text", required: false }
+        ]
+      },
       {
         namespace: "test",
         resource: "res",
@@ -31,8 +40,7 @@ describe("ask", () => {
     mockOutputError = jest.fn()
     consoleSpy = jest.spyOn(console, "log").mockImplementation()
     global.fetch = jest.fn()
-    
-    // Clear relevant environment variables
+
     delete process.env.OPENAI_BASE_URL
     delete process.env.OPENAI_MODEL
     delete process.env.OPENAI_API_KEY
@@ -49,7 +57,8 @@ describe("ask", () => {
     })
     expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
       code: 85,
-      type: "invalid_argument"
+      type: "invalid_argument",
+      message: expect.stringContaining("Usage:")
     }))
   })
 
@@ -63,7 +72,7 @@ describe("ask", () => {
     expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
       code: 105,
       type: "integration_error",
-      message: expect.stringContaining("not configured")
+      message: expect.stringContaining("requires LLM configuration")
     }))
   })
 
@@ -72,88 +81,98 @@ describe("ask", () => {
       process.env.OPENAI_BASE_URL = "http://localhost:1234/v1"
     })
 
-    test("successfully resolves and executes plan with multiple commands in config", async () => {
+    test("successfully returns suggested steps without executing", async () => {
       const mockConfigMulti = {
         commands: [
-          { namespace: "test", resource: "res", action: "act1" },
-          { namespace: "test", resource: "res", action: "act2" },
-          { namespace: "other", resource: "res", action: "act" }
+          { namespace: "resend", resource: "emails", action: "send", description: "Send email", args: [] },
+          { namespace: "test", resource: "res", action: "act2" }
         ],
         features: { ask: true }
       }
-      const mockSteps = [{ command: "test.res.act1" }]
-      
+      const mockSteps = [{ command: "resend.emails.send", args: { from: "a@b.com", to: "c@d.com" } }]
+
       global.fetch.mockResolvedValue({
         ok: true,
         json: () => Promise.resolve({
           choices: [{ message: { content: JSON.stringify(mockSteps) } }]
         })
       })
-      execute.mockResolvedValue({})
 
       await handleAskCommand({
-        positional: ["ask", "test"],
+        positional: ["ask", "send an email"],
         config: mockConfigMulti,
         context: {},
-        output: mockOutput
+        output: mockOutput,
+        humanMode: false
       })
 
-      expect(execute).toHaveBeenCalled()
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        mode: "ask_suggest",
+        llm_powered: true,
+        query: "send an email",
+        suggested_steps: expect.arrayContaining([
+          expect.objectContaining({
+            step: 1,
+            command: "resend.emails.send",
+            args: { from: "a@b.com", to: "c@d.com" }
+          })
+        ])
+      }))
     })
 
     test("strips markdown formatting from LLM response", async () => {
-      const mockSteps = [{ command: "test" }]
+      const mockSteps = [{ command: "resend.emails.send", args: { from: "a@b.com" } }]
       global.fetch.mockResolvedValue({
         ok: true,
         json: () => Promise.resolve({
           choices: [{ message: { content: "```json\n" + JSON.stringify(mockSteps) + "\n```" } }]
         })
       })
-      execute.mockResolvedValue({})
 
       await handleAskCommand({
         positional: ["ask", "test"],
         config: mockConfig,
         context: {},
-        output: mockOutput
+        output: mockOutput,
+        humanMode: false
       })
 
-      expect(execute).toHaveBeenCalledWith(
-        expect.objectContaining({ adapterConfig: { steps: mockSteps } }),
-        expect.anything(),
-        expect.anything()
-      )
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        suggested_steps: expect.arrayContaining([
+          expect.objectContaining({ command: "resend.emails.send" })
+        ])
+      }))
     })
 
     test("strips generic code blocks from LLM response", async () => {
-      const mockSteps = [{ command: "test" }]
+      const mockSteps = [{ command: "resend.emails.send", args: {} }]
       global.fetch.mockResolvedValue({
         ok: true,
         json: () => Promise.resolve({
           choices: [{ message: { content: "```\n" + JSON.stringify(mockSteps) + "\n```" } }]
         })
       })
-      execute.mockResolvedValue({})
 
       await handleAskCommand({
         positional: ["ask", "test"],
         config: mockConfig,
         context: {},
-        output: mockOutput
+        output: mockOutput,
+        humanMode: false
       })
 
-      expect(execute).toHaveBeenCalledWith(
-        expect.objectContaining({ adapterConfig: { steps: mockSteps } }),
-        expect.anything(),
-        expect.anything()
-      )
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        suggested_steps: expect.arrayContaining([
+          expect.objectContaining({ command: "resend.emails.send" })
+        ])
+      }))
     })
 
-    test("handles fetch failure from local LLM", async () => {
+    test("handles auth error (401) from local LLM", async () => {
       global.fetch.mockResolvedValue({
         ok: false,
         status: 401,
-        text: () => Promise.resolve("Unauthorized")
+        text: () => Promise.resolve(JSON.stringify({ error: { message: "Unauthorized" } }))
       })
 
       await handleAskCommand({
@@ -164,7 +183,8 @@ describe("ask", () => {
       })
 
       expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
-        message: expect.stringContaining("Local LLM Error 401: Unauthorized")
+        message: expect.stringContaining("authentication failed"),
+        recoverable: false
       }))
     })
 
@@ -182,7 +202,9 @@ describe("ask", () => {
       })
 
       expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
-        message: "Invalid response format from local LLM"
+        details: expect.objectContaining({
+          api_message: expect.stringContaining("Invalid response format")
+        })
       }))
     })
 
@@ -202,126 +224,233 @@ describe("ask", () => {
       })
 
       expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
-        message: "LLM did not return a JSON array"
+        details: expect.objectContaining({
+          api_message: expect.stringContaining("JSON array")
+        })
       }))
     })
-  })
 
-  describe("remote LLM resolution", () => {
-    test("successfully resolves via server", async () => {
-      const mockSteps = [{ command: "remote.act" }]
-      global.fetch.mockResolvedValue({
-        ok: true,
-        json: () => Promise.resolve({ steps: mockSteps })
-      })
-      execute.mockResolvedValue({ ok: true })
-
-      await handleAskCommand({
-        positional: ["ask", "remote", "query"],
-        config: { features: { ask: true } },
-        context: { server: "http://api.test" },
-        output: mockOutput
-      })
-
-      expect(global.fetch).toHaveBeenCalledWith(
-        "http://api.test/api/ask",
-        expect.objectContaining({ method: "POST" })
-      )
-      expect(execute).toHaveBeenCalledWith(
-        expect.objectContaining({ adapterConfig: { steps: mockSteps } }),
-        expect.anything(),
-        expect.anything()
-      )
-    })
-
-    test("handles server failure with error message", async () => {
-      global.fetch.mockResolvedValue({
-        ok: false,
-        statusText: "Bad Gateway",
-        json: () => Promise.resolve({ error: "Server too busy" })
-      })
-
-      await handleAskCommand({
-        positional: ["ask", "test"],
-        config: { features: { ask: true } },
-        context: { server: "http://api.test" },
-        outputError: mockOutputError
-      })
-
-      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
-        message: "Server LLM completion failed: Server too busy"
-      }))
-    })
-    
-    test("handles server failure with status text if no json error", async () => {
-      global.fetch.mockResolvedValue({
-        ok: false,
-        statusText: "Forbidden",
-        json: () => Promise.reject()
-      })
-
-      await handleAskCommand({
-        positional: ["ask", "test"],
-        config: { features: { ask: true } },
-        context: { server: "http://api.test" },
-        outputError: mockOutputError
-      })
-
-      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
-        message: "Server LLM completion failed: Forbidden"
-      }))
-    })
-  })
-
-  describe("human mode", () => {
-    test("logs plan and success message with missing command parts and no description", async () => {
-      process.env.OPENAI_BASE_URL = "http://localhost"
-      const mockConfigWithHole = {
-        commands: [
-          { namespace: "test", resource: "res", action: "act" } // No description
-        ],
-        features: { ask: true }
-      }
-      
-      const mockSteps = [
-        { command: "test.res.act" } // No args
-      ]
-      
+    test("includes dry_run command in suggestions", async () => {
+      const mockSteps = [{ command: "resend.emails.send", args: { from: "a@b.com", to: "c@d.com" } }]
       global.fetch.mockResolvedValue({
         ok: true,
         json: () => Promise.resolve({
           choices: [{ message: { content: JSON.stringify(mockSteps) } }]
         })
       })
-      execute.mockResolvedValue({ data: "done" })
 
       await handleAskCommand({
-        positional: ["ask", "do", "it"],
-        config: mockConfigWithHole,
-        context: mockContext,
-        humanMode: true
+        positional: ["ask", "send email"],
+        config: mockConfig,
+        context: {},
+        output: mockOutput,
+        humanMode: false
       })
 
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Thinking... (local resolution)"))
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("1. test res act"))
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        suggested_steps: expect.arrayContaining([
+          expect.objectContaining({
+            dry_run: expect.stringContaining("supercli resend emails send")
+          })
+        ])
+      }))
     })
 
-    test("logs plan in server mode", async () => {
-      const mockSteps = [{ command: "test.res.act", args: {} }]
+    test("includes next_steps with discover fallback", async () => {
+      const mockSteps = [{ command: "resend.emails.send", args: {} }]
+      global.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({
+          choices: [{ message: { content: JSON.stringify(mockSteps) } }]
+        })
+      })
+
+      await handleAskCommand({
+        positional: ["ask", "send email"],
+        config: mockConfig,
+        context: {},
+        output: mockOutput,
+        humanMode: false
+      })
+
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        next_steps: expect.arrayContaining([
+          expect.stringContaining("supercli discover --intent")
+        ])
+      }))
+    })
+  })
+
+  describe("remote LLM resolution", () => {
+    beforeEach(() => {
+      delete process.env.OPENAI_BASE_URL
+    })
+
+    test("successfully returns suggested steps via server", async () => {
+      const mockSteps = [{ command: "resend.emails.send", args: {} }]
       global.fetch.mockResolvedValue({
         ok: true,
         json: () => Promise.resolve({ steps: mockSteps })
       })
-      execute.mockResolvedValue({})
 
       await handleAskCommand({
-        positional: ["ask", "do", "it"],
-        config: { features: { ask: true } },
+        positional: ["ask", "remote", "query"],
+        config: { features: { ask: true }, commands: mockConfig.commands },
         context: { server: "http://api.test" },
-        humanMode: true
+        output: mockOutput,
+        outputError: mockOutputError,
+        humanMode: false
       })
 
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Thinking... (server resolution)"))
+      expect(global.fetch).toHaveBeenCalledWith(
+        "http://api.test/api/ask",
+        expect.objectContaining({ method: "POST" })
+      )
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        mode: "ask_suggest",
+        llm_powered: true,
+        suggested_steps: expect.arrayContaining([
+          expect.objectContaining({ command: "resend.emails.send" })
+        ])
+      }))
+    })
+
+    test("handles server error with suggestions", async () => {
+      global.fetch.mockResolvedValue({
+        ok: false,
+        status: 500,
+        text: () => Promise.resolve("Internal Server Error")
+      })
+
+      await handleAskCommand({
+        positional: ["ask", "test"],
+        config: { features: { ask: true } },
+        context: { server: "http://api.test" },
+        outputError: mockOutputError
+      })
+
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
+        code: 105,
+        recoverable: true,
+        suggestions: expect.arrayContaining([
+          expect.stringContaining("supercli discover")
+        ])
+      }))
+    })
+  })
+
+  describe("human mode", () => {
+    test("outputs formatted suggestions to console", async () => {
+      process.env.OPENAI_BASE_URL = "http://localhost"
+      const mockSteps = [{ command: "resend.emails.send", args: { from: "a@b.com", to: "c@d.com" } }]
+
+      global.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({
+          choices: [{ message: { content: JSON.stringify(mockSteps) } }]
+        })
+      })
+
+      await handleAskCommand({
+        positional: ["ask", "send an email"],
+        config: mockConfig,
+        context: mockContext,
+        humanMode: true,
+        output: mockOutput
+      })
+
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Query:"))
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Suggested Steps:"))
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("resend.emails.send"))
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("Next Steps:"))
+    })
+
+    test("outputs discover fallback in next steps", async () => {
+      process.env.OPENAI_BASE_URL = "http://localhost"
+      const mockSteps = [{ command: "resend.emails.send", args: {} }]
+
+      global.fetch.mockResolvedValue({
+        ok: true,
+        json: () => Promise.resolve({
+          choices: [{ message: { content: JSON.stringify(mockSteps) } }]
+        })
+      })
+
+      await handleAskCommand({
+        positional: ["ask", "send email"],
+        config: mockConfig,
+        context: mockContext,
+        humanMode: true,
+        output: mockOutput
+      })
+
+      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining("discover --intent"))
+    })
+  })
+
+  describe("error types", () => {
+    beforeEach(() => {
+      process.env.OPENAI_BASE_URL = "http://localhost:1234/v1"
+    })
+
+    test("network error suggests connectivity troubleshooting", async () => {
+      global.fetch.mockRejectedValue(new Error("Connection refused"))
+
+      await handleAskCommand({
+        positional: ["ask", "test"],
+        config: mockConfig,
+        context: {},
+        outputError: mockOutputError
+      })
+
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
+        message: expect.stringContaining("Cannot reach"),
+        recoverable: true,
+        suggestions: expect.arrayContaining([
+          expect.stringContaining("OPENAI_BASE_URL"),
+          expect.stringContaining("curl")
+        ])
+      }))
+    })
+
+    test("rate limit error suggests waiting", async () => {
+      global.fetch.mockResolvedValue({
+        ok: false,
+        status: 429,
+        text: () => Promise.resolve(JSON.stringify({ error: { message: "Rate limit" } }))
+      })
+
+      await handleAskCommand({
+        positional: ["ask", "test"],
+        config: mockConfig,
+        context: {},
+        outputError: mockOutputError
+      })
+
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
+        message: expect.stringContaining("rate limit"),
+        recoverable: true
+      }))
+    })
+
+    test("server error (5xx) suggests retry", async () => {
+      global.fetch.mockResolvedValue({
+        ok: false,
+        status: 502,
+        text: () => Promise.resolve("Bad Gateway")
+      })
+
+      await handleAskCommand({
+        positional: ["ask", "test"],
+        config: mockConfig,
+        context: {},
+        outputError: mockOutputError
+      })
+
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
+        message: expect.stringContaining("server error"),
+        recoverable: true
+      }))
     })
   })
 })
