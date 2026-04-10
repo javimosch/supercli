@@ -196,8 +196,9 @@ function renderTopLevelHelp(config) {
   if (humanMode) {
     console.log("\n  ⚡ SuperCLI\n");
     console.log(
-      "  Deterministic capability router for namespace.resource.action commands, plugin capabilities, MCP tool bindings, and SKILL.md skill documents.\n",
+      "  Capability router that wraps external CLIs behind namespace.resource.action commands.\n",
     );
+    console.log("  Workflow: discover → learn → inspect → plan → execute\n");
     console.log("  Namespaces:\n");
     namespaces.forEach((ns) => {
       const resources = [
@@ -383,7 +384,7 @@ async function main() {
           mode: "agent_bootstrap",
           name: "supercli",
           what_is_supercli:
-            "Deterministic capability router for namespace.resource.action commands, plugin capabilities, MCP tool bindings, and SKILL.md skill documents.",
+            "Capability router that wraps external CLIs behind namespace.resource.action commands. Workflow: discover → learn → inspect → plan → execute.",
           core_capabilities: ["commands", "plugins", "mcp", "skill_docs"],
           first_steps: [
             "supercli --help-json",
@@ -394,7 +395,7 @@ async function main() {
             "supercli inspect <namespace> <resource> <action> --json",
           ],
           intent_workflow:
-            "If task command is unknown, use discover -> plugins learn -> plugins install -> commands/inspect -> execute.",
+            "If task command is unknown: discover → learn → inspect → plan → execute.",
           examples: {
             send_email: [
               'supercli discover --intent "send email" --json',
