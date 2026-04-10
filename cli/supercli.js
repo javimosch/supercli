@@ -14,6 +14,7 @@ const { execute } = require("./executor");
 const { buildCapabilities } = require("./help-json");
 const { handleMcpRegistryCommand } = require("./mcp-local");
 const { handlePluginsCommand } = require("./plugins-command");
+const { handleHarnessOnboard, handleHarnessOffboard } = require("./harness-onboard");
 const {
   buildLocalPlan,
   annotateServerPlan,
@@ -218,6 +219,7 @@ function renderTopLevelHelp(config) {
     if (hasServer) console.log("  Sync: supercli sync");
     console.log(
       "  Plugins: supercli plugins explore | supercli plugins learn <name> | supercli plugins install <name|path> | supercli plugins install --git <repo>",
+      "  Onboard: supercli onboard [--harness claude,opencode,cursor,windsurf] [--detect] | supercli offboard [--harness <harness>]",
     );
     console.log(
       '  Discover: supercli discover --intent "<task>" [--limit <n>] [--json]',
@@ -482,6 +484,28 @@ async function main() {
         humanMode,
         output,
         outputHumanTable,
+        outputError,
+      });
+      return;
+    }
+
+    if (positional[0] === "onboard") {
+      await handleHarnessOnboard({
+        positional,
+        flags,
+        humanMode,
+        output,
+        outputError,
+      });
+      return;
+    }
+
+    if (positional[0] === "offboard") {
+      await handleHarnessOffboard({
+        positional,
+        flags,
+        humanMode,
+        output,
         outputError,
       });
       return;
@@ -989,6 +1013,12 @@ function displayComprehensiveHelp() {
   console.log("    supercli plugins list           # Show installed plugins");
   console.log("    supercli plugins install <name> # Install a plugin");
   console.log("    supercli plugins explore        # Browse plugin registry\n");
+
+  console.log("  🤖 HARNESS ONBOARDING:");
+  console.log("    supercli onboard                # Auto-detect and install skill");
+  console.log("    supercli onboard --detect       # List detected harnesses");
+  console.log("    supercli onboard --harness claude,cursor,opencode,windsurf");
+  console.log("    supercli offboard              # Remove installed skill\n");
 
   console.log("  📖 DOCUMENTATION & RESOURCES:");
   console.log("    Full README: https://github.com/javimosch/supercli#readme");
