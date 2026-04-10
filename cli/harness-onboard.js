@@ -60,11 +60,64 @@ async function handleHarnessOnboard({ positional, flags, humanMode, output, outp
   if (flags.detect) {
     const detected = detectHarnesses(targetDir);
     output({
-      mode: "detect",
+      version: "1.0",
+      mode: "onboard_detect",
+      description: "Detect AI harnesses in target directory",
       target: targetDir,
       detected,
       all_available: getAllHarnesses(),
+      harness_paths: {
+        claude: ".claude/skills/supercli/SKILL.md",
+        opencode: ".opencode/skills/supercli/SKILL.md",
+        agents: ".agents/skills/supercli/SKILL.md",
+        cursor: ".cursor/rules/supercli.mdc",
+        windsurf: ".windsurfrules"
+      }
     });
+    return;
+  }
+
+  if (!flags.harness && !flags.target) {
+    if (humanMode) {
+      console.log("\n  ⚡ SuperCLI Onboard\n");
+      console.log("  Install supercli skill document into AI harness directories.\n");
+      console.log("  Usage:");
+      console.log("    supercli onboard                              # Auto-detect and install");
+      console.log("    supercli onboard --detect                     # List detected harnesses");
+      console.log("    supercli onboard --harness claude,opencode   # Install to specific harnesses");
+      console.log("    supercli onboard --target ./project           # Install to directory");
+      console.log("    supercli onboard --dry-run                   # Preview without installing");
+      console.log("    supercli onboard --force                     # Overwrite existing\n");
+      console.log("  Harnesses:");
+      console.log("    claude, opencode, agents, cursor, windsurf\n");
+    } else {
+      output({
+        version: "1.0",
+        mode: "onboard_help",
+        description: "Install supercli skill document into AI harness directories",
+        usage: "supercli onboard [--harness <harnesses>] [--target <path>] [--detect] [--dry-run] [--force]",
+        harnesses: {
+          claude: { path: ".claude/skills/supercli/SKILL.md", format: "SKILL.md" },
+          opencode: { path: ".opencode/skills/supercli/SKILL.md", format: "SKILL.md" },
+          agents: { path: ".agents/skills/supercli/SKILL.md", format: "SKILL.md" },
+          cursor: { path: ".cursor/rules/supercli.mdc", format: ".mdc" },
+          windsurf: { path: ".windsurfrules", format: "markdown" }
+        },
+        flags: {
+          "--harness": "Comma-separated harnesses (claude,opencode,agents,cursor,windsurf)",
+          "--target": "Target directory (default: current directory)",
+          "--detect": "List detected harnesses without installing",
+          "--dry-run": "Preview actions without writing files",
+          "--force": "Overwrite existing skill files"
+        },
+        examples: [
+          "supercli onboard --detect --json",
+          "supercli onboard --harness claude --json",
+          "supercli onboard --harness claude,opencode,cursor,windsurf --force --json",
+          "supercli onboard --target ./frontend --harness claude --json"
+        ]
+      });
+    }
     return;
   }
 
