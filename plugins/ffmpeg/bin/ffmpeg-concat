@@ -1,0 +1,9 @@
+#!/bin/bash
+# FFmpeg video concat wrapper
+# Args: inputs_json output
+INPUTS_JSON="$1"
+OUTPUT="$2"
+FILELIST=$(mktemp)
+echo "$INPUTS_JSON" | sed 's/\["//g' | sed 's/"]//g' | sed 's/","/\n/g' | while read line; do echo "file '$line'"; done > "$FILELIST"
+ffmpeg -y -f concat -safe 0 -i "$FILELIST" -c copy "$OUTPUT"
+rm -f "$FILELIST"

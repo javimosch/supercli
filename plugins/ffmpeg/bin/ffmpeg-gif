@@ -1,0 +1,22 @@
+#!/bin/bash
+# FFmpeg video gif wrapper
+# Args: input output [fps] [start] [duration]
+INPUT="$1"
+OUTPUT="$2"
+FPS="${3:-10}"
+START="${4:-}"
+DURATION="${5:-}"
+
+# Build command
+CMD="ffmpeg -y -i $INPUT"
+
+# Add start time if specified
+[ -n "$START" ] && CMD="$CMD -ss $START"
+
+# Add duration if specified
+[ -n "$DURATION" ] && CMD="$CMD -t $DURATION"
+
+# Add filter and output
+CMD="$CMD -vf \"scale=480:-1:flags=lanczos,fps=$FPS,split[s0][s1];[s0]palettegen=max_colors=256[p];[s1][p]paletteuse\" $OUTPUT"
+
+eval $CMD
