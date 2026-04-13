@@ -1,5 +1,5 @@
 ---
-skill_name: humanenv-sdk-python-usage
+name: humanenv-sdk-python-usage
 name: humanenv-sdk-python-usage
 description: Use humanenv Python SDK to retrieve sensitives/envs. Never log/read sensitives from humanenv. They are envs for humans only.
 ---

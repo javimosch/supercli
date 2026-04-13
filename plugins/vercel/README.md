@@ -1,47 +1,87 @@
-# Vercel Plugin Harness
+# Vercel Plugin for SuperCLI
 
-This plugin integrates the [Vercel CLI](https://vercel.com/docs/cli) into dcli with one wrapped core command and full namespace passthrough.
+Semantic commands + passthrough for Vercel CLI — deployments, projects, environment variables, and serverless functions.
 
-## Prerequisites
-
-Install Vercel CLI first:
+## Installation
 
 ```bash
+# Install Vercel CLI first
 npm install -g vercel
-vercel --version
+
+# Install the plugin
+supercli plugins install ./plugins/vercel --on-conflict replace --json
 ```
 
-Authenticate before running account or project operations:
+## Authentication
 
 ```bash
+# Login to Vercel (required for deployments)
 vercel login
 ```
 
-## Available Commands
+## Commands
 
-### Account Whoami (Wrapped)
-
-Returns the currently logged in Vercel account username.
-
+### Wrapped Commands
 ```bash
-dcli vercel account whoami --json
+supercli vercel account whoami --json
 ```
 
 ### Full Passthrough
-
-You can run any Vercel CLI command through the `vercel` namespace.
+All Vercel CLI commands work through passthrough:
 
 ```bash
-# List recent deployments
-dcli vercel list
+# Projects
+supercli vercel project ls
+supercli vercel project add my-project
 
-# List projects
-dcli vercel project ls
+# Deployments
+supercli vercel                    # Deploy to preview
+supercli vercel --prod            # Deploy to production
+supercli vercel list             # List deployments
+supercli vercel logs <url>        # View logs
+supercli vercel remove <url>       # Remove deployment
 
-# Check CLI version
-dcli vercel --version
+# Environment Variables
+supercli vercel env add KEY=value --env
+supercli vercel env add KEY=value --production
+supercli vercel env pull .env.local
+supercli vercel env ls
+
+# Serverless Functions
+supercli vercel function ls
+supercli vercel function deploy ./api
+
+# Domains & Certificates
+supercli vercel domains ls
+supercli vercel certs ls
 ```
 
-## Output
+## Common Patterns
 
-Wrapped commands and passthrough responses are returned in dcli envelope format when `--json` is used with dcli-level commands.
+```bash
+# Deploy with production flag
+supercli vercel --prod
+
+# Deploy specific project
+supercli vercel --yes --project my-project
+
+# Add production secret
+supercli vercel env add DATABASE_URL=xxx --production
+
+# View deployment logs
+supercli vercel logs deploy-name
+```
+
+## Flags
+
+| Flag | Description |
+|------|-------------|
+| `--prod` | Deploy to production |
+| `--env` | Preview environment |
+| `--yes` | Auto-confirm prompts |
+| `--project` | Specify project name |
+
+## Requirements
+
+- `vercel` CLI (`npm install -g vercel`)
+- Vercel account (run `vercel login` first)

@@ -1,5 +1,5 @@
 ---
-skill_name: quickstart
+name: quickstart
 name: humanenv-usage
 description: Secure environment variable injection - secrets for humans only
 ---

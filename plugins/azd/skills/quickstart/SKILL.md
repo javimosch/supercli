@@ -1,5 +1,5 @@
 ---
-skill_name: azd.quickstart
+name: azd.quickstart
 description: Agent workflow for Azure Developer CLI with non-interactive wrappers and passthrough.
 tags: azd,azure,cloud,automation,devops
 ---

@@ -1,5 +1,5 @@
 ---
-skill_name: clawteam.system.setup
+name: clawteam.system.setup
 description: Agent workflow to detect missing ClawTeam dependencies and run automated system setup.
 tags: clawteam,setup,installation,agents
 ---

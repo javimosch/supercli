@@ -1,5 +1,5 @@
 ---
-skill_name: clawteam.usage.agent
+name: clawteam.usage.agent
 description: Workflow for agents to discover team members and delegate complex tasks via ClawTeam.
 tags: clawteam,collaboration,delegation,agents
 ---

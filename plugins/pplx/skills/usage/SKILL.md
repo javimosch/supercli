@@ -1,5 +1,5 @@
 ---
-skill_name: "pplx_usage"
+name: "pplx_usage"
 description: "Teaches agents how to use the Perplexity API CLI for online search, research, and Q&A with citations."
 command: "sc skills get pplx.usage"
 tags: ["perplexity", "ai", "search", "research", "llm", "citations", "online"]

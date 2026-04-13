@@ -1,5 +1,5 @@
 ---
-skill_name: boxlite.quickstart
+name: boxlite.quickstart
 description: Experimental BoxLite plugin status, known working flows, and current blockers.
 tags: boxlite,sandbox,vm,docker,experimental
 ---

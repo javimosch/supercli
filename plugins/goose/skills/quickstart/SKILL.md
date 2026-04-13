@@ -1,5 +1,5 @@
 ---
-skill_name: goose.quickstart
+name: goose.quickstart
 description: Agent workflow for running Goose in headless mode with non-interactive defaults and structured output.
 tags: goose,ai,automation,headless,json,jsonl
 ---

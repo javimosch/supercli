@@ -1,5 +1,5 @@
 ---
-skill_name: humanenv-usage
+name: humanenv-usage
 name: humanenv-usage
 description: Use humanenv to retrieve sensitives/envs. Never log/read sensitives from humanenv. They are envs for humans only.
 ---

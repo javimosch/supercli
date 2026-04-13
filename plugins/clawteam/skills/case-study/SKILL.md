@@ -1,5 +1,5 @@
 ---
-skill_name: clawteam.case_study.veg_basket_poc
+name: clawteam.case_study.veg_basket_poc
 description: Documentation of the Vegetable Basket Reservation POC, showing how opencode delegates to ClawTeam sub-agents.
 tags: clawteam,case-study,delegation,poc,example
 ---

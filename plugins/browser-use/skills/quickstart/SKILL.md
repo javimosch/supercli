@@ -1,5 +1,5 @@
 ---
-skill_name: browser-use.quickstart
+name: browser-use.quickstart
 description: Agent workflow to install, configure, and run Browser Use MCP tools quickly via SuperCLI.
 tags: browser-use,mcp,automation,agents
 ---

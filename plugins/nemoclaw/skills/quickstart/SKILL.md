@@ -1,5 +1,5 @@
 ---
-skill_name: nemoclaw.quickstart
+name: nemoclaw.quickstart
 description: Agent workflow for using NemoClaw host CLI through supercli wrappers and passthrough.
 tags: nemoclaw,openshell,openclaw,nvidia,sandbox
 ---

@@ -1,5 +1,5 @@
 ---
-skill_name: plandex.quickstart
+name: plandex.quickstart
 description: Agent workflow for using Plandex CLI in non-interactive mode with explicit autonomy controls.
 tags: plandex,ai,planning,automation,headless
 ---

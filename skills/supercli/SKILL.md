@@ -1,5 +1,5 @@
 ---
-skill_name: supercli.quickstart
+name: supercli.quickstart
 description: SuperCLI capability router — discover and execute CLI commands through namespace.resource.action interface
 tags: supercli,cli,plugin,capability,discovery,agent
 ---

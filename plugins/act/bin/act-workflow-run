@@ -1,0 +1,22 @@
+#!/bin/bash
+# act workflow run wrapper
+# Args: event job secrets_json dryrun_bool
+EVENT="${1:-push}"
+JOB="$2"
+SECRETS="$3"
+DRYRUN="$4"
+
+CMD="act $EVENT"
+
+[ -n "$JOB" ] && CMD="$CMD -j $JOB"
+
+# Add secrets
+if [ -n "$SECREES" ]; then
+    echo "$SECRETS" | jq -r '.[]' 2>/dev/null | while read -r secret; do
+        [ -n "$secret" ] && CMD="$CMD -s $secret"
+    done
+fi
+
+[ "$DRYRUN" = "true" ] && CMD="$CMD -n"
+
+eval $CMD

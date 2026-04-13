@@ -1,5 +1,5 @@
 ---
-skill_name: offline-ai.quickstart
+name: offline-ai.quickstart
 description: Agent workflow for running offline-ai scripts in deterministic non-interactive mode.
 tags: offline-ai,ai,scripting,automation,headless
 ---

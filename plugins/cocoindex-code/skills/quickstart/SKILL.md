@@ -1,5 +1,5 @@
 ---
-skill_name: cocoindex-code.quickstart
+name: cocoindex-code.quickstart
 description: Install cocoindex-code, auto-register MCP via supercli plugin install, then prefer the fast direct search capability for repository search; keep MCP search for MCP-native flows.
 tags: cocoindex,mcp,semantic-search,code,agents
 ---

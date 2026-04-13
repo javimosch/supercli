@@ -1,0 +1,144 @@
+{
+  "name": "act",
+  "version": "0.1.0",
+  "description": "GitHub Actions local runner plugin — run, list, validate, and test GitHub Actions workflows locally via act",
+  "source": "https://github.com/nektos/act",
+  "tags": ["act", "github-actions", "ci-cd", "testing", "automation", "docker"],
+  "checks": [
+    { "type": "binary", "name": "act" },
+    { "type": "binary", "name": "docker" }
+  ],
+  "commands": [
+    {
+      "namespace": "act",
+      "resource": "workflow",
+      "action": "list",
+      "description": "List all available workflows and jobs from .github/workflows/",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "act",
+        "baseArgs": ["-l"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "act",
+      "resource": "workflow",
+      "action": "run",
+      "description": "Run a workflow (default: push event)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/act/bin/act-workflow-run",
+        "positionalArgs": ["event", "job", "secrets"],
+        "parseJson": false,
+        "timeout_ms": 600000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "event", "type": "string", "required": false, "description": "Event type (push, pull_request, workflow_dispatch)", "default": "push" },
+        { "name": "job", "type": "string", "required": false, "description": "Specific job name to run" },
+        { "name": "secrets", "type": "array", "required": false, "description": "Array of secret key=value pairs" },
+        { "name": "dryrun", "type": "boolean", "required": false, "description": "Validate without running", "default": false }
+      ]
+    },
+    {
+      "namespace": "act",
+      "resource": "job",
+      "action": "run",
+      "description": "Run a specific job by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "act",
+        "baseArgs": ["-j"],
+        "flagArgs": ["-j", "--json", "-n"],
+        "parseJson": false,
+        "timeout_ms": 600000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "job", "type": "string", "required": true, "description": "Job ID to run" },
+        { "name": "dryrun", "type": "boolean", "required": false, "description": "Validate without running", "default": false }
+      ]
+    },
+    {
+      "namespace": "act",
+      "resource": "workflow",
+      "action": "validate",
+      "description": "Validate workflow files without running",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "act",
+        "baseArgs": ["--validate"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "act",
+      "resource": "workflow",
+      "action": "dryrun",
+      "description": "Dry run mode - validate workflow and show what would run",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "act",
+        "baseArgs": ["-n"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "act",
+      "resource": "secret",
+      "action": "list",
+      "description": "List configured secrets from .actrc files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": ["-c", "cat ~/.actrc ~/.config/act/actrc 2>/dev/null || echo 'No actrc found'"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "act",
+      "resource": "secret",
+      "action": "add",
+      "description": "Add a secret for workflow runs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/act/bin/act-secret-add",
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Secret name" },
+        { "name": "value", "type": "string", "required": true, "description": "Secret value" }
+      ]
+    },
+    {
+      "namespace": "act",
+      "resource": "workflow",
+      "action": "watch",
+      "description": "Watch for file changes and re-run workflows",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "act",
+        "baseArgs": ["-w"],
+        "parseJson": false,
+        "timeout_ms": 600000,
+        "safetyLevel": "guarded"
+      },
+      "args": []
+    }
+  ]
+}

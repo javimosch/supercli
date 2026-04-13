@@ -1,5 +1,5 @@
 ---
-skill_name: mmx.quickstart
+name: mmx.quickstart
 description: Complete mmx CLI reference for agents — all commands, flags, auth/config precedence, exit codes, and dual-region setup.
 tags: mmx,minimax,text,image,video,speech,music,vision,search,agent,quickstart
 ---

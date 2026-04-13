@@ -1,5 +1,5 @@
 ---
-skill_name: gemini.quickstart
+name: gemini.quickstart
 description: Agent workflow for running Gemini CLI in deterministic headless mode with JSON outputs.
 tags: gemini,ai,automation,headless,json
 ---

@@ -1,5 +1,5 @@
 ---
-skill_name: ollama.quickstart
+name: ollama.quickstart
 description: Agent workflow for discovering, pulling, running, and chatting with local LLM models via Ollama.
 tags: ollama,llm,local-ai,models,inference,chat
 ---

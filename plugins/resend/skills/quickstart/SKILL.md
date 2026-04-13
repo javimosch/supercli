@@ -1,5 +1,5 @@
 ---
-skill_name: resend.quickstart
+name: resend.quickstart
 description: Agent workflow to manage emails, domains, API keys, and contacts via Resend CLI.
 tags: resend,email,domains,api-keys,contacts,agents,usage
 ---

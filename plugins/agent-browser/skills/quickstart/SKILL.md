@@ -1,5 +1,5 @@
 ---
-skill_name: agent-browser.quickstart
+name: agent-browser.quickstart
 description: Agent workflow to install and run agent-browser through supercli with snapshot-ref automation.
 tags: agent-browser,browser,automation,playwright,agents
 ---

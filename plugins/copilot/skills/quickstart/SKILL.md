@@ -1,5 +1,5 @@
 ---
-skill_name: copilot.quickstart
+name: copilot.quickstart
 description: Agent workflow for running GitHub Copilot CLI in non-interactive programmatic mode.
 tags: copilot,github,ai,automation,headless
 ---

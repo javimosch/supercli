@@ -1,5 +1,5 @@
 ---
-skill_name: uipath.quickstart
+name: uipath.quickstart
 description: Agent workflow for UiPath CLI package deployment with non-interactive credentials.
 tags: uipath,uipcli,rpa,cicd,automation
 ---

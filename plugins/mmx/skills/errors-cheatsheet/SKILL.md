@@ -1,5 +1,5 @@
 ---
-skill_name: mmx.errors-cheatsheet
+name: mmx.errors-cheatsheet
 description: Complete mmx CLI error reference — every command's error scenarios, exit codes, and quick-fix resolutions.
 tags: mmx,minimax,errors,debugging,exit-codes,troubleshooting
 ---

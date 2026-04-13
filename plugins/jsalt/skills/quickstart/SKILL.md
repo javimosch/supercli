@@ -1,5 +1,5 @@
 ---
-skill_name: jsalt.quickstart
+name: jsalt.quickstart
 description: Agent workflow for learning JSALT and building .jsa apps with executable validation and AST checks.
 tags: jsalt,jsa,frontend,ast,validation,agents
 ---

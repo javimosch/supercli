@@ -1,5 +1,5 @@
 ---
-skill_name: mmx.agent-guide
+name: mmx.agent-guide
 description: Agent-facing guide for mmx CLI — agent flags, piping patterns, tool schema export, async video workflow, streaming, and CI/CD examples.
 tags: mmx,minimax,agent,ci-cd,piping,streaming,async,tool-schema
 ---

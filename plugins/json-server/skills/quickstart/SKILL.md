@@ -1,5 +1,5 @@
 ---
-skill_name: json-server.quickstart
+name: json-server.quickstart
 description: Agent workflow for background json-server lifecycle with deterministic JSON outputs.
 tags: json-server,mock-api,rest,agent-friendly,automation
 ---
