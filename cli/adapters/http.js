@@ -35,8 +35,43 @@ async function execute(cmd, flags, context) {
 
   // Build body for non-GET methods
   if (["POST", "PUT", "PATCH"].includes(method)) {
-    if (config.body) {
-      fetchOpts.body = JSON.stringify(config.body)
+    if (config.body || config.bodyTemplate) {
+      let bodyObj = config.body || config.bodyTemplate || {}
+      
+      // Support bodyTemplate with {{placeholder}} interpolation from flags
+      if (config.bodyTemplate) {
+        bodyObj = JSON.parse(JSON.stringify(config.bodyTemplate), (key, value) => {
+          if (typeof value === "string" && value.startsWith("{{") && value.endsWith("}}")) {
+            const flagName = value.slice(2, -2).trim()
+            const flagValue = flags[flagName]
+            if (flagValue === undefined) return null // Signal to remove this field
+            // Parse JSON strings (for arrays/objects passed as flag values)
+            if (typeof flagValue === "string") {
+              try {
+                return JSON.parse(flagValue)
+              } catch {
+                return flagValue
+              }
+            }
+            return flagValue
+          }
+          return value
+        })
+        // Remove null values (from unresolved {{placeholders}}) and fix type issues
+        bodyObj = JSON.parse(JSON.stringify(bodyObj), (key, value) => {
+          if (value === null) return undefined
+          // Convert numeric strings that should be numbers
+          if (typeof value === "string" && !isNaN(value) && value.trim() !== "") {
+            if (Number.isInteger(Number(value))) {
+              return parseInt(value, 10)
+            }
+            return parseFloat(value)
+          }
+          return value
+        })
+      }
+      
+      fetchOpts.body = JSON.stringify(bodyObj)
     } else {
       const bodyObj = {}
       for (const [k, v] of Object.entries(flags)) {

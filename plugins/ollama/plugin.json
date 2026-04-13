@@ -1,0 +1,268 @@
+{
+  "name": "ollama",
+  "version": "0.1.0",
+  "description": "Ollama local LLM plugin — pull, run, and manage local AI models with structured JSON responses",
+  "source": "https://github.com/ollama/ollama",
+  "tags": ["ollama", "llm", "local-ai", "models", "inference"],
+  "checks": [
+    { "type": "binary", "name": "ollama" }
+  ],
+  "commands": [
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "list",
+      "description": "List all locally downloaded models with structured output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["list"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "pull",
+      "description": "Download a model from the Ollama registry (alias: download)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["pull"],
+        "positionalArgs": ["model_name"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Model name (e.g. llama3, mistral, codellama)", "position": 1 },
+        { "name": "timeout_ms", "type": "number", "required": false, "description": "Timeout in milliseconds for model download", "default": 300000 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "show",
+      "description": "Show model details: modelfile, parameters, template, system",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["show"],
+        "positionalArgs": ["model_name"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Model name to inspect", "position": 1 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "remove",
+      "description": "Remove a downloaded model from local storage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["rm"],
+        "positionalArgs": ["model_name"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Model name to remove", "position": 1 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "copy",
+      "description": "Copy a model to a new name (alias: clone)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["cp"],
+        "positionalArgs": ["source", "destination"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source model name", "position": 1 },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination model name", "position": 2 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "create",
+      "description": "Create a model from a Modelfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["create"],
+        "positionalArgs": ["model_name"],
+        "flagArgs": ["-f"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Name for the new model", "position": 1 },
+        { "name": "file", "type": "string", "required": true, "description": "Path to Modelfile", "flag": "-f" }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "server",
+      "action": "status",
+      "description": "Check if Ollama server is running and list active models",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["ps"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ollama",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the Ollama server daemon in background",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["serve"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe",
+        "background": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "stop",
+      "description": "Stop a currently running model",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["stop"],
+        "positionalArgs": ["model_name"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Running model name to stop", "position": 1 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "model",
+      "action": "push",
+      "description": "Upload a model to the Ollama registry (requires authentication)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ollama",
+        "baseArgs": ["push"],
+        "positionalArgs": ["model_name"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Model name to push", "position": 1 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "api",
+      "action": "chat",
+      "description": "Send a chat completion request to the Ollama REST API with structured JSON response",
+      "adapter": "http",
+      "adapterConfig": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/chat",
+        "headers": { "Content-Type": "application/json" },
+        "bodyTemplate": {
+          "model": "{{model_name}}",
+          "messages": "{{messages}}",
+          "stream": false,
+          "options": {
+            "temperature": "{{temperature}}",
+            "num_predict": "{{num_predict}}"
+          }
+        },
+        "responseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Model name to use (e.g. llama3, mistral)", "envVar": "OLLAMA_MODEL" },
+        { "name": "messages", "type": "array", "required": true, "description": "Array of message objects with role and content" },
+        { "name": "temperature", "type": "number", "required": false, "description": "Temperature for generation (0-1)", "default": 0.7 },
+        { "name": "num_predict", "type": "number", "required": false, "description": "Max tokens to generate", "default": 256 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "api",
+      "action": "generate",
+      "description": "Generate a completion via the Ollama REST API with structured JSON response",
+      "adapter": "http",
+      "adapterConfig": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/generate",
+        "headers": { "Content-Type": "application/json" },
+        "bodyTemplate": {
+          "model": "{{model_name}}",
+          "prompt": "{{prompt}}",
+          "stream": false,
+          "options": {
+            "temperature": "{{temperature}}",
+            "num_predict": "{{num_predict}}"
+          }
+        },
+        "responseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Model name to use", "envVar": "OLLAMA_MODEL" },
+        { "name": "prompt", "type": "string", "required": true, "description": "Text prompt for generation" },
+        { "name": "temperature", "type": "number", "required": false, "description": "Temperature (0-1)", "default": 0.7 },
+        { "name": "num_predict", "type": "number", "required": false, "description": "Max tokens", "default": 256 }
+      ]
+    },
+    {
+      "namespace": "ollama",
+      "resource": "api",
+      "action": "embed",
+      "description": "Generate text embeddings via the Ollama REST API",
+      "adapter": "http",
+      "adapterConfig": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/embed",
+        "headers": { "Content-Type": "application/json" },
+        "bodyTemplate": {
+          "model": "{{model_name}}",
+          "input": "{{input}}"
+        },
+        "responseJson": true,
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "model_name", "type": "string", "required": true, "description": "Embedding model name (e.g. mxbai-embed-large)", "envVar": "OLLAMA_EMBED_MODEL" },
+        { "name": "input", "type": "string", "required": true, "description": "Text to generate embeddings for" }
+      ]
+    }
+  ]
+}
