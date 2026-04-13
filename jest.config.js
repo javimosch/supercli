@@ -2,6 +2,7 @@ module.exports = {
   rootDir: ".",
   testEnvironment: "node",
   testTimeout: 15000,
+  maxWorkers: 1,
   collectCoverage: true,
   coverageProvider: "v8",
   collectCoverageFrom: [

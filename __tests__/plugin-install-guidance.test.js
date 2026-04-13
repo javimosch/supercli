@@ -74,6 +74,14 @@ describe("plugin-install-guidance", () => {
   })
 
   test("falls back to legacy static guidance", () => {
+    fs.existsSync.mockImplementation((p) => String(p).endsWith("beads/install-guidance.json"))
+    fs.readFileSync.mockReturnValue(JSON.stringify({
+      plugin: "beads",
+      binary: "br",
+      check: "br --version",
+      install_steps: ["curl -fsSL ... | bash"],
+      note: "Installation delegated."
+    }))
     const guidance = getPluginInstallGuidance("beads")
     expect(guidance).not.toBeNull()
     expect(guidance.plugin).toBe("beads")

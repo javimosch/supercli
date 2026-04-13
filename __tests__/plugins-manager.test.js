@@ -312,6 +312,14 @@ describe("plugins-manager", () => {
 
   describe("Miscellaneous", () => {
     test("getPluginInstallGuidance", () => {
+      fs.existsSync.mockImplementation((p) => String(p).endsWith("beads/install-guidance.json"))
+      fs.readFileSync.mockReturnValue(JSON.stringify({
+        plugin: "beads",
+        binary: "br",
+        check: "br --version",
+        install_steps: ["curl -fsSL ... | bash", "br --version"],
+        note: "Installation delegated to your LLM/automation flow."
+      }))
       expect(getPluginInstallGuidance("beads")).not.toBeNull()
     })
     test("removePlugin success", () => {
