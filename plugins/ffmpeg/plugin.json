@@ -1,0 +1,168 @@
+{
+  "name": "ffmpeg",
+  "version": "0.1.0",
+  "description": "FFmpeg media plugin — convert, trim, resize, thumbnail, GIF, and inspect video/audio with semantic commands",
+  "source": "https://ffmpeg.org",
+  "tags": ["ffmpeg", "video", "audio", "media", "convert", "gif", "thumbnail"],
+  "checks": [
+    { "type": "binary", "name": "ffmpeg" },
+    { "type": "binary", "name": "ffprobe" }
+  ],
+  "commands": [
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "convert",
+      "description": "Convert video between formats (mp4, mkv, avi, webm, mov)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-convert",
+        "positionalArgs": ["input", "output", "codec", "audio_codec", "preset", "crf"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "codec", "type": "string", "required": false, "description": "Video codec (libx264, libx265, copy)", "default": "libx264" },
+        { "name": "audio_codec", "type": "string", "required": false, "description": "Audio codec (aac, mp3, copy)", "default": "aac" },
+        { "name": "preset", "type": "string", "required": false, "description": "Encoding preset (ultrafast, fast, medium, slow)", "default": "medium" },
+        { "name": "crf", "type": "string", "required": false, "description": "Quality (0-51, lower = better)", "default": "23" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "resize",
+      "description": "Resize video to specific dimensions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-resize",
+        "positionalArgs": ["input", "output", "width", "height"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "width", "type": "number", "required": true, "description": "Target width in pixels" },
+        { "name": "height", "type": "number", "required": true, "description": "Target height in pixels" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "trim",
+      "description": "Trim video to a specific time range (lossless)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-trim",
+        "positionalArgs": ["input", "output", "start", "duration"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "start", "type": "string", "required": true, "description": "Start time (seconds or HH:MM:SS)" },
+        { "name": "duration", "type": "string", "required": true, "description": "Duration (seconds or HH:MM:SS)" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "thumbnail",
+      "description": "Extract a single frame as image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-thumbnail",
+        "positionalArgs": ["input", "output", "timestamp"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output image file" },
+        { "name": "timestamp", "type": "string", "required": false, "description": "Time to capture (seconds or HH:MM:SS)", "default": "1" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "gif",
+      "description": "Convert video to animated GIF (480px, 10fps)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-gif",
+        "positionalArgs": ["input", "output", "fps", "start", "duration"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output GIF file" },
+        { "name": "fps", "type": "string", "required": false, "description": "Frames per second", "default": "10" },
+        { "name": "start", "type": "string", "required": false, "description": "Start time (seconds or HH:MM:SS)" },
+        { "name": "duration", "type": "string", "required": false, "description": "Duration in seconds" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "audio",
+      "action": "extract",
+      "description": "Extract audio track from video (lossless)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-extract",
+        "positionalArgs": ["input", "output"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output audio file" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "media",
+      "action": "inspect",
+      "description": "Get detailed media info as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffprobe-inspect",
+        "positionalArgs": ["input"],
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Media file to inspect" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "concat",
+      "description": "Join multiple videos into one",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-concat",
+        "positionalArgs": ["inputs", "output"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "inputs", "type": "array", "required": true, "description": "JSON array of input video files" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" }
+      ]
+    }
+  ]
+}
