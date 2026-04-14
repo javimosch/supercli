@@ -1,0 +1,66 @@
+{
+  "name": "gh-standup",
+  "version": "0.1.0",
+  "description": "GitHub CLI extension for generating AI-assisted standup reports",
+  "source": "https://github.com/sgoedecke/gh-standup",
+  "checks": [
+    { "type": "binary", "name": "gh-standup" }
+  ],
+  "install_guidance": {
+    "plugin": "gh-standup",
+    "binary": "gh-standup",
+    "check": "gh extension list | grep standup",
+    "install_steps": [
+      "gh extension install sgoedecke/gh-standup",
+      "Verify: gh standup --help",
+      "supercli plugins install ./plugins/gh-standup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gh-standup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gh-standup help",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["standup", "--help"],
+        "missingDependencyHelp": "Install gh-standup: gh extension install sgoedecke/gh-standup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gh-standup",
+      "resource": "report",
+      "action": "generate",
+      "description": "Generate a standup report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["standup"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gh-standup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gh-standup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gh standup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["standup"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gh-standup"
+      },
+      "args": []
+    }
+  ]
+}
