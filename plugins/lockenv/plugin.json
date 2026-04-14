@@ -1,0 +1,200 @@
+{
+  "name": "lockenv",
+  "version": "0.1.0",
+  "description": "Password-based encrypted vault for .env and infrastructure secrets",
+  "source": "https://github.com/illarion/lockenv",
+  "checks": [
+    { "type": "binary", "name": "lockenv" }
+  ],
+  "install_guidance": {
+    "plugin": "lockenv",
+    "binary": "lockenv",
+    "check": "which lockenv",
+    "install_steps": [
+      "brew install illarion/tap/lockenv",
+      "Verify: lockenv --version",
+      "supercli plugins install ./plugins/lockenv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lockenv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lockenv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "init",
+      "description": "Initialize a new encrypted vault (.lockenv)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["init"],
+        "passthrough": false,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "lock",
+      "description": "Encrypt and store files in the vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["lock"],
+        "positionalArgs": ["files"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Files to encrypt (supports glob patterns)" },
+        { "name": "--remove", "type": "flag", "required": false, "description": "Remove original files after locking" }
+      ]
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "unlock",
+      "description": "Decrypt and restore files from the vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["unlock"],
+        "positionalArgs": ["files"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Specific files to unlock (default: all)" },
+        { "name": "--force", "type": "flag", "required": false, "description": "Overwrite local files with vault versions" },
+        { "name": "--keep-local", "type": "flag", "required": false, "description": "Keep local versions, skip conflicts" },
+        { "name": "--keep-both", "type": "flag", "required": false, "description": "Keep both versions on conflicts" }
+      ]
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "rotate",
+      "description": "Change the vault password (re-encrypts all files)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["passwd"],
+        "passthrough": false,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "status",
+      "description": "Show vault status and statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["status"],
+        "passthrough": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "ls",
+      "description": "List files in the vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["ls"],
+        "passthrough": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "vault",
+      "action": "diff",
+      "description": "Show content differences between vault and local files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["diff"],
+        "passthrough": false,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "file",
+      "action": "rm",
+      "description": "Remove files from the vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["rm"],
+        "positionalArgs": ["files"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Files to remove from vault (supports glob patterns)" }
+      ]
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "keyring",
+      "action": "manage",
+      "description": "Manage password storage in OS keyring",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "baseArgs": ["keyring"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": [
+        { "name": "subcommand", "type": "string", "required": false, "description": "Subcommand: save, status, delete" }
+      ]
+    },
+    {
+      "namespace": "lockenv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lockenv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lockenv",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lockenv: brew install illarion/tap/lockenv"
+      },
+      "args": []
+    }
+  ]
+}
