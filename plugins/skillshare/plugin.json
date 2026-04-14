@@ -1,0 +1,173 @@
+{
+  "name": "skillshare",
+  "version": "0.1.0",
+  "description": "Sync skills across AI CLI tools — manage skills for Claude, Codex, OpenClaw, and more with one command",
+  "source": "https://github.com/runkids/skillshare",
+  "checks": [
+    { "type": "binary", "name": "skillshare" }
+  ],
+  "install_guidance": {
+    "plugin": "skillshare",
+    "binary": "skillshare",
+    "check": "which skillshare",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/runkids/skillshare/main/install.sh | sh",
+      "Verify: skillshare --version",
+      "supercli plugins install ./plugins/skillshare --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "skillshare",
+      "resource": "self",
+      "action": "version",
+      "description": "Print skillshare version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install skillshare: curl -fsSL https://raw.githubusercontent.com/runkids/skillshare/main/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize skillshare config and source directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": [
+        { "name": "project", "type": "boolean", "required": false, "description": "Initialize in project mode" }
+      ]
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "sync",
+      "action": "run",
+      "description": "Sync skills to all configured targets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["sync"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": [
+        { "name": "all", "type": "boolean", "required": false, "description": "Sync skills, agents, and extras" },
+        { "name": "agents", "type": "boolean", "required": false, "description": "Sync agents only" }
+      ]
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "install",
+      "action": "run",
+      "description": "Install a skill from GitHub or other Git host",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["install"],
+        "positionalArgs": ["source"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Skill source (e.g., github.com/repo/skills)" }
+      ]
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "update",
+      "action": "run",
+      "description": "Update installed skills",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["update"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": [
+        { "name": "all", "type": "boolean", "required": false, "description": "Update all skills" }
+      ]
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "audit",
+      "action": "run",
+      "description": "Run security audit on skills",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["audit"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "ui",
+      "action": "start",
+      "description": "Start the web dashboard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["ui"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "target",
+      "action": "list",
+      "description": "List all configured targets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["target", "list"],
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "target",
+      "action": "mode",
+      "description": "Set target sync mode (symlink or copy)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "baseArgs": ["target"],
+        "positionalArgs": ["name", "mode"],
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Target name" },
+        { "name": "mode", "type": "string", "required": true, "description": "Mode: symlink or copy" }
+      ]
+    },
+    {
+      "namespace": "skillshare",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to skillshare CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skillshare",
+        "passthrough": true,
+        "missingDependencyHelp": "Install skillshare"
+      },
+      "args": []
+    }
+  ]
+}
