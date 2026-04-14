@@ -1,0 +1,193 @@
+{
+  "name": "wait4x",
+  "version": "0.1.0",
+  "description": "Wait4X CLI — wait for services to be ready (TCP, HTTP, DNS, MySQL, PostgreSQL, Redis, MongoDB, Kafka, RabbitMQ)",
+  "source": "https://github.com/wait4x/wait4x",
+  "checks": [
+    { "type": "binary", "name": "wait4x" }
+  ],
+  "install_guidance": {
+    "plugin": "wait4x",
+    "binary": "wait4x",
+    "check": "which wait4x",
+    "install_steps": [
+      "brew install wait4x",
+      "Verify: wait4x --help",
+      "supercli plugins install ./plugins/wait4x --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wait4x",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wait4x version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wait4x: brew install wait4x"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "tcp",
+      "action": "wait",
+      "description": "Wait for TCP port to be available",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["tcp"],
+        "positionalArgs": ["address"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "address", "type": "string", "required": true, "description": "Host:port to check (e.g., localhost:3306)" },
+        { "name": "timeout", "type": "string", "required": false, "description": "Max wait time (e.g., 30s, 2m)" },
+        { "name": "invert-check", "type": "boolean", "required": false, "description": "Wait for port to be free instead" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "http",
+      "action": "wait",
+      "description": "Wait for HTTP endpoint with status/body checks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["http"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "HTTP URL to check" },
+        { "name": "expect-status-code", "type": "integer", "required": false, "description": "Expected HTTP status code" },
+        { "name": "expect-body-regex", "type": "string", "required": false, "description": "Expected body regex pattern" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "mysql",
+      "action": "wait",
+      "description": "Wait for MySQL database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["mysql"],
+        "positionalArgs": ["dsn"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "MySQL DSN (e.g., user:password@tcp(localhost:3306)/db)" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "postgresql",
+      "action": "wait",
+      "description": "Wait for PostgreSQL database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["postgresql"],
+        "positionalArgs": ["dsn"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "PostgreSQL DSN (e.g., postgres://user:pass@localhost:5432/db)" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "redis",
+      "action": "wait",
+      "description": "Wait for Redis server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["redis"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Redis URL (e.g., redis://localhost:6379)" },
+        { "name": "expect-key", "type": "string", "required": false, "description": "Key that should exist" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "mongodb",
+      "action": "wait",
+      "description": "Wait for MongoDB database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["mongodb"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "MongoDB URL" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "kafka",
+      "action": "wait",
+      "description": "Wait for Kafka broker",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["kafka"],
+        "positionalArgs": ["broker"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "broker", "type": "string", "required": true, "description": "Kafka broker URL (e.g., kafka://localhost:9092)" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "dns",
+      "action": "wait",
+      "description": "Wait for DNS record",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "baseArgs": ["dns"],
+        "positionalArgs": ["record_type", "domain"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": [
+        { "name": "record_type", "type": "string", "required": true, "description": "DNS record type (A, AAAA, CNAME, MX, NS, TXT)" },
+        { "name": "domain", "type": "string", "required": true, "description": "Domain name" },
+        { "name": "expected-ip", "type": "string", "required": false, "description": "Expected IP address" }
+      ]
+    },
+    {
+      "namespace": "wait4x",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wait4x CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wait4x",
+        "passthrough": true,
+        "missingDependencyHelp": "Install wait4x"
+      },
+      "args": []
+    }
+  ]
+}
