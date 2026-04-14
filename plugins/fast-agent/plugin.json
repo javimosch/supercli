@@ -1,0 +1,83 @@
+{
+  "name": "fast-agent",
+  "version": "0.1.0",
+  "description": "fast-agent plugin for flexible LLM interaction, coding agents, and evaluation workflows with MCP support",
+  "source": "https://github.com/evalstate/fast-agent",
+  "checks": [
+    { "type": "binary", "name": "fast-agent" }
+  ],
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fast-agent",
+      "resource": "self",
+      "action": "version",
+      "description": "Show fast-agent version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fast-agent",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install fast-agent to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "fast-agent",
+      "resource": "agent",
+      "action": "run",
+      "description": "Run a fast-agent task or prompt",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fast-agent",
+        "baseArgs": ["run"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Please install fast-agent to use this command."
+      },
+      "args": [
+        { "name": "task", "type": "string", "required": true, "description": "Task or prompt to execute" },
+        { "name": "model", "type": "string", "required": false, "description": "Model to use" },
+        { "name": "agent", "type": "string", "required": false, "description": "Agent type to use" }
+      ]
+    },
+    {
+      "namespace": "fast-agent",
+      "resource": "eval",
+      "action": "run",
+      "description": "Run evaluation on tasks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fast-agent",
+        "baseArgs": ["eval"],
+        "parseJson": false,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Please install fast-agent to use this command."
+      },
+      "args": [
+        { "name": "suite", "type": "string", "required": false, "description": "Evaluation suite to run" },
+        { "name": "tasks", "type": "string", "required": false, "description": "Specific tasks to evaluate" }
+      ]
+    },
+    {
+      "namespace": "fast-agent",
+      "resource": "server",
+      "action": "serve",
+      "description": "Start fast-agent server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fast-agent",
+        "baseArgs": ["serve"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Please install fast-agent to use this command."
+      },
+      "args": [
+        { "name": "port", "type": "number", "required": false, "description": "Port to serve on", "default": 8080 },
+        { "name": "host", "type": "string", "required": false, "description": "Host to bind to", "default": "localhost" }
+      ]
+    }
+  ]
+}
