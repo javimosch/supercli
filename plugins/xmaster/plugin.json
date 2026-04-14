@@ -1,0 +1,101 @@
+{
+  "name": "xmaster",
+  "version": "0.1.0",
+  "description": "X/Twitter CLI for developers and AI agents — post, reply, search, DM, schedule, analyze",
+  "source": "https://github.com/199-biotechnologies/xmaster",
+  "checks": [
+    { "type": "binary", "name": "xmaster" }
+  ],
+  "install_guidance": {
+    "plugin": "xmaster",
+    "binary": "xmaster",
+    "check": "which xmaster",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/199-biotechnologies/xmaster/master/install.sh | sh",
+      "Verify: xmaster --version",
+      "supercli plugins install ./plugins/xmaster --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xmaster",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xmaster version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmaster",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install xmaster: curl -fsSL https://raw.githubusercontent.com/199-biotechnologies/xmaster/master/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xmaster",
+      "resource": "post",
+      "action": "create",
+      "description": "Post a tweet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmaster",
+        "baseArgs": ["post"],
+        "positionalArgs": ["text"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install xmaster"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Tweet text" }
+      ]
+    },
+    {
+      "namespace": "xmaster",
+      "resource": "search",
+      "action": "run",
+      "description": "Search tweets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmaster",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install xmaster"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" }
+      ]
+    },
+    {
+      "namespace": "xmaster",
+      "resource": "user",
+      "action": "show",
+      "description": "Show user profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmaster",
+        "baseArgs": ["user"],
+        "positionalArgs": ["username"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install xmaster"
+      },
+      "args": [
+        { "name": "username", "type": "string", "required": true, "description": "Username" }
+      ]
+    },
+    {
+      "namespace": "xmaster",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xmaster CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmaster",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xmaster"
+      },
+      "args": []
+    }
+  ]
+}
