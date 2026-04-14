@@ -1,0 +1,102 @@
+{
+  "name": "nxv",
+  "version": "0.1.0",
+  "description": "Find any version of any Nix package, instantly",
+  "source": "https://github.com/utensils/nxv",
+  "checks": [
+    { "type": "binary", "name": "nxv" }
+  ],
+  "install_guidance": {
+    "plugin": "nxv",
+    "binary": "nxv",
+    "check": "which nxv",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/utensils/nxv/main/install.sh | sh",
+      "Verify: nxv --version",
+      "supercli plugins install ./plugins/nxv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nxv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nxv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nxv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nxv: curl -fsSL https://raw.githubusercontent.com/utensils/nxv/main/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nxv",
+      "resource": "package",
+      "action": "search",
+      "description": "Search for Nix packages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nxv",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nxv"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Package name or search query" }
+      ]
+    },
+    {
+      "namespace": "nxv",
+      "resource": "package",
+      "action": "info",
+      "description": "Show package details",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nxv",
+        "baseArgs": ["info"],
+        "positionalArgs": ["package"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nxv"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name" }
+      ]
+    },
+    {
+      "namespace": "nxv",
+      "resource": "package",
+      "action": "history",
+      "description": "Show version history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nxv",
+        "baseArgs": ["history"],
+        "positionalArgs": ["package"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nxv"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name" }
+      ]
+    },
+    {
+      "namespace": "nxv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nxv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nxv",
+        "passthrough": true,
+        "missingDependencyHelp": "Install nxv"
+      },
+      "args": []
+    }
+  ]
+}
