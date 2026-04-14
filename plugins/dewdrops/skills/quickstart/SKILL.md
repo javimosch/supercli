@@ -1,8 +1,11 @@
-# DewDrops Plugin Quickstart
+---
+name: dewdrops
+description: Use this skill when the user wants to serialize a Git repository into a single Markdown file for LLM context, generate code reviews, or create lightweight structural overviews of codebases.
+---
 
-## Overview
+# DewDrops Plugin
 
-DewDrops serializes a Git repository into a single Markdown file for LLM context stuffing. Perfect for feeding codebases to AI assistants.
+Serialize Git repositories into Markdown for LLM context stuffing.
 
 ## Commands
 
@@ -11,7 +14,7 @@ DewDrops serializes a Git repository into a single Markdown file for LLM context
 
 ### Repo Map (Lightweight Overview)
 - `dewdrops map show` — Structural overview with signatures + token estimates
-- Supports extension filtering: `--extensions go,py`
+- `--extensions go,py` — Filter by file extensions
 
 ### Scoped Selection
 - `dewdrops dump scoped` — Dump only specified files/directories
@@ -19,45 +22,19 @@ DewDrops serializes a Git repository into a single Markdown file for LLM context
 ### Change Review
 - `dewdrops review changes` — Generate map + diff + content for recent changes
 
-### Raw Passthrough
-- `dewdrops _ _` — Run any dewdrops command directly
-
 ## Usage Examples
-
-```bash
-# Full repo dump
-supercli dewdrops dump full --repo .
-
-# Structural map with signatures
-supercli dewdrops map show --repo .
-
-# Map only Go and Python files
-supercli dewdrops map show --repo . --extensions go,py
-
-# Dump specific directory
-supercli dewdrops dump scoped --paths internal/auth/ --repo .
-
-# Review changes since main branch
-supercli dewdrops review changes --ref main --repo .
-
-# Review last 3 commits
-supercli dewdrops review changes --ref HEAD~3 --repo .
-
-# Custom output path
-supercli dewdrops dump full --repo . --output context.md
-```
+- "Dump entire repo to Markdown"
+- "Show me the structure of this repo with signatures"
+- "Show only Go and Python files"
+- "Review changes since main branch"
+- "Dump only the src directory"
 
 ## Typical Workflow
 
-1. **Get overview**: `dewdrops map show .` → paste to LLM
-2. **LLM requests details**: `dewdrops dump scoped --paths src/main.go,lib/utils.go .`
-3. **Paste requested files** to LLM
+1. `dewdrops map show .` — Get overview, paste to LLM
+2. LLM requests specific files
+3. `dewdrops dump scoped --paths src/main.go,lib/utils.go .` — Provide requested files
 
-## Key Features
-
-- **Tree-first output** — Directory structure at top
-- **Signature extraction** — Functions, types, classes detected
-- **Token estimates** — Know context window usage
-- **Git-native ignore** — Respects .gitignore
-- **Binary safety** — Skips binary files automatically
-- **Change review** — `--since` produces map + diff + content combo
+## Supported Extensions for Map
+- Go, Python, JavaScript/TypeScript, Rust, Java/Kotlin
+- Ruby, PHP, C/C++, Shell, SQL, Markdown

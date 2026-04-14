@@ -1,8 +1,11 @@
-# gobackup Plugin Quickstart
+---
+name: gobackup
+description: Use this skill when the user wants to backup databases, archive files, or manage scheduled backups to cloud storage destinations like S3, GCS, Azure, or B2.
+---
 
-## Overview
+# gobackup Plugin
 
-GoBackup CLI for backing up databases and files to cloud storages with scheduling support.
+Backup databases and files to cloud storages with scheduling.
 
 ## Commands
 
@@ -11,45 +14,12 @@ GoBackup CLI for backing up databases and files to cloud storages with schedulin
 - `gobackup daemon start` — Start daemon with scheduling and Web UI
 - `gobackup daemon run` — Run without daemon mode
 
-### Passthrough
-- `gobackup _ _` — Run any gobackup command directly
-
-## Installation
-
-```bash
-curl -sSL https://gobackup.github.io/install | sh
-gobackup --version
-```
-
-## Configuration
-
-Create `~/.gobackup/gobackup.yml`:
-
-```yaml
-models:
-  my_backup:
-    databases:
-      mysql_db:
-        type: mysql
-        host: localhost
-        port: 3306
-        database: my_database
-        username: root
-        password: password
-    storages:
-      s3:
-        type: s3
-        bucket: my_backup
-        region: us-east-1
-        path: backups
-        access_key_id: $S3_ACCESS_KEY_ID
-        secret_access_key: $S3_SECRET_ACCESS_KEY
-    compress_with:
-      type: tgz
-```
+## Usage Examples
+- "Run a backup now"
+- "Start the backup daemon"
+- "Run backup without daemon mode"
 
 ## Supported Databases
-
 - MySQL / MariaDB
 - PostgreSQL
 - Redis
@@ -61,7 +31,6 @@ models:
 - Firebird
 
 ## Supported Storages
-
 - Local
 - FTP / SFTP / SCP
 - Amazon S3
@@ -75,28 +44,29 @@ models:
 - MinIO
 - And more...
 
-## Usage Examples
+## Configuration
 
-```bash
-# Run a backup
-supercli gobackup backup run
+Create `~/.gobackup/gobackup.yml`:
 
-# Start daemon with Web UI (port 2703)
-supercli gobackup daemon start
-
-# Run without daemon
-supercli gobackup daemon run
-
-# Raw passthrough
-supercli gobackup _ _ -- perform
+```yaml
+models:
+  my_backup:
+    databases:
+      mysql_db:
+        type: mysql
+        host: localhost
+        database: my_database
+        username: root
+        password: password
+    storages:
+      s3:
+        type: s3
+        bucket: my_backup
+        region: us-east-1
+        access_key_id: $S3_ACCESS_KEY_ID
+        secret_access_key: $S3_SECRET_ACCESS_KEY
 ```
 
 ## Web UI
 
-Start daemon and visit http://127.0.0.1:2703 to manage backups via browser.
-
-## Notes
-
-- Config location: `~/.gobackup/gobackup.yml` or `/etc/gobackup/gobackup.yml`
-- Supports cron schedules for automated backups
-- Built-in notifiers: Email, Webhook, Discord, Slack, Telegram, DingTalk, Feishu, etc.
+Start daemon and visit http://127.0.0.1:2703 to manage backups.

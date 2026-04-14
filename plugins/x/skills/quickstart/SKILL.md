@@ -1,8 +1,11 @@
-# x CLI Plugin Quickstart
+---
+name: x
+description: Use this skill when the user wants to post tweets from the terminal, check Twitter/X authentication status, or send tweets with optional media attachments.
+---
 
-## Overview
+# x CLI Plugin
 
-x CLI plugin provides Twitter/X posting capability. Uses browser-based OAuth for authentication.
+Post tweets directly from terminal via browser-based OAuth.
 
 ## Commands
 
@@ -10,23 +13,12 @@ x CLI plugin provides Twitter/X posting capability. Uses browser-based OAuth for
 - `x auth status` — Verify authentication status
 
 ### Posting
-- `x tweet post` — Post a tweet
-
-### Passthrough
-- `x _ _` — Run any x command directly
+- `x tweet post` — Post a tweet with the message
 
 ## Usage Examples
-
-```bash
-# Post a tweet
-supercli x tweet post --message "Hello from supercli!"
-
-# Verify auth status
-supercli x auth status
-
-# Raw passthrough
-supercli x _ _ -- -t "Direct tweet"
-```
+- "Post a tweet saying Hello World"
+- "Check if x CLI is authenticated"
+- "Send a tweet with a link"
 
 ## Setup
 
@@ -37,7 +29,6 @@ supercli x _ _ -- -t "Direct tweet"
 5. Copy config to server if needed (typically `~/.config/x/config.json`)
 
 ## Notes
-
 - Auth config stored at `~/.config/x/config.json`
 - Requires browser for initial OAuth flow
 - Config must be present on server for posting to work
