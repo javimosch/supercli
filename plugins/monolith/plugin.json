@@ -1,0 +1,84 @@
+{
+  "name": "monolith",
+  "version": "0.1.0",
+  "description": "Save complete web pages as a single HTML file with all CSS, images, and JavaScript embedded",
+  "source": "https://github.com/Y2Z/monolith",
+  "checks": [
+    { "type": "binary", "name": "monolith" }
+  ],
+  "install_guidance": {
+    "plugin": "monolith",
+    "binary": "monolith",
+    "check": "which monolith",
+    "install_steps": [
+      "cargo install monolith",
+      "Verify: monolith -V",
+      "supercli plugins install ./plugins/monolith --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "monolith",
+      "resource": "self",
+      "action": "version",
+      "description": "Print monolith version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "monolith",
+        "baseArgs": ["-V"],
+        "missingDependencyHelp": "Install monolith: cargo install monolith"
+      },
+      "args": []
+    },
+    {
+      "namespace": "monolith",
+      "resource": "save",
+      "action": "url",
+      "description": "Save a web page to a single HTML file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "monolith",
+        "positionalArgs": ["url"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install monolith"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL of the web page to save" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file (default: stdout or auto-generated)" }
+      ]
+    },
+    {
+      "namespace": "monolith",
+      "resource": "save",
+      "action": "stdin",
+      "description": "Save web page from stdin",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "monolith",
+        "baseArgs": ["-"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install monolith"
+      },
+      "args": [
+        { "name": "base", "type": "string", "required": false, "description": "Base URL for resolving assets" }
+      ]
+    },
+    {
+      "namespace": "monolith",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to monolith CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "monolith",
+        "passthrough": true,
+        "missingDependencyHelp": "Install monolith"
+      },
+      "args": []
+    }
+  ]
+}
