@@ -1,0 +1,100 @@
+{
+  "name": "tokei",
+  "version": "0.1.0",
+  "description": "Count your code — fast code statistics for 150+ languages",
+  "source": "https://github.com/XAMPPRocky/tokei",
+  "checks": [
+    { "type": "binary", "name": "tokei" }
+  ],
+  "install_guidance": {
+    "plugin": "tokei",
+    "binary": "tokei",
+    "check": "which tokei",
+    "install_steps": [
+      "cargo install tokei",
+      "Verify: tokei --version",
+      "supercli plugins install ./plugins/tokei --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tokei",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tokei version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokei",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tokei: cargo install tokei"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tokei",
+      "resource": "count",
+      "action": "run",
+      "description": "Count code statistics for a directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokei",
+        "positionalArgs": ["path"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tokei"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to analyze (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "tokei",
+      "resource": "count",
+      "action": "files",
+      "description": "Count with individual file statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokei",
+        "baseArgs": ["--files"],
+        "positionalArgs": ["path"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tokei"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to analyze" }
+      ]
+    },
+    {
+      "namespace": "tokei",
+      "resource": "count",
+      "action": "json",
+      "description": "Count and output as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokei",
+        "baseArgs": ["--output", "json"],
+        "positionalArgs": ["path"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tokei"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to analyze" }
+      ]
+    },
+    {
+      "namespace": "tokei",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tokei CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokei",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tokei"
+      },
+      "args": []
+    }
+  ]
+}
