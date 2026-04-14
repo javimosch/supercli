@@ -1,0 +1,86 @@
+{
+  "name": "mmdr",
+  "version": "0.1.0",
+  "description": "Fast native Rust Mermaid diagram renderer — 500-1000x faster than mermaid-cli, no browser required",
+  "source": "https://github.com/1jehuang/mermaid-rs-renderer",
+  "checks": [
+    { "type": "binary", "name": "mmdr" }
+  ],
+  "install_guidance": {
+    "plugin": "mmdr",
+    "binary": "mmdr",
+    "check": "which mmdr",
+    "install_steps": [
+      "cargo install mermaid-rs-renderer",
+      "Verify: mmdr --version",
+      "supercli plugins install ./plugins/mmdr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmdr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mmdr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmdr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mmdr: cargo install mermaid-rs-renderer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmdr",
+      "resource": "render",
+      "action": "svg",
+      "description": "Render Mermaid diagram to SVG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmdr",
+        "baseArgs": ["-e", "svg"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mmdr"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "Input file or stdin (use - for stdin)" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file (prints to stdout if not specified)" }
+      ]
+    },
+    {
+      "namespace": "mmdr",
+      "resource": "render",
+      "action": "png",
+      "description": "Render Mermaid diagram to PNG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmdr",
+        "baseArgs": ["-e", "png"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mmdr"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "Input file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output PNG file" }
+      ]
+    },
+    {
+      "namespace": "mmdr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mmdr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmdr",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mmdr"
+      },
+      "args": []
+    }
+  ]
+}
