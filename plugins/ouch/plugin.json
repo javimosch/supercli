@@ -1,0 +1,103 @@
+{
+  "name": "ouch",
+  "version": "0.1.0",
+  "description": "Painless compression and decompression CLI — supports zip, tar, 7z, gz, zst, xz, bz2, lz4, rar, and more",
+  "source": "https://github.com/ouch-org/ouch",
+  "checks": [
+    { "type": "binary", "name": "ouch" }
+  ],
+  "install_guidance": {
+    "plugin": "ouch",
+    "binary": "ouch",
+    "check": "which ouch",
+    "install_steps": [
+      "cargo install ouch",
+      "Verify: ouch --version",
+      "supercli plugins install ./plugins/ouch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ouch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ouch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ouch",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ouch: cargo install ouch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ouch",
+      "resource": "compress",
+      "action": "run",
+      "description": "Compress files into an archive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ouch",
+        "baseArgs": ["compress"],
+        "positionalArgs": ["files", "output"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ouch"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Files to compress (space-separated)" },
+        { "name": "output", "type": "string", "required": true, "description": "Output archive path (auto-detects format from extension)" }
+      ]
+    },
+    {
+      "namespace": "ouch",
+      "resource": "decompress",
+      "action": "run",
+      "description": "Decompress an archive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ouch",
+        "baseArgs": ["decompress"],
+        "positionalArgs": ["archive"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ouch"
+      },
+      "args": [
+        { "name": "archive", "type": "string", "required": true, "description": "Archive file to decompress" },
+        { "name": "dir", "type": "string", "required": false, "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "ouch",
+      "resource": "list",
+      "action": "run",
+      "description": "List contents of an archive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ouch",
+        "baseArgs": ["list"],
+        "positionalArgs": ["archive"],
+        "missingDependencyHelp": "Install ouch"
+      },
+      "args": [
+        { "name": "archive", "type": "string", "required": true, "description": "Archive to list" },
+        { "name": "tree", "type": "boolean", "required": false, "description": "Show as tree format" }
+      ]
+    },
+    {
+      "namespace": "ouch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ouch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ouch",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ouch"
+      },
+      "args": []
+    }
+  ]
+}
