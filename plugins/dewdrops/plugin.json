@@ -1,0 +1,127 @@
+{
+  "name": "dewdrops",
+  "version": "0.1.0",
+  "description": "DewDrops utility — serialize a Git repository into a single Markdown file for LLM context stuffing",
+  "source": "https://github.com/MedUnes/dewdrops",
+  "checks": [
+    { "type": "binary", "name": "dewdrops" }
+  ],
+  "install_guidance": {
+    "plugin": "dewdrops",
+    "binary": "dewdrops",
+    "check": "which dewdrops",
+    "install_steps": [
+      "wget https://raw.githubusercontent.com/MedUnes/dewdrops/master/latest.sh && chmod +x latest.sh && ./latest.sh && rm latest.sh",
+      "Verify: dewdrops --version",
+      "supercli plugins install ./plugins/dewdrops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dewdrops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dewdrops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dewdrops",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dewdrops: wget https://raw.githubusercontent.com/MedUnes/dewdrops/master/latest.sh && chmod +x latest.sh && ./latest.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dewdrops",
+      "resource": "dump",
+      "action": "full",
+      "description": "Serialize entire repository into Markdown",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dewdrops",
+        "positionalArgs": ["repo"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install dewdrops"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "Path to repository" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "dewdrops",
+      "resource": "map",
+      "action": "show",
+      "description": "Show lightweight structural overview with signatures and token estimates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dewdrops",
+        "baseArgs": ["--map"],
+        "positionalArgs": ["repo"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install dewdrops"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "Path to repository" },
+        { "name": "extensions", "type": "string", "required": false, "description": "Filter by extensions (e.g., go,py)" }
+      ]
+    },
+    {
+      "namespace": "dewdrops",
+      "resource": "dump",
+      "action": "scoped",
+      "description": "Dump only specified files or directories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dewdrops",
+        "baseArgs": ["--from"],
+        "positionalArgs": ["paths"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install dewdrops"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": true, "description": "Comma-separated files/dirs" },
+        { "name": "repo", "type": "string", "required": true, "description": "Path to repository" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "dewdrops",
+      "resource": "review",
+      "action": "changes",
+      "description": "Generate review-ready document for recent changes (map + diff + content)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dewdrops",
+        "baseArgs": ["--since"],
+        "positionalArgs": ["ref"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install dewdrops"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Branch, tag, commit, or relative ref (e.g., main, HEAD~3)" },
+        { "name": "repo", "type": "string", "required": true, "description": "Path to repository" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "dewdrops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dewdrops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dewdrops",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dewdrops"
+      },
+      "args": []
+    }
+  ]
+}
