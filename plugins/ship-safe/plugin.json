@@ -1,0 +1,122 @@
+{
+  "name": "ship-safe",
+  "version": "0.1.0",
+  "description": "CLI security scanner built for the agentic era",
+  "source": "https://github.com/asamassekou10/ship-safe",
+  "checks": [
+    { "type": "binary", "name": "ship-safe" }
+  ],
+  "install_guidance": {
+    "plugin": "ship-safe",
+    "binary": "ship-safe",
+    "check": "which ship-safe",
+    "install_steps": [
+      "npm install -g ship-safe",
+      "Verify: ship-safe --version",
+      "supercli plugins install ./plugins/ship-safe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ship-safe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ship-safe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ship-safe",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ship-safe: npm install -g ship-safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ship-safe",
+      "resource": "audit",
+      "action": "run",
+      "description": "Full security audit with 22 agents, secrets scan, dependency audit, and remediation plan",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ship-safe",
+        "baseArgs": ["audit"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install ship-safe: npm install -g ship-safe"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: .)" }
+      ]
+    },
+    {
+      "namespace": "ship-safe",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan for hardcoded secrets with pattern matching and entropy detection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ship-safe",
+        "baseArgs": ["scan"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ship-safe: npm install -g ship-safe"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: .)" }
+      ]
+    },
+    {
+      "namespace": "ship-safe",
+      "resource": "ci",
+      "action": "run",
+      "description": "CI/CD pipeline mode with compact output, exit codes, and threshold gating",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ship-safe",
+        "baseArgs": ["ci"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install ship-safe: npm install -g ship-safe"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: .)" }
+      ]
+    },
+    {
+      "namespace": "ship-safe",
+      "resource": "score",
+      "action": "run",
+      "description": "Compute security health score (0-100, A-F grade)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ship-safe",
+        "baseArgs": ["score"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ship-safe: npm install -g ship-safe"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: .)" }
+      ]
+    },
+    {
+      "namespace": "ship-safe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ship-safe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ship-safe",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ship-safe: npm install -g ship-safe"
+      },
+      "args": []
+    }
+  ]
+}
