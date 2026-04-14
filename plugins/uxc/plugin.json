@@ -1,0 +1,68 @@
+{
+  "name": "uxc",
+  "version": "0.1.0",
+  "description": "One CLI for tools across protocols — OpenAPI, MCP, GraphQL, gRPC, JSON-RPC",
+  "source": "https://github.com/holon-run/uxc",
+  "checks": [
+    { "type": "binary", "name": "uxc" }
+  ],
+  "install_guidance": {
+    "plugin": "uxc",
+    "binary": "uxc",
+    "check": "which uxc",
+    "install_steps": [
+      "brew install holon-run/tap/uxc",
+      "Verify: uxc --version",
+      "supercli plugins install ./plugins/uxc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uxc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uxc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uxc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install uxc: brew install holon-run/tap/uxc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uxc",
+      "resource": "host",
+      "action": "discover",
+      "description": "Discover operations on a host",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uxc",
+        "baseArgs": [],
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install uxc"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Host to discover" }
+      ]
+    },
+    {
+      "namespace": "uxc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uxc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uxc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install uxc"
+      },
+      "args": []
+    }
+  ]
+}
