@@ -1,0 +1,77 @@
+{
+  "name": "diskus",
+  "version": "0.1.0",
+  "description": "Minimal, fast alternative to du -sh — parallelized disk usage computation",
+  "source": "https://github.com/sharkdp/diskus",
+  "checks": [
+    { "type": "binary", "name": "diskus" }
+  ],
+  "install_guidance": {
+    "plugin": "diskus",
+    "binary": "diskus",
+    "check": "which diskus",
+    "install_steps": [
+      "cargo install diskus",
+      "Verify: diskus --version",
+      "supercli plugins install ./plugins/diskus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "diskus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print diskus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diskus",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install diskus: cargo install diskus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diskus",
+      "resource": "size",
+      "action": "current",
+      "description": "Compute total size of current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diskus",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install diskus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diskus",
+      "resource": "size",
+      "action": "apparent",
+      "description": "Compute apparent size (like du -sb)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diskus",
+        "baseArgs": ["--apparent-size"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install diskus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diskus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to diskus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diskus",
+        "passthrough": true,
+        "missingDependencyHelp": "Install diskus"
+      },
+      "args": []
+    }
+  ]
+}
