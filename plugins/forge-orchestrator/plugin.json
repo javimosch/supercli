@@ -1,0 +1,78 @@
+{
+  "name": "forge-orchestrator",
+  "version": "0.1.0",
+  "description": "Multi-AI task orchestration with file locking, knowledge capture, and drift detection",
+  "source": "https://github.com/nxtg-ai/forge-orchestrator",
+  "checks": [
+    { "type": "binary", "name": "forge" }
+  ],
+  "install_guidance": {
+    "plugin": "forge-orchestrator",
+    "binary": "forge",
+    "check": "which forge",
+    "install_steps": [
+      "curl -fsSL https://forge.nxtg.ai/install.sh | sh",
+      "Verify: forge --version",
+      "supercli plugins install ./plugins/forge-orchestrator --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "forge-orchestrator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print forge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "forge",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install forge: curl -fsSL https://forge.nxtg.ai/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "forge-orchestrator",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize Forge in a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "forge",
+        "baseArgs": ["init"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install forge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "forge-orchestrator",
+      "resource": "plan",
+      "action": "generate",
+      "description": "Generate task plan from spec",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "forge",
+        "baseArgs": ["plan", "--generate"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install forge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "forge-orchestrator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to forge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "forge",
+        "passthrough": true,
+        "missingDependencyHelp": "Install forge"
+      },
+      "args": []
+    }
+  ]
+}
