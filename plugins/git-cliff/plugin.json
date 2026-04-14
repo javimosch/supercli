@@ -1,0 +1,121 @@
+{
+  "name": "git-cliff",
+  "version": "0.1.0",
+  "description": "Generate changelogs from Git history with conventional commits support",
+  "source": "https://github.com/orhun/git-cliff",
+  "checks": [
+    { "type": "binary", "name": "git-cliff" }
+  ],
+  "install_guidance": {
+    "plugin": "git-cliff",
+    "binary": "git-cliff",
+    "check": "which git-cliff",
+    "install_steps": [
+      "cargo install git-cliff",
+      "Verify: git-cliff --version",
+      "supercli plugins install ./plugins/git-cliff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "git-cliff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-cliff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install git-cliff: cargo install git-cliff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-cliff",
+      "resource": "changelog",
+      "action": "generate",
+      "description": "Generate changelog to file or stdout",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "baseArgs": ["-o"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install git-cliff"
+      },
+      "args": [
+        { "name": "output", "type": "string", "required": false, "description": "Output file path (prints to stdout if not specified)" }
+      ]
+    },
+    {
+      "namespace": "git-cliff",
+      "resource": "changelog",
+      "action": "unreleased",
+      "description": "Generate only unreleased changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "baseArgs": ["--unreleased"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install git-cliff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-cliff",
+      "resource": "changelog",
+      "action": "latest",
+      "description": "Generate changelog for latest tag only",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "baseArgs": ["--latest"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install git-cliff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-cliff",
+      "resource": "changelog",
+      "action": "current",
+      "description": "Generate changelog for current tag",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "baseArgs": ["--current"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install git-cliff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-cliff",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize git-cliff config file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "baseArgs": ["--init"],
+        "missingDependencyHelp": "Install git-cliff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-cliff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-cliff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-cliff",
+        "passthrough": true,
+        "missingDependencyHelp": "Install git-cliff"
+      },
+      "args": []
+    }
+  ]
+}
