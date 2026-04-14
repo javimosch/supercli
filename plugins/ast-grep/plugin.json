@@ -1,0 +1,118 @@
+{
+  "name": "ast-grep",
+  "version": "0.1.0",
+  "description": "AST-based code structural search, lint, and rewriting — find and replace code using AST patterns",
+  "source": "https://github.com/ast-grep/ast-grep",
+  "checks": [
+    { "type": "binary", "name": "ast-grep" }
+  ],
+  "install_guidance": {
+    "plugin": "ast-grep",
+    "binary": "ast-grep",
+    "check": "which ast-grep",
+    "install_steps": [
+      "npm install --global @ast-grep/cli",
+      "Verify: ast-grep --version",
+      "supercli plugins install ./plugins/ast-grep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ast-grep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ast-grep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ast-grep",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ast-grep: npm install --global @ast-grep/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ast-grep",
+      "resource": "search",
+      "action": "run",
+      "description": "Search code using AST pattern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ast-grep",
+        "baseArgs": ["--pattern"],
+        "positionalArgs": ["pattern"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ast-grep"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "AST pattern to search for" },
+        { "name": "lang", "type": "string", "required": false, "description": "Language (js, ts, python, etc.)" }
+      ]
+    },
+    {
+      "namespace": "ast-grep",
+      "resource": "rewrite",
+      "action": "run",
+      "description": "Rewrite code using AST pattern and replacement",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ast-grep",
+        "baseArgs": ["--pattern", "--rewrite"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ast-grep"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Pattern to find" },
+        { "name": "rewrite", "type": "string", "required": true, "description": "Replacement pattern" },
+        { "name": "lang", "type": "string", "required": false, "description": "Language" }
+      ]
+    },
+    {
+      "namespace": "ast-grep",
+      "resource": "lint",
+      "action": "run",
+      "description": "Run linting rules on code",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ast-grep",
+        "baseArgs": ["lint"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ast-grep"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": false, "description": "Paths to lint" }
+      ]
+    },
+    {
+      "namespace": "ast-grep",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan directory with rules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ast-grep",
+        "baseArgs": ["scan"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ast-grep"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": false, "description": "Paths to scan" }
+      ]
+    },
+    {
+      "namespace": "ast-grep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ast-grep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ast-grep",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ast-grep"
+      },
+      "args": []
+    }
+  ]
+}
