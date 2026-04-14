@@ -1,0 +1,139 @@
+{
+  "name": "xfr",
+  "version": "0.1.0",
+  "description": "A modern iperf3 alternative with a live TUI, multi-client server, and QUIC support",
+  "source": "https://github.com/lance0/xfr",
+  "checks": [
+    { "type": "binary", "name": "xfr" }
+  ],
+  "install_guidance": {
+    "plugin": "xfr",
+    "binary": "xfr",
+    "check": "which xfr",
+    "install_steps": [
+      "cargo install xfr",
+      "Verify: xfr --version",
+      "supercli plugins install ./plugins/xfr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xfr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xfr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install xfr: cargo install xfr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xfr",
+      "resource": "serve",
+      "action": "start",
+      "description": "Start xfr server for bandwidth testing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfr",
+        "baseArgs": ["serve"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install xfr: cargo install xfr"
+      },
+      "args": [
+        { "name": "-p", "type": "number", "required": false, "description": "Server port" },
+        { "name": "--tui", "type": "boolean", "required": false, "description": "Enable live dashboard" },
+        { "name": "--one-off", "type": "boolean", "required": false, "description": "Exit after one test" },
+        { "name": "--max-duration", "type": "string", "required": false, "description": "Max test duration" },
+        { "name": "--psk", "type": "string", "required": false, "description": "Pre-shared key authentication" },
+        { "name": "--rate-limit", "type": "number", "required": false, "description": "Max concurrent tests per IP" },
+        { "name": "--prometheus", "type": "number", "required": false, "description": "Prometheus metrics port" }
+      ]
+    },
+    {
+      "namespace": "xfr",
+      "resource": "client",
+      "action": "test",
+      "description": "Run bandwidth test to xfr server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfr",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install xfr: cargo install xfr"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Server address" },
+        { "name": "-t", "type": "string", "required": false, "description": "Test duration (e.g., 10s, 30s)" },
+        { "name": "-b", "type": "string", "required": false, "description": "Target bitrate (e.g., 100M, 1G)" },
+        { "name": "-P", "type": "number", "required": false, "description": "Parallel streams" },
+        { "name": "-u", "type": "boolean", "required": false, "description": "UDP mode" },
+        { "name": "--quic", "type": "boolean", "required": false, "description": "QUIC mode (encrypted)" },
+        { "name": "--mptcp", "type": "boolean", "required": false, "description": "MPTCP mode" },
+        { "name": "-R", "type": "boolean", "required": false, "description": "Reverse direction (download test)" },
+        { "name": "--bidir", "type": "boolean", "required": false, "description": "Bidirectional test" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" },
+        { "name": "--csv", "type": "boolean", "required": false, "description": "CSV output" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output file" },
+        { "name": "--no-tui", "type": "boolean", "required": false, "description": "Disable TUI" },
+        { "name": "--theme", "type": "string", "required": false, "description": "Color theme" },
+        { "name": "--psk", "type": "string", "required": false, "description": "Pre-shared key" }
+      ]
+    },
+    {
+      "namespace": "xfr",
+      "resource": "diff",
+      "action": "compare",
+      "description": "Compare two bandwidth test results",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfr",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install xfr: cargo install xfr"
+      },
+      "args": [
+        { "name": "baseline", "type": "string", "required": true, "description": "Baseline results JSON file" },
+        { "name": "current", "type": "string", "required": true, "description": "Current results JSON file" },
+        { "name": "--threshold", "type": "number", "required": false, "description": "Threshold percentage" }
+      ]
+    },
+    {
+      "namespace": "xfr",
+      "resource": "discover",
+      "action": "find",
+      "description": "Find xfr servers on LAN via mDNS",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfr",
+        "baseArgs": ["discover"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install xfr: cargo install xfr"
+      },
+      "args": [
+        { "name": "--timeout", "type": "string", "required": false, "description": "Discovery timeout" }
+      ]
+    },
+    {
+      "namespace": "xfr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xfr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfr",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xfr: cargo install xfr"
+      },
+      "args": []
+    }
+  ]
+}
