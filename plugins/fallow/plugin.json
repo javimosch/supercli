@@ -1,0 +1,156 @@
+{
+  "name": "fallow",
+  "version": "0.1.0",
+  "description": "Codebase analyzer for TypeScript and JavaScript - finds unused code, duplication, complexity hotspots",
+  "source": "https://github.com/fallow-rs/fallow",
+  "checks": [
+    { "type": "binary", "name": "fallow" }
+  ],
+  "install_guidance": {
+    "plugin": "fallow",
+    "binary": "fallow",
+    "check": "which fallow",
+    "install_steps": [
+      "cargo install fallow-cli",
+      "Verify: fallow --version",
+      "supercli plugins install ./plugins/fallow --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fallow",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fallow version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fallow",
+      "resource": "deadcode",
+      "action": "scan",
+      "description": "Find unused files, exports, dependencies, types, and circular dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["dead-code"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--unused-exports", "type": "boolean", "required": false, "description": "Only unused exports" },
+        { "name": "--circular-deps", "type": "boolean", "required": false, "description": "Only circular dependencies" },
+        { "name": "--boundary-violations", "type": "boolean", "required": false, "description": "Only boundary violations" },
+        { "name": "--production", "type": "boolean", "required": false, "description": "Exclude test/dev files" },
+        { "name": "--changed-since", "type": "string", "required": false, "description": "Only changed files (e.g., main, HEAD~3)" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, sarif, codeclimate, markdown" },
+        { "name": "--group-by", "type": "string", "required": false, "description": "Group by: owner, directory, package" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "dupes",
+      "action": "scan",
+      "description": "Find copy-pasted code blocks across codebase",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["dupes"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--mode", "type": "string", "required": false, "description": "Detection mode: strict, mild, weak, semantic" },
+        { "name": "--skip-local", "type": "boolean", "required": false, "description": "Only cross-directory duplicates" },
+        { "name": "--trace", "type": "string", "required": false, "description": "Show all clones of code at location (e.g., src/utils.ts:42)" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, sarif, markdown" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "health",
+      "action": "analyze",
+      "description": "Analyze complexity and surface the most complex functions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["health"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--score", "type": "boolean", "required": false, "description": "Project health score (0-100) with letter grade" },
+        { "name": "--min-score", "type": "number", "required": false, "description": "CI gate: fail if score drops below N" },
+        { "name": "--top", "type": "number", "required": false, "description": "Show N most complex functions" },
+        { "name": "--file-scores", "type": "boolean", "required": false, "description": "Per-file maintainability index" },
+        { "name": "--hotspots", "type": "boolean", "required": false, "description": "Riskiest files (git churn x complexity)" },
+        { "name": "--targets", "type": "boolean", "required": false, "description": "Ranked refactoring recommendations" },
+        { "name": "--trend", "type": "boolean", "required": false, "description": "Compare against saved snapshot" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, badge, markdown" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "audit",
+      "action": "check",
+      "description": "Quality gate for AI-generated code and PRs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["audit"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--base", "type": "string", "required": false, "description": "Base branch (e.g., main, HEAD~3)" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, sarif, codeclimate, annotations" },
+        { "name": "--ci", "type": "boolean", "required": false, "description": "CI mode: quiet, SARIF output, non-zero exit on issues" },
+        { "name": "--changed-since", "type": "string", "required": false, "description": "Analyze only files touched in PR" },
+        { "name": "--baseline", "type": "string", "required": false, "description": "Fail only on new issues vs baseline" },
+        { "name": "--summary", "type": "boolean", "required": false, "description": "Show only category counts" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "fix",
+      "action": "apply",
+      "description": "Auto-remove dead exports and dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["fix"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--dry-run", "type": "boolean", "required": false, "description": "Preview changes without applying" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fallow CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": []
+    }
+  ]
+}
