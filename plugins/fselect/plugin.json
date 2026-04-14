@@ -1,0 +1,72 @@
+{
+  "name": "fselect",
+  "version": "0.1.0",
+  "description": "Find files with SQL-like queries",
+  "source": "https://github.com/jhspetersson/fselect",
+  "checks": [
+    { "type": "binary", "name": "fselect" }
+  ],
+  "install_guidance": {
+    "plugin": "fselect",
+    "binary": "fselect",
+    "check": "which fselect",
+    "install_steps": [
+      "cargo install fselect",
+      "Verify: fselect --version",
+      "supercli plugins install ./plugins/fselect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fselect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fselect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fselect",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install fselect: cargo install fselect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fselect",
+      "resource": "query",
+      "action": "execute",
+      "description": "Execute SQL-like file search query",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fselect",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fselect: cargo install fselect"
+      },
+      "args": [
+        { "name": "columns", "type": "string", "required": true, "description": "Columns to select (e.g., path, size, name)" },
+        { "name": "from", "type": "string", "required": false, "description": "Root directory to search" },
+        { "name": "where", "type": "string", "required": false, "description": "Where condition" },
+        { "name": "limit", "type": "number", "required": false, "description": "Limit results" },
+        { "name": "order", "type": "string", "required": false, "description": "Order by column" },
+        { "name": "group", "type": "string", "required": false, "description": "Group by column" },
+        { "name": "into", "type": "string", "required": false, "description": "Output format (json, csv, html)" }
+      ]
+    },
+    {
+      "namespace": "fselect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fselect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fselect",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fselect: cargo install fselect"
+      },
+      "args": []
+    }
+  ]
+}
