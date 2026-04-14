@@ -1,0 +1,99 @@
+{
+  "name": "earl",
+  "version": "0.1.0",
+  "description": "Secure CLI proxy for AI agents — HCL-defined operation templates with OS keychain secrets, MCP integration, and prompt injection protection",
+  "source": "https://github.com/mathematic-inc/earl",
+  "checks": [
+    { "type": "binary", "name": "earl" }
+  ],
+  "install_guidance": {
+    "plugin": "earl",
+    "binary": "earl",
+    "check": "which earl",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/mathematic-inc/earl/main/scripts/install.sh | bash",
+      "Verify: earl --version",
+      "supercli plugins install ./plugins/earl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "earl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print earl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install earl: curl -fsSL https://raw.githubusercontent.com/mathematic-inc/earl/main/scripts/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "earl",
+      "resource": "template",
+      "action": "import",
+      "description": "Import a provider template",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earl",
+        "baseArgs": ["templates", "import"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install earl"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Template URL (HCL file)" }
+      ]
+    },
+    {
+      "namespace": "earl",
+      "resource": "secret",
+      "action": "set",
+      "description": "Store a secret in the OS keychain",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earl",
+        "baseArgs": ["secrets", "set"],
+        "positionalArgs": ["name"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install earl"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Secret name" }
+      ]
+    },
+    {
+      "namespace": "earl",
+      "resource": "call",
+      "action": "execute",
+      "description": "Call a template command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earl",
+        "baseArgs": ["call", "--json"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install earl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "earl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to earl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install earl"
+      },
+      "args": []
+    }
+  ]
+}
