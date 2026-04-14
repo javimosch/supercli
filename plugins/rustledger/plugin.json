@@ -1,0 +1,141 @@
+{
+  "name": "rustledger",
+  "version": "0.1.0",
+  "description": "Modern plain text accounting - blazing-fast Beancount-compatible implementation in Rust",
+  "source": "https://github.com/rustledger/rustledger",
+  "checks": [
+    { "type": "binary", "name": "rledger" }
+  ],
+  "install_guidance": {
+    "plugin": "rustledger",
+    "binary": "rledger",
+    "check": "which rledger",
+    "install_steps": [
+      "cargo install rustledger",
+      "Verify: rledger --version",
+      "supercli plugins install ./plugins/rustledger --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rustledger",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rustledger version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rustledger",
+      "resource": "check",
+      "action": "validate",
+      "description": "Validate ledger files with detailed error messages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Ledger file to validate" },
+        { "name": "--native-plugin", "type": "string", "required": false, "description": "Enable native plugin" }
+      ]
+    },
+    {
+      "namespace": "rustledger",
+      "resource": "query",
+      "action": "execute",
+      "description": "Run BQL queries on ledger files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "baseArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Ledger file" },
+        { "name": "sql", "type": "string", "required": false, "description": "BQL query to execute" }
+      ]
+    },
+    {
+      "namespace": "rustledger",
+      "resource": "format",
+      "action": "auto",
+      "description": "Auto-format beancount files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "baseArgs": ["format"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to format" },
+        { "name": "--in-place", "type": "boolean", "required": false, "description": "Format in place" }
+      ]
+    },
+    {
+      "namespace": "rustledger",
+      "resource": "report",
+      "action": "generate",
+      "description": "Generate balance, account, and statistics reports",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "baseArgs": ["report"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Ledger file" },
+        { "name": "subcommand", "type": "string", "required": false, "description": "Report type: balances, bal, income, is, journal, register, holdings, networth, accounts, commodities, prices, stats" }
+      ]
+    },
+    {
+      "namespace": "rustledger",
+      "resource": "doctor",
+      "action": "debug",
+      "description": "Debugging tools for ledger issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "baseArgs": ["doctor"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": [
+        { "name": "subcommand", "type": "string", "required": true, "description": "Debug command: lex, parse, context, linked, missing-open, list-options, print-options, stats, roundtrip, directories, region, generate-synthetic" },
+        { "name": "file", "type": "string", "required": false, "description": "Ledger file" },
+        { "name": "args", "type": "string", "required": false, "description": "Additional arguments" }
+      ]
+    },
+    {
+      "namespace": "rustledger",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rledger CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rledger",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rustledger: cargo install rustledger"
+      },
+      "args": []
+    }
+  ]
+}
