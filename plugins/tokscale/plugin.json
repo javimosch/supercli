@@ -1,0 +1,189 @@
+{
+  "name": "tokscale",
+  "version": "0.1.0",
+  "description": "Track token usage and costs across AI coding agents like OpenCode, Claude Code, and more",
+  "source": "https://github.com/junhoyeo/tokscale",
+  "checks": [
+    { "type": "binary", "name": "tokscale" }
+  ],
+  "install_guidance": {
+    "plugin": "tokscale",
+    "binary": "tokscale",
+    "check": "which tokscale",
+    "install_steps": [
+      "bunx tokscale@latest",
+      "Verify: tokscale --version",
+      "supercli plugins install ./plugins/tokscale --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tokscale",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tokscale version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "usage",
+      "action": "overview",
+      "description": "Show token usage overview across all AI coding agents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["--json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": [
+        { "name": "--opencode", "type": "boolean", "required": false, "description": "Filter by OpenCode usage" },
+        { "name": "--claude", "type": "boolean", "required": false, "description": "Filter by Claude Code usage" },
+        { "name": "--codex", "type": "boolean", "required": false, "description": "Filter by Codex CLI usage" },
+        { "name": "--copilot", "type": "boolean", "required": false, "description": "Filter by Copilot CLI usage" },
+        { "name": "--today", "type": "boolean", "required": false, "description": "Today only" },
+        { "name": "--week", "type": "boolean", "required": false, "description": "Last 7 days" },
+        { "name": "--month", "type": "boolean", "required": false, "description": "Current month" },
+        { "name": "--since", "type": "string", "required": false, "description": "Start date (YYYY-MM-DD)" },
+        { "name": "--until", "type": "string", "required": false, "description": "End date (YYYY-MM-DD)" }
+      ]
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "usage",
+      "action": "models",
+      "description": "Show token usage breakdown by AI model",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["models", "--json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output as JSON" },
+        { "name": "--group-by", "type": "string", "required": false, "description": "Group by: model, client,provider,model" },
+        { "name": "--opencode", "type": "boolean", "required": false, "description": "Filter by OpenCode" },
+        { "name": "--claude", "type": "boolean", "required": false, "description": "Filter by Claude Code" }
+      ]
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "wrapped",
+      "action": "generate",
+      "description": "Generate a year-in-review image summarizing AI coding usage (Wrapped 2025)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["wrapped"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": [
+        { "name": "--clients", "type": "boolean", "required": false, "description": "Show client breakdown" },
+        { "name": "--agents", "type": "boolean", "required": false, "description": "Show agent breakdown" },
+        { "name": "--disable-pinned", "type": "boolean", "required": false, "description": "Disable pinned message" },
+        { "name": "--year", "type": "number", "required": false, "description": "Year to generate wrapped for" }
+      ]
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "graph",
+      "action": "export",
+      "description": "Export contribution graph data as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["graph", "--json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": [
+        { "name": "--output", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "--opencode", "type": "boolean", "required": false, "description": "Filter by OpenCode" },
+        { "name": "--claude", "type": "boolean", "required": false, "description": "Filter by Claude Code" },
+        { "name": "--today", "type": "boolean", "required": false, "description": "Today only" },
+        { "name": "--week", "type": "boolean", "required": false, "description": "Last 7 days" },
+        { "name": "--month", "type": "boolean", "required": false, "description": "Current month" }
+      ]
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "social",
+      "action": "submit",
+      "description": "Submit usage data to Tokscale leaderboard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["submit"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": [
+        { "name": "--dry-run", "type": "boolean", "required": false, "description": "Preview without submitting" },
+        { "name": "--opencode", "type": "boolean", "required": false, "description": "Include only OpenCode" },
+        { "name": "--claude", "type": "boolean", "required": false, "description": "Include only Claude Code" }
+      ]
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "social",
+      "action": "login",
+      "description": "Login to Tokscale via GitHub authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["login"],
+        "passthrough": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "pricing",
+      "action": "lookup",
+      "description": "Look up real-time pricing for any AI model",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "baseArgs": ["pricing"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": true, "description": "Model name (e.g., claude-3-5-sonnet-20241022)" },
+        { "name": "--provider", "type": "string", "required": false, "description": "Force specific provider (openrouter, litellm)" }
+      ]
+    },
+    {
+      "namespace": "tokscale",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tokscale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokscale",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tokscale: bunx tokscale@latest"
+      },
+      "args": []
+    }
+  ]
+}
