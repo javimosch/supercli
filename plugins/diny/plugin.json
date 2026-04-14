@@ -1,0 +1,65 @@
+{
+  "name": "diny",
+  "version": "0.1.0",
+  "description": "Generate AI git commit messages from your changes",
+  "source": "https://github.com/dinoDanic/diny",
+  "checks": [
+    { "type": "binary", "name": "diny" }
+  ],
+  "install_guidance": {
+    "plugin": "diny",
+    "binary": "diny",
+    "check": "which diny",
+    "install_steps": [
+      "go install github.com/dinoDanic/diny@latest",
+      "Verify: diny --version",
+      "supercli plugins install ./plugins/diny --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "diny",
+      "resource": "self",
+      "action": "version",
+      "description": "Print diny version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diny",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install diny: go install github.com/dinoDanic/diny@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diny",
+      "resource": "commit",
+      "action": "generate",
+      "description": "Generate a commit message",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diny",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install diny"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diny",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to diny CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diny",
+        "passthrough": true,
+        "missingDependencyHelp": "Install diny"
+      },
+      "args": []
+    }
+  ]
+}
