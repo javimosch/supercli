@@ -1,0 +1,106 @@
+{
+  "name": "rage",
+  "version": "0.1.0",
+  "description": "A simple, secure and modern file encryption tool with small explicit keys and UNIX-style composability",
+  "source": "https://github.com/str4d/rage",
+  "checks": [
+    { "type": "binary", "name": "rage" }
+  ],
+  "install_guidance": {
+    "plugin": "rage",
+    "binary": "rage",
+    "check": "which rage",
+    "install_steps": [
+      "cargo install rage",
+      "Verify: rage --version",
+      "supercli plugins install ./plugins/rage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rage",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rage: cargo install rage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rage",
+      "resource": "keygen",
+      "action": "generate",
+      "description": "Generate a new age key pair",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rage-keygen",
+        "baseArgs": [],
+        "passthrough": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install rage: cargo install rage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rage",
+      "resource": "encrypt",
+      "action": "file",
+      "description": "Encrypt a file to one or more recipients",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rage",
+        "baseArgs": ["-e"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rage: cargo install rage"
+      },
+      "args": [
+        { "name": "-r", "type": "string", "required": true, "description": "Recipient public key (age1...)" },
+        { "name": "-R", "type": "string", "required": false, "description": "Recipients file path" },
+        { "name": "-p", "type": "boolean", "required": false, "description": "Encrypt with passphrase" },
+        { "name": "-a", "type": "boolean", "required": false, "description": "Output PEM encoded format" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "INPUT", "type": "string", "required": false, "description": "Input file (default: stdin)" }
+      ]
+    },
+    {
+      "namespace": "rage",
+      "resource": "decrypt",
+      "action": "file",
+      "description": "Decrypt a file using identity file or SSH key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rage",
+        "baseArgs": ["-d"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rage: cargo install rage"
+      },
+      "args": [
+        { "name": "-i", "type": "string", "required": false, "description": "Identity file path" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "INPUT", "type": "string", "required": false, "description": "Input file (default: stdin)" }
+      ]
+    },
+    {
+      "namespace": "rage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rage",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rage: cargo install rage"
+      },
+      "args": []
+    }
+  ]
+}
