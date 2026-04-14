@@ -1,0 +1,107 @@
+{
+  "name": "mergestat-lite",
+  "version": "0.1.0",
+  "description": "Run SQL queries on git repositories — query commits, files, authors with SQL syntax",
+  "source": "https://github.com/mergestat/mergestat-lite",
+  "checks": [
+    { "type": "binary", "name": "mergestat" }
+  ],
+  "install_guidance": {
+    "plugin": "mergestat-lite",
+    "binary": "mergestat",
+    "check": "which mergestat",
+    "install_steps": [
+      "brew tap mergestat/mergestat && brew install mergestat",
+      "Verify: mergestat --version",
+      "supercli plugins install ./plugins/mergestat-lite --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mergestat-lite",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mergestat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mergestat",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mergestat: brew tap mergestat/mergestat && brew install mergestat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mergestat-lite",
+      "resource": "query",
+      "action": "run",
+      "description": "Run a SQL query on a git repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mergestat",
+        "baseArgs": ["-f", "json"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mergestat"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "Path to git repository" },
+        { "name": "sql", "type": "string", "required": true, "description": "SQL query to execute" }
+      ]
+    },
+    {
+      "namespace": "mergestat-lite",
+      "resource": "summarize",
+      "action": "commits",
+      "description": "Summarize commits with report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mergestat",
+        "baseArgs": ["summarize", "commits", "-f", "json"],
+        "positionalArgs": ["repo"],
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mergestat"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "Path to git repository" },
+        { "name": "start", "type": "string", "required": false, "description": "Start date (YYYY-MM-DD)" }
+      ]
+    },
+    {
+      "namespace": "mergestat-lite",
+      "resource": "query",
+      "action": "commits",
+      "description": "Query commits table",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mergestat",
+        "baseArgs": ["-f", "json"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mergestat"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "Path to git repository" },
+        { "name": "where", "type": "string", "required": false, "description": "WHERE clause (e.g., author_email = 'test@example.com')" }
+      ]
+    },
+    {
+      "namespace": "mergestat-lite",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mergestat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mergestat",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mergestat"
+      },
+      "args": []
+    }
+  ]
+}
