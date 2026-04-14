@@ -1,0 +1,316 @@
+{
+  "name": "sqlite3",
+  "version": "0.1.0",
+  "description": "SQLite3 CLI plugin — execute SQL, manage databases, transactions, and common pragmas",
+  "source": "https://www.sqlite.org/cli.html",
+  "checks": [
+    { "type": "binary", "name": "sqlite3" }
+  ],
+  "install_guidance": {
+    "plugin": "sqlite3",
+    "binary": "sqlite3",
+    "check": "which sqlite3",
+    "install_steps": [
+      "macOS: brew install sqlite3",
+      "Ubuntu/Debian: sudo apt install sqlite3",
+      "Windows: choco install sqlite (with Chocolatey)",
+      "Verify: sqlite3 --version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqlite3",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqlite3 CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "query",
+      "action": "execute",
+      "description": "Execute a SQL query and return JSON results",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-json"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "sql", "type": "string", "required": true, "description": "SQL statement to execute" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "query",
+      "action": "batch",
+      "description": "Execute SQL in batch mode (script-friendly, no formatting)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-batch"],
+        "positionalArgs": ["sql"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "sql", "type": "string", "required": true, "description": "SQL statement to execute" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "database",
+      "action": "tables",
+      "description": "List all tables in the database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-json"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "database",
+      "action": "schema",
+      "description": "Show complete database schema",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-json", "-bail"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "table",
+      "action": "info",
+      "description": "Show column info for a table (PRAGMA table_info)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-json"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "table", "type": "string", "required": true, "description": "Table name" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "pragma",
+      "action": "get",
+      "description": "Get pragma value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-json"],
+        "positionalArgs": ["sql"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "pragma", "type": "string", "required": true, "description": "Pragma name (e.g., foreign_keys, journal_mode)" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "pragma",
+      "action": "set",
+      "description": "Set pragma value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail"],
+        "positionalArgs": ["sql"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "pragma", "type": "string", "required": true, "description": "Pragma name" },
+        { "name": "value", "type": "string", "required": true, "description": "Value to set" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "transaction",
+      "action": "begin",
+      "description": "Begin a transaction",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail"],
+        "positionalArgs": ["sql"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "type", "type": "string", "required": false, "description": "Transaction type: DEFERRED, IMMEDIATE, EXCLUSIVE" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "transaction",
+      "action": "commit",
+      "description": "Commit the current transaction",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail"],
+        "positionalArgs": ["sql"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "transaction",
+      "action": "rollback",
+      "description": "Rollback the current transaction",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail"],
+        "positionalArgs": ["sql"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "database",
+      "action": "attach",
+      "description": "Attach a database file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail"],
+        "positionalArgs": ["sql"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to main database" },
+        { "name": "alias", "type": "string", "required": true, "description": "Database alias name" },
+        { "name": "filename", "type": "string", "required": true, "description": "Path to database file to attach" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "database",
+      "action": "detach",
+      "description": "Detach a database file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail"],
+        "positionalArgs": ["sql"],
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to main database" },
+        { "name": "alias", "type": "string", "required": true, "description": "Database alias to detach" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "export",
+      "action": "csv",
+      "description": "Export query results to CSV",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-csv", "-noheader"],
+        "positionalArgs": ["sql"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "sql", "type": "string", "required": true, "description": "SQL query to export" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file (default: stdout)" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "export",
+      "action": "dump",
+      "description": "Export complete database dump as SQL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": [".dump"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "import",
+      "action": "csv",
+      "description": "Import CSV data into a table",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "baseArgs": ["-bail", "-csv"],
+        "positionalArgs": ["sql"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Path to SQLite database" },
+        { "name": "table", "type": "string", "required": true, "description": "Target table name" },
+        { "name": "file", "type": "string", "required": true, "description": "CSV file to import" }
+      ]
+    },
+    {
+      "namespace": "sqlite3",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqlite3 CLI (run any sqlite3 command directly)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sqlite3 CLI"
+      },
+      "args": []
+    }
+  ]
+}
