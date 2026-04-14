@@ -1,0 +1,92 @@
+{
+  "name": "gobackup",
+  "version": "0.1.0",
+  "description": "GoBackup CLI — backup databases and files to cloud storages with scheduling and Web UI",
+  "source": "https://github.com/gobackup/gobackup",
+  "checks": [
+    { "type": "binary", "name": "gobackup" }
+  ],
+  "install_guidance": {
+    "plugin": "gobackup",
+    "binary": "gobackup",
+    "check": "which gobackup",
+    "install_steps": [
+      "curl -sSL https://gobackup.github.io/install | sh",
+      "Verify: gobackup --version",
+      "supercli plugins install ./plugins/gobackup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gobackup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gobackup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobackup",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gobackup: curl -sSL https://gobackup.github.io/install | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gobackup",
+      "resource": "backup",
+      "action": "run",
+      "description": "Run a backup with current config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobackup",
+        "baseArgs": ["perform"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install gobackup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gobackup",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Start gobackup daemon (with scheduling and Web UI)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobackup",
+        "baseArgs": ["start"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gobackup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gobackup",
+      "resource": "daemon",
+      "action": "run",
+      "description": "Run backup without daemon mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobackup",
+        "baseArgs": ["run"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install gobackup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gobackup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gobackup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobackup",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gobackup"
+      },
+      "args": []
+    }
+  ]
+}
