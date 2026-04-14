@@ -1,0 +1,84 @@
+{
+  "name": "jql",
+  "version": "0.1.0",
+  "description": "JSON Query Language CLI — query and transform JSON with a simple query syntax",
+  "source": "https://github.com/yamafaktory/jql",
+  "checks": [
+    { "type": "binary", "name": "jql" }
+  ],
+  "install_guidance": {
+    "plugin": "jql",
+    "binary": "jql",
+    "check": "which jql",
+    "install_steps": [
+      "cargo install jql",
+      "Verify: jql --version",
+      "supercli plugins install ./plugins/jql --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jql",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jql version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jql",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jql: cargo install jql"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jql",
+      "resource": "query",
+      "action": "run",
+      "description": "Query JSON with a jql query",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jql",
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install jql"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "jql query (e.g., '\"key\"')" },
+        { "name": "file", "type": "string", "required": false, "description": "JSON file to query (reads from stdin if not specified)" }
+      ]
+    },
+    {
+      "namespace": "jql",
+      "resource": "validate",
+      "action": "run",
+      "description": "Validate JSON data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jql",
+        "baseArgs": ["--validate"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jql"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "JSON file to validate" }
+      ]
+    },
+    {
+      "namespace": "jql",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jql CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jql",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jql"
+      },
+      "args": []
+    }
+  ]
+}
