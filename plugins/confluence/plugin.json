@@ -1,0 +1,115 @@
+{
+  "name": "confluence",
+  "version": "0.1.0",
+  "description": "A powerful command-line interface for Atlassian Confluence. Read, search, and manage Confluence content from the terminal.",
+  "source": "https://github.com/pchuri/confluence-cli",
+  "checks": [
+    { "type": "binary", "name": "confluence" }
+  ],
+  "install_guidance": {
+    "plugin": "confluence",
+    "binary": "confluence",
+    "check": "which confluence",
+    "install_steps": [
+      "npm install -g confluence-cli",
+      "Verify: confluence --version",
+      "supercli plugins install ./plugins/confluence --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "confluence",
+      "resource": "self",
+      "action": "version",
+      "description": "Print confluence-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "confluence",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install confluence-cli: npm install -g confluence-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "confluence",
+      "resource": "page",
+      "action": "get",
+      "description": "Get a Confluence page by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "confluence",
+        "baseArgs": ["page", "get"],
+        "missingDependencyHelp": "Install confluence-cli: npm install -g confluence-cli"
+      },
+      "args": [
+        { "name": "page-id", "type": "string", "required": true, "description": "Confluence page ID" }
+      ]
+    },
+    {
+      "namespace": "confluence",
+      "resource": "page",
+      "action": "search",
+      "description": "Search Confluence pages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "confluence",
+        "baseArgs": ["page", "search"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install confluence-cli: npm install -g confluence-cli"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query string" }
+      ]
+    },
+    {
+      "namespace": "confluence",
+      "resource": "page",
+      "action": "create",
+      "description": "Create a new Confluence page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "confluence",
+        "baseArgs": ["page", "create"],
+        "missingDependencyHelp": "Install confluence-cli: npm install -g confluence-cli"
+      },
+      "args": [
+        { "name": "space", "type": "string", "required": true, "description": "Confluence space key" },
+        { "name": "title", "type": "string", "required": true, "description": "Page title" },
+        { "name": "body", "type": "string", "required": true, "description": "Page content body" }
+      ]
+    },
+    {
+      "namespace": "confluence",
+      "resource": "page",
+      "action": "update",
+      "description": "Update an existing Confluence page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "confluence",
+        "baseArgs": ["page", "update"],
+        "missingDependencyHelp": "Install confluence-cli: npm install -g confluence-cli"
+      },
+      "args": [
+        { "name": "page-id", "type": "string", "required": true, "description": "Confluence page ID" },
+        { "name": "title", "type": "string", "required": false, "description": "New page title" },
+        { "name": "body", "type": "string", "required": false, "description": "New page content body" }
+      ]
+    },
+    {
+      "namespace": "confluence",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to confluence CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "confluence",
+        "passthrough": true,
+        "missingDependencyHelp": "Install confluence-cli: npm install -g confluence-cli"
+      },
+      "args": []
+    }
+  ]
+}
