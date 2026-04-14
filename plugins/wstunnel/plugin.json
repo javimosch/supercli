@@ -1,0 +1,84 @@
+{
+  "name": "wstunnel",
+  "version": "0.1.0",
+  "description": "Tunnel all your traffic over WebSocket or HTTP2 — bypass firewalls, DPI, and proxies",
+  "source": "https://github.com/erebe/wstunnel",
+  "checks": [
+    { "type": "binary", "name": "wstunnel" }
+  ],
+  "install_guidance": {
+    "plugin": "wstunnel",
+    "binary": "wstunnel",
+    "check": "which wstunnel",
+    "install_steps": [
+      "Download from https://github.com/erebe/wstunnel/releases",
+      "Verify: wstunnel --version",
+      "supercli plugins install ./plugins/wstunnel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wstunnel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wstunnel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wstunnel",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wstunnel from https://github.com/erebe/wstunnel/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wstunnel",
+      "resource": "server",
+      "action": "start",
+      "description": "Start wstunnel server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wstunnel",
+        "baseArgs": ["server"],
+        "positionalArgs": ["address"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install wstunnel"
+      },
+      "args": [
+        { "name": "address", "type": "string", "required": true, "description": "Server address (e.g., wss://0.0.0.0:8080)" }
+      ]
+    },
+    {
+      "namespace": "wstunnel",
+      "resource": "client",
+      "action": "start",
+      "description": "Start wstunnel client",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wstunnel",
+        "baseArgs": ["client"],
+        "positionalArgs": ["server"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install wstunnel"
+      },
+      "args": [
+        { "name": "server", "type": "string", "required": true, "description": "Server URL (e.g., wss://my.server.com:8080)" }
+      ]
+    },
+    {
+      "namespace": "wstunnel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wstunnel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wstunnel",
+        "passthrough": true,
+        "missingDependencyHelp": "Install wstunnel"
+      },
+      "args": []
+    }
+  ]
+}
