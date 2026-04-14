@@ -1,0 +1,65 @@
+{
+  "name": "howto",
+  "version": "0.1.0",
+  "description": "Humble command-line assistant — describe a task and get a command suggestion",
+  "source": "https://github.com/nalgeon/howto",
+  "checks": [
+    { "type": "binary", "name": "howto" }
+  ],
+  "install_guidance": {
+    "plugin": "howto",
+    "binary": "howto",
+    "check": "which howto",
+    "install_steps": [
+      "go install github.com/nalgeon/howto@latest",
+      "Verify: howto --version",
+      "supercli plugins install ./plugins/howto --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "howto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print howto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howto",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install howto: go install github.com/nalgeon/howto@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "howto",
+      "resource": "ask",
+      "action": "suggest",
+      "description": "Ask howto for a command suggestion",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howto",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install howto"
+      },
+      "args": []
+    },
+    {
+      "namespace": "howto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to howto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howto",
+        "passthrough": true,
+        "missingDependencyHelp": "Install howto"
+      },
+      "args": []
+    }
+  ]
+}
