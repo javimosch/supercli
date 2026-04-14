@@ -1,0 +1,82 @@
+{
+  "name": "silo",
+  "version": "0.1.0",
+  "description": "Run the same app, on the same port, at the same time — zero config, no containers, no code changes",
+  "source": "https://github.com/silo-rs/silo",
+  "checks": [
+    { "type": "binary", "name": "silo" }
+  ],
+  "install_guidance": {
+    "plugin": "silo",
+    "binary": "silo",
+    "check": "which silo",
+    "install_steps": [
+      "curl -fsSL https://setup.silo.rs | sh",
+      "Verify: silo --version || silo ip",
+      "supercli plugins install ./plugins/silo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "silo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print silo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "silo",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install silo: curl -fsSL https://setup.silo.rs | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "silo",
+      "resource": "run",
+      "action": "command",
+      "description": "Run a command with IP isolation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "silo",
+        "baseArgs": [],
+        "positionalArgs": ["cmd"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install silo"
+      },
+      "args": [
+        { "name": "cmd", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "silo",
+      "resource": "ip",
+      "action": "show",
+      "description": "Show the resolved IP for current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "silo",
+        "baseArgs": ["ip"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install silo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "silo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to silo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "silo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install silo"
+      },
+      "args": []
+    }
+  ]
+}
