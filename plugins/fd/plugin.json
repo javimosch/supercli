@@ -1,0 +1,108 @@
+{
+  "name": "fd",
+  "version": "0.1.0",
+  "description": "fd — fast and user-friendly alternative to find with regex and glob support",
+  "source": "https://github.com/sharkdp/fd",
+  "checks": [
+    { "type": "binary", "name": "fd" }
+  ],
+  "install_guidance": {
+    "plugin": "fd",
+    "binary": "fd",
+    "check": "which fd",
+    "install_steps": [
+      "cargo install fd-find",
+      "Verify: fd --version",
+      "supercli plugins install ./plugins/fd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install fd: cargo install fd-find"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fd",
+      "resource": "find",
+      "action": "run",
+      "description": "Find files by pattern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "positionalArgs": ["pattern", "path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install fd"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": false, "description": "Search pattern (regex)" },
+        { "name": "path", "type": "string", "required": false, "description": "Directory to search" }
+      ]
+    },
+    {
+      "namespace": "fd",
+      "resource": "find",
+      "action": "extension",
+      "description": "Find files by extension",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "baseArgs": ["-e"],
+        "positionalArgs": ["extension", "pattern", "path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install fd"
+      },
+      "args": [
+        { "name": "extension", "type": "string", "required": true, "description": "File extension (e.g., md, rs, js)" },
+        { "name": "pattern", "type": "string", "required": false, "description": "Search pattern" },
+        { "name": "path", "type": "string", "required": false, "description": "Directory to search" }
+      ]
+    },
+    {
+      "namespace": "fd",
+      "resource": "find",
+      "action": "type",
+      "description": "Find files by type (f=file, d=directory)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["filetype", "pattern", "path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install fd"
+      },
+      "args": [
+        { "name": "filetype", "type": "string", "required": true, "description": "Type: f (file), d (directory), l (symlink), x (executable)" },
+        { "name": "pattern", "type": "string", "required": false, "description": "Search pattern" },
+        { "name": "path", "type": "string", "required": false, "description": "Directory to search" }
+      ]
+    },
+    {
+      "namespace": "fd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fd"
+      },
+      "args": []
+    }
+  ]
+}
