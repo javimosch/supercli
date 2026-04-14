@@ -1,0 +1,87 @@
+{
+  "name": "ripgrep",
+  "version": "0.1.0",
+  "description": "Ripgrep (rg) — fast recursive regex search that respects gitignore and skips hidden/binary files",
+  "source": "https://github.com/BurntSushi/ripgrep",
+  "checks": [
+    { "type": "binary", "name": "rg" }
+  ],
+  "install_guidance": {
+    "plugin": "ripgrep",
+    "binary": "rg",
+    "check": "which rg",
+    "install_steps": [
+      "cargo install ripgrep",
+      "Verify: rg --version",
+      "supercli plugins install ./plugins/ripgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ripgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ripgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rg",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ripgrep: cargo install ripgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ripgrep",
+      "resource": "search",
+      "action": "run",
+      "description": "Search for regex pattern in files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rg",
+        "positionalArgs": ["pattern"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ripgrep"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Regex pattern to search for" },
+        { "name": "path", "type": "string", "required": false, "description": "Path to search (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "ripgrep",
+      "resource": "search",
+      "action": "files",
+      "description": "List files containing pattern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rg",
+        "baseArgs": ["-l"],
+        "positionalArgs": ["pattern"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ripgrep"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Regex pattern" },
+        { "name": "path", "type": "string", "required": false, "description": "Path to search" }
+      ]
+    },
+    {
+      "namespace": "ripgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ripgrep"
+      },
+      "args": []
+    }
+  ]
+}
