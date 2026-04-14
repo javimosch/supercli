@@ -1,0 +1,102 @@
+{
+  "name": "lurk",
+  "version": "0.1.0",
+  "description": "A pretty alternative to strace — trace system calls of a process or command with colorized output",
+  "source": "https://github.com/JakWai01/lurk",
+  "checks": [
+    { "type": "binary", "name": "lurk" }
+  ],
+  "install_guidance": {
+    "plugin": "lurk",
+    "binary": "lurk",
+    "check": "which lurk",
+    "install_steps": [
+      "cargo install lurk-cli",
+      "Verify: lurk --version",
+      "supercli plugins install ./plugins/lurk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lurk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lurk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lurk",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lurk: cargo install lurk-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lurk",
+      "resource": "trace",
+      "action": "run",
+      "description": "Trace system calls of a command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lurk",
+        "positionalArgs": ["command"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lurk"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to trace" }
+      ]
+    },
+    {
+      "namespace": "lurk",
+      "resource": "trace",
+      "action": "attach",
+      "description": "Attach to a running process (requires sudo)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lurk",
+        "baseArgs": ["--attach"],
+        "positionalArgs": ["pid"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lurk"
+      },
+      "args": [
+        { "name": "pid", "type": "integer", "required": true, "description": "Process ID to attach to" }
+      ]
+    },
+    {
+      "namespace": "lurk",
+      "resource": "summary",
+      "action": "run",
+      "description": "Show summary of system calls",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lurk",
+        "baseArgs": ["--summary"],
+        "positionalArgs": ["command"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install lurk"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to trace" }
+      ]
+    },
+    {
+      "namespace": "lurk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lurk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lurk",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lurk"
+      },
+      "args": []
+    }
+  ]
+}
