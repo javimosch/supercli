@@ -1,0 +1,118 @@
+{
+  "name": "ffsend",
+  "version": "0.1.0",
+  "description": "Secure file sharing via Firefox Send — upload, download, and manage encrypted file transfers",
+  "source": "https://github.com/timvisee/ffsend",
+  "checks": [
+    { "type": "binary", "name": "ffsend" }
+  ],
+  "install_guidance": {
+    "plugin": "ffsend",
+    "binary": "ffsend",
+    "check": "which ffsend",
+    "install_steps": [
+      "cargo install ffsend",
+      "Verify: ffsend --version",
+      "supercli plugins install ./plugins/ffsend --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ffsend",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ffsend version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffsend",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ffsend: cargo install ffsend"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ffsend",
+      "resource": "upload",
+      "action": "run",
+      "description": "Upload files to Send service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffsend",
+        "baseArgs": ["upload"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install ffsend"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to upload" },
+        { "name": "downloads", "type": "integer", "required": false, "description": "Max downloads (1-20)" },
+        { "name": "password", "type": "boolean", "required": false, "description": "Require password" }
+      ]
+    },
+    {
+      "namespace": "ffsend",
+      "resource": "download",
+      "action": "run",
+      "description": "Download files from Send service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffsend",
+        "baseArgs": ["download"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install ffsend"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Share URL" }
+      ]
+    },
+    {
+      "namespace": "ffsend",
+      "resource": "info",
+      "action": "run",
+      "description": "Fetch info about shared file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffsend",
+        "baseArgs": ["info"],
+        "positionalArgs": ["url"],
+        "missingDependencyHelp": "Install ffsend"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Share URL" }
+      ]
+    },
+    {
+      "namespace": "ffsend",
+      "resource": "delete",
+      "action": "run",
+      "description": "Delete shared file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffsend",
+        "baseArgs": ["delete"],
+        "positionalArgs": ["url"],
+        "missingDependencyHelp": "Install ffsend"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Share URL" }
+      ]
+    },
+    {
+      "namespace": "ffsend",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ffsend CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffsend",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ffsend"
+      },
+      "args": []
+    }
+  ]
+}
