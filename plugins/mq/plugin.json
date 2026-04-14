@@ -1,0 +1,123 @@
+{
+  "name": "mq",
+  "version": "0.1.0",
+  "description": "A jq-like Markdown query language for command-line processing",
+  "source": "https://github.com/harehare/mq",
+  "checks": [
+    { "type": "binary", "name": "mq" }
+  ],
+  "install_guidance": {
+    "plugin": "mq",
+    "binary": "mq",
+    "check": "which mq",
+    "install_steps": [
+      "curl -sSL https://mqlang.org/install.sh | bash",
+      "Verify: mq --version",
+      "supercli plugins install ./plugins/mq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mq",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mq: curl -sSL https://mqlang.org/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mq",
+      "resource": "query",
+      "action": "execute",
+      "description": "Execute mq query on Markdown files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mq",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mq: curl -sSL https://mqlang.org/install.sh | bash"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "MQ query string or file (.mq file)" },
+        { "name": "files", "type": "string", "required": false, "description": "Input Markdown files" },
+        { "name": "-A", "type": "boolean", "required": false, "description": "Aggregate all input files into single array" },
+        { "name": "-f", "type": "boolean", "required": false, "description": "Load filter from file" },
+        { "name": "-I", "type": "string", "required": false, "description": "Input format: markdown, mdx, html, text, null, raw" },
+        { "name": "-F", "type": "string", "required": false, "description": "Output format: markdown, html, text, json, none" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "--stream", "type": "boolean", "required": false, "description": "Enable streaming mode for large files" }
+      ]
+    },
+    {
+      "namespace": "mq",
+      "resource": "repl",
+      "action": "start",
+      "description": "Start interactive REPL session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mq",
+        "baseArgs": ["repl"],
+        "passthrough": false,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mq: curl -sSL https://mqlang.org/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mq",
+      "resource": "fmt",
+      "action": "format",
+      "description": "Format mq query files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mq",
+        "baseArgs": ["fmt"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install mq: curl -sSL https://mqlang.org/install.sh | bash"
+      },
+      "args": [
+        { "name": "--check", "type": "boolean", "required": false, "description": "Check if files need formatting" },
+        { "name": "files", "type": "string", "required": false, "description": "Files to format" }
+      ]
+    },
+    {
+      "namespace": "mq",
+      "resource": "conv",
+      "action": "convert",
+      "description": "Convert documents to Markdown (xlsx, docx, pdf, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mq",
+        "baseArgs": ["conv"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mq: curl -sSL https://mqlang.org/install.sh | bash"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to convert" }
+      ]
+    },
+    {
+      "namespace": "mq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mq: curl -sSL https://mqlang.org/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
