@@ -1,0 +1,139 @@
+{
+  "name": "sd",
+  "version": "0.1.0",
+  "description": "Intuitive find & replace CLI — sed alternative with regex support, string-literal mode, and cross-line patterns",
+  "source": "https://github.com/chmln/sd",
+  "checks": [
+    { "type": "binary", "name": "sd" }
+  ],
+  "install_guidance": {
+    "plugin": "sd",
+    "binary": "sd",
+    "check": "which sd",
+    "install_steps": [
+      "cargo install sd",
+      "Verify: sd --version",
+      "supercli plugins install ./plugins/sd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sd: cargo install sd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sd",
+      "resource": "replace",
+      "action": "run",
+      "description": "Find and replace with regex (stdin, preview)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "positionalArgs": ["find", "replace"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sd"
+      },
+      "args": [
+        { "name": "find", "type": "string", "required": true, "description": "Pattern to find (regex)" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+      ]
+    },
+    {
+      "namespace": "sd",
+      "resource": "replace",
+      "action": "file",
+      "description": "Find and replace in a file (in-place)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "positionalArgs": ["find", "replace", "file"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sd"
+      },
+      "args": [
+        { "name": "find", "type": "string", "required": true, "description": "Pattern to find (regex)" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" },
+        { "name": "file", "type": "string", "required": true, "description": "File to modify in-place" }
+      ]
+    },
+    {
+      "namespace": "sd",
+      "resource": "replace",
+      "action": "preview",
+      "description": "Preview changes without modifying (stdin)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "baseArgs": ["-p"],
+        "positionalArgs": ["find", "replace"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sd"
+      },
+      "args": [
+        { "name": "find", "type": "string", "required": true, "description": "Pattern to find" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+      ]
+    },
+    {
+      "namespace": "sd",
+      "resource": "replace",
+      "action": "fixed",
+      "description": "Find and replace with fixed strings (no regex)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "baseArgs": ["-F"],
+        "positionalArgs": ["find", "replace"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sd"
+      },
+      "args": [
+        { "name": "find", "type": "string", "required": true, "description": "String to find (literal)" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+      ]
+    },
+    {
+      "namespace": "sd",
+      "resource": "replace",
+      "action": "across",
+      "description": "Find and replace across line boundaries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "baseArgs": ["-A"],
+        "positionalArgs": ["find", "replace"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sd"
+      },
+      "args": [
+        { "name": "find", "type": "string", "required": true, "description": "Pattern to find (can include \\n)" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+      ]
+    },
+    {
+      "namespace": "sd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sd"
+      },
+      "args": []
+    }
+  ]
+}
