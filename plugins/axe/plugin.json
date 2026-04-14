@@ -1,0 +1,146 @@
+{
+  "name": "axe",
+  "version": "0.1.0",
+  "description": "A lightweight cli for running single-purpose AI agents. Define focused agents in TOML, trigger them from anywhere; pipes, git hooks, cron, or the terminal.",
+  "source": "https://github.com/jrswab/axe",
+  "checks": [
+    { "type": "binary", "name": "axe" }
+  ],
+  "install_guidance": {
+    "plugin": "axe",
+    "binary": "axe",
+    "check": "which axe",
+    "install_steps": [
+      "go install github.com/jrswab/axe@latest",
+      "Verify: axe version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "axe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print axe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "axe",
+      "resource": "agent",
+      "action": "list",
+      "description": "List all configured agents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["agents", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "axe",
+      "resource": "agent",
+      "action": "init",
+      "description": "Scaffold a new agent TOML file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["agents", "init"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Name of the agent to create" }
+      ]
+    },
+    {
+      "namespace": "axe",
+      "resource": "agent",
+      "action": "run",
+      "description": "Run an agent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": [
+        { "name": "agent", "type": "string", "required": true, "description": "Name of the agent to run" },
+        { "name": "prompt", "type": "string", "required": false, "description": "Inline prompt (takes precedence over stdin)" },
+        { "name": "model", "type": "string", "required": false, "description": "Override model (e.g. anthropic/claude-sonnet-4-20250514)" },
+        { "name": "skill", "type": "string", "required": false, "description": "Override skill file path" },
+        { "name": "workdir", "type": "string", "required": false, "description": "Override working directory" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Show resolved context without calling LLM" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Wrap output in JSON envelope with metadata" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Print debug info to stderr" }
+      ]
+    },
+    {
+      "namespace": "axe",
+      "resource": "config",
+      "action": "init",
+      "description": "Initialize the config directory with defaults",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["config", "init"],
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "axe",
+      "resource": "config",
+      "action": "path",
+      "description": "Print the configuration directory path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["config", "path"],
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "axe",
+      "resource": "gc",
+      "action": "run",
+      "description": "Run memory garbage collection for an agent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "baseArgs": ["gc"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": [
+        { "name": "agent", "type": "string", "required": false, "description": "Agent name (omit for --all)" },
+        { "name": "all", "type": "boolean", "required": false, "description": "Run GC on all memory-enabled agents" }
+      ]
+    },
+    {
+      "namespace": "axe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to axe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "axe",
+        "passthrough": true,
+        "missingDependencyHelp": "Install axe: go install github.com/jrswab/axe@latest"
+      },
+      "args": []
+    }
+  ]
+}
