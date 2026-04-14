@@ -1,0 +1,68 @@
+{
+  "name": "jta",
+  "version": "0.1.0",
+  "description": "AI-powered JSON Translation Agent with intelligent quality optimization and agentic reflection",
+  "source": "https://github.com/hikanner/jta",
+  "checks": [
+    { "type": "binary", "name": "jta" }
+  ],
+  "install_guidance": {
+    "plugin": "jta",
+    "binary": "jta",
+    "check": "which jta",
+    "install_steps": [
+      "brew install hikanner/jta/jta",
+      "Verify: jta --version",
+      "supercli plugins install ./plugins/jta --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jta",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jta version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jta",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jta: brew install hikanner/jta/jta"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jta",
+      "resource": "file",
+      "action": "translate",
+      "description": "Translate a JSON i18n file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jta",
+        "baseArgs": [],
+        "positionalArgs": ["source"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install jta"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source JSON file" }
+      ]
+    },
+    {
+      "namespace": "jta",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jta CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jta",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jta"
+      },
+      "args": []
+    }
+  ]
+}
