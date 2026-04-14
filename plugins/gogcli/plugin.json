@@ -1,0 +1,205 @@
+{
+  "name": "gogcli",
+  "version": "0.1.0",
+  "description": "Google Suite CLI — Gmail, Calendar, Drive, Tasks, Contacts, Sheets, Docs, and more via gog CLI",
+  "source": "https://github.com/steipete/gogcli",
+  "checks": [
+    { "type": "binary", "name": "gog" }
+  ],
+  "install_guidance": {
+    "plugin": "gogcli",
+    "binary": "gog",
+    "check": "which gog",
+    "install_steps": [
+      "brew install gogcli",
+      "Verify: gog --version",
+      "supercli plugins install ./plugins/gogcli --on-conflict replace --json"
+    ],
+    "note": "Requires OAuth setup: gog auth credentials <client.json> then gog auth add <email>"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gogcli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gog: brew install gogcli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "auth",
+      "action": "status",
+      "description": "Show current auth state and services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["auth", "status"],
+        "missingDependencyHelp": "Install gog: brew install gogcli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "gmail",
+      "action": "search",
+      "description": "Search Gmail threads/messages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["gmail", "search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Gmail search query (e.g., newer_than:7d)" },
+        { "name": "max", "type": "integer", "required": false, "description": "Max results" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "gmail",
+      "action": "send",
+      "description": "Send an email",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["gmail", "send"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "to", "type": "string", "required": true, "description": "Recipient email" },
+        { "name": "subject", "type": "string", "required": true, "description": "Email subject" },
+        { "name": "body", "type": "string", "required": false, "description": "Plain text body" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "gmail",
+      "action": "labels",
+      "description": "List Gmail labels",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["gmail", "labels", "list"],
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "calendar",
+      "action": "events",
+      "description": "List calendar events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["calendar", "events"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "calendar", "type": "string", "required": false, "description": "Calendar ID (default: primary)" },
+        { "name": "today", "type": "boolean", "required": false, "description": "Show today's events" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "calendar",
+      "action": "create",
+      "description": "Create a calendar event",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["calendar", "create"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "calendar", "type": "string", "required": true, "description": "Calendar ID" },
+        { "name": "summary", "type": "string", "required": true, "description": "Event title" },
+        { "name": "from", "type": "string", "required": true, "description": "Start time (ISO 8601)" },
+        { "name": "to", "type": "string", "required": true, "description": "End time (ISO 8601)" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "drive",
+      "action": "list",
+      "description": "List files in Drive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["drive", "list"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false, "description": "Search query" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "tasks",
+      "action": "list",
+      "description": "List tasks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["tasks", "list"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "tasklist", "type": "string", "required": false, "description": "Tasklist ID" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "contacts",
+      "action": "search",
+      "description": "Search contacts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "baseArgs": ["contacts", "search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install and auth gog"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" }
+      ]
+    },
+    {
+      "namespace": "gogcli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gog CLI (run any gog command)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gog: brew install gogcli"
+      },
+      "args": []
+    }
+  ]
+}
