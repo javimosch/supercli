@@ -1,0 +1,106 @@
+{
+  "name": "gitlogue",
+  "version": "0.1.0",
+  "description": "A cinematic Git commit replay tool for the terminal, turning your Git history into a living, animated story",
+  "source": "https://github.com/unhappychoice/gitlogue",
+  "checks": [
+    { "type": "binary", "name": "gitlogue" }
+  ],
+  "install_guidance": {
+    "plugin": "gitlogue",
+    "binary": "gitlogue",
+    "check": "which gitlogue",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/unhappychoice/gitlogue/main/install.sh | bash",
+      "Verify: gitlogue --version",
+      "supercli plugins install ./plugins/gitlogue --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitlogue",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitlogue version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlogue",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gitlogue: curl -fsSL https://raw.githubusercontent.com/unhappychoice/gitlogue/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlogue",
+      "resource": "replay",
+      "action": "screensaver",
+      "description": "Start gitlogue screensaver - replay commits in cinematic style",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlogue",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install gitlogue: curl -fsSL https://raw.githubusercontent.com/unhappychoice/gitlogue/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "--commit", "type": "string", "required": false, "description": "Specific commit or range (e.g., HEAD~5..HEAD)" },
+        { "name": "--loop", "type": "boolean", "required": false, "description": "Loop playback continuously" },
+        { "name": "--order", "type": "string", "required": false, "description": "Playback order: asc or desc" },
+        { "name": "--author", "type": "string", "required": false, "description": "Filter by author" },
+        { "name": "--after", "type": "string", "required": false, "description": "Filter commits after date" },
+        { "name": "--before", "type": "string", "required": false, "description": "Filter commits before date" },
+        { "name": "--theme", "type": "string", "required": false, "description": "Theme name (e.g., dracula, nord)" },
+        { "name": "--speed", "type": "number", "required": false, "description": "Typing speed in ms per character" },
+        { "name": "--ignore", "type": "string", "required": false, "description": "Ignore file patterns" }
+      ]
+    },
+    {
+      "namespace": "gitlogue",
+      "resource": "diff",
+      "action": "view",
+      "description": "View staged/unstaged changes in gitlogue style",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlogue",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install gitlogue: curl -fsSL https://raw.githubusercontent.com/unhappychoice/gitlogue/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "--unstaged", "type": "boolean", "required": false, "description": "Show unstaged changes instead of staged" }
+      ]
+    },
+    {
+      "namespace": "gitlogue",
+      "resource": "theme",
+      "action": "list",
+      "description": "List available gitlogue themes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlogue",
+        "baseArgs": ["theme", "list"],
+        "passthrough": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install gitlogue: curl -fsSL https://raw.githubusercontent.com/unhappychoice/gitlogue/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlogue",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitlogue CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlogue",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitlogue: curl -fsSL https://raw.githubusercontent.com/unhappychoice/gitlogue/main/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
