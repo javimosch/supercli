@@ -1,0 +1,103 @@
+{
+  "name": "xh",
+  "version": "0.1.0",
+  "description": "Friendly and fast HTTP client — drop-in replacement for HTTPie with HTTP/2 support",
+  "source": "https://github.com/ducaale/xh",
+  "checks": [
+    { "type": "binary", "name": "xh" }
+  ],
+  "install_guidance": {
+    "plugin": "xh",
+    "binary": "xh",
+    "check": "which xh",
+    "install_steps": [
+      "curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh",
+      "Verify: xh --version",
+      "supercli plugins install ./plugins/xh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xh",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install xh: curl -sfL https://raw.githubusercontent.com/ducaale/xh/master/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xh",
+      "resource": "request",
+      "action": "get",
+      "description": "Send GET request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xh",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install xh"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to request" }
+      ]
+    },
+    {
+      "namespace": "xh",
+      "resource": "request",
+      "action": "post",
+      "description": "Send POST request with JSON body",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xh",
+        "baseArgs": ["post"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install xh"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to request" }
+      ]
+    },
+    {
+      "namespace": "xh",
+      "resource": "request",
+      "action": "download",
+      "description": "Download file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xh",
+        "baseArgs": ["--download", "--output"],
+        "positionalArgs": ["url", "output"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install xh"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to download" },
+        { "name": "output", "type": "string", "required": true, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "xh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xh",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xh"
+      },
+      "args": []
+    }
+  ]
+}
