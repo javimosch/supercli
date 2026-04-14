@@ -1,0 +1,150 @@
+{
+  "name": "feluda",
+  "version": "0.1.0",
+  "description": "Detect license usage restrictions in your project",
+  "source": "https://github.com/anistark/feluda",
+  "checks": [
+    { "type": "binary", "name": "feluda" }
+  ],
+  "install_guidance": {
+    "plugin": "feluda",
+    "binary": "feluda",
+    "check": "which feluda",
+    "install_steps": [
+      "cargo install feluda",
+      "Verify: feluda --version",
+      "supercli plugins install ./plugins/feluda --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "feluda",
+      "resource": "self",
+      "action": "version",
+      "description": "Print feluda version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "feluda",
+      "resource": "scan",
+      "action": "licenses",
+      "description": "Analyze project dependencies and their licenses",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": [
+        { "name": "--path", "type": "string", "required": false, "description": "Path to project directory" },
+        { "name": "--language", "type": "string", "required": false, "description": "Language (rust, node, go, python, c, cpp, r)" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" },
+        { "name": "--yaml", "type": "boolean", "required": false, "description": "YAML output" },
+        { "name": "--gist", "type": "boolean", "required": false, "description": "Short summary output" },
+        { "name": "--verbose", "type": "boolean", "required": false, "description": "Verbose output with OSI status" },
+        { "name": "--osi", "type": "string", "required": false, "description": "Filter by OSI status (approved, not-approved, unknown)" },
+        { "name": "--restrictive", "type": "boolean", "required": false, "description": "Show only restrictive licenses" },
+        { "name": "--incompatible", "type": "boolean", "required": false, "description": "Show only incompatible licenses" },
+        { "name": "--project-license", "type": "string", "required": false, "description": "Project license for compatibility check" },
+        { "name": "--fail-on-incompatible", "type": "boolean", "required": false, "description": "Fail CI if incompatible licenses found" },
+        { "name": "--github-token", "type": "string", "required": false, "description": "GitHub token for API access" }
+      ]
+    },
+    {
+      "namespace": "feluda",
+      "resource": "sbom",
+      "action": "generate",
+      "description": "Generate Software Bill of Materials (SBOM)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "baseArgs": ["sbom"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": false, "description": "SBOM format (spdx, cyclonedx)" },
+        { "name": "--output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "feluda",
+      "resource": "sbom",
+      "action": "validate",
+      "description": "Validate SBOM files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "baseArgs": ["sbom", "validate"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "SBOM file to validate" },
+        { "name": "--output", "type": "string", "required": false, "description": "Output report file" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "feluda",
+      "resource": "generate",
+      "action": "compliance",
+      "description": "Generate compliance files (NOTICE, THIRD_PARTY_LICENSES)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": [
+        { "name": "--language", "type": "string", "required": false, "description": "Project language" },
+        { "name": "--project-license", "type": "string", "required": false, "description": "Project license" },
+        { "name": "--path", "type": "string", "required": false, "description": "Project path" }
+      ]
+    },
+    {
+      "namespace": "feluda",
+      "resource": "cache",
+      "action": "manage",
+      "description": "Manage feluda cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "baseArgs": ["cache"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": [
+        { "name": "--clear", "type": "boolean", "required": false, "description": "Clear the cache" }
+      ]
+    },
+    {
+      "namespace": "feluda",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to feluda CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "feluda",
+        "passthrough": true,
+        "missingDependencyHelp": "Install feluda: cargo install feluda"
+      },
+      "args": []
+    }
+  ]
+}
