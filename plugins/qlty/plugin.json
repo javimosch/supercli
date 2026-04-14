@@ -1,0 +1,128 @@
+{
+  "name": "qlty",
+  "version": "0.1.0",
+  "description": "Universal code quality CLI for linting, auto-formatting, security scanning, and maintainability with 70+ tool support",
+  "source": "https://github.com/qltysh/qlty",
+  "checks": [
+    { "type": "binary", "name": "qlty" }
+  ],
+  "install_guidance": {
+    "plugin": "qlty",
+    "binary": "qlty",
+    "check": "which qlty",
+    "install_steps": [
+      "curl https://qlty.sh | bash",
+      "Verify: qlty --version",
+      "supercli plugins install ./plugins/qlty --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qlty",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qlty version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qlty: curl https://qlty.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qlty",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize qlty in a Git repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install qlty"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qlty",
+      "resource": "check",
+      "action": "run",
+      "description": "Run lint checks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "baseArgs": ["check"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install qlty"
+      },
+      "args": [
+        { "name": "sample", "type": "integer", "required": false, "description": "Show sample of N issues" }
+      ]
+    },
+    {
+      "namespace": "qlty",
+      "resource": "fmt",
+      "action": "run",
+      "description": "Auto-format code",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "baseArgs": ["fmt"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install qlty"
+      },
+      "args": [
+        { "name": "all", "type": "boolean", "required": false, "description": "Format all files" }
+      ]
+    },
+    {
+      "namespace": "qlty",
+      "resource": "smells",
+      "action": "run",
+      "description": "Scan for code smells",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "baseArgs": ["smells"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install qlty"
+      },
+      "args": [
+        { "name": "all", "type": "boolean", "required": false, "description": "Scan all files" }
+      ]
+    },
+    {
+      "namespace": "qlty",
+      "resource": "metrics",
+      "action": "run",
+      "description": "Review code quality metrics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "baseArgs": ["metrics"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install qlty"
+      },
+      "args": [
+        { "name": "sort", "type": "string", "required": false, "description": "Sort by metric (complexity, duplication)" },
+        { "name": "max-depth", "type": "integer", "required": false, "description": "Max directory depth" }
+      ]
+    },
+    {
+      "namespace": "qlty",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qlty CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qlty",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qlty"
+      },
+      "args": []
+    }
+  ]
+}
