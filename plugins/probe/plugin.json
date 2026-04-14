@@ -1,0 +1,126 @@
+{
+  "name": "probe",
+  "version": "0.1.0",
+  "description": "AI-friendly semantic code search engine for large codebases",
+  "source": "https://github.com/probelabs/probe",
+  "checks": [
+    { "type": "binary", "name": "probe" }
+  ],
+  "install_guidance": {
+    "plugin": "probe",
+    "binary": "probe",
+    "check": "which probe",
+    "install_steps": [
+      "npm install -g @probelabs/probe",
+      "Verify: probe --version",
+      "supercli plugins install ./plugins/probe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "probe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print probe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install probe: npm install -g @probelabs/probe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe",
+      "resource": "search",
+      "action": "query",
+      "description": "Semantic code search with Elasticsearch-style queries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install probe: npm install -g @probelabs/probe"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Search pattern" },
+        { "name": "path", "type": "string", "required": false, "description": "Search path (default: .)" },
+        { "name": "--max-tokens", "type": "number", "required": false, "description": "Max tokens returned" },
+        { "name": "--max-results", "type": "number", "required": false, "description": "Max results" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: markdown, json, xml" }
+      ]
+    },
+    {
+      "namespace": "probe",
+      "resource": "extract",
+      "action": "code",
+      "description": "Extract code blocks with full AST context",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe",
+        "baseArgs": ["extract"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install probe: npm install -g @probelabs/probe"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Files to extract (e.g., src/main.rs:42 or src/main.rs#funcname)" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format" }
+      ]
+    },
+    {
+      "namespace": "probe",
+      "resource": "symbols",
+      "action": "list",
+      "description": "List all symbols in files with line numbers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe",
+        "baseArgs": ["symbols"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install probe: npm install -g @probelabs/probe"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Files to analyze" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, markdown" }
+      ]
+    },
+    {
+      "namespace": "probe",
+      "resource": "query",
+      "action": "ast",
+      "description": "AST-based structural pattern matching",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe",
+        "baseArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install probe: npm install -g @probelabs/probe"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "AST pattern (e.g., 'async fn $NAME($$$)')" },
+        { "name": "--language", "type": "string", "required": false, "description": "Language (rust, python, javascript, etc.)" },
+        { "name": "path", "type": "string", "required": false, "description": "Search path" }
+      ]
+    },
+    {
+      "namespace": "probe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to probe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe",
+        "passthrough": true,
+        "missingDependencyHelp": "Install probe: npm install -g @probelabs/probe"
+      },
+      "args": []
+    }
+  ]
+}
