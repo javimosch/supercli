@@ -1,0 +1,137 @@
+{
+  "name": "pgschema",
+  "version": "0.1.0",
+  "description": "Terraform-style, declarative schema migration CLI for Postgres",
+  "source": "https://github.com/pgplex/pgschema",
+  "checks": [
+    { "type": "binary", "name": "pgschema" }
+  ],
+  "install_guidance": {
+    "plugin": "pgschema",
+    "binary": "pgschema",
+    "check": "which pgschema",
+    "install_steps": [
+      "go install github.com/pgplex/pgschema@latest",
+      "Verify: pgschema --version",
+      "supercli plugins install ./plugins/pgschema --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgschema",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgschema version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgschema",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pgschema: go install github.com/pgplex/pgschema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgschema",
+      "resource": "schema",
+      "action": "dump",
+      "description": "Dump current database schema to SQL file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgschema",
+        "baseArgs": ["dump"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pgschema: go install github.com/pgplex/pgschema@latest"
+      },
+      "args": [
+        { "name": "--host", "type": "string", "required": true, "description": "Postgres host" },
+        { "name": "--db", "type": "string", "required": true, "description": "Database name" },
+        { "name": "--user", "type": "string", "required": true, "description": "Database user" },
+        { "name": "--schema", "type": "string", "required": false, "description": "Schema to dump (default: public)" },
+        { "name": "--file", "type": "string", "required": false, "description": "Output file (default: stdout)" }
+      ]
+    },
+    {
+      "namespace": "pgschema",
+      "resource": "schema",
+      "action": "plan",
+      "description": "Diff schema against live database and generate migration plan",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgschema",
+        "baseArgs": ["plan"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pgschema: go install github.com/pgplex/pgschema@latest"
+      },
+      "args": [
+        { "name": "--host", "type": "string", "required": true, "description": "Postgres host" },
+        { "name": "--db", "type": "string", "required": true, "description": "Database name" },
+        { "name": "--user", "type": "string", "required": true, "description": "Database user" },
+        { "name": "--schema", "type": "string", "required": false, "description": "Schema to plan (default: public)" },
+        { "name": "--file", "type": "string", "required": true, "description": "Schema file to compare" },
+        { "name": "--output-json", "type": "string", "required": false, "description": "Output plan as JSON" },
+        { "name": "--output-human", "type": "string", "required": false, "description": "Output plan as human-readable (stdout)" }
+      ]
+    },
+    {
+      "namespace": "pgschema",
+      "resource": "schema",
+      "action": "apply",
+      "description": "Apply migration plan to database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgschema",
+        "baseArgs": ["apply"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pgschema: go install github.com/pgplex/pgschema@latest"
+      },
+      "args": [
+        { "name": "--host", "type": "string", "required": true, "description": "Postgres host" },
+        { "name": "--db", "type": "string", "required": true, "description": "Database name" },
+        { "name": "--user", "type": "string", "required": true, "description": "Database user" },
+        { "name": "--schema", "type": "string", "required": false, "description": "Schema to apply (default: public)" },
+        { "name": "--plan", "type": "string", "required": true, "description": "Plan JSON file from 'plan' command" },
+        { "name": "--auto-approve", "type": "boolean", "required": false, "description": "Skip confirmation prompt" }
+      ]
+    },
+    {
+      "namespace": "pgschema",
+      "resource": "schema",
+      "action": "diff",
+      "description": "Show diff between schema file and live database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgschema",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pgschema: go install github.com/pgplex/pgschema@latest"
+      },
+      "args": [
+        { "name": "--host", "type": "string", "required": true, "description": "Postgres host" },
+        { "name": "--db", "type": "string", "required": true, "description": "Database name" },
+        { "name": "--user", "type": "string", "required": true, "description": "Database user" },
+        { "name": "--schema", "type": "string", "required": false, "description": "Schema to diff (default: public)" },
+        { "name": "--file", "type": "string", "required": true, "description": "Schema file to compare" }
+      ]
+    },
+    {
+      "namespace": "pgschema",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgschema CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgschema",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pgschema: go install github.com/pgplex/pgschema@latest"
+      },
+      "args": []
+    }
+  ]
+}
