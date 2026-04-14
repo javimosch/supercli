@@ -1,0 +1,160 @@
+{
+  "name": "mcpm",
+  "version": "0.1.0",
+  "description": "CLI MCP package manager & registry for all platforms. Search & configure MCP servers with Router, profile, and remote sharing features.",
+  "source": "https://github.com/pathintegral-institute/mcpm.sh",
+  "checks": [
+    { "type": "binary", "name": "mcpm" }
+  ],
+  "install_guidance": {
+    "plugin": "mcpm",
+    "binary": "mcpm",
+    "check": "mcpm --version",
+    "install_steps": [
+      "curl -sSL https://mcpm.sh/install | bash",
+      "Verify: mcpm --version",
+      "supercli plugins install ./plugins/mcpm --on-conflict replace --json"
+    ],
+    "note": "Requires curl. Works on Linux, macOS, and Windows via WSL."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcpm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcpm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "install",
+      "action": "run",
+      "description": "Install an MCP server package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": false },
+        { "name": "name", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "search",
+      "action": "run",
+      "description": "Search the MCP registry for servers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "router",
+      "action": "start",
+      "description": "Start the MCP Router for remote server sharing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["router", "start"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": false },
+        { "name": "port", "type": "number", "required": false }
+      ]
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "router",
+      "action": "stop",
+      "description": "Stop the MCP Router",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["router", "stop"],
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "profile",
+      "action": "list",
+      "description": "List all MCP profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["profile", "list"],
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "profile",
+      "action": "add",
+      "description": "Add a new MCP profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["profile", "add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "profile",
+      "action": "remove",
+      "description": "Remove an MCP profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "baseArgs": ["profile", "remove"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": false }
+      ]
+    },
+    {
+      "namespace": "mcpm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcpm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcpm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mcpm: curl -sSL https://mcpm.sh/install | bash"
+      },
+      "args": []
+    }
+  ]
+}
