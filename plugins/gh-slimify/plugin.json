@@ -1,0 +1,81 @@
+{
+  "name": "gh-slimify",
+  "version": "0.1.0",
+  "description": "Automatically detect and migrate GitHub Actions workflows to ubuntu-slim for cost-efficient CI",
+  "source": "https://github.com/fchimpan/gh-slimify",
+  "checks": [
+    { "type": "binary", "name": "gh-slimify" }
+  ],
+  "install_guidance": {
+    "plugin": "gh-slimify",
+    "binary": "gh-slimify",
+    "check": "gh extension list | grep slimify",
+    "install_steps": [
+      "gh extension install fchimpan/gh-slimify",
+      "Verify: gh slimify --help",
+      "supercli plugins install ./plugins/gh-slimify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gh-slimify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gh-slimify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["slimify", "--version"],
+        "missingDependencyHelp": "Install gh-slimify: gh extension install fchimpan/gh-slimify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gh-slimify",
+      "resource": "workflow",
+      "action": "scan",
+      "description": "Scan workflows for migration candidates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["slimify"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gh-slimify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gh-slimify",
+      "resource": "workflow",
+      "action": "fix",
+      "description": "Automatically migrate eligible jobs to ubuntu-slim",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["slimify", "fix"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gh-slimify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gh-slimify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gh slimify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["slimify"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gh-slimify"
+      },
+      "args": []
+    }
+  ]
+}
