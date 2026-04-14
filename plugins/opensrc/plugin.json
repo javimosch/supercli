@@ -1,0 +1,84 @@
+{
+  "name": "opensrc",
+  "version": "0.1.0",
+  "description": "Fetch source code for npm packages to give AI coding agents deeper context",
+  "source": "https://github.com/vercel-labs/opensrc",
+  "checks": [
+    { "type": "binary", "name": "opensrc" }
+  ],
+  "install_guidance": {
+    "plugin": "opensrc",
+    "binary": "opensrc",
+    "check": "which opensrc",
+    "install_steps": [
+      "npm install -g opensrc",
+      "Verify: opensrc --version",
+      "supercli plugins install ./plugins/opensrc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "opensrc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print opensrc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opensrc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install opensrc: npm install -g opensrc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opensrc",
+      "resource": "package",
+      "action": "path",
+      "description": "Get the cached path to a package's source code",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opensrc",
+        "baseArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install opensrc: npm install -g opensrc"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name (e.g., zod, pypi:requests, crates:tokio)" }
+      ]
+    },
+    {
+      "namespace": "opensrc",
+      "resource": "package",
+      "action": "fetch",
+      "description": "Fetch package source code to cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opensrc",
+        "baseArgs": ["fetch"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install opensrc: npm install -g opensrc"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name to fetch" }
+      ]
+    },
+    {
+      "namespace": "opensrc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to opensrc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opensrc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install opensrc: npm install -g opensrc"
+      },
+      "args": []
+    }
+  ]
+}
