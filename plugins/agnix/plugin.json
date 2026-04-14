@@ -1,0 +1,72 @@
+{
+  "name": "agnix",
+  "version": "0.1.0",
+  "description": "The missing linter and LSP for AI coding assistants - validates CLAUDE.md, AGENTS.md, SKILL.md, hooks, MCP configs",
+  "source": "https://github.com/agent-sh/agnix",
+  "checks": [
+    { "type": "binary", "name": "agnix" }
+  ],
+  "install_guidance": {
+    "plugin": "agnix",
+    "binary": "agnix",
+    "check": "which agnix",
+    "install_steps": [
+      "npm install -g agnix",
+      "Verify: agnix --version",
+      "supercli plugins install ./plugins/agnix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "agnix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print agnix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agnix",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install agnix: npm install -g agnix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agnix",
+      "resource": "lint",
+      "action": "validate",
+      "description": "Validate agent configuration files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agnix",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install agnix: npm install -g agnix"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": false, "description": "Target tool: claude-code, kiro, cursor, copilot, etc." },
+        { "name": "--strict", "type": "boolean", "required": false, "description": "Strict mode (warnings = errors)" },
+        { "name": "--fix", "type": "boolean", "required": false, "description": "Apply HIGH and MEDIUM confidence fixes" },
+        { "name": "--fix-safe", "type": "boolean", "required": false, "description": "Apply only HIGH confidence fixes" },
+        { "name": "--fix-unsafe", "type": "boolean", "required": false, "description": "Apply all fixes including LOW confidence" },
+        { "name": "--dry-run", "type": "boolean", "required": false, "description": "Preview fixes with inline diff output" },
+        { "name": "path", "type": "string", "required": false, "description": "Path to validate (default: .)" }
+      ]
+    },
+    {
+      "namespace": "agnix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to agnix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agnix",
+        "passthrough": true,
+        "missingDependencyHelp": "Install agnix: npm install -g agnix"
+      },
+      "args": []
+    }
+  ]
+}
