@@ -1,0 +1,82 @@
+{
+  "name": "x",
+  "version": "0.1.0",
+  "description": "x CLI plugin for posting tweets from terminal",
+  "source": "https://github.com/devhindo/x",
+  "checks": [
+    { "type": "binary", "name": "x" }
+  ],
+  "install_guidance": {
+    "plugin": "x",
+    "binary": "x",
+    "check": "which x",
+    "install_steps": [
+      "Download from: https://github.com/devhindo/x/releases/latest",
+      "Extract tarball and add to PATH",
+      "Run: x auth (opens browser for OAuth)",
+      "Verify: x auth -v",
+      "supercli plugins install ./plugins/x --on-conflict replace --json"
+    ],
+    "note": "Auth requires browser-based OAuth. Run 'x auth' on a machine with browser access."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "x",
+      "resource": "self",
+      "action": "version",
+      "description": "Show x CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install x CLI from https://github.com/devhindo/x"
+      },
+      "args": []
+    },
+    {
+      "namespace": "x",
+      "resource": "auth",
+      "action": "status",
+      "description": "Verify authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x",
+        "baseArgs": ["auth", "-v"],
+        "missingDependencyHelp": "Install x CLI from https://github.com/devhindo/x"
+      },
+      "args": []
+    },
+    {
+      "namespace": "x",
+      "resource": "tweet",
+      "action": "post",
+      "description": "Post a tweet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["message"],
+        "missingDependencyHelp": "Install x CLI from https://github.com/devhindo/x"
+      },
+      "args": [
+        { "name": "message", "type": "string", "required": true, "description": "Tweet text to post" }
+      ]
+    },
+    {
+      "namespace": "x",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to x CLI (run any x command directly)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x",
+        "passthrough": true,
+        "missingDependencyHelp": "Install x CLI from https://github.com/devhindo/x"
+      },
+      "args": []
+    }
+  ]
+}
