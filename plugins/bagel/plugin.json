@@ -1,0 +1,80 @@
+{
+  "name": "bagel",
+  "version": "0.1.0",
+  "description": "Inventory security-relevant metadata on developer workstations — no payloads, ever",
+  "source": "https://github.com/boostsecurityio/bagel",
+  "checks": [
+    { "type": "binary", "name": "bagel" }
+  ],
+  "install_guidance": {
+    "plugin": "bagel",
+    "binary": "bagel",
+    "check": "which bagel",
+    "install_steps": [
+      "brew install boostsecurityio/tap/bagel",
+      "Verify: bagel --version",
+      "supercli plugins install ./plugins/bagel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bagel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bagel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bagel",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install bagel: brew install boostsecurityio/tap/bagel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bagel",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan workstation for security findings",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bagel",
+        "baseArgs": ["scan"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install bagel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bagel",
+      "resource": "scrub",
+      "action": "run",
+      "description": "Remove credentials from AI CLI session logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bagel",
+        "baseArgs": ["scrub"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install bagel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bagel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bagel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bagel",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bagel"
+      },
+      "args": []
+    }
+  ]
+}
