@@ -1,0 +1,68 @@
+{
+  "name": "jina-grep",
+  "version": "0.1.0",
+  "description": "Semantic grep powered by Jina embeddings v5 (MLX on Apple Silicon)",
+  "source": "https://github.com/jina-ai/jina-grep-cli",
+  "checks": [
+    { "type": "binary", "name": "jina-grep" }
+  ],
+  "install_guidance": {
+    "plugin": "jina-grep",
+    "binary": "jina-grep",
+    "check": "which jina-grep",
+    "install_steps": [
+      "pip install jina-grep-cli",
+      "Verify: jina-grep --version",
+      "supercli plugins install ./plugins/jina-grep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jina-grep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jina-grep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina-grep",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jina-grep: pip install jina-grep-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jina-grep",
+      "resource": "search",
+      "action": "run",
+      "description": "Semantic search for natural language query in files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina-grep",
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install jina-grep: pip install jina-grep-cli"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Natural language search query" },
+        { "name": "path", "type": "string", "required": false, "description": "Path to search (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "jina-grep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jina-grep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina-grep",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jina-grep: pip install jina-grep-cli"
+      },
+      "args": []
+    }
+  ]
+}
