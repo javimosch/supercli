@@ -1,0 +1,101 @@
+{
+  "name": "jina",
+  "version": "0.1.0",
+  "description": "Jina AI CLI — search, read, embed, and rerank APIs as Unix CLI commands with pipe support",
+  "source": "https://github.com/jina-ai/cli",
+  "tags": ["jina", "search", "embeddings", "rerank", "reader", "ai", "web-search", "scraping"],
+  "checks": [
+    { "type": "binary", "name": "jina" }
+  ],
+  "learn": { "file": "skills/quickstart/SKILL.md" },
+  "commands": [
+    {
+      "namespace": "jina",
+      "resource": "self",
+      "action": "version",
+      "description": "Show jina CLI version information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jina",
+      "resource": "search",
+      "action": "run",
+      "description": "Search the web using Jina AI search API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina",
+        "baseArgs": ["search"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query string", "position": 1 },
+        { "name": "limit", "type": "integer", "required": false, "description": "Maximum number of results", "default": 10 }
+      ]
+    },
+    {
+      "namespace": "jina",
+      "resource": "reader",
+      "action": "read",
+      "description": "Read and extract content from URLs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina",
+        "baseArgs": ["reader"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to read and extract content from", "position": 1 },
+        { "name": "format", "type": "string", "required": false, "description": "Output format (text, markdown, html)", "default": "text" }
+      ]
+    },
+    {
+      "namespace": "jina",
+      "resource": "embed",
+      "action": "run",
+      "description": "Generate text embeddings using Jina AI embeddings API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina",
+        "baseArgs": ["embed"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Text to generate embeddings for", "position": 1 },
+        { "name": "model", "type": "string", "required": false, "description": "Embedding model to use", "default": "jina-embeddings-v3" }
+      ]
+    },
+    {
+      "namespace": "jina",
+      "resource": "rerank",
+      "action": "run",
+      "description": "Rerank search results using Jina AI rerank API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jina",
+        "baseArgs": ["rerank"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "The search query for reranking", "position": 1 },
+        { "name": "documents", "type": "string", "required": true, "description": "Documents to rerank (JSON array or pipe input)", "position": 2 },
+        { "name": "model", "type": "string", "required": false, "description": "Reranking model to use", "default": "jina-reranker-v2-base-multilingual" }
+      ]
+    }
+  ]
+}
