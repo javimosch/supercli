@@ -1,0 +1,62 @@
+{
+  "name": "domain-check",
+  "version": "0.1.0",
+  "description": "Fast, universal domain availability checker - 1,200+ TLDs, pattern generation, RDAP with WHOIS fallback",
+  "source": "https://github.com/saidutt46/domain-check",
+  "tags": ["domain", "dns", "whois", "rdap", "tld", "availability", "check"],
+  "checks": [
+    { "type": "binary", "name": "domain-check" }
+  ],
+  "learn": { "file": "skills/quickstart/SKILL.md" },
+  "commands": [
+    {
+      "namespace": "domain-check",
+      "resource": "self",
+      "action": "version",
+      "description": "Show domain-check CLI version information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "domain-check",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "domain-check",
+      "resource": "domain",
+      "action": "check",
+      "description": "Check if a single domain is available",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "domain-check",
+        "baseArgs": ["check"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "required": true, "description": "Domain name to check (e.g., example.com)", "position": 1 }
+      ]
+    },
+    {
+      "namespace": "domain-check",
+      "resource": "domain",
+      "action": "bulk",
+      "description": "Check multiple domains from a file or list",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "domain-check",
+        "baseArgs": ["bulk"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File containing domain names to check (one per line)", "position": 1 }
+      ]
+    }
+  ]
+}
