@@ -1,0 +1,88 @@
+{
+  "name": "yek",
+  "version": "0.1.0",
+  "description": "Fast Rust tool to serialize text-based files for LLM consumption",
+  "source": "https://github.com/mohsen1/yek",
+  "checks": [
+    { "type": "binary", "name": "yek" }
+  ],
+  "install_guidance": {
+    "plugin": "yek",
+    "binary": "yek",
+    "check": "which yek",
+    "install_steps": [
+      "curl -fsSL https://azimi.me/yek.sh | bash",
+      "Verify: yek --version",
+      "supercli plugins install ./plugins/yek --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yek",
+      "resource": "self",
+      "action": "version",
+      "description": "Print yek version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yek",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install yek: curl -fsSL https://azimi.me/yek.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yek",
+      "resource": "serialize",
+      "action": "run",
+      "description": "Serialize repository/directory for LLM consumption",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yek",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install yek: curl -fsSL https://azimi.me/yek.sh | bash"
+      },
+      "args": [
+        { "name": "input-paths", "type": "string", "required": false, "description": "Input files and/or directories to process" },
+        { "name": "--max-size", "type": "string", "required": false, "description": "Max size per chunk (e.g., 10MB, 128K)" },
+        { "name": "--tokens", "type": "string", "required": false, "description": "Token limit (e.g., 128k)" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "Enable JSON output" },
+        { "name": "--output-dir", "type": "string", "required": false, "description": "Output directory" },
+        { "name": "--ignore-patterns", "type": "string", "required": false, "description": "Ignore patterns" }
+      ]
+    },
+    {
+      "namespace": "yek",
+      "resource": "tree",
+      "action": "show",
+      "description": "Show directory tree only (no file contents)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yek",
+        "baseArgs": ["--tree-only"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install yek: curl -fsSL https://azimi.me/yek.sh | bash"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to show tree for" }
+      ]
+    },
+    {
+      "namespace": "yek",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yek CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yek",
+        "passthrough": true,
+        "missingDependencyHelp": "Install yek: curl -fsSL https://azimi.me/yek.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,169 @@
+{
+  "name": "sem",
+  "version": "0.1.0",
+  "description": "Semantic version control - entity-level diff, blame, impact analysis for code",
+  "source": "https://github.com/Ataraxy-Labs/sem",
+  "checks": [
+    { "type": "binary", "name": "sem" }
+  ],
+  "install_guidance": {
+    "plugin": "sem",
+    "binary": "sem",
+    "check": "which sem",
+    "install_steps": [
+      "brew install sem-cli",
+      "Verify: sem --version",
+      "supercli plugins install ./plugins/sem --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sem",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sem version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sem",
+      "resource": "diff",
+      "action": "run",
+      "description": "Entity-level diff with rename detection and structural hashing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": [
+        { "name": "--staged", "type": "boolean", "required": false, "description": "Show staged changes only" },
+        { "name": "--commit", "type": "string", "required": false, "description": "Specific commit to diff" },
+        { "name": "--from", "type": "string", "required": false, "description": "Start commit for range" },
+        { "name": "--to", "type": "string", "required": false, "description": "End commit for range" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, markdown, plain" },
+        { "name": "--file-exts", "type": "string", "required": false, "description": "Filter by file extensions" }
+      ]
+    },
+    {
+      "namespace": "sem",
+      "resource": "impact",
+      "action": "analyze",
+      "description": "Cross-file dependency graph - what breaks if an entity changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["impact"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": [
+        { "name": "entity", "type": "string", "required": true, "description": "Entity name to analyze" },
+        { "name": "--deps", "type": "boolean", "required": false, "description": "Show direct dependencies only" },
+        { "name": "--dependents", "type": "boolean", "required": false, "description": "Show direct dependents only" },
+        { "name": "--tests", "type": "boolean", "required": false, "description": "Show affected tests only" },
+        { "name": "--file", "type": "string", "required": false, "description": "Disambiguate by file path" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "sem",
+      "resource": "blame",
+      "action": "run",
+      "description": "Entity-level blame showing who last modified each function/class",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["blame"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to blame" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "sem",
+      "resource": "log",
+      "action": "show",
+      "description": "Track how a single entity evolved through git history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["log"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": [
+        { "name": "entity", "type": "string", "required": true, "description": "Entity name to track" },
+        { "name": "-v", "type": "boolean", "required": false, "description": "Verbose mode with content diffs" },
+        { "name": "--limit", "type": "number", "required": false, "description": "Limit commits scanned" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "sem",
+      "resource": "entities",
+      "action": "list",
+      "description": "List all entities in a file with types and line ranges",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["entities"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to analyze" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "sem",
+      "resource": "context",
+      "action": "generate",
+      "description": "Token-budgeted context for LLMs: entity, dependencies, dependents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "baseArgs": ["context"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": [
+        { "name": "entity", "type": "string", "required": true, "description": "Entity name" },
+        { "name": "--budget", "type": "number", "required": false, "description": "Token budget" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "sem",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sem CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sem",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sem: brew install sem-cli"
+      },
+      "args": []
+    }
+  ]
+}
