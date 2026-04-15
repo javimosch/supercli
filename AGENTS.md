@@ -60,3 +60,39 @@ No edits to any file outside `plugins/mytool/` are needed.
 - Use Markdown for all documentation
 - Follow existing code conventions
 - Never commit secrets or credentials
+
+## Codebase Exploration
+
+When exploring or preparing context from a codebase for LLM consumption, use **yek** to serialize files efficiently.
+
+### Quick Setup
+```bash
+# Install yek plugin
+sc plugins install yek
+
+# Sync skills to make yek skill available
+sc skills sync
+
+# Search for yek skill
+sc skills search --query yek
+
+# Load yek quickstart skill
+sc skills teach yek:quickstart
+```
+
+### Usage
+```bash
+# Serialize entire repo for LLM (with token limit)
+yek --tokens 128k
+
+# JSON output for AI pipelines
+yek --json --max-size 100KB
+
+# Specific directory with glob patterns
+yek "src/**/*.ts" "tests/*.rs"
+
+# Show directory tree only
+yek --tree-only
+```
+
+See `sc skills get yek` for full command reference.
