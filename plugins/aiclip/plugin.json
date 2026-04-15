@@ -1,0 +1,61 @@
+{
+  "name": "aiclip",
+  "version": "0.1.0",
+  "description": "AI-powered CLI that translates natural language into safe, reviewable ffmpeg commands",
+  "source": "https://github.com/d-k-patel/ai-ffmpeg-cli",
+  "tags": ["ffmpeg", "ai", "video", "audio", "media", "natural-language", "clip"],
+  "checks": [
+    { "type": "binary", "name": "aiclip" }
+  ],
+  "commands": [
+    {
+      "namespace": "aiclip",
+      "resource": "command",
+      "action": "version",
+      "description": "Show aiclip version information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aiclip",
+        "positionalArgs": [],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "aiclip",
+      "resource": "command",
+      "action": "describe",
+      "description": "Describe a media file and get AI-generated ffprobe-like information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aiclip",
+        "positionalArgs": ["input"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Media file to describe" }
+      ]
+    },
+    {
+      "namespace": "aiclip",
+      "resource": "command",
+      "action": "generate",
+      "description": "Generate a safe, reviewable ffmpeg command from natural language description",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aiclip",
+        "positionalArgs": ["prompt"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "Natural language description of the desired ffmpeg operation" }
+      ]
+    }
+  ]
+}
