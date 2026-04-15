@@ -1,0 +1,67 @@
+{
+  "name": "runprompt",
+  "version": "0.1.0",
+  "description": "Run LLM .prompt files from your shell",
+  "source": "https://github.com/chr15m/runprompt",
+  "checks": [
+    { "type": "binary", "name": "runprompt" }
+  ],
+  "install_guidance": {
+    "plugin": "runprompt",
+    "binary": "runprompt",
+    "check": "which runprompt",
+    "install_steps": [
+      "pip install runprompt",
+      "Verify: runprompt --version",
+      "supercli plugins install ./plugins/runprompt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "runprompt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print runprompt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "runprompt",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install runprompt: pip install runprompt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "runprompt",
+      "resource": "prompt",
+      "action": "run",
+      "description": "Run a .prompt file with template variables",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "runprompt",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install runprompt: pip install runprompt"
+      },
+      "args": [
+        { "name": "prompt_file", "type": "string", "required": true, "description": "Path to .prompt file" },
+        { "name": "variables", "type": "string", "required": false, "description": "JSON variables for template" }
+      ]
+    },
+    {
+      "namespace": "runprompt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to runprompt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "runprompt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install runprompt: pip install runprompt"
+      },
+      "args": []
+    }
+  ]
+}
