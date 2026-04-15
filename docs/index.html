@@ -47,15 +47,15 @@
           <div>
             <p class="text-xs uppercase tracking-[0.4em] text-brand-400">Docs</p>
             <h1 class="text-2xl font-display font-semibold mt-3 text-white">supercli</h1>
-            <p class="text-sm text-slate-400">Universal Skill Router</p>
+            <p class="text-sm text-slate-400">Universal Capability Router</p>
           </div>
           <nav class="space-y-4">
             <div>
               <p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Overview</p>
               <ul class="space-y-2 text-sm">
                 <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#getting-started">Getting Started</a></li>
-                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#skill-layer">Skill Layer Basics</a></li>
-                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#skill-sources">Skill Sources</a></li>
+                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#capability-layer">Capability Layer Basics</a></li>
+                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#capability-sources">Capability Sources</a></li>
               </ul>
             </div>
             <div>
@@ -69,7 +69,7 @@
             <div>
               <p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Vision</p>
               <ul class="space-y-2 text-sm">
-                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#skill-vision">Skill Mesh Vision</a></li>
+                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#capability-vision">Capability Mesh Vision</a></li>
                 <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="#resources">Resources</a></li>
               </ul>
             </div>
@@ -95,74 +95,86 @@
           </section>
 
           <div class="max-w-4xl px-6 py-10 space-y-10">
-            <article class="doc-section space-y-4" id="getting-started" data-keywords="install npm start quick start env">
+            <article class="doc-section space-y-4" id="getting-started" data-keywords="install npm start quick start env local server">
               <p class="text-sm uppercase tracking-widest text-brand-200">Start here</p>
               <h2 class="text-3xl font-display font-semibold">Getting Started</h2>
-              <p class="text-slate-300">Run `npx supercli help` for instant usage or `npx supercli --help` to see all available options, install dependencies with `npm install`, copy `.env.example`, and start the local server via `npm start` or `supercli --server`. The web UI (EJS + Vue + Tailwind) is reachable at `http://localhost:3000`. Refer to the repository README for additional context.</p>
+              <p class="text-slate-300">supercli runs in two modes: <strong>Local-only</strong> (default, no server required) or <strong>Server mode</strong> (optional, shared backend). Run `npx supercli help` for instant usage or `npx supercli --help` for all options.</p>
+              <p class="text-slate-300"><strong>Local-only:</strong> `npx supercli help`, `supercli beads issue list`, `supercli skills list` — everything works out of the box, no installation needed.</p>
+              <p class="text-slate-300"><strong>Server mode:</strong> Install dependencies (`npm install`), copy `.env.example` to `.env`, then start via `npm start` or `supercli --server`. The web UI is reachable at `http://localhost:3000`.</p>
+              <p class="text-slate-400 text-sm">Refer to the repository README for detailed setup instructions.</p>
             </article>
 
-            <article class="doc-section space-y-4" id="skill-layer" data-keywords="skill layer discovery routing execution mesh">
+            <article class="doc-section space-y-4" id="capability-layer" data-keywords="capability layer discovery routing execution mesh">
               <p class="text-sm uppercase tracking-widest text-brand-200">Concept</p>
-              <h2 class="text-3xl font-display font-semibold">Skill Layer Basics</h2>
-              <p class="text-slate-300">Every capability becomes a skill, whether it originates from CLI commands, OpenAPI endpoints, MCP tools, workflows, or HTTP requests. supercli indexes names like `namespace.resource.action`, exposes schemas, and lets agents discover, inspect, and execute consistently.</p>
+              <h2 class="text-3xl font-display font-semibold">Capability Layer Basics</h2>
+              <p class="text-slate-300">Every executable unit becomes a capability, whether it originates from CLI commands, OpenAPI endpoints, MCP tools, workflows, or HTTP requests. supercli indexes capabilities as `namespace.resource.action`, exposes schemas, and lets agents discover, inspect, and execute consistently.</p>
               <pre class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-sm"><code>supercli skills list
 supercli skills search "database"
 supercli skills get beads.issue.create</code></pre>
             </article>
 
-            <article class="doc-section space-y-4" id="skill-sources" data-keywords="bundled adapters openapi http mcp workflows plugins">
+            <article class="doc-section space-y-4" id="capability-sources" data-keywords="bundled adapters openapi http mcp workflows plugins 150 156">
               <p class="text-sm uppercase tracking-widest text-brand-200">Sources</p>
-              <h2 class="text-3xl font-display font-semibold">Skill Sources</h2>
+              <h2 class="text-3xl font-display font-semibold">Capability Sources</h2>
               <ul class="list-disc list-inside text-slate-300 space-y-2">
-                <li><strong>Bundled Harnesses</strong> – beads, gwc, commiat ship with the CLI.</li>
-                <li><strong>Built-in Adapters</strong> – OpenAPI specs, raw HTTP, and MCP servers become skills automatically.</li>
-                <li><strong>Plugins</strong> – Install docker, gh, aws, kubectl, terraform harnesses via `supercli plugins install`.</li>
-                <li><strong>AI Plans / Workflows</strong> – Natural language `ask` and `plan` commands create DAGs of skills.</li>
+                <li><strong>Bundled Harnesses</strong> – beads (issues/tasks), gwc (Google Workspace), commiat (commit automation) ship with the CLI.</li>
+                <li><strong>Built-in Adapters</strong> – OpenAPI specs, raw HTTP, and MCP servers become capabilities automatically.</li>
+                <li><strong>Plugin Harnesses</strong> – 150+ bundled plugins (gh, aws, gcloud, az, docker, kubectl, terraform, stripe, supabase, and many more) via `supercli plugins install`.</li>
+                <li><strong>AI Plans / Workflows</strong> – Natural language `ask` and `plan` commands create DAGs of capabilities.</li>
               </ul>
             </article>
 
-            <article class="doc-section space-y-4" id="architecture" data-keywords="router discovery layer adapters harness diagram">
+            <article class="doc-section space-y-4" id="architecture" data-keywords="router discovery layer adapters harness diagram capability">
               <p class="text-sm uppercase tracking-widest text-brand-200">Runtime</p>
               <h2 class="text-3xl font-display font-semibold">Architecture</h2>
-              <p class="text-slate-300">Agents route requests through the skill discovery layer, which maps namespaces to harnesses/adapters. Execution envelopes guarantee deterministic JSON responses and exit codes.</p>
-              <pre class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-sm"><code>Agents/Humans → supercli runtime → Skill Router → Harness / Adapter → Tool</code></pre>
+              <p class="text-slate-300">Agents route requests through the capability discovery layer, which maps namespaces to harnesses/adapters. Execution envelopes guarantee deterministic JSON responses and exit codes.</p>
+              <pre class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-sm"><code>Agents/Humans → supercli runtime → Capability Router → Harness / Adapter → Tool</code></pre>
             </article>
 
-            <article class="doc-section space-y-4" id="cli-usage" data-keywords="cli usage beads gwc docker plan ask plugins config">
+            <article class="doc-section space-y-4" id="cli-usage" data-keywords="cli usage beads gwc docker plan ask plugins config discover">
               <p class="text-sm uppercase tracking-widest text-brand-200">Interface</p>
               <h2 class="text-3xl font-display font-semibold">CLI Usage</h2>
               <div class="space-y-3">
-                <pre class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-sm"><code>supercli &lt;harness&gt;                # list skills
+                <pre class="bg-slate-900 border border-slate-800 rounded-2xl p-4 text-sm"><code>supercli help                     # list harnesses
+supercli &lt;namespace&gt;              # list capabilities in harness
 supercli beads issue list --json
-supercli skills search --harness beads "task"
-supercli ask "deploy staging"
-supercli plugins explore --tags git,ai</code></pre>
+supercli skills list
+supercli skills teach
+supercli discover --intent "deploy app"
+supercli inspect beads issue create
+supercli plugins explore
+supercli plugins show &lt;name&gt;</code></pre>
                 <p class="text-slate-300">`--json`, `--human`, and `--compact` control output, while exit codes communicate validation, resource, or integration errors.</p>
               </div>
             </article>
 
-            <article class="doc-section space-y-4" id="plugins" data-keywords="plugin harness guide manifest commiat docker install">
+            <article class="doc-section space-y-4" id="plugins" data-keywords="plugin harness guide manifest meta.json commiat docker install">
               <p class="text-sm uppercase tracking-widest text-brand-200">Extension</p>
               <h2 class="text-3xl font-display font-semibold">Plugins & Harnesses</h2>
-              <p class="text-slate-300">Wrap any CLI with a `plugin.json` manifest that defines commands, schemas, dependency checks, and passthrough rules. Install from the registry, Git repos, or local paths.</p>
-              <p class="text-slate-400 text-sm">Need more? Check `docs/plugin-harness-guide.md` in the repository for step-by-step authoring details.</p>
+              <p class="text-slate-300">supercli extends via 150+ bundled plugin harnesses and supports custom plugin authoring. Each plugin lives in its own directory with isolated metadata — no shared file edits needed.</p>
+              <ul class="list-disc list-inside text-slate-300 space-y-2">
+                <li><strong>manifest.json</strong> — commands, schemas, dependency checks, passthrough rules</li>
+                <li><strong>meta.json</strong> — registry metadata (description, tags, has_learn flag)</li>
+                <li><strong>install-guidance.json</strong> — optional install steps</li>
+              </ul>
+              <p class="text-slate-400 text-sm">Need more? Check `docs/plugins-how-to.md` for authoring details, or `supercli plugins explore` to browse available plugins.</p>
             </article>
 
-            <article class="doc-section space-y-4" id="skill-vision" data-keywords="skill mesh registry graph governance dag api telemetry">
+            <article class="doc-section space-y-4" id="capability-vision" data-keywords="capability mesh registry graph governance dag api telemetry">
               <p class="text-sm uppercase tracking-widest text-brand-200">Vision</p>
-              <h2 class="text-3xl font-display font-semibold">Skill Mesh Direction</h2>
-              <p class="text-slate-300">The platform is evolving toward a mesh that handles discovery, routing, execution, composition, and governance. Key areas under exploration include a unified skill registry, graph-native discovery, mesh-wide policy, DAG orchestration, agent endpoints, composition tooling, telemetry, and richer plugin UX.</p>
+              <h2 class="text-3xl font-display font-semibold">Capability Mesh Direction</h2>
+              <p class="text-slate-300">The platform is evolving toward a mesh that handles discovery, routing, execution, composition, and governance. Key areas under exploration include a unified capability registry, graph-native discovery, mesh-wide policy, DAG orchestration, agent endpoints, composition tooling, telemetry, and richer plugin UX.</p>
             </article>
 
-            <article class="doc-section space-y-4" id="resources" data-keywords="readme docs skills catalog supported harnesses">
+            <article class="doc-section space-y-4" id="resources" data-keywords="readme docs skills catalog plugins features">
               <p class="text-sm uppercase tracking-widest text-brand-200">Resources</p>
               <h2 class="text-3xl font-display font-semibold">More Documentation</h2>
               <ul class="list-disc list-inside text-slate-300 space-y-2">
                 <li>README.md (repository root)</li>
                 <li>docs/skills-catalog.md</li>
-                <li>docs/supported-harnesses.md</li>
                 <li>docs/features/skills.md</li>
-                <li><a class="text-brand-400 hover:text-brand-200" href="changelog.html">Changelog</a></li>
+                <li>docs/plugins.md</li>
+                <li>docs/plugins-how-to.md</li>
               </ul>
             </article>
           </div>
