@@ -1,0 +1,201 @@
+{
+  "name": "qsv",
+  "version": "0.1.0",
+  "description": "Blazing-fast CSV data wrangling toolkit written in Rust",
+  "source": "https://github.com/dathere/qsv",
+  "checks": [
+    { "type": "binary", "name": "qsv" }
+  ],
+  "install_guidance": {
+    "plugin": "qsv",
+    "binary": "qsv",
+    "check": "which qsv",
+    "install_steps": [
+      "VERSION=$(curl -sL 'https://api.github.com/repos/dathere/qsv/releases/latest' | grep -o '\"tag_name\": \"[^\"]*' | cut -d'\"' -f4)",
+      "curl -sSfL \"https://github.com/dathere/qsv/releases/download/$VERSION/qsv-$VERSION-x86_64-unknown-linux-musl.zip\" -o /tmp/qsv.zip && unzip -o /tmp/qsv.zip -d ~/.local/bin/",
+      "Verify: qsv --version",
+      "supercli plugins install ./plugins/qsv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qsv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qsv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qsv: VERSION=$(curl -sL 'https://api.github.com/repos/dathere/qsv/releases/latest' | grep -o '\"tag_name\": \"[^\"]*' | cut -d'\"' -f4) && curl -sSfL \"https://github.com/dathere/qsv/releases/download/$VERSION/qsv-$VERSION-x86_64-unknown-linux-musl.zip\" -o /tmp/qsv.zip && unzip -o /tmp/qsv.zip -d ~/.local/bin/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "count",
+      "description": "Count rows in a CSV file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["count"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path (stdin if not specified)" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "stats",
+      "description": "Compute statistics for CSV columns",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["stats"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "select",
+      "description": "Select columns from CSV",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["select"],
+        "positionalArgs": ["columns"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "columns", "type": "string", "required": true, "description": "Column selector (e.g., 'name,age' or '1-5')" },
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "search",
+      "description": "Search CSV data with regex",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["search"],
+        "positionalArgs": ["pattern"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Regex pattern to search" },
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "sort",
+      "description": "Sort CSV data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["sort"],
+        "positionalArgs": ["column"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "column", "type": "string", "required": false, "description": "Column to sort by" },
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "join",
+      "description": "Join two CSV files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["join"],
+        "positionalArgs": ["key", "file1", "file2"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Join key column" },
+        { "name": "file1", "type": "string", "required": true, "description": "First CSV file" },
+        { "name": "file2", "type": "string", "required": true, "description": "Second CSV file" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "sample",
+      "description": "Random sample from CSV",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["sample"],
+        "positionalArgs": ["count"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "count", "type": "number", "required": true, "description": "Number of rows to sample" },
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "csv",
+      "action": "table",
+      "description": "Format CSV as aligned table",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "baseArgs": ["table"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "CSV file path" }
+      ]
+    },
+    {
+      "namespace": "qsv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qsv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsv",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qsv"
+      },
+      "args": []
+    }
+  ]
+}

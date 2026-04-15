@@ -1,0 +1,86 @@
+{
+  "name": "trufflehog",
+  "version": "0.1.0",
+  "description": "Find leaked credentials in git repos, filesystems, and more",
+  "source": "https://github.com/trufflesecurity/trufflehog",
+  "checks": [
+    { "type": "binary", "name": "trufflehog" }
+  ],
+  "install_guidance": {
+    "plugin": "trufflehog",
+    "binary": "trufflehog",
+    "check": "which trufflehog",
+    "install_steps": [
+      "curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh -s -- -b ~/.local/bin",
+      "Verify: trufflehog --version",
+      "supercli plugins install ./plugins/trufflehog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trufflehog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print trufflehog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trufflehog",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install trufflehog: curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scripts/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "trufflehog",
+      "resource": "git",
+      "action": "scan",
+      "description": "Scan a git repository for secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trufflehog",
+        "baseArgs": ["git"],
+        "positionalArgs": ["uri"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install trufflehog"
+      },
+      "args": [
+        { "name": "uri", "type": "string", "required": true, "description": "Git repository URL" }
+      ]
+    },
+    {
+      "namespace": "trufflehog",
+      "resource": "filesystem",
+      "action": "scan",
+      "description": "Scan files or directories for secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trufflehog",
+        "baseArgs": ["filesystem"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install trufflehog"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File or directory path to scan" }
+      ]
+    },
+    {
+      "namespace": "trufflehog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trufflehog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trufflehog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install trufflehog"
+      },
+      "args": []
+    }
+  ]
+}
