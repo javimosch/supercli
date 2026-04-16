@@ -1,0 +1,209 @@
+{
+  "name": "graphify",
+  "version": "0.1.0",
+  "description": "Turn code, docs, papers, images, and videos into a queryable knowledge graph",
+  "source": "https://github.com/safishamsi/graphify",
+  "checks": [
+    { "type": "binary", "name": "graphify" }
+  ],
+  "install_guidance": {
+    "plugin": "graphify",
+    "binary": "graphify",
+    "check": "which graphify",
+    "install_steps": [
+      "pip install graphifyy",
+      "Verify: graphify --version",
+      "graphify install",
+      "supercli plugins install ./plugins/graphify --on-conflict replace --json"
+    ],
+    "note": "PyPI package is graphifyy (double-y), but binary is graphify"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "graphify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print graphify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "graphify",
+      "resource": "graph",
+      "action": "build",
+      "description": "Build knowledge graph from a directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to graph (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "content",
+      "action": "add",
+      "description": "Add paper, video, or tweet to the graph",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["add"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to add (arxiv, tweet, video)" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "graph",
+      "action": "query",
+      "description": "Query the knowledge graph",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["query"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "question", "type": "string", "required": true, "description": "Question to ask the graph" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "graph",
+      "action": "path",
+      "description": "Find shortest path between two nodes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "node1", "type": "string", "required": true, "description": "Starting node" },
+        { "name": "node2", "type": "string", "required": true, "description": "Target node" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "graph",
+      "action": "explain",
+      "description": "Get plain-language explanation of a node",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["explain"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "node", "type": "string", "required": true, "description": "Node to explain" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "graph",
+      "action": "update",
+      "description": "Re-extract only changed files, merge into existing graph",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["update"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to update (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "graph",
+      "action": "watch",
+      "description": "Auto-sync graph as files change",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["watch"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to watch (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "graphify",
+      "resource": "platform",
+      "action": "install",
+      "description": "Install graphify skill for AI assistant",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "graphify",
+      "resource": "git",
+      "action": "hook-install",
+      "description": "Install git hooks for auto-rebuild on commit and branch switch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "baseArgs": ["hook", "install"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "graphify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to graphify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "graphify",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install graphify: pip install graphifyy"
+      },
+      "args": []
+    }
+  ]
+}
