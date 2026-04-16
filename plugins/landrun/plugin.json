@@ -1,0 +1,139 @@
+{
+  "name": "landrun",
+  "version": "0.1.0",
+  "description": "Run Linux processes in a secure sandbox using Landlock kernel security",
+  "source": "https://github.com/Zouuup/landrun",
+  "checks": [
+    { "type": "binary", "name": "landrun" }
+  ],
+  "install_guidance": {
+    "plugin": "landrun",
+    "binary": "landrun",
+    "check": "which landrun",
+    "install_steps": [
+      "go install github.com/zouuup/landrun/cmd/landrun@latest",
+      "Verify: landrun --help",
+      "supercli plugins install ./plugins/landrun --on-conflict replace --json"
+    ],
+    "note": "Linux only (requires Landlock kernel support). Install go first if not present."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "landrun",
+      "resource": "self",
+      "action": "help",
+      "description": "Show landrun help",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "landrun",
+      "resource": "run",
+      "action": "ro",
+      "description": "Run command with read-only directory access",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "baseArgs": ["--ro"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to allow read-only access" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "landrun",
+      "resource": "run",
+      "action": "rw",
+      "description": "Run command with read-write directory access",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "baseArgs": ["--rw"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to allow read-write access" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "landrun",
+      "resource": "run",
+      "action": "rox",
+      "description": "Run command with read-only + execute access",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "baseArgs": ["--rox"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to allow read-execute access" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "landrun",
+      "resource": "run",
+      "action": "network-restricted",
+      "description": "Run command with TCP port restrictions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "baseArgs": ["--connect-tcp"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": true, "description": "TCP port to allow connections" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "landrun",
+      "resource": "run",
+      "action": "debug",
+      "description": "Run with debug logging",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "baseArgs": ["--log-level", "debug"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "landrun",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to landrun CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "landrun",
+        "passthrough": true,
+        "missingDependencyHelp": "Install landrun: go install github.com/zouuup/landrun/cmd/landrun@latest"
+      },
+      "args": []
+    }
+  ]
+}
