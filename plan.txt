@@ -1,0 +1,198 @@
+# README Restructure Plan
+
+**Goal:** Restructure README from 474 LOC → 500-750 LOC optimized for conversion
+**Key principle:** Optimize for density, not length
+
+## New Section Order
+
+| # | Section | Target LOC | Notes |
+|---|---------|------------|-------|
+| 1 | Title + Badges | ~5 | Keep as-is |
+| 2 | **Positioning Anchor** | ~1 | "Think: Stripe API for CLIs and tools" |
+| 3 | TL;DR | ~22 | Hook + 3-4 commands + outcome lines |
+| 4 | **Example (Proof Moment)** | ~15 | Show JSON output shape |
+| 5 | Problem / Solution | ~30 | Sharp, 2-3 sentences each |
+| 6 | **Quick Start** | ~45 | Moved UP - use npx everywhere |
+| 7 | For Humans / For Agents | ~40 | Compressed benefits table |
+| 8 | What You Get | ~25 | Outcome-oriented, scan section |
+| 9 | CLI Usage Examples | ~55 | 12-15 commands + Inspection category |
+| 10 | Architecture | ~55 | Text-only, tightened ending |
+| 11 | Capability Sources | ~25 | Compressed |
+| 12 | Output Envelope + Exit Codes | ~25 | Reference style |
+| 13 | Operating Modes | ~20 | Condensed |
+| 14 | Tech Stack + Social + Contributors | ~40 | Keep |
+| 15 | License | ~5 | Keep |
+
+**Total:** ~430-600 LOC
+
+## Key Changes
+
+### Replace Entirely
+- **Lines 1-33 (Why Supercli)** → Replace with Positioning Anchor + TL;DR + Example + Problem/Solution
+- **Lines 47-108 (Architecture + Why Capabilities Matter)** → Text-only Architecture (~55 LOC, no diagram)
+
+### Compress
+- **Lines 70-86 (Capability Sources)** → ~5-6 lines
+- **Lines 167-225 (Quick Start)** → Trim to ~10 commands, link to docs for server mode
+- **Lines 310-393 (Plugins as Harnesses)** → Remove from README, link to docs/
+
+### Remove
+- BIN Aliases section
+- Detailed API table (replace with "See docs for full API reference")
+- MCP demo examples from Quick Start
+
+## Positioning Anchor
+
+```md
+> Think: "Stripe API for CLIs and tools"
+```
+
+## TL;DR Section
+
+```md
+## ⚡ TL;DR
+
+> Turn any CLI, API, or workflow into a discoverable, executable capability
+> — with consistent inputs, outputs, and zero glue code.
+
+```bash
+# Discover what exists
+npx supercli skills search "deploy" --json
+
+# Understand exactly how to use it
+npx supercli skills get aws.cfn.deploy --json
+
+# Execute with predictable output
+npx supercli aws cfn deploy --stack-name my-stack --json
+```
+
+👉 Works the same across CLI tools, APIs, MCP servers, and workflows
+👉 No glue code, no parsing, no guesswork
+```
+
+## Example Section (Proof Moment with JSON)
+
+```md
+## ⚡ Example
+
+```bash
+npx supercli ask "list my tasks and recent commits"
+```
+
+```json
+{
+  "tasks": [...],
+  "commits": [...]
+}
+```
+
+→ Combines multiple tools into one structured response.
+```
+
+## Problem/Solution Section
+
+```md
+## The Problem
+
+Every tool speaks a different language:
+- CLIs → flags & inconsistent output
+- APIs → schemas & auth
+- MCP/tools → custom protocols
+- Workflows → glue code everywhere
+
+Humans waste time learning syntax. Agents fail because nothing is predictable.
+
+## The Solution
+
+supercli turns everything into capabilities:
+- Same structure → `supercli <namespace> <resource> <action>`
+- Same output → deterministic JSON envelopes
+- Same discovery → searchable skill graph
+- Same execution → no custom integrations
+```
+
+## Quick Start (TRIMMED - 45 LOC, npx everywhere)
+
+```bash
+# Explore capabilities
+npx supercli help
+npx supercli skills search "github"
+
+# Run something real
+npx supercli beads issue list --json
+npx supercli gh issue list --json
+
+# AI-driven execution
+npx supercli ask "show my tasks and recent commits"
+
+# Manage plugins
+npx supercli plugins list
+npx supercli plugins explore
+npx supercli plugins install commiat
+
+# Agent mode
+npx supercli --help-json
+npx supercli skills get <capability> --json
+```
+
+Install globally: `npm install -g superacli` for repeated use.
+Server mode: See docs/features/server-plugins.md
+
+## What You Get (~25 LOC - Outcome-Oriented)
+
+```md
+## What You Get
+
+- 🔍 Find any capability instantly — no docs hunting
+- ⚡ Run tools with one consistent interface
+- 🤖 Give agents predictable, structured execution
+- 🔗 Combine multiple tools without glue code
+- 📦 Extend anything via plugins
+```
+
+## CLI Usage Examples (~55 LOC - + Inspection category)
+
+```bash
+# Discovery
+npx supercli skills list
+npx supercli skills search "database"
+
+# Inspection (important for agents)
+npx supercli inspect beads issue create
+npx supercli skills get beads.issue.create --json
+
+# Execution
+npx supercli beads issue create --title "Fix bug"
+npx supercli beads issue list --json
+npx supercli gwc drive files list
+
+# AI
+npx supercli ask "do X and Y"
+
+# Plugins
+npx supercli plugins list
+npx supercli plugins install commiat
+npx supercli plugins show commiat
+```
+
+## Architecture Section (Text-only, tightened ending)
+
+The router:
+- **Discovers** capabilities from every adapter, caches metadata for fast lookup
+- **Routes** commands to correct harness based on namespace
+- **Executes** with unified error handling, envelopes, and output formatting
+- **Surfaces** machine-readable descriptions so agents can plan against the capability graph
+
+supercli replaces tool-specific syntax with a **queryable, executable capability graph**.
+
+## Validation Checklist
+
+- [ ] Positioning anchor under title
+- [ ] TL;DR has outcome lines (no glue code, no parsing)
+- [ ] Example shows JSON output shape
+- [ ] Quick Start uses npx everywhere consistently
+- [ ] What You Get is outcome-oriented (not infrastructure)
+- [ ] CLI Examples includes Inspection category
+- [ ] Architecture ends with "queryable, executable capability graph"
+- [ ] No ASCII diagrams
+- [ ] Total LOC ~430-600
