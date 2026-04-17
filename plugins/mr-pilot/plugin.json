@@ -1,0 +1,218 @@
+{
+  "name": "mr-pilot",
+  "version": "0.1.0",
+  "description": "AI-powered code review for GitLab Merge Requests and GitHub Pull Requests",
+  "source": "https://github.com/javimosch/mr-pilot",
+  "tags": ["mr-pilot", "code-review", "gitlab", "github", "ai", "llm", "automation", "ci-cd"],
+  "checks": [
+    { "type": "binary", "name": "mr-pilot" }
+  ],
+  "install_guidance": {
+    "plugin": "mr-pilot",
+    "binary": "mr-pilot",
+    "check": "which mr-pilot",
+    "install_steps": [
+      "npm install -g mr-pilot",
+      "Verify: mr-pilot --version",
+      "Configure .env with GITLAB_TOKEN, GITHUB_TOKEN, and LLM_PROVIDER",
+      "supercli plugins install ./plugins/mr-pilot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mr-pilot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mr-pilot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "url",
+      "description": "Review MR/PR by full GitLab or GitHub URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["url"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Full GitLab MR or GitHub PR URL" },
+        { "name": "input_file", "type": "string", "required": false, "description": "Ticket specification file path" },
+        { "name": "guidelines_file", "type": "string", "required": false, "description": "Project guidelines file path" },
+        { "name": "comment", "type": "boolean", "required": false, "description": "Post review as MR/PR comment", "default": false },
+        { "name": "debug", "type": "boolean", "required": false, "description": "Debug mode (show LLM input)", "default": false },
+        { "name": "max_diff_chars", "type": "number", "required": false, "description": "Maximum diff characters for large MRs" }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "id",
+      "description": "Review MR/PR by ID with project specification",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["id"],
+        "flagArgs": ["--project", "-p", "--platform"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "MR/PR numeric ID" },
+        { "name": "project", "type": "string", "required": false, "description": "Project path (e.g., owner/repo or group/subgroup/project)" },
+        { "name": "platform", "type": "string", "required": false, "description": "Platform: gitlab or github (auto-detected if not specified)" },
+        { "name": "input_file", "type": "string", "required": false, "description": "Ticket specification file path" },
+        { "name": "guidelines_file", "type": "string", "required": false, "description": "Project guidelines file path" },
+        { "name": "comment", "type": "boolean", "required": false, "description": "Post review as MR/PR comment", "default": false },
+        { "name": "debug", "type": "boolean", "required": false, "description": "Debug mode (show LLM input)", "default": false },
+        { "name": "max_diff_chars", "type": "number", "required": false, "description": "Maximum diff characters for large MRs" }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "with-input",
+      "description": "Review MR/PR with ticket specification file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["id"],
+        "flagArgs": ["--input-file", "-i", "--project", "-p"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "MR/PR numeric ID or URL" },
+        { "name": "input_file", "type": "string", "required": true, "description": "Ticket specification file path" },
+        { "name": "project", "type": "string", "required": false, "description": "Project path (e.g., owner/repo or group/subgroup/project)" },
+        { "name": "guidelines_file", "type": "string", "required": false, "description": "Project guidelines file path" },
+        { "name": "comment", "type": "boolean", "required": false, "description": "Post review as MR/PR comment", "default": false },
+        { "name": "debug", "type": "boolean", "required": false, "description": "Debug mode (show LLM input)", "default": false },
+        { "name": "max_diff_chars", "type": "number", "required": false, "description": "Maximum diff characters for large MRs" }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "with-guidelines",
+      "description": "Review MR/PR with project guidelines to reduce false positives",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["id"],
+        "flagArgs": ["--guidelines-file", "-g", "--input-file", "-i", "--project", "-p"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "MR/PR numeric ID or URL" },
+        { "name": "guidelines_file", "type": "string", "required": true, "description": "Project guidelines file path" },
+        { "name": "input_file", "type": "string", "required": false, "description": "Ticket specification file path" },
+        { "name": "project", "type": "string", "required": false, "description": "Project path (e.g., owner/repo or group/subgroup/project)" },
+        { "name": "comment", "type": "boolean", "required": false, "description": "Post review as MR/PR comment", "default": false },
+        { "name": "debug", "type": "boolean", "required": false, "description": "Debug mode (show LLM input)", "default": false },
+        { "name": "max_diff_chars", "type": "number", "required": false, "description": "Maximum diff characters for large MRs" }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "comment",
+      "description": "Review MR/PR and post as comment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["id"],
+        "flagArgs": ["--comment", "-c", "--project", "-p"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "MR/PR numeric ID or URL" },
+        { "name": "project", "type": "string", "required": false, "description": "Project path (e.g., owner/repo or group/subgroup/project)" },
+        { "name": "input_file", "type": "string", "required": false, "description": "Ticket specification file path" },
+        { "name": "guidelines_file", "type": "string", "required": false, "description": "Project guidelines file path" },
+        { "name": "debug", "type": "boolean", "required": false, "description": "Debug mode (show LLM input)", "default": false },
+        { "name": "max_diff_chars", "type": "number", "required": false, "description": "Maximum diff characters for large MRs" }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "debug",
+      "description": "Review MR/PR in debug mode (show what's sent to LLM)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["id"],
+        "flagArgs": ["--debug", "-d", "--project", "-p"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "MR/PR numeric ID or URL" },
+        { "name": "project", "type": "string", "required": false, "description": "Project path (e.g., owner/repo or group/subgroup/project)" },
+        { "name": "input_file", "type": "string", "required": false, "description": "Ticket specification file path" },
+        { "name": "guidelines_file", "type": "string", "required": false, "description": "Project guidelines file path" }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "review",
+      "action": "max-diff",
+      "description": "Review MR/PR with custom diff size limit for large changesets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "positionalArgs": ["id"],
+        "flagArgs": ["--max-diff-chars", "-m", "--project", "-p"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "MR/PR numeric ID or URL" },
+        { "name": "max_diff_chars", "type": "number", "required": true, "description": "Maximum diff characters (default: 50000)" },
+        { "name": "project", "type": "string", "required": false, "description": "Project path (e.g., owner/repo or group/subgroup/project)" },
+        { "name": "input_file", "type": "string", "required": false, "description": "Ticket specification file path" },
+        { "name": "guidelines_file", "type": "string", "required": false, "description": "Project guidelines file path" },
+        { "name": "comment", "type": "boolean", "required": false, "description": "Post review as MR/PR comment", "default": false }
+      ]
+    },
+    {
+      "namespace": "mr-pilot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mr-pilot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mr-pilot",
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mr-pilot: npm install -g mr-pilot"
+      },
+      "args": []
+    }
+  ]
+}
