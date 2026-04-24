@@ -1,0 +1,56 @@
+{
+  "name": "mirrord",
+  "version": "0.1.0",
+  "description": "Connect your local process and your cloud environment. Run local code in cloud conditions for debugging and development.",
+  "source": "https://github.com/metalbear-co/mirrord",
+  "checks": [
+    { "type": "binary", "name": "mirrord" }
+  ],
+  "install_guidance": {
+    "plugin": "mirrord",
+    "binary": "mirrord",
+    "check": "which mirrord",
+    "install_steps": [
+      "brew install mirrord",
+      "Verify: mirrord --version",
+      "supercli plugins install ./plugins/mirrord --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mirrord",
+      "resource": "process",
+      "action": "run",
+      "description": "Run process with mirrord",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mirrord",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mirrord: brew install mirrord"
+      },
+      "args": [
+        { "name": "command", "type": "string", "description": "Command to run" },
+        { "name": "--target", "type": "string", "description": "Target deployment" },
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" },
+        { "name": "--context", "type": "string", "description": "Kubernetes context" },
+        { "name": "--env", "type": "boolean", "description": "Load environment variables" }
+      ]
+    },
+    {
+      "namespace": "mirrord",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mirrord CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mirrord",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mirrord: brew install mirrord"
+      },
+      "args": []
+    }
+  ]
+}
