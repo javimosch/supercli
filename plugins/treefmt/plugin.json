@@ -1,0 +1,55 @@
+{
+  "name": "treefmt",
+  "version": "0.1.0",
+  "description": "The formatter multiplexer. Run multiple formatters on a codebase with a single command. Format all files using configured formatters.",
+  "source": "https://github.com/numtide/treefmt",
+  "checks": [
+    { "type": "binary", "name": "treefmt" }
+  ],
+  "install_guidance": {
+    "plugin": "treefmt",
+    "binary": "treefmt",
+    "check": "which treefmt",
+    "install_steps": [
+      "brew install treefmt",
+      "Verify: treefmt --version",
+      "supercli plugins install ./plugins/treefmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "treefmt",
+      "resource": "format",
+      "action": "run",
+      "description": "Format code with multiple formatters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treefmt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install treefmt: brew install treefmt"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Path to format" },
+        { "name": "--config", "type": "string", "description": "Config file path" },
+        { "name": "--check", "type": "boolean", "description": "Check formatting without changes" },
+        { "name": "--fail-on-change", "type": "boolean", "description": "Fail if files changed" }
+      ]
+    },
+    {
+      "namespace": "treefmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to treefmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treefmt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install treefmt: brew install treefmt"
+      },
+      "args": []
+    }
+  ]
+}
