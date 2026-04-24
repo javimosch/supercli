@@ -1,0 +1,95 @@
+{
+  "name": "gitleaks",
+  "version": "0.1.0",
+  "description": "Find secrets with Gitleaks. Detect secrets, credentials, and sensitive information in git repositories, files, and directories. Supports custom rules, baselines, and CI/CD integration.",
+  "source": "https://github.com/gitleaks/gitleaks",
+  "checks": [
+    { "type": "binary", "name": "gitleaks" }
+  ],
+  "install_guidance": {
+    "plugin": "gitleaks",
+    "binary": "gitleaks",
+    "check": "which gitleaks",
+    "install_steps": [
+      "brew install gitleaks",
+      "Verify: gitleaks --version",
+      "supercli plugins install ./plugins/gitleaks --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitleaks",
+      "resource": "repo",
+      "action": "detect",
+      "description": "Detect secrets in git repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitleaks",
+        "baseArgs": ["detect"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitleaks: brew install gitleaks"
+      },
+      "args": [
+        { "name": "--source", "type": "string", "description": "Path to source repository" },
+        { "name": "--config", "type": "string", "description": "Path to config file" },
+        { "name": "--report", "type": "string", "description": "Output report file" },
+        { "name": "--report-format", "type": "string", "description": "Report format (json, sarif, csv)" },
+        { "name": "--verbose", "type": "boolean", "description": "Verbose output" },
+        { "name": "--redact", "type": "boolean", "description": "Redact secrets from output" },
+        { "name": "--no-git", "type": "boolean", "description": "Run without git history" }
+      ]
+    },
+    {
+      "namespace": "gitleaks",
+      "resource": "repo",
+      "action": "protect",
+      "description": "Protect git repository from secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitleaks",
+        "baseArgs": ["protect"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitleaks: brew install gitleaks"
+      },
+      "args": [
+        { "name": "--source", "type": "string", "description": "Path to source repository" },
+        { "name": "--staged", "type": "boolean", "description": "Scan staged files only" },
+        { "name": "--verbose", "type": "boolean", "description": "Verbose output" }
+      ]
+    },
+    {
+      "namespace": "gitleaks",
+      "resource": "baseline",
+      "action": "generate",
+      "description": "Generate baseline for known secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitleaks",
+        "baseArgs": ["detect"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitleaks: brew install gitleaks"
+      },
+      "args": [
+        { "name": "--source", "type": "string", "description": "Path to source repository" },
+        { "name": "--baseline", "type": "string", "description": "Path to baseline file" },
+        { "name": "--report", "type": "string", "description": "Output report file" }
+      ]
+    },
+    {
+      "namespace": "gitleaks",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitleaks CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitleaks",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitleaks: brew install gitleaks"
+      },
+      "args": []
+    }
+  ]
+}
