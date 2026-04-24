@@ -1,0 +1,84 @@
+{
+  "name": "tint",
+  "version": "0.1.0",
+  "description": "Palette-based image recoloring CLI. Recolor images using popular terminal color themes like Catppuccin, Gruvbox, Everforest, and Tokyonight.",
+  "source": "https://github.com/ashish0kumar/tint",
+  "checks": [
+    { "type": "binary", "name": "tint" }
+  ],
+  "install_guidance": {
+    "plugin": "tint",
+    "binary": "tint",
+    "check": "which tint",
+    "install_steps": [
+      "go install github.com/ashish0kumar/tint@latest",
+      "Verify: tint --version",
+      "supercli plugins install ./plugins/tint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tint: go install github.com/ashish0kumar/tint@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tint",
+      "resource": "image",
+      "action": "recolor",
+      "description": "Recolor an image using a terminal color theme",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tint",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tint: go install github.com/ashish0kumar/tint@latest"
+      },
+      "args": [
+        { "name": "-i", "type": "string", "required": true, "description": "Input image path (JPEG or PNG)" },
+        { "name": "-t", "type": "string", "required": true, "description": "Theme palette and optional flavor (e.g. catppuccin, gruvbox, everforest, tokyonight)" },
+        { "name": "-o", "type": "string", "description": "Output image path (default: <input>_themed_<theme>.<ext>)" },
+        { "name": "--luminosity", "type": "string", "description": "Luminosity adjustment factor (e.g. 0.8 for darker, 1.2 for brighter)" },
+        { "name": "--nearest", "type": "string", "description": "Number of nearest palette colors for interpolation (default: 30)" },
+        { "name": "--power", "type": "string", "description": "Power for Shepard's Method interpolation (default: 2.5)" },
+        { "name": "--not-open", "type": "boolean", "description": "Do not open the recolored image in the default viewer" }
+      ]
+    },
+    {
+      "namespace": "tint",
+      "resource": "theme",
+      "action": "list",
+      "description": "List all available themes and their flavors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tint",
+        "baseArgs": ["--list-themes"],
+        "missingDependencyHelp": "Install tint: go install github.com/ashish0kumar/tint@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tint",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tint: go install github.com/ashish0kumar/tint@latest"
+      },
+      "args": []
+    }
+  ]
+}
