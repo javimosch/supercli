@@ -1,0 +1,140 @@
+{
+  "name": "foxguard",
+  "version": "0.1.0",
+  "description": "Security scanner as fast as a linter with post-quantum crypto audit, diff scans, secrets detection, and CycloneDX CBOM export. Tree-sitter based with Semgrep/OpenGrep compatible rules.",
+  "source": "https://github.com/PwnKit-Labs/foxguard",
+  "checks": [
+    { "type": "binary", "name": "foxguard" }
+  ],
+  "install_guidance": {
+    "plugin": "foxguard",
+    "binary": "foxguard",
+    "check": "which foxguard",
+    "install_steps": [
+      "curl -fsSL https://foxguard.dev/install.sh | sh",
+      "Verify: foxguard --version",
+      "supercli plugins install ./plugins/foxguard --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foxguard",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foxguard version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foxguard",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan the target path for security issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "description": "Output format: cbom, sarif, json" },
+        { "name": "--changed", "type": "boolean", "description": "Only scan modified files" },
+        { "name": "--explain", "type": "boolean", "description": "Include source-to-sink dataflow traces" },
+        { "name": "--github-pr", "type": "string", "description": "Post findings as PR review comments (PR number)" },
+        { "name": "--rules", "type": "string", "description": "Path to custom Semgrep/OpenGrep compatible rules" },
+        { "name": "path", "type": "string", "description": "Target path to scan (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "foxguard",
+      "resource": "scan",
+      "action": "diff",
+      "description": "Show new findings compared to a target branch or commit",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Branch or commit to diff against (e.g. main)" },
+        { "name": "path", "type": "string", "description": "Target path (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "foxguard",
+      "resource": "scan",
+      "action": "secrets",
+      "description": "Scan for leaked credentials and private keys",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "baseArgs": ["secrets"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "description": "Output format: cbom, sarif, json" },
+        { "name": "path", "type": "string", "description": "Target path (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "foxguard",
+      "resource": "scan",
+      "action": "pqc",
+      "description": "Post-quantum crypto audit (NSA CNSA 2.0 compliance)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "baseArgs": ["pqc"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "description": "Output format: cbom, sarif, json" },
+        { "name": "path", "type": "string", "description": "Target path (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "foxguard",
+      "resource": "config",
+      "action": "init",
+      "description": "Install local pre-commit hook",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foxguard",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foxguard CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foxguard",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foxguard: curl -fsSL https://foxguard.dev/install.sh | sh or cargo install foxguard"
+      },
+      "args": []
+    }
+  ]
+}
