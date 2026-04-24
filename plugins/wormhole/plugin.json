@@ -1,0 +1,68 @@
+{
+  "name": "wormhole",
+  "version": "0.1.0",
+  "description": "Open-source ngrok alternative to expose local servers to the internet with one command. Built with Go and Cloudflare Workers.",
+  "source": "https://github.com/MuhammadHananAsghar/wormhole",
+  "checks": [
+    { "type": "binary", "name": "wormhole" }
+  ],
+  "install_guidance": {
+    "plugin": "wormhole",
+    "binary": "wormhole",
+    "check": "which wormhole",
+    "install_steps": [
+      "go install github.com/MuhammadHananAsghar/wormhole@latest",
+      "Verify: wormhole --version",
+      "supercli plugins install ./plugins/wormhole --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wormhole",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wormhole version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wormhole",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wormhole: go install github.com/MuhammadHananAsghar/wormhole@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wormhole",
+      "resource": "tunnel",
+      "action": "start",
+      "description": "Expose a local HTTP server to the internet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wormhole",
+        "baseArgs": ["http"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install wormhole: go install github.com/MuhammadHananAsghar/wormhole@latest"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": true, "description": "Local port number to expose" },
+        { "name": "--subdomain", "type": "string", "description": "Request a custom subdomain (free)" },
+        { "name": "--inspect", "type": "boolean", "description": "Enable traffic inspector (shows request/response details)" }
+      ]
+    },
+    {
+      "namespace": "wormhole",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wormhole CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wormhole",
+        "passthrough": true,
+        "missingDependencyHelp": "Install wormhole: go install github.com/MuhammadHananAsghar/wormhole@latest"
+      },
+      "args": []
+    }
+  ]
+}
