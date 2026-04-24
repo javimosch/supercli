@@ -1,0 +1,154 @@
+{
+  "name": "viking",
+  "version": "0.1.0",
+  "description": "Simple way to manage your remote machines and SSH keys. Execute commands in parallel across machines, copy files, manage SSH keys, and handle SSH connections easily.",
+  "source": "https://github.com/d3witt/viking",
+  "checks": [
+    { "type": "binary", "name": "viking" }
+  ],
+  "install_guidance": {
+    "plugin": "viking",
+    "binary": "viking",
+    "check": "which viking",
+    "install_steps": [
+      "go install github.com/d3witt/viking@latest",
+      "Verify: viking config",
+      "supercli plugins install ./plugins/viking --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "viking",
+      "resource": "machine",
+      "action": "add",
+      "description": "Add a remote machine",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["machine", "add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "description": "Machine name" },
+        { "name": "--key", "type": "string", "description": "SSH key name" },
+        { "name": "addresses", "type": "string", "description": "Machine addresses" }
+      ]
+    },
+    {
+      "namespace": "viking",
+      "resource": "machine",
+      "action": "exec",
+      "description": "Execute command on machines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["exec"],
+        "positionalArgs": ["machine", "command"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": [
+        { "name": "--tty", "type": "boolean", "description": "Interactive TTY mode" },
+        { "name": "machine", "type": "string", "required": true, "description": "Machine name" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to execute" }
+      ]
+    },
+    {
+      "namespace": "viking",
+      "resource": "file",
+      "action": "copy",
+      "description": "Copy files/directories to/from machines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["cp"],
+        "positionalArgs": ["source", "destination"],
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source path" },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination path" }
+      ]
+    },
+    {
+      "namespace": "viking",
+      "resource": "key",
+      "action": "add",
+      "description": "Add SSH key from file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["key", "add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "description": "Key name" },
+        { "name": "--passphrase", "type": "string", "description": "Key passphrase" },
+        { "name": "keyfile", "type": "string", "description": "Path to key file" }
+      ]
+    },
+    {
+      "namespace": "viking",
+      "resource": "key",
+      "action": "generate",
+      "description": "Generate new SSH key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["key", "generate"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "description": "Key name" }
+      ]
+    },
+    {
+      "namespace": "viking",
+      "resource": "key",
+      "action": "copy",
+      "description": "Copy public SSH key to clipboard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["key", "copy"],
+        "positionalArgs": ["keyname"],
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": [
+        { "name": "keyname", "type": "string", "required": true, "description": "Key name" }
+      ]
+    },
+    {
+      "namespace": "viking",
+      "resource": "config",
+      "action": "show",
+      "description": "Show current config folder",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "baseArgs": ["config"],
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "viking",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to viking CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viking",
+        "passthrough": true,
+        "missingDependencyHelp": "Install viking: go install github.com/d3witt/viking@latest"
+      },
+      "args": []
+    }
+  ]
+}
