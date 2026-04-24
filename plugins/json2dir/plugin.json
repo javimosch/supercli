@@ -1,0 +1,65 @@
+{
+  "name": "json2dir",
+  "version": "0.1.0",
+  "description": "Convert JSON documents into directory structures — files, directories, symlinks, and executable scripts. Useful for managing dotfiles and configuration archives.",
+  "source": "https://github.com/alurm/json2dir",
+  "checks": [
+    { "type": "binary", "name": "json2dir" }
+  ],
+  "install_guidance": {
+    "plugin": "json2dir",
+    "binary": "json2dir",
+    "check": "which json2dir",
+    "install_steps": [
+      "cargo install json2dir",
+      "Verify: json2dir --version",
+      "supercli plugins install ./plugins/json2dir --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "json2dir",
+      "resource": "self",
+      "action": "version",
+      "description": "Print json2dir version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2dir",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install json2dir: cargo install json2dir"
+      },
+      "args": []
+    },
+    {
+      "namespace": "json2dir",
+      "resource": "data",
+      "action": "convert",
+      "description": "Convert JSON to directory structure (files, dirs, symlinks, scripts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2dir",
+        "passthrough": true,
+        "missingDependencyHelp": "Install json2dir: cargo install json2dir"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "Input JSON file (reads from STDIN if omitted)" }
+      ]
+    },
+    {
+      "namespace": "json2dir",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to json2dir CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2dir",
+        "passthrough": true,
+        "missingDependencyHelp": "Install json2dir: cargo install json2dir"
+      },
+      "args": []
+    }
+  ]
+}
