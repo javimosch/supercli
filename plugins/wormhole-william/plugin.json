@@ -1,0 +1,73 @@
+{
+  "name": "wormhole-william",
+  "version": "0.1.0",
+  "description": "End-to-end encrypted file transfer between computers. A Go implementation of Magic Wormhole for secure, easy file sharing without setup.",
+  "source": "https://github.com/psanford/wormhole-william",
+  "checks": [
+    { "type": "binary", "name": "wormhole-william" }
+  ],
+  "install_guidance": {
+    "plugin": "wormhole-william",
+    "binary": "wormhole-william",
+    "check": "which wormhole-william",
+    "install_steps": [
+      "brew install psanford/tap/wormhole-william",
+      "Verify: wormhole-william --version",
+      "supercli plugins install ./plugins/wormhole-william --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wormhole-william",
+      "resource": "file",
+      "action": "send",
+      "description": "Send file with Magic Wormhole",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wormhole-william",
+        "baseArgs": ["send"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install wormhole-william: brew install psanford/tap/wormhole-william"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "File or directory to send" },
+        { "name": "--code-length", "type": "integer", "description": "Length of transfer code" },
+        { "name": "--no-listen", "type": "boolean", "description": "Do not listen on port" }
+      ]
+    },
+    {
+      "namespace": "wormhole-william",
+      "resource": "file",
+      "action": "receive",
+      "description": "Receive file with Magic Wormhole",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wormhole-william",
+        "baseArgs": ["receive"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install wormhole-william: brew install psanford/tap/wormhole-william"
+      },
+      "args": [
+        { "name": "code", "type": "string", "description": "Transfer code from sender" },
+        { "name": "--accept-file", "type": "boolean", "description": "Accept file without prompting" },
+        { "name": "--output-dir", "type": "string", "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "wormhole-william",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wormhole-william CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wormhole-william",
+        "passthrough": true,
+        "missingDependencyHelp": "Install wormhole-william: brew install psanford/tap/wormhole-william"
+      },
+      "args": []
+    }
+  ]
+}

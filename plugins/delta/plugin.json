@@ -1,0 +1,56 @@
+{
+  "name": "delta",
+  "version": "0.1.0",
+  "description": "A syntax-highlighting pager for git and diff output. Make diffs readable with side-by-side comparison, line numbers, and beautiful highlighting.",
+  "source": "https://github.com/dandavison/delta",
+  "checks": [
+    { "type": "binary", "name": "delta" }
+  ],
+  "install_guidance": {
+    "plugin": "delta",
+    "binary": "delta",
+    "check": "which delta",
+    "install_steps": [
+      "brew install git-delta",
+      "Verify: delta --version",
+      "supercli plugins install ./plugins/delta --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "delta",
+      "resource": "diff",
+      "action": "show",
+      "description": "Show diff with syntax highlighting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "delta",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install delta: brew install git-delta"
+      },
+      "args": [
+        { "name": "--side-by-side", "type": "boolean", "description": "Show side-by-side diff" },
+        { "name": "--dark", "type": "boolean", "description": "Use dark theme" },
+        { "name": "--light", "type": "boolean", "description": "Use light theme" },
+        { "name": "--file", "type": "string", "description": "File path for diff" }
+      ]
+    },
+    {
+      "namespace": "delta",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to delta CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "delta",
+        "passthrough": true,
+        "missingDependencyHelp": "Install delta: brew install git-delta"
+      },
+      "args": []
+    }
+  ]
+}
