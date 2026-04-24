@@ -1,0 +1,69 @@
+{
+  "name": "qo",
+  "version": "0.1.0",
+  "description": "Interactive minimalist SQL query tool for JSON and CSV files. Supports format conversion, aggregation, joins, and pipe-friendly headless output.",
+  "source": "https://github.com/kiki-ki/go-qo",
+  "checks": [
+    { "type": "binary", "name": "qo" }
+  ],
+  "install_guidance": {
+    "plugin": "qo",
+    "binary": "qo",
+    "check": "which qo",
+    "install_steps": [
+      "brew install kiki-ki/tap/qo",
+      "Verify: qo --version",
+      "supercli plugins install ./plugins/qo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qo",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qo: brew install kiki-ki/tap/qo or curl -sfL https://raw.githubusercontent.com/kiki-ki/go-qo/main/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qo",
+      "resource": "data",
+      "action": "query",
+      "description": "Run a SQL query on JSON or CSV data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qo: brew install kiki-ki/tap/qo or curl -sfL https://raw.githubusercontent.com/kiki-ki/go-qo/main/install.sh | sh"
+      },
+      "args": [
+        { "name": "-q", "type": "string", "description": "SQL query string (required for headless mode)" },
+        { "name": "-i", "type": "string", "description": "Input format: csv, json" },
+        { "name": "-o", "type": "string", "description": "Output format: csv, json, jsonl" },
+        { "name": "--no-header", "type": "boolean", "description": "Treat CSV input as headerless" },
+        { "name": "files", "type": "string", "description": "Input file(s) to query (or use stdin)" }
+      ]
+    },
+    {
+      "namespace": "qo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qo: brew install kiki-ki/tap/qo or curl -sfL https://raw.githubusercontent.com/kiki-ki/go-qo/main/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
