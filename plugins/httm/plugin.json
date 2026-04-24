@@ -1,0 +1,72 @@
+{
+  "name": "httm",
+  "version": "0.1.0",
+  "description": "Interactive, file-level Time Machine-like tool for ZFS/btrfs. Browse and restore file snapshots directly from the terminal.",
+  "source": "https://github.com/kimono-koans/httm",
+  "checks": [
+    { "type": "binary", "name": "httm" }
+  ],
+  "install_guidance": {
+    "plugin": "httm",
+    "binary": "httm",
+    "check": "which httm",
+    "install_steps": [
+      "brew install httm",
+      "Verify: httm --version",
+      "supercli plugins install ./plugins/httm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "httm",
+      "resource": "snapshot",
+      "action": "list",
+      "description": "List file snapshots",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httm",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install httm: brew install httm"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "File or directory path" },
+        { "name": "--select", "type": "string", "description": "Select snapshots by criteria" },
+        { "name": "--deleted", "type": "boolean", "description": "Show deleted files" }
+      ]
+    },
+    {
+      "namespace": "httm",
+      "resource": "snapshot",
+      "action": "restore",
+      "description": "Restore file from snapshot",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httm",
+        "baseArgs": ["--restore"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install httm: brew install httm"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "File path to restore" },
+        { "name": "--snapshot", "type": "string", "description": "Specific snapshot path" }
+      ]
+    },
+    {
+      "namespace": "httm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to httm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install httm: brew install httm"
+      },
+      "args": []
+    }
+  ]
+}

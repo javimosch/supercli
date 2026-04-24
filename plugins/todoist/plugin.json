@@ -1,0 +1,73 @@
+{
+  "name": "todoist",
+  "version": "0.1.0",
+  "description": "Todoist CLI client. Manage tasks, projects, and productivity directly from the command line. Add, list, complete, and organize tasks.",
+  "source": "https://github.com/sachaos/todoist",
+  "checks": [
+    { "type": "binary", "name": "todoist" }
+  ],
+  "install_guidance": {
+    "plugin": "todoist",
+    "binary": "todoist",
+    "check": "which todoist",
+    "install_steps": [
+      "brew install todoist",
+      "Verify: todoist --version",
+      "supercli plugins install ./plugins/todoist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "todoist",
+      "resource": "task",
+      "action": "add",
+      "description": "Add a new task to Todoist",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "todoist",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install todoist: brew install todoist"
+      },
+      "args": [
+        { "name": "content", "type": "string", "description": "Task content" },
+        { "name": "--project", "type": "string", "description": "Project ID" },
+        { "name": "--priority", "type": "integer", "description": "Priority level (1-4)" },
+        { "name": "--due", "type": "string", "description": "Due date" }
+      ]
+    },
+    {
+      "namespace": "todoist",
+      "resource": "task",
+      "action": "list",
+      "description": "List tasks from Todoist",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "todoist",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install todoist: brew install todoist"
+      },
+      "args": [
+        { "name": "--project", "type": "string", "description": "Filter by project" },
+        { "name": "--filter", "type": "string", "description": "Filter query" }
+      ]
+    },
+    {
+      "namespace": "todoist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to todoist CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "todoist",
+        "passthrough": true,
+        "missingDependencyHelp": "Install todoist: brew install todoist"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "dep-tree",
+  "version": "0.1.0",
+  "description": "Render your project's dependency tree in ASCII, track cycles and exports. Visualize and analyze module dependencies across your codebase.",
+  "source": "https://github.com/gabotechs/dep-tree",
+  "checks": [
+    { "type": "binary", "name": "dep-tree" }
+  ],
+  "install_guidance": {
+    "plugin": "dep-tree",
+    "binary": "dep-tree",
+    "check": "which dep-tree",
+    "install_steps": [
+      "brew install dep-tree",
+      "Verify: dep-tree --version",
+      "supercli plugins install ./plugins/dep-tree --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dep-tree",
+      "resource": "deps",
+      "action": "show",
+      "description": "Show dependency tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dep-tree",
+        "baseArgs": ["render"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dep-tree: brew install dep-tree"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path or file" },
+        { "name": "--config", "type": "string", "description": "Config file path" }
+      ]
+    },
+    {
+      "namespace": "dep-tree",
+      "resource": "deps",
+      "action": "check",
+      "description": "Check for dependency cycles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dep-tree",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dep-tree: brew install dep-tree"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path" },
+        { "name": "--config", "type": "string", "description": "Config file path" }
+      ]
+    },
+    {
+      "namespace": "dep-tree",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dep-tree CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dep-tree",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dep-tree: brew install dep-tree"
+      },
+      "args": []
+    }
+  ]
+}

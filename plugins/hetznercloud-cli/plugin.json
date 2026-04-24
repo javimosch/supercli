@@ -1,0 +1,73 @@
+{
+  "name": "hetznercloud-cli",
+  "version": "0.1.0",
+  "description": "Official Hetzner Cloud command line interface. Manage servers, networks, volumes, and all Hetzner Cloud resources from the terminal.",
+  "source": "https://github.com/hetznercloud/cli",
+  "checks": [
+    { "type": "binary", "name": "hcloud" }
+  ],
+  "install_guidance": {
+    "plugin": "hetznercloud-cli",
+    "binary": "hcloud",
+    "check": "which hcloud",
+    "install_steps": [
+      "brew install hcloud",
+      "Verify: hcloud --version",
+      "supercli plugins install ./plugins/hetznercloud-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hetznercloud-cli",
+      "resource": "server",
+      "action": "list",
+      "description": "List Hetzner Cloud servers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hcloud",
+        "baseArgs": ["server", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install hcloud: brew install hcloud"
+      },
+      "args": [
+        { "name": "--selector", "type": "string", "description": "Label selector" },
+        { "name": "--output", "type": "string", "description": "Output format (json, yaml)" }
+      ]
+    },
+    {
+      "namespace": "hetznercloud-cli",
+      "resource": "server",
+      "action": "create",
+      "description": "Create a new server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hcloud",
+        "baseArgs": ["server", "create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install hcloud: brew install hcloud"
+      },
+      "args": [
+        { "name": "name", "type": "string", "description": "Server name" },
+        { "name": "--type", "type": "string", "description": "Server type" },
+        { "name": "--image", "type": "string", "description": "OS image" },
+        { "name": "--location", "type": "string", "description": "Data center location" }
+      ]
+    },
+    {
+      "namespace": "hetznercloud-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hcloud CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hcloud",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hcloud: brew install hcloud"
+      },
+      "args": []
+    }
+  ]
+}

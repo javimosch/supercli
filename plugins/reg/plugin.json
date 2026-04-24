@@ -1,0 +1,73 @@
+{
+  "name": "reg",
+  "version": "0.1.0",
+  "description": "Docker registry CLI. List, inspect, and manage Docker registry images and tags from the command line without pulling.",
+  "source": "https://github.com/genuinetools/reg",
+  "checks": [
+    { "type": "binary", "name": "reg" }
+  ],
+  "install_guidance": {
+    "plugin": "reg",
+    "binary": "reg",
+    "check": "which reg",
+    "install_steps": [
+      "brew install reg",
+      "Verify: reg --version",
+      "supercli plugins install ./plugins/reg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "reg",
+      "resource": "image",
+      "action": "list",
+      "description": "List images in registry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reg",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install reg: brew install reg"
+      },
+      "args": [
+        { "name": "registry", "type": "string", "description": "Registry URL" },
+        { "name": "--username", "type": "string", "description": "Registry username" },
+        { "name": "--password", "type": "string", "description": "Registry password" }
+      ]
+    },
+    {
+      "namespace": "reg",
+      "resource": "image",
+      "action": "inspect",
+      "description": "Inspect image manifest",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reg",
+        "baseArgs": ["manifest"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install reg: brew install reg"
+      },
+      "args": [
+        { "name": "image", "type": "string", "description": "Image reference" },
+        { "name": "--username", "type": "string", "description": "Registry username" },
+        { "name": "--password", "type": "string", "description": "Registry password" }
+      ]
+    },
+    {
+      "namespace": "reg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to reg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install reg: brew install reg"
+      },
+      "args": []
+    }
+  ]
+}
