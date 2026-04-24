@@ -1,0 +1,166 @@
+{
+  "name": "tirith",
+  "version": "0.1.0",
+  "description": "Terminal security for developers and AI agents. Intercepts homograph URLs, pipe-to-shell, ANSI injection, obfuscated payloads, data exfiltration, and malicious AI skills/configs before they execute. Offline by default with no telemetry.",
+  "source": "https://github.com/sheeki03/tirith",
+  "checks": [
+    { "type": "binary", "name": "tirith" }
+  ],
+  "install_guidance": {
+    "plugin": "tirith",
+    "binary": "tirith",
+    "check": "which tirith",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash",
+      "Verify: tirith doctor",
+      "supercli plugins install ./plugins/tirith --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tirith",
+      "resource": "self",
+      "action": "doctor",
+      "description": "Check tirith installation and configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["doctor"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tirith",
+      "resource": "security",
+      "action": "check",
+      "description": "Check a command for security threats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "--", "type": "string", "description": "Command to check (follows --)" },
+        { "name": "--include", "type": "string", "description": "Include patterns" },
+        { "name": "--exclude", "type": "string", "description": "Exclude patterns" },
+        { "name": "--profile", "type": "string", "description": "Use a specific profile" },
+        { "name": "--format", "type": "string", "description": "Output format (e.g. sarif)" },
+        { "name": "--ci", "type": "boolean", "description": "CI-friendly output" },
+        { "name": "--summary", "type": "boolean", "description": "Show summary only" }
+      ]
+    },
+    {
+      "namespace": "tirith",
+      "resource": "security",
+      "action": "scan",
+      "description": "Scan a directory path for security issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["scan"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Directory path to scan" },
+        { "name": "--include", "type": "string", "description": "Include patterns" },
+        { "name": "--exclude", "type": "string", "description": "Exclude patterns" },
+        { "name": "--profile", "type": "string", "description": "Use a specific profile" }
+      ]
+    },
+    {
+      "namespace": "tirith",
+      "resource": "security",
+      "action": "paste",
+      "description": "Check clipboard paste for security threats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["paste"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tirith",
+      "resource": "threat",
+      "action": "update",
+      "description": "Update threat database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["threat-db", "update"],
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tirith",
+      "resource": "threat",
+      "action": "status",
+      "description": "Check threat database status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["threat-db", "status"],
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tirith",
+      "resource": "url",
+      "action": "score",
+      "description": "Score a URL for security risks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["score"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to score" }
+      ]
+    },
+    {
+      "namespace": "tirith",
+      "resource": "url",
+      "action": "run",
+      "description": "Run a URL with security checks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "baseArgs": ["run"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to run" }
+      ]
+    },
+    {
+      "namespace": "tirith",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tirith CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tirith",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tirith: curl -fsSL https://raw.githubusercontent.com/sheeki03/tirith/main/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
