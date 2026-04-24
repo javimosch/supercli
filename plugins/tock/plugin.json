@@ -1,0 +1,205 @@
+{
+  "name": "tock",
+  "version": "0.1.0",
+  "description": "Powerful time tracking tool for the command line with headless report, export, and productivity analysis.",
+  "source": "https://github.com/kriuchkov/tock",
+  "checks": [
+    { "type": "binary", "name": "tock" }
+  ],
+  "install_guidance": {
+    "plugin": "tock",
+    "binary": "tock",
+    "check": "which tock",
+    "install_steps": [
+      "brew install kriuchkov/tap/tock",
+      "Verify: tock --version",
+      "supercli plugins install ./plugins/tock --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tock",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tock version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock or go install github.com/kriuchkov/tock/cmd/tock@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tock",
+      "resource": "activity",
+      "action": "start",
+      "description": "Start tracking time for an activity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["start"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "project", "type": "string", "description": "Project name" },
+        { "name": "description", "type": "string", "description": "Activity description" },
+        { "name": "-p", "type": "string", "description": "Project name (flag)" },
+        { "name": "-d", "type": "string", "description": "Activity description (flag)" },
+        { "name": "-t", "type": "string", "description": "Start time (HH:MM)" },
+        { "name": "--note", "type": "string", "description": "Note for the entry" },
+        { "name": "--tag", "type": "string", "description": "Tag for the entry" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "activity",
+      "action": "stop",
+      "description": "Stop the current activity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["stop"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "-t", "type": "string", "description": "Stop time (HH:MM)" },
+        { "name": "--note", "type": "string", "description": "Note for the entry" },
+        { "name": "--tag", "type": "string", "description": "Tag for the entry" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "activity",
+      "action": "continue",
+      "description": "Continue a previous activity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["continue"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "index", "type": "string", "description": "Activity index (from tock last)" },
+        { "name": "-d", "type": "string", "description": "New description" },
+        { "name": "-p", "type": "string", "description": "New project" },
+        { "name": "-t", "type": "string", "description": "Start time (HH:MM)" },
+        { "name": "--note", "type": "string", "description": "Note for the entry" },
+        { "name": "--tag", "type": "string", "description": "Tag for the entry" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "activity",
+      "action": "current",
+      "description": "Show the currently running activity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["current"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "description": "Custom output format template" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "activity",
+      "action": "last",
+      "description": "List recent activities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["last"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "-n", "type": "string", "description": "Number of activities to show (default 10)" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "report",
+      "action": "generate",
+      "description": "Generate a text report for a specific day",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["report"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "--today", "type": "boolean", "description": "Report for today" },
+        { "name": "--yesterday", "type": "boolean", "description": "Report for yesterday" },
+        { "name": "--date", "type": "string", "description": "Report for specific date (YYYY-MM-DD)" },
+        { "name": "-p", "type": "string", "description": "Filter by project" },
+        { "name": "-d", "type": "string", "description": "Filter by description" },
+        { "name": "--summary", "type": "boolean", "description": "Show only project summaries" },
+        { "name": "--json", "type": "boolean", "description": "Output report as JSON" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "report",
+      "action": "export",
+      "description": "Export report data as text, CSV, or JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["export"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "--today", "type": "boolean", "description": "Export data for today" },
+        { "name": "--yesterday", "type": "boolean", "description": "Export data for yesterday" },
+        { "name": "--date", "type": "string", "description": "Export data for a specific date (YYYY-MM-DD)" },
+        { "name": "-p", "type": "string", "description": "Filter by project" },
+        { "name": "-d", "type": "string", "description": "Filter by description" },
+        { "name": "-m", "type": "string", "description": "Export format: txt, csv, or json (default txt)" },
+        { "name": "-o", "type": "string", "description": "Output directory" },
+        { "name": "--stdout", "type": "boolean", "description": "Print output to stdout instead of writing a file" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "report",
+      "action": "analyze",
+      "description": "Generate productivity analysis with Deep Work Score and Chronotype",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "baseArgs": ["analyze"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": [
+        { "name": "-n", "type": "string", "description": "Number of days to analyze (default 30)" },
+        { "name": "--days", "type": "string", "description": "Number of days to analyze (default 30)" }
+      ]
+    },
+    {
+      "namespace": "tock",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tock CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tock",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tock: brew install kriuchkov/tap/tock"
+      },
+      "args": []
+    }
+  ]
+}
