@@ -1,0 +1,91 @@
+{
+  "name": "bit",
+  "version": "0.1.0",
+  "description": "CLI/TUI ANSI logo designer and font library. Render ASCII/ANSI art text with gradients, shadows, scaling, and multi-format export.",
+  "source": "https://github.com/superstarryeyes/bit",
+  "checks": [
+    { "type": "binary", "name": "bit" }
+  ],
+  "install_guidance": {
+    "plugin": "bit",
+    "binary": "bit",
+    "check": "which bit",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/superstarryeyes/bit/main/install.sh | bash",
+      "Verify: bit --version",
+      "supercli plugins install ./plugins/bit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bit: curl -fsSL https://raw.githubusercontent.com/superstarryeyes/bit/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bit",
+      "resource": "text",
+      "action": "render",
+      "description": "Render text as ANSI/ASCII art",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bit",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bit: curl -fsSL https://raw.githubusercontent.com/superstarryeyes/bit/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "text", "type": "string", "description": "Text to render" },
+        { "name": "-font", "type": "string", "description": "Font name (use 'bit font list' to see available)" },
+        { "name": "-color", "type": "string", "description": "Text color (ANSI code or hex like #FF5733)" },
+        { "name": "-gradient", "type": "string", "description": "Gradient end color (ANSI code or hex)" },
+        { "name": "-direction", "type": "string", "description": "Gradient direction: up, down, left, right" },
+        { "name": "-scale", "type": "string", "description": "Scale factor: 0.5, 1, 2, 4" },
+        { "name": "-shadow", "type": "boolean", "description": "Enable shadow" },
+        { "name": "-shadow-h", "type": "string", "description": "Horizontal shadow offset (-5 to 5)" },
+        { "name": "-shadow-v", "type": "string", "description": "Vertical shadow offset (-5 to 5)" },
+        { "name": "-shadow-style", "type": "string", "description": "Shadow style: light, medium, dark" },
+        { "name": "-align", "type": "string", "description": "Text alignment: left, center, right" },
+        { "name": "-char-spacing", "type": "string", "description": "Character spacing (0-10)" },
+        { "name": "-word-spacing", "type": "string", "description": "Word spacing (0-20)" },
+        { "name": "-line-spacing", "type": "string", "description": "Line spacing (0-10)" }
+      ]
+    },
+    {
+      "namespace": "bit",
+      "resource": "font",
+      "action": "list",
+      "description": "List all available fonts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bit",
+        "baseArgs": ["-list"],
+        "missingDependencyHelp": "Install bit: curl -fsSL https://raw.githubusercontent.com/superstarryeyes/bit/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bit",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bit: curl -fsSL https://raw.githubusercontent.com/superstarryeyes/bit/main/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
