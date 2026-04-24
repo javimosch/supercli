@@ -1,0 +1,71 @@
+{
+  "name": "vhs",
+  "version": "0.1.0",
+  "description": "Your CLI home video recorder. Record terminal sessions as GIFs or videos using simple tape files. Perfect for demos, tutorials, and documentation.",
+  "source": "https://github.com/charmbracelet/vhs",
+  "checks": [
+    { "type": "binary", "name": "vhs" }
+  ],
+  "install_guidance": {
+    "plugin": "vhs",
+    "binary": "vhs",
+    "check": "which vhs",
+    "install_steps": [
+      "brew install vhs",
+      "Verify: vhs --version",
+      "supercli plugins install ./plugins/vhs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vhs",
+      "resource": "tape",
+      "action": "record",
+      "description": "Record terminal session from tape file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vhs",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vhs: brew install vhs"
+      },
+      "args": [
+        { "name": "tape", "type": "string", "required": true, "description": "Tape file to record" },
+        { "name": "--output", "type": "string", "description": "Output file path" },
+        { "name": "--format", "type": "string", "description": "Output format (gif, mp4, webm)" },
+        { "name": "--no-audio", "type": "boolean", "description": "Disable audio" }
+      ]
+    },
+    {
+      "namespace": "vhs",
+      "resource": "tape",
+      "action": "validate",
+      "description": "Validate tape file syntax",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vhs",
+        "baseArgs": ["validate"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install vhs: brew install vhs"
+      },
+      "args": [
+        { "name": "tape", "type": "string", "required": true, "description": "Tape file to validate" }
+      ]
+    },
+    {
+      "namespace": "vhs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vhs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vhs",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vhs: brew install vhs"
+      },
+      "args": []
+    }
+  ]
+}
