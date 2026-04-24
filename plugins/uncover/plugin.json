@@ -1,0 +1,55 @@
+{
+  "name": "uncover",
+  "version": "0.1.0",
+  "description": "Quickly discover exposed hosts on the internet using multiple search engines. Security reconnaissance tool for finding exposed assets.",
+  "source": "https://github.com/projectdiscovery/uncover",
+  "checks": [
+    { "type": "binary", "name": "uncover" }
+  ],
+  "install_guidance": {
+    "plugin": "uncover",
+    "binary": "uncover",
+    "check": "which uncover",
+    "install_steps": [
+      "brew install uncover",
+      "Verify: uncover --version",
+      "supercli plugins install ./plugins/uncover --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uncover",
+      "resource": "host",
+      "action": "discover",
+      "description": "Discover exposed hosts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uncover",
+        "passthrough": true,
+        "missingDependencyHelp": "Install uncover: brew install uncover"
+      },
+      "args": [
+        { "name": "query", "type": "string", "description": "Search query" },
+        { "name": "--engine", "type": "string", "description": "Search engine" },
+        { "name": "--json", "type": "boolean", "description": "JSON output" },
+        { "name": "--limit", "type": "integer", "description": "Result limit" }
+      ]
+    },
+    {
+      "namespace": "uncover",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uncover CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uncover",
+        "passthrough": true,
+        "missingDependencyHelp": "Install uncover: brew install uncover"
+      },
+      "args": []
+    }
+  ]
+}
