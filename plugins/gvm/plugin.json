@@ -1,0 +1,133 @@
+{
+  "name": "gvm",
+  "version": "0.1.0",
+  "description": "Global programming language version manager. Install, manage, and switch versions of multiple languages from a single CLI.",
+  "source": "https://github.com/toodofun/gvm",
+  "checks": [
+    { "type": "binary", "name": "gvm" }
+  ],
+  "install_guidance": {
+    "plugin": "gvm",
+    "binary": "gvm",
+    "check": "which gvm",
+    "install_steps": [
+      "Download the appropriate binary from GitHub Releases (https://github.com/toodofun/gvm/releases)",
+      "Place it in your PATH and make it executable",
+      "Verify: gvm --version",
+      "supercli plugins install ./plugins/gvm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvm",
+      "resource": "version",
+      "action": "list-remote",
+      "description": "List available remote versions for a language",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "baseArgs": ["ls-remote"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": [
+        { "name": "language", "type": "string", "required": true, "description": "Programming language (e.g. node, python, go, rust)" }
+      ]
+    },
+    {
+      "namespace": "gvm",
+      "resource": "version",
+      "action": "list",
+      "description": "List installed versions for a language",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": [
+        { "name": "language", "type": "string", "required": true, "description": "Programming language (e.g. node, python, go, rust)" }
+      ]
+    },
+    {
+      "namespace": "gvm",
+      "resource": "version",
+      "action": "install",
+      "description": "Install a specific language version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": [
+        { "name": "language", "type": "string", "required": true, "description": "Programming language (e.g. node, python, go, rust)" },
+        { "name": "version", "type": "string", "required": true, "description": "Version to install (e.g. 18.0.0, 3.11.0)" }
+      ]
+    },
+    {
+      "namespace": "gvm",
+      "resource": "version",
+      "action": "uninstall",
+      "description": "Uninstall a specific language version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "baseArgs": ["uninstall"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": [
+        { "name": "language", "type": "string", "required": true, "description": "Programming language (e.g. node, python, go, rust)" },
+        { "name": "version", "type": "string", "required": true, "description": "Version to uninstall (e.g. 18.0.0, 3.11.0)" }
+      ]
+    },
+    {
+      "namespace": "gvm",
+      "resource": "version",
+      "action": "current",
+      "description": "Show the currently active version for a language",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "baseArgs": ["current"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": [
+        { "name": "language", "type": "string", "required": true, "description": "Programming language (e.g. node, python, go, rust)" }
+      ]
+    },
+    {
+      "namespace": "gvm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gvm: download from https://github.com/toodofun/gvm/releases or build from source"
+      },
+      "args": []
+    }
+  ]
+}
