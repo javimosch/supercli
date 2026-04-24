@@ -1,0 +1,56 @@
+{
+  "name": "cloudlist",
+  "version": "0.1.0",
+  "description": "Cloudlist is a tool for listing Assets from multiple Cloud Providers. Enumerate cloud assets across AWS, GCP, Azure, and more.",
+  "source": "https://github.com/projectdiscovery/cloudlist",
+  "checks": [
+    { "type": "binary", "name": "cloudlist" }
+  ],
+  "install_guidance": {
+    "plugin": "cloudlist",
+    "binary": "cloudlist",
+    "check": "which cloudlist",
+    "install_steps": [
+      "brew install cloudlist",
+      "Verify: cloudlist --version",
+      "supercli plugins install ./plugins/cloudlist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cloudlist",
+      "resource": "asset",
+      "action": "enumerate",
+      "description": "Enumerate cloud assets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudlist",
+        "baseArgs": ["enumerate"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cloudlist: brew install cloudlist"
+      },
+      "args": [
+        { "name": "provider", "type": "string", "description": "Cloud provider (aws, gcp, azure)" },
+        { "name": "--json", "type": "boolean", "description": "JSON output" },
+        { "name": "--config", "type": "string", "description": "Config file path" },
+        { "name": "--output", "type": "string", "description": "Output file" }
+      ]
+    },
+    {
+      "namespace": "cloudlist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cloudlist CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudlist",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cloudlist: brew install cloudlist"
+      },
+      "args": []
+    }
+  ]
+}
