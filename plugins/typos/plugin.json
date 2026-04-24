@@ -1,0 +1,55 @@
+{
+  "name": "typos",
+  "version": "0.1.0",
+  "description": "Source code spell checker. Find and fix typos in source code files. Fast, customizable, and easy to integrate into CI/CD pipelines.",
+  "source": "https://github.com/crate-ci/typos",
+  "checks": [
+    { "type": "binary", "name": "typos" }
+  ],
+  "install_guidance": {
+    "plugin": "typos",
+    "binary": "typos",
+    "check": "which typos",
+    "install_steps": [
+      "brew install typos",
+      "Verify: typos --version",
+      "supercli plugins install ./plugins/typos --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "typos",
+      "resource": "code",
+      "action": "check",
+      "description": "Check code for typos",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "typos",
+        "passthrough": true,
+        "missingDependencyHelp": "Install typos: brew install typos"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Path to check" },
+        { "name": "--fix", "type": "boolean", "description": "Auto-fix typos" },
+        { "name": "--format", "type": "string", "description": "Output format" },
+        { "name": "--exclude", "type": "string", "description": "Exclude files" }
+      ]
+    },
+    {
+      "namespace": "typos",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to typos CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "typos",
+        "passthrough": true,
+        "missingDependencyHelp": "Install typos: brew install typos"
+      },
+      "args": []
+    }
+  ]
+}
