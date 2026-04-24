@@ -1,0 +1,72 @@
+{
+  "name": "ytt",
+  "version": "0.1.0",
+  "description": "YAML templating tool that works on YAML structure instead of text. Template and patch YAML configurations with a powerful overlay mechanism.",
+  "source": "https://github.com/carvel-dev/ytt",
+  "checks": [
+    { "type": "binary", "name": "ytt" }
+  ],
+  "install_guidance": {
+    "plugin": "ytt",
+    "binary": "ytt",
+    "check": "which ytt",
+    "install_steps": [
+      "brew install ytt",
+      "Verify: ytt --version",
+      "supercli plugins install ./plugins/ytt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ytt",
+      "resource": "template",
+      "action": "render",
+      "description": "Render YAML templates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ytt",
+        "baseArgs": ["-f"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ytt: brew install ytt"
+      },
+      "args": [
+        { "name": "files", "type": "string", "description": "Template files or directories" },
+        { "name": "--data-values-file", "type": "string", "description": "Data values file" },
+        { "name": "--output", "type": "string", "description": "Output format (yaml, json)" }
+      ]
+    },
+    {
+      "namespace": "ytt",
+      "resource": "config",
+      "action": "patch",
+      "description": "Patch YAML configurations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ytt",
+        "baseArgs": ["-f"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ytt: brew install ytt"
+      },
+      "args": [
+        { "name": "files", "type": "string", "description": "Config and overlay files" },
+        { "name": "--output", "type": "string", "description": "Output format" }
+      ]
+    },
+    {
+      "namespace": "ytt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ytt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ytt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ytt: brew install ytt"
+      },
+      "args": []
+    }
+  ]
+}

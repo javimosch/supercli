@@ -1,0 +1,54 @@
+{
+  "name": "carapace-bin",
+  "version": "0.1.0",
+  "description": "Multi-shell completion generator. Generate shell completions for Bash, Zsh, Fish, PowerShell, and more with a single command.",
+  "source": "https://github.com/carapace-sh/carapace-bin",
+  "checks": [
+    { "type": "binary", "name": "carapace" }
+  ],
+  "install_guidance": {
+    "plugin": "carapace-bin",
+    "binary": "carapace",
+    "check": "which carapace",
+    "install_steps": [
+      "brew install carapace",
+      "Verify: carapace --version",
+      "supercli plugins install ./plugins/carapace-bin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "carapace-bin",
+      "resource": "completion",
+      "action": "generate",
+      "description": "Generate shell completions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "carapace",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install carapace: brew install carapace"
+      },
+      "args": [
+        { "name": "command", "type": "string", "description": "Command to generate completion for" },
+        { "name": "shell", "type": "string", "description": "Target shell (bash, zsh, fish, pwsh)" }
+      ]
+    },
+    {
+      "namespace": "carapace-bin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to carapace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "carapace",
+        "passthrough": true,
+        "missingDependencyHelp": "Install carapace: brew install carapace"
+      },
+      "args": []
+    }
+  ]
+}

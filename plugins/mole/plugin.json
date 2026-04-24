@@ -1,0 +1,56 @@
+{
+  "name": "mole",
+  "version": "0.1.0",
+  "description": "CLI application to create SSH tunnels focused on resiliency and user experience. Automatically reconnect and manage multiple SSH tunnels.",
+  "source": "https://github.com/davrodpin/mole",
+  "checks": [
+    { "type": "binary", "name": "mole" }
+  ],
+  "install_guidance": {
+    "plugin": "mole",
+    "binary": "mole",
+    "check": "which mole",
+    "install_steps": [
+      "brew install mole",
+      "Verify: mole --version",
+      "supercli plugins install ./plugins/mole --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mole",
+      "resource": "tunnel",
+      "action": "start",
+      "description": "Start an SSH tunnel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mole",
+        "baseArgs": ["start"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install mole: brew install mole"
+      },
+      "args": [
+        { "name": "local", "type": "string", "description": "Local address" },
+        { "name": "remote", "type": "string", "description": "Remote address" },
+        { "name": "--server", "type": "string", "description": "SSH server address" },
+        { "name": "--key", "type": "string", "description": "SSH private key path" }
+      ]
+    },
+    {
+      "namespace": "mole",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mole CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mole",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mole: brew install mole"
+      },
+      "args": []
+    }
+  ]
+}

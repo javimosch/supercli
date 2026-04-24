@@ -1,0 +1,55 @@
+{
+  "name": "ots",
+  "version": "0.1.0",
+  "description": "Share end-to-end encrypted secrets with others via a one-time URL. Securely share sensitive information that can only be viewed once.",
+  "source": "https://github.com/sniptt-official/ots",
+  "checks": [
+    { "type": "binary", "name": "ots" }
+  ],
+  "install_guidance": {
+    "plugin": "ots",
+    "binary": "ots",
+    "check": "which ots",
+    "install_steps": [
+      "brew install ots",
+      "Verify: ots --version",
+      "supercli plugins install ./plugins/ots --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ots",
+      "resource": "secret",
+      "action": "share",
+      "description": "Create a one-time secret",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ots",
+        "baseArgs": ["new"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ots: brew install ots"
+      },
+      "args": [
+        { "name": "value", "type": "string", "description": "Secret value to share" },
+        { "name": "--password", "type": "string", "description": "Password for encryption" },
+        { "name": "--expires", "type": "string", "description": "Expiration time" }
+      ]
+    },
+    {
+      "namespace": "ots",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ots CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ots",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ots: brew install ots"
+      },
+      "args": []
+    }
+  ]
+}

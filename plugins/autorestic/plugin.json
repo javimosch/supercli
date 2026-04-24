@@ -1,0 +1,70 @@
+{
+  "name": "autorestic",
+  "version": "0.1.0",
+  "description": "Config wrapper for restic backup. Configure, run, and forget backup tasks with a simple YAML configuration file.",
+  "source": "https://github.com/cupcakearmy/autorestic",
+  "checks": [
+    { "type": "binary", "name": "autorestic" }
+  ],
+  "install_guidance": {
+    "plugin": "autorestic",
+    "binary": "autorestic",
+    "check": "which autorestic",
+    "install_steps": [
+      "brew install autorestic",
+      "Verify: autorestic --version",
+      "supercli plugins install ./plugins/autorestic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "autorestic",
+      "resource": "backup",
+      "action": "run",
+      "description": "Run configured backups",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "autorestic",
+        "baseArgs": ["backup"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install autorestic: brew install autorestic"
+      },
+      "args": [
+        { "name": "--location", "type": "string", "description": "Specific location to backup" },
+        { "name": "--dry-run", "type": "boolean", "description": "Show what would be backed up" }
+      ]
+    },
+    {
+      "namespace": "autorestic",
+      "resource": "backup",
+      "action": "check",
+      "description": "Check backup status and integrity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "autorestic",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install autorestic: brew install autorestic"
+      },
+      "args": [
+        { "name": "--location", "type": "string", "description": "Specific location to check" }
+      ]
+    },
+    {
+      "namespace": "autorestic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to autorestic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "autorestic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install autorestic: brew install autorestic"
+      },
+      "args": []
+    }
+  ]
+}
