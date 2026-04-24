@@ -1,0 +1,92 @@
+{
+  "name": "asciinema",
+  "version": "0.1.0",
+  "description": "Terminal session recorder, streamer and player. Record terminal sessions and share them as asciicasts. Perfect for tutorials, demos, and bug reports.",
+  "source": "https://github.com/asciinema/asciinema",
+  "checks": [
+    { "type": "binary", "name": "asciinema" }
+  ],
+  "install_guidance": {
+    "plugin": "asciinema",
+    "binary": "asciinema",
+    "check": "which asciinema",
+    "install_steps": [
+      "brew install asciinema",
+      "Verify: asciinema --version",
+      "supercli plugins install ./plugins/asciinema --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "asciinema",
+      "resource": "session",
+      "action": "record",
+      "description": "Record terminal session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asciinema",
+        "baseArgs": ["rec"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install asciinema: brew install asciinema"
+      },
+      "args": [
+        { "name": "filename", "type": "string", "description": "Output filename" },
+        { "name": "--command", "type": "string", "description": "Command to record" },
+        { "name": "--title", "type": "string", "description": "Recording title" },
+        { "name": "--idle-time-limit", "type": "integer", "description": "Idle time limit in seconds" },
+        { "name": "--overwrite", "type": "boolean", "description": "Overwrite existing file" },
+        { "name": "--append", "type": "boolean", "description": "Append to existing file" }
+      ]
+    },
+    {
+      "namespace": "asciinema",
+      "resource": "session",
+      "action": "play",
+      "description": "Play recorded session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asciinema",
+        "baseArgs": ["play"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install asciinema: brew install asciinema"
+      },
+      "args": [
+        { "name": "filename", "type": "string", "required": true, "description": "Recording filename" },
+        { "name": "--idle-time-limit", "type": "integer", "description": "Idle time limit in seconds" },
+        { "name": "--speed", "type": "float", "description": "Playback speed multiplier" }
+      ]
+    },
+    {
+      "namespace": "asciinema",
+      "resource": "session",
+      "action": "upload",
+      "description": "Upload session to asciinema.org",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asciinema",
+        "baseArgs": ["upload"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install asciinema: brew install asciinema"
+      },
+      "args": [
+        { "name": "filename", "type": "string", "required": true, "description": "Recording filename" }
+      ]
+    },
+    {
+      "namespace": "asciinema",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to asciinema CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asciinema",
+        "passthrough": true,
+        "missingDependencyHelp": "Install asciinema: brew install asciinema"
+      },
+      "args": []
+    }
+  ]
+}
