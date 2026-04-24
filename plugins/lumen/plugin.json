@@ -1,0 +1,117 @@
+{
+  "name": "lumen",
+  "version": "0.1.0",
+  "description": "Beautiful git diff viewer with AI-powered commit message generation and git command generation. Generate meaningful commits, explain changes, and execute git commands from natural language.",
+  "source": "https://github.com/jnsahaj/lumen",
+  "checks": [
+    { "type": "binary", "name": "lumen" }
+  ],
+  "install_guidance": {
+    "plugin": "lumen",
+    "binary": "lumen",
+    "check": "which lumen",
+    "install_steps": [
+      "brew install jnsahaj/lumen/lumen",
+      "Verify: lumen --version",
+      "supercli plugins install ./plugins/lumen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lumen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lumen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lumen",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lumen: brew install jnsahaj/lumen/lumen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lumen",
+      "resource": "diff",
+      "action": "view",
+      "description": "View git diff with beautiful formatting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lumen",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lumen: brew install jnsahaj/lumen/lumen"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "File or directory path to diff" },
+        { "name": "--cached", "type": "boolean", "description": "Show staged changes" },
+        { "name": "--stat", "type": "boolean", "description": "Show diffstat" }
+      ]
+    },
+    {
+      "namespace": "lumen",
+      "resource": "commit",
+      "action": "draft",
+      "description": "Generate commit message from staged changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lumen",
+        "baseArgs": ["draft"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lumen: brew install jnsahaj/lumen/lumen"
+      },
+      "args": [
+        { "name": "--context", "type": "string", "description": "Additional context for commit message" }
+      ]
+    },
+    {
+      "namespace": "lumen",
+      "resource": "git",
+      "action": "operate",
+      "description": "Generate and execute git commands from natural language",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lumen",
+        "baseArgs": ["operate"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lumen: brew install jnsahaj/lumen/lumen"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Natural language git command query" }
+      ]
+    },
+    {
+      "namespace": "lumen",
+      "resource": "changes",
+      "action": "explain",
+      "description": "Explain changes with AI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lumen",
+        "baseArgs": ["explain"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lumen: brew install jnsahaj/lumen/lumen"
+      },
+      "args": [
+        { "name": "--list", "type": "boolean", "description": "List changes with fzf" }
+      ]
+    },
+    {
+      "namespace": "lumen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lumen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lumen",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lumen: brew install jnsahaj/lumen/lumen"
+      },
+      "args": []
+    }
+  ]
+}
