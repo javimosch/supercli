@@ -1,0 +1,61 @@
+{
+  "name": "yq",
+  "version": "0.1.0",
+  "description": "A portable command-line YAML, JSON, XML, CSV, TOML, HCL and properties processor. Query and transform structured data with a simple syntax.",
+  "source": "https://github.com/mikefarah/yq",
+  "checks": [
+    { "type": "binary", "name": "yq" }
+  ],
+  "install_guidance": {
+    "plugin": "yq",
+    "binary": "yq",
+    "check": "which yq",
+    "install_steps": [
+      "brew install yq",
+      "Verify: yq --version",
+      "supercli plugins install ./plugins/yq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yq",
+      "resource": "data",
+      "action": "query",
+      "description": "Query and transform data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install yq: brew install yq"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "yq expression to evaluate" },
+        { "name": "files", "type": "string", "description": "Input files" },
+        { "name": "-y", "type": "boolean", "description": "YAML output" },
+        { "name": "-j", "type": "boolean", "description": "JSON output" },
+        { "name": "-x", "type": "boolean", "description": "XML output" },
+        { "name": "-c", "type": "boolean", "description": "CSV output" },
+        { "name": "-t", "type": "boolean", "description": "TOML output" },
+        { "name": "-p", "type": "string", "description": "Output format (y, j, x, c, t)" },
+        { "name": "-i", "type": "boolean", "description": "Edit file in place" },
+        { "name": "-n", "type": "boolean", "description": "Null input" }
+      ]
+    },
+    {
+      "namespace": "yq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install yq: brew install yq"
+      },
+      "args": []
+    }
+  ]
+}
