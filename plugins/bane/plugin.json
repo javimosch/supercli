@@ -1,0 +1,55 @@
+{
+  "name": "bane",
+  "version": "0.1.0",
+  "description": "Custom & better AppArmor profile generator for Docker containers. Generate security profiles for Docker containers automatically.",
+  "source": "https://github.com/genuinetools/bane",
+  "checks": [
+    { "type": "binary", "name": "bane" }
+  ],
+  "install_guidance": {
+    "plugin": "bane",
+    "binary": "bane",
+    "check": "which bane",
+    "install_steps": [
+      "brew install bane",
+      "Verify: bane --version",
+      "supercli plugins install ./plugins/bane --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bane",
+      "resource": "profile",
+      "action": "generate",
+      "description": "Generate AppArmor profile for container",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bane",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bane: brew install bane"
+      },
+      "args": [
+        { "name": "image", "type": "string", "description": "Docker image name" },
+        { "name": "--profile", "type": "string", "description": "Profile name" },
+        { "name": "--output", "type": "string", "description": "Output file" },
+        { "name": "--dry-run", "type": "boolean", "description": "Dry run without changes" }
+      ]
+    },
+    {
+      "namespace": "bane",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bane CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bane",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bane: brew install bane"
+      },
+      "args": []
+    }
+  ]
+}
