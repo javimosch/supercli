@@ -1,0 +1,55 @@
+{
+  "name": "bandwhich",
+  "version": "0.1.0",
+  "description": "Terminal bandwidth utilization tool. Display network utilization by process, connection, and remote IP/hostname with real-time monitoring.",
+  "source": "https://github.com/imsnif/bandwhich",
+  "checks": [
+    { "type": "binary", "name": "bandwhich" }
+  ],
+  "install_guidance": {
+    "plugin": "bandwhich",
+    "binary": "bandwhich",
+    "check": "which bandwhich",
+    "install_steps": [
+      "brew install bandwhich",
+      "Verify: bandwhich --version",
+      "supercli plugins install ./plugins/bandwhich --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bandwhich",
+      "resource": "network",
+      "action": "monitor",
+      "description": "Monitor network utilization in real-time",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bandwhich",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bandwhich: brew install bandwhich"
+      },
+      "args": [
+        { "name": "--interface", "type": "string", "description": "Network interface to monitor" },
+        { "name": "--raw", "type": "boolean", "description": "Output raw data without TUI" },
+        { "name": "--dns", "type": "boolean", "description": "Attempt DNS resolution" }
+      ]
+    },
+    {
+      "namespace": "bandwhich",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bandwhich CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bandwhich",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bandwhich: brew install bandwhich"
+      },
+      "args": []
+    }
+  ]
+}

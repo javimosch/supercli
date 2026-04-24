@@ -1,0 +1,56 @@
+{
+  "name": "dog",
+  "version": "0.1.0",
+  "description": "A command-line DNS client. Query DNS servers with a colorful, human-readable output and support for all major record types.",
+  "source": "https://github.com/ogham/dog",
+  "checks": [
+    { "type": "binary", "name": "dog" }
+  ],
+  "install_guidance": {
+    "plugin": "dog",
+    "binary": "dog",
+    "check": "which dog",
+    "install_steps": [
+      "brew install dog",
+      "Verify: dog --version",
+      "supercli plugins install ./plugins/dog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dog",
+      "resource": "dns",
+      "action": "query",
+      "description": "Query DNS records",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dog",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dog: brew install dog"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "description": "Domain to query" },
+        { "name": "--type", "type": "string", "description": "Record type (A, AAAA, MX, NS, TXT, CNAME, SOA)" },
+        { "name": "--nameserver", "type": "string", "description": "Custom DNS server" },
+        { "name": "--json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "dog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dog: brew install dog"
+      },
+      "args": []
+    }
+  ]
+}

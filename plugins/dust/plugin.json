@@ -1,0 +1,56 @@
+{
+  "name": "dust",
+  "version": "0.1.0",
+  "description": "A more intuitive version of du in rust. Display disk usage with a tree view, showing which directories are taking up space.",
+  "source": "https://github.com/bootandy/dust",
+  "checks": [
+    { "type": "binary", "name": "dust" }
+  ],
+  "install_guidance": {
+    "plugin": "dust",
+    "binary": "dust",
+    "check": "which dust",
+    "install_steps": [
+      "brew install dust",
+      "Verify: dust --version",
+      "supercli plugins install ./plugins/dust --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dust",
+      "resource": "disk",
+      "action": "analyze",
+      "description": "Analyze disk usage with tree view",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dust",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dust: brew install dust"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Directory to analyze" },
+        { "name": "--depth", "type": "integer", "description": "Maximum display depth" },
+        { "name": "--no-percent-bars", "type": "boolean", "description": "Hide percentage bars" },
+        { "name": "--reverse", "type": "boolean", "description": "Reverse sort order" }
+      ]
+    },
+    {
+      "namespace": "dust",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dust CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dust",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dust: brew install dust"
+      },
+      "args": []
+    }
+  ]
+}

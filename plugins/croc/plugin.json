@@ -1,0 +1,72 @@
+{
+  "name": "croc",
+  "version": "0.1.0",
+  "description": "Easily and securely send things from one computer to another. A simple cross-platform file transfer tool with end-to-end encryption and relay support.",
+  "source": "https://github.com/schollz/croc",
+  "checks": [
+    { "type": "binary", "name": "croc" }
+  ],
+  "install_guidance": {
+    "plugin": "croc",
+    "binary": "croc",
+    "check": "which croc",
+    "install_steps": [
+      "brew install croc",
+      "Verify: croc --version",
+      "supercli plugins install ./plugins/croc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "croc",
+      "resource": "file",
+      "action": "send",
+      "description": "Send files or folders securely",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "croc",
+        "baseArgs": ["send"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install croc: brew install croc"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "File or folder to send" },
+        { "name": "--code", "type": "string", "description": "Custom transfer code" },
+        { "name": "--text", "type": "string", "description": "Send text directly" }
+      ]
+    },
+    {
+      "namespace": "croc",
+      "resource": "file",
+      "action": "receive",
+      "description": "Receive files or folders securely",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "croc",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install croc: brew install croc"
+      },
+      "args": [
+        { "name": "code", "type": "string", "description": "Transfer code from sender" },
+        { "name": "--out", "type": "string", "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "croc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to croc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "croc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install croc: brew install croc"
+      },
+      "args": []
+    }
+  ]
+}
