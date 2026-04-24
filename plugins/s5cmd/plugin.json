@@ -1,0 +1,55 @@
+{
+  "name": "s5cmd",
+  "version": "0.1.0",
+  "description": "Parallel S3 and local filesystem execution tool. Fast S3 operations with parallel execution for high performance.",
+  "source": "https://github.com/peak/s5cmd",
+  "checks": [
+    { "type": "binary", "name": "s5cmd" }
+  ],
+  "install_guidance": {
+    "plugin": "s5cmd",
+    "binary": "s5cmd",
+    "check": "which s5cmd",
+    "install_steps": [
+      "brew install s5cmd",
+      "Verify: s5cmd --version",
+      "supercli plugins install ./plugins/s5cmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "s5cmd",
+      "resource": "s3",
+      "action": "copy",
+      "description": "Copy files to/from S3",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "s5cmd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install s5cmd: brew install s5cmd"
+      },
+      "args": [
+        { "name": "source", "type": "string", "description": "Source path" },
+        { "name": "destination", "type": "string", "description": "Destination path" },
+        { "name": "--concurrency", "type": "integer", "description": "Concurrency level" },
+        { "name": "--dry-run", "type": "boolean", "description": "Dry run" }
+      ]
+    },
+    {
+      "namespace": "s5cmd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to s5cmd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "s5cmd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install s5cmd: brew install s5cmd"
+      },
+      "args": []
+    }
+  ]
+}
