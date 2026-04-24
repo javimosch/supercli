@@ -1,0 +1,56 @@
+{
+  "name": "venom",
+  "version": "0.1.0",
+  "description": "Manage and run your integration tests with efficiency. Venom runs executors (script, HTTP Request, web, imap, etc.) and assertions for testing.",
+  "source": "https://github.com/ovh/venom",
+  "checks": [
+    { "type": "binary", "name": "venom" }
+  ],
+  "install_guidance": {
+    "plugin": "venom",
+    "binary": "venom",
+    "check": "which venom",
+    "install_steps": [
+      "brew install venom",
+      "Verify: venom --version",
+      "supercli plugins install ./plugins/venom --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "venom",
+      "resource": "test",
+      "action": "run",
+      "description": "Run integration tests",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "venom",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install venom: brew install venom"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Test suite path" },
+        { "name": "--format", "type": "string", "description": "Output format (yaml, json, xml)" },
+        { "name": "--output-dir", "type": "string", "description": "Output directory" },
+        { "name": "--var", "type": "string", "description": "Variable to pass" }
+      ]
+    },
+    {
+      "namespace": "venom",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to venom CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "venom",
+        "passthrough": true,
+        "missingDependencyHelp": "Install venom: brew install venom"
+      },
+      "args": []
+    }
+  ]
+}
