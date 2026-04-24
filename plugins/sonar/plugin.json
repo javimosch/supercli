@@ -1,0 +1,181 @@
+{
+  "name": "sonar",
+  "version": "0.1.0",
+  "description": "CLI tool for inspecting and managing services listening on localhost ports",
+  "source": "https://github.com/raskrebs/sonar",
+  "checks": [
+    { "type": "binary", "name": "sonar" }
+  ],
+  "install_guidance": {
+    "plugin": "sonar",
+    "binary": "sonar",
+    "check": "which sonar",
+    "install_steps": [
+      "curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash",
+      "Verify: sonar --version",
+      "supercli plugins install ./plugins/sonar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sonar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sonar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sonar",
+      "resource": "ports",
+      "action": "list",
+      "description": "List services listening on localhost ports",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output as JSON" },
+        { "name": "--stats", "type": "boolean", "required": false, "description": "Include CPU, memory, state, uptime" },
+        { "name": "--filter", "type": "string", "required": false, "description": "Filter by type (docker, user, etc.)" },
+        { "name": "--sort", "type": "string", "required": false, "description": "Sort by column (name, port, etc.)" },
+        { "name": "--health", "type": "boolean", "required": false, "description": "Run HTTP health checks" },
+        { "name": "-a", "type": "boolean", "required": false, "description": "Include desktop apps and system services" }
+      ]
+    },
+    {
+      "namespace": "sonar",
+      "resource": "port",
+      "action": "info",
+      "description": "Show detailed information about a specific port",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["info"],
+        "positionalArgs": ["port"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": true, "description": "Port number to inspect" }
+      ]
+    },
+    {
+      "namespace": "sonar",
+      "resource": "port",
+      "action": "kill",
+      "description": "Kill the process listening on a port",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["kill"],
+        "positionalArgs": ["port"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": true, "description": "Port number" },
+        { "name": "-f", "type": "boolean", "required": false, "description": "Force kill (SIGKILL)" },
+        { "name": "-y", "type": "boolean", "required": false, "description": "Skip confirmation" }
+      ]
+    },
+    {
+      "namespace": "sonar",
+      "resource": "ports",
+      "action": "wait",
+      "description": "Wait for ports to accept connections",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["wait"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": [
+        { "name": "ports", "type": "string", "required": true, "description": "Port numbers to wait for" },
+        { "name": "--timeout", "type": "string", "required": false, "description": "Timeout (e.g., 30s)" },
+        { "name": "--http", "type": "string", "required": false, "description": "Wait for HTTP 200 instead of TCP open" },
+        { "name": "-q", "type": "boolean", "required": false, "description": "No output, just exit code" }
+      ]
+    },
+    {
+      "namespace": "sonar",
+      "resource": "ports",
+      "action": "graph",
+      "description": "Show dependency graph between services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["graph"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output as JSON" },
+        { "name": "--dot", "type": "boolean", "required": false, "description": "Output as Graphviz DOT format" }
+      ]
+    },
+    {
+      "namespace": "sonar",
+      "resource": "profile",
+      "action": "list",
+      "description": "List saved port profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["profile", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sonar",
+      "resource": "port",
+      "action": "logs",
+      "description": "View logs for a service on a port",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "baseArgs": ["logs"],
+        "positionalArgs": ["port"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": true, "description": "Port number" }
+      ]
+    },
+    {
+      "namespace": "sonar",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sonar CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonar",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sonar: curl -sfL https://raw.githubusercontent.com/raskrebs/sonar/main/scripts/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
