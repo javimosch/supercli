@@ -1,0 +1,58 @@
+{
+  "name": "miniserve",
+  "version": "0.1.0",
+  "description": "For when you really just want to serve some files over HTTP right now! A CLI tool to serve files and directories over HTTP with upload support and authentication.",
+  "source": "https://github.com/svenstaro/miniserve",
+  "checks": [
+    { "type": "binary", "name": "miniserve" }
+  ],
+  "install_guidance": {
+    "plugin": "miniserve",
+    "binary": "miniserve",
+    "check": "which miniserve",
+    "install_steps": [
+      "brew install miniserve",
+      "Verify: miniserve --version",
+      "supercli plugins install ./plugins/miniserve --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "miniserve",
+      "resource": "files",
+      "action": "serve",
+      "description": "Serve files over HTTP",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "miniserve",
+        "passthrough": true,
+        "missingDependencyHelp": "Install miniserve: brew install miniserve"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Directory or file to serve" },
+        { "name": "--port", "type": "integer", "description": "Port to listen on" },
+        { "name": "--host", "type": "string", "description": "Host to bind to" },
+        { "name": "--upload", "type": "boolean", "description": "Enable file upload" },
+        { "name": "--auth", "type": "string", "description": "Username:password for auth" },
+        { "name": "--random-route", "type": "boolean", "description": "Generate random URL path" },
+        { "name": "--tls", "type": "boolean", "description": "Enable HTTPS" }
+      ]
+    },
+    {
+      "namespace": "miniserve",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to miniserve CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "miniserve",
+        "passthrough": true,
+        "missingDependencyHelp": "Install miniserve: brew install miniserve"
+      },
+      "args": []
+    }
+  ]
+}
