@@ -1,0 +1,73 @@
+{
+  "name": "onefetch",
+  "version": "0.1.0",
+  "description": "Command-line Git information tool that displays repository summary with ASCII art logo, language stats, and commit history",
+  "source": "https://github.com/o2sh/onefetch",
+  "checks": [
+    { "type": "binary", "name": "onefetch" }
+  ],
+  "install_guidance": {
+    "plugin": "onefetch",
+    "binary": "onefetch",
+    "check": "which onefetch",
+    "install_steps": [
+      "brew install onefetch",
+      "Verify: onefetch --version",
+      "supercli plugins install ./plugins/onefetch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "onefetch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print onefetch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "onefetch",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install onefetch: brew install onefetch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "onefetch",
+      "resource": "repo",
+      "action": "info",
+      "description": "Display Git repository summary with language stats and commit history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "onefetch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install onefetch: brew install onefetch"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output as JSON" },
+        { "name": "--yaml", "type": "boolean", "required": false, "description": "Output as YAML" },
+        { "name": "--no-art", "type": "boolean", "required": false, "description": "Disable ASCII logo" },
+        { "name": "--no-color", "type": "boolean", "required": false, "description": "Disable color output" },
+        { "name": "--languages", "type": "boolean", "required": false, "description": "Show only language breakdown" },
+        { "name": "-d", "type": "string", "required": false, "description": "Specify repository path (defaults to current directory)" }
+      ]
+    },
+    {
+      "namespace": "onefetch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to onefetch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "onefetch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install onefetch: brew install onefetch"
+      },
+      "args": []
+    }
+  ]
+}
