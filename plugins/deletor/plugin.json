@@ -1,0 +1,77 @@
+{
+  "name": "deletor",
+  "version": "0.1.0",
+  "description": "Manage and delete files efficiently with an interactive TUI and scriptable CLI mode. Filter by extension, size, age, and preview before removing.",
+  "source": "https://github.com/pashkov256/deletor",
+  "checks": [
+    { "type": "binary", "name": "deletor" }
+  ],
+  "install_guidance": {
+    "plugin": "deletor",
+    "binary": "deletor",
+    "check": "which deletor",
+    "install_steps": [
+      "go install github.com/pashkov256/deletor@latest",
+      "Verify: deletor --version",
+      "supercli plugins install ./plugins/deletor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "deletor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print deletor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deletor",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install deletor: go install github.com/pashkov256/deletor@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "deletor",
+      "resource": "files",
+      "action": "clean",
+      "description": "Clean files in CLI mode with filters (preview first, then add -skip-confirm to execute)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deletor",
+        "baseArgs": ["-cli"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install deletor: go install github.com/pashkov256/deletor@latest"
+      },
+      "args": [
+        { "name": "-d", "type": "string", "description": "Target directory to scan" },
+        { "name": "-e", "type": "string", "description": "File extensions to target (comma-separated, e.g. mp4,zip,jpg)" },
+        { "name": "--min-size", "type": "string", "description": "Minimum file size (e.g. 10kb, 1mb, 1gb)" },
+        { "name": "--max-size", "type": "string", "description": "Maximum file size (e.g. 10kb, 1mb, 1gb)" },
+        { "name": "--older", "type": "string", "description": "Only files older than (e.g. 1sec, 2min, 3hour, 4day)" },
+        { "name": "--newer", "type": "string", "description": "Only files newer than (e.g. 1sec, 2min, 3hour, 4day)" },
+        { "name": "--exclude", "type": "string", "description": "Directories or files to exclude (comma-separated)" },
+        { "name": "-subdirs", "type": "boolean", "description": "Include subdirectories in the scan" },
+        { "name": "-prune-empty", "type": "boolean", "description": "Remove empty directories after deletion" },
+        { "name": "-rules", "type": "boolean", "description": "Apply smart rules for safe deletion" },
+        { "name": "-progress", "type": "boolean", "description": "Show progress during deletion" },
+        { "name": "-skip-confirm", "type": "boolean", "description": "Skip confirmation prompts (use with caution)" }
+      ]
+    },
+    {
+      "namespace": "deletor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to deletor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deletor",
+        "passthrough": true,
+        "missingDependencyHelp": "Install deletor: go install github.com/pashkov256/deletor@latest"
+      },
+      "args": []
+    }
+  ]
+}
