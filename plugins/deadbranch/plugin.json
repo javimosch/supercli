@@ -1,0 +1,138 @@
+{
+  "name": "deadbranch",
+  "version": "0.1.0",
+  "description": "Clean up stale git branches safely. List, delete, backup, and restore branches with dry-run support, age filtering, and pattern matching.",
+  "source": "https://github.com/armgabrielyan/deadbranch",
+  "checks": [
+    { "type": "binary", "name": "deadbranch" }
+  ],
+  "install_guidance": {
+    "plugin": "deadbranch",
+    "binary": "deadbranch",
+    "check": "which deadbranch",
+    "install_steps": [
+      "cargo install deadbranch",
+      "Verify: deadbranch --version",
+      "supercli plugins install ./plugins/deadbranch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "deadbranch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print deadbranch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script from https://github.com/armgabrielyan/deadbranch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "deadbranch",
+      "resource": "branch",
+      "action": "list",
+      "description": "List stale branches (older than threshold)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script"
+      },
+      "args": [
+        { "name": "--days", "type": "string", "description": "Minimum age in days (default: 30)" },
+        { "name": "--remote", "type": "boolean", "description": "Include remote branches" },
+        { "name": "--merged", "type": "boolean", "description": "Only merged branches" },
+        { "name": "--pattern", "type": "string", "description": "Pattern to match branch names" }
+      ]
+    },
+    {
+      "namespace": "deadbranch",
+      "resource": "branch",
+      "action": "clean",
+      "description": "Delete stale branches (with confirmation by default)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "baseArgs": ["clean"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script"
+      },
+      "args": [
+        { "name": "--dry-run", "type": "boolean", "description": "Preview what would be deleted without making changes" },
+        { "name": "--local", "type": "boolean", "description": "Delete only local branches" },
+        { "name": "--force", "type": "boolean", "description": "Skip confirmation prompt" },
+        { "name": "--backup", "type": "boolean", "description": "Create backup before deleting" },
+        { "name": "--days", "type": "string", "description": "Minimum age in days (default: 30)" },
+        { "name": "--pattern", "type": "string", "description": "Pattern to match branch names" }
+      ]
+    },
+    {
+      "namespace": "deadbranch",
+      "resource": "branch",
+      "action": "stats",
+      "description": "Show branch health overview",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "baseArgs": ["stats"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "deadbranch",
+      "resource": "backup",
+      "action": "create",
+      "description": "Backup branches before deleting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "baseArgs": ["backup"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "deadbranch",
+      "resource": "backup",
+      "action": "restore",
+      "description": "Restore deleted branches from backup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "baseArgs": ["restore"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "deadbranch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to deadbranch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deadbranch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install deadbranch: cargo install deadbranch or use the quick install script"
+      },
+      "args": []
+    }
+  ]
+}
