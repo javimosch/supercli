@@ -1,0 +1,87 @@
+{
+  "name": "zoxide",
+  "version": "0.1.0",
+  "description": "A smarter cd command that keeps track of directories you visit and allows you to jump to them quickly. Supports all major shells and integrates with fzf for fuzzy matching.",
+  "source": "https://github.com/ajeetdsouza/zoxide",
+  "checks": [
+    { "type": "binary", "name": "zoxide" }
+  ],
+  "install_guidance": {
+    "plugin": "zoxide",
+    "binary": "zoxide",
+    "check": "which zoxide",
+    "install_steps": [
+      "brew install zoxide",
+      "Verify: zoxide --version",
+      "supercli plugins install ./plugins/zoxide --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zoxide",
+      "resource": "directory",
+      "action": "add",
+      "description": "Add directory to database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zoxide",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install zoxide: brew install zoxide"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory path to add" }
+      ]
+    },
+    {
+      "namespace": "zoxide",
+      "resource": "directory",
+      "action": "query",
+      "description": "Query directory database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zoxide",
+        "baseArgs": ["query"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install zoxide: brew install zoxide"
+      },
+      "args": [
+        { "name": "--list", "type": "boolean", "description": "List all directories" },
+        { "name": "--score", "type": "boolean", "description": "Show directory scores" },
+        { "name": "keywords", "type": "string", "required": true, "description": "Keywords to search for" }
+      ]
+    },
+    {
+      "namespace": "zoxide",
+      "resource": "directory",
+      "action": "remove",
+      "description": "Remove directory from database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zoxide",
+        "baseArgs": ["remove"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install zoxide: brew install zoxide"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory path to remove" }
+      ]
+    },
+    {
+      "namespace": "zoxide",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zoxide CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zoxide",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zoxide: brew install zoxide"
+      },
+      "args": []
+    }
+  ]
+}
