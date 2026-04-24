@@ -1,0 +1,71 @@
+{
+  "name": "supabase-cli",
+  "version": "0.1.0",
+  "description": "Supabase CLI. Manage your Supabase projects, databases, edge functions, and authentication directly from the command line.",
+  "source": "https://github.com/supabase/cli",
+  "checks": [
+    { "type": "binary", "name": "supabase" }
+  ],
+  "install_guidance": {
+    "plugin": "supabase-cli",
+    "binary": "supabase",
+    "check": "which supabase",
+    "install_steps": [
+      "brew install supabase/tap/supabase",
+      "Verify: supabase --version",
+      "supercli plugins install ./plugins/supabase-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "supabase-cli",
+      "resource": "db",
+      "action": "migrate",
+      "description": "Run database migrations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supabase",
+        "baseArgs": ["db", "push"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install supabase-cli: brew install supabase/tap/supabase"
+      },
+      "args": [
+        { "name": "--linked", "type": "boolean", "description": "Push to linked project" },
+        { "name": "--dry-run", "type": "boolean", "description": "Show changes without applying" }
+      ]
+    },
+    {
+      "namespace": "supabase-cli",
+      "resource": "function",
+      "action": "deploy",
+      "description": "Deploy an edge function",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supabase",
+        "baseArgs": ["functions", "deploy"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install supabase-cli: brew install supabase/tap/supabase"
+      },
+      "args": [
+        { "name": "name", "type": "string", "description": "Function name" },
+        { "name": "--project-ref", "type": "string", "description": "Project reference" }
+      ]
+    },
+    {
+      "namespace": "supabase-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to supabase CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supabase",
+        "passthrough": true,
+        "missingDependencyHelp": "Install supabase-cli: brew install supabase/tap/supabase"
+      },
+      "args": []
+    }
+  ]
+}

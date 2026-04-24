@@ -1,0 +1,55 @@
+{
+  "name": "trdsql",
+  "version": "0.1.0",
+  "description": "Execute SQL queries on CSV, JSON, LTSV, TBLN, and other text files. Query structured data files with standard SQL without importing into a database.",
+  "source": "https://github.com/noborus/trdsql",
+  "checks": [
+    { "type": "binary", "name": "trdsql" }
+  ],
+  "install_guidance": {
+    "plugin": "trdsql",
+    "binary": "trdsql",
+    "check": "which trdsql",
+    "install_steps": [
+      "brew install trdsql",
+      "Verify: trdsql --version",
+      "supercli plugins install ./plugins/trdsql --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trdsql",
+      "resource": "data",
+      "action": "query",
+      "description": "Query data files with SQL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trdsql",
+        "passthrough": true,
+        "missingDependencyHelp": "Install trdsql: brew install trdsql"
+      },
+      "args": [
+        { "name": "query", "type": "string", "description": "SQL query" },
+        { "name": "files", "type": "string", "description": "Data files to query" },
+        { "name": "--header", "type": "boolean", "description": "First row as header" },
+        { "name": "--output", "type": "string", "description": "Output format (CSV, JSON, LTSV)" }
+      ]
+    },
+    {
+      "namespace": "trdsql",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trdsql CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trdsql",
+        "passthrough": true,
+        "missingDependencyHelp": "Install trdsql: brew install trdsql"
+      },
+      "args": []
+    }
+  ]
+}

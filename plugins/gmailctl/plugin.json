@@ -1,0 +1,55 @@
+{
+  "name": "gmailctl",
+  "version": "0.1.0",
+  "description": "Declarative configuration for Gmail filters. Manage Gmail filters as code with a declarative DSL and version control your email automation.",
+  "source": "https://github.com/mbrt/gmailctl",
+  "checks": [
+    { "type": "binary", "name": "gmailctl" }
+  ],
+  "install_guidance": {
+    "plugin": "gmailctl",
+    "binary": "gmailctl",
+    "check": "which gmailctl",
+    "install_steps": [
+      "brew install gmailctl",
+      "Verify: gmailctl --version",
+      "supercli plugins install ./plugins/gmailctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gmailctl",
+      "resource": "filter",
+      "action": "apply",
+      "description": "Apply Gmail filter configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gmailctl",
+        "baseArgs": ["apply"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gmailctl: brew install gmailctl"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "description": "Config file path" },
+        { "name": "--dry-run", "type": "boolean", "description": "Show changes without applying" },
+        { "name": "--remove", "type": "boolean", "description": "Remove existing filters" }
+      ]
+    },
+    {
+      "namespace": "gmailctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gmailctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gmailctl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gmailctl: brew install gmailctl"
+      },
+      "args": []
+    }
+  ]
+}
