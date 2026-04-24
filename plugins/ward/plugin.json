@@ -1,0 +1,85 @@
+{
+  "name": "ward",
+  "version": "0.1.0",
+  "description": "Security scanner for Laravel projects. Detects misconfigurations, vulnerabilities, and exposed secrets with headless JSON/SARIF output, CI integration, and baseline suppression.",
+  "source": "https://github.com/Eljakani/ward",
+  "checks": [
+    { "type": "binary", "name": "ward" }
+  ],
+  "install_guidance": {
+    "plugin": "ward",
+    "binary": "ward",
+    "check": "which ward",
+    "install_steps": [
+      "go install github.com/eljakani/ward@latest",
+      "Verify: ward --version",
+      "supercli plugins install ./plugins/ward --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ward",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ward version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ward",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ward: go install github.com/eljakani/ward@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ward",
+      "resource": "config",
+      "action": "init",
+      "description": "Initialize ward configuration with default security rules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ward",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install ward: go install github.com/eljakani/ward@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ward",
+      "resource": "project",
+      "action": "scan",
+      "description": "Scan a Laravel project for security issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ward",
+        "baseArgs": ["scan"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ward: go install github.com/eljakani/ward@latest"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path or remote git URL to scan" },
+        { "name": "--output", "type": "string", "description": "Output format: json, sarif, or text (default)" },
+        { "name": "--fail-on", "type": "string", "description": "Severity threshold for non-zero exit: info, low, medium, high, critical" },
+        { "name": "--baseline", "type": "string", "description": "Path to baseline file to suppress known findings" },
+        { "name": "--update-baseline", "type": "string", "description": "Generate or update a baseline file at the given path" }
+      ]
+    },
+    {
+      "namespace": "ward",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ward CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ward",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ward: go install github.com/eljakani/ward@latest"
+      },
+      "args": []
+    }
+  ]
+}
