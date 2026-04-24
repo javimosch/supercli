@@ -1,0 +1,76 @@
+{
+  "name": "jwt-cli",
+  "version": "0.1.0",
+  "description": "A super fast CLI tool to decode and encode JWTs. Designed for hackers, with support for flexible output formats and pipe-friendly workflows.",
+  "source": "https://github.com/mike-engel/jwt-cli",
+  "checks": [
+    { "type": "binary", "name": "jwt" }
+  ],
+  "install_guidance": {
+    "plugin": "jwt-cli",
+    "binary": "jwt",
+    "check": "which jwt",
+    "install_steps": [
+      "brew install mike-engel/tap/jwt-cli",
+      "Verify: jwt --version",
+      "supercli plugins install ./plugins/jwt-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jwt-cli",
+      "resource": "token",
+      "action": "decode",
+      "description": "Decode a JWT token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jwt",
+        "baseArgs": ["decode"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jwt-cli: brew install mike-engel/tap/jwt-cli"
+      },
+      "args": [
+        { "name": "token", "type": "string", "description": "JWT token to decode" },
+        { "name": "--algorithm", "type": "string", "description": "Algorithm to use for validation" },
+        { "name": "--secret", "type": "string", "description": "Secret key for validation" },
+        { "name": "--json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "jwt-cli",
+      "resource": "token",
+      "action": "encode",
+      "description": "Encode a JWT token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jwt",
+        "baseArgs": ["encode"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jwt-cli: brew install mike-engel/tap/jwt-cli"
+      },
+      "args": [
+        { "name": "--algorithm", "type": "string", "description": "Signing algorithm" },
+        { "name": "--secret", "type": "string", "description": "Secret key for signing" },
+        { "name": "--issuer", "type": "string", "description": "Issuer claim" },
+        { "name": "--subject", "type": "string", "description": "Subject claim" },
+        { "name": "--expiry", "type": "string", "description": "Expiration time" }
+      ]
+    },
+    {
+      "namespace": "jwt-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jwt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jwt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jwt-cli: brew install mike-engel/tap/jwt-cli"
+      },
+      "args": []
+    }
+  ]
+}

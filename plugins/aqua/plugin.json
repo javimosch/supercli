@@ -1,0 +1,72 @@
+{
+  "name": "aqua",
+  "version": "0.1.0",
+  "description": "Declarative CLI Version manager. Install CLI tools with a single command and manage their versions declaratively via YAML configuration.",
+  "source": "https://github.com/aquaproj/aqua",
+  "checks": [
+    { "type": "binary", "name": "aqua" }
+  ],
+  "install_guidance": {
+    "plugin": "aqua",
+    "binary": "aqua",
+    "check": "which aqua",
+    "install_steps": [
+      "brew install aquaproj/aqua/aqua",
+      "Verify: aqua --version",
+      "supercli plugins install ./plugins/aqua --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aqua",
+      "resource": "tool",
+      "action": "install",
+      "description": "Install CLI tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aqua",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install aqua: brew install aquaproj/aqua/aqua"
+      },
+      "args": [
+        { "name": "--all", "type": "boolean", "description": "Install all tools from config" },
+        { "name": "--tags", "type": "string", "description": "Filter by tags" },
+        { "name": "--only-link", "type": "boolean", "description": "Only create symlinks" }
+      ]
+    },
+    {
+      "namespace": "aqua",
+      "resource": "tool",
+      "action": "list",
+      "description": "List installed tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aqua",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install aqua: brew install aquaproj/aqua/aqua"
+      },
+      "args": [
+        { "name": "--installed", "type": "boolean", "description": "Show only installed tools" },
+        { "name": "--all", "type": "boolean", "description": "Show all versions" }
+      ]
+    },
+    {
+      "namespace": "aqua",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aqua CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aqua",
+        "passthrough": true,
+        "missingDependencyHelp": "Install aqua: brew install aquaproj/aqua/aqua"
+      },
+      "args": []
+    }
+  ]
+}
