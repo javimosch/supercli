@@ -1,0 +1,114 @@
+{
+  "name": "webclaw",
+  "version": "0.1.0",
+  "description": "Fast, local-first web content extraction for LLMs. Scrape, crawl, and extract structured data from web pages.",
+  "source": "https://github.com/0xMassi/webclaw",
+  "checks": [
+    { "type": "binary", "name": "webclaw" }
+  ],
+  "install_guidance": {
+    "plugin": "webclaw",
+    "binary": "webclaw",
+    "check": "which webclaw",
+    "install_steps": [
+      "brew tap 0xMassi/webclaw && brew install webclaw",
+      "Verify: webclaw --version",
+      "supercli plugins install ./plugins/webclaw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "webclaw",
+      "resource": "self",
+      "action": "version",
+      "description": "Print webclaw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webclaw",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install webclaw: brew tap 0xMassi/webclaw && brew install webclaw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "webclaw",
+      "resource": "page",
+      "action": "extract",
+      "description": "Extract content from a single web page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webclaw",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install webclaw: brew tap 0xMassi/webclaw && brew install webclaw"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to extract content from" },
+        { "name": "-f", "type": "string", "required": false, "description": "Output format: markdown, text, json, llm, html" },
+        { "name": "--include", "type": "string", "required": false, "description": "CSS selector to include" },
+        { "name": "--exclude", "type": "string", "required": false, "description": "CSS selector to exclude" },
+        { "name": "--only-main-content", "type": "boolean", "required": false, "description": "Auto-detect main content only" },
+        { "name": "--brand", "type": "boolean", "required": false, "description": "Extract brand colors, fonts, logos" }
+      ]
+    },
+    {
+      "namespace": "webclaw",
+      "resource": "site",
+      "action": "crawl",
+      "description": "Crawl a website and extract content from multiple pages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webclaw",
+        "baseArgs": ["--crawl"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install webclaw: brew tap 0xMassi/webclaw && brew install webclaw"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Starting URL to crawl" },
+        { "name": "--depth", "type": "string", "required": false, "description": "Crawl depth (default: 2)" },
+        { "name": "--max-pages", "type": "string", "required": false, "description": "Maximum pages to crawl" },
+        { "name": "--sitemap", "type": "boolean", "required": false, "description": "Seed crawl from sitemap" },
+        { "name": "-f", "type": "string", "required": false, "description": "Output format: markdown, text, json, llm, html" },
+        { "name": "--map", "type": "boolean", "required": false, "description": "Discover URLs only, no extraction" }
+      ]
+    },
+    {
+      "namespace": "webclaw",
+      "resource": "page",
+      "action": "diff",
+      "description": "Compare a web page against a previous snapshot",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webclaw",
+        "baseArgs": ["--diff-with"],
+        "positionalArgs": ["snapshot", "url"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install webclaw: brew tap 0xMassi/webclaw && brew install webclaw"
+      },
+      "args": [
+        { "name": "snapshot", "type": "string", "required": true, "description": "Path to snapshot JSON file" },
+        { "name": "url", "type": "string", "required": true, "description": "URL to compare" }
+      ]
+    },
+    {
+      "namespace": "webclaw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to webclaw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webclaw",
+        "passthrough": true,
+        "missingDependencyHelp": "Install webclaw: brew tap 0xMassi/webclaw && brew install webclaw"
+      },
+      "args": []
+    }
+  ]
+}
