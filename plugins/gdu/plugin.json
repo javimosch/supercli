@@ -1,0 +1,56 @@
+{
+  "name": "gdu",
+  "version": "0.1.0",
+  "description": "Fast disk usage analyzer with console interface written in Go. Analyze disk usage with visualization and filtering capabilities.",
+  "source": "https://github.com/dundee/gdu",
+  "checks": [
+    { "type": "binary", "name": "gdu" }
+  ],
+  "install_guidance": {
+    "plugin": "gdu",
+    "binary": "gdu",
+    "check": "which gdu",
+    "install_steps": [
+      "brew install gdu",
+      "Verify: gdu --version",
+      "supercli plugins install ./plugins/gdu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gdu",
+      "resource": "disk",
+      "action": "analyze",
+      "description": "Analyze disk usage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdu",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gdu: brew install gdu"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Path to analyze" },
+        { "name": "--color", "type": "string", "description": "Color mode (auto, always, never)" },
+        { "name": "--show-hidden", "type": "boolean", "description": "Show hidden files" },
+        { "name": "--no-follow", "type": "boolean", "description": "Don't follow symlinks" },
+        { "name": "--ignore-dirs", "type": "string", "description": "Ignore directories" }
+      ]
+    },
+    {
+      "namespace": "gdu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gdu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdu",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gdu: brew install gdu"
+      },
+      "args": []
+    }
+  ]
+}
