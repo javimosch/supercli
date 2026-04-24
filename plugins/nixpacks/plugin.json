@@ -1,0 +1,55 @@
+{
+  "name": "nixpacks",
+  "version": "0.1.0",
+  "description": "App source + Nix packages + Docker = Image. Build Docker images from source code using Nix packages automatically.",
+  "source": "https://github.com/railwayapp/nixpacks",
+  "checks": [
+    { "type": "binary", "name": "nixpacks" }
+  ],
+  "install_guidance": {
+    "plugin": "nixpacks",
+    "binary": "nixpacks",
+    "check": "which nixpacks",
+    "install_steps": [
+      "brew install nixpacks",
+      "Verify: nixpacks --version",
+      "supercli plugins install ./plugins/nixpacks --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nixpacks",
+      "resource": "build",
+      "action": "plan",
+      "description": "Generate build plan",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nixpacks",
+        "baseArgs": ["plan"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nixpacks: brew install nixpacks"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Path to source code" },
+        { "name": "--config", "type": "string", "description": "Config file path" },
+        { "name": "--no-cache", "type": "boolean", "description": "Disable cache" }
+      ]
+    },
+    {
+      "namespace": "nixpacks",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nixpacks CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nixpacks",
+        "passthrough": true,
+        "missingDependencyHelp": "Install nixpacks: brew install nixpacks"
+      },
+      "args": []
+    }
+  ]
+}
