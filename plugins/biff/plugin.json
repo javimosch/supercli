@@ -1,0 +1,102 @@
+{
+  "name": "biff",
+  "version": "0.1.0",
+  "description": "Datetime arithmetic, parsing, formatting, timezone conversion, sequence generation, and log timestamp tagging for the command line.",
+  "source": "https://github.com/BurntSushi/biff",
+  "checks": [
+    { "type": "binary", "name": "biff" }
+  ],
+  "install_guidance": {
+    "plugin": "biff",
+    "binary": "biff",
+    "check": "which biff",
+    "install_steps": [
+      "cargo install biff",
+      "Verify: biff --version",
+      "supercli plugins install ./plugins/biff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "biff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print biff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "biff",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install biff: cargo install biff or download from GitHub releases (https://github.com/BurntSushi/biff/releases)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "biff",
+      "resource": "time",
+      "action": "fmt",
+      "description": "Format timestamps, convert timezones, and round times",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "biff",
+        "baseArgs": ["time", "fmt"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install biff: cargo install biff or download from GitHub releases"
+      },
+      "args": [
+        { "name": "-f", "type": "string", "description": "Output format: rfc3339, rfc9557, or strftime pattern (e.g. '%Y-%m-%d %H:%M:%S %Z')" },
+        { "name": "timestamps", "type": "string", "description": "One or more timestamps to format (e.g. now, -1d, 'next sat', 'last monday')" }
+      ]
+    },
+    {
+      "namespace": "biff",
+      "resource": "time",
+      "action": "add",
+      "description": "Add a duration to a timestamp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "biff",
+        "baseArgs": ["time", "add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install biff: cargo install biff or download from GitHub releases"
+      },
+      "args": [
+        { "name": "duration", "type": "string", "required": true, "description": "Duration to add (e.g. -1w, '1 week, 12 hours ago', 6mo)" },
+        { "name": "timestamp", "type": "string", "description": "Base timestamp (default: now)" }
+      ]
+    },
+    {
+      "namespace": "biff",
+      "resource": "span",
+      "action": "since",
+      "description": "Calculate the duration since a given timestamp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "biff",
+        "baseArgs": ["span", "since"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install biff: cargo install biff or download from GitHub releases"
+      },
+      "args": [
+        { "name": "timestamp", "type": "string", "required": true, "description": "Timestamp to calculate span from (e.g. 2025-01-20T12:00)" },
+        { "name": "-l", "type": "string", "description": "Precision level: year, month, day, hour, minute, second" },
+        { "name": "-s", "type": "string", "description": "Precision step for rounding" }
+      ]
+    },
+    {
+      "namespace": "biff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to biff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "biff",
+        "passthrough": true,
+        "missingDependencyHelp": "Install biff: cargo install biff or download from GitHub releases"
+      },
+      "args": []
+    }
+  ]
+}
