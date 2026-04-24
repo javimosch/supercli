@@ -1,0 +1,128 @@
+{
+  "name": "blogr",
+  "version": "0.1.0",
+  "description": "Terminal-first blog and personal website generator. Write, edit, and publish your blog without ever leaving your terminal. Supports Markdown, YAML frontmatter, themes, and static site builds.",
+  "source": "https://github.com/bahdotsh/blogr",
+  "checks": [
+    { "type": "binary", "name": "blogr" }
+  ],
+  "install_guidance": {
+    "plugin": "blogr",
+    "binary": "blogr",
+    "check": "which blogr",
+    "install_steps": [
+      "cargo install blogr-cli",
+      "Verify: blogr --version",
+      "supercli plugins install ./plugins/blogr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "blogr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print blogr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "blogr",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize a new blog or personal website project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "description": "Project name" },
+        { "name": "--personal", "type": "boolean", "description": "Create a personal website instead of a blog" }
+      ]
+    },
+    {
+      "namespace": "blogr",
+      "resource": "content",
+      "action": "new",
+      "description": "Create a new blog post",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "baseArgs": ["new"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": [
+        { "name": "title", "type": "string", "description": "Post title" }
+      ]
+    },
+    {
+      "namespace": "blogr",
+      "resource": "content",
+      "action": "list",
+      "description": "List all blog posts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "baseArgs": ["list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "blogr",
+      "resource": "site",
+      "action": "build",
+      "description": "Build the static site",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "baseArgs": ["build"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "blogr",
+      "resource": "project",
+      "action": "info",
+      "description": "Show project details",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "baseArgs": ["project", "info"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "blogr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to blogr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "blogr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blogr: cargo install blogr-cli"
+      },
+      "args": []
+    }
+  ]
+}
