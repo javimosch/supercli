@@ -1,0 +1,55 @@
+{
+  "name": "hishtory",
+  "version": "0.1.0",
+  "description": "Your shell history in context. Search, sync, and get rich context for your shell history across all your devices.",
+  "source": "https://github.com/ddworken/hishtory",
+  "checks": [
+    { "type": "binary", "name": "hishtory" }
+  ],
+  "install_guidance": {
+    "plugin": "hishtory",
+    "binary": "hishtory",
+    "check": "which hishtory",
+    "install_steps": [
+      "brew install hishtory",
+      "Verify: hishtory --version",
+      "supercli plugins install ./plugins/hishtory --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hishtory",
+      "resource": "history",
+      "action": "search",
+      "description": "Search shell history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hishtory",
+        "baseArgs": ["query"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install hishtory: brew install hishtory"
+      },
+      "args": [
+        { "name": "query", "type": "string", "description": "Search query" },
+        { "name": "--limit", "type": "integer", "description": "Result limit" },
+        { "name": "--all", "type": "boolean", "description": "Search all history" }
+      ]
+    },
+    {
+      "namespace": "hishtory",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hishtory CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hishtory",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hishtory: brew install hishtory"
+      },
+      "args": []
+    }
+  ]
+}

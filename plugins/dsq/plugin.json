@@ -1,0 +1,54 @@
+{
+  "name": "dsq",
+  "version": "0.1.0",
+  "description": "Run SQL queries on data files (JSON, CSV, Parquet, etc.). Query data files directly with SQL without loading into a database.",
+  "source": "https://github.com/multiprocessio/dsq",
+  "checks": [
+    { "type": "binary", "name": "dsq" }
+  ],
+  "install_guidance": {
+    "plugin": "dsq",
+    "binary": "dsq",
+    "check": "which dsq",
+    "install_steps": [
+      "brew install dsq",
+      "Verify: dsq --version",
+      "supercli plugins install ./plugins/dsq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dsq",
+      "resource": "data",
+      "action": "query",
+      "description": "Query data files with SQL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dsq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dsq: brew install dsq"
+      },
+      "args": [
+        { "name": "files", "type": "string", "description": "Data files to query" },
+        { "name": "query", "type": "string", "description": "SQL query string" },
+        { "name": "--format", "type": "string", "description": "Output format (json, csv, pretty)" }
+      ]
+    },
+    {
+      "namespace": "dsq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dsq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dsq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dsq: brew install dsq"
+      },
+      "args": []
+    }
+  ]
+}

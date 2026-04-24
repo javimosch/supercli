@@ -1,0 +1,56 @@
+{
+  "name": "img",
+  "version": "0.1.0",
+  "description": "Standalone, daemon-less, unprivileged container image builder. Build container images without Docker daemon or root privileges.",
+  "source": "https://github.com/genuinetools/img",
+  "checks": [
+    { "type": "binary", "name": "img" }
+  ],
+  "install_guidance": {
+    "plugin": "img",
+    "binary": "img",
+    "check": "which img",
+    "install_steps": [
+      "brew install img",
+      "Verify: img --version",
+      "supercli plugins install ./plugins/img --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "img",
+      "resource": "image",
+      "action": "build",
+      "description": "Build a container image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "img",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install img: brew install img"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Build context path" },
+        { "name": "--tag", "type": "string", "description": "Image tag" },
+        { "name": "--file", "type": "string", "description": "Dockerfile path" },
+        { "name": "--no-cache", "type": "boolean", "description": "Disable cache" }
+      ]
+    },
+    {
+      "namespace": "img",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to img CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "img",
+        "passthrough": true,
+        "missingDependencyHelp": "Install img: brew install img"
+      },
+      "args": []
+    }
+  ]
+}
