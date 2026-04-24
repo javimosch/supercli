@@ -1,0 +1,117 @@
+{
+  "name": "wrkflw",
+  "version": "0.1.0",
+  "description": "Validate and run GitHub Actions locally. Workflow validation, local execution with Docker/Podman, watch mode, matrix builds, secrets management, and GitLab CI support.",
+  "source": "https://github.com/bahdotsh/wrkflw",
+  "checks": [
+    { "type": "binary", "name": "wrkflw" }
+  ],
+  "install_guidance": {
+    "plugin": "wrkflw",
+    "binary": "wrkflw",
+    "check": "which wrkflw",
+    "install_steps": [
+      "cargo install wrkflw",
+      "Verify: wrkflw --version",
+      "supercli plugins install ./plugins/wrkflw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wrkflw",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wrkflw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrkflw",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wrkflw: cargo install wrkflw or brew install wrkflw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrkflw",
+      "resource": "workflow",
+      "action": "validate",
+      "description": "Validate workflow files (syntax, structure, composite action inputs)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrkflw",
+        "baseArgs": ["validate"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wrkflw: cargo install wrkflw or brew install wrkflw"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Workflow file or directory (default: .github/workflows)" }
+      ]
+    },
+    {
+      "namespace": "wrkflw",
+      "resource": "workflow",
+      "action": "run",
+      "description": "Run a workflow locally",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrkflw",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wrkflw: cargo install wrkflw or brew install wrkflw"
+      },
+      "args": [
+        { "name": "workflow", "type": "string", "description": "Workflow file path (e.g. .github/workflows/ci.yml)" },
+        { "name": "--job", "type": "string", "description": "Run a specific job ID only" },
+        { "name": "--event", "type": "string", "description": "Simulate a specific event type (e.g. push, pull_request)" }
+      ]
+    },
+    {
+      "namespace": "wrkflw",
+      "resource": "workflow",
+      "action": "watch",
+      "description": "Rerun workflows automatically on file changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrkflw",
+        "baseArgs": ["watch"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wrkflw: cargo install wrkflw or brew install wrkflw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrkflw",
+      "resource": "workflow",
+      "action": "list",
+      "description": "List detected workflows and pipelines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrkflw",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wrkflw: cargo install wrkflw or brew install wrkflw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrkflw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wrkflw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrkflw",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wrkflw: cargo install wrkflw or brew install wrkflw"
+      },
+      "args": []
+    }
+  ]
+}
