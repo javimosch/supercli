@@ -1,0 +1,117 @@
+{
+  "name": "asc",
+  "version": "0.1.0",
+  "description": "Fast, scriptable CLI for the App Store Connect API. Automate TestFlight, builds, submissions, signing, analytics, screenshots, subscriptions, and more. JSON-first, no interactive prompts.",
+  "source": "https://github.com/rorkai/App-Store-Connect-CLI",
+  "checks": [
+    { "type": "binary", "name": "asc" }
+  ],
+  "install_guidance": {
+    "plugin": "asc",
+    "binary": "asc",
+    "check": "which asc",
+    "install_steps": [
+      "brew install asc",
+      "Verify: asc --version",
+      "supercli plugins install ./plugins/asc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "asc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print asc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install asc: brew install asc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "asc",
+      "resource": "auth",
+      "action": "login",
+      "description": "Authenticate with App Store Connect API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asc",
+        "baseArgs": ["auth", "login"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install asc: brew install asc"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "description": "Name for the auth key" },
+        { "name": "--key-id", "type": "string", "description": "API key ID" },
+        { "name": "--issuer-id", "type": "string", "description": "Issuer ID" },
+        { "name": "--private-key", "type": "string", "description": "Path to AuthKey.p8 file" },
+        { "name": "--network", "type": "boolean", "description": "Enable network access" },
+        { "name": "--bypass-keychain", "type": "boolean", "description": "Bypass keychain (for CI)" }
+      ]
+    },
+    {
+      "namespace": "asc",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asc",
+        "baseArgs": ["auth", "status"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install asc: brew install asc"
+      },
+      "args": [
+        { "name": "--validate", "type": "boolean", "description": "Validate credentials" }
+      ]
+    },
+    {
+      "namespace": "asc",
+      "resource": "auth",
+      "action": "doctor",
+      "description": "Validate authentication configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asc",
+        "baseArgs": ["auth", "doctor"],
+        "missingDependencyHelp": "Install asc: brew install asc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "asc",
+      "resource": "apps",
+      "action": "list",
+      "description": "List all apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asc",
+        "baseArgs": ["apps", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install asc: brew install asc"
+      },
+      "args": [
+        { "name": "--output", "type": "string", "description": "Output format (table, json, markdown)" },
+        { "name": "--pretty", "type": "boolean", "description": "Pretty print JSON" }
+      ]
+    },
+    {
+      "namespace": "asc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to asc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install asc: brew install asc"
+      },
+      "args": []
+    }
+  ]
+}
