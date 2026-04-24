@@ -1,0 +1,57 @@
+{
+  "name": "reviewdog",
+  "version": "0.1.0",
+  "description": "Automated code review tool integrated with any code analysis tools regardless of programming language. Post review comments to pull requests with diff filtering.",
+  "source": "https://github.com/reviewdog/reviewdog",
+  "checks": [
+    { "type": "binary", "name": "reviewdog" }
+  ],
+  "install_guidance": {
+    "plugin": "reviewdog",
+    "binary": "reviewdog",
+    "check": "which reviewdog",
+    "install_steps": [
+      "brew install reviewdog",
+      "Verify: reviewdog --version",
+      "supercli plugins install ./plugins/reviewdog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "reviewdog",
+      "resource": "code",
+      "action": "review",
+      "description": "Run code review on project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reviewdog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install reviewdog: brew install reviewdog"
+      },
+      "args": [
+        { "name": "--reporter", "type": "string", "description": "Reporter (github-pr-check, github-check, local)" },
+        { "name": "--filter", "type": "string", "description": "Filter mode (added, diff_context, file, nofilter)" },
+        { "name": "--fail-on-error", "type": "boolean", "description": "Fail on errors" },
+        { "name": "--level", "type": "string", "description": "Report level (error, warning, info)" },
+        { "name": "--conf", "type": "string", "description": "Config file path" },
+        { "name": "--tee", "type": "boolean", "description": "Also print to stdout" }
+      ]
+    },
+    {
+      "namespace": "reviewdog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to reviewdog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reviewdog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install reviewdog: brew install reviewdog"
+      },
+      "args": []
+    }
+  ]
+}
