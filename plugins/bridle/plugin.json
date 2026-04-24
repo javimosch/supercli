@@ -1,0 +1,198 @@
+{
+  "name": "bridle",
+  "version": "0.1.0",
+  "description": "TUI/CLI config manager for agentic harnesses (Amp, Claude Code, Opencode, Goose, Copilot CLI, Crush, Droid). Manage profiles, diffs, installs, and settings with JSON output.",
+  "source": "https://github.com/neiii/bridle",
+  "checks": [
+    { "type": "binary", "name": "bridle" }
+  ],
+  "install_guidance": {
+    "plugin": "bridle",
+    "binary": "bridle",
+    "check": "which bridle",
+    "install_steps": [
+      "brew install neiii/bridle/bridle",
+      "Verify: bridle --version",
+      "supercli plugins install ./plugins/bridle --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bridle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bridle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bridle",
+      "resource": "self",
+      "action": "status",
+      "description": "Show bridle status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "profile",
+      "action": "list",
+      "description": "List profiles for a harness",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["profile", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "harness", "type": "string", "required": true, "description": "Harness name (e.g. claude, goose, opencode)" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "profile",
+      "action": "show",
+      "description": "Show a specific profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["profile", "show"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "harness", "type": "string", "required": true, "description": "Harness name" },
+        { "name": "profile", "type": "string", "required": true, "description": "Profile name" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "profile",
+      "action": "diff",
+      "description": "Diff two profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["profile", "diff"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "harness", "type": "string", "required": true, "description": "Harness name" },
+        { "name": "profile", "type": "string", "required": true, "description": "Profile name" },
+        { "name": "other", "type": "string", "required": false, "description": "Other profile to diff against" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "config",
+      "action": "get",
+      "description": "Get a configuration value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["config", "get"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Config key (e.g. editor, default_harness)" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "config",
+      "action": "set",
+      "description": "Set a configuration value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["config", "set"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Config key" },
+        { "name": "value", "type": "string", "required": true, "description": "Config value" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "package",
+      "action": "install",
+      "description": "Install a harness from a source",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source to install (e.g. owner/repo)" },
+        { "name": "--force", "type": "boolean", "description": "Force reinstall if already present" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "package",
+      "action": "uninstall",
+      "description": "Uninstall a harness profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "baseArgs": ["uninstall"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": [
+        { "name": "harness", "type": "string", "required": true, "description": "Harness name" },
+        { "name": "profile", "type": "string", "required": true, "description": "Profile name" },
+        { "name": "-o", "type": "string", "description": "Output format: text, json, auto" },
+        { "name": "--output", "type": "string", "description": "Output format: text, json, auto" }
+      ]
+    },
+    {
+      "namespace": "bridle",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bridle CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bridle",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bridle: brew install neiii/bridle/bridle or cargo install bridle"
+      },
+      "args": []
+    }
+  ]
+}
