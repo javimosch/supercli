@@ -1,0 +1,146 @@
+{
+  "name": "nail",
+  "version": "0.1.0",
+  "description": "Lightning-fast data analysis CLI for Parquet, CSV, and XLSX files. Describe, filter, transform, join, compare, and analyze datasets with rich statistics and schema introspection.",
+  "source": "https://github.com/Vitruves/nail-parquet",
+  "checks": [
+    { "type": "binary", "name": "nail" }
+  ],
+  "install_guidance": {
+    "plugin": "nail",
+    "binary": "nail",
+    "check": "which nail",
+    "install_steps": [
+      "cargo install nail-parquet",
+      "Verify: nail --version",
+      "supercli plugins install ./plugins/nail --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nail",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nail version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nail",
+      "resource": "data",
+      "action": "describe",
+      "description": "Show global file overview and metadata",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "baseArgs": ["describe"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Input dataset file" },
+        { "name": "-o", "type": "string", "description": "Output file" },
+        { "name": "-f", "type": "string", "description": "Output format: json, csv, parquet, text (default: auto)" },
+        { "name": "-v", "type": "boolean", "description": "Verbose output" }
+      ]
+    },
+    {
+      "namespace": "nail",
+      "resource": "data",
+      "action": "stats",
+      "description": "Calculate descriptive statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "baseArgs": ["stats"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Input dataset file" },
+        { "name": "-c", "type": "string", "description": "Columns to analyze" },
+        { "name": "--percentiles", "type": "string", "description": "Custom percentiles to compute" },
+        { "name": "--stats-type", "type": "string", "description": "Statistics detail level: basic, standard, exhaustive" },
+        { "name": "-o", "type": "string", "description": "Output file" },
+        { "name": "-f", "type": "string", "description": "Output format: json, csv, parquet, text" }
+      ]
+    },
+    {
+      "namespace": "nail",
+      "resource": "data",
+      "action": "head",
+      "description": "Display first N rows",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "baseArgs": ["head"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Input dataset file" },
+        { "name": "-n", "type": "string", "description": "Number of rows (default: 10)" },
+        { "name": "-o", "type": "string", "description": "Output file" },
+        { "name": "-f", "type": "string", "description": "Output format: json, csv, parquet, text" }
+      ]
+    },
+    {
+      "namespace": "nail",
+      "resource": "data",
+      "action": "schema",
+      "description": "Display schema information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "baseArgs": ["schema"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Input dataset file" },
+        { "name": "-o", "type": "string", "description": "Output file" },
+        { "name": "-f", "type": "string", "description": "Output format: json, csv, parquet, text" }
+      ]
+    },
+    {
+      "namespace": "nail",
+      "resource": "data",
+      "action": "convert",
+      "description": "Convert between file formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "baseArgs": ["convert"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Input dataset file" },
+        { "name": "-o", "type": "string", "required": true, "description": "Output file" },
+        { "name": "-f", "type": "string", "description": "Output format: json, csv, parquet, text (default: inferred from extension)" },
+        { "name": "-v", "type": "boolean", "description": "Verbose output" }
+      ]
+    },
+    {
+      "namespace": "nail",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nail CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nail",
+        "passthrough": true,
+        "missingDependencyHelp": "Install nail: cargo install nail-parquet"
+      },
+      "args": []
+    }
+  ]
+}

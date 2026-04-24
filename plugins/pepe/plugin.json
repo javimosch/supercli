@@ -1,0 +1,72 @@
+{
+  "name": "pepe",
+  "version": "0.1.0",
+  "description": "HTTP load generator written in Rust. Send simple or advanced HTTP requests with configurable concurrency, timeouts, headers, and curl command parsing support.",
+  "source": "https://github.com/omarmhaimdat/pepe",
+  "checks": [
+    { "type": "binary", "name": "pepe" }
+  ],
+  "install_guidance": {
+    "plugin": "pepe",
+    "binary": "pepe",
+    "check": "which pepe",
+    "install_steps": [
+      "curl --proto '=https' --tlsv1.2 -sSf https://pepe.mhaimdat.com/install.sh | bash",
+      "Verify: pepe --version",
+      "supercli plugins install ./plugins/pepe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pepe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pepe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pepe",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pepe: curl --proto '=https' --tlsv1.2 -sSf https://pepe.mhaimdat.com/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pepe",
+      "resource": "load",
+      "action": "test",
+      "description": "Run HTTP load test against a target URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pepe",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pepe: curl --proto '=https' --tlsv1.2 -sSf https://pepe.mhaimdat.com/install.sh | bash"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Target URL to test" },
+        { "name": "-n", "type": "string", "description": "Total number of requests to send (default: 200)" },
+        { "name": "-c", "type": "string", "description": "Number of concurrent connections (default: 50)" },
+        { "name": "-t", "type": "string", "description": "Timeout per request in seconds (default: 2)" },
+        { "name": "-u", "type": "string", "description": "User-Agent string" },
+        { "name": "-H", "type": "string", "description": "Custom header (repeatable)" },
+        { "name": "-m", "type": "string", "description": "HTTP method: GET, POST, PUT, DELETE, etc. (default: GET)" },
+        { "name": "--curl", "type": "boolean", "description": "Parse a curl command instead (use -- before the curl command)" }
+      ]
+    },
+    {
+      "namespace": "pepe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pepe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pepe",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pepe: curl --proto '=https' --tlsv1.2 -sSf https://pepe.mhaimdat.com/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
