@@ -1,0 +1,131 @@
+{
+  "name": "colgrep",
+  "version": "0.1.0",
+  "description": "Semantic code search for your terminal. Combines regex filtering with semantic ranking. All local — your code never leaves your machine.",
+  "source": "https://github.com/lightonai/next-plaid",
+  "checks": [
+    { "type": "binary", "name": "colgrep" }
+  ],
+  "install_guidance": {
+    "plugin": "colgrep",
+    "binary": "colgrep",
+    "check": "which colgrep",
+    "install_steps": [
+      "brew install lightonai/tap/colgrep",
+      "Verify: colgrep --version",
+      "supercli plugins install ./plugins/colgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "colgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print colgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer (https://github.com/lightonai/next-plaid/releases)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "colgrep",
+      "resource": "index",
+      "action": "init",
+      "description": "Build the search index for a project (or current directory)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path to index (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "colgrep",
+      "resource": "index",
+      "action": "clear",
+      "description": "Clear the search index for the active model (or all models)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "baseArgs": ["clear"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer"
+      },
+      "args": [
+        { "name": "--all", "type": "boolean", "description": "Wipe every index across all models" }
+      ]
+    },
+    {
+      "namespace": "colgrep",
+      "resource": "search",
+      "action": "query",
+      "description": "Semantic code search with optional regex filtering",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer"
+      },
+      "args": [
+        { "name": "-e", "type": "string", "description": "Regex pattern for pre-filtering before semantic ranking" },
+        { "name": "--model", "type": "string", "description": "One-shot model override (e.g. lightonai/LateOn-Code)" },
+        { "name": "query", "type": "string", "required": true, "description": "Natural-language search query" }
+      ]
+    },
+    {
+      "namespace": "colgrep",
+      "resource": "model",
+      "action": "set",
+      "description": "Persist a ColBERT-style model as the default",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "baseArgs": ["set-model"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": true, "description": "HuggingFace model identifier (e.g. lightonai/LateOn-Code)" }
+      ]
+    },
+    {
+      "namespace": "colgrep",
+      "resource": "model",
+      "action": "status",
+      "description": "Show which model an index was built with",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "colgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to colgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "colgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install colgrep: brew install lightonai/tap/colgrep or use the shell installer"
+      },
+      "args": []
+    }
+  ]
+}
