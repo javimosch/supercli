@@ -1,0 +1,72 @@
+{
+  "name": "devspace",
+  "version": "0.1.0",
+  "description": "DevSpace is an open-source developer tool for Kubernetes that lets you develop and deploy cloud-native software faster. Build, test, and debug applications directly inside Kubernetes.",
+  "source": "https://github.com/devspace-sh/devspace",
+  "checks": [
+    { "type": "binary", "name": "devspace" }
+  ],
+  "install_guidance": {
+    "plugin": "devspace",
+    "binary": "devspace",
+    "check": "which devspace",
+    "install_steps": [
+      "brew install devspace",
+      "Verify: devspace --version",
+      "supercli plugins install ./plugins/devspace --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "devspace",
+      "resource": "dev",
+      "action": "start",
+      "description": "Start development in Kubernetes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devspace",
+        "baseArgs": ["dev"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install devspace: brew install devspace"
+      },
+      "args": [
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" },
+        { "name": "--profile", "type": "string", "description": "DevSpace profile" },
+        { "name": "--debug", "type": "boolean", "description": "Enable debugging" }
+      ]
+    },
+    {
+      "namespace": "devspace",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy to Kubernetes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devspace",
+        "baseArgs": ["deploy"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install devspace: brew install devspace"
+      },
+      "args": [
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" },
+        { "name": "--profile", "type": "string", "description": "DevSpace profile" }
+      ]
+    },
+    {
+      "namespace": "devspace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to devspace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devspace",
+        "passthrough": true,
+        "missingDependencyHelp": "Install devspace: brew install devspace"
+      },
+      "args": []
+    }
+  ]
+}

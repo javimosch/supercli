@@ -1,0 +1,72 @@
+{
+  "name": "arkade",
+  "version": "0.1.0",
+  "description": "Open Source Marketplace For Kubernetes. The single marketplace for all your Kubernetes and Cloud Native tools. Install CLIs, helm charts, and apps with a single command.",
+  "source": "https://github.com/alexellis/arkade",
+  "checks": [
+    { "type": "binary", "name": "arkade" }
+  ],
+  "install_guidance": {
+    "plugin": "arkade",
+    "binary": "arkade",
+    "check": "which arkade",
+    "install_steps": [
+      "brew install arkade",
+      "Verify: arkade version",
+      "supercli plugins install ./plugins/arkade --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "arkade",
+      "resource": "app",
+      "action": "install",
+      "description": "Install a Kubernetes app",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "arkade",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install arkade: brew install arkade"
+      },
+      "args": [
+        { "name": "app", "type": "string", "description": "App name" },
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" },
+        { "name": "--set", "type": "string", "description": "Set values" }
+      ]
+    },
+    {
+      "namespace": "arkade",
+      "resource": "tool",
+      "action": "get",
+      "description": "Get a CLI tool",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "arkade",
+        "baseArgs": ["get"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install arkade: brew install arkade"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "description": "Tool name" },
+        { "name": "--version", "type": "string", "description": "Tool version" }
+      ]
+    },
+    {
+      "namespace": "arkade",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to arkade CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "arkade",
+        "passthrough": true,
+        "missingDependencyHelp": "Install arkade: brew install arkade"
+      },
+      "args": []
+    }
+  ]
+}

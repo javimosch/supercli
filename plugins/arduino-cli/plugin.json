@@ -1,0 +1,71 @@
+{
+  "name": "arduino-cli",
+  "version": "0.1.0",
+  "description": "Arduino command line interface. Compile, upload, and manage Arduino sketches, boards, and libraries from the command line.",
+  "source": "https://github.com/arduino/arduino-cli",
+  "checks": [
+    { "type": "binary", "name": "arduino-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "arduino-cli",
+    "binary": "arduino-cli",
+    "check": "which arduino-cli",
+    "install_steps": [
+      "brew install arduino-cli",
+      "Verify: arduino-cli version",
+      "supercli plugins install ./plugins/arduino-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "arduino-cli",
+      "resource": "sketch",
+      "action": "compile",
+      "description": "Compile an Arduino sketch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "arduino-cli",
+        "baseArgs": ["compile"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install arduino-cli: brew install arduino-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Sketch path" },
+        { "name": "--fqbn", "type": "string", "description": "Fully Qualified Board Name" },
+        { "name": "--port", "type": "string", "description": "Upload port" }
+      ]
+    },
+    {
+      "namespace": "arduino-cli",
+      "resource": "board",
+      "action": "list",
+      "description": "List connected boards",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "arduino-cli",
+        "baseArgs": ["board", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install arduino-cli: brew install arduino-cli"
+      },
+      "args": [
+        { "name": "--timeout", "type": "integer", "description": "Discovery timeout" }
+      ]
+    },
+    {
+      "namespace": "arduino-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to arduino-cli",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "arduino-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install arduino-cli: brew install arduino-cli"
+      },
+      "args": []
+    }
+  ]
+}
