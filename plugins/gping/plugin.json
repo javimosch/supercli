@@ -1,0 +1,58 @@
+{
+  "name": "gping",
+  "version": "0.1.0",
+  "description": "Ping, but with a graph. Visual ping tool with real-time graph display for monitoring network latency and packet loss.",
+  "source": "https://github.com/orf/gping",
+  "checks": [
+    { "type": "binary", "name": "gping" }
+  ],
+  "install_guidance": {
+    "plugin": "gping",
+    "binary": "gping",
+    "check": "which gping",
+    "install_steps": [
+      "brew install gping",
+      "Verify: gping --version",
+      "supercli plugins install ./plugins/gping --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gping",
+      "resource": "host",
+      "action": "ping",
+      "description": "Ping host with graph visualization",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gping",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gping: brew install gping"
+      },
+      "args": [
+        { "name": "hosts", "type": "string", "required": true, "description": "Host(s) to ping" },
+        { "name": "--interval", "type": "string", "description": "Ping interval" },
+        { "name": "--count", "type": "integer", "description": "Number of pings" },
+        { "name": "--timeout", "type": "integer", "description": "Ping timeout" },
+        { "name": "--no-ipv4", "type": "boolean", "description": "Disable IPv4" },
+        { "name": "--no-ipv6", "type": "boolean", "description": "Disable IPv6" },
+        { "name": "--interface", "type": "string", "description": "Network interface" }
+      ]
+    },
+    {
+      "namespace": "gping",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gping CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gping",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gping: brew install gping"
+      },
+      "args": []
+    }
+  ]
+}
