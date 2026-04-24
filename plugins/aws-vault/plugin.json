@@ -1,0 +1,56 @@
+{
+  "name": "aws-vault",
+  "version": "0.1.0",
+  "description": "A tool for securely storing and accessing AWS credentials in development environments. Uses OS-native secure keystore to protect credentials.",
+  "source": "https://github.com/99designs/aws-vault",
+  "checks": [
+    { "type": "binary", "name": "aws-vault" }
+  ],
+  "install_guidance": {
+    "plugin": "aws-vault",
+    "binary": "aws-vault",
+    "check": "which aws-vault",
+    "install_steps": [
+      "brew install aws-vault",
+      "Verify: aws-vault --version",
+      "supercli plugins install ./plugins/aws-vault --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aws-vault",
+      "resource": "cred",
+      "action": "exec",
+      "description": "Execute command with AWS credentials",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aws-vault",
+        "baseArgs": ["exec"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install aws-vault: brew install aws-vault"
+      },
+      "args": [
+        { "name": "profile", "type": "string", "description": "AWS profile name" },
+        { "name": "--duration", "type": "string", "description": "Session duration" },
+        { "name": "--no-session", "type": "boolean", "description": "Skip session token" },
+        { "name": "command", "type": "string", "description": "Command to execute" }
+      ]
+    },
+    {
+      "namespace": "aws-vault",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aws-vault CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aws-vault",
+        "passthrough": true,
+        "missingDependencyHelp": "Install aws-vault: brew install aws-vault"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "gitoxide",
+  "version": "0.1.0",
+  "description": "An implementation of Git in Rust. A fast, correct, and enjoyable pure Rust implementation of the Git version control system.",
+  "source": "https://github.com/GitoxideLabs/gitoxide",
+  "checks": [
+    { "type": "binary", "name": "gix" }
+  ],
+  "install_guidance": {
+    "plugin": "gitoxide",
+    "binary": "gix",
+    "check": "which gix",
+    "install_steps": [
+      "brew install gitoxide",
+      "Verify: gix --version",
+      "supercli plugins install ./plugins/gitoxide --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitoxide",
+      "resource": "repo",
+      "action": "clone",
+      "description": "Clone a repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gix",
+        "baseArgs": ["clone"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitoxide: brew install gitoxide"
+      },
+      "args": [
+        { "name": "url", "type": "string", "description": "Repository URL" },
+        { "name": "--bare", "type": "boolean", "description": "Clone as bare repository" },
+        { "name": "--depth", "type": "integer", "description": "Shallow clone depth" }
+      ]
+    },
+    {
+      "namespace": "gitoxide",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gix",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitoxide: brew install gitoxide"
+      },
+      "args": []
+    }
+  ]
+}
