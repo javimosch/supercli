@@ -1,0 +1,70 @@
+{
+  "name": "glow",
+  "version": "0.1.0",
+  "description": "Render markdown on the CLI with pizzazz. A markdown renderer with syntax highlighting, automatic paging, and support for multiple output styles.",
+  "source": "https://github.com/charmbracelet/glow",
+  "checks": [
+    { "type": "binary", "name": "glow" }
+  ],
+  "install_guidance": {
+    "plugin": "glow",
+    "binary": "glow",
+    "check": "which glow",
+    "install_steps": [
+      "brew install glow",
+      "Verify: glow --version",
+      "supercli plugins install ./plugins/glow --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "glow",
+      "resource": "markdown",
+      "action": "render",
+      "description": "Render markdown file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glow",
+        "passthrough": true,
+        "missingDependencyHelp": "Install glow: brew install glow"
+      },
+      "args": [
+        { "name": "--style", "type": "string", "description": "Output style (auto, dark, light)" },
+        { "name": "--width", "type": "integer", "description": "Wrap width" },
+        { "name": "--pager", "type": "boolean", "description": "Enable pager" },
+        { "name": "--no-pager", "type": "boolean", "description": "Disable pager" },
+        { "name": "files", "type": "string", "required": true, "description": "Markdown files to render" }
+      ]
+    },
+    {
+      "namespace": "glow",
+      "resource": "markdown",
+      "action": "stdin",
+      "description": "Render markdown from stdin",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glow",
+        "baseArgs": ["-"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install glow: brew install glow"
+      },
+      "args": []
+    },
+    {
+      "namespace": "glow",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to glow CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glow",
+        "passthrough": true,
+        "missingDependencyHelp": "Install glow: brew install glow"
+      },
+      "args": []
+    }
+  ]
+}
