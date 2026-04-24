@@ -1,0 +1,55 @@
+{
+  "name": "cup",
+  "version": "0.1.0",
+  "description": "Check for available updates for your container images. Monitor and report outdated container images in registries and local deployments.",
+  "source": "https://github.com/sergi0g/cup",
+  "checks": [
+    { "type": "binary", "name": "cup" }
+  ],
+  "install_guidance": {
+    "plugin": "cup",
+    "binary": "cup",
+    "check": "which cup",
+    "install_steps": [
+      "brew install sergi0g/tap/cup",
+      "Verify: cup --version",
+      "supercli plugins install ./plugins/cup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cup",
+      "resource": "image",
+      "action": "check",
+      "description": "Check for image updates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cup",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cup: brew install sergi0g/tap/cup"
+      },
+      "args": [
+        { "name": "image", "type": "string", "description": "Image name to check" },
+        { "name": "--all", "type": "boolean", "description": "Check all configured images" },
+        { "name": "--json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "cup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cup",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cup: brew install sergi0g/tap/cup"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "cargo-llvm-cov",
+  "version": "0.1.0",
+  "description": "Cargo subcommand for LLVM source-based code coverage for Rust. Generate and report code coverage for Rust projects with minimal configuration.",
+  "source": "https://github.com/taiki-e/cargo-llvm-cov",
+  "checks": [
+    { "type": "binary", "name": "cargo-llvm-cov" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-llvm-cov",
+    "binary": "cargo-llvm-cov",
+    "check": "cargo llvm-cov --version",
+    "install_steps": [
+      "cargo install cargo-llvm-cov",
+      "Verify: cargo llvm-cov --version",
+      "supercli plugins install ./plugins/cargo-llvm-cov --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-llvm-cov",
+      "resource": "coverage",
+      "action": "report",
+      "description": "Generate code coverage report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["llvm-cov"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-llvm-cov: cargo install cargo-llvm-cov"
+      },
+      "args": [
+        { "name": "--html", "type": "boolean", "description": "Generate HTML report" },
+        { "name": "--lcov", "type": "boolean", "description": "Generate LCOV report" },
+        { "name": "--output-path", "type": "string", "description": "Output file path" },
+        { "name": "--package", "type": "string", "description": "Package to run tests for" }
+      ]
+    },
+    {
+      "namespace": "cargo-llvm-cov",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo llvm-cov CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["llvm-cov"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-llvm-cov: cargo install cargo-llvm-cov"
+      },
+      "args": []
+    }
+  ]
+}

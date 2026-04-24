@@ -1,0 +1,72 @@
+{
+  "name": "ignite-cli",
+  "version": "0.1.0",
+  "description": "CLI tool for creating and maintaining blockchain applications. Scaffold, build, and manage Cosmos SDK blockchains from the command line.",
+  "source": "https://github.com/ignite/cli",
+  "checks": [
+    { "type": "binary", "name": "ignite" }
+  ],
+  "install_guidance": {
+    "plugin": "ignite-cli",
+    "binary": "ignite",
+    "check": "which ignite",
+    "install_steps": [
+      "brew install ignite",
+      "Verify: ignite version",
+      "supercli plugins install ./plugins/ignite-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ignite-cli",
+      "resource": "chain",
+      "action": "scaffold",
+      "description": "Scaffold a new blockchain",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ignite",
+        "baseArgs": ["scaffold", "chain"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ignite-cli: brew install ignite"
+      },
+      "args": [
+        { "name": "name", "type": "string", "description": "Blockchain name" },
+        { "name": "--no-module", "type": "boolean", "description": "Do not create a default module" },
+        { "name": "--address-prefix", "type": "string", "description": "Account address prefix" }
+      ]
+    },
+    {
+      "namespace": "ignite-cli",
+      "resource": "chain",
+      "action": "build",
+      "description": "Build the blockchain",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ignite",
+        "baseArgs": ["chain", "build"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ignite-cli: brew install ignite"
+      },
+      "args": [
+        { "name": "--release", "type": "boolean", "description": "Build for release" },
+        { "name": "--output", "type": "string", "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "ignite-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ignite CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ignite",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ignite-cli: brew install ignite"
+      },
+      "args": []
+    }
+  ]
+}
