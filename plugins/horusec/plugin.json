@@ -1,0 +1,56 @@
+{
+  "name": "horusec",
+  "version": "0.1.0",
+  "description": "Horusec is an open source tool that improves identification of vulnerabilities in your project with just one command. Security vulnerability scanner.",
+  "source": "https://github.com/ZupIT/horusec",
+  "checks": [
+    { "type": "binary", "name": "horusec" }
+  ],
+  "install_guidance": {
+    "plugin": "horusec",
+    "binary": "horusec",
+    "check": "which horusec",
+    "install_steps": [
+      "brew install horusec",
+      "Verify: horusec --version",
+      "supercli plugins install ./plugins/horusec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "horusec",
+      "resource": "scan",
+      "action": "start",
+      "description": "Start security vulnerability scan",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "horusec",
+        "baseArgs": ["start"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install horusec: brew install horusec"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path to scan" },
+        { "name": "--json-output", "type": "boolean", "description": "JSON output format" },
+        { "name": "--skip-folder", "type": "string", "description": "Folder to skip" },
+        { "name": "--remote", "type": "boolean", "description": "Use remote analysis" }
+      ]
+    },
+    {
+      "namespace": "horusec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to horusec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "horusec",
+        "passthrough": true,
+        "missingDependencyHelp": "Install horusec: brew install horusec"
+      },
+      "args": []
+    }
+  ]
+}
