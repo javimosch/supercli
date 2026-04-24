@@ -1,0 +1,97 @@
+{
+  "name": "ttl",
+  "version": "0.1.0",
+  "description": "Fast, modern traceroute with per-hop stats, ASN/geo lookup, ECMP detection, and MPLS label parsing. Headless JSON, CSV, and report output.",
+  "source": "https://github.com/lance0/ttl",
+  "checks": [
+    { "type": "binary", "name": "ttl" }
+  ],
+  "install_guidance": {
+    "plugin": "ttl",
+    "binary": "ttl",
+    "check": "which ttl",
+    "install_steps": [
+      "brew install lance0/tap/ttl",
+      "Verify: ttl --version",
+      "supercli plugins install ./plugins/ttl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ttl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ttl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ttl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ttl: brew install lance0/tap/ttl or cargo install ttl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ttl",
+      "resource": "host",
+      "action": "trace",
+      "description": "Run traceroute to a host and display results",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ttl",
+        "baseArgs": ["trace"],
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ttl: brew install lance0/tap/ttl or cargo install ttl"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Target host or IP address" },
+        { "name": "-c", "type": "string", "required": false, "description": "Number of probe packets per hop" },
+        { "name": "-p", "type": "string", "required": false, "description": "Protocol: icmp, udp, or tcp" },
+        { "name": "--port", "type": "string", "required": false, "description": "Port number for TCP probes" },
+        { "name": "--flows", "type": "string", "required": false, "description": "ECMP path enumeration (number of flows)" },
+        { "name": "--interface", "type": "string", "required": false, "description": "Bind to specific network interface" },
+        { "name": "--size", "type": "string", "required": false, "description": "Packet size for MTU testing" },
+        { "name": "--dscp", "type": "string", "required": false, "description": "DSCP/QoS marking value" },
+        { "name": "--report", "type": "boolean", "required": false, "description": "Generate text report" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "Export results as JSON" },
+        { "name": "--csv", "type": "boolean", "required": false, "description": "Export results as CSV" }
+      ]
+    },
+    {
+      "namespace": "ttl",
+      "resource": "trace",
+      "action": "replay",
+      "description": "Replay a saved traceroute session from JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ttl",
+        "baseArgs": ["--replay"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ttl: brew install lance0/tap/ttl or cargo install ttl"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to saved results JSON file" },
+        { "name": "--animate", "type": "boolean", "required": false, "description": "Animate the replay" }
+      ]
+    },
+    {
+      "namespace": "ttl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ttl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ttl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ttl: brew install lance0/tap/ttl or cargo install ttl"
+      },
+      "args": []
+    }
+  ]
+}
