@@ -1,0 +1,76 @@
+{
+  "name": "dasel",
+  "version": "0.1.0",
+  "description": "Select, put and delete data from JSON, TOML, YAML, XML, INI, HCL and CSV files with a single tool. A query and update tool for structured data files.",
+  "source": "https://github.com/TomWright/dasel",
+  "checks": [
+    { "type": "binary", "name": "dasel" }
+  ],
+  "install_guidance": {
+    "plugin": "dasel",
+    "binary": "dasel",
+    "check": "which dasel",
+    "install_steps": [
+      "brew install dasel",
+      "Verify: dasel --version",
+      "supercli plugins install ./plugins/dasel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dasel",
+      "resource": "data",
+      "action": "select",
+      "description": "Select data from structured files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dasel",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dasel: brew install dasel"
+      },
+      "args": [
+        { "name": "selector", "type": "string", "description": "Dasel selector" },
+        { "name": "file", "type": "string", "description": "Input file" },
+        { "name": "-p", "type": "string", "description": "Parser (json, toml, yaml, xml, ini, hcl, csv)" },
+        { "name": "-w", "type": "string", "description": "Writer format" },
+        { "name": "-f", "type": "string", "description": "Output file" }
+      ]
+    },
+    {
+      "namespace": "dasel",
+      "resource": "data",
+      "action": "put",
+      "description": "Put data into structured files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dasel",
+        "baseArgs": ["put"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dasel: brew install dasel"
+      },
+      "args": [
+        { "name": "selector", "type": "string", "description": "Dasel selector" },
+        { "name": "value", "type": "string", "description": "Value to put" },
+        { "name": "file", "type": "string", "description": "Input file" },
+        { "name": "-p", "type": "string", "description": "Parser" },
+        { "name": "-t", "type": "string", "description": "Type (string, int, bool)" }
+      ]
+    },
+    {
+      "namespace": "dasel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dasel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dasel",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dasel: brew install dasel"
+      },
+      "args": []
+    }
+  ]
+}
