@@ -1,0 +1,55 @@
+{
+  "name": "topgrade",
+  "version": "0.1.0",
+  "description": "Upgrade all the things. Upgrade all installed packages and system components on Linux, macOS, and Windows with a single command.",
+  "source": "https://github.com/topgrade-rs/topgrade",
+  "checks": [
+    { "type": "binary", "name": "topgrade" }
+  ],
+  "install_guidance": {
+    "plugin": "topgrade",
+    "binary": "topgrade",
+    "check": "which topgrade",
+    "install_steps": [
+      "brew install topgrade",
+      "Verify: topgrade --version",
+      "supercli plugins install ./plugins/topgrade --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "topgrade",
+      "resource": "system",
+      "action": "upgrade",
+      "description": "Upgrade all system packages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "topgrade",
+        "passthrough": true,
+        "missingDependencyHelp": "Install topgrade: brew install topgrade"
+      },
+      "args": [
+        { "name": "--dry-run", "type": "boolean", "description": "Dry run without changes" },
+        { "name": "--only", "type": "string", "description": "Only upgrade specific step" },
+        { "name": "--skip", "type": "string", "description": "Skip specific step" },
+        { "name": "--yes", "type": "boolean", "description": "Auto-confirm all prompts" }
+      ]
+    },
+    {
+      "namespace": "topgrade",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to topgrade CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "topgrade",
+        "passthrough": true,
+        "missingDependencyHelp": "Install topgrade: brew install topgrade"
+      },
+      "args": []
+    }
+  ]
+}
