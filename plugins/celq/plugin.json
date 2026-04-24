@@ -1,0 +1,67 @@
+{
+  "name": "celq",
+  "version": "0.1.0",
+  "description": "Common Expression Language (CEL) CLI tool. Evaluate CEL expressions against JSON, JSON5, YAML, TOML, and XML input. Filter, transform, and validate structured data with a familiar expression syntax.",
+  "source": "https://github.com/IvanIsCoding/celq",
+  "checks": [
+    { "type": "binary", "name": "celq" }
+  ],
+  "install_guidance": {
+    "plugin": "celq",
+    "binary": "celq",
+    "check": "which celq",
+    "install_steps": [
+      "cargo install celq",
+      "Verify: celq --version",
+      "supercli plugins install ./plugins/celq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "celq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print celq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "celq",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install celq: cargo install celq or brew install celq"
+      },
+      "args": []
+    },
+    {
+      "namespace": "celq",
+      "resource": "data",
+      "action": "query",
+      "description": "Evaluate CEL expression against structured data (JSON, YAML, TOML, XML)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "celq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install celq: cargo install celq or brew install celq"
+      },
+      "args": [
+        { "name": "-n", "type": "boolean", "description": "No input mode (do not read from STDIN, evaluate expression only)" },
+        { "name": "--arg", "type": "string", "description": "Pass an argument to the expression (e.g. --arg='fruit:string=apple')" },
+        { "name": "expression", "type": "string", "description": "CEL expression to evaluate (e.g. 'this.filter(s, s.contains(\"a\"))')" }
+      ]
+    },
+    {
+      "namespace": "celq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to celq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "celq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install celq: cargo install celq or brew install celq"
+      },
+      "args": []
+    }
+  ]
+}
