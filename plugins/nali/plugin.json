@@ -1,0 +1,55 @@
+{
+  "name": "nali",
+  "version": "0.1.0",
+  "description": "Offline tool for querying IP geographic information and CDN provider. Query IP geolocation and CDN service provider information without internet.",
+  "source": "https://github.com/zu1k/nali",
+  "checks": [
+    { "type": "binary", "name": "nali" }
+  ],
+  "install_guidance": {
+    "plugin": "nali",
+    "binary": "nali",
+    "check": "which nali",
+    "install_steps": [
+      "brew install nali",
+      "Verify: nali --version",
+      "supercli plugins install ./plugins/nali --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nali",
+      "resource": "ip",
+      "action": "lookup",
+      "description": "Lookup IP geographic information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nali",
+        "passthrough": true,
+        "missingDependencyHelp": "Install nali: brew install nali"
+      },
+      "args": [
+        { "name": "ip", "type": "string", "description": "IP address to lookup" },
+        { "name": "--cdn", "type": "boolean", "description": "Query CDN provider" },
+        { "name": "--update", "type": "boolean", "description": "Update database" },
+        { "name": "--lang", "type": "string", "description": "Language (en, zh)" }
+      ]
+    },
+    {
+      "namespace": "nali",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nali CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nali",
+        "passthrough": true,
+        "missingDependencyHelp": "Install nali: brew install nali"
+      },
+      "args": []
+    }
+  ]
+}
