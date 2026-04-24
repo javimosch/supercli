@@ -1,0 +1,153 @@
+{
+  "name": "rumdl",
+  "version": "0.1.0",
+  "description": "Fast Markdown linter and formatter written in Rust",
+  "source": "https://github.com/rvben/rumdl",
+  "checks": [
+    { "type": "binary", "name": "rumdl" }
+  ],
+  "install_guidance": {
+    "plugin": "rumdl",
+    "binary": "rumdl",
+    "check": "which rumdl",
+    "install_steps": [
+      "cargo install rumdl",
+      "Verify: rumdl --version",
+      "supercli plugins install ./plugins/rumdl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rumdl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rumdl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rumdl",
+      "resource": "markdown",
+      "action": "check",
+      "description": "Lint Markdown files for style violations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "baseArgs": ["check"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": false, "description": "Files or directories to lint (default: current directory)" },
+        { "name": "--output-format", "type": "string", "required": false, "description": "Output format: json, json-lines" },
+        { "name": "--fix", "type": "boolean", "required": false, "description": "Auto-fix violations where possible" },
+        { "name": "--diff", "type": "boolean", "required": false, "description": "Preview fixes without modifying files" },
+        { "name": "--disable", "type": "string", "required": false, "description": "Comma-separated list of rules to disable" },
+        { "name": "--enable", "type": "string", "required": false, "description": "Comma-separated list of rules to enable" },
+        { "name": "--exclude", "type": "string", "required": false, "description": "Comma-separated patterns to exclude" },
+        { "name": "--color", "type": "string", "required": false, "description": "Color mode: auto, always, never" }
+      ]
+    },
+    {
+      "namespace": "rumdl",
+      "resource": "markdown",
+      "action": "format",
+      "description": "Format Markdown files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "baseArgs": ["fmt"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": false, "description": "Files or directories to format (default: current directory)" },
+        { "name": "--exclude", "type": "string", "required": false, "description": "Comma-separated patterns to exclude" },
+        { "name": "--color", "type": "string", "required": false, "description": "Color mode: auto, always, never" }
+      ]
+    },
+    {
+      "namespace": "rumdl",
+      "resource": "config",
+      "action": "init",
+      "description": "Create a default rumdl configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": [
+        { "name": "--pyproject", "type": "boolean", "required": false, "description": "Create pyproject.toml config instead of rumdl.toml" }
+      ]
+    },
+    {
+      "namespace": "rumdl",
+      "resource": "rule",
+      "action": "show",
+      "description": "Show information about linting rules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "baseArgs": ["rule"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": [
+        { "name": "rule-id", "type": "string", "required": false, "description": "Specific rule ID to describe (e.g., MD013). Omit to list all rules." }
+      ]
+    },
+    {
+      "namespace": "rumdl",
+      "resource": "config",
+      "action": "show",
+      "description": "Show loaded configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "baseArgs": ["config"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": [
+        { "name": "--output", "type": "string", "required": false, "description": "Output format: toml, json" },
+        { "name": "--defaults", "type": "boolean", "required": false, "description": "Show only default configuration values" },
+        { "name": "--no-defaults", "type": "boolean", "required": false, "description": "Show only non-default configuration values" }
+      ]
+    },
+    {
+      "namespace": "rumdl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rumdl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rumdl",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rumdl: cargo install rumdl"
+      },
+      "args": []
+    }
+  ]
+}
