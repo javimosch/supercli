@@ -1,0 +1,73 @@
+{
+  "name": "headson",
+  "version": "0.1.0",
+  "description": "Head/tail for structured data — summarize and preview JSON, YAML, and source code with configurable budgets, tree views, and grep-like filtering.",
+  "source": "https://github.com/kantord/headson",
+  "checks": [
+    { "type": "binary", "name": "hson" }
+  ],
+  "install_guidance": {
+    "plugin": "headson",
+    "binary": "hson",
+    "check": "which hson",
+    "install_steps": [
+      "cargo install headson",
+      "Verify: hson --version",
+      "supercli plugins install ./plugins/headson --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "headson",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hson version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hson",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install headson: cargo install headson"
+      },
+      "args": []
+    },
+    {
+      "namespace": "headson",
+      "resource": "data",
+      "action": "preview",
+      "description": "Preview and summarize structured data files or stdin with configurable character budgets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hson",
+        "passthrough": true,
+        "missingDependencyHelp": "Install headson: cargo install headson"
+      },
+      "args": [
+        { "name": "-c", "type": "string", "description": "Character budget per file (default: 200)" },
+        { "name": "-C", "type": "string", "description": "Total character budget across all files" },
+        { "name": "-f", "type": "string", "description": "Output format: json, yaml" },
+        { "name": "-t", "type": "string", "description": "Type/level: strict, detailed" },
+        { "name": "--grep", "type": "string", "description": "Keep lines matching this pattern visible" },
+        { "name": "--tree", "type": "boolean", "description": "Show tree-like view with inline previews" },
+        { "name": "--glob", "type": "string", "description": "Glob pattern for file selection" },
+        { "name": "-n", "type": "string", "description": "Line count for source code outline (keeps lines intact)" },
+        { "name": "files", "type": "string", "description": "Input file(s). If omitted, reads from stdin." }
+      ]
+    },
+    {
+      "namespace": "headson",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hson CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hson",
+        "passthrough": true,
+        "missingDependencyHelp": "Install headson: cargo install headson"
+      },
+      "args": []
+    }
+  ]
+}
