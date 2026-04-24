@@ -1,0 +1,67 @@
+{
+  "name": "rslint",
+  "version": "0.1.0",
+  "description": "Lightning-fast JavaScript/TypeScript linter built with Go and typescript-go. 20-40x faster than ESLint with minimal config, typed linting by default, and ESLint-compatible rules.",
+  "source": "https://github.com/web-infra-dev/rslint",
+  "checks": [
+    { "type": "binary", "name": "rslint" }
+  ],
+  "install_guidance": {
+    "plugin": "rslint",
+    "binary": "rslint",
+    "check": "which rslint",
+    "install_steps": [
+      "npm install -g @rslint/cli  # or download binary from GitHub Releases",
+      "Verify: rslint --version",
+      "supercli plugins install ./plugins/rslint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rslint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rslint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rslint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rslint: npm install -g @rslint/cli or download from https://github.com/web-infra-dev/rslint/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rslint",
+      "resource": "lint",
+      "action": "check",
+      "description": "Lint JavaScript/TypeScript files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rslint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rslint: npm install -g @rslint/cli or download from https://github.com/web-infra-dev/rslint/releases"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Files or directories to lint (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "rslint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rslint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rslint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rslint: npm install -g @rslint/cli or download from https://github.com/web-infra-dev/rslint/releases"
+      },
+      "args": []
+    }
+  ]
+}
