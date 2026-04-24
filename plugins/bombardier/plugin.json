@@ -1,0 +1,60 @@
+{
+  "name": "bombardier",
+  "version": "0.1.0",
+  "description": "Fast cross-platform HTTP benchmarking tool written in Go. Load test HTTP servers with configurable concurrency and request rates.",
+  "source": "https://github.com/codesenberg/bombardier",
+  "checks": [
+    { "type": "binary", "name": "bombardier" }
+  ],
+  "install_guidance": {
+    "plugin": "bombardier",
+    "binary": "bombardier",
+    "check": "which bombardier",
+    "install_steps": [
+      "brew install bombardier",
+      "Verify: bombardier --version",
+      "supercli plugins install ./plugins/bombardier --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bombardier",
+      "resource": "http",
+      "action": "benchmark",
+      "description": "Run HTTP load test",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bombardier",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bombardier: brew install bombardier"
+      },
+      "args": [
+        { "name": "url", "type": "string", "description": "Target URL" },
+        { "name": "-c", "type": "integer", "description": "Number of concurrent connections" },
+        { "name": "-n", "type": "integer", "description": "Number of requests" },
+        { "name": "-d", "type": "string", "description": "Duration" },
+        { "name": "-r", "type": "integer", "description": "Requests per second" },
+        { "name": "-m", "type": "string", "description": "HTTP method" },
+        { "name": "-H", "type": "string", "description": "HTTP header" },
+        { "name": "--fasthttp", "type": "boolean", "description": "Use fasthttp" },
+        { "name": "-l", "type": "boolean", "description": "Enable latency stats" }
+      ]
+    },
+    {
+      "namespace": "bombardier",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bombardier CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bombardier",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bombardier: brew install bombardier"
+      },
+      "args": []
+    }
+  ]
+}
