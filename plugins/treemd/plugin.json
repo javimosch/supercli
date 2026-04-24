@@ -1,0 +1,155 @@
+{
+  "name": "treemd",
+  "version": "0.1.0",
+  "description": "Markdown navigator with tree-based structural navigation. Non-interactive CLI mode for listing headings, extracting sections, querying markdown elements, and outputting JSON.",
+  "source": "https://github.com/Epistates/treemd",
+  "checks": [
+    { "type": "binary", "name": "treemd" }
+  ],
+  "install_guidance": {
+    "plugin": "treemd",
+    "binary": "treemd",
+    "check": "which treemd",
+    "install_steps": [
+      "cargo install treemd",
+      "Verify: treemd --version",
+      "supercli plugins install ./plugins/treemd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "treemd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print treemd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "treemd",
+      "resource": "headings",
+      "action": "list",
+      "description": "List all headings in a markdown file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["-l"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Markdown file to analyze (or use stdin)" },
+        { "name": "-L", "type": "string", "required": false, "description": "Only show headings up to level N" },
+        { "name": "--filter", "type": "string", "required": false, "description": "Filter headings by text substring" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output format: json" }
+      ]
+    },
+    {
+      "namespace": "treemd",
+      "resource": "headings",
+      "action": "tree",
+      "description": "Show heading tree structure of a markdown file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["--tree"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Markdown file to analyze (or use stdin)" }
+      ]
+    },
+    {
+      "namespace": "treemd",
+      "resource": "section",
+      "action": "extract",
+      "description": "Extract a section by heading from a markdown file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["-s"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": [
+        { "name": "heading", "type": "string", "required": true, "description": "Heading name to extract" },
+        { "name": "file", "type": "string", "required": false, "description": "Markdown file to analyze (or use stdin)" }
+      ]
+    },
+    {
+      "namespace": "treemd",
+      "resource": "doc",
+      "action": "count",
+      "description": "Count headings by level in a markdown file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["--count"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Markdown file to analyze (or use stdin)" }
+      ]
+    },
+    {
+      "namespace": "treemd",
+      "resource": "doc",
+      "action": "query",
+      "description": "Query markdown elements using jq-like syntax",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["-q"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Query expression (e.g. '.h2', '.code', '.link')" },
+        { "name": "file", "type": "string", "required": false, "description": "Markdown file to query (or use stdin)" },
+        { "name": "--query-output", "type": "string", "required": false, "description": "Output format: json, json-pretty, jsonl" }
+      ]
+    },
+    {
+      "namespace": "treemd",
+      "resource": "self",
+      "action": "query-help",
+      "description": "Show query language documentation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "baseArgs": ["--query-help"],
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "treemd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to treemd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treemd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treemd: cargo install treemd"
+      },
+      "args": []
+    }
+  ]
+}
