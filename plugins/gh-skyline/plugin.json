@@ -1,0 +1,56 @@
+{
+  "name": "gh-skyline",
+  "version": "0.1.0",
+  "description": "Generate a 3D model of your GitHub contribution graph. Create STL files from GitHub contribution history for 3D printing and visualization.",
+  "source": "https://github.com/github/gh-skyline",
+  "checks": [
+    { "type": "binary", "name": "gh-skyline" }
+  ],
+  "install_guidance": {
+    "plugin": "gh-skyline",
+    "binary": "gh-skyline",
+    "check": "gh skyline --help",
+    "install_steps": [
+      "gh extension install github/gh-skyline",
+      "Verify: gh skyline --help",
+      "supercli plugins install ./plugins/gh-skyline --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gh-skyline",
+      "resource": "contribution",
+      "action": "generate",
+      "description": "Generate 3D model from GitHub contributions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["skyline"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gh-skyline: gh extension install github/gh-skyline"
+      },
+      "args": [
+        { "name": "user", "type": "string", "description": "GitHub username" },
+        { "name": "--year", "type": "integer", "description": "Year to generate" },
+        { "name": "--output", "type": "string", "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "gh-skyline",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gh skyline CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["skyline"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gh-skyline: gh extension install github/gh-skyline"
+      },
+      "args": []
+    }
+  ]
+}

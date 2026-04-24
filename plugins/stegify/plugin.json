@@ -1,0 +1,72 @@
+{
+  "name": "stegify",
+  "version": "0.1.0",
+  "description": "Steganography tool for images. Hide any file inside an image using Least Significant Bit (LSB) encoding with minimal visual impact.",
+  "source": "https://github.com/DimitarPetrov/stegify",
+  "checks": [
+    { "type": "binary", "name": "stegify" }
+  ],
+  "install_guidance": {
+    "plugin": "stegify",
+    "binary": "stegify",
+    "check": "which stegify",
+    "install_steps": [
+      "brew install stegify",
+      "Verify: stegify --version",
+      "supercli plugins install ./plugins/stegify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "stegify",
+      "resource": "image",
+      "action": "hide",
+      "description": "Hide a file inside an image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stegify",
+        "baseArgs": ["encode"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install stegify: brew install stegify"
+      },
+      "args": [
+        { "name": "carrier", "type": "string", "description": "Carrier image path" },
+        { "name": "data", "type": "string", "description": "File to hide" },
+        { "name": "--result", "type": "string", "description": "Output image path" }
+      ]
+    },
+    {
+      "namespace": "stegify",
+      "resource": "image",
+      "action": "extract",
+      "description": "Extract hidden file from image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stegify",
+        "baseArgs": ["decode"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install stegify: brew install stegify"
+      },
+      "args": [
+        { "name": "carrier", "type": "string", "description": "Carrier image with hidden data" },
+        { "name": "--result", "type": "string", "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "stegify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to stegify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stegify",
+        "passthrough": true,
+        "missingDependencyHelp": "Install stegify: brew install stegify"
+      },
+      "args": []
+    }
+  ]
+}
