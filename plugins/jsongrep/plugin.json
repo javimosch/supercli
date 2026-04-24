@@ -1,0 +1,90 @@
+{
+  "name": "jsongrep",
+  "version": "0.1.0",
+  "description": "Path query language for JSON, YAML, TOML, JSONL, CBOR, and MessagePack documents. JSONPath-inspired syntax with multi-format support.",
+  "source": "https://github.com/micahkepe/jsongrep",
+  "checks": [
+    { "type": "binary", "name": "jg" }
+  ],
+  "install_guidance": {
+    "plugin": "jsongrep",
+    "binary": "jg",
+    "check": "which jg",
+    "install_steps": [
+      "cargo install jsongrep",
+      "Verify: jg --version",
+      "supercli plugins install ./plugins/jsongrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jsongrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jsongrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jg",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jsongrep: cargo install jsongrep or brew install jsongrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jsongrep",
+      "resource": "data",
+      "action": "query",
+      "description": "Query structured data with path expressions (JSON, YAML, TOML, CBOR, MessagePack)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jsongrep: cargo install jsongrep or brew install jsongrep"
+      },
+      "args": [
+        { "name": "--query", "type": "string", "description": "Query string (e.g. '**.name' or 'users.[*].name')" },
+        { "name": "--file", "type": "string", "description": "Input file path (reads from STDIN if omitted)" },
+        { "name": "-i", "type": "boolean", "description": "Case insensitive search" },
+        { "name": "--compact", "type": "boolean", "description": "Do not pretty-print JSON output" },
+        { "name": "--count", "type": "boolean", "description": "Display count of matches" },
+        { "name": "--depth", "type": "boolean", "description": "Display depth of input document" },
+        { "name": "--porcelain", "type": "boolean", "description": "Machine-readable output (strip labels and colors)" },
+        { "name": "-n", "type": "boolean", "description": "Do not display matched JSON values" },
+        { "name": "-F", "type": "boolean", "description": "Treat query as a literal field name and search at any depth" },
+        { "name": "--with-path", "type": "boolean", "description": "Always print the path header, even when output is piped" },
+        { "name": "--no-path", "type": "boolean", "description": "Never print the path header, even in a terminal" },
+        { "name": "-f", "type": "string", "description": "Input format: auto, json, jsonl, yaml, toml, cbor, msgpack (default: auto)" }
+      ]
+    },
+    {
+      "namespace": "jsongrep",
+      "resource": "doc",
+      "action": "generate",
+      "description": "Generate additional documentation and/or completions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jg",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jsongrep: cargo install jsongrep or brew install jsongrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jsongrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jsongrep: cargo install jsongrep or brew install jsongrep"
+      },
+      "args": []
+    }
+  ]
+}
