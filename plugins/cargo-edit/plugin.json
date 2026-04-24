@@ -1,0 +1,56 @@
+{
+  "name": "cargo-edit",
+  "version": "0.1.0",
+  "description": "A utility for managing cargo dependencies from the command line. Add, remove, and upgrade Rust dependencies easily.",
+  "source": "https://github.com/killercup/cargo-edit",
+  "checks": [
+    { "type": "binary", "name": "cargo-edit" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-edit",
+    "binary": "cargo-edit",
+    "check": "which cargo-edit",
+    "install_steps": [
+      "brew install cargo-edit",
+      "Verify: cargo-edit --version",
+      "supercli plugins install ./plugins/cargo-edit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-edit",
+      "resource": "dependency",
+      "action": "add",
+      "description": "Add dependency to Cargo.toml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-edit: brew install cargo-edit"
+      },
+      "args": [
+        { "name": "crate", "type": "string", "description": "Crate name to add" },
+        { "name": "--version", "type": "string", "description": "Specific version" },
+        { "name": "--dev", "type": "boolean", "description": "Add as dev dependency" },
+        { "name": "--build", "type": "boolean", "description": "Add as build dependency" }
+      ]
+    },
+    {
+      "namespace": "cargo-edit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo-edit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-edit: brew install cargo-edit"
+      },
+      "args": []
+    }
+  ]
+}
