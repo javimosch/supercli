@@ -1,0 +1,56 @@
+{
+  "name": "pinact",
+  "version": "0.1.0",
+  "description": "Pinact is a CLI to edit GitHub Workflow and Composite action files and pin versions of Actions and Reusable Workflows. Update and verify version annotations.",
+  "source": "https://github.com/suzuki-shunsuke/pinact",
+  "checks": [
+    { "type": "binary", "name": "pinact" }
+  ],
+  "install_guidance": {
+    "plugin": "pinact",
+    "binary": "pinact",
+    "check": "which pinact",
+    "install_steps": [
+      "brew install pinact",
+      "Verify: pinact --version",
+      "supercli plugins install ./plugins/pinact --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pinact",
+      "resource": "action",
+      "action": "update",
+      "description": "Update GitHub Actions versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinact",
+        "baseArgs": ["update"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install pinact: brew install pinact"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Workflow directory" },
+        { "name": "--check", "type": "boolean", "description": "Check without modifying" },
+        { "name": "--fix", "type": "boolean", "description": "Fix issues" },
+        { "name": "--diff", "type": "boolean", "description": "Show diff" }
+      ]
+    },
+    {
+      "namespace": "pinact",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pinact CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinact",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pinact: brew install pinact"
+      },
+      "args": []
+    }
+  ]
+}
