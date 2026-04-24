@@ -1,0 +1,119 @@
+{
+  "name": "firm",
+  "version": "0.1.0",
+  "description": "Business-as-code work management system. Model organizations, projects, and tasks as a graph and query them with a declarative DSL.",
+  "source": "https://github.com/42futures/firm",
+  "checks": [
+    { "type": "binary", "name": "firm" }
+  ],
+  "install_guidance": {
+    "plugin": "firm",
+    "binary": "firm",
+    "check": "which firm",
+    "install_steps": [
+      "brew tap 42futures/firm && brew install firm",
+      "Verify: firm --version",
+      "supercli plugins install ./plugins/firm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "firm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print firm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "firm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install firm: brew tap 42futures/firm && brew install firm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "firm",
+      "resource": "workspace",
+      "action": "init",
+      "description": "Initialize a firm workspace in the current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "firm",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install firm: brew tap 42futures/firm && brew install firm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "firm",
+      "resource": "entity",
+      "action": "add",
+      "description": "Add an entity to the workspace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "firm",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install firm: brew tap 42futures/firm && brew install firm"
+      },
+      "args": [
+        { "name": "--type", "type": "string", "description": "Entity type (e.g. organization, project, task)" },
+        { "name": "--id", "type": "string", "description": "Entity identifier" },
+        { "name": "--field", "type": "string", "description": "Field name" },
+        { "name": "value", "type": "string", "description": "Field value" }
+      ]
+    },
+    {
+      "namespace": "firm",
+      "resource": "entity",
+      "action": "list",
+      "description": "List entities of a given type",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "firm",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install firm: brew tap 42futures/firm && brew install firm"
+      },
+      "args": [
+        { "name": "type", "type": "string", "required": true, "description": "Entity type to list (e.g. organization, project, task)" }
+      ]
+    },
+    {
+      "namespace": "firm",
+      "resource": "data",
+      "action": "query",
+      "description": "Query workspace data using the firm DSL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "firm",
+        "baseArgs": ["query"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install firm: brew tap 42futures/firm && brew install firm"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "DSL query expression (e.g. 'from organization | where name contains \"Megacorp\"')" }
+      ]
+    },
+    {
+      "namespace": "firm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to firm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "firm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install firm: brew tap 42futures/firm && brew install firm"
+      },
+      "args": []
+    }
+  ]
+}
