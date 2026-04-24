@@ -1,0 +1,79 @@
+{
+  "name": "treex",
+  "version": "0.1.0",
+  "description": "Directory structure visualization CLI with multiple output formats (tree, indent, markdown, mermaid, JSON, CSV) and powerful filters for max-depth, exclusions, gitignore, and metadata.",
+  "source": "https://github.com/shiquda/treex",
+  "checks": [
+    { "type": "binary", "name": "treex" }
+  ],
+  "install_guidance": {
+    "plugin": "treex",
+    "binary": "treex",
+    "check": "which treex",
+    "install_steps": [
+      "go install github.com/shiquda/treex@latest",
+      "Verify: treex --version",
+      "supercli plugins install ./plugins/treex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "treex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print treex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treex",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install treex: go install github.com/shiquda/treex@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "treex",
+      "resource": "dir",
+      "action": "tree",
+      "description": "Generate directory structure visualization",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treex: go install github.com/shiquda/treex@latest"
+      },
+      "args": [
+        { "name": "-d", "type": "string", "description": "Target directory (default: current)" },
+        { "name": "-f", "type": "string", "description": "Output format: tree, indent, md, mermaid, json, csv" },
+        { "name": "-m", "type": "string", "description": "Maximum depth to display" },
+        { "name": "-L", "type": "string", "description": "Level (alias for max-depth)" },
+        { "name": "-s", "type": "boolean", "description": "Show file sizes (human-readable)" },
+        { "name": "-O", "type": "boolean", "description": "Show file owners" },
+        { "name": "-M", "type": "boolean", "description": "Show file modification times" },
+        { "name": "-o", "type": "string", "description": "Save output to a file" },
+        { "name": "-e", "type": "string", "description": "Exclude rules (dir/ or .ext)" },
+        { "name": "-H", "type": "boolean", "description": "Hide hidden files and directories" },
+        { "name": "-D", "type": "boolean", "description": "Show directories only" },
+        { "name": "-I", "type": "boolean", "description": "Automatically apply .gitignore rules" },
+        { "name": "-C", "type": "boolean", "description": "Show icons for files (emoji)" }
+      ]
+    },
+    {
+      "namespace": "treex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to treex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "treex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install treex: go install github.com/shiquda/treex@latest"
+      },
+      "args": []
+    }
+  ]
+}
