@@ -1,0 +1,71 @@
+{
+  "name": "grex",
+  "version": "0.1.0",
+  "description": "Generate regular expressions from user-provided test cases. Supports digit, whitespace, word character conversions, repetition detection, case-insensitive matching, and capturing groups.",
+  "source": "https://github.com/pemistahl/grex",
+  "checks": [
+    { "type": "binary", "name": "grex" }
+  ],
+  "install_guidance": {
+    "plugin": "grex",
+    "binary": "grex",
+    "check": "which grex",
+    "install_steps": [
+      "brew install grex",
+      "Verify: grex --version",
+      "supercli plugins install ./plugins/grex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grex",
+      "resource": "regex",
+      "action": "generate",
+      "description": "Generate regex from test cases",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grex",
+        "passthrough": true,
+        "missingDependencyHelp": "Install grex: brew install grex"
+      },
+      "args": [
+        { "name": "--digits", "type": "boolean", "description": "Convert digits to \\d" },
+        { "name": "--non-digits", "type": "boolean", "description": "Convert non-digits to \\D" },
+        { "name": "--spaces", "type": "boolean", "description": "Convert whitespace to \\s" },
+        { "name": "--non-spaces", "type": "boolean", "description": "Convert non-whitespace to \\S" },
+        { "name": "--words", "type": "boolean", "description": "Convert word characters to \\w" },
+        { "name": "--non-words", "type": "boolean", "description": "Convert non-word characters to \\W" },
+        { "name": "--escape", "type": "boolean", "description": "Escape non-ASCII characters" },
+        { "name": "--with-surrogates", "type": "boolean", "description": "Convert astral code points to surrogate pairs" },
+        { "name": "--repetitions", "type": "boolean", "description": "Detect repeated substrings" },
+        { "name": "--min-repetitions", "type": "integer", "description": "Min repetitions for conversion" },
+        { "name": "--min-substring-length", "type": "integer", "description": "Min substring length for repetition" },
+        { "name": "--no-start-anchor", "type": "boolean", "description": "Remove caret anchor" },
+        { "name": "--no-end-anchor", "type": "boolean", "description": "Remove dollar anchor" },
+        { "name": "--no-anchors", "type": "boolean", "description": "Remove both anchors" },
+        { "name": "--verbose", "type": "boolean", "description": "Verbose mode for nicer regex" },
+        { "name": "--colorize", "type": "boolean", "description": "Syntax highlighting" },
+        { "name": "--ignore-case", "type": "boolean", "description": "Case-insensitive matching" },
+        { "name": "--capture-groups", "type": "boolean", "description": "Use capturing groups" },
+        { "name": "--file", "type": "string", "description": "Read test cases from file" },
+        { "name": "inputs", "type": "string", "required": true, "description": "Test cases to generate regex from" }
+      ]
+    },
+    {
+      "namespace": "grex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grex",
+        "passthrough": true,
+        "missingDependencyHelp": "Install grex: brew install grex"
+      },
+      "args": []
+    }
+  ]
+}
