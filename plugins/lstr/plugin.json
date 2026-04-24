@@ -1,0 +1,74 @@
+{
+  "name": "lstr",
+  "version": "0.1.0",
+  "description": "Fast, minimalist directory tree viewer with theme-aware coloring, git integration, file permissions, sizes, and .gitignore support. Classic mode for headless output and optional interactive TUI.",
+  "source": "https://github.com/bgreenwell/lstr",
+  "checks": [
+    { "type": "binary", "name": "lstr" }
+  ],
+  "install_guidance": {
+    "plugin": "lstr",
+    "binary": "lstr",
+    "check": "which lstr",
+    "install_steps": [
+      "brew install lstr",
+      "Verify: lstr --version",
+      "supercli plugins install ./plugins/lstr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lstr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lstr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lstr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lstr: brew install lstr or build from source with cargo install --path ."
+      },
+      "args": []
+    },
+    {
+      "namespace": "lstr",
+      "resource": "dir",
+      "action": "tree",
+      "description": "Generate a directory tree listing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lstr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lstr: brew install lstr or build from source with cargo install --path ."
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Target directory (default: current)" },
+        { "name": "--icons", "type": "boolean", "description": "Show file-specific icons (requires Nerd Font)" },
+        { "name": "-p", "type": "boolean", "description": "Show file permissions" },
+        { "name": "-s", "type": "boolean", "description": "Show file sizes" },
+        { "name": "-G", "type": "boolean", "description": "Show git file statuses (Modified, New, Untracked)" },
+        { "name": "-g", "type": "boolean", "description": "Respect .gitignore files" },
+        { "name": "-L", "type": "string", "description": "Maximum recursion depth" },
+        { "name": "-d", "type": "boolean", "description": "Show directories only" }
+      ]
+    },
+    {
+      "namespace": "lstr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lstr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lstr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lstr: brew install lstr or build from source with cargo install --path ."
+      },
+      "args": []
+    }
+  ]
+}
