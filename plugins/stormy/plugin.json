@@ -1,0 +1,68 @@
+{
+  "name": "stormy",
+  "version": "0.1.0",
+  "description": "Minimal neofetch-style weather CLI with ASCII art output. Fetch weather information for any city with configurable units and display formats.",
+  "source": "https://github.com/ashish0kumar/stormy",
+  "checks": [
+    { "type": "binary", "name": "stormy" }
+  ],
+  "install_guidance": {
+    "plugin": "stormy",
+    "binary": "stormy",
+    "check": "which stormy",
+    "install_steps": [
+      "go install github.com/ashish0kumar/stormy@latest",
+      "Verify: stormy --version",
+      "supercli plugins install ./plugins/stormy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "stormy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print stormy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stormy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install stormy: go install github.com/ashish0kumar/stormy@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stormy",
+      "resource": "weather",
+      "action": "get",
+      "description": "Get weather information for a city",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stormy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install stormy: go install github.com/ashish0kumar/stormy@latest"
+      },
+      "args": [
+        { "name": "-c", "type": "string", "description": "City name (default from config or auto-detect)" },
+        { "name": "-u", "type": "string", "description": "Units: metric or imperial (default: metric)" },
+        { "name": "-f", "type": "string", "description": "Output format" },
+        { "name": "--config", "type": "string", "description": "Path to configuration file" }
+      ]
+    },
+    {
+      "namespace": "stormy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to stormy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stormy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install stormy: go install github.com/ashish0kumar/stormy@latest"
+      },
+      "args": []
+    }
+  ]
+}
