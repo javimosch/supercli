@@ -1,0 +1,70 @@
+{
+  "name": "dockerfmt",
+  "version": "0.1.0",
+  "description": "Modern Dockerfile formatter written in Go. Format Dockerfiles with configurable indentation, trailing newlines, and redirect spacing. Compatible with pre-commit hooks and CI pipelines.",
+  "source": "https://github.com/reteps/dockerfmt",
+  "checks": [
+    { "type": "binary", "name": "dockerfmt" }
+  ],
+  "install_guidance": {
+    "plugin": "dockerfmt",
+    "binary": "dockerfmt",
+    "check": "which dockerfmt",
+    "install_steps": [
+      "go install github.com/reteps/dockerfmt@latest",
+      "Verify: dockerfmt version",
+      "supercli plugins install ./plugins/dockerfmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dockerfmt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dockerfmt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerfmt",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install dockerfmt: go install github.com/reteps/dockerfmt@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dockerfmt",
+      "resource": "format",
+      "action": "file",
+      "description": "Format Dockerfile(s)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerfmt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dockerfmt: go install github.com/reteps/dockerfmt@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "Dockerfile path(s) to format" },
+        { "name": "-w", "type": "boolean", "description": "Write formatted output back to file(s)" },
+        { "name": "-c", "type": "boolean", "description": "Check if file(s) are already formatted (exits non-zero if not)" },
+        { "name": "-i", "type": "string", "description": "Number of spaces for indentation (default: 4)" },
+        { "name": "-n", "type": "boolean", "description": "End the file with a trailing newline" },
+        { "name": "-s", "type": "boolean", "description": "Redirect operators will be followed by a space" }
+      ]
+    },
+    {
+      "namespace": "dockerfmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dockerfmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerfmt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dockerfmt: go install github.com/reteps/dockerfmt@latest"
+      },
+      "args": []
+    }
+  ]
+}
