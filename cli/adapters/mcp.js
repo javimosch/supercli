@@ -1,11 +1,13 @@
 // MCP Adapter
 // Supports HTTP MCP endpoints and local stdio MCP commands.
+// Stateful MCP servers are routed through the MCP daemon.
 
 const { spawn } = require("child_process");
 const {
   shouldUseStdioJsonRpc,
   stdioCallToolJsonRpc,
 } = require("../mcp-stdio-jsonrpc");
+const { callDaemonTool, listDaemonTools } = require("../mcp-daemon-client");
 
 function asObject(value) {
   return value && typeof value === "object" && !Array.isArray(value)
@@ -55,6 +57,7 @@ function mergeMcpConfig(cmdConfig, serverEntry) {
     command: cmdConfig.command || (serverEntry && serverEntry.command),
     mcp_protocol: cmdConfig.mcp_protocol || (serverEntry && serverEntry.mcp_protocol),
     mcp_wire: cmdConfig.mcp_wire || (serverEntry && serverEntry.mcp_wire),
+    stateful: cmdConfig.stateful !== undefined ? cmdConfig.stateful : (serverEntry && serverEntry.stateful),
     timeout_ms:
       cmdConfig.timeout_ms !== undefined
         ? cmdConfig.timeout_ms
@@ -226,6 +229,23 @@ async function execute(cmd, flags, context) {
     const commandArgs = Array.isArray(config.args) ? config.args : [];
     const timeoutMs =
       Number(config.timeout_ms) > 0 ? Number(config.timeout_ms) : 10000;
+
+    // Route stateful MCP servers through the daemon
+    if (config.stateful) {
+      const serverConfig = {
+        command: config.command,
+        args: commandArgs,
+        env: config.env,
+      };
+      return callDaemonTool({
+        server: config.server || config.command,
+        serverConfig,
+        tool: toolName,
+        input,
+        timeout_ms: timeoutMs,
+      });
+    }
+
     if (shouldUseStdioJsonRpc(config)) {
       return stdioCallToolJsonRpc({
         command: config.command,

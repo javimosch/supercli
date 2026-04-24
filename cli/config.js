@@ -47,6 +47,7 @@ function normalizeMcpServerEntry(name, entry) {
     out.env = Object.fromEntries(Object.entries(entry.env).filter(([k, v]) => typeof k === "string" && typeof v === "string"))
   }
   if (typeof entry.timeout_ms === "number" && entry.timeout_ms > 0) out.timeout_ms = entry.timeout_ms
+  if (entry.stateful === true) out.stateful = true
   return out
 }
 

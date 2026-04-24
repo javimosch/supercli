@@ -1,5 +1,13 @@
 const { discoverMcpTools, normalizeTools } = require("./mcp-discovery");
 const { diagnoseMcpServer } = require("./mcp-diagnostics");
+const {
+  isDaemonRunning,
+  startDaemon,
+  stopDaemon,
+  daemonStatus,
+  listDaemonServers,
+  stopDaemonServer,
+} = require("./mcp-daemon-client");
 
 function parseJsonFlag(name, raw, outputError) {
   if (raw === undefined) return undefined;
@@ -139,6 +147,8 @@ async function handleMcpRegistryCommand(options) {
       return true;
     }
 
+    const stateful = cliFlags["stateful"] === true || cliFlags["stateful"] === "true";
+
     await setMcpServer(name, {
       url,
       command,
@@ -146,8 +156,9 @@ async function handleMcpRegistryCommand(options) {
       headers,
       env,
       timeout_ms: timeoutMs,
+      ...(stateful ? { stateful: true } : {}),
     });
-    output({ ok: true, message: `MCP server '${name}' saved locally` });
+    output({ ok: true, message: `MCP server '${name}' saved locally`, stateful });
     return true;
   }
 
@@ -348,10 +359,104 @@ async function handleMcpRegistryCommand(options) {
     return true;
   }
 
+  if (subcommand === "daemon") {
+    const daemonCmd = positional[2];
+
+    if (daemonCmd === "start") {
+      const already = await isDaemonRunning();
+      if (already) {
+        const status = await daemonStatus();
+        output({ ok: true, message: "MCP daemon already running", pid: status.pid, servers: status.servers });
+        return true;
+      }
+      const result = await startDaemon();
+      output({ ok: true, message: "MCP daemon started", pid: result.pid });
+      return true;
+    }
+
+    if (daemonCmd === "stop") {
+      const result = await stopDaemon();
+      if (result && result.ok) {
+        output({ ok: true, message: "MCP daemon stopped" });
+      } else {
+        output({ ok: false, message: "MCP daemon was not running" });
+      }
+      return true;
+    }
+
+    if (daemonCmd === "status") {
+      const running = await isDaemonRunning();
+      if (!running) {
+        if (humanMode) {
+          console.log("\n  ⚡ MCP Daemon\n");
+          console.log("  Status: not running");
+          console.log("  Tip: start with supercli mcp daemon start\n");
+        } else {
+          output({ running: false });
+        }
+        return true;
+      }
+      const status = await daemonStatus();
+      let activeServers = [];
+      try {
+        const serversResult = await listDaemonServers();
+        activeServers = serversResult.servers || [];
+      } catch {}
+      if (humanMode) {
+        console.log("\n  ⚡ MCP Daemon\n");
+        console.log(`  Status: running (pid ${status.pid})`);
+        console.log(`  Active servers: ${activeServers.length}`);
+        if (activeServers.length > 0) {
+          outputHumanTable(activeServers, [
+            { key: "name", label: "Name" },
+            { key: "state", label: "State" },
+            { key: "pid", label: "PID" },
+          ]);
+        }
+        console.log("");
+      } else {
+        output({ running: true, pid: status.pid, servers: activeServers });
+      }
+      return true;
+    }
+
+    if (daemonCmd === "restart") {
+      await stopDaemon();
+      await new Promise((r) => setTimeout(r, 500));
+      const result = await startDaemon();
+      output({ ok: true, message: "MCP daemon restarted", pid: result.pid });
+      return true;
+    }
+
+    if (daemonCmd === "stop-server") {
+      const serverName = positional[3] || cliFlags["mcp-server"];
+      if (!serverName) {
+        outputError({
+          code: 85,
+          type: "invalid_argument",
+          message: "Usage: supercli mcp daemon stop-server <server-name>",
+          recoverable: false,
+        });
+        return true;
+      }
+      const result = await stopDaemonServer(serverName);
+      output(result);
+      return true;
+    }
+
+    outputError({
+      code: 85,
+      type: "invalid_argument",
+      message: "Usage: supercli mcp daemon <start|stop|status|restart|stop-server>",
+      recoverable: false,
+    });
+    return true;
+  }
+
   outputError({
     code: 85,
     type: "invalid_argument",
-    message: "Unknown mcp subcommand. Use: list, add, tools, call, bind, doctor, remove",
+    message: "Unknown mcp subcommand. Use: list, add, tools, call, bind, doctor, remove, daemon",
     recoverable: false,
   });
   return true;

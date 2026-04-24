@@ -8,17 +8,29 @@
 
   <!-- Add form -->
   <div v-if="showForm" class="card bg-base-300 p-4 mb-6">
-    <form @submit.prevent="create" class="flex gap-4 items-end">
-      <div class="form-control flex-1">
-        <label class="label"><span class="label-text">Name</span></label>
-        <input v-model="form.name" class="input input-bordered input-sm" required placeholder="e.g. ai-tools">
+    <form @submit.prevent="create">
+      <div class="flex gap-4 items-end mb-3">
+        <div class="form-control flex-1">
+          <label class="label"><span class="label-text">Name</span></label>
+          <input v-model="form.name" class="input input-bordered input-sm" required placeholder="e.g. context-mode">
+        </div>
+        <div class="form-control flex-1">
+          <label class="label"><span class="label-text">URL (HTTP MCP)</span></label>
+          <input v-model="form.url" class="input input-bordered input-sm" placeholder="https://mcp.example.com">
+        </div>
+        <div class="form-control flex-1">
+          <label class="label"><span class="label-text">Command (stdio MCP)</span></label>
+          <input v-model="form.command" class="input input-bordered input-sm" placeholder="e.g. context-mode">
+        </div>
       </div>
-      <div class="form-control flex-1">
-        <label class="label"><span class="label-text">URL</span></label>
-        <input v-model="form.url" class="input input-bordered input-sm" required placeholder="https://mcp.example.com">
+      <div class="flex gap-4 items-center">
+        <label class="label cursor-pointer gap-2">
+          <input type="checkbox" v-model="form.stateful" class="checkbox checkbox-sm checkbox-primary">
+          <span class="label-text">Stateful (requires daemon)</span>
+        </label>
+        <button type="submit" class="btn btn-primary btn-sm">Save</button>
+        <button type="button" @click="showForm=false" class="btn btn-ghost btn-sm">Cancel</button>
       </div>
-      <button type="submit" class="btn btn-primary btn-sm">Save</button>
-      <button type="button" @click="showForm=false" class="btn btn-ghost btn-sm">Cancel</button>
     </form>
   </div>
 
@@ -27,15 +39,20 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>URL</th>
+          <th>Source</th>
+          <th>Type</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-if="servers.length===0"><td colspan="3" class="text-center opacity-60">No MCP servers registered.</td></tr>
+        <tr v-if="servers.length===0"><td colspan="4" class="text-center opacity-60">No MCP servers registered.</td></tr>
         <tr v-for="s in servers" :key="s._id">
           <td><code>{{ s.name }}</code></td>
-          <td class="max-w-xs truncate opacity-70">{{ s.url }}</td>
+          <td class="max-w-xs truncate opacity-70">{{ s.url || s.command || '' }}</td>
+          <td>
+            <span v-if="s.stateful" class="badge badge-primary badge-sm">stateful</span>
+            <span v-else class="badge badge-ghost badge-sm">{{ s.url ? 'http' : 'stdio' }}</span>
+          </td>
           <td>
             <button @click="remove(s._id)" class="btn btn-xs btn-error btn-outline">Delete</button>
           </td>
@@ -53,19 +70,23 @@
       return {
         servers: initialServers,
         showForm: false,
-        form: { name: '', url: '' }
+        form: { name: '', url: '', command: '', stateful: false }
       }
     },
     methods: {
       async create() {
+        const payload = { name: this.form.name }
+        if (this.form.url) payload.url = this.form.url
+        if (this.form.command) payload.command = this.form.command
+        if (this.form.stateful) payload.stateful = true
         const r = await fetch('/api/mcp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(this.form)
+          body: JSON.stringify(payload)
         })
         const doc = await r.json()
         this.servers.push(doc)
-        this.form = { name: '', url: '' }
+        this.form = { name: '', url: '', command: '', stateful: false }
         this.showForm = false
       },
       async remove(id) {

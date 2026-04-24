@@ -18,6 +18,7 @@ function sanitizeMcpPayload(payload, fallbackName) {
     out.env = Object.fromEntries(Object.entries(payload.env).filter(([k, v]) => typeof k === "string" && typeof v === "string"))
   }
   if (typeof payload.timeout_ms === "number" && payload.timeout_ms > 0) out.timeout_ms = payload.timeout_ms
+  if (payload.stateful === true || payload.stateful === "true" || payload.stateful === "on") out.stateful = true
   return out
 }
 
