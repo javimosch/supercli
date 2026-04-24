@@ -1,0 +1,55 @@
+{
+  "name": "ludusavi",
+  "version": "0.1.0",
+  "description": "Backup tool for PC game saves. Automatically back up and restore game save files across different platforms and cloud storage services.",
+  "source": "https://github.com/mtkennerly/ludusavi",
+  "checks": [
+    { "type": "binary", "name": "ludusavi" }
+  ],
+  "install_guidance": {
+    "plugin": "ludusavi",
+    "binary": "ludusavi",
+    "check": "which ludusavi",
+    "install_steps": [
+      "brew install ludusavi",
+      "Verify: ludusavi --version",
+      "supercli plugins install ./plugins/ludusavi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ludusavi",
+      "resource": "backup",
+      "action": "run",
+      "description": "Run game save backup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ludusavi",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ludusavi: brew install ludusavi"
+      },
+      "args": [
+        { "name": "--path", "type": "string", "description": "Backup path" },
+        { "name": "--force", "type": "boolean", "description": "Force overwrite" },
+        { "name": "--dry-run", "type": "boolean", "description": "Dry run without changes" },
+        { "name": "--unlimited", "type": "boolean", "description": "Unlimited backup size" }
+      ]
+    },
+    {
+      "namespace": "ludusavi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ludusavi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ludusavi",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ludusavi: brew install ludusavi"
+      },
+      "args": []
+    }
+  ]
+}
