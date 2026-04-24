@@ -1,0 +1,55 @@
+{
+  "name": "dnsx",
+  "version": "0.1.0",
+  "description": "A fast and multi-purpose DNS toolkit that allows you to run multiple DNS queries of your choice with a list of user-supplied resolvers. DNS resolution, bruteforce, and wildcard filtering.",
+  "source": "https://github.com/projectdiscovery/dnsx",
+  "checks": [
+    { "type": "binary", "name": "dnsx" }
+  ],
+  "install_guidance": {
+    "plugin": "dnsx",
+    "binary": "dnsx",
+    "check": "which dnsx",
+    "install_steps": [
+      "brew install dnsx",
+      "Verify: dnsx --version",
+      "supercli plugins install ./plugins/dnsx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dnsx",
+      "resource": "dns",
+      "action": "resolve",
+      "description": "Resolve DNS records",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dnsx",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dnsx: brew install dnsx"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "description": "Domain to resolve" },
+        { "name": "--type", "type": "string", "description": "DNS record type (A, AAAA, CNAME, etc.)" },
+        { "name": "--json", "type": "boolean", "description": "JSON output" },
+        { "name": "--resolver", "type": "string", "description": "Custom resolver" }
+      ]
+    },
+    {
+      "namespace": "dnsx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dnsx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dnsx",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dnsx: brew install dnsx"
+      },
+      "args": []
+    }
+  ]
+}
