@@ -1,0 +1,78 @@
+{
+  "name": "defuddle",
+  "version": "0.1.0",
+  "description": "Extract the main content of any web page as clean Markdown. CLI tool for parsing URLs and HTML files with structured metadata extraction.",
+  "source": "https://github.com/kepano/defuddle",
+  "checks": [
+    { "type": "binary", "name": "defuddle" }
+  ],
+  "install_guidance": {
+    "plugin": "defuddle",
+    "binary": "defuddle",
+    "check": "which defuddle",
+    "install_steps": [
+      "npm install -g defuddle",
+      "Verify: defuddle --version",
+      "supercli plugins install ./plugins/defuddle --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "defuddle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print defuddle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "defuddle",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install defuddle: npm install -g defuddle"
+      },
+      "args": []
+    },
+    {
+      "namespace": "defuddle",
+      "resource": "web",
+      "action": "parse",
+      "description": "Parse a URL or HTML file and extract the main content",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "defuddle",
+        "baseArgs": ["parse"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install defuddle: npm install -g defuddle"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL or local HTML file path to parse" },
+        { "name": "-m", "type": "boolean", "description": "Output as Markdown (alias for --markdown)" },
+        { "name": "--markdown", "type": "boolean", "description": "Output as Markdown" },
+        { "name": "--md", "type": "boolean", "description": "Output as Markdown (short alias)" },
+        { "name": "-j", "type": "boolean", "description": "Output as JSON with metadata (alias for --json)" },
+        { "name": "--json", "type": "boolean", "description": "Output as JSON with metadata" },
+        { "name": "-p", "type": "string", "description": "Extract a specific property: title, author, content, etc. (alias for --property)" },
+        { "name": "--property", "type": "string", "description": "Extract a specific property" },
+        { "name": "-o", "type": "string", "description": "Save output to a file (alias for --output)" },
+        { "name": "--output", "type": "string", "description": "Save output to a file" },
+        { "name": "--debug", "type": "boolean", "description": "Enable debug mode" },
+        { "name": "-l", "type": "string", "description": "Specify language code (alias for --lang)" },
+        { "name": "--lang", "type": "string", "description": "Specify language code (e.g. en, fr, ja)" }
+      ]
+    },
+    {
+      "namespace": "defuddle",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to defuddle CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "defuddle",
+        "passthrough": true,
+        "missingDependencyHelp": "Install defuddle: npm install -g defuddle"
+      },
+      "args": []
+    }
+  ]
+}
