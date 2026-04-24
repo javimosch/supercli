@@ -1,0 +1,167 @@
+{
+  "name": "dcg",
+  "version": "0.1.0",
+  "description": "Destructive Command Guard — blocks dangerous git and shell commands from being executed by agents. Test, explain, scan, and manage safety policies with structured JSON output.",
+  "source": "https://github.com/Dicklesworthstone/destructive_command_guard",
+  "checks": [
+    { "type": "binary", "name": "dcg" }
+  ],
+  "install_guidance": {
+    "plugin": "dcg",
+    "binary": "dcg",
+    "check": "which dcg",
+    "install_steps": [
+      "curl -fsSL \"https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh?$(date +%s)\" | bash -s -- --easy-mode",
+      "Verify: dcg --version",
+      "supercli plugins install ./plugins/dcg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dcg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dcg version with build metadata",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dcg",
+      "resource": "command",
+      "action": "test",
+      "description": "Evaluate whether a command would be allowed or blocked",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["test"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": [
+        { "name": "command", "type": "string", "description": "Command to evaluate" },
+        { "name": "-c", "type": "string", "description": "Path to config file" },
+        { "name": "--config", "type": "string", "description": "Path to config file" },
+        { "name": "--with-packs", "type": "string", "description": "Temporarily enable extra packs (comma-separated IDs)" },
+        { "name": "--explain", "type": "boolean", "description": "Print detailed decision trace" },
+        { "name": "-f", "type": "string", "description": "Output format: pretty, json, toon" },
+        { "name": "--format", "type": "string", "description": "Output format: pretty, json, toon" },
+        { "name": "--no-color", "type": "boolean", "description": "Disable ANSI color output" },
+        { "name": "--heredoc-scan", "type": "boolean", "description": "Force-enable heredoc/inline-script scanning" },
+        { "name": "--no-heredoc-scan", "type": "boolean", "description": "Force-disable heredoc/inline-script scanning" },
+        { "name": "--heredoc-timeout", "type": "string", "description": "Override heredoc extraction timeout (ms)" },
+        { "name": "--heredoc-languages", "type": "string", "description": "Limit heredoc AST scanning languages (comma-separated)" }
+      ]
+    },
+    {
+      "namespace": "dcg",
+      "resource": "command",
+      "action": "explain",
+      "description": "Explain why a command is blocked or allowed with evaluation trace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["explain"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": [
+        { "name": "command", "type": "string", "description": "Command to explain" },
+        { "name": "--format", "type": "string", "description": "Output format: pretty, json" },
+        { "name": "--verbose", "type": "boolean", "description": "Include verbose timing information" },
+        { "name": "--no-color", "type": "boolean", "description": "Disable ANSI color output" },
+        { "name": "-c", "type": "string", "description": "Path to config file" },
+        { "name": "--config", "type": "string", "description": "Path to config file" }
+      ]
+    },
+    {
+      "namespace": "dcg",
+      "resource": "repo",
+      "action": "scan",
+      "description": "Scan repository for destructive commands embedded in files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["scan"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Directory to scan (default: current directory)" },
+        { "name": "--format", "type": "string", "description": "Output format: pretty, json" },
+        { "name": "--no-color", "type": "boolean", "description": "Disable ANSI color output" }
+      ]
+    },
+    {
+      "namespace": "dcg",
+      "resource": "exception",
+      "action": "allow-once",
+      "description": "Create a temporary one-time exception for a blocked command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["allow-once"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": [
+        { "name": "code", "type": "string", "description": "Short code from blocked command output" },
+        { "name": "--single-use", "type": "boolean", "description": "Make the exception valid for a single execution only" }
+      ]
+    },
+    {
+      "namespace": "dcg",
+      "resource": "config",
+      "action": "packs",
+      "description": "List enabled rule packs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["packs"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": [
+        { "name": "--verbose", "type": "boolean", "description": "Show detailed pack information" },
+        { "name": "--format", "type": "string", "description": "Output format: pretty, json" }
+      ]
+    },
+    {
+      "namespace": "dcg",
+      "resource": "config",
+      "action": "allowlist",
+      "description": "Manage allowlist entries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "baseArgs": ["allowlist"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": [
+        { "name": "action", "type": "string", "description": "Action: list, add, remove" }
+      ]
+    },
+    {
+      "namespace": "dcg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dcg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dcg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dcg: curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/destructive_command_guard/main/install.sh | bash -s -- --easy-mode"
+      },
+      "args": []
+    }
+  ]
+}
