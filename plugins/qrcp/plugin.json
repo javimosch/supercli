@@ -1,0 +1,75 @@
+{
+  "name": "qrcp",
+  "version": "0.1.0",
+  "description": "Transfer files over wifi from your computer to your mobile device by scanning a QR code without leaving the terminal. Secure, fast, and works across platforms.",
+  "source": "https://github.com/claudiodangelis/qrcp",
+  "checks": [
+    { "type": "binary", "name": "qrcp" }
+  ],
+  "install_guidance": {
+    "plugin": "qrcp",
+    "binary": "qrcp",
+    "check": "which qrcp",
+    "install_steps": [
+      "brew install qrcp",
+      "Verify: qrcp --version",
+      "supercli plugins install ./plugins/qrcp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qrcp",
+      "resource": "file",
+      "action": "send",
+      "description": "Send file to mobile device via QR code",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrcp",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qrcp: brew install qrcp"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "File to send" },
+        { "name": "--zip", "type": "boolean", "description": "Compress before sending" },
+        { "name": "--interface", "type": "string", "description": "Network interface" },
+        { "name": "--port", "type": "integer", "description": "Port to use" },
+        { "name": "--output", "type": "string", "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "qrcp",
+      "resource": "file",
+      "action": "receive",
+      "description": "Receive file from mobile device",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrcp",
+        "baseArgs": ["receive"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install qrcp: brew install qrcp"
+      },
+      "args": [
+        { "name": "--zip", "type": "boolean", "description": "Compress after receiving" },
+        { "name": "--interface", "type": "string", "description": "Network interface" },
+        { "name": "--port", "type": "integer", "description": "Port to use" },
+        { "name": "--output", "type": "string", "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "qrcp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qrcp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrcp",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qrcp: brew install qrcp"
+      },
+      "args": []
+    }
+  ]
+}
