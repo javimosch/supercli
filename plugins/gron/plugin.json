@@ -1,0 +1,56 @@
+{
+  "name": "gron",
+  "version": "0.1.0",
+  "description": "Make JSON greppable. Convert JSON to a grep-able format for easier searching and manipulation with standard Unix tools.",
+  "source": "https://github.com/tomnomnom/gron",
+  "checks": [
+    { "type": "binary", "name": "gron" }
+  ],
+  "install_guidance": {
+    "plugin": "gron",
+    "binary": "gron",
+    "check": "which gron",
+    "install_steps": [
+      "brew install gron",
+      "Verify: gron --version",
+      "supercli plugins install ./plugins/gron --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gron",
+      "resource": "json",
+      "action": "convert",
+      "description": "Convert JSON to grep-able format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gron",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gron: brew install gron"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "JSON file or URL" },
+        { "name": "--ungron", "type": "boolean", "description": "Convert back to JSON" },
+        { "name": "--stream", "type": "boolean", "description": "Stream mode for large files" },
+        { "name": "--monochrome", "type": "boolean", "description": "Disable color output" },
+        { "name": "--no-sort", "type": "boolean", "description": "Don't sort keys" }
+      ]
+    },
+    {
+      "namespace": "gron",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gron CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gron",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gron: brew install gron"
+      },
+      "args": []
+    }
+  ]
+}
