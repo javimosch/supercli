@@ -1,0 +1,71 @@
+{
+  "name": "cloudfoundry-cli",
+  "version": "0.1.0",
+  "description": "The official Cloud Foundry command line client. Deploy and manage applications on Cloud Foundry platforms directly from the terminal.",
+  "source": "https://github.com/cloudfoundry/cli",
+  "checks": [
+    { "type": "binary", "name": "cf" }
+  ],
+  "install_guidance": {
+    "plugin": "cloudfoundry-cli",
+    "binary": "cf",
+    "check": "which cf",
+    "install_steps": [
+      "brew install cloudfoundry/tap/cf-cli",
+      "Verify: cf --version",
+      "supercli plugins install ./plugins/cloudfoundry-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cloudfoundry-cli",
+      "resource": "app",
+      "action": "deploy",
+      "description": "Deploy application to Cloud Foundry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cf",
+        "baseArgs": ["push"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cf: brew install cloudfoundry/tap/cf-cli"
+      },
+      "args": [
+        { "name": "app-name", "type": "string", "description": "Application name" },
+        { "name": "-f", "type": "string", "description": "Manifest file path" },
+        { "name": "--no-start", "type": "boolean", "description": "Push without starting" }
+      ]
+    },
+    {
+      "namespace": "cloudfoundry-cli",
+      "resource": "app",
+      "action": "status",
+      "description": "Check application status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cf",
+        "baseArgs": ["app"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cf: brew install cloudfoundry/tap/cf-cli"
+      },
+      "args": [
+        { "name": "app-name", "type": "string", "description": "Application name" }
+      ]
+    },
+    {
+      "namespace": "cloudfoundry-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cf",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cf: brew install cloudfoundry/tap/cf-cli"
+      },
+      "args": []
+    }
+  ]
+}

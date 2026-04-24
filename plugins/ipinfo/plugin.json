@@ -1,0 +1,70 @@
+{
+  "name": "ipinfo",
+  "version": "0.1.0",
+  "description": "Official CLI for the IPinfo API. Get IP geolocation, ASN details, IP ranges, and hosted domains from the command line.",
+  "source": "https://github.com/ipinfo/cli",
+  "checks": [
+    { "type": "binary", "name": "ipinfo" }
+  ],
+  "install_guidance": {
+    "plugin": "ipinfo",
+    "binary": "ipinfo",
+    "check": "which ipinfo",
+    "install_steps": [
+      "brew install ipinfo-cli",
+      "Verify: ipinfo version",
+      "supercli plugins install ./plugins/ipinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ipinfo",
+      "resource": "ip",
+      "action": "lookup",
+      "description": "Look up IP address information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipinfo",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ipinfo: brew install ipinfo-cli"
+      },
+      "args": [
+        { "name": "ip", "type": "string", "description": "IP address to look up" },
+        { "name": "--field", "type": "string", "description": "Specific field to return" }
+      ]
+    },
+    {
+      "namespace": "ipinfo",
+      "resource": "range",
+      "action": "lookup",
+      "description": "Look up IP range information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipinfo",
+        "baseArgs": ["range"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ipinfo: brew install ipinfo-cli"
+      },
+      "args": [
+        { "name": "ip", "type": "string", "description": "IP address or ASN" }
+      ]
+    },
+    {
+      "namespace": "ipinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ipinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipinfo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ipinfo: brew install ipinfo-cli"
+      },
+      "args": []
+    }
+  ]
+}

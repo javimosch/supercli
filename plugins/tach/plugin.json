@@ -1,0 +1,71 @@
+{
+  "name": "tach",
+  "version": "0.1.0",
+  "description": "A Python tool to enforce modular design boundaries and manage dependencies between packages in a codebase. Define and visualize dependencies between modules.",
+  "source": "https://github.com/tach-org/tach",
+  "checks": [
+    { "type": "binary", "name": "tach" }
+  ],
+  "install_guidance": {
+    "plugin": "tach",
+    "binary": "tach",
+    "check": "which tach",
+    "install_steps": [
+      "pip install tach",
+      "Verify: tach --version",
+      "supercli plugins install ./plugins/tach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tach",
+      "resource": "deps",
+      "action": "check",
+      "description": "Check dependency boundaries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tach",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tach: pip install tach"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path" },
+        { "name": "--strict", "type": "boolean", "description": "Strict mode" }
+      ]
+    },
+    {
+      "namespace": "tach",
+      "resource": "deps",
+      "action": "show",
+      "description": "Show dependency graph",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tach",
+        "baseArgs": ["show"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install tach: pip install tach"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Project path" },
+        { "name": "--format", "type": "string", "description": "Output format" }
+      ]
+    },
+    {
+      "namespace": "tach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tach",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tach: pip install tach"
+      },
+      "args": []
+    }
+  ]
+}

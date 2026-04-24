@@ -1,0 +1,71 @@
+{
+  "name": "kpt",
+  "version": "0.1.0",
+  "description": "Google's tool for managing Kubernetes packages. Package, customize, and apply Kubernetes configurations using a standard format.",
+  "source": "https://github.com/kptdev/kpt",
+  "checks": [
+    { "type": "binary", "name": "kpt" }
+  ],
+  "install_guidance": {
+    "plugin": "kpt",
+    "binary": "kpt",
+    "check": "which kpt",
+    "install_steps": [
+      "brew install kpt",
+      "Verify: kpt version",
+      "supercli plugins install ./plugins/kpt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kpt",
+      "resource": "pkg",
+      "action": "get",
+      "description": "Get a Kubernetes package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpt",
+        "baseArgs": ["pkg", "get"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kpt: brew install kpt"
+      },
+      "args": [
+        { "name": "url", "type": "string", "description": "Package URL" },
+        { "name": "path", "type": "string", "description": "Local path" }
+      ]
+    },
+    {
+      "namespace": "kpt",
+      "resource": "pkg",
+      "action": "apply",
+      "description": "Apply package to cluster",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpt",
+        "baseArgs": ["live", "apply"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kpt: brew install kpt"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Package path" },
+        { "name": "--reconcile-timeout", "type": "string", "description": "Reconcile timeout" }
+      ]
+    },
+    {
+      "namespace": "kpt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kpt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kpt: brew install kpt"
+      },
+      "args": []
+    }
+  ]
+}
