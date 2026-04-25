@@ -1,0 +1,86 @@
+{
+  "name": "athenapdf",
+  "version": "0.1.0",
+  "description": "Convert HTML to PDF using Chrome headless",
+  "source": "https://github.com/arachnys/athenapdf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "athenapdf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "athenapdf",
+    "binary": "athenapdf",
+    "check": "which athenapdf",
+    "install_steps": [
+      "go install github.com/arachnys/athenapdf/cmd/athenapdf@latest",
+      "Verify: athenapdf --version",
+      "supercli plugins install ./plugins/athenapdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "athenapdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print athenapdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "athenapdf",
+        "missingDependencyHelp": "Install athenapdf: go install github.com/arachnys/athenapdf/cmd/athenapdf@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "athenapdf",
+      "resource": "file",
+      "action": "convert",
+      "description": "convert file via athenapdf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "athenapdf",
+        "missingDependencyHelp": "Install athenapdf: go install github.com/arachnys/athenapdf/cmd/athenapdf@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "athenapdf",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via athenapdf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "athenapdf",
+        "missingDependencyHelp": "Install athenapdf: go install github.com/arachnys/athenapdf/cmd/athenapdf@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
