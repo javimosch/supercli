@@ -1,0 +1,84 @@
+{
+  "name": "cinf",
+  "version": "0.1.0",
+  "description": "Command line tool to view container resource usage",
+  "source": "https://github.com/mhausenblas/cinf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cinf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cinf",
+    "binary": "cinf",
+    "check": "which cinf",
+    "install_steps": [
+      "go install github.com/mhausenblas/cinf@latest",
+      "Verify: cinf --version",
+      "supercli plugins install ./plugins/cinf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cinf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cinf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cinf",
+        "missingDependencyHelp": "Install cinf: go install github.com/mhausenblas/cinf@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cinf",
+      "resource": "containers",
+      "action": "list",
+      "description": "list containers via cinf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cinf",
+        "missingDependencyHelp": "Install cinf: go install github.com/mhausenblas/cinf@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cinf",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via cinf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cinf",
+        "missingDependencyHelp": "Install cinf: go install github.com/mhausenblas/cinf@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

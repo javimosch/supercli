@@ -1,0 +1,108 @@
+{
+  "name": "bpfd",
+  "version": "0.1.0",
+  "description": "Load and manage eBPF programs from user space",
+  "source": "https://github.com/genuinetools/bpfd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bpfd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bpfd",
+    "binary": "bpfd",
+    "check": "which bpfd",
+    "install_steps": [
+      "go install github.com/genuinetools/bpfd@latest",
+      "Verify: bpfd --version",
+      "supercli plugins install ./plugins/bpfd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bpfd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bpfd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpfd",
+        "missingDependencyHelp": "Install bpfd: go install github.com/genuinetools/bpfd@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "bpfd",
+      "resource": "program",
+      "action": "load",
+      "description": "load program via bpfd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpfd",
+        "missingDependencyHelp": "Install bpfd: go install github.com/genuinetools/bpfd@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "bpfd",
+      "resource": "program",
+      "action": "list",
+      "description": "list program via bpfd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpfd",
+        "missingDependencyHelp": "Install bpfd: go install github.com/genuinetools/bpfd@latest",
+        "baseArgs": [
+          "list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "bpfd",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via bpfd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpfd",
+        "missingDependencyHelp": "Install bpfd: go install github.com/genuinetools/bpfd@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
