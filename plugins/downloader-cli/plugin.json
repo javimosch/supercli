@@ -1,0 +1,57 @@
+{
+  "name": "downloader-cli",
+  "version": "0.1.0",
+  "description": "Simple downloader with awesome customizable progressbar",
+  "source": "https://github.com/deepjyoti30/downloader-cli",
+  "checks": [
+    { "type": "binary", "name": "dw" }
+  ],
+  "install_guidance": {
+    "plugin": "downloader-cli",
+    "binary": "dw",
+    "check": "which dw",
+    "install_steps": [
+      "pip install downloader-cli",
+      "Verify: dw --help",
+      "supercli plugins install ./plugins/downloader-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "downloader",
+      "resource": "download",
+      "action": "file",
+      "description": "Download file with progressbar",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dw",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-q"],
+        "positionalArgs": ["source", "target"],
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install downloader-cli: pip install downloader-cli"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source URL" },
+        { "name": "target", "type": "string", "required": false, "description": "Target filepath" }
+      ]
+    },
+    {
+      "namespace": "downloader",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to downloader CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dw",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install downloader-cli: pip install downloader-cli"
+      },
+      "args": []
+    }
+  ]
+}

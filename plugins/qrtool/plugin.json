@@ -1,0 +1,74 @@
+{
+  "name": "qrtool",
+  "version": "0.1.0",
+  "description": "Command-line utility for encoding and decoding QR codes",
+  "source": "https://github.com/sorairolake/qrtool",
+  "checks": [
+    { "type": "binary", "name": "qrtool" }
+  ],
+  "install_guidance": {
+    "plugin": "qrtool",
+    "binary": "qrtool",
+    "check": "which qrtool",
+    "install_steps": [
+      "cargo install qrtool",
+      "Verify: qrtool --help",
+      "supercli plugins install ./plugins/qrtool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qrtool",
+      "resource": "decode",
+      "action": "qr",
+      "description": "Decode QR code from image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrtool",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["decode"],
+        "positionalArgs": ["image"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qrtool: cargo install qrtool"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": true, "description": "Image file containing QR code" }
+      ]
+    },
+    {
+      "namespace": "qrtool",
+      "resource": "encode",
+      "action": "qr",
+      "description": "Encode text into QR code",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrtool",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["encode"],
+        "positionalArgs": ["text"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qrtool: cargo install qrtool"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Text to encode" }
+      ]
+    },
+    {
+      "namespace": "qrtool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qrtool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrtool",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qrtool: cargo install qrtool"
+      },
+      "args": []
+    }
+  ]
+}

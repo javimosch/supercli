@@ -1,0 +1,75 @@
+{
+  "name": "van-gonography",
+  "version": "0.1.0",
+  "description": "Hide files of any type inside an image using steganography",
+  "source": "https://github.com/JoshuaKasa/van-gonography",
+  "checks": [
+    { "type": "binary", "name": "vangonography" }
+  ],
+  "install_guidance": {
+    "plugin": "van-gonography",
+    "binary": "vangonography",
+    "check": "which vangonography",
+    "install_steps": [
+      "pip install van-gonography",
+      "Verify: vangonography --help",
+      "supercli plugins install ./plugins/van-gonography --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "van-gonography",
+      "resource": "encode",
+      "action": "file",
+      "description": "Encode file into image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vangonography",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-cli", "-e"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install van-gonography: pip install van-gonography"
+      },
+      "args": [
+        { "name": "cover", "type": "string", "required": true, "description": "Cover image path" },
+        { "name": "file", "type": "string", "required": true, "description": "File to hide" },
+        { "name": "output", "type": "string", "required": false, "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "van-gonography",
+      "resource": "decode",
+      "action": "file",
+      "description": "Decode file from image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vangonography",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-cli", "-d"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install van-gonography: pip install van-gonography"
+      },
+      "args": [
+        { "name": "cover", "type": "string", "required": true, "description": "Cover image path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "van-gonography",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to van-gonography CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vangonography",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install van-gonography: pip install van-gonography"
+      },
+      "args": []
+    }
+  ]
+}
