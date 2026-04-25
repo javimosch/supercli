@@ -1,0 +1,55 @@
+{
+  "name": "cpc",
+  "version": "0.1.0",
+  "description": "Text calculator with support for units and conversion",
+  "source": "https://github.com/probablykasper/cpc",
+  "checks": [
+    { "type": "binary", "name": "cpc" }
+  ],
+  "install_guidance": {
+    "plugin": "cpc",
+    "binary": "cpc",
+    "check": "which cpc",
+    "install_steps": [
+      "cargo install cpc",
+      "Verify: cpc --help",
+      "supercli plugins install ./plugins/cpc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cpc",
+      "resource": "calculate",
+      "action": "expression",
+      "description": "Calculate expression",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cpc",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["expression"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cpc: cargo install cpc"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Math expression to calculate" }
+      ]
+    },
+    {
+      "namespace": "cpc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cpc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cpc",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cpc: cargo install cpc"
+      },
+      "args": []
+    }
+  ]
+}

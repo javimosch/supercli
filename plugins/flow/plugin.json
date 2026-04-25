@@ -1,0 +1,55 @@
+{
+  "name": "flow",
+  "version": "0.1.0",
+  "description": "Keyboard-first Kanban board for terminal workflows",
+  "source": "https://github.com/jsubroto/flow",
+  "checks": [
+    { "type": "binary", "name": "flow" }
+  ],
+  "install_guidance": {
+    "plugin": "flow",
+    "binary": "flow",
+    "check": "which flow",
+    "install_steps": [
+      "cargo install flow",
+      "Verify: flow --help",
+      "supercli plugins install ./plugins/flow --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "flow",
+      "resource": "run",
+      "action": "board",
+      "description": "Run Kanban board",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flow",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["board"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install flow: cargo install flow"
+      },
+      "args": [
+        { "name": "board", "type": "string", "required": true, "description": "Board file" }
+      ]
+    },
+    {
+      "namespace": "flow",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to flow CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flow",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install flow: cargo install flow"
+      },
+      "args": []
+    }
+  ]
+}

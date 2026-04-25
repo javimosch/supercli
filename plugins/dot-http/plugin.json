@@ -1,0 +1,55 @@
+{
+  "name": "dot-http",
+  "version": "0.1.0",
+  "description": "Text-based scriptable HTTP client",
+  "source": "https://github.com/bayne/dot-http",
+  "checks": [
+    { "type": "binary", "name": "dot-http" }
+  ],
+  "install_guidance": {
+    "plugin": "dot-http",
+    "binary": "dot-http",
+    "check": "which dot-http",
+    "install_steps": [
+      "cargo install dot-http",
+      "Verify: dot-http --help",
+      "supercli plugins install ./plugins/dot-http --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dot-http",
+      "resource": "request",
+      "action": "http",
+      "description": "Send HTTP request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dot-http",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["file"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install dot-http: cargo install dot-http"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTTP request file" }
+      ]
+    },
+    {
+      "namespace": "dot-http",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dot-http CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dot-http",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dot-http: cargo install dot-http"
+      },
+      "args": []
+    }
+  ]
+}

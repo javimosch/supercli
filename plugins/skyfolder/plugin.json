@@ -1,0 +1,55 @@
+{
+  "name": "skyfolder",
+  "version": "0.1.0",
+  "description": "Share folders on the network",
+  "source": "https://github.com/mu-arch/skyfolder",
+  "checks": [
+    { "type": "binary", "name": "skyfolder" }
+  ],
+  "install_guidance": {
+    "plugin": "skyfolder",
+    "binary": "skyfolder",
+    "check": "which skyfolder",
+    "install_steps": [
+      "cargo install skyfolder",
+      "Verify: skyfolder --help",
+      "supercli plugins install ./plugins/skyfolder --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "skyfolder",
+      "resource": "share",
+      "action": "folder",
+      "description": "Share a folder on the network",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skyfolder",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["path"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install skyfolder: cargo install skyfolder"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Folder path to share" }
+      ]
+    },
+    {
+      "namespace": "skyfolder",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to skyfolder CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skyfolder",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install skyfolder: cargo install skyfolder"
+      },
+      "args": []
+    }
+  ]
+}

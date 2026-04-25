@@ -1,0 +1,56 @@
+{
+  "name": "aspect-cli",
+  "version": "0.1.0",
+  "description": "Aspect CLI for Bazel - Correct, Fast, Usable",
+  "source": "https://github.com/aspect-build/aspect-cli",
+  "checks": [
+    { "type": "binary", "name": "aspect" }
+  ],
+  "install_guidance": {
+    "plugin": "aspect-cli",
+    "binary": "aspect",
+    "check": "which aspect",
+    "install_steps": [
+      "cargo install aspect-cli",
+      "Verify: aspect --help",
+      "supercli plugins install ./plugins/aspect-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aspect",
+      "resource": "build",
+      "action": "target",
+      "description": "Build Bazel target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aspect",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["build"],
+        "positionalArgs": ["target"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install aspect-cli: cargo install aspect-cli"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Bazel target to build" }
+      ]
+    },
+    {
+      "namespace": "aspect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aspect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aspect",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install aspect-cli: cargo install aspect-cli"
+      },
+      "args": []
+    }
+  ]
+}
