@@ -1,0 +1,55 @@
+{
+  "name": "complexity",
+  "version": "0.1.0",
+  "description": "A command line tool to identify complex code",
+  "source": "https://github.com/thoughtbot/complexity",
+  "checks": [
+    { "type": "binary", "name": "complexity" }
+  ],
+  "install_guidance": {
+    "plugin": "complexity",
+    "binary": "complexity",
+    "check": "which complexity",
+    "install_steps": [
+      "cargo install complexity",
+      "Verify: complexity --help",
+      "supercli plugins install ./plugins/complexity --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "complexity",
+      "resource": "analyze",
+      "action": "code",
+      "description": "Analyze code complexity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "complexity",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["path"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install complexity: cargo install complexity"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File or directory to analyze" }
+      ]
+    },
+    {
+      "namespace": "complexity",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to complexity CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "complexity",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install complexity: cargo install complexity"
+      },
+      "args": []
+    }
+  ]
+}

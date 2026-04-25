@@ -1,0 +1,55 @@
+{
+  "name": "peep",
+  "version": "0.1.0",
+  "description": "CLI text viewer tool that works like less command on small pane within the terminal window",
+  "source": "https://github.com/ryochack/peep",
+  "checks": [
+    { "type": "binary", "name": "peep" }
+  ],
+  "install_guidance": {
+    "plugin": "peep",
+    "binary": "peep",
+    "check": "which peep",
+    "install_steps": [
+      "cargo install peep",
+      "Verify: peep --help",
+      "supercli plugins install ./plugins/peep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "peep",
+      "resource": "view",
+      "action": "file",
+      "description": "View a file in a small pane",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peep",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["file"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install peep: cargo install peep"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to view" }
+      ]
+    },
+    {
+      "namespace": "peep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to peep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peep",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install peep: cargo install peep"
+      },
+      "args": []
+    }
+  ]
+}

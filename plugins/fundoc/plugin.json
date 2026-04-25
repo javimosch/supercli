@@ -1,0 +1,55 @@
+{
+  "name": "fundoc",
+  "version": "0.1.0",
+  "description": "Language agnostic documentation generator",
+  "source": "https://github.com/daynin/fundoc",
+  "checks": [
+    { "type": "binary", "name": "fundoc" }
+  ],
+  "install_guidance": {
+    "plugin": "fundoc",
+    "binary": "fundoc",
+    "check": "which fundoc",
+    "install_steps": [
+      "cargo install fundoc",
+      "Verify: fundoc --help",
+      "supercli plugins install ./plugins/fundoc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fundoc",
+      "resource": "generate",
+      "action": "docs",
+      "description": "Generate documentation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fundoc",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["path"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fundoc: cargo install fundoc"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to generate docs for" }
+      ]
+    },
+    {
+      "namespace": "fundoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fundoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fundoc",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fundoc: cargo install fundoc"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "jsonwatch",
+  "version": "0.1.0",
+  "description": "Track changes in JSON data from the command line",
+  "source": "https://github.com/dbohdan/jsonwatch",
+  "checks": [
+    { "type": "binary", "name": "jsonwatch" }
+  ],
+  "install_guidance": {
+    "plugin": "jsonwatch",
+    "binary": "jsonwatch",
+    "check": "which jsonwatch",
+    "install_steps": [
+      "cargo install jsonwatch",
+      "Verify: jsonwatch --help",
+      "supercli plugins install ./plugins/jsonwatch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jsonwatch",
+      "resource": "watch",
+      "action": "json",
+      "description": "Watch JSON data for changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jsonwatch",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["source"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install jsonwatch: cargo install jsonwatch"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "JSON file or URL to watch" }
+      ]
+    },
+    {
+      "namespace": "jsonwatch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jsonwatch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jsonwatch",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jsonwatch: cargo install jsonwatch"
+      },
+      "args": []
+    }
+  ]
+}

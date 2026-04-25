@@ -1,0 +1,55 @@
+{
+  "name": "smag",
+  "version": "0.1.0",
+  "description": "Show Me A Graph - Command Line Graphing",
+  "source": "https://github.com/aantn/smag",
+  "checks": [
+    { "type": "binary", "name": "smag" }
+  ],
+  "install_guidance": {
+    "plugin": "smag",
+    "binary": "smag",
+    "check": "which smag",
+    "install_steps": [
+      "cargo install smag",
+      "Verify: smag --help",
+      "supercli plugins install ./plugins/smag --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "smag",
+      "resource": "graph",
+      "action": "data",
+      "description": "Create a graph from data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "smag",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["data"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install smag: cargo install smag"
+      },
+      "args": [
+        { "name": "data", "type": "string", "required": true, "description": "Data to graph" }
+      ]
+    },
+    {
+      "namespace": "smag",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to smag CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "smag",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install smag: cargo install smag"
+      },
+      "args": []
+    }
+  ]
+}
