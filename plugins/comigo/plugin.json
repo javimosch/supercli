@@ -1,0 +1,84 @@
+{
+  "name": "comigo",
+  "version": "0.1.0",
+  "description": "Comic reader and server for CBR, CBZ, EPUB, and manga",
+  "source": "https://github.com/yumenaka/comigo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "comigo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "comigo",
+    "binary": "comigo",
+    "check": "which comigo",
+    "install_steps": [
+      "go install github.com/yumenaka/comigo@latest",
+      "Verify: comigo --version",
+      "supercli plugins install ./plugins/comigo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "comigo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print comigo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comigo",
+        "missingDependencyHelp": "Install comigo: go install github.com/yumenaka/comigo@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "comigo",
+      "resource": "file",
+      "action": "serve",
+      "description": "serve file via comigo",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comigo",
+        "missingDependencyHelp": "Install comigo: go install github.com/yumenaka/comigo@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "comigo",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via comigo",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comigo",
+        "missingDependencyHelp": "Install comigo: go install github.com/yumenaka/comigo@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

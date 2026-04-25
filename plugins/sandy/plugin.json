@@ -1,0 +1,84 @@
+{
+  "name": "sandy",
+  "version": "0.1.0",
+  "description": "Process tracing and syscall monitoring CLI",
+  "source": "https://github.com/craigmulligan/sandy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sandy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sandy",
+    "binary": "sandy",
+    "check": "which sandy",
+    "install_steps": [
+      "go install github.com/craigmulligan/sandy@latest",
+      "Verify: sandy --version",
+      "supercli plugins install ./plugins/sandy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sandy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sandy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sandy",
+        "missingDependencyHelp": "Install sandy: go install github.com/craigmulligan/sandy@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "sandy",
+      "resource": "process",
+      "action": "trace",
+      "description": "trace process via sandy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sandy",
+        "missingDependencyHelp": "Install sandy: go install github.com/craigmulligan/sandy@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "sandy",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via sandy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sandy",
+        "missingDependencyHelp": "Install sandy: go install github.com/craigmulligan/sandy@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "oneshot",
+  "version": "0.1.0",
+  "description": "P2P file transfer over WebRTC with NAT traversal",
+  "source": "https://github.com/forestnode-io/oneshot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "oneshot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "oneshot",
+    "binary": "oneshot",
+    "check": "which oneshot",
+    "install_steps": [
+      "go install github.com/forestnode-io/oneshot/v2/cmd/oneshot@latest",
+      "Verify: oneshot --version",
+      "supercli plugins install ./plugins/oneshot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oneshot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oneshot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oneshot",
+        "missingDependencyHelp": "Install oneshot: go install github.com/forestnode-io/oneshot/v2/cmd/oneshot@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "oneshot",
+      "resource": "file",
+      "action": "send",
+      "description": "send file via oneshot",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oneshot",
+        "missingDependencyHelp": "Install oneshot: go install github.com/forestnode-io/oneshot/v2/cmd/oneshot@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "oneshot",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via oneshot",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oneshot",
+        "missingDependencyHelp": "Install oneshot: go install github.com/forestnode-io/oneshot/v2/cmd/oneshot@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
