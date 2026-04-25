@@ -1,0 +1,111 @@
+{
+  "name": "syncthing",
+  "version": "0.1.0",
+  "description": "Continuous file synchronization tool with CLI",
+  "source": "https://github.com/syncthing/syncthing",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "syncthing"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "syncthing",
+    "binary": "syncthing",
+    "check": "which syncthing",
+    "install_steps": [
+      "brew install syncthing",
+      "Verify: syncthing --version",
+      "supercli plugins install ./plugins/syncthing --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "syncthing",
+      "resource": "self",
+      "action": "version",
+      "description": "Print syncthing version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syncthing",
+        "missingDependencyHelp": "Install syncthing: brew install syncthing",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "syncthing",
+      "resource": "device",
+      "action": "list",
+      "description": "list device via syncthing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syncthing",
+        "missingDependencyHelp": "Install syncthing: brew install syncthing",
+        "baseArgs": [
+          "cli",
+          "operations"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "syncthing",
+      "resource": "config",
+      "action": "dump",
+      "description": "dump config via syncthing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syncthing",
+        "missingDependencyHelp": "Install syncthing: brew install syncthing",
+        "baseArgs": [
+          "--paths"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "syncthing",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via syncthing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syncthing",
+        "missingDependencyHelp": "Install syncthing: brew install syncthing",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

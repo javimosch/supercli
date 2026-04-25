@@ -1,0 +1,112 @@
+{
+  "name": "drone",
+  "version": "0.1.0",
+  "description": "Continuous integration and delivery platform CLI",
+  "source": "https://github.com/harness/drone",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "drone"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "drone",
+    "binary": "drone",
+    "check": "which drone",
+    "install_steps": [
+      "brew install drone",
+      "Verify: drone --version",
+      "supercli plugins install ./plugins/drone --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "drone",
+      "resource": "self",
+      "action": "version",
+      "description": "Print drone version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone",
+        "missingDependencyHelp": "Install drone: brew install drone",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "drone",
+      "resource": "repo",
+      "action": "sync",
+      "description": "sync repo via drone",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone",
+        "missingDependencyHelp": "Install drone: brew install drone",
+        "baseArgs": [
+          "repo",
+          "sync"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "drone",
+      "resource": "build",
+      "action": "list",
+      "description": "list build via drone",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone",
+        "missingDependencyHelp": "Install drone: brew install drone",
+        "baseArgs": [
+          "build",
+          "list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "drone",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via drone",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone",
+        "missingDependencyHelp": "Install drone: brew install drone",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
