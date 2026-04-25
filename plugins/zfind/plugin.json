@@ -1,0 +1,85 @@
+{
+  "name": "zfind",
+  "version": "0.1.0",
+  "description": "Search for files (even inside tar/zip/7z/rar) using a SQL-WHERE filter",
+  "source": "https://github.com/laktak/zfind",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zfind"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zfind",
+    "binary": "zfind",
+    "check": "which zfind",
+    "install_steps": [
+      "brew install laktak/tap/zfind",
+      "Verify: zfind --version",
+      "supercli plugins install ./plugins/zfind --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zfind",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zfind version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zfind",
+        "missingDependencyHelp": "Install zfind: brew install laktak/tap/zfind",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "zfind",
+      "resource": "file",
+      "action": "find",
+      "description": "find file via zfind",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zfind",
+        "missingDependencyHelp": "Install zfind: brew install laktak/tap/zfind",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "zfind",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via zfind",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zfind",
+        "missingDependencyHelp": "Install zfind: brew install laktak/tap/zfind",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
