@@ -1,0 +1,88 @@
+{
+  "name": "ko",
+  "version": "0.1.0",
+  "description": "Build and deploy Go containers",
+  "source": "https://github.com/ko-build/ko",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ko"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ko",
+    "binary": "ko",
+    "check": "which ko",
+    "install_steps": [
+      "go install github.com/google/ko@latest",
+      "Verify: ko --version",
+      "supercli plugins install ./plugins/ko --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ko",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ko version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ko",
+        "missingDependencyHelp": "Install ko: go install github.com/google/ko@latest",
+        "baseArgs": [
+          "version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "ko",
+      "resource": "build",
+      "action": "run",
+      "description": "run build via ko",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ko",
+        "missingDependencyHelp": "Install ko: go install github.com/google/ko@latest",
+        "baseArgs": [
+          "build"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ko",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via ko",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ko",
+        "missingDependencyHelp": "Install ko: go install github.com/google/ko@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
