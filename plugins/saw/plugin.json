@@ -1,0 +1,71 @@
+{
+  "name": "saw",
+  "version": "0.1.0",
+  "description": "A modern and intuitive CLI tool for AWS. Manage AWS resources and services with a simple, human-friendly command line interface.",
+  "source": "https://github.com/TylerBrock/saw",
+  "checks": [
+    { "type": "binary", "name": "saw" }
+  ],
+  "install_guidance": {
+    "plugin": "saw",
+    "binary": "saw",
+    "check": "which saw",
+    "install_steps": [
+      "brew install saw",
+      "Verify: saw --version",
+      "supercli plugins install ./plugins/saw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "saw",
+      "resource": "aws",
+      "action": "list",
+      "description": "List AWS resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "saw",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install saw: brew install saw"
+      },
+      "args": [
+        { "name": "service", "type": "string", "description": "AWS service name" },
+        { "name": "--region", "type": "string", "description": "AWS region" }
+      ]
+    },
+    {
+      "namespace": "saw",
+      "resource": "aws",
+      "action": "describe",
+      "description": "Describe AWS resource",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "saw",
+        "baseArgs": ["describe"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install saw: brew install saw"
+      },
+      "args": [
+        { "name": "resource", "type": "string", "description": "Resource identifier" },
+        { "name": "--region", "type": "string", "description": "AWS region" }
+      ]
+    },
+    {
+      "namespace": "saw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to saw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "saw",
+        "passthrough": true,
+        "missingDependencyHelp": "Install saw: brew install saw"
+      },
+      "args": []
+    }
+  ]
+}

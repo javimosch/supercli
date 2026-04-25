@@ -1,0 +1,54 @@
+{
+  "name": "KouShare-dl",
+  "version": "0.1.0",
+  "description": "A command-line downloader for KouShare. Download files and resources from KouShare platform directly from the terminal.",
+  "source": "https://github.com/yliu7949/KouShare-dl",
+  "checks": [
+    { "type": "binary", "name": "koushare-dl" }
+  ],
+  "install_guidance": {
+    "plugin": "KouShare-dl",
+    "binary": "koushare-dl",
+    "check": "which koushare-dl",
+    "install_steps": [
+      "brew install koushare-dl",
+      "Verify: koushare-dl --version",
+      "supercli plugins install ./plugins/KouShare-dl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "KouShare-dl",
+      "resource": "file",
+      "action": "download",
+      "description": "Download file from KouShare",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "koushare-dl",
+        "baseArgs": ["download"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install koushare-dl: brew install koushare-dl"
+      },
+      "args": [
+        { "name": "url", "type": "string", "description": "KouShare URL" },
+        { "name": "--output", "type": "string", "description": "Output directory" }
+      ]
+    },
+    {
+      "namespace": "KouShare-dl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to KouShare-dl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "koushare-dl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install koushare-dl: brew install koushare-dl"
+      },
+      "args": []
+    }
+  ]
+}
