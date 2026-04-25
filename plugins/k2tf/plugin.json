@@ -1,0 +1,86 @@
+{
+  "name": "k2tf",
+  "version": "0.1.0",
+  "description": "Convert Kubernetes YAML to Terraform HCL",
+  "source": "https://github.com/sl1pm4t/k2tf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "k2tf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "k2tf",
+    "binary": "k2tf",
+    "check": "which k2tf",
+    "install_steps": [
+      "go install github.com/sl1pm4t/k2tf@latest",
+      "Verify: k2tf --version",
+      "supercli plugins install ./plugins/k2tf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "k2tf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print k2tf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k2tf",
+        "missingDependencyHelp": "Install k2tf: go install github.com/sl1pm4t/k2tf@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "k2tf",
+      "resource": "file",
+      "action": "convert",
+      "description": "convert file via k2tf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k2tf",
+        "missingDependencyHelp": "Install k2tf: go install github.com/sl1pm4t/k2tf@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "k2tf",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via k2tf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k2tf",
+        "missingDependencyHelp": "Install k2tf: go install github.com/sl1pm4t/k2tf@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

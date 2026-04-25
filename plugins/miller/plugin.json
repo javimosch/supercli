@@ -1,0 +1,86 @@
+{
+  "name": "miller",
+  "version": "0.1.0",
+  "description": "Like awk/sed/join/sort for name-indexed data such as CSV, TSV, JSON",
+  "source": "https://github.com/johnkerl/miller",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mlr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "miller",
+    "binary": "mlr",
+    "check": "which mlr",
+    "install_steps": [
+      "brew install miller",
+      "Verify: mlr --version",
+      "supercli plugins install ./plugins/miller --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "miller",
+      "resource": "self",
+      "action": "version",
+      "description": "Print miller version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mlr",
+        "missingDependencyHelp": "Install miller: brew install miller",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "miller",
+      "resource": "data",
+      "action": "process",
+      "description": "process data via mlr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mlr",
+        "missingDependencyHelp": "Install miller: brew install miller",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "miller",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via mlr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mlr",
+        "missingDependencyHelp": "Install miller: brew install miller",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "jaggr",
+  "version": "0.1.0",
+  "description": "JSON aggregator and histogram viewer",
+  "source": "https://github.com/rs/jaggr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jaggr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jaggr",
+    "binary": "jaggr",
+    "check": "which jaggr",
+    "install_steps": [
+      "go install github.com/rs/jaggr@latest",
+      "Verify: jaggr --version",
+      "supercli plugins install ./plugins/jaggr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jaggr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jaggr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaggr",
+        "missingDependencyHelp": "Install jaggr: go install github.com/rs/jaggr@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "jaggr",
+      "resource": "data",
+      "action": "aggregate",
+      "description": "aggregate data via jaggr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaggr",
+        "missingDependencyHelp": "Install jaggr: go install github.com/rs/jaggr@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "jaggr",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via jaggr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaggr",
+        "missingDependencyHelp": "Install jaggr: go install github.com/rs/jaggr@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
