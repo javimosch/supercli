@@ -1,0 +1,108 @@
+{
+  "name": "kube-hunter",
+  "version": "0.1.0",
+  "description": "Hunt for security weaknesses in Kubernetes clusters",
+  "source": "https://github.com/aquasecurity/kube-hunter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kube-hunter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kube-hunter",
+    "binary": "kube-hunter",
+    "check": "which kube-hunter",
+    "install_steps": [
+      "brew install kube-hunter",
+      "Verify: kube-hunter --version",
+      "supercli plugins install ./plugins/kube-hunter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kube-hunter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kube-hunter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-hunter",
+        "missingDependencyHelp": "Install kube-hunter: brew install kube-hunter",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kube-hunter",
+      "resource": "cluster",
+      "action": "hunt",
+      "description": "hunt cluster via kube-hunter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-hunter",
+        "missingDependencyHelp": "Install kube-hunter: brew install kube-hunter",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kube-hunter",
+      "resource": "cluster",
+      "action": "report",
+      "description": "report cluster via kube-hunter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-hunter",
+        "missingDependencyHelp": "Install kube-hunter: brew install kube-hunter",
+        "baseArgs": [
+          "--report"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kube-hunter",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kube-hunter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-hunter",
+        "missingDependencyHelp": "Install kube-hunter: brew install kube-hunter",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

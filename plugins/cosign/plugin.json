@@ -1,0 +1,134 @@
+{
+  "name": "cosign",
+  "version": "0.1.0",
+  "description": "Container Signing, Verification and Storage in an OCI registry",
+  "source": "https://github.com/sigstore/cosign",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cosign"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cosign",
+    "binary": "cosign",
+    "check": "which cosign",
+    "install_steps": [
+      "brew install cosign",
+      "Verify: cosign --version",
+      "supercli plugins install ./plugins/cosign --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cosign",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cosign version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cosign",
+        "missingDependencyHelp": "Install cosign: brew install cosign",
+        "baseArgs": [
+          "version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cosign",
+      "resource": "image",
+      "action": "sign",
+      "description": "sign image via cosign",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cosign",
+        "missingDependencyHelp": "Install cosign: brew install cosign",
+        "baseArgs": [
+          "sign"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cosign",
+      "resource": "image",
+      "action": "verify",
+      "description": "verify image via cosign",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cosign",
+        "missingDependencyHelp": "Install cosign: brew install cosign",
+        "baseArgs": [
+          "verify"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cosign",
+      "resource": "image",
+      "action": "attest",
+      "description": "attest image via cosign",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cosign",
+        "missingDependencyHelp": "Install cosign: brew install cosign",
+        "baseArgs": [
+          "attest"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cosign",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via cosign",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cosign",
+        "missingDependencyHelp": "Install cosign: brew install cosign",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

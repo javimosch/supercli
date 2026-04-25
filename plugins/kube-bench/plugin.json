@@ -1,0 +1,111 @@
+{
+  "name": "kube-bench",
+  "version": "0.1.0",
+  "description": "CIS Kubernetes Benchmark security scanner",
+  "source": "https://github.com/aquasecurity/kube-bench",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kube-bench"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kube-bench",
+    "binary": "kube-bench",
+    "check": "which kube-bench",
+    "install_steps": [
+      "brew install kube-bench",
+      "Verify: kube-bench --version",
+      "supercli plugins install ./plugins/kube-bench --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kube-bench",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kube-bench version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-bench",
+        "missingDependencyHelp": "Install kube-bench: brew install kube-bench",
+        "baseArgs": [
+          "version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kube-bench",
+      "resource": "cluster",
+      "action": "run",
+      "description": "run cluster via kube-bench",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-bench",
+        "missingDependencyHelp": "Install kube-bench: brew install kube-bench",
+        "baseArgs": [
+          "run"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kube-bench",
+      "resource": "cluster",
+      "action": "apply",
+      "description": "apply cluster via kube-bench",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-bench",
+        "missingDependencyHelp": "Install kube-bench: brew install kube-bench",
+        "baseArgs": [
+          "run",
+          "--apply"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kube-bench",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kube-bench",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-bench",
+        "missingDependencyHelp": "Install kube-bench: brew install kube-bench",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
