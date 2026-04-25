@@ -1,0 +1,86 @@
+{
+  "name": "ojosama",
+  "version": "0.1.0",
+  "description": "Convert Japanese text to ojou-sama speech style",
+  "source": "https://github.com/jiro4989/ojosama",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ojosama"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ojosama",
+    "binary": "ojosama",
+    "check": "which ojosama",
+    "install_steps": [
+      "go install github.com/jiro4989/ojosama@latest",
+      "Verify: ojosama --version",
+      "supercli plugins install ./plugins/ojosama --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ojosama",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ojosama version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ojosama",
+        "missingDependencyHelp": "Install ojosama: go install github.com/jiro4989/ojosama@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "ojosama",
+      "resource": "text",
+      "action": "convert",
+      "description": "convert text via ojosama",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ojosama",
+        "missingDependencyHelp": "Install ojosama: go install github.com/jiro4989/ojosama@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ojosama",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via ojosama",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ojosama",
+        "missingDependencyHelp": "Install ojosama: go install github.com/jiro4989/ojosama@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
