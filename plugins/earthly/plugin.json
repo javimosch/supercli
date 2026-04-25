@@ -1,0 +1,108 @@
+{
+  "name": "earthly",
+  "version": "0.1.0",
+  "description": "Build automation tool that works with Dockerfiles",
+  "source": "https://github.com/earthly/earthly",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "earthly"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "earthly",
+    "binary": "earthly",
+    "check": "which earthly",
+    "install_steps": [
+      "brew install earthly",
+      "Verify: earthly --version",
+      "supercli plugins install ./plugins/earthly --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "earthly",
+      "resource": "self",
+      "action": "version",
+      "description": "Print earthly version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earthly",
+        "missingDependencyHelp": "Install earthly: brew install earthly",
+        "baseArgs": [
+          "version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "earthly",
+      "resource": "build",
+      "action": "run",
+      "description": "run build via earthly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earthly",
+        "missingDependencyHelp": "Install earthly: brew install earthly",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "earthly",
+      "resource": "target",
+      "action": "list",
+      "description": "list target via earthly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earthly",
+        "missingDependencyHelp": "Install earthly: brew install earthly",
+        "baseArgs": [
+          "target"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "earthly",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via earthly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "earthly",
+        "missingDependencyHelp": "Install earthly: brew install earthly",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

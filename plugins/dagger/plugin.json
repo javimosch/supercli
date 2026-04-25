@@ -1,0 +1,110 @@
+{
+  "name": "dagger",
+  "version": "0.1.0",
+  "description": "Programmable CI/CD engine that runs pipelines in containers",
+  "source": "https://github.com/dagger/dagger",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dagger"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dagger",
+    "binary": "dagger",
+    "check": "which dagger",
+    "install_steps": [
+      "curl -L https://dl.dagger.io/dagger/install.sh | sh",
+      "Verify: dagger --version",
+      "supercli plugins install ./plugins/dagger --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dagger",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dagger version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagger",
+        "missingDependencyHelp": "Install dagger: curl -L https://dl.dagger.io/dagger/install.sh | sh",
+        "baseArgs": [
+          "version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagger",
+      "resource": "pipeline",
+      "action": "run",
+      "description": "run pipeline via dagger",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagger",
+        "missingDependencyHelp": "Install dagger: curl -L https://dl.dagger.io/dagger/install.sh | sh",
+        "baseArgs": [
+          "call"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "dagger",
+      "resource": "module",
+      "action": "list",
+      "description": "list module via dagger",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagger",
+        "missingDependencyHelp": "Install dagger: curl -L https://dl.dagger.io/dagger/install.sh | sh",
+        "baseArgs": [
+          "functions"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "dagger",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via dagger",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagger",
+        "missingDependencyHelp": "Install dagger: curl -L https://dl.dagger.io/dagger/install.sh | sh",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
