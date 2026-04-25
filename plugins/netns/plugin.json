@@ -1,0 +1,83 @@
+{
+  "name": "netns",
+  "version": "0.1.0",
+  "description": "Runc hook (OCI compatible) for setting up default bridge networking for containers",
+  "source": "https://github.com/genuinetools/netns",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "netns"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "netns",
+    "binary": "netns",
+    "check": "which netns",
+    "install_steps": [
+      "go install github.com/genuinetools/netns@latest",
+      "Verify: netns --version",
+      "supercli plugins install ./plugins/netns --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "netns",
+      "resource": "self",
+      "action": "version",
+      "description": "Print netns version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netns",
+        "missingDependencyHelp": "Install netns: go install github.com/genuinetools/netns@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "netns",
+      "resource": "network",
+      "action": "setup",
+      "description": "setup network via netns",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netns",
+        "missingDependencyHelp": "Install netns: go install github.com/genuinetools/netns@latest",
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "netns",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via netns",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netns",
+        "missingDependencyHelp": "Install netns: go install github.com/genuinetools/netns@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

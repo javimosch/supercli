@@ -1,0 +1,83 @@
+{
+  "name": "certok",
+  "version": "0.1.0",
+  "description": "Command line tool to check the validity and expiration dates of SSL certificates",
+  "source": "https://github.com/genuinetools/certok",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "certok"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "certok",
+    "binary": "certok",
+    "check": "which certok",
+    "install_steps": [
+      "go install github.com/genuinetools/certok@latest",
+      "Verify: certok --version",
+      "supercli plugins install ./plugins/certok --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "certok",
+      "resource": "self",
+      "action": "version",
+      "description": "Print certok version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certok",
+        "missingDependencyHelp": "Install certok: go install github.com/genuinetools/certok@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "certok",
+      "resource": "cert",
+      "action": "check",
+      "description": "check cert via certok",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certok",
+        "missingDependencyHelp": "Install certok: go install github.com/genuinetools/certok@latest",
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "certok",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via certok",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certok",
+        "missingDependencyHelp": "Install certok: go install github.com/genuinetools/certok@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
