@@ -1,0 +1,111 @@
+{
+  "name": "triangula",
+  "version": "0.1.0",
+  "description": "Generate high-quality triangulated and polygonal art from images",
+  "source": "https://github.com/rh12503/triangula",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "triangula"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "triangula",
+    "binary": "triangula",
+    "check": "which triangula",
+    "install_steps": [
+      "go install github.com/rh12503/triangula@latest",
+      "Verify: triangula --version",
+      "supercli plugins install ./plugins/triangula --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "triangula",
+      "resource": "self",
+      "action": "version",
+      "description": "Print triangula version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "triangula",
+        "missingDependencyHelp": "Install triangula: go install github.com/rh12503/triangula@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "triangula",
+      "resource": "image",
+      "action": "generate",
+      "description": "generate image via triangula",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "triangula",
+        "missingDependencyHelp": "Install triangula: go install github.com/rh12503/triangula@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "triangula",
+      "resource": "image",
+      "action": "polygon",
+      "description": "polygon image via triangula",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "triangula",
+        "missingDependencyHelp": "Install triangula: go install github.com/rh12503/triangula@latest",
+        "baseArgs": [
+          "--polygon"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "triangula",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via triangula",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "triangula",
+        "missingDependencyHelp": "Install triangula: go install github.com/rh12503/triangula@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

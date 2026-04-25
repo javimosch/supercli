@@ -1,0 +1,111 @@
+{
+  "name": "xc",
+  "version": "0.1.0",
+  "description": "Markdown task runner that executes code blocks",
+  "source": "https://github.com/joerdav/xc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xc",
+    "binary": "xc",
+    "check": "which xc",
+    "install_steps": [
+      "go install github.com/joerdav/xc@latest",
+      "Verify: xc --version",
+      "supercli plugins install ./plugins/xc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xc",
+        "missingDependencyHelp": "Install xc: go install github.com/joerdav/xc@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "xc",
+      "resource": "task",
+      "action": "run",
+      "description": "run task via xc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xc",
+        "missingDependencyHelp": "Install xc: go install github.com/joerdav/xc@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "xc",
+      "resource": "task",
+      "action": "list",
+      "description": "list task via xc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xc",
+        "missingDependencyHelp": "Install xc: go install github.com/joerdav/xc@latest",
+        "baseArgs": [
+          "--list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "xc",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via xc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xc",
+        "missingDependencyHelp": "Install xc: go install github.com/joerdav/xc@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
