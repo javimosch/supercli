@@ -1,0 +1,86 @@
+{
+  "name": "ips",
+  "version": "0.1.0",
+  "description": "IP geolocation and information tool",
+  "source": "https://github.com/sjzar/ips",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ips"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ips",
+    "binary": "ips",
+    "check": "which ips",
+    "install_steps": [
+      "go install github.com/sjzar/ips@latest",
+      "Verify: ips --version",
+      "supercli plugins install ./plugins/ips --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ips",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ips version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ips",
+        "missingDependencyHelp": "Install ips: go install github.com/sjzar/ips@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "ips",
+      "resource": "ip",
+      "action": "query",
+      "description": "query ip via ips",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ips",
+        "missingDependencyHelp": "Install ips: go install github.com/sjzar/ips@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ips",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via ips",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ips",
+        "missingDependencyHelp": "Install ips: go install github.com/sjzar/ips@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

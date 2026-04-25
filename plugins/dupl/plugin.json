@@ -1,0 +1,86 @@
+{
+  "name": "dupl",
+  "version": "0.1.0",
+  "description": "Tool for finding code clones in Go projects",
+  "source": "https://github.com/mibk/dupl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dupl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dupl",
+    "binary": "dupl",
+    "check": "which dupl",
+    "install_steps": [
+      "go install github.com/mibk/dupl@latest",
+      "Verify: dupl --version",
+      "supercli plugins install ./plugins/dupl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dupl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dupl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dupl",
+        "missingDependencyHelp": "Install dupl: go install github.com/mibk/dupl@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "dupl",
+      "resource": "code",
+      "action": "check",
+      "description": "check code via dupl",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dupl",
+        "missingDependencyHelp": "Install dupl: go install github.com/mibk/dupl@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "dupl",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via dupl",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dupl",
+        "missingDependencyHelp": "Install dupl: go install github.com/mibk/dupl@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
