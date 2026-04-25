@@ -1,0 +1,57 @@
+{
+  "name": "google-maps-scraper",
+  "version": "0.1.0",
+  "description": "Scrape business data from Google Maps including names, addresses, websites, phone numbers, ratings, and reviews",
+  "source": "https://github.com/javimosch/supercli",
+  "checks": [
+    { "type": "binary", "name": "python3" }
+  ],
+  "install_guidance": {
+    "plugin": "google-maps-scraper",
+    "binary": "python3",
+    "check": "python3 --version",
+    "install_steps": [
+      "pip install playwright pandas",
+      "playwright install chromium",
+      "supercli plugins install ./plugins/google-maps-scraper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "google-maps-scraper",
+      "resource": "search",
+      "action": "scrape",
+      "description": "Scrape Google Maps for business data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python3",
+        "baseArgs": ["plugins/google-maps-scraper/scraper.py"],
+        "positionalArgs": ["query", "limit"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install dependencies: pip install playwright pandas && playwright install chromium"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query for Google Maps (e.g., 'restaurants in Paris')" },
+        { "name": "limit", "type": "number", "required": false, "description": "Maximum number of results to scrape (default: 10)" }
+      ]
+    },
+    {
+      "namespace": "google-maps-scraper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to google-maps-scraper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python3",
+        "baseArgs": ["plugins/google-maps-scraper/scraper.py"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install dependencies: pip install playwright pandas && playwright install chromium"
+      },
+      "args": []
+    }
+  ]
+}
