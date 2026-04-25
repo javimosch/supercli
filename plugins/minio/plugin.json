@@ -1,0 +1,158 @@
+{
+  "name": "minio",
+  "version": "0.1.0",
+  "description": "High performance object storage with S3 compatible API",
+  "source": "https://github.com/minio/minio",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "minio",
+    "binary": "mc",
+    "check": "which mc",
+    "install_steps": [
+      "brew install minio/stable/mc",
+      "Verify: mc --version",
+      "supercli plugins install ./plugins/minio --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "minio",
+      "resource": "self",
+      "action": "version",
+      "description": "Print minio version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mc",
+        "missingDependencyHelp": "Install minio: brew install minio/stable/mc",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "minio",
+      "resource": "bucket",
+      "action": "ls",
+      "description": "ls bucket via mc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mc",
+        "missingDependencyHelp": "Install minio: brew install minio/stable/mc",
+        "baseArgs": [
+          "ls"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "minio",
+      "resource": "bucket",
+      "action": "mb",
+      "description": "mb bucket via mc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mc",
+        "missingDependencyHelp": "Install minio: brew install minio/stable/mc",
+        "baseArgs": [
+          "mb"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "minio",
+      "resource": "object",
+      "action": "cp",
+      "description": "cp object via mc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mc",
+        "missingDependencyHelp": "Install minio: brew install minio/stable/mc",
+        "baseArgs": [
+          "cp"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "minio",
+      "resource": "object",
+      "action": "mirror",
+      "description": "mirror object via mc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mc",
+        "missingDependencyHelp": "Install minio: brew install minio/stable/mc",
+        "baseArgs": [
+          "mirror"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "minio",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via mc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mc",
+        "missingDependencyHelp": "Install minio: brew install minio/stable/mc",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
