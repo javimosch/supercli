@@ -1,0 +1,83 @@
+{
+  "name": "cdncheck",
+  "version": "0.1.0",
+  "description": "A utility to detect various technology for a given IP address",
+  "source": "https://github.com/projectdiscovery/cdncheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cdncheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cdncheck",
+    "binary": "cdncheck",
+    "check": "which cdncheck",
+    "install_steps": [
+      "go install github.com/projectdiscovery/cdncheck/cmd/cdncheck@latest",
+      "Verify: cdncheck --version",
+      "supercli plugins install ./plugins/cdncheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cdncheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cdncheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cdncheck",
+        "missingDependencyHelp": "Install cdncheck: go install github.com/projectdiscovery/cdncheck/cmd/cdncheck@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cdncheck",
+      "resource": "ip",
+      "action": "check",
+      "description": "check ip via cdncheck",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cdncheck",
+        "missingDependencyHelp": "Install cdncheck: go install github.com/projectdiscovery/cdncheck/cmd/cdncheck@latest",
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cdncheck",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via cdncheck",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cdncheck",
+        "missingDependencyHelp": "Install cdncheck: go install github.com/projectdiscovery/cdncheck/cmd/cdncheck@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

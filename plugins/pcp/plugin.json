@@ -1,0 +1,110 @@
+{
+  "name": "pcp",
+  "version": "0.1.0",
+  "description": "Command line peer-to-peer data transfer tool based on libp2p",
+  "source": "https://github.com/dennis-tra/pcp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pcp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pcp",
+    "binary": "pcp",
+    "check": "which pcp",
+    "install_steps": [
+      "go install github.com/dennis-tra/pcp@latest",
+      "Verify: pcp --version",
+      "supercli plugins install ./plugins/pcp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pcp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pcp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcp",
+        "missingDependencyHelp": "Install pcp: go install github.com/dennis-tra/pcp@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "pcp",
+      "resource": "file",
+      "action": "send",
+      "description": "send file via pcp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcp",
+        "missingDependencyHelp": "Install pcp: go install github.com/dennis-tra/pcp@latest",
+        "baseArgs": [
+          "send"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "pcp",
+      "resource": "file",
+      "action": "receive",
+      "description": "receive file via pcp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcp",
+        "missingDependencyHelp": "Install pcp: go install github.com/dennis-tra/pcp@latest",
+        "baseArgs": [
+          "receive"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "pcp",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via pcp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcp",
+        "missingDependencyHelp": "Install pcp: go install github.com/dennis-tra/pcp@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

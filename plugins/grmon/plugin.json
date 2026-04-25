@@ -1,0 +1,83 @@
+{
+  "name": "grmon",
+  "version": "0.1.0",
+  "description": "Command line monitoring for goroutines",
+  "source": "https://github.com/bcicen/grmon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grmon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grmon",
+    "binary": "grmon",
+    "check": "which grmon",
+    "install_steps": [
+      "go install github.com/bcicen/grmon@latest",
+      "Verify: grmon --version",
+      "supercli plugins install ./plugins/grmon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grmon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grmon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grmon",
+        "missingDependencyHelp": "Install grmon: go install github.com/bcicen/grmon@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "grmon",
+      "resource": "process",
+      "action": "monitor",
+      "description": "monitor process via grmon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grmon",
+        "missingDependencyHelp": "Install grmon: go install github.com/bcicen/grmon@latest",
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "grmon",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via grmon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grmon",
+        "missingDependencyHelp": "Install grmon: go install github.com/bcicen/grmon@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
