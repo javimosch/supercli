@@ -1,0 +1,89 @@
+{
+  "name": "npkill",
+  "version": "0.1.0",
+  "description": "Find and remove old node_modules directories to free up disk space",
+  "source": "https://github.com/voidcosmos/npkill",
+  "checks": [
+    { "type": "binary", "name": "npkill" }
+  ],
+  "install_guidance": {
+    "plugin": "npkill",
+    "binary": "npkill",
+    "check": "which npkill",
+    "install_steps": [
+      "npm install -g npkill",
+      "Verify: npkill --help",
+      "supercli plugins install ./plugins/npkill --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "npkill",
+      "resource": "scan",
+      "action": "directory",
+      "description": "Scan directory for node_modules and output results in JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npkill",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--json"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install npkill: npm install -g npkill"
+      },
+      "args": [
+        { "name": "directory", "type": "string", "required": false, "description": "Directory to scan (default: current)" }
+      ]
+    },
+    {
+      "namespace": "npkill",
+      "resource": "delete",
+      "action": "all",
+      "description": "Delete all node_modules directories found",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npkill",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--delete-all"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install npkill: npm install -g npkill"
+      },
+      "args": [
+        { "name": "directory", "type": "string", "required": false, "description": "Directory to scan (default: current)" }
+      ]
+    },
+    {
+      "namespace": "npkill",
+      "resource": "stream",
+      "action": "results",
+      "description": "Stream results in real-time as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npkill",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--json-stream"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install npkill: npm install -g npkill"
+      },
+      "args": [
+        { "name": "directory", "type": "string", "required": false, "description": "Directory to scan (default: current)" }
+      ]
+    },
+    {
+      "namespace": "npkill",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to npkill CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npkill",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install npkill: npm install -g npkill"
+      },
+      "args": []
+    }
+  ]
+}

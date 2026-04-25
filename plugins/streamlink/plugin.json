@@ -1,0 +1,91 @@
+{
+  "name": "streamlink",
+  "version": "0.1.0",
+  "description": "CLI utility to extract streams from various services and pipe them to video players or files",
+  "source": "https://github.com/streamlink/streamlink",
+  "checks": [
+    { "type": "binary", "name": "streamlink" }
+  ],
+  "install_guidance": {
+    "plugin": "streamlink",
+    "binary": "streamlink",
+    "check": "which streamlink",
+    "install_steps": [
+      "pip install streamlink",
+      "Verify: streamlink --version",
+      "supercli plugins install ./plugins/streamlink --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "streamlink",
+      "resource": "stream",
+      "action": "url",
+      "description": "Stream video from URL to player",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "streamlink",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install streamlink: pip install streamlink"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Stream URL" },
+        { "name": "quality", "type": "string", "required": false, "description": "Stream quality (best, worst, or specific)" }
+      ]
+    },
+    {
+      "namespace": "streamlink",
+      "resource": "list",
+      "action": "qualities",
+      "description": "List available stream qualities in JSON format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "streamlink",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--json"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install streamlink: pip install streamlink"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Stream URL" }
+      ]
+    },
+    {
+      "namespace": "streamlink",
+      "resource": "download",
+      "action": "stream",
+      "description": "Download stream to file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "streamlink",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--output", "%(title)s.%(ext)s"],
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install streamlink: pip install streamlink"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Stream URL" },
+        { "name": "quality", "type": "string", "required": false, "description": "Stream quality" }
+      ]
+    },
+    {
+      "namespace": "streamlink",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to streamlink CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "streamlink",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install streamlink: pip install streamlink"
+      },
+      "args": []
+    }
+  ]
+}

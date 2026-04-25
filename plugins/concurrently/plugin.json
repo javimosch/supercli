@@ -1,0 +1,73 @@
+{
+  "name": "concurrently",
+  "version": "0.1.0",
+  "description": "Run multiple commands concurrently with better output tracking and error handling",
+  "source": "https://github.com/open-cli-tools/concurrently",
+  "checks": [
+    { "type": "binary", "name": "concurrently" }
+  ],
+  "install_guidance": {
+    "plugin": "concurrently",
+    "binary": "concurrently",
+    "check": "which concurrently",
+    "install_steps": [
+      "npm install -g concurrently",
+      "Verify: concurrently --version",
+      "supercli plugins install ./plugins/concurrently --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "concurrently",
+      "resource": "run",
+      "action": "commands",
+      "description": "Run multiple commands concurrently",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "concurrently",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install concurrently: npm install -g concurrently"
+      },
+      "args": [
+        { "name": "commands", "type": "string", "required": true, "description": "Commands to run (quoted)" }
+      ]
+    },
+    {
+      "namespace": "concurrently",
+      "resource": "run",
+      "action": "kill-others",
+      "description": "Run commands concurrently, kill others if one fails",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "concurrently",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--kill-others"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install concurrently: npm install -g concurrently"
+      },
+      "args": [
+        { "name": "commands", "type": "string", "required": true, "description": "Commands to run (quoted)" }
+      ]
+    },
+    {
+      "namespace": "concurrently",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to concurrently CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "concurrently",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install concurrently: npm install -g concurrently"
+      },
+      "args": []
+    }
+  ]
+}

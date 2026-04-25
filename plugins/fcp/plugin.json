@@ -1,0 +1,74 @@
+{
+  "name": "fcp",
+  "version": "0.1.0",
+  "description": "A significantly faster alternative to the classic Unix cp(1) command for copying large files and directories",
+  "source": "https://github.com/Svetlitski/fcp",
+  "checks": [
+    { "type": "binary", "name": "fcp" }
+  ],
+  "install_guidance": {
+    "plugin": "fcp",
+    "binary": "fcp",
+    "check": "which fcp",
+    "install_steps": [
+      "cargo install fcp",
+      "Verify: fcp --help",
+      "supercli plugins install ./plugins/fcp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fcp",
+      "resource": "copy",
+      "action": "file",
+      "description": "Copy SOURCE to DESTINATION_FILE",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fcp",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install fcp: cargo install fcp"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source file" },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination file" }
+      ]
+    },
+    {
+      "namespace": "fcp",
+      "resource": "copy",
+      "action": "directory",
+      "description": "Copy each SOURCE into DESTINATION_DIRECTORY",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fcp",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install fcp: cargo install fcp"
+      },
+      "args": [
+        { "name": "sources", "type": "string", "required": true, "description": "Source files/directories" },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination directory" }
+      ]
+    },
+    {
+      "namespace": "fcp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fcp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fcp",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fcp: cargo install fcp"
+      },
+      "args": []
+    }
+  ]
+}

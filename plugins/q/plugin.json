@@ -1,0 +1,74 @@
+{
+  "name": "q",
+  "version": "0.1.0",
+  "description": "Run SQL directly on delimited files and multi-file sqlite databases",
+  "source": "https://github.com/harelba/q",
+  "checks": [
+    { "type": "binary", "name": "q" }
+  ],
+  "install_guidance": {
+    "plugin": "q",
+    "binary": "q",
+    "check": "which q",
+    "install_steps": [
+      "Visit https://harelba.github.io/q/ for installation instructions",
+      "Verify: q --help",
+      "supercli plugins install ./plugins/q --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "q",
+      "resource": "query",
+      "action": "file",
+      "description": "Run SQL query on a file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "q",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install q: https://harelba.github.io/q/"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "SQL query string" },
+        { "name": "file", "type": "string", "required": false, "description": "File to query (default: stdin)" }
+      ]
+    },
+    {
+      "namespace": "q",
+      "resource": "query",
+      "action": "stdin",
+      "description": "Run SQL query on stdin data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "q",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-H"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install q: https://harelba.github.io/q/"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "SQL query string" }
+      ]
+    },
+    {
+      "namespace": "q",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to q CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "q",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install q: https://harelba.github.io/q/"
+      },
+      "args": []
+    }
+  ]
+}
