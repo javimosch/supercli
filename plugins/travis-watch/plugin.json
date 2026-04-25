@@ -1,0 +1,86 @@
+{
+  "name": "travis-watch",
+  "version": "0.1.0",
+  "description": "Watch Travis CI build status from the terminal",
+  "source": "https://github.com/juliangruber/travis-watch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "travis-watch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "travis-watch",
+    "binary": "travis-watch",
+    "check": "which travis-watch",
+    "install_steps": [
+      "npm install -g travis-watch",
+      "Verify: travis-watch --version",
+      "supercli plugins install ./plugins/travis-watch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "travis-watch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print travis-watch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "travis-watch",
+        "missingDependencyHelp": "Install travis-watch: npm install -g travis-watch",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "travis-watch",
+      "resource": "build",
+      "action": "watch",
+      "description": "watch build via travis-watch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "travis-watch",
+        "missingDependencyHelp": "Install travis-watch: npm install -g travis-watch",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "travis-watch",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via travis-watch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "travis-watch",
+        "missingDependencyHelp": "Install travis-watch: npm install -g travis-watch",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

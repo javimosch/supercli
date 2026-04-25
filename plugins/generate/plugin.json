@@ -1,0 +1,86 @@
+{
+  "name": "generate",
+  "version": "0.1.0",
+  "description": "Command-line tool and code generator",
+  "source": "https://github.com/generate/generate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "generate",
+    "binary": "gen",
+    "check": "which gen",
+    "install_steps": [
+      "npm install -g generate",
+      "Verify: gen --version",
+      "supercli plugins install ./plugins/generate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "generate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print generate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gen",
+        "missingDependencyHelp": "Install generate: npm install -g generate",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "generate",
+      "resource": "template",
+      "action": "generate",
+      "description": "generate template via gen",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gen",
+        "missingDependencyHelp": "Install generate: npm install -g generate",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "generate",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via gen",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gen",
+        "missingDependencyHelp": "Install generate: npm install -g generate",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
