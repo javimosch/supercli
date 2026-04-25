@@ -1,0 +1,79 @@
+{
+  "name": "dysk",
+  "version": "0.1.0",
+  "description": "Linux utility to get information on filesystems, like df but better with JSON and CSV output",
+  "source": "https://github.com/Canop/dysk",
+  "checks": [
+    { "type": "binary", "name": "dysk" }
+  ],
+  "install_guidance": {
+    "plugin": "dysk",
+    "binary": "dysk",
+    "check": "which dysk",
+    "install_steps": [
+      "cargo install dysk",
+      "Verify: dysk --version",
+      "supercli plugins install ./plugins/dysk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dysk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dysk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dysk",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dysk: cargo install dysk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dysk",
+      "resource": "filesystem",
+      "action": "info",
+      "description": "Get filesystem information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dysk",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install dysk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dysk",
+      "resource": "output",
+      "action": "json",
+      "description": "Output filesystem information in JSON format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dysk",
+        "baseArgs": ["--json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install dysk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dysk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dysk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dysk",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dysk"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "comprust",
+  "version": "0.1.0",
+  "description": "Image compressor CLI tool for compressing images with configurable quality",
+  "source": "https://github.com/Karim-W/comprust",
+  "checks": [
+    { "type": "binary", "name": "comprust" }
+  ],
+  "install_guidance": {
+    "plugin": "comprust",
+    "binary": "comprust",
+    "check": "which comprust",
+    "install_steps": [
+      "cargo install https://github.com/karim-w/comprust",
+      "Verify: comprust --version",
+      "supercli plugins install ./plugins/comprust --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "comprust",
+      "resource": "self",
+      "action": "version",
+      "description": "Print comprust version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comprust",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install comprust: cargo install https://github.com/karim-w/comprust"
+      },
+      "args": []
+    },
+    {
+      "namespace": "comprust",
+      "resource": "compress",
+      "action": "image",
+      "description": "Compress images from source to destination",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comprust",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install comprust"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source image or directory" },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination directory" },
+        { "name": "quality", "type": "string", "required": true, "description": "Quality (0.0-100.0)" },
+        { "name": "size", "type": "string", "required": true, "description": "Size factor (0.0-1.0)" }
+      ]
+    },
+    {
+      "namespace": "comprust",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to comprust CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comprust",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install comprust"
+      },
+      "args": []
+    }
+  ]
+}
