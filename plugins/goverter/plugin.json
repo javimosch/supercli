@@ -1,0 +1,86 @@
+{
+  "name": "goverter",
+  "version": "0.1.0",
+  "description": "Type-safe Go converter generator",
+  "source": "https://github.com/jmattheis/goverter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "goverter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "goverter",
+    "binary": "goverter",
+    "check": "which goverter",
+    "install_steps": [
+      "go install github.com/jmattheis/goverter/cmd/goverter@latest",
+      "Verify: goverter --version",
+      "supercli plugins install ./plugins/goverter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "goverter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print goverter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goverter",
+        "missingDependencyHelp": "Install goverter: go install github.com/jmattheis/goverter/cmd/goverter@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "goverter",
+      "resource": "types",
+      "action": "generate",
+      "description": "generate types via goverter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goverter",
+        "missingDependencyHelp": "Install goverter: go install github.com/jmattheis/goverter/cmd/goverter@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "goverter",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via goverter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goverter",
+        "missingDependencyHelp": "Install goverter: go install github.com/jmattheis/goverter/cmd/goverter@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

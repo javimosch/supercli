@@ -1,0 +1,86 @@
+{
+  "name": "tfk8s",
+  "version": "0.1.0",
+  "description": "Convert Terraform HCL to Kubernetes YAML",
+  "source": "https://github.com/jrhouston/tfk8s",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tfk8s"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tfk8s",
+    "binary": "tfk8s",
+    "check": "which tfk8s",
+    "install_steps": [
+      "go install github.com/jrhouston/tfk8s@latest",
+      "Verify: tfk8s --version",
+      "supercli plugins install ./plugins/tfk8s --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tfk8s",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tfk8s version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfk8s",
+        "missingDependencyHelp": "Install tfk8s: go install github.com/jrhouston/tfk8s@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "tfk8s",
+      "resource": "file",
+      "action": "convert",
+      "description": "convert file via tfk8s",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfk8s",
+        "missingDependencyHelp": "Install tfk8s: go install github.com/jrhouston/tfk8s@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "tfk8s",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via tfk8s",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfk8s",
+        "missingDependencyHelp": "Install tfk8s: go install github.com/jrhouston/tfk8s@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

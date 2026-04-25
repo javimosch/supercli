@@ -1,0 +1,86 @@
+{
+  "name": "kepubify",
+  "version": "0.1.0",
+  "description": "Fast ePub to Kobo ePub converter",
+  "source": "https://github.com/pgaskin/kepubify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kepubify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kepubify",
+    "binary": "kepubify",
+    "check": "which kepubify",
+    "install_steps": [
+      "go install github.com/pgaskin/kepubify/cmd/kepubify@latest",
+      "Verify: kepubify --version",
+      "supercli plugins install ./plugins/kepubify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kepubify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kepubify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kepubify",
+        "missingDependencyHelp": "Install kepubify: go install github.com/pgaskin/kepubify/cmd/kepubify@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kepubify",
+      "resource": "file",
+      "action": "convert",
+      "description": "convert file via kepubify",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kepubify",
+        "missingDependencyHelp": "Install kepubify: go install github.com/pgaskin/kepubify/cmd/kepubify@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kepubify",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kepubify",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kepubify",
+        "missingDependencyHelp": "Install kepubify: go install github.com/pgaskin/kepubify/cmd/kepubify@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
