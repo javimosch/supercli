@@ -1,0 +1,86 @@
+{
+  "name": "terradrift",
+  "version": "0.1.0",
+  "description": "Terraform drift detection and monitoring CLI",
+  "source": "https://github.com/rootsami/terradrift",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "terradrift"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "terradrift",
+    "binary": "terradrift",
+    "check": "which terradrift",
+    "install_steps": [
+      "go install github.com/rootsami/terradrift@latest",
+      "Verify: terradrift --version",
+      "supercli plugins install ./plugins/terradrift --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "terradrift",
+      "resource": "self",
+      "action": "version",
+      "description": "Print terradrift version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terradrift",
+        "missingDependencyHelp": "Install terradrift: go install github.com/rootsami/terradrift@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "terradrift",
+      "resource": "terraform",
+      "action": "scan",
+      "description": "scan terraform via terradrift",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terradrift",
+        "missingDependencyHelp": "Install terradrift: go install github.com/rootsami/terradrift@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "terradrift",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via terradrift",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terradrift",
+        "missingDependencyHelp": "Install terradrift: go install github.com/rootsami/terradrift@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

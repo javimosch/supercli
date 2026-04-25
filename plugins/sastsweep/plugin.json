@@ -1,0 +1,86 @@
+{
+  "name": "sastsweep",
+  "version": "0.1.0",
+  "description": "SAST security scanner and vulnerability research CLI",
+  "source": "https://github.com/chebuya/sastsweep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sastsweep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sastsweep",
+    "binary": "sastsweep",
+    "check": "which sastsweep",
+    "install_steps": [
+      "go install github.com/chebuya/sastsweep@latest",
+      "Verify: sastsweep --version",
+      "supercli plugins install ./plugins/sastsweep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sastsweep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sastsweep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sastsweep",
+        "missingDependencyHelp": "Install sastsweep: go install github.com/chebuya/sastsweep@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "sastsweep",
+      "resource": "code",
+      "action": "scan",
+      "description": "scan code via sastsweep",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sastsweep",
+        "missingDependencyHelp": "Install sastsweep: go install github.com/chebuya/sastsweep@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "sastsweep",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via sastsweep",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sastsweep",
+        "missingDependencyHelp": "Install sastsweep: go install github.com/chebuya/sastsweep@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
