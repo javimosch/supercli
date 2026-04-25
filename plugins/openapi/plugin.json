@@ -1,0 +1,86 @@
+{
+  "name": "openapi",
+  "version": "0.1.0",
+  "description": "OpenAPI tooling for SDK generation and validation",
+  "source": "https://github.com/speakeasy-api/openapi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "speakeasy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "openapi",
+    "binary": "speakeasy",
+    "check": "which speakeasy",
+    "install_steps": [
+      "brew install speakeasy-api/tap/speakeasy",
+      "Verify: speakeasy --version",
+      "supercli plugins install ./plugins/openapi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "openapi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print openapi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speakeasy",
+        "missingDependencyHelp": "Install openapi: brew install speakeasy-api/tap/speakeasy",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "openapi",
+      "resource": "spec",
+      "action": "validate",
+      "description": "validate spec via speakeasy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speakeasy",
+        "missingDependencyHelp": "Install openapi: brew install speakeasy-api/tap/speakeasy",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "openapi",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via speakeasy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speakeasy",
+        "missingDependencyHelp": "Install openapi: brew install speakeasy-api/tap/speakeasy",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
