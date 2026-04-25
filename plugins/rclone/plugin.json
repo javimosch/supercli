@@ -1,0 +1,118 @@
+{
+  "name": "rclone",
+  "version": "0.1.0",
+  "description": "rsync for cloud storage - sync files to/from Google Drive, S3, Dropbox, and more",
+  "source": "https://github.com/rclone/rclone",
+  "checks": [
+    { "type": "binary", "name": "rclone" }
+  ],
+  "install_guidance": {
+    "plugin": "rclone",
+    "binary": "rclone",
+    "check": "which rclone",
+    "install_steps": [
+      "curl https://rclone.org/install.sh | sudo bash",
+      "Or: brew install rclone",
+      "Verify: rclone version",
+      "supercli plugins install ./plugins/rclone --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rclone",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rclone version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rclone",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install rclone: curl https://rclone.org/install.sh | sudo bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rclone",
+      "resource": "file",
+      "action": "copy",
+      "description": "Copy files to/from cloud storage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rclone",
+        "baseArgs": ["copy"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install rclone: curl https://rclone.org/install.sh | sudo bash"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source path" },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination path" }
+      ]
+    },
+    {
+      "namespace": "rclone",
+      "resource": "file",
+      "action": "sync",
+      "description": "Sync source to destination, changing destination only",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rclone",
+        "baseArgs": ["sync"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install rclone: curl https://rclone.org/install.sh | sudo bash"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source path" },
+        { "name": "destination", "type": "string", "required": true, "description": "Destination path" }
+      ]
+    },
+    {
+      "namespace": "rclone",
+      "resource": "file",
+      "action": "list",
+      "description": "List files in remote",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rclone",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rclone: curl https://rclone.org/install.sh | sudo bash"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Remote:path to list" }
+      ]
+    },
+    {
+      "namespace": "rclone",
+      "resource": "config",
+      "action": "list",
+      "description": "List configured remotes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rclone",
+        "baseArgs": ["config", "list"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rclone: curl https://rclone.org/install.sh | sudo bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rclone",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rclone CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rclone",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rclone: curl https://rclone.org/install.sh | sudo bash"
+      },
+      "args": []
+    }
+  ]
+}

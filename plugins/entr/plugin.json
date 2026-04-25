@@ -1,0 +1,71 @@
+{
+  "name": "entr",
+  "version": "0.1.0",
+  "description": "Run arbitrary commands when files change",
+  "source": "http://eradman.com/entrproject/",
+  "checks": [
+    { "type": "binary", "name": "entr" }
+  ],
+  "install_guidance": {
+    "plugin": "entr",
+    "binary": "entr",
+    "check": "which entr",
+    "install_steps": [
+      "brew install entr",
+      "Or: download from http://eradman.com/entrproject/",
+      "Verify: entr -v",
+      "supercli plugins install ./plugins/entr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "entr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print entr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "entr",
+        "baseArgs": ["-v"],
+        "missingDependencyHelp": "Install entr: brew install entr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "entr",
+      "resource": "run",
+      "action": "watch",
+      "description": "Run command when files change",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "entr",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install entr: brew install entr"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to run when files change" },
+        { "name": "clear", "type": "boolean", "required": false, "description": "Clear screen before running command" },
+        { "name": "restart", "type": "boolean", "required": false, "description": "Restart long-running process" },
+        { "name": "dir", "type": "boolean", "required": false, "description": "Watch directory for file additions" }
+      ]
+    },
+    {
+      "namespace": "entr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to entr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "entr",
+        "passthrough": true,
+        "missingDependencyHelp": "Install entr: brew install entr"
+      },
+      "args": []
+    }
+  ]
+}

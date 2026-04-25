@@ -1,0 +1,122 @@
+{
+  "name": "buku",
+  "version": "0.1.0",
+  "description": "Powerful bookmark manager and personal textual mini-web",
+  "source": "https://github.com/jarun/buku",
+  "checks": [
+    { "type": "binary", "name": "buku" }
+  ],
+  "install_guidance": {
+    "plugin": "buku",
+    "binary": "buku",
+    "check": "which buku",
+    "install_steps": [
+      "pip install buku",
+      "Or: brew install buku",
+      "Verify: buku --version",
+      "supercli plugins install ./plugins/buku --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "buku",
+      "resource": "self",
+      "action": "version",
+      "description": "Print buku version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buku",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install buku: pip install buku or brew install buku"
+      },
+      "args": []
+    },
+    {
+      "namespace": "buku",
+      "resource": "bookmark",
+      "action": "add",
+      "description": "Add a bookmark",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buku",
+        "baseArgs": ["--add"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install buku: pip install buku or brew install buku"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to bookmark" },
+        { "name": "title", "type": "string", "required": false, "description": "Custom title for the bookmark" },
+        { "name": "tags", "type": "string", "required": false, "description": "Comma-separated tags" },
+        { "name": "comment", "type": "string", "required": false, "description": "Comment or description" }
+      ]
+    },
+    {
+      "namespace": "buku",
+      "resource": "bookmark",
+      "action": "search",
+      "description": "Search bookmarks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buku",
+        "baseArgs": ["--sdb"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install buku: pip install buku or brew install buku"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query (regex supported)" }
+      ]
+    },
+    {
+      "namespace": "buku",
+      "resource": "bookmark",
+      "action": "list",
+      "description": "List all bookmarks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buku",
+        "baseArgs": ["--print"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install buku: pip install buku or brew install buku"
+      },
+      "args": [
+        { "name": "id", "type": "number", "required": false, "description": "Specific bookmark ID to print" }
+      ]
+    },
+    {
+      "namespace": "buku",
+      "resource": "bookmark",
+      "action": "open",
+      "description": "Open bookmark in browser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buku",
+        "baseArgs": ["--open"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install buku: pip install buku or brew install buku"
+      },
+      "args": [
+        { "name": "id", "type": "number", "required": true, "description": "Bookmark ID to open" }
+      ]
+    },
+    {
+      "namespace": "buku",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to buku CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buku",
+        "passthrough": true,
+        "missingDependencyHelp": "Install buku: pip install buku or brew install buku"
+      },
+      "args": []
+    }
+  ]
+}

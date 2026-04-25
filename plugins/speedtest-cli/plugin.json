@@ -1,0 +1,89 @@
+{
+  "name": "speedtest-cli",
+  "version": "0.1.0",
+  "description": "Command line interface for testing internet bandwidth using speedtest.net",
+  "source": "https://github.com/sivel/speedtest-cli",
+  "checks": [
+    { "type": "binary", "name": "speedtest-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "speedtest-cli",
+    "binary": "speedtest-cli",
+    "check": "which speedtest-cli",
+    "install_steps": [
+      "pip install speedtest-cli",
+      "Verify: speedtest-cli --version",
+      "supercli plugins install ./plugins/speedtest-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "speedtest-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print speedtest-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speedtest-cli",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install speedtest-cli: pip install speedtest-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "speedtest-cli",
+      "resource": "test",
+      "action": "run",
+      "description": "Run bandwidth speed test",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speedtest-cli",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install speedtest-cli: pip install speedtest-cli"
+      },
+      "args": [
+        { "name": "simple", "type": "boolean", "required": false, "description": "Suppress verbose output, show basic information only" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output results in JSON format" },
+        { "name": "csv", "type": "boolean", "required": false, "description": "Output results in CSV format" },
+        { "name": "no_download", "type": "boolean", "required": false, "description": "Do not perform download test" },
+        { "name": "no_upload", "type": "boolean", "required": false, "description": "Do not perform upload test" },
+        { "name": "single", "type": "boolean", "required": false, "description": "Use single connection instead of multiple" },
+        { "name": "bytes", "type": "boolean", "required": false, "description": "Display values in bytes instead of bits" },
+        { "name": "share", "type": "boolean", "required": false, "description": "Generate and provide URL to share results" },
+        { "name": "server", "type": "string", "required": false, "description": "Specify server ID to test against" }
+      ]
+    },
+    {
+      "namespace": "speedtest-cli",
+      "resource": "servers",
+      "action": "list",
+      "description": "List available speedtest.net servers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speedtest-cli",
+        "baseArgs": ["--list"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install speedtest-cli: pip install speedtest-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "speedtest-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to speedtest-cli",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speedtest-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install speedtest-cli: pip install speedtest-cli"
+      },
+      "args": []
+    }
+  ]
+}

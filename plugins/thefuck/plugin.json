@@ -1,0 +1,86 @@
+{
+  "name": "thefuck",
+  "version": "0.1.0",
+  "description": "Magnificent app which corrects your previous console command",
+  "source": "https://github.com/nvbn/thefuck",
+  "checks": [
+    { "type": "binary", "name": "fuck" }
+  ],
+  "install_guidance": {
+    "plugin": "thefuck",
+    "binary": "fuck",
+    "check": "which fuck",
+    "install_steps": [
+      "brew install thefuck",
+      "Or: pip install thefuck",
+      "Verify: fuck --version",
+      "supercli plugins install ./plugins/thefuck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thefuck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thefuck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuck",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install thefuck: brew install thefuck or pip install thefuck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thefuck",
+      "resource": "command",
+      "action": "correct",
+      "description": "Correct the previous console command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuck",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install thefuck: brew install thefuck or pip install thefuck"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": false, "description": "Specific command to correct (optional)" },
+        { "name": "yes", "type": "boolean", "required": false, "description": "Execute the corrected command without confirmation" },
+        { "name": "repeat", "type": "boolean", "required": false, "description": "Repeat the correction process" }
+      ]
+    },
+    {
+      "namespace": "thefuck",
+      "resource": "command",
+      "action": "alias",
+      "description": "Print shell alias for thefuck",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuck",
+        "baseArgs": ["--alias"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install thefuck: brew install thefuck or pip install thefuck"
+      },
+      "args": [
+        { "name": "shell", "type": "string", "required": false, "description": "Shell type (bash, zsh, fish, etc.)" }
+      ]
+    },
+    {
+      "namespace": "thefuck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thefuck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuck",
+        "passthrough": true,
+        "missingDependencyHelp": "Install thefuck: brew install thefuck or pip install thefuck"
+      },
+      "args": []
+    }
+  ]
+}

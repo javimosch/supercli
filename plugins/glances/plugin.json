@@ -1,0 +1,102 @@
+{
+  "name": "glances",
+  "version": "0.1.0",
+  "description": "Cross-platform system monitoring tool with JSON/CSV output support",
+  "source": "https://github.com/nicolargo/glances",
+  "checks": [
+    { "type": "binary", "name": "glances" }
+  ],
+  "install_guidance": {
+    "plugin": "glances",
+    "binary": "glances",
+    "check": "which glances",
+    "install_steps": [
+      "pip install glances",
+      "Or: brew install glances",
+      "Verify: glances --version",
+      "supercli plugins install ./plugins/glances --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "glances",
+      "resource": "self",
+      "action": "version",
+      "description": "Print glances version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glances",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install glances: pip install glances or brew install glances"
+      },
+      "args": []
+    },
+    {
+      "namespace": "glances",
+      "resource": "stats",
+      "action": "stdout",
+      "description": "Display stats in stdout format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glances",
+        "baseArgs": ["--stdout"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install glances: pip install glances or brew install glances"
+      },
+      "args": [
+        { "name": "metrics", "type": "string", "required": true, "description": "Comma-separated metrics to display (e.g., cpu.user,mem.used,load)" }
+      ]
+    },
+    {
+      "namespace": "glances",
+      "resource": "stats",
+      "action": "json",
+      "description": "Display stats in JSON format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glances",
+        "baseArgs": ["--stdout-json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install glances: pip install glances or brew install glances"
+      },
+      "args": [
+        { "name": "metrics", "type": "string", "required": true, "description": "Comma-separated metrics to display (e.g., cpu,mem)" }
+      ]
+    },
+    {
+      "namespace": "glances",
+      "resource": "stats",
+      "action": "csv",
+      "description": "Display stats in CSV format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glances",
+        "baseArgs": ["--stdout-csv"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install glances: pip install glances or brew install glances"
+      },
+      "args": [
+        { "name": "metrics", "type": "string", "required": true, "description": "Comma-separated metrics to display (e.g., now,cpu.user,mem.used)" }
+      ]
+    },
+    {
+      "namespace": "glances",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to glances CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glances",
+        "passthrough": true,
+        "missingDependencyHelp": "Install glances: pip install glances or brew install glances"
+      },
+      "args": []
+    }
+  ]
+}

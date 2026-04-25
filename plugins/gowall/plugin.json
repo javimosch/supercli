@@ -1,0 +1,122 @@
+{
+  "name": "gowall",
+  "version": "0.1.0",
+  "description": "Image processing tool with color theme conversion, compression, OCR, and more",
+  "source": "https://github.com/Achno/gowall",
+  "checks": [
+    { "type": "binary", "name": "gowall" }
+  ],
+  "install_guidance": {
+    "plugin": "gowall",
+    "binary": "gowall",
+    "check": "which gowall",
+    "install_steps": [
+      "brew install gowall",
+      "Or download from https://github.com/Achno/gowall/releases",
+      "Verify: gowall -v",
+      "supercli plugins install ./plugins/gowall --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gowall",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gowall version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowall",
+        "baseArgs": ["-v"],
+        "missingDependencyHelp": "Install gowall: brew install gowall or download from releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gowall",
+      "resource": "image",
+      "action": "theme",
+      "description": "Convert image to color theme",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowall",
+        "baseArgs": ["theme"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gowall: brew install gowall or download from releases"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" },
+        { "name": "theme", "type": "string", "required": true, "description": "Theme name (catppuccin, dracula, etc.)" },
+        { "name": "output", "type": "string", "required": false, "description": "Output image path" }
+      ]
+    },
+    {
+      "namespace": "gowall",
+      "resource": "image",
+      "action": "compress",
+      "description": "Compress image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowall",
+        "baseArgs": ["compress"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gowall: brew install gowall or download from releases"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output image path" }
+      ]
+    },
+    {
+      "namespace": "gowall",
+      "resource": "image",
+      "action": "ocr",
+      "description": "Extract text from image using OCR",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowall",
+        "baseArgs": ["ocr"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install gowall: brew install gowall or download from releases"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" }
+      ]
+    },
+    {
+      "namespace": "gowall",
+      "resource": "palette",
+      "action": "extract",
+      "description": "Extract color palette from image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowall",
+        "baseArgs": ["palette"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gowall: brew install gowall or download from releases"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" }
+      ]
+    },
+    {
+      "namespace": "gowall",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gowall CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowall",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gowall: brew install gowall or download from releases"
+      },
+      "args": []
+    }
+  ]
+}

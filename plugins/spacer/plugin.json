@@ -1,0 +1,67 @@
+{
+  "name": "spacer",
+  "version": "0.1.0",
+  "description": "CLI tool to insert spacers when command output stops",
+  "source": "https://github.com/samwho/spacer",
+  "checks": [
+    { "type": "binary", "name": "spacer" }
+  ],
+  "install_guidance": {
+    "plugin": "spacer",
+    "binary": "spacer",
+    "check": "which spacer",
+    "install_steps": [
+      "brew install spacer",
+      "Verify: spacer --version",
+      "supercli plugins install ./plugins/spacer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spacer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spacer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spacer",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install spacer: brew install spacer or cargo install spacer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spacer",
+      "resource": "run",
+      "action": "insert",
+      "description": "Insert spacer after command output stops",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spacer",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install spacer: brew install spacer or cargo install spacer"
+      },
+      "args": [
+        { "name": "after", "type": "number", "required": false, "description": "Seconds of silence before inserting spacer (default: 1)" }
+      ]
+    },
+    {
+      "namespace": "spacer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spacer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spacer",
+        "passthrough": true,
+        "missingDependencyHelp": "Install spacer: brew install spacer or cargo install spacer"
+      },
+      "args": []
+    }
+  ]
+}

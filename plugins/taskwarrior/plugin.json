@@ -1,0 +1,120 @@
+{
+  "name": "taskwarrior",
+  "version": "0.1.0",
+  "description": "Command line task list management utility",
+  "source": "https://github.com/GothenburgBitFactory/taskwarrior",
+  "checks": [
+    { "type": "binary", "name": "task" }
+  ],
+  "install_guidance": {
+    "plugin": "taskwarrior",
+    "binary": "task",
+    "check": "which task",
+    "install_steps": [
+      "brew install task",
+      "Or: apt install taskwarrior",
+      "Verify: task version",
+      "supercli plugins install ./plugins/taskwarrior --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "taskwarrior",
+      "resource": "self",
+      "action": "version",
+      "description": "Print taskwarrior version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install taskwarrior: brew install task or apt install taskwarrior"
+      },
+      "args": []
+    },
+    {
+      "namespace": "taskwarrior",
+      "resource": "task",
+      "action": "add",
+      "description": "Add a new task",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install taskwarrior: brew install task or apt install taskwarrior"
+      },
+      "args": [
+        { "name": "description", "type": "string", "required": true, "description": "Task description" },
+        { "name": "project", "type": "string", "required": false, "description": "Project name" },
+        { "name": "tag", "type": "string", "required": false, "description": "Tag for the task" },
+        { "name": "priority", "type": "string", "required": false, "description": "Priority (H, M, L)" },
+        { "name": "due", "type": "string", "required": false, "description": "Due date" }
+      ]
+    },
+    {
+      "namespace": "taskwarrior",
+      "resource": "task",
+      "action": "list",
+      "description": "List tasks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install taskwarrior: brew install task or apt install taskwarrior"
+      },
+      "args": [
+        { "name": "filter", "type": "string", "required": false, "description": "Filter tasks by project, tag, or status" }
+      ]
+    },
+    {
+      "namespace": "taskwarrior",
+      "resource": "task",
+      "action": "done",
+      "description": "Mark task as completed",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": ["done"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install taskwarrior: brew install task or apt install taskwarrior"
+      },
+      "args": [
+        { "name": "id", "type": "number", "required": true, "description": "Task ID to mark as done" }
+      ]
+    },
+    {
+      "namespace": "taskwarrior",
+      "resource": "task",
+      "action": "next",
+      "description": "Show next task",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": ["next"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install taskwarrior: brew install task or apt install taskwarrior"
+      },
+      "args": []
+    },
+    {
+      "namespace": "taskwarrior",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to task CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "passthrough": true,
+        "missingDependencyHelp": "Install taskwarrior: brew install task or apt install taskwarrior"
+      },
+      "args": []
+    }
+  ]
+}

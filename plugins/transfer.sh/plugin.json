@@ -1,0 +1,76 @@
+{
+  "name": "transfer.sh",
+  "version": "0.1.0",
+  "description": "Easy and fast file sharing from the command-line",
+  "source": "https://github.com/dutchcoders/transfer.sh",
+  "checks": [
+    { "type": "binary", "name": "transfer" }
+  ],
+  "install_guidance": {
+    "plugin": "transfer.sh",
+    "binary": "transfer",
+    "check": "which transfer",
+    "install_steps": [
+      "curl https://transfer.sh/install.sh | sh",
+      "Or download from https://github.com/dutchcoders/transfer.sh/releases",
+      "Verify: transfer --version",
+      "supercli plugins install ./plugins/transfer.sh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "transfer.sh",
+      "resource": "file",
+      "action": "upload",
+      "description": "Upload file and get shareable link",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transfer",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install transfer.sh: curl https://transfer.sh/install.sh | sh"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File path to upload" },
+        { "name": "max_downloads", "type": "number", "required": false, "description": "Maximum number of downloads" },
+        { "name": "max_days", "type": "number", "required": false, "description": "Maximum number of days before deletion" },
+        { "name": "encrypt", "type": "boolean", "required": false, "description": "Encrypt file before upload" }
+      ]
+    },
+    {
+      "namespace": "transfer.sh",
+      "resource": "file",
+      "action": "download",
+      "description": "Download file from transfer.sh",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "curl",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Use curl to download: curl https://transfer.sh/file-id"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Transfer.sh URL" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "transfer.sh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to transfer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transfer",
+        "passthrough": true,
+        "missingDependencyHelp": "Install transfer.sh: curl https://transfer.sh/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
