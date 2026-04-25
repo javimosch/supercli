@@ -1,17 +1,22 @@
 {
   "name": "codemap",
   "version": "0.1.0",
-  "description": "A project brain for your AI. Give LLMs instant architectural context without burning tokens.",
+  "description": "Generate code maps and visualization from source code",
   "source": "https://github.com/JordanCoin/codemap",
   "checks": [
-    { "type": "binary", "name": "codemap" }
+    {
+      "type": "binary",
+      "name": "codemap"
+    }
   ],
   "install_guidance": {
     "plugin": "codemap",
     "binary": "codemap",
-    "check": "codemap --version",
+    "check": "which codemap",
     "install_steps": [
-      "brew tap JordanCoin/tap && brew install codemap"
+      "go install github.com/JordanCoin/codemap@latest",
+      "Verify: codemap --version",
+      "supercli plugins install ./plugins/codemap --on-conflict replace --json"
     ]
   },
   "learn": {
@@ -26,53 +31,55 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "codemap",
-        "baseArgs": ["--version"],
-        "missingDependencyHelp": "Install codemap: brew tap JordanCoin/tap && brew install codemap"
+        "missingDependencyHelp": "Install codemap: go install github.com/JordanCoin/codemap@latest",
+        "baseArgs": [
+          "--version"
+        ]
       },
       "args": []
     },
     {
       "namespace": "codemap",
-      "resource": "context",
-      "action": "run",
-      "description": "Get architectural context for the current project",
+      "resource": "code",
+      "action": "map",
+      "description": "map code via codemap",
       "adapter": "process",
       "adapterConfig": {
         "command": "codemap",
-        "baseArgs": ["context"],
+        "missingDependencyHelp": "Install codemap: go install github.com/JordanCoin/codemap@latest",
+        "baseArgs": [],
         "passthrough": true,
-        "missingDependencyHelp": "Install codemap: brew tap JordanCoin/tap && brew install codemap"
-      },
-      "args": []
-    },
-    {
-      "namespace": "codemap",
-      "resource": "scan",
-      "action": "run",
-      "description": "Scan the codebase and build the architectural map",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "codemap",
-        "baseArgs": ["scan"],
-        "passthrough": true,
-        "missingDependencyHelp": "Install codemap: brew tap JordanCoin/tap && brew install codemap"
-      },
-      "args": []
-    },
-    {
-      "namespace": "codemap",
-      "resource": "query",
-      "action": "run",
-      "description": "Query the project map for architectural information",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "codemap",
-        "baseArgs": ["query"],
-        "positionalArgs": ["question"],
-        "missingDependencyHelp": "Install codemap: brew tap JordanCoin/tap && brew install codemap"
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
       },
       "args": [
-        { "name": "question", "type": "string", "required": true, "description": "Question about the project architecture" }
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "codemap",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via codemap",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codemap",
+        "missingDependencyHelp": "Install codemap: go install github.com/JordanCoin/codemap@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
       ]
     }
   ]

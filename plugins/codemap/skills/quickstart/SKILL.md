@@ -1,38 +1,33 @@
-# codemap Skill
+---
+name: codemap
+description: Use this skill when the user wants to generate code maps and visualization from source code.
+---
 
-Use the codemap plugin to give AI agents instant architectural context about a codebase without burning tokens.
+# Codemap Plugin
 
-## Quick Start
+Generate code maps and visualization from source code.
 
-### 1. Install
+## Commands
+
+### Operations
+- `codemap code map` — map code via codemap
+
+## Usage Examples
+- "codemap --help"
+- "codemap <args>"
+
+## Installation
+
+```bash
+go install github.com/JordanCoin/codemap@latest
+```
+
+## Examples
+
 ```bash
 codemap --version
+codemap --help
 ```
 
-### 2. Scan the Codebase
-
-Build the architectural map of the project:
-```bash
-dcli codemap scan run
-```
-
-### 3. Get Architectural Context
-
-Get a high-level overview of the project structure:
-```bash
-dcli codemap context run
-```
-
-### 4. Query the Architecture
-
-Ask questions about the project architecture:
-```bash
-dcli codemap query run --question "What is the main entry point of this application?"
-```
-
-## Agent Notes
-
-- codemap reduces token usage by providing structured architectural context instead of raw code dumps.
-- Run `codemap scan` first to build the project map before querying.
-- Useful for onboarding new agents or understanding unfamiliar codebases quickly.
-- Author: @JordanCoin
+## Key Features
+- code\n- visualization\n- map
