@@ -1,0 +1,55 @@
+{
+  "name": "licensor",
+  "version": "0.1.0",
+  "description": "Write licenses to stdout",
+  "source": "https://github.com/raftario/licensor",
+  "checks": [
+    { "type": "binary", "name": "licensor" }
+  ],
+  "install_guidance": {
+    "plugin": "licensor",
+    "binary": "licensor",
+    "check": "which licensor",
+    "install_steps": [
+      "cargo install licensor",
+      "Verify: licensor --help",
+      "supercli plugins install ./plugins/licensor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "licensor",
+      "resource": "generate",
+      "action": "license",
+      "description": "Generate a license",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "licensor",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["license"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install licensor: cargo install licensor"
+      },
+      "args": [
+        { "name": "license", "type": "string", "required": true, "description": "License name (e.g., MIT, Apache-2.0)" }
+      ]
+    },
+    {
+      "namespace": "licensor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to licensor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "licensor",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install licensor: cargo install licensor"
+      },
+      "args": []
+    }
+  ]
+}

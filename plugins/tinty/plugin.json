@@ -1,0 +1,56 @@
+{
+  "name": "tinty",
+  "version": "0.1.0",
+  "description": "A base16 and base24 color scheme manager",
+  "source": "https://github.com/tinted-theming/tinty",
+  "checks": [
+    { "type": "binary", "name": "tinty" }
+  ],
+  "install_guidance": {
+    "plugin": "tinty",
+    "binary": "tinty",
+    "check": "which tinty",
+    "install_steps": [
+      "cargo install tinty",
+      "Verify: tinty --help",
+      "supercli plugins install ./plugins/tinty --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tinty",
+      "resource": "apply",
+      "action": "scheme",
+      "description": "Apply a color scheme",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tinty",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["apply"],
+        "positionalArgs": ["scheme"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tinty: cargo install tinty"
+      },
+      "args": [
+        { "name": "scheme", "type": "string", "required": true, "description": "Scheme name" }
+      ]
+    },
+    {
+      "namespace": "tinty",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tinty CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tinty",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tinty: cargo install tinty"
+      },
+      "args": []
+    }
+  ]
+}
