@@ -1,0 +1,86 @@
+{
+  "name": "squix",
+  "version": "0.1.0",
+  "description": "Run SQL queries directly against CSV, JSON, Parquet files",
+  "source": "https://github.com/eduardofuncao/squix",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "squix"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "squix",
+    "binary": "squix",
+    "check": "which squix",
+    "install_steps": [
+      "go install github.com/eduardofuncao/squix@latest",
+      "Verify: squix --version",
+      "supercli plugins install ./plugins/squix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "squix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print squix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "squix",
+        "missingDependencyHelp": "Install squix: go install github.com/eduardofuncao/squix@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "squix",
+      "resource": "query",
+      "action": "execute",
+      "description": "execute query via squix",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "squix",
+        "missingDependencyHelp": "Install squix: go install github.com/eduardofuncao/squix@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "squix",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via squix",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "squix",
+        "missingDependencyHelp": "Install squix: go install github.com/eduardofuncao/squix@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

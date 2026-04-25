@@ -1,0 +1,86 @@
+{
+  "name": "tfvar",
+  "version": "0.1.0",
+  "description": "Generate Terraform variable definitions from existing code",
+  "source": "https://github.com/shihanng/tfvar",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tfvar"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tfvar",
+    "binary": "tfvar",
+    "check": "which tfvar",
+    "install_steps": [
+      "go install github.com/shihanng/tfvar@latest",
+      "Verify: tfvar --version",
+      "supercli plugins install ./plugins/tfvar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tfvar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tfvar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfvar",
+        "missingDependencyHelp": "Install tfvar: go install github.com/shihanng/tfvar@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "tfvar",
+      "resource": "config",
+      "action": "generate",
+      "description": "generate config via tfvar",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfvar",
+        "missingDependencyHelp": "Install tfvar: go install github.com/shihanng/tfvar@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "tfvar",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via tfvar",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfvar",
+        "missingDependencyHelp": "Install tfvar: go install github.com/shihanng/tfvar@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

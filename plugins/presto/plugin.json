@@ -1,0 +1,84 @@
+{
+  "name": "presto",
+  "version": "0.1.0",
+  "description": "Lightweight tunnel and proxy CLI tool",
+  "source": "https://github.com/paramientos/presto",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "presto"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "presto",
+    "binary": "presto",
+    "check": "which presto",
+    "install_steps": [
+      "go install github.com/paramientos/presto@latest",
+      "Verify: presto --version",
+      "supercli plugins install ./plugins/presto --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "presto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print presto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "presto",
+        "missingDependencyHelp": "Install presto: go install github.com/paramientos/presto@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "presto",
+      "resource": "tunnel",
+      "action": "create",
+      "description": "create tunnel via presto",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "presto",
+        "missingDependencyHelp": "Install presto: go install github.com/paramientos/presto@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "presto",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via presto",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "presto",
+        "missingDependencyHelp": "Install presto: go install github.com/paramientos/presto@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
