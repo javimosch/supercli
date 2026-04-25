@@ -1,0 +1,88 @@
+{
+  "name": "sqlc",
+  "version": "0.1.0",
+  "description": "Generate type-safe Go code from SQL",
+  "source": "https://github.com/sqlc-dev/sqlc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sqlc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sqlc",
+    "binary": "sqlc",
+    "check": "which sqlc",
+    "install_steps": [
+      "brew install sqlc",
+      "Verify: sqlc --version",
+      "supercli plugins install ./plugins/sqlc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqlc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqlc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlc",
+        "missingDependencyHelp": "Install sqlc: brew install sqlc",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqlc",
+      "resource": "sql",
+      "action": "generate",
+      "description": "generate sql via sqlc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlc",
+        "missingDependencyHelp": "Install sqlc: brew install sqlc",
+        "baseArgs": [
+          "generate"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "sqlc",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via sqlc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlc",
+        "missingDependencyHelp": "Install sqlc: brew install sqlc",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
