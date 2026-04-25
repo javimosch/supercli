@@ -1,0 +1,52 @@
+{
+  "name": "motus",
+  "version": "0.1.0",
+  "description": "Dead simple password generator",
+  "source": "https://github.com/oleiade/motus",
+  "checks": [
+    { "type": "binary", "name": "motus" }
+  ],
+  "install_guidance": {
+    "plugin": "motus",
+    "binary": "motus",
+    "check": "which motus",
+    "install_steps": [
+      "cargo install motus",
+      "Verify: motus --help",
+      "supercli plugins install ./plugins/motus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "motus",
+      "resource": "generate",
+      "action": "password",
+      "description": "Generate a password",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "motus",
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install motus: cargo install motus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "motus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to motus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "motus",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install motus: cargo install motus"
+      },
+      "args": []
+    }
+  ]
+}

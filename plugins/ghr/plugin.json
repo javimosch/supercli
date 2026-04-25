@@ -1,0 +1,56 @@
+{
+  "name": "ghr",
+  "version": "0.1.0",
+  "description": "Repository management with auto-attaching profiles",
+  "source": "https://github.com/siketyan/ghr",
+  "checks": [
+    { "type": "binary", "name": "ghr" }
+  ],
+  "install_guidance": {
+    "plugin": "ghr",
+    "binary": "ghr",
+    "check": "which ghr",
+    "install_steps": [
+      "cargo install ghr",
+      "Verify: ghr --help",
+      "supercli plugins install ./plugins/ghr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ghr",
+      "resource": "clone",
+      "action": "repo",
+      "description": "Clone a repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghr",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["clone"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ghr: cargo install ghr"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Repository URL to clone" }
+      ]
+    },
+    {
+      "namespace": "ghr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ghr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghr",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ghr: cargo install ghr"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "tokf",
+  "version": "0.1.0",
+  "description": "Config-driven CLI tool that compresses command output before it reaches an LLM context",
+  "source": "https://github.com/mpecan/tokf",
+  "checks": [
+    { "type": "binary", "name": "tokf" }
+  ],
+  "install_guidance": {
+    "plugin": "tokf",
+    "binary": "tokf",
+    "check": "which tokf",
+    "install_steps": [
+      "cargo install tokf",
+      "Verify: tokf --help",
+      "supercli plugins install ./plugins/tokf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tokf",
+      "resource": "run",
+      "action": "command",
+      "description": "Run command with output filtering",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokf",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["command"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tokf: cargo install tokf"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to run" }
+      ]
+    },
+    {
+      "namespace": "tokf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tokf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tokf",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tokf: cargo install tokf"
+      },
+      "args": []
+    }
+  ]
+}
