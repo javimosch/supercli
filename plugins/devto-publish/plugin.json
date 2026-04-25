@@ -1,0 +1,61 @@
+{
+  "name": "devto-publish",
+  "version": "0.1.0",
+  "description": "Publish articles to Dev.to via API",
+  "source": "https://dev.to",
+  "checks": [],
+  "install_guidance": {
+    "plugin": "devto-publish",
+    "check": "echo API key required as --api-key flag",
+    "install_steps": [
+      "Get API key from https://dev.to/settings/account",
+      "supercli plugins install ./plugins/devto-publish --on-conflict replace --json"
+    ],
+    "note": "API key must be passed as --api-key flag"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "devto",
+      "resource": "article",
+      "action": "publish",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["./plugins/devto-publish/publish.js"],
+        "parseJson": true,
+        "timeout_ms": 15000
+      },
+      "description": "Publish an article to Dev.to",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "api_key": {
+            "type": "string",
+            "description": "Dev.to API key from https://dev.to/settings/account"
+          },
+          "title": {
+            "type": "string",
+            "description": "Article title"
+          },
+          "body_markdown": {
+            "type": "string",
+            "description": "Article content in Markdown format"
+          },
+          "published": {
+            "type": "boolean",
+            "description": "Publish immediately (true) or save as draft (false)",
+            "default": true
+          },
+          "tags": {
+            "type": "string",
+            "description": "Comma-separated tags (max 4)"
+          }
+        },
+        "required": ["api_key", "title", "body_markdown"]
+      }
+    }
+  ]
+}
