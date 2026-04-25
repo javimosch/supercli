@@ -1,0 +1,57 @@
+{
+  "name": "pdf2md",
+  "version": "0.1.0",
+  "description": "PDF to Markdown converter CLI tool",
+  "source": "https://github.com/opengovsg/pdf2md",
+  "checks": [
+    { "type": "binary", "name": "pdf2md" }
+  ],
+  "install_guidance": {
+    "plugin": "pdf2md",
+    "binary": "pdf2md",
+    "check": "which pdf2md",
+    "install_steps": [
+      "npm install -g @opendocsg/pdf2md",
+      "Verify: npx @opendocsg/pdf2md --help",
+      "supercli plugins install ./plugins/pdf2md --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdf2md",
+      "resource": "file",
+      "action": "convert",
+      "description": "Convert PDF to Markdown",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@opendocsg/pdf2md"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install pdf2md: npm install -g @opendocsg/pdf2md"
+      },
+      "args": [
+        { "name": "input_folder", "type": "string", "required": true, "description": "Input folder path" },
+        { "name": "output_folder", "type": "string", "required": true, "description": "Output folder path" },
+        { "name": "recursive", "type": "boolean", "required": false, "description": "Convert recursively" }
+      ]
+    },
+    {
+      "namespace": "pdf2md",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdf2md CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@opendocsg/pdf2md"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install pdf2md: npm install -g @opendocsg/pdf2md"
+      },
+      "args": []
+    }
+  ]
+}

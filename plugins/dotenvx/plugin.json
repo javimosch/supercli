@@ -1,0 +1,70 @@
+{
+  "name": "dotenvx",
+  "version": "0.1.0",
+  "description": "A secure dotenv from the creator of dotenv",
+  "source": "https://github.com/dotenvx/dotenvx",
+  "checks": [
+    { "type": "binary", "name": "dotenvx" }
+  ],
+  "install_guidance": {
+    "plugin": "dotenvx",
+    "binary": "dotenvx",
+    "check": "which dotenvx",
+    "install_steps": [
+      "npm install -g dotenvx",
+      "Verify: dotenvx --version",
+      "supercli plugins install ./plugins/dotenvx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dotenvx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dotenvx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dotenvx",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dotenvx: npm install -g dotenvx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dotenvx",
+      "resource": "env",
+      "action": "run",
+      "description": "Run command with environment variables from .env file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dotenvx",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install dotenvx: npm install -g dotenvx"
+      },
+      "args": [
+        { "name": "env_file", "type": "string", "required": false, "description": "Path to .env file" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to run with env vars" },
+        { "name": "debug", "type": "boolean", "required": false, "description": "Show debug output" },
+        { "name": "env", "type": "string", "required": false, "description": "Set environment variable (e.g., KEY=value)" }
+      ]
+    },
+    {
+      "namespace": "dotenvx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dotenvx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dotenvx",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dotenvx: npm install -g dotenvx"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "name": "json-cli",
+  "version": "0.1.0",
+  "description": "A json command for massaging JSON on the Unix command line",
+  "source": "https://github.com/trentm/json",
+  "checks": [
+    { "type": "binary", "name": "json" }
+  ],
+  "install_guidance": {
+    "plugin": "json-cli",
+    "binary": "json",
+    "check": "which json",
+    "install_steps": [
+      "npm install -g json",
+      "Verify: json --version",
+      "supercli plugins install ./plugins/json-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "json-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print json CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install json CLI: npm install -g json"
+      },
+      "args": []
+    },
+    {
+      "namespace": "json-cli",
+      "resource": "json",
+      "action": "parse",
+      "description": "Parse and manipulate JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install json CLI: npm install -g json"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "JSON input string or file" },
+        { "name": "keys", "type": "boolean", "required": false, "description": "Extract keys" },
+        { "name": "values", "type": "boolean", "required": false, "description": "Extract values" },
+        { "name": "path", "type": "string", "required": false, "description": "JSON path to extract" }
+      ]
+    },
+    {
+      "namespace": "json-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to json CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json",
+        "passthrough": true,
+        "missingDependencyHelp": "Install json CLI: npm install -g json"
+      },
+      "args": []
+    }
+  ]
+}

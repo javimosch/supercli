@@ -1,0 +1,73 @@
+{
+  "name": "b64-cli",
+  "version": "0.1.0",
+  "description": "Command line tool for encoding and decoding files as base64",
+  "source": "https://www.npmjs.com/package/b64-cli",
+  "checks": [
+    { "type": "binary", "name": "b64" }
+  ],
+  "install_guidance": {
+    "plugin": "b64-cli",
+    "binary": "b64",
+    "check": "which b64",
+    "install_steps": [
+      "npm install -g b64-cli",
+      "Verify: b64 --help",
+      "supercli plugins install ./plugins/b64-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "b64-cli",
+      "resource": "file",
+      "action": "encode",
+      "description": "Encode file to base64",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b64",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install b64-cli: npm install -g b64-cli"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input file path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "b64-cli",
+      "resource": "file",
+      "action": "decode",
+      "description": "Decode base64 to file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b64",
+        "baseArgs": ["-d"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install b64-cli: npm install -g b64-cli"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input base64 file" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "b64-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to b64 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b64",
+        "passthrough": true,
+        "missingDependencyHelp": "Install b64-cli: npm install -g b64-cli"
+      },
+      "args": []
+    }
+  ]
+}

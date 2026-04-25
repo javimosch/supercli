@@ -1,0 +1,71 @@
+{
+  "name": "md-to-pdf",
+  "version": "0.1.0",
+  "description": "Hackable CLI tool for converting Markdown files to PDF using Node.js and headless Chrome",
+  "source": "https://github.com/simonhaenisch/md-to-pdf",
+  "checks": [
+    { "type": "binary", "name": "md-to-pdf" }
+  ],
+  "install_guidance": {
+    "plugin": "md-to-pdf",
+    "binary": "md-to-pdf",
+    "check": "which md-to-pdf",
+    "install_steps": [
+      "npm install -g md-to-pdf",
+      "Verify: md-to-pdf --version",
+      "supercli plugins install ./plugins/md-to-pdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "md-to-pdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print md-to-pdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "md-to-pdf",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install md-to-pdf: npm install -g md-to-pdf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "md-to-pdf",
+      "resource": "file",
+      "action": "convert",
+      "description": "Convert Markdown to PDF",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "md-to-pdf",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install md-to-pdf: npm install -g md-to-pdf"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Markdown file path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output PDF path" },
+        { "name": "stylesheet", "type": "string", "required": false, "description": "Path to custom stylesheet" },
+        { "name": "css", "type": "string", "required": false, "description": "Inline CSS string" },
+        { "name": "pdf_options", "type": "string", "required": false, "description": "PDF options as JSON string" }
+      ]
+    },
+    {
+      "namespace": "md-to-pdf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to md-to-pdf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "md-to-pdf",
+        "passthrough": true,
+        "missingDependencyHelp": "Install md-to-pdf: npm install -g md-to-pdf"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "git2txt",
+  "version": "0.1.0",
+  "description": "CLI tool to convert GitHub repositories to text files for LLMs",
+  "source": "https://github.com/addyosmani/git2txt",
+  "checks": [
+    { "type": "binary", "name": "git2txt" }
+  ],
+  "install_guidance": {
+    "plugin": "git2txt",
+    "binary": "git2txt",
+    "check": "which git2txt",
+    "install_steps": [
+      "npm install -g git2txt",
+      "Verify: git2txt --version",
+      "supercli plugins install ./plugins/git2txt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "git2txt",
+      "resource": "repo",
+      "action": "convert",
+      "description": "Convert GitHub repository to text file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git2txt",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install git2txt: npm install -g git2txt"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "GitHub repository (format: username/repo or full URL)" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "max_size", "type": "number", "required": false, "description": "Maximum file size in KB" }
+      ]
+    },
+    {
+      "namespace": "git2txt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git2txt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git2txt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install git2txt: npm install -g git2txt"
+      },
+      "args": []
+    }
+  ]
+}
