@@ -1,0 +1,86 @@
+{
+  "name": "gowsdl",
+  "version": "0.1.0",
+  "description": "WSDL to Go code generator",
+  "source": "https://github.com/hooklift/gowsdl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gowsdl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gowsdl",
+    "binary": "gowsdl",
+    "check": "which gowsdl",
+    "install_steps": [
+      "go install github.com/hooklift/gowsdl/cmd/gowsdl@latest",
+      "Verify: gowsdl --version",
+      "supercli plugins install ./plugins/gowsdl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gowsdl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gowsdl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowsdl",
+        "missingDependencyHelp": "Install gowsdl: go install github.com/hooklift/gowsdl/cmd/gowsdl@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "gowsdl",
+      "resource": "wsdl",
+      "action": "generate",
+      "description": "generate wsdl via gowsdl",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowsdl",
+        "missingDependencyHelp": "Install gowsdl: go install github.com/hooklift/gowsdl/cmd/gowsdl@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gowsdl",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via gowsdl",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gowsdl",
+        "missingDependencyHelp": "Install gowsdl: go install github.com/hooklift/gowsdl/cmd/gowsdl@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
