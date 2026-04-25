@@ -1,18 +1,17 @@
 {
   "name": "google-maps-scraper",
-  "version": "0.1.0",
-  "description": "Scrape business data from Google Maps including names, addresses, websites, phone numbers, ratings, and reviews",
+  "version": "0.2.0",
+  "description": "Scrape business data from Google Maps including names, addresses, websites, phone numbers, ratings, and reviews using Lightpanda",
   "source": "https://github.com/javimosch/supercli",
   "checks": [
-    { "type": "binary", "name": "python3" }
+    { "type": "binary", "name": "node" }
   ],
   "install_guidance": {
     "plugin": "google-maps-scraper",
-    "binary": "python3",
-    "check": "python3 --version",
+    "binary": "node",
+    "check": "node --version",
     "install_steps": [
-      "pip install playwright pandas",
-      "playwright install chromium",
+      "sc lightpanda cli setup",
       "supercli plugins install ./plugins/google-maps-scraper --on-conflict replace --json"
     ]
   },
@@ -27,31 +26,18 @@
       "description": "Scrape Google Maps for business data",
       "adapter": "process",
       "adapterConfig": {
-        "command": "python3",
-        "baseArgs": ["plugins/google-maps-scraper/scraper.py"],
-        "positionalArgs": ["query", "limit"],
+        "command": "node",
+        "baseArgs": ["plugins/lightpanda/scripts/lightpanda-wrapper.js", "run"],
         "timeout_ms": 120000,
-        "missingDependencyHelp": "Install dependencies: pip install playwright pandas && playwright install chromium"
+        "missingDependencyHelp": "Run 'sc lightpanda cli setup' to install Lightpanda runtime dependencies"
       },
       "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Path to scraper script (default: plugin_dir/scraper.js)" },
         { "name": "query", "type": "string", "required": true, "description": "Search query for Google Maps (e.g., 'restaurants in Paris')" },
-        { "name": "limit", "type": "number", "required": false, "description": "Maximum number of results to scrape (default: 10)" }
+        { "name": "limit", "type": "number", "required": false, "description": "Maximum number of results to scrape (default: 10)" },
+        { "name": "timeout-ms", "type": "number", "required": false, "description": "Execution timeout in milliseconds" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Enable verbose logging" }
       ]
-    },
-    {
-      "namespace": "google-maps-scraper",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to google-maps-scraper CLI",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "python3",
-        "baseArgs": ["plugins/google-maps-scraper/scraper.py"],
-        "passthrough": true,
-        "timeout_ms": 120000,
-        "missingDependencyHelp": "Install dependencies: pip install playwright pandas && playwright install chromium"
-      },
-      "args": []
     }
   ]
 }
