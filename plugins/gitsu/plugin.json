@@ -1,0 +1,88 @@
+{
+  "name": "gitsu",
+  "version": "0.1.0",
+  "description": "Switch git user easily",
+  "source": "https://github.com/matsuyoshi30/gitsu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gitsu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gitsu",
+    "binary": "gitsu",
+    "check": "which gitsu",
+    "install_steps": [
+      "brew install matsuyoshi30/tap/gitsu",
+      "Verify: gitsu --version",
+      "supercli plugins install ./plugins/gitsu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitsu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitsu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitsu",
+        "missingDependencyHelp": "Install gitsu: brew install matsuyoshi30/tap/gitsu",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitsu",
+      "resource": "user",
+      "action": "switch",
+      "description": "switch user via gitsu",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitsu",
+        "missingDependencyHelp": "Install gitsu: brew install matsuyoshi30/tap/gitsu",
+        "baseArgs": [
+          "switch"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gitsu",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via gitsu",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitsu",
+        "missingDependencyHelp": "Install gitsu: brew install matsuyoshi30/tap/gitsu",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

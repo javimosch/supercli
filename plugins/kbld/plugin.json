@@ -1,0 +1,88 @@
+{
+  "name": "kbld",
+  "version": "0.1.0",
+  "description": "Seamlessly incorporates image building and image pushing into your development and deployment workflows",
+  "source": "https://github.com/carvel-dev/kbld",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kbld"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kbld",
+    "binary": "kbld",
+    "check": "which kbld",
+    "install_steps": [
+      "brew install carvel-dev/tap/kbld",
+      "Verify: kbld --version",
+      "supercli plugins install ./plugins/kbld --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kbld",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kbld version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbld",
+        "missingDependencyHelp": "Install kbld: brew install carvel-dev/tap/kbld",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kbld",
+      "resource": "image",
+      "action": "resolve",
+      "description": "resolve image via kbld",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbld",
+        "missingDependencyHelp": "Install kbld: brew install carvel-dev/tap/kbld",
+        "baseArgs": [
+          "resolve"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kbld",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kbld",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbld",
+        "missingDependencyHelp": "Install kbld: brew install carvel-dev/tap/kbld",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

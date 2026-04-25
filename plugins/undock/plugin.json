@@ -1,0 +1,85 @@
+{
+  "name": "undock",
+  "version": "0.1.0",
+  "description": "Extract contents of a container image in a local folder",
+  "source": "https://github.com/crazy-max/undock",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "undock"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "undock",
+    "binary": "undock",
+    "check": "which undock",
+    "install_steps": [
+      "brew install undock",
+      "Verify: undock --version",
+      "supercli plugins install ./plugins/undock --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "undock",
+      "resource": "self",
+      "action": "version",
+      "description": "Print undock version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "undock",
+        "missingDependencyHelp": "Install undock: brew install undock",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "undock",
+      "resource": "image",
+      "action": "extract",
+      "description": "extract image via undock",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "undock",
+        "missingDependencyHelp": "Install undock: brew install undock",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "undock",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via undock",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "undock",
+        "missingDependencyHelp": "Install undock: brew install undock",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
