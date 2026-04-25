@@ -1,0 +1,113 @@
+{
+  "name": "trivy",
+  "version": "0.1.0",
+  "description": "Find vulnerabilities, misconfigurations, secrets, SBOM in containers and code",
+  "source": "https://github.com/aquasecurity/trivy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "trivy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "trivy",
+    "binary": "trivy",
+    "check": "which trivy",
+    "install_steps": [
+      "brew install aquasecurity/trivy/trivy",
+      "Verify: trivy --version",
+      "supercli plugins install ./plugins/trivy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trivy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print trivy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trivy",
+        "missingDependencyHelp": "Install trivy: brew install aquasecurity/trivy/trivy",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "trivy",
+      "resource": "image",
+      "action": "scan",
+      "description": "scan image via trivy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trivy",
+        "missingDependencyHelp": "Install trivy: brew install aquasecurity/trivy/trivy",
+        "baseArgs": [
+          "image"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "trivy",
+      "resource": "fs",
+      "action": "scan",
+      "description": "scan fs via trivy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trivy",
+        "missingDependencyHelp": "Install trivy: brew install aquasecurity/trivy/trivy",
+        "baseArgs": [
+          "filesystem"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "trivy",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via trivy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trivy",
+        "missingDependencyHelp": "Install trivy: brew install aquasecurity/trivy/trivy",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

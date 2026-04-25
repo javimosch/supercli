@@ -1,0 +1,110 @@
+{
+  "name": "vegeta",
+  "version": "0.1.0",
+  "description": "HTTP load testing tool and library",
+  "source": "https://github.com/tsenart/vegeta",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vegeta"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vegeta",
+    "binary": "vegeta",
+    "check": "which vegeta",
+    "install_steps": [
+      "go install github.com/tsenart/vegeta@latest",
+      "Verify: vegeta --version",
+      "supercli plugins install ./plugins/vegeta --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vegeta",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vegeta version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vegeta",
+        "missingDependencyHelp": "Install vegeta: go install github.com/tsenart/vegeta@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "vegeta",
+      "resource": "attack",
+      "action": "run",
+      "description": "run attack via vegeta",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vegeta",
+        "missingDependencyHelp": "Install vegeta: go install github.com/tsenart/vegeta@latest",
+        "baseArgs": [
+          "attack"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "vegeta",
+      "resource": "report",
+      "action": "generate",
+      "description": "generate report via vegeta",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vegeta",
+        "missingDependencyHelp": "Install vegeta: go install github.com/tsenart/vegeta@latest",
+        "baseArgs": [
+          "report"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "vegeta",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via vegeta",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vegeta",
+        "missingDependencyHelp": "Install vegeta: go install github.com/tsenart/vegeta@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

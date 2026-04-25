@@ -1,0 +1,83 @@
+{
+  "name": "hey",
+  "version": "0.1.0",
+  "description": "HTTP load generator, ApacheBench (ab) replacement",
+  "source": "https://github.com/rakyll/hey",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hey"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hey",
+    "binary": "hey",
+    "check": "which hey",
+    "install_steps": [
+      "go install github.com/rakyll/hey@latest",
+      "Verify: hey --version",
+      "supercli plugins install ./plugins/hey --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hey",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hey version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hey",
+        "missingDependencyHelp": "Install hey: go install github.com/rakyll/hey@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "hey",
+      "resource": "load",
+      "action": "run",
+      "description": "run load via hey",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hey",
+        "missingDependencyHelp": "Install hey: go install github.com/rakyll/hey@latest",
+        "passthrough": true,
+        "timeout_ms": 120000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "hey",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via hey",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hey",
+        "missingDependencyHelp": "Install hey: go install github.com/rakyll/hey@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
