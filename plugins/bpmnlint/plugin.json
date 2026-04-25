@@ -1,0 +1,86 @@
+{
+  "name": "bpmnlint",
+  "version": "0.1.0",
+  "description": "Validate BPMN diagrams from the command line",
+  "source": "https://github.com/bpmn-io/bpmnlint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bpmnlint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bpmnlint",
+    "binary": "bpmnlint",
+    "check": "which bpmnlint",
+    "install_steps": [
+      "npm install -g bpmnlint",
+      "Verify: bpmnlint --version",
+      "supercli plugins install ./plugins/bpmnlint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bpmnlint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bpmnlint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpmnlint",
+        "missingDependencyHelp": "Install bpmnlint: npm install -g bpmnlint",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "bpmnlint",
+      "resource": "file",
+      "action": "lint",
+      "description": "lint file via bpmnlint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpmnlint",
+        "missingDependencyHelp": "Install bpmnlint: npm install -g bpmnlint",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "bpmnlint",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via bpmnlint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bpmnlint",
+        "missingDependencyHelp": "Install bpmnlint: npm install -g bpmnlint",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
