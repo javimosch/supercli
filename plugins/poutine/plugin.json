@@ -1,0 +1,86 @@
+{
+  "name": "poutine",
+  "version": "0.1.0",
+  "description": "Supply chain vulnerability scanner for Go dependencies",
+  "source": "https://github.com/boostsecurityio/poutine",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "poutine"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "poutine",
+    "binary": "poutine",
+    "check": "which poutine",
+    "install_steps": [
+      "brew install poutine",
+      "Verify: poutine --version",
+      "supercli plugins install ./plugins/poutine --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "poutine",
+      "resource": "self",
+      "action": "version",
+      "description": "Print poutine version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poutine",
+        "missingDependencyHelp": "Install poutine: brew install poutine",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "poutine",
+      "resource": "repo",
+      "action": "scan",
+      "description": "scan repo via poutine",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poutine",
+        "missingDependencyHelp": "Install poutine: brew install poutine",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "poutine",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via poutine",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poutine",
+        "missingDependencyHelp": "Install poutine: brew install poutine",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

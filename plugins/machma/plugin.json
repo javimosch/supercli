@@ -1,0 +1,84 @@
+{
+  "name": "machma",
+  "version": "0.1.0",
+  "description": "Parallel command execution tool with progress bars",
+  "source": "https://github.com/fd0/machma",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "machma"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "machma",
+    "binary": "machma",
+    "check": "which machma",
+    "install_steps": [
+      "go install github.com/fd0/machma@latest",
+      "Verify: machma --version",
+      "supercli plugins install ./plugins/machma --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "machma",
+      "resource": "self",
+      "action": "version",
+      "description": "Print machma version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "machma",
+        "missingDependencyHelp": "Install machma: go install github.com/fd0/machma@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "machma",
+      "resource": "command",
+      "action": "run",
+      "description": "run command via machma",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "machma",
+        "missingDependencyHelp": "Install machma: go install github.com/fd0/machma@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "machma",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via machma",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "machma",
+        "missingDependencyHelp": "Install machma: go install github.com/fd0/machma@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

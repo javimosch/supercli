@@ -1,0 +1,86 @@
+{
+  "name": "protodot",
+  "version": "0.1.0",
+  "description": "Generate DOT language visualization from Protocol Buffer files",
+  "source": "https://github.com/seamia/protodot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "protodot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "protodot",
+    "binary": "protodot",
+    "check": "which protodot",
+    "install_steps": [
+      "go install github.com/seamia/protodot/cmd/protodot@latest",
+      "Verify: protodot --version",
+      "supercli plugins install ./plugins/protodot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "protodot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print protodot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protodot",
+        "missingDependencyHelp": "Install protodot: go install github.com/seamia/protodot/cmd/protodot@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "protodot",
+      "resource": "proto",
+      "action": "convert",
+      "description": "convert proto via protodot",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protodot",
+        "missingDependencyHelp": "Install protodot: go install github.com/seamia/protodot/cmd/protodot@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "protodot",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via protodot",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protodot",
+        "missingDependencyHelp": "Install protodot: go install github.com/seamia/protodot/cmd/protodot@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
