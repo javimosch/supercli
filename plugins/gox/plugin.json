@@ -1,0 +1,54 @@
+{
+  "name": "gox",
+  "version": "0.1.0",
+  "description": "A dead simple, no frills Go cross compile tool. Build Go binaries for multiple platforms at once.",
+  "source": "https://github.com/mitchellh/gox",
+  "checks": [
+    { "type": "binary", "name": "gox" }
+  ],
+  "install_guidance": {
+    "plugin": "gox",
+    "binary": "gox",
+    "check": "which gox",
+    "install_steps": [
+      "go install github.com/mitchellh/gox@latest",
+      "Verify: gox --version",
+      "supercli plugins install ./plugins/gox --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gox",
+      "resource": "build",
+      "action": "cross",
+      "description": "Cross-compile Go binaries for multiple platforms",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gox",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gox: go install github.com/mitchellh/gox@latest"
+      },
+      "args": [
+        { "name": "-os", "type": "string", "description": "Target OS" },
+        { "name": "-arch", "type": "string", "description": "Target architecture" },
+        { "name": "-output", "type": "string", "description": "Output template" }
+      ]
+    },
+    {
+      "namespace": "gox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gox",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gox: go install github.com/mitchellh/gox@latest"
+      },
+      "args": []
+    }
+  ]
+}

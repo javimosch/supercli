@@ -1,0 +1,55 @@
+{
+  "name": "furious",
+  "version": "0.1.0",
+  "description": "Go IP/port scanner with SYN (stealth) scanning and device manufacturer identification. Fast network scanning tool.",
+  "source": "https://github.com/liamg/furious",
+  "checks": [
+    { "type": "binary", "name": "furious" }
+  ],
+  "install_guidance": {
+    "plugin": "furious",
+    "binary": "furious",
+    "check": "which furious",
+    "install_steps": [
+      "go install github.com/liamg/furious@latest",
+      "Verify: furious --version",
+      "supercli plugins install ./plugins/furious --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "furious",
+      "resource": "scan",
+      "action": "ports",
+      "description": "Scan IP addresses and ports",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "furious",
+        "passthrough": true,
+        "missingDependencyHelp": "Install furious: go install github.com/liamg/furious@latest"
+      },
+      "args": [
+        { "name": "target", "type": "string", "description": "Target IP, hostname, or CIDR" },
+        { "name": "-p", "type": "string", "description": "Ports to scan" },
+        { "name": "-s", "type": "string", "description": "Scan type (syn/connect)" },
+        { "name": "-t", "type": "integer", "description": "Timeout in ms" }
+      ]
+    },
+    {
+      "namespace": "furious",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to furious CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "furious",
+        "passthrough": true,
+        "missingDependencyHelp": "Install furious: go install github.com/liamg/furious@latest"
+      },
+      "args": []
+    }
+  ]
+}

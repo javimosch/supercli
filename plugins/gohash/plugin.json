@@ -1,0 +1,53 @@
+{
+  "name": "gohash",
+  "version": "0.1.0",
+  "description": "Command line tools and library to work with hashes and various encodings. Calculate hashes and encode/decode data.",
+  "source": "https://github.com/martinlindhe/gohash",
+  "checks": [
+    { "type": "binary", "name": "hasher" }
+  ],
+  "install_guidance": {
+    "plugin": "gohash",
+    "binary": "hasher",
+    "check": "which hasher",
+    "install_steps": [
+      "go install github.com/martinlindhe/gohash/cmd/hasher@latest",
+      "Verify: hasher --list-hashes",
+      "supercli plugins install ./plugins/gohash --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gohash",
+      "resource": "calculate",
+      "action": "hash",
+      "description": "Calculate hash from stdin or files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hasher",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gohash: go install github.com/martinlindhe/gohash/cmd/hasher@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "File to hash" },
+        { "name": "--list-hashes", "type": "boolean", "description": "List all supported hashes" }
+      ]
+    },
+    {
+      "namespace": "gohash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hasher CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hasher",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gohash: go install github.com/martinlindhe/gohash/cmd/hasher@latest"
+      },
+      "args": []
+    }
+  ]
+}

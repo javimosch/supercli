@@ -1,0 +1,54 @@
+{
+  "name": "zdns",
+  "version": "0.1.0",
+  "description": "Fast DNS lookup library and CLI tool. Perform DNS lookups with high performance and multiple output formats.",
+  "source": "https://github.com/zmap/zdns",
+  "checks": [
+    { "type": "binary", "name": "zdns" }
+  ],
+  "install_guidance": {
+    "plugin": "zdns",
+    "binary": "zdns",
+    "check": "which zdns",
+    "install_steps": [
+      "brew install zdns",
+      "Verify: zdns --version",
+      "supercli plugins install ./plugins/zdns --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zdns",
+      "resource": "lookup",
+      "action": "dns",
+      "description": "Perform DNS lookup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zdns",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zdns: brew install zdns"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "description": "Domain to lookup" },
+        { "name": "-t", "type": "string", "description": "Record type (A, AAAA, MX, etc.)" },
+        { "name": "-n", "type": "string", "description": "Nameserver" }
+      ]
+    },
+    {
+      "namespace": "zdns",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zdns CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zdns",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zdns: brew install zdns"
+      },
+      "args": []
+    }
+  ]
+}

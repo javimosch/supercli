@@ -1,0 +1,54 @@
+{
+  "name": "doggo",
+  "version": "0.1.0",
+  "description": "Command-line DNS client for humans. Modern DNS lookup tool with support for DoH and DoT.",
+  "source": "https://github.com/mr-karan/doggo",
+  "checks": [
+    { "type": "binary", "name": "doggo" }
+  ],
+  "install_guidance": {
+    "plugin": "doggo",
+    "binary": "doggo",
+    "check": "which doggo",
+    "install_steps": [
+      "brew install doggo",
+      "Verify: doggo --version",
+      "supercli plugins install ./plugins/doggo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "doggo",
+      "resource": "lookup",
+      "action": "dns",
+      "description": "Perform DNS lookup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doggo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install doggo: brew install doggo"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "description": "Domain to lookup" },
+        { "name": "-t", "type": "string", "description": "Record type (A, AAAA, MX, etc.)" },
+        { "name": "-n", "type": "string", "description": "Nameserver" }
+      ]
+    },
+    {
+      "namespace": "doggo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to doggo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doggo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install doggo: brew install doggo"
+      },
+      "args": []
+    }
+  ]
+}
