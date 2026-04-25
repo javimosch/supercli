@@ -1,0 +1,86 @@
+{
+  "name": "npm-run-all",
+  "version": "0.1.0",
+  "description": "Run multiple npm-scripts in parallel or sequential",
+  "source": "https://github.com/mysticatea/npm-run-all",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "run-p"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "npm-run-all",
+    "binary": "run-p",
+    "check": "which run-p",
+    "install_steps": [
+      "npm install -g npm-run-all",
+      "Verify: run-p --version",
+      "supercli plugins install ./plugins/npm-run-all --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "npm-run-all",
+      "resource": "self",
+      "action": "version",
+      "description": "Print npm-run-all version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "run-p",
+        "missingDependencyHelp": "Install npm-run-all: npm install -g npm-run-all",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "npm-run-all",
+      "resource": "script",
+      "action": "run",
+      "description": "run script via run-p",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "run-p",
+        "missingDependencyHelp": "Install npm-run-all: npm install -g npm-run-all",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "npm-run-all",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via run-p",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "run-p",
+        "missingDependencyHelp": "Install npm-run-all: npm install -g npm-run-all",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
