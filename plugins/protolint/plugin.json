@@ -1,0 +1,113 @@
+{
+  "name": "protolint",
+  "version": "0.1.0",
+  "description": "A pluggable linter and fixer to enforce Protocol Buffer style and conventions",
+  "source": "https://github.com/yoheimuta/protolint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "protolint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "protolint",
+    "binary": "protolint",
+    "check": "which protolint",
+    "install_steps": [
+      "brew install protolint",
+      "Verify: protolint --version",
+      "supercli plugins install ./plugins/protolint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "protolint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print protolint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protolint",
+        "missingDependencyHelp": "Install protolint: brew install protolint",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "protolint",
+      "resource": "file",
+      "action": "lint",
+      "description": "lint file via protolint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protolint",
+        "missingDependencyHelp": "Install protolint: brew install protolint",
+        "baseArgs": [
+          "lint"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "protolint",
+      "resource": "file",
+      "action": "fix",
+      "description": "fix file via protolint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protolint",
+        "missingDependencyHelp": "Install protolint: brew install protolint",
+        "baseArgs": [
+          "--fix"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "protolint",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via protolint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protolint",
+        "missingDependencyHelp": "Install protolint: brew install protolint",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

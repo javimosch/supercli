@@ -1,0 +1,85 @@
+{
+  "name": "gotestsum",
+  "version": "0.1.0",
+  "description": "'go test' runner with output optimized for humans, JUnit XML for CI integration, and a summary of the test results",
+  "source": "https://github.com/gotestyourself/gotestsum",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gotestsum"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gotestsum",
+    "binary": "gotestsum",
+    "check": "which gotestsum",
+    "install_steps": [
+      "go install gotest.tools/gotestsum@latest",
+      "Verify: gotestsum --version",
+      "supercli plugins install ./plugins/gotestsum --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gotestsum",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gotestsum version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gotestsum",
+        "missingDependencyHelp": "Install gotestsum: go install gotest.tools/gotestsum@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "gotestsum",
+      "resource": "test",
+      "action": "run",
+      "description": "run test via gotestsum",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gotestsum",
+        "missingDependencyHelp": "Install gotestsum: go install gotest.tools/gotestsum@latest",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gotestsum",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via gotestsum",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gotestsum",
+        "missingDependencyHelp": "Install gotestsum: go install gotest.tools/gotestsum@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
