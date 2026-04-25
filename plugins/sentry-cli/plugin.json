@@ -1,0 +1,71 @@
+{
+  "name": "sentry-cli",
+  "version": "0.1.0",
+  "description": "A command-line tool for Sentry. Manage Sentry projects, releases, and upload source maps and debug files from the command line.",
+  "source": "https://github.com/getsentry/sentry-cli",
+  "checks": [
+    { "type": "binary", "name": "sentry-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "sentry-cli",
+    "binary": "sentry-cli",
+    "check": "which sentry-cli",
+    "install_steps": [
+      "brew install sentry-cli",
+      "Verify: sentry-cli --version",
+      "supercli plugins install ./plugins/sentry-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sentry-cli",
+      "resource": "release",
+      "action": "create",
+      "description": "Create a release",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sentry-cli",
+        "baseArgs": ["releases", "new"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sentry-cli: brew install sentry-cli"
+      },
+      "args": [
+        { "name": "version", "type": "string", "description": "Release version" },
+        { "name": "--project", "type": "string", "description": "Sentry project" }
+      ]
+    },
+    {
+      "namespace": "sentry-cli",
+      "resource": "sourcemaps",
+      "action": "upload",
+      "description": "Upload source maps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sentry-cli",
+        "baseArgs": ["releases", "files", "upload-sourcemaps"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sentry-cli: brew install sentry-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Source maps path" },
+        { "name": "--release", "type": "string", "description": "Release version" }
+      ]
+    },
+    {
+      "namespace": "sentry-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sentry-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sentry-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sentry-cli: brew install sentry-cli"
+      },
+      "args": []
+    }
+  ]
+}

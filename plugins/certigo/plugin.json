@@ -1,0 +1,71 @@
+{
+  "name": "certigo",
+  "version": "0.1.0",
+  "description": "A certificate validation and inspection tool. Examine, validate, and convert SSL/TLS certificates and keys from the command line.",
+  "source": "https://github.com/square/certigo",
+  "checks": [
+    { "type": "binary", "name": "certigo" }
+  ],
+  "install_guidance": {
+    "plugin": "certigo",
+    "binary": "certigo",
+    "check": "which certigo",
+    "install_steps": [
+      "brew install certigo",
+      "Verify: certigo version",
+      "supercli plugins install ./plugins/certigo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "certigo",
+      "resource": "cert",
+      "action": "inspect",
+      "description": "Inspect certificate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certigo",
+        "baseArgs": ["cert"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install certigo: brew install certigo"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "Certificate file path" },
+        { "name": "--json", "type": "boolean", "description": "JSON output" },
+        { "name": "--chain", "type": "boolean", "description": "Show certificate chain" }
+      ]
+    },
+    {
+      "namespace": "certigo",
+      "resource": "cert",
+      "action": "validate",
+      "description": "Validate certificate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certigo",
+        "baseArgs": ["cert", "--validate"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install certigo: brew install certigo"
+      },
+      "args": [
+        { "name": "file", "type": "string", "description": "Certificate file path" }
+      ]
+    },
+    {
+      "namespace": "certigo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to certigo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certigo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install certigo: brew install certigo"
+      },
+      "args": []
+    }
+  ]
+}

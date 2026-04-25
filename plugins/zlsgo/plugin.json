@@ -1,0 +1,56 @@
+{
+  "name": "zlsgo",
+  "version": "0.1.0",
+  "description": "A fast, simple, and powerful HTTP load testing tool. Perform load testing and benchmarking for web applications from the command line.",
+  "source": "https://github.com/sohaha/zlsgo",
+  "checks": [
+    { "type": "binary", "name": "zls" }
+  ],
+  "install_guidance": {
+    "plugin": "zlsgo",
+    "binary": "zls",
+    "check": "which zls",
+    "install_steps": [
+      "brew install zlsgo",
+      "Verify: zls --version",
+      "supercli plugins install ./plugins/zlsgo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zlsgo",
+      "resource": "test",
+      "action": "run",
+      "description": "Run load test",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zls",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install zlsgo: brew install zlsgo"
+      },
+      "args": [
+        { "name": "--url", "type": "string", "description": "Target URL" },
+        { "name": "--c", "type": "integer", "description": "Concurrent connections" },
+        { "name": "--n", "type": "integer", "description": "Number of requests" },
+        { "name": "--duration", "type": "string", "description": "Test duration" }
+      ]
+    },
+    {
+      "namespace": "zlsgo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zlsgo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zls",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zlsgo: brew install zlsgo"
+      },
+      "args": []
+    }
+  ]
+}

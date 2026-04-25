@@ -1,0 +1,84 @@
+{
+  "name": "kafkactl",
+  "version": "0.1.0",
+  "description": "A command-line interface for Apache Kafka. Manage Kafka clusters, topics, consumers, and messages from the command line.",
+  "source": "https://github.com/deviceinsight/kafkactl",
+  "checks": [
+    { "type": "binary", "name": "kafkactl" }
+  ],
+  "install_guidance": {
+    "plugin": "kafkactl",
+    "binary": "kafkactl",
+    "check": "which kafkactl",
+    "install_steps": [
+      "brew install kafkactl",
+      "Verify: kafkactl version",
+      "supercli plugins install ./plugins/kafkactl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kafkactl",
+      "resource": "topic",
+      "action": "list",
+      "description": "List Kafka topics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kafkactl",
+        "baseArgs": ["get", "topics"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kafkactl: brew install kafkactl"
+      },
+      "args": [
+        { "name": "--context", "type": "string", "description": "Kafka context" },
+        { "name": "--cluster", "type": "string", "description": "Kafka cluster" }
+      ]
+    },
+    {
+      "namespace": "kafkactl",
+      "resource": "topic",
+      "action": "describe",
+      "description": "Describe Kafka topic",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kafkactl",
+        "baseArgs": ["describe", "topic"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kafkactl: brew install kafkactl"
+      },
+      "args": [
+        { "name": "topic", "type": "string", "description": "Topic name" }
+      ]
+    },
+    {
+      "namespace": "kafkactl",
+      "resource": "consumer",
+      "action": "list",
+      "description": "List consumer groups",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kafkactl",
+        "baseArgs": ["get", "consumer-groups"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kafkactl: brew install kafkactl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kafkactl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kafkactl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kafkactl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kafkactl: brew install kafkactl"
+      },
+      "args": []
+    }
+  ]
+}
