@@ -414,6 +414,12 @@ async function main() {
             ],
           },
           note: "discover is deterministic (no LLM). ask uses LLM for suggestions only (no execution).",
+          token_optimization: {
+            context_mode: "Use supercli MCP context-mode when calling supercli CLI commands that produce verbose output (e.g., supercli commands, supercli plugins explore). SuperCLI has 350+ plugins, so command output can be large. Context-mode reduces token usage by up to 98% by indexing content instead of showing it in conversation.",
+            when_to_use: ["supercli commands (350+ plugins)", "supercli plugins explore", "supercli commands --query <keyword>", "Any supercli command with large output", "Repeated searches across plugins"],
+            quick_start: "sc mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '{\"commands\": [{\"label\": \"Commands\", \"command\": \"supercli commands --json\"}], \"queries\": [\"<search terms>\"]}' --json",
+            learn_more: "supercli skills teach context-mode:quickstart"
+          }
         });
         return;
       }
