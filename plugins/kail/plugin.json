@@ -1,0 +1,84 @@
+{
+  "name": "kail",
+  "version": "0.1.0",
+  "description": "Kubernetes log viewer with pod filtering",
+  "source": "https://github.com/boz/kail",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kail"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kail",
+    "binary": "kail",
+    "check": "which kail",
+    "install_steps": [
+      "brew install boz/repo/kail",
+      "Verify: kail --version",
+      "supercli plugins install ./plugins/kail --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kail",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kail version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kail",
+        "missingDependencyHelp": "Install kail: brew install boz/repo/kail",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kail",
+      "resource": "logs",
+      "action": "stream",
+      "description": "stream logs via kail",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kail",
+        "missingDependencyHelp": "Install kail: brew install boz/repo/kail",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kail",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kail",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kail",
+        "missingDependencyHelp": "Install kail: brew install boz/repo/kail",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

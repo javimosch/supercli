@@ -1,0 +1,84 @@
+{
+  "name": "popeye",
+  "version": "0.1.0",
+  "description": "Kubernetes cluster resource sanitizer and linter",
+  "source": "https://github.com/derailed/popeye",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "popeye"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "popeye",
+    "binary": "popeye",
+    "check": "which popeye",
+    "install_steps": [
+      "brew install popeye",
+      "Verify: popeye --version",
+      "supercli plugins install ./plugins/popeye --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "popeye",
+      "resource": "self",
+      "action": "version",
+      "description": "Print popeye version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "popeye",
+        "missingDependencyHelp": "Install popeye: brew install popeye",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "popeye",
+      "resource": "cluster",
+      "action": "scan",
+      "description": "scan cluster via popeye",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "popeye",
+        "missingDependencyHelp": "Install popeye: brew install popeye",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "popeye",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via popeye",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "popeye",
+        "missingDependencyHelp": "Install popeye: brew install popeye",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "name": "ctop",
+  "version": "0.1.0",
+  "description": "Top-like interface for container metrics",
+  "source": "https://github.com/bcicen/ctop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ctop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ctop",
+    "binary": "ctop",
+    "check": "which ctop",
+    "install_steps": [
+      "brew install ctop",
+      "Verify: ctop --version",
+      "supercli plugins install ./plugins/ctop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ctop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ctop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ctop",
+        "missingDependencyHelp": "Install ctop: brew install ctop",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "ctop",
+      "resource": "containers",
+      "action": "list",
+      "description": "list containers via ctop",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ctop",
+        "missingDependencyHelp": "Install ctop: brew install ctop",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ctop",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via ctop",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ctop",
+        "missingDependencyHelp": "Install ctop: brew install ctop",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

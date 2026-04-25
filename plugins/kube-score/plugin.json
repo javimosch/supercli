@@ -1,0 +1,84 @@
+{
+  "name": "kube-score",
+  "version": "0.1.0",
+  "description": "Kubernetes object analyzer for reliability and security",
+  "source": "https://github.com/zegl/kube-score",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kube-score"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kube-score",
+    "binary": "kube-score",
+    "check": "which kube-score",
+    "install_steps": [
+      "brew install kube-score",
+      "Verify: kube-score --version",
+      "supercli plugins install ./plugins/kube-score --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kube-score",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kube-score version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-score",
+        "missingDependencyHelp": "Install kube-score: brew install kube-score",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kube-score",
+      "resource": "manifest",
+      "action": "score",
+      "description": "score manifest via kube-score",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-score",
+        "missingDependencyHelp": "Install kube-score: brew install kube-score",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kube-score",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kube-score",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kube-score",
+        "missingDependencyHelp": "Install kube-score: brew install kube-score",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

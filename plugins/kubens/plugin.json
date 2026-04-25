@@ -1,0 +1,108 @@
+{
+  "name": "kubens",
+  "version": "0.1.0",
+  "description": "Faster way to switch between Kubernetes namespaces",
+  "source": "https://github.com/ahmetb/kubectx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kubens"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kubens",
+    "binary": "kubens",
+    "check": "which kubens",
+    "install_steps": [
+      "brew install kubectx",
+      "Verify: kubens --version",
+      "supercli plugins install ./plugins/kubens --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kubens",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kubens version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubens",
+        "missingDependencyHelp": "Install kubens: brew install kubectx",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubens",
+      "resource": "namespace",
+      "action": "switch",
+      "description": "switch namespace via kubens",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubens",
+        "missingDependencyHelp": "Install kubens: brew install kubectx",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kubens",
+      "resource": "namespace",
+      "action": "list",
+      "description": "list namespace via kubens",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubens",
+        "missingDependencyHelp": "Install kubens: brew install kubectx",
+        "baseArgs": [
+          "-l"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kubens",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kubens",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubens",
+        "missingDependencyHelp": "Install kubens: brew install kubectx",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
