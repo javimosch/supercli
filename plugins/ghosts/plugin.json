@@ -1,0 +1,84 @@
+{
+  "name": "ghosts",
+  "version": "0.1.0",
+  "description": "A hosts file manager for developers",
+  "source": "https://github.com/StevenBlack/ghosts",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ghosts"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ghosts",
+    "binary": "ghosts",
+    "check": "which ghosts",
+    "install_steps": [
+      "go install github.com/StevenBlack/ghosts@latest",
+      "Verify: ghosts --version",
+      "supercli plugins install ./plugins/ghosts --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ghosts",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ghosts version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghosts",
+        "missingDependencyHelp": "Install ghosts: go install github.com/StevenBlack/ghosts@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghosts",
+      "resource": "hosts",
+      "action": "check",
+      "description": "check hosts via ghosts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghosts",
+        "missingDependencyHelp": "Install ghosts: go install github.com/StevenBlack/ghosts@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ghosts",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via ghosts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghosts",
+        "missingDependencyHelp": "Install ghosts: go install github.com/StevenBlack/ghosts@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

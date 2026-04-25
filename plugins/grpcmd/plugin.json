@@ -1,0 +1,86 @@
+{
+  "name": "grpcmd",
+  "version": "0.1.0",
+  "description": "gRPC client for the terminal with readable syntax",
+  "source": "https://github.com/grpcmd/grpcmd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grpcmd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grpcmd",
+    "binary": "grpcmd",
+    "check": "which grpcmd",
+    "install_steps": [
+      "go install github.com/grpcmd/grpcmd@latest",
+      "Verify: grpcmd --version",
+      "supercli plugins install ./plugins/grpcmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grpcmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grpcmd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpcmd",
+        "missingDependencyHelp": "Install grpcmd: go install github.com/grpcmd/grpcmd@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "grpcmd",
+      "resource": "request",
+      "action": "send",
+      "description": "send request via grpcmd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpcmd",
+        "missingDependencyHelp": "Install grpcmd: go install github.com/grpcmd/grpcmd@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "grpcmd",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via grpcmd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpcmd",
+        "missingDependencyHelp": "Install grpcmd: go install github.com/grpcmd/grpcmd@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

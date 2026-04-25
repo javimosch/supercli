@@ -1,0 +1,86 @@
+{
+  "name": "journey",
+  "version": "0.1.0",
+  "description": "Database migration and schema management tool",
+  "source": "https://github.com/db-journey/journey",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "journey"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "journey",
+    "binary": "journey",
+    "check": "which journey",
+    "install_steps": [
+      "go install github.com/db-journey/journey@latest",
+      "Verify: journey --version",
+      "supercli plugins install ./plugins/journey --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "journey",
+      "resource": "self",
+      "action": "version",
+      "description": "Print journey version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journey",
+        "missingDependencyHelp": "Install journey: go install github.com/db-journey/journey@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "journey",
+      "resource": "migration",
+      "action": "run",
+      "description": "run migration via journey",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journey",
+        "missingDependencyHelp": "Install journey: go install github.com/db-journey/journey@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "journey",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via journey",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journey",
+        "missingDependencyHelp": "Install journey: go install github.com/db-journey/journey@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
