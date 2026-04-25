@@ -1,0 +1,110 @@
+{
+  "name": "restic",
+  "version": "0.1.0",
+  "description": "Fast, secure, efficient backup program",
+  "source": "https://github.com/restic/restic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "restic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "restic",
+    "binary": "restic",
+    "check": "which restic",
+    "install_steps": [
+      "brew install restic",
+      "Verify: restic --version",
+      "supercli plugins install ./plugins/restic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "restic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print restic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "restic",
+        "missingDependencyHelp": "Install restic: brew install restic",
+        "baseArgs": [
+          "version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "restic",
+      "resource": "snapshot",
+      "action": "list",
+      "description": "list snapshot via restic",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "restic",
+        "missingDependencyHelp": "Install restic: brew install restic",
+        "baseArgs": [
+          "snapshots"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "restic",
+      "resource": "backup",
+      "action": "run",
+      "description": "run backup via restic",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "restic",
+        "missingDependencyHelp": "Install restic: brew install restic",
+        "baseArgs": [
+          "backup"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "restic",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via restic",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "restic",
+        "missingDependencyHelp": "Install restic: brew install restic",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

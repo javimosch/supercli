@@ -1,0 +1,113 @@
+{
+  "name": "goreleaser",
+  "version": "0.1.0",
+  "description": "Deliver Go binaries as fast and easily as possible",
+  "source": "https://github.com/goreleaser/goreleaser",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "goreleaser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "goreleaser",
+    "binary": "goreleaser",
+    "check": "which goreleaser",
+    "install_steps": [
+      "brew install goreleaser",
+      "Verify: goreleaser --version",
+      "supercli plugins install ./plugins/goreleaser --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "goreleaser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print goreleaser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goreleaser",
+        "missingDependencyHelp": "Install goreleaser: brew install goreleaser",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "goreleaser",
+      "resource": "release",
+      "action": "run",
+      "description": "run release via goreleaser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goreleaser",
+        "missingDependencyHelp": "Install goreleaser: brew install goreleaser",
+        "baseArgs": [
+          "release"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "goreleaser",
+      "resource": "build",
+      "action": "run",
+      "description": "run build via goreleaser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goreleaser",
+        "missingDependencyHelp": "Install goreleaser: brew install goreleaser",
+        "baseArgs": [
+          "build"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "goreleaser",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via goreleaser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goreleaser",
+        "missingDependencyHelp": "Install goreleaser: brew install goreleaser",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "stern",
+  "version": "0.1.0",
+  "description": "Multi pod and container log tailing for Kubernetes",
+  "source": "https://github.com/stern/stern",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "stern"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "stern",
+    "binary": "stern",
+    "check": "which stern",
+    "install_steps": [
+      "brew install stern",
+      "Verify: stern --version",
+      "supercli plugins install ./plugins/stern --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "stern",
+      "resource": "self",
+      "action": "version",
+      "description": "Print stern version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stern",
+        "missingDependencyHelp": "Install stern: brew install stern",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "stern",
+      "resource": "pod",
+      "action": "logs",
+      "description": "logs pod via stern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stern",
+        "missingDependencyHelp": "Install stern: brew install stern",
+        "passthrough": true,
+        "timeout_ms": 120000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "stern",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via stern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stern",
+        "missingDependencyHelp": "Install stern: brew install stern",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

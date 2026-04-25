@@ -1,0 +1,83 @@
+{
+  "name": "kubectx",
+  "version": "0.1.0",
+  "description": "Faster way to switch between clusters and namespaces in kubectl",
+  "source": "https://github.com/ahmetb/kubectx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kubectx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kubectx",
+    "binary": "kubectx",
+    "check": "which kubectx",
+    "install_steps": [
+      "brew install kubectx",
+      "Verify: kubectx --version",
+      "supercli plugins install ./plugins/kubectx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kubectx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kubectx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectx",
+        "missingDependencyHelp": "Install kubectx: brew install kubectx",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubectx",
+      "resource": "context",
+      "action": "switch",
+      "description": "switch context via kubectx",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectx",
+        "missingDependencyHelp": "Install kubectx: brew install kubectx",
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kubectx",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kubectx",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectx",
+        "missingDependencyHelp": "Install kubectx: brew install kubectx",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
