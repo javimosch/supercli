@@ -1,0 +1,83 @@
+{
+  "name": "btop",
+  "version": "0.1.0",
+  "description": "A resource monitor that shows usage and stats for processor, memory, disks, network and processes",
+  "source": "https://github.com/aristocratos/btop",
+  "checks": [
+    { "type": "binary", "name": "btop" }
+  ],
+  "install_guidance": {
+    "plugin": "btop",
+    "binary": "btop",
+    "check": "which btop",
+    "install_steps": [
+      "sudo apt install btop",
+      "Or: brew install btop",
+      "Or: sudo pacman -S btop",
+      "supercli plugins install ./plugins/btop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "btop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print btop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btop",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install btop: sudo apt install btop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "btop",
+      "resource": "ui",
+      "action": "open",
+      "description": "Open btop terminal UI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btop",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install btop: sudo apt install btop"
+      },
+      "args": [
+        { "name": "--preset", "type": "string", "required": false, "description": "Color preset to use" },
+        { "name": "--utf-force", "type": "boolean", "required": false, "description": "Force UTF-8" }
+      ]
+    },
+    {
+      "namespace": "btop",
+      "resource": "process",
+      "action": "tree",
+      "description": "Show process tree in btop",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btop",
+        "baseArgs": ["--tree"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install btop: sudo apt install btop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "btop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to btop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btop",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install btop: sudo apt install btop"
+      },
+      "args": []
+    }
+  ]
+}

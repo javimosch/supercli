@@ -1,0 +1,87 @@
+{
+  "name": "dive",
+  "version": "0.1.0",
+  "description": "A tool for exploring each layer in a docker image",
+  "source": "https://github.com/wagoodman/dive",
+  "checks": [
+    { "type": "binary", "name": "dive" }
+  ],
+  "install_guidance": {
+    "plugin": "dive",
+    "binary": "dive",
+    "check": "which dive",
+    "install_steps": [
+      "curl -sL https://raw.githubusercontent.com/wagoodman/dive/master/scripts/install.sh | sh",
+      "Or: brew install dive",
+      "supercli plugins install ./plugins/dive --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dive",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dive version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dive",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dive: curl -sL https://raw.githubusercontent.com/wagoodman/dive/master/scripts/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dive",
+      "resource": "image",
+      "action": "analyze",
+      "description": "Analyze a docker image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dive",
+        "positionalArgs": ["image"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dive: curl -sL https://raw.githubusercontent.com/wagoodman/dive/master/scripts/install.sh | sh"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": false, "description": "Docker image name or ID" },
+        { "name": "--ci", "type": "boolean", "required": false, "description": "CI mode (no TUI, JSON output)" },
+        { "name": "--lowestEfficiency", "type": "string", "required": false, "description": "Min efficiency threshold for CI" },
+        { "name": "--highestWastedBytes", "type": "string", "required": false, "description": "Max wasted bytes threshold for CI" }
+      ]
+    },
+    {
+      "namespace": "dive",
+      "resource": "build",
+      "action": "analyze",
+      "description": "Build and analyze a docker image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dive",
+        "baseArgs": ["--build"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dive: curl -sL https://raw.githubusercontent.com/wagoodman/dive/master/scripts/install.sh | sh"
+      },
+      "args": [
+        { "name": "context", "type": "string", "required": false, "description": "Build context path" }
+      ]
+    },
+    {
+      "namespace": "dive",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dive CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dive",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dive: curl -sL https://raw.githubusercontent.com/wagoodman/dive/master/scripts/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
