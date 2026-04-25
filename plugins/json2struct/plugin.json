@@ -1,0 +1,85 @@
+{
+  "name": "json2struct",
+  "version": "0.1.0",
+  "description": "Convert JSON to Go struct",
+  "source": "https://github.com/marhaupe/json2struct",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "json2struct"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "json2struct",
+    "binary": "json2struct",
+    "check": "which json2struct",
+    "install_steps": [
+      "go install github.com/marhaupe/json2struct@latest",
+      "Verify: json2struct --version",
+      "supercli plugins install ./plugins/json2struct --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "json2struct",
+      "resource": "self",
+      "action": "version",
+      "description": "Print json2struct version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2struct",
+        "missingDependencyHelp": "Install json2struct: go install github.com/marhaupe/json2struct@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "json2struct",
+      "resource": "json",
+      "action": "convert",
+      "description": "convert json via json2struct",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2struct",
+        "missingDependencyHelp": "Install json2struct: go install github.com/marhaupe/json2struct@latest",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "json2struct",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via json2struct",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2struct",
+        "missingDependencyHelp": "Install json2struct: go install github.com/marhaupe/json2struct@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

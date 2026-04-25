@@ -1,0 +1,88 @@
+{
+  "name": "shuttle",
+  "version": "0.1.0",
+  "description": "CLI for handling shared build and deploy tools between projects no matter what technologies the projects are using",
+  "source": "https://github.com/lunarway/shuttle",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shuttle"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shuttle",
+    "binary": "shuttle",
+    "check": "which shuttle",
+    "install_steps": [
+      "brew install lunarway/tap/shuttle",
+      "Verify: shuttle --version",
+      "supercli plugins install ./plugins/shuttle --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shuttle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shuttle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shuttle",
+        "missingDependencyHelp": "Install shuttle: brew install lunarway/tap/shuttle",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "shuttle",
+      "resource": "plan",
+      "action": "run",
+      "description": "run plan via shuttle",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shuttle",
+        "missingDependencyHelp": "Install shuttle: brew install lunarway/tap/shuttle",
+        "baseArgs": [
+          "run"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "shuttle",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via shuttle",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shuttle",
+        "missingDependencyHelp": "Install shuttle: brew install lunarway/tap/shuttle",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

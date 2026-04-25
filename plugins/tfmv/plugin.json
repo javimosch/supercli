@@ -1,0 +1,85 @@
+{
+  "name": "tfmv",
+  "version": "0.1.0",
+  "description": "CLI to rename Terraform resources and generate moved blocks",
+  "source": "https://github.com/suzuki-shunsuke/tfmv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tfmv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tfmv",
+    "binary": "tfmv",
+    "check": "which tfmv",
+    "install_steps": [
+      "brew install suzuki-shunsuke/tap/tfmv",
+      "Verify: tfmv --version",
+      "supercli plugins install ./plugins/tfmv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tfmv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tfmv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfmv",
+        "missingDependencyHelp": "Install tfmv: brew install suzuki-shunsuke/tap/tfmv",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "tfmv",
+      "resource": "resource",
+      "action": "rename",
+      "description": "rename resource via tfmv",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfmv",
+        "missingDependencyHelp": "Install tfmv: brew install suzuki-shunsuke/tap/tfmv",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "tfmv",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via tfmv",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfmv",
+        "missingDependencyHelp": "Install tfmv: brew install suzuki-shunsuke/tap/tfmv",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

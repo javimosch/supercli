@@ -1,0 +1,85 @@
+{
+  "name": "yajsv",
+  "version": "0.1.0",
+  "description": "Yet Another JSON Schema Validator CLI",
+  "source": "https://github.com/neilpa/yajsv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "yajsv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "yajsv",
+    "binary": "yajsv",
+    "check": "which yajsv",
+    "install_steps": [
+      "go install github.com/neilpa/yajsv@latest",
+      "Verify: yajsv --version",
+      "supercli plugins install ./plugins/yajsv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yajsv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print yajsv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yajsv",
+        "missingDependencyHelp": "Install yajsv: go install github.com/neilpa/yajsv@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "yajsv",
+      "resource": "file",
+      "action": "validate",
+      "description": "validate file via yajsv",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yajsv",
+        "missingDependencyHelp": "Install yajsv: go install github.com/neilpa/yajsv@latest",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "yajsv",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via yajsv",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yajsv",
+        "missingDependencyHelp": "Install yajsv: go install github.com/neilpa/yajsv@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
