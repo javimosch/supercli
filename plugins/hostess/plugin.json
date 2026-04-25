@@ -1,0 +1,134 @@
+{
+  "name": "hostess",
+  "version": "0.1.0",
+  "description": "An idempotent command-line utility for managing your /etc/hosts file",
+  "source": "https://github.com/cbednarski/hostess",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hostess"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hostess",
+    "binary": "hostess",
+    "check": "which hostess",
+    "install_steps": [
+      "go install github.com/cbednarski/hostess@latest",
+      "Verify: hostess --version",
+      "supercli plugins install ./plugins/hostess --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hostess",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hostess version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostess",
+        "missingDependencyHelp": "Install hostess: go install github.com/cbednarski/hostess@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "hostess",
+      "resource": "hosts",
+      "action": "list",
+      "description": "list hosts via hostess",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostess",
+        "missingDependencyHelp": "Install hostess: go install github.com/cbednarski/hostess@latest",
+        "baseArgs": [
+          "list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "hostess",
+      "resource": "hosts",
+      "action": "add",
+      "description": "add hosts via hostess",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostess",
+        "missingDependencyHelp": "Install hostess: go install github.com/cbednarski/hostess@latest",
+        "baseArgs": [
+          "add"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "hostess",
+      "resource": "hosts",
+      "action": "del",
+      "description": "del hosts via hostess",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostess",
+        "missingDependencyHelp": "Install hostess: go install github.com/cbednarski/hostess@latest",
+        "baseArgs": [
+          "del"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "hostess",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via hostess",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostess",
+        "missingDependencyHelp": "Install hostess: go install github.com/cbednarski/hostess@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "name": "wol",
+  "version": "0.1.0",
+  "description": "Wake up your devices with a single command. A Wake-On-LAN tool",
+  "source": "https://github.com/Trugamr/wol",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wol"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wol",
+    "binary": "wol",
+    "check": "which wol",
+    "install_steps": [
+      "go install github.com/Trugamr/wol@latest",
+      "Verify: wol --version",
+      "supercli plugins install ./plugins/wol --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wol",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wol version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wol",
+        "missingDependencyHelp": "Install wol: go install github.com/Trugamr/wol@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "wol",
+      "resource": "device",
+      "action": "wake",
+      "description": "wake device via wol",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wol",
+        "missingDependencyHelp": "Install wol: go install github.com/Trugamr/wol@latest",
+        "baseArgs": [
+          "wake"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "wol",
+      "resource": "device",
+      "action": "list",
+      "description": "list device via wol",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wol",
+        "missingDependencyHelp": "Install wol: go install github.com/Trugamr/wol@latest",
+        "baseArgs": [
+          "list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "wol",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via wol",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wol",
+        "missingDependencyHelp": "Install wol: go install github.com/Trugamr/wol@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
