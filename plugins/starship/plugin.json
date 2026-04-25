@@ -1,0 +1,116 @@
+{
+  "name": "starship",
+  "version": "0.1.0",
+  "description": "The minimal, blazing-fast, and infinitely customizable prompt for any shell",
+  "source": "https://github.com/starship/starship",
+  "checks": [
+    { "type": "binary", "name": "starship" }
+  ],
+  "install_guidance": {
+    "plugin": "starship",
+    "binary": "starship",
+    "check": "which starship",
+    "install_steps": [
+      "curl -sS https://starship.rs/install.sh | sh",
+      "Add to shell: eval \"$(starship init bash)\"",
+      "supercli plugins install ./plugins/starship --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "starship",
+      "resource": "self",
+      "action": "version",
+      "description": "Print starship version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "starship",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install starship: curl -sS https://starship.rs/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "starship",
+      "resource": "prompt",
+      "action": "print",
+      "description": "Print starship prompt",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "starship",
+        "baseArgs": ["prompt"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install starship: curl -sS https://starship.rs/install.sh | sh"
+      },
+      "args": [
+        { "name": "--status", "type": "string", "required": false, "description": "Exit status of previous command" },
+        { "name": "--cmd-duration", "type": "string", "required": false, "description": "Duration of last command" },
+        { "name": "--jobs", "type": "string", "required": false, "description": "Number of background jobs" }
+      ]
+    },
+    {
+      "namespace": "starship",
+      "resource": "config",
+      "action": "print",
+      "description": "Print default starship config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "starship",
+        "baseArgs": ["print-config"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install starship: curl -sS https://starship.rs/install.sh | sh"
+      },
+      "args": [
+        { "name": "--default", "type": "boolean", "required": false, "description": "Print default config" }
+      ]
+    },
+    {
+      "namespace": "starship",
+      "resource": "module",
+      "action": "explain",
+      "description": "Explain active modules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "starship",
+        "baseArgs": ["explain"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install starship: curl -sS https://starship.rs/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "starship",
+      "resource": "session",
+      "action": "init",
+      "description": "Initialize starship for shell",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "starship",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install starship: curl -sS https://starship.rs/install.sh | sh"
+      },
+      "args": [
+        { "name": "shell", "type": "string", "required": false, "description": "Shell type (bash, zsh, fish, etc.)" }
+      ]
+    },
+    {
+      "namespace": "starship",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to starship CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "starship",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install starship: curl -sS https://starship.rs/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}

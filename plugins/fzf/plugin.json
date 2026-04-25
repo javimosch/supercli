@@ -1,0 +1,85 @@
+{
+  "name": "fzf",
+  "version": "0.1.0",
+  "description": "A command-line fuzzy finder",
+  "source": "https://github.com/junegunn/fzf",
+  "checks": [
+    { "type": "binary", "name": "fzf" }
+  ],
+  "install_guidance": {
+    "plugin": "fzf",
+    "binary": "fzf",
+    "check": "which fzf",
+    "install_steps": [
+      "git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf",
+      "~/.fzf/install",
+      "Or: brew install fzf",
+      "supercli plugins install ./plugins/fzf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fzf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fzf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fzf",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fzf: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fzf",
+      "resource": "files",
+      "action": "select",
+      "description": "Interactive file selection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fzf",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fzf: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install"
+      },
+      "args": [
+        { "name": "--height", "type": "string", "required": false, "description": "Height of fzf window" },
+        { "name": "--multi", "type": "boolean", "required": false, "description": "Enable multi-select" },
+        { "name": "--preview", "type": "string", "required": false, "description": "Preview command" },
+        { "name": "--query", "type": "string", "required": false, "description": "Initial query" }
+      ]
+    },
+    {
+      "namespace": "fzf",
+      "resource": "history",
+      "action": "search",
+      "description": "Search command history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fzf",
+        "baseArgs": ["--history"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fzf: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fzf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fzf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fzf",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fzf: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install"
+      },
+      "args": []
+    }
+  ]
+}
