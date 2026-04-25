@@ -1,0 +1,113 @@
+{
+  "name": "compose-cli",
+  "version": "0.1.0",
+  "description": "Docker Compose CLI for multi-container applications",
+  "source": "https://github.com/docker-archive/compose-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "docker-compose"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "compose-cli",
+    "binary": "docker-compose",
+    "check": "which docker-compose",
+    "install_steps": [
+      "brew install docker-compose",
+      "Verify: docker-compose --version",
+      "supercli plugins install ./plugins/compose-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "compose-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print compose-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "docker-compose",
+        "missingDependencyHelp": "Install compose-cli: brew install docker-compose",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "compose-cli",
+      "resource": "stack",
+      "action": "up",
+      "description": "up stack via docker-compose",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "docker-compose",
+        "missingDependencyHelp": "Install compose-cli: brew install docker-compose",
+        "baseArgs": [
+          "up"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "compose-cli",
+      "resource": "stack",
+      "action": "down",
+      "description": "down stack via docker-compose",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "docker-compose",
+        "missingDependencyHelp": "Install compose-cli: brew install docker-compose",
+        "baseArgs": [
+          "down"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "compose-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via docker-compose",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "docker-compose",
+        "missingDependencyHelp": "Install compose-cli: brew install docker-compose",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
