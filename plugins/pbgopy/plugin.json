@@ -1,0 +1,56 @@
+{
+  "name": "pbgopy",
+  "version": "0.1.0",
+  "description": "Copy and paste between devices",
+  "source": "https://github.com/nakabonne/pbgopy",
+  "checks": [
+    { "type": "binary", "name": "pbgopy" }
+  ],
+  "install_guidance": {
+    "plugin": "pbgopy",
+    "binary": "pbgopy",
+    "check": "which pbgopy",
+    "install_steps": [
+      "go install github.com/nakabonne/pbgopy@latest",
+      "Verify: pbgopy --help",
+      "supercli plugins install ./plugins/pbgopy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbgopy",
+      "resource": "copy",
+      "action": "text",
+      "description": "Copy text to clipboard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbgopy",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["copy"],
+        "positionalArgs": ["text"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pbgopy: go install github.com/nakabonne/pbgopy@latest"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Text to copy" }
+      ]
+    },
+    {
+      "namespace": "pbgopy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbgopy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbgopy",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pbgopy: go install github.com/nakabonne/pbgopy@latest"
+      },
+      "args": []
+    }
+  ]
+}

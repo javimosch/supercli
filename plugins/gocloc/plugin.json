@@ -1,0 +1,56 @@
+{
+  "name": "gocloc",
+  "version": "0.1.0",
+  "description": "A little fast cloc (Count Lines Of Code) written in Go",
+  "source": "https://github.com/hhatto/gocloc",
+  "checks": [
+    { "type": "binary", "name": "gocloc" }
+  ],
+  "install_guidance": {
+    "plugin": "gocloc",
+    "binary": "gocloc",
+    "check": "which gocloc",
+    "install_steps": [
+      "go install github.com/hhatto/gocloc/cmd/gocloc@latest",
+      "Verify: gocloc --help",
+      "supercli plugins install ./plugins/gocloc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gocloc",
+      "resource": "count",
+      "action": "lines",
+      "description": "Count lines of code in files/directories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gocloc",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--output", "json"],
+        "positionalArgs": ["paths"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install gocloc: go install github.com/hhatto/gocloc/cmd/gocloc@latest"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": true, "description": "Files or directories to count" }
+      ]
+    },
+    {
+      "namespace": "gocloc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gocloc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gocloc",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gocloc: go install github.com/hhatto/gocloc/cmd/gocloc@latest"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "timetrace",
+  "version": "0.1.0",
+  "description": "A simple CLI for tracking your working time",
+  "source": "https://github.com/dominikbraun/timetrace",
+  "checks": [
+    { "type": "binary", "name": "timetrace" }
+  ],
+  "install_guidance": {
+    "plugin": "timetrace",
+    "binary": "timetrace",
+    "check": "which timetrace",
+    "install_steps": [
+      "brew install timetrace",
+      "Verify: timetrace --version",
+      "supercli plugins install ./plugins/timetrace --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "timetrace",
+      "resource": "start",
+      "action": "tracking",
+      "description": "Start tracking time for a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrace",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["start"],
+        "positionalArgs": ["project"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install timetrace: brew install timetrace"
+      },
+      "args": [
+        { "name": "project", "type": "string", "required": true, "description": "Project name" }
+      ]
+    },
+    {
+      "namespace": "timetrace",
+      "resource": "stop",
+      "action": "tracking",
+      "description": "Stop tracking time",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrace",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["stop"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install timetrace: brew install timetrace"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timetrace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to timetrace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrace",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install timetrace: brew install timetrace"
+      },
+      "args": []
+    }
+  ]
+}

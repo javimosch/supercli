@@ -1,0 +1,55 @@
+{
+  "name": "diagram",
+  "version": "0.1.0",
+  "description": "CLI app to convert ASCII arts into hand drawn diagrams",
+  "source": "https://github.com/esimov/diagram",
+  "checks": [
+    { "type": "binary", "name": "diagram" }
+  ],
+  "install_guidance": {
+    "plugin": "diagram",
+    "binary": "diagram",
+    "check": "which diagram",
+    "install_steps": [
+      "go install github.com/esimov/diagram/cmd/diagram@latest",
+      "Verify: diagram --help",
+      "supercli plugins install ./plugins/diagram --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "diagram",
+      "resource": "convert",
+      "action": "ascii",
+      "description": "Convert ASCII art to hand-drawn diagram",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diagram",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["input"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install diagram: go install github.com/esimov/diagram/cmd/diagram@latest"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "ASCII art input file" }
+      ]
+    },
+    {
+      "namespace": "diagram",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to diagram CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diagram",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install diagram: go install github.com/esimov/diagram/cmd/diagram@latest"
+      },
+      "args": []
+    }
+  ]
+}
