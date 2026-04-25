@@ -1,0 +1,75 @@
+{
+  "name": "lutgen-rs",
+  "version": "0.1.0",
+  "description": "Blazingly fast interpolated LUT generator and applicator for color palettes",
+  "source": "https://github.com/ozwaldorf/lutgen-rs",
+  "checks": [
+    { "type": "binary", "name": "lutgen" }
+  ],
+  "install_guidance": {
+    "plugin": "lutgen-rs",
+    "binary": "lutgen",
+    "check": "which lutgen",
+    "install_steps": [
+      "cargo install lutgen-cli",
+      "Verify: lutgen --help",
+      "supercli plugins install ./plugins/lutgen-rs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lutgen",
+      "resource": "generate",
+      "action": "lut",
+      "description": "Generate LUT from image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lutgen",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install lutgen: cargo install lutgen-cli"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": true, "description": "Source image file" },
+        { "name": "output", "type": "string", "required": false, "description": "Output LUT file" }
+      ]
+    },
+    {
+      "namespace": "lutgen",
+      "resource": "apply",
+      "action": "lut",
+      "description": "Apply LUT to image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lutgen",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["apply"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install lutgen: cargo install lutgen-cli"
+      },
+      "args": [
+        { "name": "lut", "type": "string", "required": true, "description": "LUT file to apply" },
+        { "name": "image", "type": "string", "required": true, "description": "Image to apply LUT to" }
+      ]
+    },
+    {
+      "namespace": "lutgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lutgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lutgen",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lutgen: cargo install lutgen-cli"
+      },
+      "args": []
+    }
+  ]
+}

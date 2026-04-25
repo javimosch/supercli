@@ -1,0 +1,89 @@
+{
+  "name": "tldx",
+  "version": "0.1.0",
+  "description": "Domain availability research tool with smart keyword-based permutations and RDAP checks",
+  "source": "https://github.com/brandonyoungdev/tldx",
+  "checks": [
+    { "type": "binary", "name": "tldx" }
+  ],
+  "install_guidance": {
+    "plugin": "tldx",
+    "binary": "tldx",
+    "check": "which tldx",
+    "install_steps": [
+      "go install github.com/brandonyoungdev/tldx@latest",
+      "Verify: tldx --help",
+      "supercli plugins install ./plugins/tldx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tldx",
+      "resource": "check",
+      "action": "domains",
+      "description": "Check domain availability for keywords",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldx",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--format", "json"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install tldx: go install github.com/brandonyoungdev/tldx@latest"
+      },
+      "args": [
+        { "name": "keywords", "type": "string", "required": true, "description": "Keywords to check" }
+      ]
+    },
+    {
+      "namespace": "tldx",
+      "resource": "check",
+      "action": "available",
+      "description": "Show only available domains",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldx",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["--only-available", "--format", "json"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install tldx: go install github.com/brandonyoungdev/tldx@latest"
+      },
+      "args": [
+        { "name": "keywords", "type": "string", "required": true, "description": "Keywords to check" }
+      ]
+    },
+    {
+      "namespace": "tldx",
+      "resource": "show",
+      "action": "presets",
+      "description": "Show available TLD presets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldx",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["show-tld-presets"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tldx: go install github.com/brandonyoungdev/tldx@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tldx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tldx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldx",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tldx: go install github.com/brandonyoungdev/tldx@latest"
+      },
+      "args": []
+    }
+  ]
+}

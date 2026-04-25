@@ -1,0 +1,57 @@
+{
+  "name": "codesnap",
+  "version": "0.1.0",
+  "description": "Pure Rust tool to generate beautiful code snapshots from CLI",
+  "source": "https://github.com/codesnap-rs/codesnap",
+  "checks": [
+    { "type": "binary", "name": "codesnap" }
+  ],
+  "install_guidance": {
+    "plugin": "codesnap",
+    "binary": "codesnap",
+    "check": "which codesnap",
+    "install_steps": [
+      "cargo install codesnap-cli",
+      "Verify: codesnap --help",
+      "supercli plugins install ./plugins/codesnap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "codesnap",
+      "resource": "capture",
+      "action": "file",
+      "description": "Generate code snapshot from file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codesnap",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-f"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install codesnap: cargo install codesnap-cli"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Code file to snapshot" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "codesnap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to codesnap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codesnap",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install codesnap: cargo install codesnap-cli"
+      },
+      "args": []
+    }
+  ]
+}

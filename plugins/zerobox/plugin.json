@@ -1,0 +1,70 @@
+{
+  "name": "zerobox",
+  "version": "0.1.0",
+  "description": "Lightweight, cross-platform process sandboxing with file, network, and credential controls",
+  "source": "https://github.com/afshinm/zerobox",
+  "checks": [
+    { "type": "binary", "name": "zerobox" }
+  ],
+  "install_guidance": {
+    "plugin": "zerobox",
+    "binary": "zerobox",
+    "check": "which zerobox",
+    "install_steps": [
+      "cargo install zerobox",
+      "Verify: zerobox --help",
+      "supercli plugins install ./plugins/zerobox --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zerobox",
+      "resource": "run",
+      "action": "command",
+      "description": "Run command with sandboxing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zerobox",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install zerobox: cargo install zerobox"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to sandbox" }
+      ]
+    },
+    {
+      "namespace": "zerobox",
+      "resource": "snapshot",
+      "action": "list",
+      "description": "List filesystem snapshots",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zerobox",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["snapshot", "list"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install zerobox: cargo install zerobox"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zerobox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zerobox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zerobox",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zerobox: cargo install zerobox"
+      },
+      "args": []
+    }
+  ]
+}
