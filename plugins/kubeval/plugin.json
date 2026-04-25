@@ -1,0 +1,84 @@
+{
+  "name": "kubeval",
+  "version": "0.1.0",
+  "description": "Validate Kubernetes configuration files",
+  "source": "https://github.com/instrumenta/kubeval",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kubeval"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kubeval",
+    "binary": "kubeval",
+    "check": "which kubeval",
+    "install_steps": [
+      "brew install kubeval",
+      "Verify: kubeval --version",
+      "supercli plugins install ./plugins/kubeval --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kubeval",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kubeval version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubeval",
+        "missingDependencyHelp": "Install kubeval: brew install kubeval",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubeval",
+      "resource": "manifest",
+      "action": "validate",
+      "description": "validate manifest via kubeval",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubeval",
+        "missingDependencyHelp": "Install kubeval: brew install kubeval",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kubeval",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kubeval",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubeval",
+        "missingDependencyHelp": "Install kubeval: brew install kubeval",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

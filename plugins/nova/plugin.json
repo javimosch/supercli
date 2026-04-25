@@ -1,0 +1,86 @@
+{
+  "name": "nova",
+  "version": "0.1.0",
+  "description": "Finds outdated Helm charts running in a cluster",
+  "source": "https://github.com/FairwindsOps/nova",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nova"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nova",
+    "binary": "nova",
+    "check": "which nova",
+    "install_steps": [
+      "brew install FairwindsOps/tap/nova",
+      "Verify: nova --version",
+      "supercli plugins install ./plugins/nova --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nova",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nova version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nova",
+        "missingDependencyHelp": "Install nova: brew install FairwindsOps/tap/nova",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "nova",
+      "resource": "charts",
+      "action": "find",
+      "description": "find charts via nova",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nova",
+        "missingDependencyHelp": "Install nova: brew install FairwindsOps/tap/nova",
+        "baseArgs": [
+          "find"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "nova",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via nova",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nova",
+        "missingDependencyHelp": "Install nova: brew install FairwindsOps/tap/nova",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

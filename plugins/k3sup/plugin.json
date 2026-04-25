@@ -1,0 +1,111 @@
+{
+  "name": "k3sup",
+  "version": "0.1.0",
+  "description": "Bootstrap k3s clusters over SSH with one command",
+  "source": "https://github.com/alexellis/k3sup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "k3sup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "k3sup",
+    "binary": "k3sup",
+    "check": "which k3sup",
+    "install_steps": [
+      "brew install k3sup",
+      "Verify: k3sup --version",
+      "supercli plugins install ./plugins/k3sup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "k3sup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print k3sup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k3sup",
+        "missingDependencyHelp": "Install k3sup: brew install k3sup",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "k3sup",
+      "resource": "cluster",
+      "action": "install",
+      "description": "install cluster via k3sup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k3sup",
+        "missingDependencyHelp": "Install k3sup: brew install k3sup",
+        "baseArgs": [
+          "install"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "k3sup",
+      "resource": "app",
+      "action": "install",
+      "description": "install app via k3sup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k3sup",
+        "missingDependencyHelp": "Install k3sup: brew install k3sup",
+        "baseArgs": [
+          "app",
+          "install"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "k3sup",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via k3sup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k3sup",
+        "missingDependencyHelp": "Install k3sup: brew install k3sup",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
