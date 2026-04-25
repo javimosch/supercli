@@ -1,0 +1,86 @@
+{
+  "name": "httpu",
+  "version": "0.1.0",
+  "description": "CLI for making HTTP requests with readable syntax",
+  "source": "https://github.com/hazbo/httpu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "httpu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "httpu",
+    "binary": "httpu",
+    "check": "which httpu",
+    "install_steps": [
+      "go install github.com/hazbo/httpu@latest",
+      "Verify: httpu --version",
+      "supercli plugins install ./plugins/httpu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "httpu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print httpu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpu",
+        "missingDependencyHelp": "Install httpu: go install github.com/hazbo/httpu@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "httpu",
+      "resource": "request",
+      "action": "send",
+      "description": "send request via httpu",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpu",
+        "missingDependencyHelp": "Install httpu: go install github.com/hazbo/httpu@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "httpu",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via httpu",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpu",
+        "missingDependencyHelp": "Install httpu: go install github.com/hazbo/httpu@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

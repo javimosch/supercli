@@ -1,0 +1,84 @@
+{
+  "name": "file-d",
+  "version": "0.1.0",
+  "description": "Fast log collector with pipelines and filters",
+  "source": "https://github.com/ozontech/file.d",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "file.d"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "file-d",
+    "binary": "file.d",
+    "check": "which file.d",
+    "install_steps": [
+      "go install github.com/ozontech/file.d@latest",
+      "Verify: file.d --version",
+      "supercli plugins install ./plugins/file-d --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "file-d",
+      "resource": "self",
+      "action": "version",
+      "description": "Print file-d version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "file.d",
+        "missingDependencyHelp": "Install file-d: go install github.com/ozontech/file.d@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "file-d",
+      "resource": "config",
+      "action": "run",
+      "description": "run config via file.d",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "file.d",
+        "missingDependencyHelp": "Install file-d: go install github.com/ozontech/file.d@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "file-d",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via file.d",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "file.d",
+        "missingDependencyHelp": "Install file-d: go install github.com/ozontech/file.d@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
