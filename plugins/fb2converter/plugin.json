@@ -1,0 +1,86 @@
+{
+  "name": "fb2converter",
+  "version": "0.1.0",
+  "description": "Convert FB2 e-book files to other formats",
+  "source": "https://github.com/rupor-github/fb2converter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fb2converter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fb2converter",
+    "binary": "fb2converter",
+    "check": "which fb2converter",
+    "install_steps": [
+      "go install github.com/rupor-github/fb2converter@latest",
+      "Verify: fb2converter --version",
+      "supercli plugins install ./plugins/fb2converter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fb2converter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fb2converter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fb2converter",
+        "missingDependencyHelp": "Install fb2converter: go install github.com/rupor-github/fb2converter@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "fb2converter",
+      "resource": "file",
+      "action": "convert",
+      "description": "convert file via fb2converter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fb2converter",
+        "missingDependencyHelp": "Install fb2converter: go install github.com/rupor-github/fb2converter@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "fb2converter",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via fb2converter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fb2converter",
+        "missingDependencyHelp": "Install fb2converter: go install github.com/rupor-github/fb2converter@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

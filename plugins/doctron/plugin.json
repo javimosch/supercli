@@ -1,0 +1,84 @@
+{
+  "name": "doctron",
+  "version": "0.1.0",
+  "description": "Convert Markdown and other documents to PDF or images",
+  "source": "https://github.com/lampnick/doctron",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "doctron"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "doctron",
+    "binary": "doctron",
+    "check": "which doctron",
+    "install_steps": [
+      "go install github.com/lampnick/doctron@latest",
+      "Verify: doctron --version",
+      "supercli plugins install ./plugins/doctron --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "doctron",
+      "resource": "self",
+      "action": "version",
+      "description": "Print doctron version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doctron",
+        "missingDependencyHelp": "Install doctron: go install github.com/lampnick/doctron@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "doctron",
+      "resource": "file",
+      "action": "convert",
+      "description": "convert file via doctron",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doctron",
+        "missingDependencyHelp": "Install doctron: go install github.com/lampnick/doctron@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "doctron",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via doctron",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doctron",
+        "missingDependencyHelp": "Install doctron: go install github.com/lampnick/doctron@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "name": "bt2qbt",
+  "version": "0.1.0",
+  "description": "Migrate BitTorrent to qBittorrent torrent files",
+  "source": "https://github.com/rumanzo/bt2qbt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bt2qbt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bt2qbt",
+    "binary": "bt2qbt",
+    "check": "which bt2qbt",
+    "install_steps": [
+      "go install github.com/rumanzo/bt2qbt@latest",
+      "Verify: bt2qbt --version",
+      "supercli plugins install ./plugins/bt2qbt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bt2qbt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bt2qbt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bt2qbt",
+        "missingDependencyHelp": "Install bt2qbt: go install github.com/rumanzo/bt2qbt@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "bt2qbt",
+      "resource": "torrent",
+      "action": "migrate",
+      "description": "migrate torrent via bt2qbt",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bt2qbt",
+        "missingDependencyHelp": "Install bt2qbt: go install github.com/rumanzo/bt2qbt@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "bt2qbt",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via bt2qbt",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bt2qbt",
+        "missingDependencyHelp": "Install bt2qbt: go install github.com/rumanzo/bt2qbt@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
