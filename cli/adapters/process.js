@@ -128,7 +128,7 @@ function resolveCwd(cfg, cmd) {
   if (cfg.cwd === "invoke_cwd") return process.cwd()
   if (cfg.cwd === "plugin_dir") return cmd.plugin_dir || undefined
   if (typeof cfg.cwd === "string" && cfg.cwd.trim()) return cfg.cwd
-  return cmd.plugin_dir || undefined
+  return process.cwd()
 }
 
 async function execute(cmd, flags, context = {}) {

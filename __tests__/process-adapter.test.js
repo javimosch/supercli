@@ -153,14 +153,14 @@ describe("process adapter", () => {
     expect(spawn).toHaveBeenCalledWith("node", [], expect.objectContaining({ cwd: process.cwd() }))
   })
 
-  test("defaults cwd to plugin dir when not configured", async () => {
+  test("defaults cwd to invoke cwd when not configured", async () => {
     const promise = execute({
       adapterConfig: { command: "node" },
       plugin_dir: "/tmp/plugin-dir"
     }, {})
     mockChild.emit("close", 0)
     await promise
-    expect(spawn).toHaveBeenCalledWith("node", [], expect.objectContaining({ cwd: "/tmp/plugin-dir" }))
+    expect(spawn).toHaveBeenCalledWith("node", [], expect.objectContaining({ cwd: process.cwd() }))
   })
 
   test("streams jsonl events incrementally", async () => {
