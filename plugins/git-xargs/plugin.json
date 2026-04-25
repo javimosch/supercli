@@ -1,0 +1,56 @@
+{
+  "name": "git-xargs",
+  "version": "0.1.0",
+  "description": "Run Git commands across multiple repositories. Execute Git operations across many repos at once from the command line.",
+  "source": "https://github.com/gruntwork-io/git-xargs",
+  "checks": [
+    { "type": "binary", "name": "git-xargs" }
+  ],
+  "install_guidance": {
+    "plugin": "git-xargs",
+    "binary": "git-xargs",
+    "check": "which git-xargs",
+    "install_steps": [
+      "brew install git-xargs",
+      "Verify: git-xargs --version",
+      "supercli plugins install ./plugins/git-xargs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "git-xargs",
+      "resource": "repo",
+      "action": "run",
+      "description": "Run command across multiple repos",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-xargs",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install git-xargs: brew install git-xargs"
+      },
+      "args": [
+        { "name": "--args", "type": "string", "description": "Command to run" },
+        { "name": "--branch-name", "type": "string", "description": "Branch name for changes" },
+        { "name": "--commit-message", "type": "string", "description": "Commit message" },
+        { "name": "--repos", "type": "string", "description": "Repository list file" }
+      ]
+    },
+    {
+      "namespace": "git-xargs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-xargs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-xargs",
+        "passthrough": true,
+        "missingDependencyHelp": "Install git-xargs: brew install git-xargs"
+      },
+      "args": []
+    }
+  ]
+}

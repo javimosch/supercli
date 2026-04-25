@@ -1,0 +1,90 @@
+{
+  "name": "kapp",
+  "version": "0.1.0",
+  "description": "A lightweight application deployment tool for Kubernetes. Deploy and manage Kubernetes applications with simple, declarative configuration.",
+  "source": "https://github.com/carvel-dev/kapp",
+  "checks": [
+    { "type": "binary", "name": "kapp" }
+  ],
+  "install_guidance": {
+    "plugin": "kapp",
+    "binary": "kapp",
+    "check": "which kapp",
+    "install_steps": [
+      "brew install kapp",
+      "Verify: kapp version",
+      "supercli plugins install ./plugins/kapp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kapp",
+      "resource": "app",
+      "action": "deploy",
+      "description": "Deploy application to Kubernetes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kapp",
+        "baseArgs": ["deploy"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kapp: brew install kapp"
+      },
+      "args": [
+        { "name": "--file", "type": "string", "description": "YAML configuration file" },
+        { "name": "--name", "type": "string", "description": "Application name" },
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" },
+        { "name": "--diff-run", "type": "boolean", "description": "Show diff before applying" }
+      ]
+    },
+    {
+      "namespace": "kapp",
+      "resource": "app",
+      "action": "list",
+      "description": "List deployed applications",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kapp",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kapp: brew install kapp"
+      },
+      "args": [
+        { "name": "--namespace", "type": "string", "description": "Filter by namespace" },
+        { "name": "--all-namespaces", "type": "boolean", "description": "List all namespaces" }
+      ]
+    },
+    {
+      "namespace": "kapp",
+      "resource": "app",
+      "action": "delete",
+      "description": "Delete application from Kubernetes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kapp",
+        "baseArgs": ["delete"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kapp: brew install kapp"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "description": "Application name" },
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" }
+      ]
+    },
+    {
+      "namespace": "kapp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kapp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kapp",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kapp: brew install kapp"
+      },
+      "args": []
+    }
+  ]
+}

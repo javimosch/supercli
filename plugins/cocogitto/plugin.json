@@ -1,0 +1,90 @@
+{
+  "name": "cocogitto",
+  "version": "0.1.0",
+  "description": "A set of tools for the Conventional Commits specification. Manage semantic versioning, changelogs, and git workflows.",
+  "source": "https://github.com/cocogitto/cocogitto",
+  "checks": [
+    { "type": "binary", "name": "cog" }
+  ],
+  "install_guidance": {
+    "plugin": "cocogitto",
+    "binary": "cog",
+    "check": "which cog",
+    "install_steps": [
+      "brew install cocogitto",
+      "Verify: cog --version",
+      "supercli plugins install ./plugins/cocogitto --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cocogitto",
+      "resource": "commit",
+      "action": "check",
+      "description": "Check conventional commit format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cog",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cocogitto: brew install cocogitto"
+      },
+      "args": [
+        { "name": "--message", "type": "string", "description": "Commit message to check" },
+        { "name": "--from-latest-tag", "type": "boolean", "description": "Check from latest tag" }
+      ]
+    },
+    {
+      "namespace": "cocogitto",
+      "resource": "version",
+      "action": "bump",
+      "description": "Bump semantic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cog",
+        "baseArgs": ["bump"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cocogitto: brew install cocogitto"
+      },
+      "args": [
+        { "name": "--auto", "type": "boolean", "description": "Automatic version bump" },
+        { "name": "--major", "type": "boolean", "description": "Bump major version" },
+        { "name": "--minor", "type": "boolean", "description": "Bump minor version" },
+        { "name": "--patch", "type": "boolean", "description": "Bump patch version" }
+      ]
+    },
+    {
+      "namespace": "cocogitto",
+      "resource": "changelog",
+      "action": "generate",
+      "description": "Generate changelog",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cog",
+        "baseArgs": ["changelog"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cocogitto: brew install cocogitto"
+      },
+      "args": [
+        { "name": "--from", "type": "string", "description": "Start tag" },
+        { "name": "--to", "type": "string", "description": "End tag" }
+      ]
+    },
+    {
+      "namespace": "cocogitto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cocogitto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cocogitto: brew install cocogitto"
+      },
+      "args": []
+    }
+  ]
+}

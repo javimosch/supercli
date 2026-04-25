@@ -1,0 +1,70 @@
+{
+  "name": "kubecm",
+  "version": "0.1.0",
+  "description": "A Kubeconfig manager for multiple Kubernetes clusters. Switch and manage kubeconfig files easily from the command line.",
+  "source": "https://github.com/sunny0826/kubecm",
+  "checks": [
+    { "type": "binary", "name": "kubecm" }
+  ],
+  "install_guidance": {
+    "plugin": "kubecm",
+    "binary": "kubecm",
+    "check": "which kubecm",
+    "install_steps": [
+      "brew install kubecm",
+      "Verify: kubecm version",
+      "supercli plugins install ./plugins/kubecm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kubecm",
+      "resource": "context",
+      "action": "list",
+      "description": "List Kubernetes contexts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubecm",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kubecm: brew install kubecm"
+      },
+      "args": [
+        { "name": "--kubeconfig", "type": "string", "description": "Kubeconfig file path" },
+        { "name": "--namespace", "type": "string", "description": "Filter by namespace" }
+      ]
+    },
+    {
+      "namespace": "kubecm",
+      "resource": "context",
+      "action": "switch",
+      "description": "Switch Kubernetes context",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubecm",
+        "baseArgs": ["sw"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kubecm: brew install kubecm"
+      },
+      "args": [
+        { "name": "context", "type": "string", "description": "Context name to switch to" }
+      ]
+    },
+    {
+      "namespace": "kubecm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kubecm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubecm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kubecm: brew install kubecm"
+      },
+      "args": []
+    }
+  ]
+}
