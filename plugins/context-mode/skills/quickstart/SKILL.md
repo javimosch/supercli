@@ -1,22 +1,33 @@
 ---
 name: context-mode
-description: Use this skill when you want to optimize context window usage, sandbox tool outputs, index files/URLs into a searchable knowledge base, or run commands with reduced output. context-mode reduces token usage by up to 98% by keeping raw output out of the conversation.
+description: Use context-mode when analyzing large codebases (50+ files), processing long command outputs, or when you need to search content multiple times. Reduces token usage by up to 98% by indexing content instead of showing it in conversation. NOT needed for simple one-off commands or small file sets.
 ---
 
 # context-mode via supercli
 
-context-mode is a **stateful MCP server** that maintains a SQLite knowledge base and session history. In supercli, it runs via the **MCP daemon** — a persistent background process that keeps context-mode alive so its knowledge base survives between your one-shot `sc` CLI calls.
+context-mode is a **stateful MCP server** that maintains a SQLite knowledge base. Use it for large-scale analysis where you'd otherwise flood the context window with file contents or command output.
+
+## When to Use context-mode
+
+**USE context-mode when:**
+- Analyzing 50+ files or directories
+- Running commands that produce 1000+ lines of output
+- You need to search the same content multiple times
+- Exploring a new codebase structure
+- Processing documentation or API specs
+
+**DO NOT use context-mode when:**
+- Simple one-off command (e.g., `ls -la`, `cat package.json`)
+- Checking 1-10 files
+- Quick duplicate checks (use direct bash + `uniq -c`)
+- Simple grep/search operations
+- The output is already small (< 500 lines)
 
 ## For Agents: What You Need to Know
 
-**You do not need to start or manage the daemon.** The daemon auto-starts on your first `sc mcp call` to context-mode. Every subsequent call in any shell reuses the same daemon process and the same knowledge base.
+**Daemon auto-starts** on first `sc mcp call` to context-mode. No manual management needed.
 
-**The knowledge base is global and persistent** across shell sessions until the daemon is stopped. This means:
-- You can index content in one call, search it in the next
-- `ctx_stats` shows accumulated session history
-- Restarting the daemon clears in-memory session state but not the SQLite KB
-
-**Zero setup required** — just call the tools directly.
+**Knowledge base persists** across shell sessions until daemon stops. Index once, search many times.
 
 ## Quick Start
 
@@ -28,73 +39,93 @@ sc mcp call --mcp-server context-mode --tool ctx_doctor --input-json '{}' --json
 sc mcp daemon status --json
 ```
 
-## Core Agent Workflow
+## Agent Workflows
 
-### Pattern: Explore codebase with 98% context reduction
+### Workflow 1: Explore new codebase (50+ files)
 
-Instead of reading dozens of files and flooding your context window, use `ctx_batch_execute` to run commands, auto-index results, and search — all in one call:
+When you need to understand a large codebase structure:
 
 ```bash
 sc mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '{
   "commands": [
+    {"label": "Structure", "command": "find src -type f -name \"*.js\" | head -100"},
     {"label": "Package", "command": "cat package.json"},
-    {"label": "Source tree", "command": "find src -name \"*.js\" | head -40"},
-    {"label": "Routes", "command": "grep -r \"router\\|app.get\\|app.post\" src/ --include=\"*.js\" -l"}
+    {"label": "Entry points", "command": "grep -r \"main\\|entry\\|app.listen\" src/ --include=\"*.js\" -l"}
   ],
-  "queries": ["entry point", "routes", "dependencies"]
+  "queries": ["main entry point", "routes", "dependencies", "server setup"]
 }' --json
 ```
 
-The result contains only the matched snippets, not the full raw output.
+**Result:** Only matching snippets, not full file contents.
 
-### Pattern: Index once, search many times
+### Workflow 2: Index once, search many times
+
+When you'll search the same content repeatedly:
 
 ```bash
-# Call 1 — index your docs or a large file
+# Step 1: Index (call this once)
 sc mcp call --mcp-server context-mode --tool ctx_index --input-json '{
-  "content": "... large content ...",
-  "source": "my-docs"
+  "content": "$(cat path/to/large-file.txt)",
+  "source": "docs"
 }' --json
 
-# Call 2 (new shell, new process — knowledge persists in daemon)
+# Step 2: Search (call this as many times as needed)
 sc mcp call --mcp-server context-mode --tool ctx_search --input-json '{
-  "queries": ["authentication", "token expiry"]
+  "queries": ["authentication", "API keys", "configuration"]
 }' --json
 ```
 
-### Pattern: Execute a command with reduced output
+### Workflow 3: Long command output reduction
+
+For commands that produce massive output (npm test, build logs, etc.):
 
 ```bash
 sc mcp call --mcp-server context-mode --tool ctx_execute --input-json '{
   "language": "shell",
-  "code": "npm test 2>&1 | tail -50",
+  "code": "npm test 2>&1",
   "path": "/path/to/project"
 }' --json
 ```
 
-### Pattern: Fetch and index a URL
+Only relevant test failures/errors shown, not full output.
+
+### Workflow 4: Fetch and index documentation
+
+For external docs or API specs:
 
 ```bash
 sc mcp call --mcp-server context-mode --tool ctx_fetch_and_index --input-json '{
   "url": "https://docs.example.com/api",
   "source": "api-docs"
 }' --json
+
+# Then search
+sc mcp call --mcp-server context-mode --tool ctx_search --input-json '{
+  "queries": ["authentication", "endpoints", "rate limits"]
+}' --json
 ```
 
-## All Available Tools
+## Tool Reference (for Agents)
 
-| Tool | Purpose |
-|---|---|
-| `ctx_batch_execute` | Run commands + auto-index + search in one call. **Use this most.** |
-| `ctx_execute` | Run a single command in sandbox with reduced output |
-| `ctx_index` | Manually index text content into knowledge base |
-| `ctx_search` | Search previously indexed content |
-| `ctx_fetch_and_index` | Fetch a URL, index it, then search |
-| `ctx_stats` | Session statistics and accumulated savings |
-| `ctx_doctor` | Verify installation and runtimes |
-| `ctx_purge` | Clear the knowledge base |
-| `ctx_upgrade` | Upgrade context-mode binary |
-| `ctx_insight` | Context insights and recommendations |
+| Tool | When to Use | Example |
+|---|---|---|
+| `ctx_batch_execute` | **Most common** - run commands + index + search in one call | Exploring codebase, analyzing logs |
+| `ctx_execute` | Single command with output reduction | Running tests, builds |
+| `ctx_index` | Index large text content for later search | Documentation, config files |
+| `ctx_search` | Search previously indexed content | Finding specific info in docs |
+| `ctx_fetch_and_index` | Fetch URL and index | API docs, external docs |
+| `ctx_stats` | Check token savings | Verify context-mode is helping |
+| `ctx_doctor` | Verify installation | Troubleshooting |
+| `ctx_purge` | Clear knowledge base | Start fresh |
+
+## Agent Best Practices
+
+1. **Start with ctx_doctor** to verify context-mode is working
+2. **Use ctx_batch_execute** for most exploration tasks - it's the most efficient
+3. **Index first, search later** when you'll query the same content multiple times
+4. **Check ctx_stats** occasionally to see token savings
+5. **Purge knowledge base** between unrelated tasks to avoid search noise
+6. **Use direct bash** for simple one-off commands (ls, cat small files, grep)
 
 ## Daemon Commands (for humans)
 
