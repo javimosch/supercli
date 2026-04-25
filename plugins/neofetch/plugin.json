@@ -1,0 +1,86 @@
+{
+  "name": "neofetch",
+  "version": "0.1.0",
+  "description": "A command-line system information tool",
+  "source": "https://github.com/dylanaraps/neofetch",
+  "checks": [
+    { "type": "binary", "name": "neofetch" }
+  ],
+  "install_guidance": {
+    "plugin": "neofetch",
+    "binary": "neofetch",
+    "check": "which neofetch",
+    "install_steps": [
+      "sudo apt install neofetch",
+      "Or: brew install neofetch",
+      "Or: sudo pacman -S neofetch",
+      "supercli plugins install ./plugins/neofetch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "neofetch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print neofetch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neofetch",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install neofetch: sudo apt install neofetch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "neofetch",
+      "resource": "system",
+      "action": "info",
+      "description": "Display system information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neofetch",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install neofetch: sudo apt install neofetch"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "required": false, "description": "Path to config file" },
+        { "name": "--ascii", "type": "string", "required": false, "description": "ASCII distro logo" },
+        { "name": "--ascii_distro", "type": "string", "required": false, "description": "Which distro's ASCII art to use" },
+        { "name": "--color_blocks", "type": "boolean", "required": false, "description": "Enable color blocks" },
+        { "name": "--disable", "type": "string", "required": false, "description": "Disable specific info" }
+      ]
+    },
+    {
+      "namespace": "neofetch",
+      "resource": "config",
+      "action": "generate",
+      "description": "Generate neofetch config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neofetch",
+        "baseArgs": ["--gen-config"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install neofetch: sudo apt install neofetch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "neofetch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to neofetch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neofetch",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install neofetch: sudo apt install neofetch"
+      },
+      "args": []
+    }
+  ]
+}
