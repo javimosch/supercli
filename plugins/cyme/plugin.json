@@ -1,0 +1,71 @@
+{
+  "name": "cyme",
+  "version": "0.1.0",
+  "description": "A beautiful, fast terminal USB device manager. List and manage USB devices with detailed information in a tree view format.",
+  "source": "https://github.com/tuna-f1sh/cyme",
+  "checks": [
+    { "type": "binary", "name": "cyme" }
+  ],
+  "install_guidance": {
+    "plugin": "cyme",
+    "binary": "cyme",
+    "check": "which cyme",
+    "install_steps": [
+      "brew install cyme",
+      "Verify: cyme --version",
+      "supercli plugins install ./plugins/cyme --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cyme",
+      "resource": "usb",
+      "action": "list",
+      "description": "List USB devices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cyme",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cyme: brew install cyme"
+      },
+      "args": [
+        { "name": "--tree", "type": "boolean", "description": "Tree view output" },
+        { "name": "--verbose", "type": "boolean", "description": "Verbose output" },
+        { "name": "--json", "type": "boolean", "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "cyme",
+      "resource": "usb",
+      "action": "info",
+      "description": "Get USB device information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cyme",
+        "baseArgs": ["info"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cyme: brew install cyme"
+      },
+      "args": [
+        { "name": "device", "type": "string", "description": "Device identifier" }
+      ]
+    },
+    {
+      "namespace": "cyme",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cyme CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cyme",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cyme: brew install cyme"
+      },
+      "args": []
+    }
+  ]
+}

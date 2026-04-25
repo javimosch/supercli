@@ -1,0 +1,57 @@
+{
+  "name": "cargo-msrv",
+  "version": "0.1.0",
+  "description": "Cargo subcommand to determine the Minimum Supported Rust Version (MSRV). Verify Rust version compatibility for crates and projects.",
+  "source": "https://github.com/foresterre/cargo-msrv",
+  "checks": [
+    { "type": "binary", "name": "cargo-msrv" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-msrv",
+    "binary": "cargo-msrv",
+    "check": "cargo msrv --version",
+    "install_steps": [
+      "cargo install cargo-msrv",
+      "Verify: cargo msrv --version",
+      "supercli plugins install ./plugins/cargo-msrv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-msrv",
+      "resource": "rust",
+      "action": "find",
+      "description": "Find the minimum supported Rust version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["msrv"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-msrv: cargo install cargo-msrv"
+      },
+      "args": [
+        { "name": "--min", "type": "string", "description": "Minimum Rust version to search from" },
+        { "name": "--max", "type": "string", "description": "Maximum Rust version to search up to" },
+        { "name": "--output-format", "type": "string", "description": "Output format (human, json, none)" },
+        { "name": "--verify", "type": "boolean", "description": "Verify MSRV without searching" }
+      ]
+    },
+    {
+      "namespace": "cargo-msrv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo msrv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["msrv"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-msrv: cargo install cargo-msrv"
+      },
+      "args": []
+    }
+  ]
+}

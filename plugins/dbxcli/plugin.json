@@ -1,0 +1,89 @@
+{
+  "name": "dbxcli",
+  "version": "0.1.0",
+  "description": "A command line client for Dropbox. Manage Dropbox files and folders directly from the terminal with upload, download, and sync capabilities.",
+  "source": "https://github.com/dropbox/dbxcli",
+  "checks": [
+    { "type": "binary", "name": "dbxcli" }
+  ],
+  "install_guidance": {
+    "plugin": "dbxcli",
+    "binary": "dbxcli",
+    "check": "which dbxcli",
+    "install_steps": [
+      "brew install dbxcli",
+      "Verify: dbxcli version",
+      "supercli plugins install ./plugins/dbxcli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dbxcli",
+      "resource": "file",
+      "action": "list",
+      "description": "List Dropbox files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbxcli",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dbxcli: brew install dbxcli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "description": "Dropbox path to list" },
+        { "name": "--long", "type": "boolean", "description": "Long format with details" },
+        { "name": "--recursive", "type": "boolean", "description": "Recursive listing" }
+      ]
+    },
+    {
+      "namespace": "dbxcli",
+      "resource": "file",
+      "action": "upload",
+      "description": "Upload file to Dropbox",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbxcli",
+        "baseArgs": ["upload"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dbxcli: brew install dbxcli"
+      },
+      "args": [
+        { "name": "local_path", "type": "string", "description": "Local file path" },
+        { "name": "dropbox_path", "type": "string", "description": "Dropbox destination path" }
+      ]
+    },
+    {
+      "namespace": "dbxcli",
+      "resource": "file",
+      "action": "download",
+      "description": "Download file from Dropbox",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbxcli",
+        "baseArgs": ["get"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dbxcli: brew install dbxcli"
+      },
+      "args": [
+        { "name": "dropbox_path", "type": "string", "description": "Dropbox file path" },
+        { "name": "local_path", "type": "string", "description": "Local destination path" }
+      ]
+    },
+    {
+      "namespace": "dbxcli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dbxcli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbxcli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dbxcli: brew install dbxcli"
+      },
+      "args": []
+    }
+  ]
+}

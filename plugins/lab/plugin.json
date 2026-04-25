@@ -1,0 +1,91 @@
+{
+  "name": "lab",
+  "version": "0.1.0",
+  "description": "A hub-like CLI for GitLab. Manage GitLab repositories, issues, merge requests, and pipelines from the command line.",
+  "source": "https://github.com/zaquestion/lab",
+  "checks": [
+    { "type": "binary", "name": "lab" }
+  ],
+  "install_guidance": {
+    "plugin": "lab",
+    "binary": "lab",
+    "check": "which lab",
+    "install_steps": [
+      "brew install lab",
+      "Verify: lab --version",
+      "supercli plugins install ./plugins/lab --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lab",
+      "resource": "mr",
+      "action": "list",
+      "description": "List merge requests",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lab",
+        "baseArgs": ["mr", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lab: brew install lab"
+      },
+      "args": [
+        { "name": "--assignee", "type": "string", "description": "Filter by assignee" },
+        { "name": "--author", "type": "string", "description": "Filter by author" },
+        { "name": "--state", "type": "string", "description": "Filter by state (opened, closed, merged)" }
+      ]
+    },
+    {
+      "namespace": "lab",
+      "resource": "mr",
+      "action": "create",
+      "description": "Create a merge request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lab",
+        "baseArgs": ["mr", "create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lab: brew install lab"
+      },
+      "args": [
+        { "name": "--title", "type": "string", "description": "MR title" },
+        { "name": "--source", "type": "string", "description": "Source branch" },
+        { "name": "--target", "type": "string", "description": "Target branch" }
+      ]
+    },
+    {
+      "namespace": "lab",
+      "resource": "issue",
+      "action": "list",
+      "description": "List issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lab",
+        "baseArgs": ["issue", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install lab: brew install lab"
+      },
+      "args": [
+        { "name": "--assignee", "type": "string", "description": "Filter by assignee" },
+        { "name": "--author", "type": "string", "description": "Filter by author" },
+        { "name": "--state", "type": "string", "description": "Filter by state (opened, closed)" }
+      ]
+    },
+    {
+      "namespace": "lab",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lab CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lab",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lab: brew install lab"
+      },
+      "args": []
+    }
+  ]
+}
