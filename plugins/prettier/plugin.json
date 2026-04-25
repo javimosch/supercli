@@ -1,0 +1,87 @@
+{
+  "name": "prettier",
+  "version": "0.1.0",
+  "description": "Code formatter using prettier",
+  "source": "https://github.com/prettier/prettier",
+  "checks": [
+    { "type": "binary", "name": "prettier" }
+  ],
+  "install_guidance": {
+    "plugin": "prettier",
+    "binary": "prettier",
+    "check": "which prettier",
+    "install_steps": [
+      "npm install -g prettier",
+      "Verify: prettier --version",
+      "supercli plugins install ./plugins/prettier --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prettier",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prettier version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettier",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install prettier: npm install -g prettier"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prettier",
+      "resource": "file",
+      "action": "format",
+      "description": "Format file with prettier",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettier",
+        "baseArgs": ["--write"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install prettier: npm install -g prettier"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File or directory to format" },
+        { "name": "check", "type": "boolean", "required": false, "description": "Check if files are formatted" },
+        { "name": "single_quote", "type": "boolean", "required": false, "description": "Use single quotes" },
+        { "name": "trailing_comma", "type": "string", "required": false, "description": "Trailing comma style" }
+      ]
+    },
+    {
+      "namespace": "prettier",
+      "resource": "file",
+      "action": "check",
+      "description": "Check if files are formatted",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettier",
+        "baseArgs": ["--check"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install prettier: npm install -g prettier"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File or directory to check" }
+      ]
+    },
+    {
+      "namespace": "prettier",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prettier CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettier",
+        "passthrough": true,
+        "missingDependencyHelp": "Install prettier: npm install -g prettier"
+      },
+      "args": []
+    }
+  ]
+}

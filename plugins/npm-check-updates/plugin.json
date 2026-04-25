@@ -1,0 +1,87 @@
+{
+  "name": "npm-check-updates",
+  "version": "0.1.0",
+  "description": "Find newer versions of dependencies than what package.json allows",
+  "source": "https://github.com/raineorshine/npm-check-updates",
+  "checks": [
+    { "type": "binary", "name": "ncu" }
+  ],
+  "install_guidance": {
+    "plugin": "npm-check-updates",
+    "binary": "ncu",
+    "check": "which ncu",
+    "install_steps": [
+      "npm install -g npm-check-updates",
+      "Verify: ncu --version",
+      "supercli plugins install ./plugins/npm-check-updates --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "npm-check-updates",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ncu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncu",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install npm-check-updates: npm install -g npm-check-updates"
+      },
+      "args": []
+    },
+    {
+      "namespace": "npm-check-updates",
+      "resource": "dependencies",
+      "action": "check",
+      "description": "Check for newer dependency versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncu",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install npm-check-updates: npm install -g npm-check-updates"
+      },
+      "args": [
+        { "name": "json", "type": "boolean", "required": false, "description": "Output as JSON" },
+        { "name": "target", "type": "string", "required": false, "description": "Target version type (latest, minor, patch)" },
+        { "name": "package_file", "type": "string", "required": false, "description": "Package file path" },
+        { "name": "filter", "type": "string", "required": false, "description": "Filter packages by pattern" }
+      ]
+    },
+    {
+      "namespace": "npm-check-updates",
+      "resource": "dependencies",
+      "action": "upgrade",
+      "description": "Upgrade package.json with latest versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncu",
+        "baseArgs": ["-u"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install npm-check-updates: npm install -g npm-check-updates"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": false, "description": "Target version type (latest, minor, patch)" }
+      ]
+    },
+    {
+      "namespace": "npm-check-updates",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ncu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncu",
+        "passthrough": true,
+        "missingDependencyHelp": "Install npm-check-updates: npm install -g npm-check-updates"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "name": "json2csv",
+  "version": "0.1.0",
+  "description": "JSON to CSV converter CLI",
+  "source": "https://github.com/zemirco/json2csv",
+  "checks": [
+    { "type": "binary", "name": "json2csv" }
+  ],
+  "install_guidance": {
+    "plugin": "json2csv",
+    "binary": "json2csv",
+    "check": "which json2csv",
+    "install_steps": [
+      "npm install -g @json2csv/cli",
+      "Verify: json2csv --version",
+      "supercli plugins install ./plugins/json2csv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "json2csv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print json2csv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2csv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install json2csv: npm install -g @json2csv/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "json2csv",
+      "resource": "file",
+      "action": "convert",
+      "description": "Convert JSON to CSV",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2csv",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install json2csv: npm install -g @json2csv/cli"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input JSON file" },
+        { "name": "output", "type": "string", "required": false, "description": "Output CSV file" },
+        { "name": "delimiter", "type": "string", "required": false, "description": "Field delimiter (default: comma)" }
+      ]
+    },
+    {
+      "namespace": "json2csv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to json2csv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json2csv",
+        "passthrough": true,
+        "missingDependencyHelp": "Install json2csv: npm install -g @json2csv/cli"
+      },
+      "args": []
+    }
+  ]
+}

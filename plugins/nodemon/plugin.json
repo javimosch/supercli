@@ -1,0 +1,70 @@
+{
+  "name": "nodemon",
+  "version": "0.1.0",
+  "description": "Monitor for changes and automatically restart Node.js applications",
+  "source": "https://github.com/remy/nodemon",
+  "checks": [
+    { "type": "binary", "name": "nodemon" }
+  ],
+  "install_guidance": {
+    "plugin": "nodemon",
+    "binary": "nodemon",
+    "check": "which nodemon",
+    "install_steps": [
+      "npm install -g nodemon",
+      "Verify: nodemon --version",
+      "supercli plugins install ./plugins/nodemon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nodemon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nodemon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodemon",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nodemon: npm install -g nodemon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nodemon",
+      "resource": "script",
+      "action": "watch",
+      "description": "Watch and restart Node.js application",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodemon",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install nodemon: npm install -g nodemon"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": false, "description": "Script to run (default: node index.js)" },
+        { "name": "watch", "type": "string", "required": false, "description": "Files/directories to watch" },
+        { "name": "ext", "type": "string", "required": false, "description": "File extensions to watch" },
+        { "name": "ignore", "type": "string", "required": false, "description": "Files/directories to ignore" }
+      ]
+    },
+    {
+      "namespace": "nodemon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nodemon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodemon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install nodemon: npm install -g nodemon"
+      },
+      "args": []
+    }
+  ]
+}

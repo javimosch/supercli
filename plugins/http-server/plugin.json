@@ -1,0 +1,71 @@
+{
+  "name": "http-server",
+  "version": "0.1.0",
+  "description": "Simple, zero-configuration command-line static HTTP server",
+  "source": "https://github.com/http-party/http-server",
+  "checks": [
+    { "type": "binary", "name": "http-server" }
+  ],
+  "install_guidance": {
+    "plugin": "http-server",
+    "binary": "http-server",
+    "check": "which http-server",
+    "install_steps": [
+      "npm install --global http-server",
+      "Verify: http-server --version",
+      "supercli plugins install ./plugins/http-server --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "http-server",
+      "resource": "self",
+      "action": "version",
+      "description": "Print http-server version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-server",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install http-server: npm install --global http-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "http-server",
+      "resource": "directory",
+      "action": "serve",
+      "description": "Serve a directory as static HTTP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-server",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install http-server: npm install --global http-server"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to serve (default: ./public or ./)" },
+        { "name": "port", "type": "number", "required": false, "description": "Port to listen on (default: 8080)" },
+        { "name": "gzip", "type": "boolean", "required": false, "description": "Enable gzip compression" },
+        { "name": "cors", "type": "boolean", "required": false, "description": "Enable CORS" },
+        { "name": "silent", "type": "boolean", "required": false, "description": "Silent mode" }
+      ]
+    },
+    {
+      "namespace": "http-server",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to http-server CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-server",
+        "passthrough": true,
+        "missingDependencyHelp": "Install http-server: npm install --global http-server"
+      },
+      "args": []
+    }
+  ]
+}

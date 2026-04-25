@@ -1,0 +1,70 @@
+{
+  "name": "serve",
+  "version": "0.1.0",
+  "description": "Static file serving and directory listing",
+  "source": "https://github.com/vercel/serve",
+  "checks": [
+    { "type": "binary", "name": "serve" }
+  ],
+  "install_guidance": {
+    "plugin": "serve",
+    "binary": "serve",
+    "check": "which serve",
+    "install_steps": [
+      "npm install -g serve",
+      "Verify: serve --version",
+      "supercli plugins install ./plugins/serve --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "serve",
+      "resource": "self",
+      "action": "version",
+      "description": "Print serve version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serve",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install serve: npm install -g serve"
+      },
+      "args": []
+    },
+    {
+      "namespace": "serve",
+      "resource": "directory",
+      "action": "serve",
+      "description": "Serve a directory as static HTTP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serve",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install serve: npm install -g serve"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to serve (default: current)" },
+        { "name": "port", "type": "number", "required": false, "description": "Port to listen on (default: 3000)" },
+        { "name": "single", "type": "boolean", "required": false, "description": "Single page application mode" },
+        { "name": "no_cache", "type": "boolean", "required": false, "description": "Disable caching" }
+      ]
+    },
+    {
+      "namespace": "serve",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to serve CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serve",
+        "passthrough": true,
+        "missingDependencyHelp": "Install serve: npm install -g serve"
+      },
+      "args": []
+    }
+  ]
+}

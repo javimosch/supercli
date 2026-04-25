@@ -1,0 +1,134 @@
+{
+  "name": "pm2",
+  "version": "0.1.0",
+  "description": "Process manager for Node.js applications",
+  "source": "https://github.com/Unitech/pm2",
+  "checks": [
+    { "type": "binary", "name": "pm2" }
+  ],
+  "install_guidance": {
+    "plugin": "pm2",
+    "binary": "pm2",
+    "check": "which pm2",
+    "install_steps": [
+      "npm install -g pm2",
+      "Verify: pm2 --version",
+      "supercli plugins install ./plugins/pm2 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pm2",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pm2 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pm2",
+      "resource": "process",
+      "action": "list",
+      "description": "List all processes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "baseArgs": ["list"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pm2",
+      "resource": "process",
+      "action": "start",
+      "description": "Start a process",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "baseArgs": ["start"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Script or config file to start" },
+        { "name": "name", "type": "string", "required": false, "description": "Process name" },
+        { "name": "instances", "type": "number", "required": false, "description": "Number of instances" }
+      ]
+    },
+    {
+      "namespace": "pm2",
+      "resource": "process",
+      "action": "stop",
+      "description": "Stop a process",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "baseArgs": ["stop"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Process ID or name" }
+      ]
+    },
+    {
+      "namespace": "pm2",
+      "resource": "process",
+      "action": "restart",
+      "description": "Restart a process",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "baseArgs": ["restart"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Process ID or name" }
+      ]
+    },
+    {
+      "namespace": "pm2",
+      "resource": "process",
+      "action": "delete",
+      "description": "Delete a process",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "baseArgs": ["delete"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Process ID or name" }
+      ]
+    },
+    {
+      "namespace": "pm2",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pm2 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pm2",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pm2: npm install -g pm2"
+      },
+      "args": []
+    }
+  ]
+}

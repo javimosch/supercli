@@ -1,0 +1,69 @@
+{
+  "name": "eslint",
+  "version": "0.1.0",
+  "description": "Find and fix problems in JavaScript and TypeScript code",
+  "source": "https://github.com/eslint/eslint",
+  "checks": [
+    { "type": "binary", "name": "eslint" }
+  ],
+  "install_guidance": {
+    "plugin": "eslint",
+    "binary": "eslint",
+    "check": "which eslint",
+    "install_steps": [
+      "npm install -g eslint",
+      "Verify: eslint --version",
+      "supercli plugins install ./plugins/eslint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "eslint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print eslint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eslint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install eslint: npm install -g eslint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "eslint",
+      "resource": "file",
+      "action": "lint",
+      "description": "Lint files with eslint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eslint",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install eslint: npm install -g eslint"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File or directory to lint" },
+        { "name": "fix", "type": "boolean", "required": false, "description": "Auto-fix problems" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format (stylish, json, etc.)" }
+      ]
+    },
+    {
+      "namespace": "eslint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to eslint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eslint",
+        "passthrough": true,
+        "missingDependencyHelp": "Install eslint: npm install -g eslint"
+      },
+      "args": []
+    }
+  ]
+}
