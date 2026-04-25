@@ -1,0 +1,150 @@
+{
+  "name": "glab",
+  "version": "0.1.0",
+  "description": "GitLab CLI tool - Bring GitLab to your command line",
+  "source": "https://github.com/profclems/glab",
+  "checks": [
+    { "type": "binary", "name": "glab" }
+  ],
+  "install_guidance": {
+    "plugin": "glab",
+    "binary": "glab",
+    "check": "which glab",
+    "install_steps": [
+      "curl -sL https://git.io/glab | sh",
+      "Or: brew install glab",
+      "Authenticate: glab auth login",
+      "supercli plugins install ./plugins/glab --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "glab",
+      "resource": "self",
+      "action": "version",
+      "description": "Print glab version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "glab",
+      "resource": "auth",
+      "action": "login",
+      "description": "Authenticate with GitLab",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["auth", "login"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": [
+        { "name": "--hostname", "type": "string", "required": false, "description": "GitLab instance hostname (default: gitlab.com)" },
+        { "name": "--token", "type": "string", "required": false, "description": "Personal access token" }
+      ]
+    },
+    {
+      "namespace": "glab",
+      "resource": "mr",
+      "action": "list",
+      "description": "List merge requests",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["mr", "list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": [
+        { "name": "--state", "type": "string", "required": false, "description": "Filter by state (opened, closed, merged)" },
+        { "name": "--author", "type": "string", "required": false, "description": "Filter by author" }
+      ]
+    },
+    {
+      "namespace": "glab",
+      "resource": "mr",
+      "action": "view",
+      "description": "View a merge request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["mr", "view"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": [
+        { "name": "iid", "type": "string", "required": false, "description": "Merge request IID" }
+      ]
+    },
+    {
+      "namespace": "glab",
+      "resource": "issue",
+      "action": "list",
+      "description": "List issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["issue", "list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": [
+        { "name": "--state", "type": "string", "required": false, "description": "Filter by state (opened, closed)" },
+        { "name": "--assignee", "type": "string", "required": false, "description": "Filter by assignee" }
+      ]
+    },
+    {
+      "namespace": "glab",
+      "resource": "ci",
+      "action": "list",
+      "description": "List CI/CD pipelines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["ci", "list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "glab",
+      "resource": "repo",
+      "action": "clone",
+      "description": "Clone a repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "baseArgs": ["repo", "clone"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": false, "description": "Repository path (owner/repo)" }
+      ]
+    },
+    {
+      "namespace": "glab",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to glab CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glab",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install glab: curl -sL https://git.io/glab | sh"
+      },
+      "args": []
+    }
+  ]
+}
