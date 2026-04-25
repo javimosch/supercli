@@ -1,0 +1,110 @@
+{
+  "name": "kaniko",
+  "version": "0.1.0",
+  "description": "Build container images from a Dockerfile without root privileges",
+  "source": "https://github.com/GoogleContainerTools/kaniko",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "executor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kaniko",
+    "binary": "executor",
+    "check": "which executor",
+    "install_steps": [
+      "docker run gcr.io/kaniko-project/executor:latest",
+      "Verify: executor --version",
+      "supercli plugins install ./plugins/kaniko --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kaniko",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kaniko version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "executor",
+        "missingDependencyHelp": "Install kaniko: docker run gcr.io/kaniko-project/executor:latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kaniko",
+      "resource": "image",
+      "action": "build",
+      "description": "build image via executor",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "executor",
+        "missingDependencyHelp": "Install kaniko: docker run gcr.io/kaniko-project/executor:latest",
+        "baseArgs": [
+          "--dockerfile"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kaniko",
+      "resource": "image",
+      "action": "push",
+      "description": "push image via executor",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "executor",
+        "missingDependencyHelp": "Install kaniko: docker run gcr.io/kaniko-project/executor:latest",
+        "baseArgs": [
+          "--destination"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kaniko",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via executor",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "executor",
+        "missingDependencyHelp": "Install kaniko: docker run gcr.io/kaniko-project/executor:latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
