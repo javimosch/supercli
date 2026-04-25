@@ -1,0 +1,110 @@
+{
+  "name": "subfinder",
+  "version": "0.1.0",
+  "description": "Fast passive subdomain enumeration tool",
+  "source": "https://github.com/projectdiscovery/subfinder",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "subfinder"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "subfinder",
+    "binary": "subfinder",
+    "check": "which subfinder",
+    "install_steps": [
+      "go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
+      "Verify: subfinder --version",
+      "supercli plugins install ./plugins/subfinder --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "subfinder",
+      "resource": "self",
+      "action": "version",
+      "description": "Print subfinder version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subfinder",
+        "missingDependencyHelp": "Install subfinder: go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "subfinder",
+      "resource": "domain",
+      "action": "discover",
+      "description": "discover domain via subfinder",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subfinder",
+        "missingDependencyHelp": "Install subfinder: go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
+        "baseArgs": [
+          "-d"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "subfinder",
+      "resource": "domain",
+      "action": "list",
+      "description": "list domain via subfinder",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subfinder",
+        "missingDependencyHelp": "Install subfinder: go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
+        "baseArgs": [
+          "-list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "subfinder",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via subfinder",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subfinder",
+        "missingDependencyHelp": "Install subfinder: go install github.com/projectdiscovery/subfinder/v2/cmd/subfinder@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
