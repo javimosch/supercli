@@ -1,0 +1,86 @@
+{
+  "name": "chdb-go",
+  "version": "0.1.0",
+  "description": "ClickHouse CLI and client library",
+  "source": "https://github.com/chdb-io/chdb-go",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "chdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "chdb-go",
+    "binary": "chdb",
+    "check": "which chdb",
+    "install_steps": [
+      "go install github.com/chdb-io/chdb-go/cmd/chdb@latest",
+      "Verify: chdb --version",
+      "supercli plugins install ./plugins/chdb-go --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "chdb-go",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chdb-go version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chdb",
+        "missingDependencyHelp": "Install chdb-go: go install github.com/chdb-io/chdb-go/cmd/chdb@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "chdb-go",
+      "resource": "query",
+      "action": "execute",
+      "description": "execute query via chdb",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chdb",
+        "missingDependencyHelp": "Install chdb-go: go install github.com/chdb-io/chdb-go/cmd/chdb@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "chdb-go",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via chdb",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chdb",
+        "missingDependencyHelp": "Install chdb-go: go install github.com/chdb-io/chdb-go/cmd/chdb@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

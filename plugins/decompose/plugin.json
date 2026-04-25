@@ -1,0 +1,86 @@
+{
+  "name": "decompose",
+  "version": "0.1.0",
+  "description": "Docker dependency graph generator and analyzer",
+  "source": "https://github.com/s0rg/decompose",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "decompose"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "decompose",
+    "binary": "decompose",
+    "check": "which decompose",
+    "install_steps": [
+      "go install github.com/s0rg/decompose/cmd/decompose@latest",
+      "Verify: decompose --version",
+      "supercli plugins install ./plugins/decompose --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "decompose",
+      "resource": "self",
+      "action": "version",
+      "description": "Print decompose version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "decompose",
+        "missingDependencyHelp": "Install decompose: go install github.com/s0rg/decompose/cmd/decompose@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "decompose",
+      "resource": "graph",
+      "action": "generate",
+      "description": "generate graph via decompose",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "decompose",
+        "missingDependencyHelp": "Install decompose: go install github.com/s0rg/decompose/cmd/decompose@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "decompose",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via decompose",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "decompose",
+        "missingDependencyHelp": "Install decompose: go install github.com/s0rg/decompose/cmd/decompose@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
