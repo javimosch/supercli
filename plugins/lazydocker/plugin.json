@@ -1,0 +1,84 @@
+{
+  "name": "lazydocker",
+  "version": "0.1.0",
+  "description": "A terminal UI for both docker and docker-compose",
+  "source": "https://github.com/jesseduffield/lazydocker",
+  "checks": [
+    { "type": "binary", "name": "lazydocker" }
+  ],
+  "install_guidance": {
+    "plugin": "lazydocker",
+    "binary": "lazydocker",
+    "check": "which lazydocker",
+    "install_steps": [
+      "curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash",
+      "Or: brew install lazydocker",
+      "supercli plugins install ./plugins/lazydocker --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lazydocker",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lazydocker version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazydocker",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lazydocker: curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lazydocker",
+      "resource": "ui",
+      "action": "open",
+      "description": "Open lazydocker terminal UI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazydocker",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lazydocker: curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash"
+      },
+      "args": [
+        { "name": "--config-file", "type": "string", "required": false, "description": "Path to config file" },
+        { "name": "--cwd", "type": "string", "required": false, "description": "Working directory to use" }
+      ]
+    },
+    {
+      "namespace": "lazydocker",
+      "resource": "logs",
+      "action": "view",
+      "description": "View logs for a container",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazydocker",
+        "baseArgs": ["--logs"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lazydocker: curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash"
+      },
+      "args": [
+        { "name": "container", "type": "string", "required": false, "description": "Container name or ID" }
+      ]
+    },
+    {
+      "namespace": "lazydocker",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lazydocker CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazydocker",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lazydocker: curl https://raw.githubusercontent.com/jesseduffield/lazydocker/master/scripts/install_update_linux.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}
