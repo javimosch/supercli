@@ -1,0 +1,68 @@
+{
+  "name": "lux",
+  "version": "0.1.0",
+  "description": "Fast and simple video download library and CLI tool written in Go",
+  "source": "https://github.com/iawia002/lux",
+  "checks": [
+    { "type": "binary", "name": "lux" }
+  ],
+  "install_guidance": {
+    "plugin": "lux",
+    "binary": "lux",
+    "check": "which lux",
+    "install_steps": [
+      "go install github.com/iawia002/lux@latest",
+      "Verify: lux --version",
+      "supercli plugins install ./plugins/lux --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lux",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lux version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lux",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lux: go install github.com/iawia002/lux@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lux",
+      "resource": "download",
+      "action": "video",
+      "description": "Download video from URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lux",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install lux"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Video URL" }
+      ]
+    },
+    {
+      "namespace": "lux",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lux CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lux",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lux"
+      },
+      "args": []
+    }
+  ]
+}

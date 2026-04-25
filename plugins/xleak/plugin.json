@@ -1,0 +1,108 @@
+{
+  "name": "xleak",
+  "version": "0.1.0",
+  "description": "Fast terminal Excel viewer with non-interactive mode and export to CSV/JSON",
+  "source": "https://github.com/bgreenwell/xleak",
+  "checks": [
+    { "type": "binary", "name": "xleak" }
+  ],
+  "install_guidance": {
+    "plugin": "xleak",
+    "binary": "xleak",
+    "check": "which xleak",
+    "install_steps": [
+      "cargo install xleak",
+      "Verify: xleak --version",
+      "supercli plugins install ./plugins/xleak --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xleak",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xleak version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xleak",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install xleak: cargo install xleak"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xleak",
+      "resource": "sheet",
+      "action": "view",
+      "description": "View spreadsheet in non-interactive mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xleak",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install xleak"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Excel file path" },
+        { "name": "sheet", "type": "string", "required": false, "description": "Sheet name or index" },
+        { "name": "rows", "type": "string", "required": false, "description": "Limit rows (-n flag, 0 = all)" }
+      ]
+    },
+    {
+      "namespace": "xleak",
+      "resource": "export",
+      "action": "csv",
+      "description": "Export spreadsheet to CSV",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xleak",
+        "baseArgs": ["--export", "csv"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install xleak"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Excel file path" },
+        { "name": "sheet", "type": "string", "required": false, "description": "Sheet name or index" }
+      ]
+    },
+    {
+      "namespace": "xleak",
+      "resource": "export",
+      "action": "json",
+      "description": "Export spreadsheet to JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xleak",
+        "baseArgs": ["--export", "json"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install xleak"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Excel file path" },
+        { "name": "sheet", "type": "string", "required": false, "description": "Sheet name or index" }
+      ]
+    },
+    {
+      "namespace": "xleak",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xleak CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xleak",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xleak"
+      },
+      "args": []
+    }
+  ]
+}

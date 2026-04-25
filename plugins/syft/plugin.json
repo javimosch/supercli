@@ -1,0 +1,87 @@
+{
+  "name": "syft",
+  "version": "0.1.0",
+  "description": "CLI tool for generating Software Bill of Materials from container images and filesystems",
+  "source": "https://github.com/anchore/syft",
+  "checks": [
+    { "type": "binary", "name": "syft" }
+  ],
+  "install_guidance": {
+    "plugin": "syft",
+    "binary": "syft",
+    "check": "which syft",
+    "install_steps": [
+      "curl -sSfL https://get.anchore.io/syft | sudo sh -s -- -b /usr/local/bin",
+      "Verify: syft --version",
+      "supercli plugins install ./plugins/syft --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "syft",
+      "resource": "self",
+      "action": "version",
+      "description": "Print syft version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syft",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install syft: curl -sSfL https://get.anchore.io/syft | sudo sh -s -- -b /usr/local/bin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "syft",
+      "resource": "scan",
+      "action": "image",
+      "description": "Scan container image for SBOM",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syft",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syft"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": true, "description": "Container image reference" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format (cyclonedx-json, spdx-json, table)" }
+      ]
+    },
+    {
+      "namespace": "syft",
+      "resource": "scan",
+      "action": "directory",
+      "description": "Scan directory for SBOM",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syft",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syft"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format (cyclonedx-json, spdx-json, table)" }
+      ]
+    },
+    {
+      "namespace": "syft",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to syft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syft",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install syft"
+      },
+      "args": []
+    }
+  ]
+}

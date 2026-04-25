@@ -1,0 +1,118 @@
+{
+  "name": "trashy",
+  "version": "0.1.0",
+  "description": "CLI system trash manager, alternative to rm and trash-cli",
+  "source": "https://github.com/oberblastmeister/trashy",
+  "checks": [
+    { "type": "binary", "name": "trashy" }
+  ],
+  "install_guidance": {
+    "plugin": "trashy",
+    "binary": "trashy",
+    "check": "which trashy",
+    "install_steps": [
+      "cargo install trashy",
+      "Verify: trashy --version",
+      "supercli plugins install ./plugins/trashy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trashy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print trashy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trashy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install trashy: cargo install trashy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "trashy",
+      "resource": "put",
+      "action": "files",
+      "description": "Move files to trash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trashy",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install trashy"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": true, "description": "File paths to trash" }
+      ]
+    },
+    {
+      "namespace": "trashy",
+      "resource": "list",
+      "action": "items",
+      "description": "List items in the trash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trashy",
+        "baseArgs": ["list"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install trashy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "trashy",
+      "resource": "restore",
+      "action": "files",
+      "description": "Restore files from trash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trashy",
+        "baseArgs": ["restore"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install trashy"
+      },
+      "args": [
+        { "name": "patterns", "type": "string", "required": false, "description": "File patterns to restore" }
+      ]
+    },
+    {
+      "namespace": "trashy",
+      "resource": "empty",
+      "action": "files",
+      "description": "Empty files from trash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trashy",
+        "baseArgs": ["empty"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install trashy"
+      },
+      "args": [
+        { "name": "patterns", "type": "string", "required": false, "description": "File patterns to empty" }
+      ]
+    },
+    {
+      "namespace": "trashy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trashy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trashy",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install trashy"
+      },
+      "args": []
+    }
+  ]
+}

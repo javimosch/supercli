@@ -1,0 +1,67 @@
+{
+  "name": "macmon",
+  "version": "0.1.0",
+  "description": "Real-time system monitor for Apple Silicon Macs with JSON output support",
+  "source": "https://github.com/vladkens/macmon",
+  "checks": [
+    { "type": "binary", "name": "macmon" }
+  ],
+  "install_guidance": {
+    "plugin": "macmon",
+    "binary": "macmon",
+    "check": "which macmon",
+    "install_steps": [
+      "brew install macmon",
+      "Verify: macmon --version",
+      "supercli plugins install ./plugins/macmon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "macmon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print macmon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "macmon",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install macmon: brew install macmon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "macmon",
+      "resource": "pipe",
+      "action": "metrics",
+      "description": "Output metrics in JSON format for piping",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "macmon",
+        "baseArgs": ["pipe"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install macmon"
+      },
+      "args": [
+        { "name": "samples", "type": "string", "required": false, "description": "Number of samples to collect (0 = infinite)" },
+        { "name": "interval", "type": "string", "required": false, "description": "Update interval in milliseconds" }
+      ]
+    },
+    {
+      "namespace": "macmon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to macmon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "macmon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install macmon"
+      },
+      "args": []
+    }
+  ]
+}
