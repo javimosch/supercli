@@ -1,0 +1,56 @@
+{
+  "name": "cloc-cli",
+  "version": "0.1.0",
+  "description": "Count lines of code in directories",
+  "source": "https://www.npmjs.com/package/cloc",
+  "checks": [
+    { "type": "binary", "name": "cloc" }
+  ],
+  "install_guidance": {
+    "plugin": "cloc-cli",
+    "binary": "cloc",
+    "check": "which cloc",
+    "install_steps": [
+      "npm install -g cloc",
+      "Verify: cloc --version",
+      "supercli plugins install ./plugins/cloc-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cloc-cli",
+      "resource": "directory",
+      "action": "count",
+      "description": "Count lines of code in directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloc",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cloc-cli: npm install -g cloc"
+      },
+      "args": [
+        { "name": "directory", "type": "string", "required": false, "description": "Directory to count (default: current)" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output as JSON" },
+        { "name": "exclude_dir", "type": "string", "required": false, "description": "Directories to exclude" }
+      ]
+    },
+    {
+      "namespace": "cloc-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cloc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cloc-cli: npm install -g cloc"
+      },
+      "args": []
+    }
+  ]
+}

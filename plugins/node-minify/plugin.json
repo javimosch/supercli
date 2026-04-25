@@ -1,0 +1,69 @@
+{
+  "name": "node-minify",
+  "version": "0.1.0",
+  "description": "CLI tool for compressing JavaScript and CSS files",
+  "source": "https://github.com/srod/node-minify",
+  "checks": [
+    { "type": "binary", "name": "node-minify" }
+  ],
+  "install_guidance": {
+    "plugin": "node-minify",
+    "binary": "node-minify",
+    "check": "which node-minify",
+    "install_steps": [
+      "npm install -g @node-minify/cli @node-minify/uglify-js @node-minify/clean-css",
+      "Verify: node-minify --version",
+      "supercli plugins install ./plugins/node-minify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "node-minify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print node-minify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node-minify",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install node-minify: npm install -g @node-minify/cli @node-minify/uglify-js @node-minify/clean-css"
+      },
+      "args": []
+    },
+    {
+      "namespace": "node-minify",
+      "resource": "file",
+      "action": "compress",
+      "description": "Compress JavaScript or CSS file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node-minify",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install node-minify: npm install -g @node-minify/cli @node-minify/uglify-js @node-minify/clean-css"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output file" },
+        { "name": "compressor", "type": "string", "required": false, "description": "Compressor to use (uglify-js, clean-css)" }
+      ]
+    },
+    {
+      "namespace": "node-minify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to node-minify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node-minify",
+        "passthrough": true,
+        "missingDependencyHelp": "Install node-minify: npm install -g @node-minify/cli @node-minify/uglify-js @node-minify/clean-css"
+      },
+      "args": []
+    }
+  ]
+}

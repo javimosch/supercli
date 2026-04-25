@@ -1,0 +1,68 @@
+{
+  "name": "bestzip",
+  "version": "0.1.0",
+  "description": "CLI tool for creating zip files",
+  "source": "https://github.com/nickgermany/bestzip",
+  "checks": [
+    { "type": "binary", "name": "bestzip" }
+  ],
+  "install_guidance": {
+    "plugin": "bestzip",
+    "binary": "bestzip",
+    "check": "which bestzip",
+    "install_steps": [
+      "npm install -g bestzip",
+      "Verify: bestzip --version",
+      "supercli plugins install ./plugins/bestzip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bestzip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bestzip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bestzip",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bestzip: npm install -g bestzip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bestzip",
+      "resource": "file",
+      "action": "create",
+      "description": "Create zip archive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bestzip",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install bestzip: npm install -g bestzip"
+      },
+      "args": [
+        { "name": "output", "type": "string", "required": true, "description": "Output zip file" },
+        { "name": "input", "type": "string", "required": true, "description": "Input file or directory" }
+      ]
+    },
+    {
+      "namespace": "bestzip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bestzip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bestzip",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bestzip: npm install -g bestzip"
+      },
+      "args": []
+    }
+  ]
+}

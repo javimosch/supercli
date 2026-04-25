@@ -1,0 +1,56 @@
+{
+  "name": "rename-cli",
+  "version": "0.1.0",
+  "description": "Batch file renaming tool",
+  "source": "https://www.npmjs.com/package/rename-cli",
+  "checks": [
+    { "type": "binary", "name": "rename" }
+  ],
+  "install_guidance": {
+    "plugin": "rename-cli",
+    "binary": "rename",
+    "check": "which rename",
+    "install_steps": [
+      "npm install -g rename-cli",
+      "Verify: rename --help",
+      "supercli plugins install ./plugins/rename-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rename-cli",
+      "resource": "file",
+      "action": "rename",
+      "description": "Rename files using patterns",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rename",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rename-cli: npm install -g rename-cli"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Search pattern" },
+        { "name": "replacement", "type": "string", "required": true, "description": "Replacement string" },
+        { "name": "files", "type": "string", "required": false, "description": "Files to rename (glob pattern)" }
+      ]
+    },
+    {
+      "namespace": "rename-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rename CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rename",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rename-cli: npm install -g rename-cli"
+      },
+      "args": []
+    }
+  ]
+}

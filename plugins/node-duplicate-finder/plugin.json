@@ -1,0 +1,56 @@
+{
+  "name": "node-duplicate-finder",
+  "version": "0.1.0",
+  "description": "Find duplicate files in directories",
+  "source": "https://www.npmjs.com/package/node-duplicate-finder",
+  "checks": [
+    { "type": "binary", "name": "dedup" }
+  ],
+  "install_guidance": {
+    "plugin": "node-duplicate-finder",
+    "binary": "dedup",
+    "check": "which dedup",
+    "install_steps": [
+      "npm install -g node-duplicate-finder",
+      "Verify: dedup --help",
+      "supercli plugins install ./plugins/node-duplicate-finder --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "node-duplicate-finder",
+      "resource": "directory",
+      "action": "find",
+      "description": "Find duplicate files in directories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dedup",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install node-duplicate-finder: npm install -g node-duplicate-finder"
+      },
+      "args": [
+        { "name": "directory", "type": "string", "required": true, "description": "Directory to scan" },
+        { "name": "ignore", "type": "string", "required": false, "description": "Directories to ignore" },
+        { "name": "only", "type": "string", "required": false, "description": "File extensions to include" }
+      ]
+    },
+    {
+      "namespace": "node-duplicate-finder",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dedup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dedup",
+        "passthrough": true,
+        "missingDependencyHelp": "Install node-duplicate-finder: npm install -g node-duplicate-finder"
+      },
+      "args": []
+    }
+  ]
+}

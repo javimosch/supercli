@@ -1,0 +1,68 @@
+{
+  "name": "marked",
+  "version": "0.1.0",
+  "description": "Markdown parser and compiler",
+  "source": "https://github.com/markedjs/marked",
+  "checks": [
+    { "type": "binary", "name": "marked" }
+  ],
+  "install_guidance": {
+    "plugin": "marked",
+    "binary": "marked",
+    "check": "which marked",
+    "install_steps": [
+      "npm install -g marked",
+      "Verify: marked --version",
+      "supercli plugins install ./plugins/marked --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "marked",
+      "resource": "self",
+      "action": "version",
+      "description": "Print marked version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "marked",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install marked: npm install -g marked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "marked",
+      "resource": "file",
+      "action": "parse",
+      "description": "Parse markdown to HTML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "marked",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install marked: npm install -g marked"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "Input markdown file (stdin if not provided)" },
+        { "name": "output", "type": "string", "required": false, "description": "Output HTML file" }
+      ]
+    },
+    {
+      "namespace": "marked",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to marked CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "marked",
+        "passthrough": true,
+        "missingDependencyHelp": "Install marked: npm install -g marked"
+      },
+      "args": []
+    }
+  ]
+}
