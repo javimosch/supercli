@@ -1,0 +1,111 @@
+{
+  "name": "go-audio",
+  "version": "0.1.0",
+  "description": "Offline solution to convert PDFs into audiobooks",
+  "source": "https://github.com/Harry-027/go-audio",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "go-audio"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "go-audio",
+    "binary": "go-audio",
+    "check": "which go-audio",
+    "install_steps": [
+      "go install github.com/Harry-027/go-audio@latest",
+      "Verify: go-audio --version",
+      "supercli plugins install ./plugins/go-audio --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "go-audio",
+      "resource": "self",
+      "action": "version",
+      "description": "Print go-audio version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "go-audio",
+        "missingDependencyHelp": "Install go-audio: go install github.com/Harry-027/go-audio@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "go-audio",
+      "resource": "pdf",
+      "action": "convert",
+      "description": "convert pdf via go-audio",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "go-audio",
+        "missingDependencyHelp": "Install go-audio: go install github.com/Harry-027/go-audio@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "go-audio",
+      "resource": "text",
+      "action": "speak",
+      "description": "speak text via go-audio",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "go-audio",
+        "missingDependencyHelp": "Install go-audio: go install github.com/Harry-027/go-audio@latest",
+        "baseArgs": [
+          "--speak"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "go-audio",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via go-audio",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "go-audio",
+        "missingDependencyHelp": "Install go-audio: go install github.com/Harry-027/go-audio@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
