@@ -1,0 +1,108 @@
+{
+  "name": "goris",
+  "version": "0.1.0",
+  "description": "Search and download images from Google Images",
+  "source": "https://github.com/tanaikech/goris",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "goris"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "goris",
+    "binary": "goris",
+    "check": "which goris",
+    "install_steps": [
+      "go install github.com/tanaikech/goris@latest",
+      "Verify: goris --version",
+      "supercli plugins install ./plugins/goris --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "goris",
+      "resource": "self",
+      "action": "version",
+      "description": "Print goris version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goris",
+        "missingDependencyHelp": "Install goris: go install github.com/tanaikech/goris@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "goris",
+      "resource": "images",
+      "action": "search",
+      "description": "search images via goris",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goris",
+        "missingDependencyHelp": "Install goris: go install github.com/tanaikech/goris@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "goris",
+      "resource": "images",
+      "action": "download",
+      "description": "download images via goris",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goris",
+        "missingDependencyHelp": "Install goris: go install github.com/tanaikech/goris@latest",
+        "baseArgs": [
+          "--download"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "goris",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via goris",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goris",
+        "missingDependencyHelp": "Install goris: go install github.com/tanaikech/goris@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

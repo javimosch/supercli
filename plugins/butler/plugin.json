@@ -1,0 +1,108 @@
+{
+  "name": "butler",
+  "version": "0.1.0",
+  "description": "Swiss army knife CLI for managing development tasks",
+  "source": "https://github.com/mlabouardy/butler",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "butler"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "butler",
+    "binary": "butler",
+    "check": "which butler",
+    "install_steps": [
+      "go install github.com/mlabouardy/butler@latest",
+      "Verify: butler --version",
+      "supercli plugins install ./plugins/butler --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "butler",
+      "resource": "self",
+      "action": "version",
+      "description": "Print butler version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "butler",
+        "missingDependencyHelp": "Install butler: go install github.com/mlabouardy/butler@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "butler",
+      "resource": "task",
+      "action": "run",
+      "description": "run task via butler",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "butler",
+        "missingDependencyHelp": "Install butler: go install github.com/mlabouardy/butler@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "butler",
+      "resource": "task",
+      "action": "list",
+      "description": "list task via butler",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "butler",
+        "missingDependencyHelp": "Install butler: go install github.com/mlabouardy/butler@latest",
+        "baseArgs": [
+          "--list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "butler",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via butler",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "butler",
+        "missingDependencyHelp": "Install butler: go install github.com/mlabouardy/butler@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

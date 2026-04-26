@@ -1,0 +1,108 @@
+{
+  "name": "cron",
+  "version": "0.1.0",
+  "description": "Cron expression parser and evaluator CLI",
+  "source": "https://github.com/lnquy/cron",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cron"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cron",
+    "binary": "cron",
+    "check": "which cron",
+    "install_steps": [
+      "go install github.com/lnquy/cron@latest",
+      "Verify: cron --version",
+      "supercli plugins install ./plugins/cron --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cron",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cron version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cron",
+        "missingDependencyHelp": "Install cron: go install github.com/lnquy/cron@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cron",
+      "resource": "expression",
+      "action": "parse",
+      "description": "parse expression via cron",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cron",
+        "missingDependencyHelp": "Install cron: go install github.com/lnquy/cron@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cron",
+      "resource": "schedule",
+      "action": "next",
+      "description": "next schedule via cron",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cron",
+        "missingDependencyHelp": "Install cron: go install github.com/lnquy/cron@latest",
+        "baseArgs": [
+          "--next"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cron",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via cron",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cron",
+        "missingDependencyHelp": "Install cron: go install github.com/lnquy/cron@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

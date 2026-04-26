@@ -1,0 +1,108 @@
+{
+  "name": "vault-unseal",
+  "version": "0.1.0",
+  "description": "Automated HashiCorp Vault unseal utility",
+  "source": "https://github.com/lrstanley/vault-unseal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vault-unseal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vault-unseal",
+    "binary": "vault-unseal",
+    "check": "which vault-unseal",
+    "install_steps": [
+      "go install github.com/lrstanley/vault-unseal@latest",
+      "Verify: vault-unseal --version",
+      "supercli plugins install ./plugins/vault-unseal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vault-unseal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vault-unseal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vault-unseal",
+        "missingDependencyHelp": "Install vault-unseal: go install github.com/lrstanley/vault-unseal@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "vault-unseal",
+      "resource": "vault",
+      "action": "unseal",
+      "description": "unseal vault via vault-unseal",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vault-unseal",
+        "missingDependencyHelp": "Install vault-unseal: go install github.com/lrstanley/vault-unseal@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "vault-unseal",
+      "resource": "vault",
+      "action": "status",
+      "description": "status vault via vault-unseal",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vault-unseal",
+        "missingDependencyHelp": "Install vault-unseal: go install github.com/lrstanley/vault-unseal@latest",
+        "baseArgs": [
+          "--status"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "vault-unseal",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via vault-unseal",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vault-unseal",
+        "missingDependencyHelp": "Install vault-unseal: go install github.com/lrstanley/vault-unseal@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
