@@ -30,38 +30,95 @@
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" />
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+      
       body {
-        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        background-color: #020617;
-        color: #e2e8f0;
+        font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #FBFBFA;
+        color: #111111;
+        line-height: 1.6;
       }
       .sidebar-link {
-        transition: background-color 0.2s ease, color 0.2s ease;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .editorial-heading {
+        font-family: 'Newsreader', serif;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+      .mono-text {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .bento-card {
+        border: 1px solid #EAEAEA;
+        border-radius: 12px;
+        background: #FFFFFF;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .bento-card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
       }
       .tag {
-        transition: all 0.15s ease;
+        background: #EDF3EC;
+        color: #346538;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .tag.active {
+        background: #111111;
+        color: #FFFFFF;
+      }
+      .scroll-top-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 3rem;
+        height: 3rem;
+        background: #111111;
+        color: #FFFFFF;
+        border: 1px solid #EAEAEA;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 50;
+      }
+      .scroll-top-btn.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      .scroll-top-btn:hover {
+        background: #333333;
+        transform: scale(1.05);
       }
     </style>
   </head>
-  <body class="bg-slate-950">
+  <body class="bg-[#FBFBFA]">
     <div class="flex min-h-screen">
-      <aside id="sidebar" class="w-72 flex-shrink-0 border-r border-slate-800 bg-slate-950/80 backdrop-blur hidden lg:block">
-        <div class="p-6 space-y-8">
+      <aside id="sidebar" class="w-72 flex-shrink-0 border-r border-[#EAEAEA] bg-white hidden lg:block">
+        <div class="p-8 space-y-10">
           <div>
-            <p class="text-xs uppercase tracking-[0.4em] text-brand-400">Docs</p>
-            <h1 class="text-2xl font-display font-semibold mt-3 text-white">supercli</h1>
-            <p class="text-sm text-slate-400">Plugin Directory</p>
+            <p class="text-xs uppercase tracking-[0.2em] text-[#787774]">Documentation</p>
+            <h1 class="text-2xl font-semibold mt-3 text-[#111111]">supercli</h1>
+            <p class="text-sm text-[#787774] mt-1">Plugin Directory</p>
           </div>
-          <nav class="space-y-4">
+          <nav class="space-y-6">
             <div>
-              <p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Navigation</p>
-              <ul class="space-y-2 text-sm">
-                <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="index.html">Documentation Home</a></li>
-                <li><a class="sidebar-link block rounded-lg px-3 py-2 bg-brand-500/20 text-brand-100" href="plugins.html">Plugin Directory</a></li>
+              <p class="text-xs uppercase tracking-widest text-[#787774] mb-3">Navigation</p>
+              <ul class="space-y-1 text-sm">
+                <li><a class="sidebar-link block px-3 py-2 text-[#111111] hover:bg-[#F7F6F3] rounded-md" href="index.html">Documentation Home</a></li>
+                <li><a class="sidebar-link block px-3 py-2 bg-[#F7F6F3] text-[#111111] rounded-md" href="plugins.html">Plugin Directory</a></li>
               </ul>
             </div>
             <div>
-              <p class="text-xs uppercase tracking-widest text-slate-500 mb-2">Popular Tags</p>
+              <p class="text-xs uppercase tracking-widest text-[#787774] mb-3">Popular Tags</p>
               <div id="sidebarTags" class="flex flex-wrap gap-2">
               </div>
             </div>
@@ -70,32 +127,32 @@
       </aside>
 
       <div class="flex-1 flex flex-col">
-        <header class="border-b border-slate-800 px-6 py-4 flex items-center justify-between">
-          <button id="mobileToggle" class="lg:hidden btn btn-sm btn-outline border-brand-400 text-brand-100" type="button">Menu</button>
+        <header class="border-b border-[#EAEAEA] px-8 py-6 flex items-center justify-between bg-white">
+          <button id="mobileToggle" class="lg:hidden px-4 py-2 text-sm border border-[#EAEAEA] rounded-md" type="button">Menu</button>
           <div>
-            <p class="text-xs uppercase tracking-[0.4em] text-brand-400">Plugins</p>
-            <h1 class="text-2xl font-display font-semibold text-white">Plugin Directory</h1>
+            <p class="text-xs uppercase tracking-[0.2em] text-[#787774]">Plugins</p>
+            <h1 class="text-2xl font-semibold text-[#111111]">Plugin Directory</h1>
           </div>
         </header>
 
-        <main class="flex-1 overflow-y-auto">
-          <section class="border-b border-slate-900 bg-slate-900/60 px-6 py-6">
+        <main class="flex-1 overflow-y-auto bg-[#FBFBFA]">
+          <section class="border-b border-[#EAEAEA] bg-white px-8 py-12">
             <div class="max-w-6xl">
               <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
                 <div class="flex-1 w-full">
-                  <input id="searchInput" type="text" placeholder="Search plugins by name or description..." class="w-full rounded-2xl bg-slate-950/70 border border-slate-700 px-4 py-3 text-slate-100 placeholder:text-slate-500 focus:border-brand-400 focus:outline-none" />
+                  <input id="searchInput" type="text" placeholder="Search plugins by name or description..." class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] placeholder:text-[#787774] focus:outline-none focus:border-[#111111] transition-colors" />
                 </div>
                 <div class="flex flex-wrap gap-2" id="tagFilters">
                 </div>
               </div>
-              <p class="text-sm text-slate-500 mt-3"><span id="pluginCount">0</span> plugins</p>
+              <p class="text-sm text-[#787774] mt-3"><span id="pluginCount">0</span> plugins</p>
             </div>
           </section>
 
-          <div class="max-w-6xl px-6 py-10">
+          <div class="max-w-6xl px-8 py-12">
             <div id="pluginGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
             </div>
-            <div id="noResults" class="hidden text-center py-12 text-slate-500">
+            <div id="noResults" class="hidden text-center py-12 text-[#787774]">
               <p class="text-xl">No plugins found</p>
               <p class="text-sm mt-2">Try adjusting your search or filters</p>
             </div>
@@ -104,20 +161,26 @@
       </div>
     </div>
 
-    <div id="mobileDrawer" class="fixed inset-0 bg-black/60 hidden z-40 lg:hidden">
-      <div class="w-72 bg-slate-950 h-full border-r border-slate-800 p-6 overflow-y-auto">
-        <div class="flex items-center justify-between mb-6">
-          <h2 class="text-white text-xl font-display">Navigate</h2>
-          <button id="drawerClose" class="btn btn-sm btn-ghost">Close</button>
+    <div id="mobileDrawer" class="fixed inset-0 bg-black/40 hidden z-40 lg:hidden">
+      <div class="w-72 bg-white h-full border-r border-[#EAEAEA] p-8 overflow-y-auto">
+        <div class="flex items-center justify-between mb-8">
+          <h2 class="text-[#111111] text-xl font-semibold">Navigate</h2>
+          <button id="drawerClose" class="text-[#787774] text-sm">Close</button>
         </div>
         <div id="drawerNav" class="space-y-6 text-sm">
-          <ul class="space-y-2">
-            <li><a class="sidebar-link block rounded-lg px-3 py-2 hover:bg-brand-500/10 hover:text-brand-100" href="index.html">Documentation Home</a></li>
-            <li><a class="sidebar-link block rounded-lg px-3 py-2 bg-brand-500/20 text-brand-100" href="plugins.html">Plugin Directory</a></li>
+          <ul class="space-y-1">
+            <li><a class="sidebar-link block px-3 py-2 text-[#111111] hover:bg-[#F7F6F3] rounded-md" href="index.html">Documentation Home</a></li>
+            <li><a class="sidebar-link block px-3 py-2 bg-[#F7F6F3] text-[#111111] rounded-md" href="plugins.html">Plugin Directory</a></li>
           </ul>
         </div>
       </div>
     </div>
+
+    <button id="scrollTopBtn" class="scroll-top-btn" aria-label="Scroll to top">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
 
     <script>
       let allPlugins = [];
@@ -154,14 +217,14 @@
         const sidebarTags = document.getElementById('sidebarTags');
         
         container.innerHTML = tags.map(tag => `
-          <button class="tag btn btn-sm ${activeTags.has(tag) ? 'btn-primary' : 'btn-outline border-slate-600 text-slate-300'} text-xs"
+          <button class="tag px-3 py-1 ${activeTags.has(tag) ? 'active' : ''}"
                   data-tag="${tag}" onclick="toggleTag('${tag}')">
             ${tag}
           </button>
         `).join('');
         
         sidebarTags.innerHTML = tags.slice(0, 10).map(tag => `
-          <button class="tag btn btn-xs ${activeTags.has(tag) ? 'btn-primary' : 'btn-ghost text-slate-400'} text-xs"
+          <button class="tag px-3 py-1 ${activeTags.has(tag) ? 'active' : ''}"
                   data-tag="${tag}" onclick="toggleTag('${tag}')">
             ${tag}
           </button>
@@ -198,12 +261,12 @@
         
         const grid = document.getElementById('pluginGrid');
         grid.innerHTML = filtered.map(p => `
-          <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 hover:border-brand-500/50 transition-colors">
-            <div class="flex items-start justify-between mb-3">
-              <h3 class="text-lg font-display font-semibold text-white">${p.name}</h3>
+          <div class="bento-card p-6">
+            <div class="flex items-start justify-between mb-4">
+              <h3 class="text-lg font-semibold text-[#111111]">${p.name}</h3>
               <div class="flex items-center gap-2">
-                ${p.has_learn ? '<span class="badge badge-sm badge-primary text-xs">learn</span>' : ''}
-                <button class="copy-btn btn btn-xs btn-ghost text-slate-400 hover:text-brand-400" 
+                ${p.has_learn ? '<span class="tag px-2 py-0.5 text-[10px]">learn</span>' : ''}
+                <button class="copy-btn p-2 text-[#787774] hover:text-[#111111] transition-colors" 
                         data-cmd="supercli plugins install ${p.name}" 
                         onclick="copyCmd(this)"
                         title="Copy install command">
@@ -213,10 +276,10 @@
                 </button>
               </div>
             </div>
-            <p class="text-slate-400 text-sm mb-3 line-clamp-2">${p.description}</p>
-            <div class="bg-slate-950/50 rounded-lg px-3 py-2 mb-3 flex items-center justify-between">
-              <code class="text-xs text-brand-400">supercli plugins install ${p.name}</code>
-              <button class="copy-btn btn btn-xs btn-ghost text-slate-500 hover:text-brand-400" 
+            <p class="text-[#2F3437] text-sm mb-4 line-clamp-2">${p.description}</p>
+            <div class="bg-[#F7F6F3] border border-[#EAEAEA] rounded-md px-3 py-2 mb-4 flex items-center justify-between">
+              <code class="text-xs mono-text text-[#1F6C9F]">supercli plugins install ${p.name}</code>
+              <button class="copy-btn p-1 text-[#787774] hover:text-[#111111] transition-colors" 
                       data-cmd="supercli plugins install ${p.name}" 
                       onclick="copyCmd(this)"
                       title="Copy install command">
@@ -227,7 +290,7 @@
             </div>
             <div class="flex flex-wrap gap-1">
               ${p.tags.slice(0, 5).map(t => `
-                <span class="text-xs px-2 py-1 rounded-full bg-slate-800 text-slate-400">${t}</span>
+                <span class="text-xs px-2 py-1 rounded-full bg-[#F7F6F3] text-[#787774]">${t}</span>
               `).join('')}
             </div>
           </div>
@@ -239,8 +302,8 @@
         try {
           await navigator.clipboard.writeText(cmd);
           const svg = btn.querySelector('svg');
-          svg.classList.add('text-green-400');
-          setTimeout(() => svg.classList.remove('text-green-400'), 1000);
+          svg.classList.add('text-[#346538]');
+          setTimeout(() => svg.classList.remove('text-[#346538]'), 1000);
         } catch {
           console.error('Copy failed');
         }
@@ -257,6 +320,24 @@
       drawerClose?.addEventListener('click', () => mobileDrawer.classList.add('hidden'));
       mobileDrawer?.addEventListener('click', (e) => {
         if (e.target === mobileDrawer) mobileDrawer.classList.add('hidden');
+      });
+
+      // Scroll to top button
+      const scrollTopBtn = document.getElementById('scrollTopBtn');
+      
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+          scrollTopBtn.classList.add('visible');
+        } else {
+          scrollTopBtn.classList.remove('visible');
+        }
+      });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       });
 
       loadPlugins();
