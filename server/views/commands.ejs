@@ -1,36 +1,39 @@
 <%- include("partials/head", { title: "Commands" }) %>
 
-<div class="flex justify-between items-center mb-6">
-  <h1 class="text-2xl font-bold">Commands</h1>
-  <a href="/api/commands/new" class="btn btn-primary btn-sm">+ Create Command</a>
+<div class="flex justify-between items-center mb-8">
+  <div>
+    <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Management</p>
+    <h1 class="text-2xl editorial-heading text-[#111111]">Commands</h1>
+  </div>
+  <a href="/api/commands/new" class="btn btn-primary">+ Create Command</a>
 </div>
 
-<div class="overflow-x-auto">
-  <table class="table table-zebra w-full">
+<div class="bento-card overflow-hidden">
+  <table class="w-full">
     <thead>
-      <tr>
-        <th>Namespace</th>
-        <th>Resource</th>
-        <th>Action</th>
-        <th>Adapter</th>
-        <th>Description</th>
-        <th>Actions</th>
+      <tr class="border-b border-[#EAEAEA] bg-[#F7F6F3]">
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Namespace</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Resource</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Action</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Adapter</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Description</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Actions</th>
       </tr>
     </thead>
     <tbody>
       <% if (commands.length === 0) { %>
-        <tr><td colspan="6" class="text-center opacity-60">No commands yet. Create one to get started.</td></tr>
+        <tr><td colspan="6" class="px-6 py-12 text-center text-[#787774]">No commands yet. Create one to get started.</td></tr>
       <% } %>
       <% commands.forEach(c => { %>
-        <tr>
-          <td><span class="badge badge-outline"><%= c.namespace %></span></td>
-          <td><%= c.resource %></td>
-          <td><code><%= c.action %></code></td>
-          <td><span class="badge badge-ghost badge-sm"><%= c.adapter %></span></td>
-          <td class="max-w-xs truncate opacity-70"><%= c.description || '-' %></td>
-          <td class="flex gap-1">
-            <a href="/api/commands/<%= c._id %>/edit" class="btn btn-xs btn-outline">Edit</a>
-            <button onclick="deleteCommand('<%= c._id %>')" class="btn btn-xs btn-error btn-outline">Delete</button>
+        <tr class="border-b border-[#EAEAEA] hover:bg-[#F7F6F3] transition-colors">
+          <td class="px-6 py-4"><span class="badge badge-outline"><%= c.namespace %></span></td>
+          <td class="px-6 py-4 text-[#111111]"><%= c.resource %></td>
+          <td class="px-6 py-4"><code class="mono-text text-sm text-[#1F6C9F]"><%= c.action %></code></td>
+          <td class="px-6 py-4"><span class="badge"><%= c.adapter %></span></td>
+          <td class="px-6 py-4 max-w-xs truncate text-[#2F3437]"><%= c.description || '-' %></td>
+          <td class="px-6 py-4 flex gap-2">
+            <a href="/api/commands/<%= c._id %>/edit" class="btn text-xs">Edit</a>
+            <button onclick="deleteCommand('<%= c._id %>')" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">Delete</button>
           </td>
         </tr>
       <% }) %>
