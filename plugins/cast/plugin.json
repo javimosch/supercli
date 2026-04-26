@@ -1,0 +1,108 @@
+{
+  "name": "cast",
+  "version": "0.1.0",
+  "description": "Command line tool for broadcasting messages to multiple channels",
+  "source": "https://github.com/ekristen/cast",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cast"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cast",
+    "binary": "cast",
+    "check": "which cast",
+    "install_steps": [
+      "go install github.com/ekristen/cast@latest",
+      "Verify: cast --version",
+      "supercli plugins install ./plugins/cast --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cast",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cast version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cast",
+        "missingDependencyHelp": "Install cast: go install github.com/ekristen/cast@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cast",
+      "resource": "message",
+      "action": "send",
+      "description": "send message via cast",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cast",
+        "missingDependencyHelp": "Install cast: go install github.com/ekristen/cast@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cast",
+      "resource": "channel",
+      "action": "list",
+      "description": "list channel via cast",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cast",
+        "missingDependencyHelp": "Install cast: go install github.com/ekristen/cast@latest",
+        "baseArgs": [
+          "--list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "cast",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via cast",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cast",
+        "missingDependencyHelp": "Install cast: go install github.com/ekristen/cast@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
