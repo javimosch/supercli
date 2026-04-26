@@ -1,0 +1,136 @@
+{
+  "name": "gitcs",
+  "version": "0.1.0",
+  "description": "Git commit statistics and contributor analysis CLI",
+  "source": "https://github.com/hrtsegv/gitcs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gitcs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gitcs",
+    "binary": "gitcs",
+    "check": "which gitcs",
+    "install_steps": [
+      "go install github.com/hrtsegv/gitcs@latest",
+      "Verify: gitcs --version",
+      "supercli plugins install ./plugins/gitcs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitcs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitcs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitcs",
+        "missingDependencyHelp": "Install gitcs: go install github.com/hrtsegv/gitcs@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitcs",
+      "resource": "repo",
+      "action": "analyze",
+      "description": "analyze repo via gitcs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitcs",
+        "missingDependencyHelp": "Install gitcs: go install github.com/hrtsegv/gitcs@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gitcs",
+      "resource": "contributor",
+      "action": "stats",
+      "description": "stats contributor via gitcs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitcs",
+        "missingDependencyHelp": "Install gitcs: go install github.com/hrtsegv/gitcs@latest",
+        "baseArgs": [
+          "--contributors"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gitcs",
+      "resource": "commit",
+      "action": "timeline",
+      "description": "timeline commit via gitcs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitcs",
+        "missingDependencyHelp": "Install gitcs: go install github.com/hrtsegv/gitcs@latest",
+        "baseArgs": [
+          "--timeline"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gitcs",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via gitcs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitcs",
+        "missingDependencyHelp": "Install gitcs: go install github.com/hrtsegv/gitcs@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

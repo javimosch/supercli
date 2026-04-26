@@ -1,0 +1,108 @@
+{
+  "name": "hssp",
+  "version": "0.1.0",
+  "description": "HTTP server security probe and header analyzer",
+  "source": "https://github.com/sterchelen/hssp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hssp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hssp",
+    "binary": "hssp",
+    "check": "which hssp",
+    "install_steps": [
+      "go install github.com/sterchelen/hssp@latest",
+      "Verify: hssp --version",
+      "supercli plugins install ./plugins/hssp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hssp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hssp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hssp",
+        "missingDependencyHelp": "Install hssp: go install github.com/sterchelen/hssp@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "hssp",
+      "resource": "url",
+      "action": "probe",
+      "description": "probe url via hssp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hssp",
+        "missingDependencyHelp": "Install hssp: go install github.com/sterchelen/hssp@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "hssp",
+      "resource": "url",
+      "action": "scan",
+      "description": "scan url via hssp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hssp",
+        "missingDependencyHelp": "Install hssp: go install github.com/sterchelen/hssp@latest",
+        "baseArgs": [
+          "--scan"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "hssp",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via hssp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hssp",
+        "missingDependencyHelp": "Install hssp: go install github.com/sterchelen/hssp@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
