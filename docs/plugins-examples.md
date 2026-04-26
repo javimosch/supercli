@@ -21,8 +21,8 @@ The beads plugin demonstrates selective command wrapping. It exposes key beads_r
       "resource": "install",
       "action": "steps",
       "description": "Show beads_rust installation steps for LLM automation",
-      "adapter": "builtin",
-      "adapterConfig": { "builtin": "beads_install_steps" },
+      "adapter": "shell",
+      "adapterConfig": { "script": "cat install-guidance.json", "unsafe": true },
       "args": []
     },
     {
@@ -126,7 +126,7 @@ The beads plugin demonstrates selective command wrapping. It exposes key beads_r
 **Key Points**:
 - Uses wrapped commands (selective exposure)
 - JSON parsing for automation
-- Installation step handling via builtin adapter
+- Install guidance via isolated install-guidance.json file
 - Clear error messages with help guidance
 - Multiple related commands under same namespace/resource
 
@@ -159,8 +159,8 @@ The Google Workspace CLI plugin demonstrates full passthrough, giving access to 
       "resource": "install",
       "action": "steps",
       "description": "Show gws installation steps for LLM automation",
-      "adapter": "builtin",
-      "adapterConfig": { "builtin": "gwc_install_steps" },
+      "adapter": "shell",
+      "adapterConfig": { "script": "cat install-guidance.json", "unsafe": true },
       "args": []
     },
     {
@@ -186,7 +186,7 @@ The Google Workspace CLI plugin demonstrates full passthrough, giving access to 
 - Single `_` wildcard command captures all gws functionality
 - Longer timeout for complex operations
 - Passthrough mode passes all arguments directly
-- Builtin adapter for installation guidance
+- Install guidance via isolated install-guidance.json file
 - Minimal manifest for maximum CLI access
 
 **Usage Examples**:
@@ -220,8 +220,8 @@ A minimal passthrough plugin for commit automation.
       "resource": "install",
       "action": "steps",
       "description": "Show commiat installation steps for LLM automation",
-      "adapter": "builtin",
-      "adapterConfig": { "builtin": "commiat_install_steps" },
+      "adapter": "shell",
+      "adapterConfig": { "script": "cat install-guidance.json", "unsafe": true },
       "args": []
     },
     {

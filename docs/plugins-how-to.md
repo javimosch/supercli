@@ -261,19 +261,6 @@ The most common adapter. Executes an external CLI binary.
 | `timeout_ms` | number | Execution timeout in milliseconds |
 | `missingDependencyHelp` | string | Message if binary not found |
 
-### builtin Adapter
-
-For dcli-specific functionality (e.g., showing installation steps).
-
-```json
-{
-  "adapter": "builtin",
-  "adapterConfig": {
-    "builtin": "beads_install_steps"  // Builtin handler key
-  }
-}
-```
-
 ## Argument Mapping
 
 ### Positional Arguments

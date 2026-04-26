@@ -29,6 +29,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
       
@@ -129,6 +130,7 @@
                 <li><a class="sidebar-link block px-3 py-2 text-[#111111] hover:bg-[#F7F6F3] rounded-md" href="#architecture">Architecture</a></li>
                 <li><a class="sidebar-link block px-3 py-2 text-[#111111] hover:bg-[#F7F6F3] rounded-md" href="#cli-usage">CLI Usage</a></li>
                 <li><a class="sidebar-link block px-3 py-2 text-[#111111] hover:bg-[#F7F6F3] rounded-md" href="#plugins">Plugins & Harnesses</a></li>
+                <li><a class="sidebar-link block px-3 py-2 text-[#111111] hover:bg-[#F7F6F3] rounded-md" href="#server">Server</a></li>
               </ul>
             </div>
             <div>
@@ -308,6 +310,14 @@ supercli plugins show &lt;name&gt;</code></pre>
                 </div>
               </div>
             </article>
+
+            <article class="doc-section space-y-8 scroll-reveal" id="server" data-keywords="server commands openapi mcp plugins jobs shell adapter">
+              <div class="space-y-6">
+                <span class="tag px-3 py-1 inline-block">Server</span>
+                <h2 class="editorial-heading text-5xl font-medium text-[#111111]">Server UI</h2>
+              </div>
+              <div id="server-content" class="prose prose-lg max-w-none text-[#2F3437]"></div>
+            </article>
           </div>
         </main>
       </div>
@@ -405,6 +415,19 @@ supercli plugins show &lt;name&gt;</code></pre>
           behavior: 'smooth'
         });
       });
+
+      // Load server documentation dynamically
+      async function loadServerDocs() {
+        try {
+          const res = await fetch('server.md');
+          const markdown = await res.text();
+          const html = marked.parse(markdown);
+          document.getElementById('server-content').innerHTML = html;
+        } catch (err) {
+          document.getElementById('server-content').innerHTML = '<p class="text-red-500">Failed to load server documentation</p>';
+        }
+      }
+      loadServerDocs();
     </script>
   </body>
 </html>
