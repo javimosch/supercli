@@ -1,0 +1,136 @@
+{
+  "name": "ghalint",
+  "version": "0.1.0",
+  "description": "GitHub Actions workflow linter for security best practices",
+  "source": "https://github.com/suzuki-shunsuke/ghalint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ghalint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ghalint",
+    "binary": "ghalint",
+    "check": "which ghalint",
+    "install_steps": [
+      "go install github.com/suzuki-shunsuke/ghalint/cmd/ghalint@latest",
+      "Verify: ghalint --version",
+      "supercli plugins install ./plugins/ghalint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ghalint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ghalint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghalint",
+        "missingDependencyHelp": "Install ghalint: go install github.com/suzuki-shunsuke/ghalint/cmd/ghalint@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghalint",
+      "resource": "workflow",
+      "action": "lint",
+      "description": "lint workflow via ghalint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghalint",
+        "missingDependencyHelp": "Install ghalint: go install github.com/suzuki-shunsuke/ghalint/cmd/ghalint@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ghalint",
+      "resource": "policy",
+      "action": "run",
+      "description": "run policy via ghalint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghalint",
+        "missingDependencyHelp": "Install ghalint: go install github.com/suzuki-shunsuke/ghalint/cmd/ghalint@latest",
+        "baseArgs": [
+          "run"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ghalint",
+      "resource": "config",
+      "action": "show",
+      "description": "show config via ghalint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghalint",
+        "missingDependencyHelp": "Install ghalint: go install github.com/suzuki-shunsuke/ghalint/cmd/ghalint@latest",
+        "baseArgs": [
+          "--config"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "ghalint",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via ghalint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghalint",
+        "missingDependencyHelp": "Install ghalint: go install github.com/suzuki-shunsuke/ghalint/cmd/ghalint@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
