@@ -31,7 +31,7 @@ describe("configService", () => {
       return []
     })
     mockStorage.get.mockImplementation((key) => {
-      if (key === "command:n.r.a") return { namespace: "n", resource: "r", action: "a", adapter: "builtin" }
+      if (key === "command:n.r.a") return { namespace: "n", resource: "r", action: "a", adapter: "process" }
       if (key === "mcp:s1") return { name: "s1", command: "npx", args: ["mcp-remote", "u1"], headers: { H: "v" }, env: { E: "1" } }
       if (key === "spec:sp1") return { name: "sp1", url: "u2", auth: "none" }
       if (key === "settings:config_version") return "10"

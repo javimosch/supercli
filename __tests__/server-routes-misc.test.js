@@ -97,7 +97,7 @@ describe("server routes - misc", () => {
     test("POST /:id/execute success", async () => {
       mockStorage.get.mockImplementation((k) => {
         if (k === "plan:p1") return { status: "planned", command: "n.r.a", plan_id: "p1" }
-        if (k === "command:n.r.a") return { adapter: "builtin" }
+        if (k === "command:n.r.a") return { adapter: "process" }
         return null
       })
       executor.execute.mockResolvedValue({ ok: true })
