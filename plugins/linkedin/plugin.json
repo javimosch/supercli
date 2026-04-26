@@ -1,0 +1,112 @@
+{
+  "name": "linkedin",
+  "version": "0.1.0",
+  "description": "Publish text posts to LinkedIn via REST API with OAuth 2.0",
+  "source": "https://developer.linkedin.com",
+  "checks": [
+    { "type": "binary", "name": "node" }
+  ],
+  "install_guidance": {
+    "plugin": "linkedin",
+    "binary": "node",
+    "check": "which node",
+    "install_steps": [
+      "npm install -g node",
+      "Verify: node --version",
+      "supercli plugins install ./plugins/linkedin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "linkedin",
+      "resource": "auth",
+      "action": "url",
+      "description": "Generate LinkedIn OAuth authorization URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["./plugins/linkedin/publish.js", "auth", "url"],
+        "parseJson": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "client-id", "type": "string", "required": true, "description": "LinkedIn OAuth client ID" },
+        { "name": "redirect-port", "type": "number", "required": false, "description": "OAuth redirect port (default: 3000)" }
+      ]
+    },
+    {
+      "namespace": "linkedin",
+      "resource": "auth",
+      "action": "exchange",
+      "description": "Exchange OAuth authorization code for access token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["./plugins/linkedin/publish.js", "auth", "exchange"],
+        "parseJson": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": true, "description": "OAuth authorization code" },
+        { "name": "client-id", "type": "string", "required": true, "description": "LinkedIn OAuth client ID" },
+        { "name": "client-secret", "type": "string", "required": true, "description": "LinkedIn OAuth client secret" },
+        { "name": "redirect-port", "type": "number", "required": false, "description": "OAuth redirect port (default: 3000)" }
+      ]
+    },
+    {
+      "namespace": "linkedin",
+      "resource": "person",
+      "action": "urn",
+      "description": "Fetch LinkedIn person URN from OpenID userinfo endpoint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["./plugins/linkedin/publish.js", "person", "urn"],
+        "parseJson": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "access-token", "type": "string", "required": true, "description": "LinkedIn OAuth access token" }
+      ]
+    },
+    {
+      "namespace": "linkedin",
+      "resource": "post",
+      "action": "create",
+      "description": "Publish a text post to LinkedIn organization page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["./plugins/linkedin/publish.js", "post"],
+        "parseJson": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "access-token", "type": "string", "required": true, "description": "LinkedIn OAuth access token" },
+        { "name": "text", "type": "string", "required": true, "description": "Post body text (max 3000 chars)" },
+        { "name": "org-urn", "type": "string", "required": false, "description": "LinkedIn organization URN (e.g., urn:li:organization:123456789)" },
+        { "name": "person-urn", "type": "string", "required": false, "description": "LinkedIn person URN (e.g., urn:li:person:123456789)" }
+      ]
+    },
+    {
+      "namespace": "linkedin",
+      "resource": "post",
+      "action": "browser",
+      "description": "Publish a text post to LinkedIn via browser automation (puppeteer-core)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["./plugins/linkedin/publish.js", "post", "browser"],
+        "parseJson": true,
+        "timeout_ms": 120000
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Post body text (max 3000 chars)" },
+        { "name": "cookies-file", "type": "string", "required": false, "description": "Path to JSON file with LinkedIn cookies" }
+      ]
+    }
+  ]
+}
