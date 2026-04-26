@@ -1,0 +1,108 @@
+{
+  "name": "drone-ssh",
+  "version": "0.1.0",
+  "description": "Drone CI plugin for executing commands over SSH",
+  "source": "https://github.com/appleboy/drone-ssh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "drone-ssh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "drone-ssh",
+    "binary": "drone-ssh",
+    "check": "which drone-ssh",
+    "install_steps": [
+      "go install github.com/appleboy/drone-ssh@latest",
+      "Verify: drone-ssh --version",
+      "supercli plugins install ./plugins/drone-ssh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "drone-ssh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print drone-ssh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone-ssh",
+        "missingDependencyHelp": "Install drone-ssh: go install github.com/appleboy/drone-ssh@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "drone-ssh",
+      "resource": "server",
+      "action": "exec",
+      "description": "exec server via drone-ssh",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone-ssh",
+        "missingDependencyHelp": "Install drone-ssh: go install github.com/appleboy/drone-ssh@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "drone-ssh",
+      "resource": "config",
+      "action": "validate",
+      "description": "validate config via drone-ssh",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone-ssh",
+        "missingDependencyHelp": "Install drone-ssh: go install github.com/appleboy/drone-ssh@latest",
+        "baseArgs": [
+          "--validate"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "drone-ssh",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via drone-ssh",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "drone-ssh",
+        "missingDependencyHelp": "Install drone-ssh: go install github.com/appleboy/drone-ssh@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "name": "kuake-cli",
+  "version": "0.1.0",
+  "description": "Quick command launcher and alias manager",
+  "source": "https://github.com/zhangjingwei/kuake_cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kuake"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kuake-cli",
+    "binary": "kuake",
+    "check": "which kuake",
+    "install_steps": [
+      "go install github.com/zhangjingwei/kuake_cli@latest",
+      "Verify: kuake --version",
+      "supercli plugins install ./plugins/kuake-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kuake-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kuake-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kuake",
+        "missingDependencyHelp": "Install kuake-cli: go install github.com/zhangjingwei/kuake_cli@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "kuake-cli",
+      "resource": "command",
+      "action": "run",
+      "description": "run command via kuake",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kuake",
+        "missingDependencyHelp": "Install kuake-cli: go install github.com/zhangjingwei/kuake_cli@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kuake-cli",
+      "resource": "alias",
+      "action": "list",
+      "description": "list alias via kuake",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kuake",
+        "missingDependencyHelp": "Install kuake-cli: go install github.com/zhangjingwei/kuake_cli@latest",
+        "baseArgs": [
+          "--list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "kuake-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via kuake",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kuake",
+        "missingDependencyHelp": "Install kuake-cli: go install github.com/zhangjingwei/kuake_cli@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
