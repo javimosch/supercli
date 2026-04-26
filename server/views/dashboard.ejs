@@ -1,0 +1,196 @@
+<%- include("partials/head", { title: "Dashboard" }) %>
+
+<div class="mb-8">
+  <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Overview</p>
+  <h1 class="text-2xl editorial-heading text-[#111111]">Dashboard</h1>
+</div>
+
+<!-- Resource Summary Cards -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <a href="/api/commands" class="bento-card p-5 block no-underline">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">Commands</p>
+    <p class="text-3xl font-semibold text-[#111111]"><%= counts.commands %></p>
+  </a>
+  <a href="/api/mcp" class="bento-card p-5 block no-underline">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">MCP Servers</p>
+    <p class="text-3xl font-semibold text-[#111111]"><%= counts.mcpServers %></p>
+  </a>
+  <a href="/api/specs" class="bento-card p-5 block no-underline">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">OpenAPI Specs</p>
+    <p class="text-3xl font-semibold text-[#111111]"><%= counts.specs %></p>
+  </a>
+  <a href="/api/plugins" class="bento-card p-5 block no-underline">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">Plugins</p>
+    <p class="text-3xl font-semibold text-[#111111]"><%= counts.plugins %></p>
+    <p class="text-xs text-[#787774] mt-1"><%= counts.pluginsEnabled %> enabled</p>
+  </a>
+</div>
+
+<!-- Job Metrics Row -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div class="bento-card p-5">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">Total Jobs</p>
+    <p class="text-3xl font-semibold text-[#111111]"><%= jobs.total %></p>
+  </div>
+  <div class="bento-card p-5">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">Success Rate</p>
+    <p class="text-3xl font-semibold text-[#346538]"><%= jobs.successRate %>%</p>
+  </div>
+  <div class="bento-card p-5">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">Failure Rate</p>
+    <p class="text-3xl font-semibold <%= jobs.failed > 0 ? 'text-red-600' : 'text-[#111111]' %>"><%= jobs.failureRate %>%</p>
+  </div>
+  <div class="bento-card p-5">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-2">Avg Duration</p>
+    <p class="text-3xl font-semibold text-[#111111]"><%= jobs.avgDuration %><span class="text-base text-[#787774] ml-1">ms</span></p>
+  </div>
+</div>
+
+<!-- Charts Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+  <!-- 7-day Trend Chart -->
+  <div class="bento-card p-5 md:col-span-2">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-4">Job Activity (Last 7 Days)</p>
+    <canvas id="trendChart" height="120"></canvas>
+  </div>
+  <!-- Status Pie Chart -->
+  <div class="bento-card p-5">
+    <p class="text-xs uppercase tracking-widest text-[#787774] mb-4">Job Status</p>
+    <% if (jobs.total > 0) { %>
+      <canvas id="statusChart" height="160"></canvas>
+    <% } else { %>
+      <div class="flex items-center justify-center h-40 text-[#787774] text-sm">No jobs yet</div>
+    <% } %>
+  </div>
+</div>
+
+<!-- Top Commands + Recent Jobs -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+  <!-- Top Commands -->
+  <div class="bento-card overflow-hidden">
+    <div class="px-6 py-4 border-b border-[#EAEAEA] bg-[#F7F6F3]">
+      <p class="text-xs uppercase tracking-widest text-[#787774]">Top Commands</p>
+    </div>
+    <% if (topCommands.length === 0) { %>
+      <div class="px-6 py-10 text-center text-[#787774] text-sm">No job data yet</div>
+    <% } else { %>
+      <div class="divide-y divide-[#EAEAEA]">
+        <% topCommands.forEach((cmd, i) => { %>
+          <div class="px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-[#787774] w-4"><%= i + 1 %></span>
+              <code class="mono-text text-sm text-[#1F6C9F]"><%= cmd.command %></code>
+            </div>
+            <div class="flex items-center gap-4 text-xs text-[#787774]">
+              <span><%= cmd.count %> runs</span>
+              <span><%= cmd.avg_ms %>ms avg</span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Recent Jobs -->
+  <div class="bento-card overflow-hidden">
+    <div class="px-6 py-4 border-b border-[#EAEAEA] bg-[#F7F6F3] flex items-center justify-between">
+      <p class="text-xs uppercase tracking-widest text-[#787774]">Recent Jobs</p>
+      <a href="/api/jobs" class="text-xs text-[#787774] hover:text-[#111111] transition-colors">View all →</a>
+    </div>
+    <% if (recentJobs.length === 0) { %>
+      <div class="px-6 py-10 text-center text-[#787774] text-sm">No jobs yet</div>
+    <% } else { %>
+      <div class="divide-y divide-[#EAEAEA]">
+        <% recentJobs.forEach(job => { %>
+          <div class="px-6 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="w-2 h-2 rounded-full flex-shrink-0
+                <%= job.status === 'success' ? 'bg-[#346538]' : job.status === 'failed' ? 'bg-red-500' : 'bg-[#787774]' %>">
+              </span>
+              <code class="mono-text text-xs text-[#1F6C9F] truncate max-w-[160px]"><%= job.command || '—' %></code>
+            </div>
+            <div class="flex items-center gap-3 text-xs text-[#787774] flex-shrink-0">
+              <% if (job.duration_ms) { %><span><%= job.duration_ms %>ms</span><% } %>
+              <span><%= new Date(job.timestamp).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) %></span>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script>
+  const trend = <%- JSON.stringify(trend) %>;
+  const jobs = <%- JSON.stringify(jobs) %>;
+
+  Chart.defaults.font.family = "'Geist', system-ui, sans-serif";
+  Chart.defaults.color = '#787774';
+
+  // Trend line chart
+  const trendCtx = document.getElementById('trendChart');
+  if (trendCtx) {
+    new Chart(trendCtx, {
+      type: 'bar',
+      data: {
+        labels: trend.map(d => d.label),
+        datasets: [
+          {
+            label: 'Success',
+            data: trend.map(d => d.success),
+            backgroundColor: '#EDF3EC',
+            borderColor: '#346538',
+            borderWidth: 1,
+            borderRadius: 4,
+          },
+          {
+            label: 'Failed',
+            data: trend.map(d => d.failed),
+            backgroundColor: '#FEE2E2',
+            borderColor: '#DC2626',
+            borderWidth: 1,
+            borderRadius: 4,
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, padding: 16, font: { size: 11 } } }
+        },
+        scales: {
+          x: { grid: { display: false }, border: { display: false } },
+          y: { grid: { color: '#EAEAEA' }, border: { display: false }, beginAtZero: true, ticks: { stepSize: 1 } }
+        }
+      }
+    });
+  }
+
+  // Status pie chart
+  const statusCtx = document.getElementById('statusChart');
+  if (statusCtx && jobs.total > 0) {
+    const unknown = jobs.total - jobs.success - jobs.failed;
+    new Chart(statusCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Success', 'Failed', 'Unknown'],
+        datasets: [{
+          data: [jobs.success, jobs.failed, unknown],
+          backgroundColor: ['#EDF3EC', '#FEE2E2', '#F7F6F3'],
+          borderColor: ['#346538', '#DC2626', '#EAEAEA'],
+          borderWidth: 1,
+        }]
+      },
+      options: {
+        responsive: true,
+        cutout: '65%',
+        plugins: {
+          legend: { position: 'bottom', labels: { boxWidth: 12, padding: 12, font: { size: 11 } } }
+        }
+      }
+    });
+  }
+</script>
+
+<%- include("partials/foot") %>
