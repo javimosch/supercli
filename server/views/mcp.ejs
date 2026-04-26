@@ -1,60 +1,63 @@
 <%- include("partials/head", { title: "MCP Servers" }) %>
 
 <div id="mcp-app">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold">MCP Servers</h1>
-    <button @click="showForm=!showForm" class="btn btn-primary btn-sm">+ Add Server</button>
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Management</p>
+      <h1 class="text-2xl editorial-heading text-[#111111]">MCP Servers</h1>
+    </div>
+    <button @click="showForm=!showForm" class="btn btn-primary">+ Add Server</button>
   </div>
 
   <!-- Add form -->
-  <div v-if="showForm" class="card bg-base-300 p-4 mb-6">
+  <div v-if="showForm" class="bento-card p-6 mb-6">
     <form @submit.prevent="create">
-      <div class="flex gap-4 items-end mb-3">
-        <div class="form-control flex-1">
-          <label class="label"><span class="label-text">Name</span></label>
-          <input v-model="form.name" class="input input-bordered input-sm" required placeholder="e.g. context-mode">
+      <div class="flex flex-col md:flex-row gap-4 items-end mb-4">
+        <div class="flex-1 w-full">
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Name</label>
+          <input v-model="form.name" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" required placeholder="e.g. context-mode">
         </div>
-        <div class="form-control flex-1">
-          <label class="label"><span class="label-text">URL (HTTP MCP)</span></label>
-          <input v-model="form.url" class="input input-bordered input-sm" placeholder="https://mcp.example.com">
+        <div class="flex-1 w-full">
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">URL (HTTP MCP)</label>
+          <input v-model="form.url" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="https://mcp.example.com">
         </div>
-        <div class="form-control flex-1">
-          <label class="label"><span class="label-text">Command (stdio MCP)</span></label>
-          <input v-model="form.command" class="input input-bordered input-sm" placeholder="e.g. context-mode">
+        <div class="flex-1 w-full">
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Command (stdio MCP)</label>
+          <input v-model="form.command" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="e.g. context-mode">
         </div>
       </div>
       <div class="flex gap-4 items-center">
-        <label class="label cursor-pointer gap-2">
-          <input type="checkbox" v-model="form.stateful" class="checkbox checkbox-sm checkbox-primary">
-          <span class="label-text">Stateful (requires daemon)</span>
+        <label class="flex items-center gap-2 cursor-pointer">
+          <input type="checkbox" v-model="form.stateful" class="w-4 h-4 accent-[#111111]">
+          <span class="text-sm text-[#2F3437]">Stateful (requires daemon)</span>
         </label>
-        <button type="submit" class="btn btn-primary btn-sm">Save</button>
-        <button type="button" @click="showForm=false" class="btn btn-ghost btn-sm">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" @click="showForm=false" class="btn">Cancel</button>
       </div>
     </form>
   </div>
 
-  <div class="overflow-x-auto">
-    <table class="table table-zebra w-full">
+  <div class="bento-card overflow-hidden">
+    <table class="w-full">
       <thead>
-        <tr>
-          <th>Name</th>
-          <th>Source</th>
-          <th>Type</th>
-          <th>Actions</th>
+        <tr class="border-b border-[#EAEAEA] bg-[#F7F6F3]">
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Name</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Source</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Type</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-if="servers.length===0"><td colspan="4" class="text-center opacity-60">No MCP servers registered.</td></tr>
-        <tr v-for="s in servers" :key="s._id">
-          <td><code>{{ s.name }}</code></td>
-          <td class="max-w-xs truncate opacity-70">{{ s.url || s.command || '' }}</td>
-          <td>
-            <span v-if="s.stateful" class="badge badge-primary badge-sm">stateful</span>
-            <span v-else class="badge badge-ghost badge-sm">{{ s.url ? 'http' : 'stdio' }}</span>
+        <tr v-if="servers.length===0"><td colspan="4" class="px-6 py-12 text-center text-[#787774]">No MCP servers registered.</td></tr>
+        <tr v-for="s in servers" :key="s._id" class="border-b border-[#EAEAEA] hover:bg-[#F7F6F3] transition-colors">
+          <td class="px-6 py-4"><code class="mono-text text-sm text-[#1F6C9F]">{{ s.name }}</code></td>
+          <td class="px-6 py-4 max-w-xs truncate text-[#2F3437]">{{ s.url || s.command || '' }}</td>
+          <td class="px-6 py-4">
+            <span v-if="s.stateful" class="badge bg-[#111111] text-white">stateful</span>
+            <span v-else class="badge">{{ s.url ? 'http' : 'stdio' }}</span>
           </td>
-          <td>
-            <button @click="remove(s._id)" class="btn btn-xs btn-error btn-outline">Delete</button>
+          <td class="px-6 py-4">
+            <button @click="remove(s._id)" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">Delete</button>
           </td>
         </tr>
       </tbody>
