@@ -1,0 +1,136 @@
+{
+  "name": "markpdf",
+  "version": "0.1.0",
+  "description": "Watermark PDF files using image or text overlays",
+  "source": "https://github.com/ajaxray/markpdf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "markpdf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "markpdf",
+    "binary": "markpdf",
+    "check": "which markpdf",
+    "install_steps": [
+      "go install github.com/ajaxray/markpdf@latest",
+      "Verify: markpdf --version",
+      "supercli plugins install ./plugins/markpdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "markpdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print markpdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "markpdf",
+        "missingDependencyHelp": "Install markpdf: go install github.com/ajaxray/markpdf@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "markpdf",
+      "resource": "pdf",
+      "action": "watermark",
+      "description": "watermark pdf via markpdf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "markpdf",
+        "missingDependencyHelp": "Install markpdf: go install github.com/ajaxray/markpdf@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "markpdf",
+      "resource": "text",
+      "action": "stamp",
+      "description": "stamp text via markpdf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "markpdf",
+        "missingDependencyHelp": "Install markpdf: go install github.com/ajaxray/markpdf@latest",
+        "baseArgs": [
+          "--text"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "markpdf",
+      "resource": "image",
+      "action": "overlay",
+      "description": "overlay image via markpdf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "markpdf",
+        "missingDependencyHelp": "Install markpdf: go install github.com/ajaxray/markpdf@latest",
+        "baseArgs": [
+          "--image"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "markpdf",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via markpdf",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "markpdf",
+        "missingDependencyHelp": "Install markpdf: go install github.com/ajaxray/markpdf@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
