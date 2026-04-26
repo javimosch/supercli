@@ -17,6 +17,7 @@ function defaultSettings() {
   return {
     max_zip_mb: 10,
     default_hooks_policy: "deny",
+    admin_mode_enabled: false,
   }
 }
 
@@ -114,6 +115,9 @@ async function updateSettings(patch = {}) {
   }
   if (patch.default_hooks_policy !== undefined) {
     next.default_hooks_policy = sanitizeHooksPolicy(patch.default_hooks_policy, next.default_hooks_policy)
+  }
+  if (patch.admin_mode_enabled !== undefined) {
+    next.admin_mode_enabled = patch.admin_mode_enabled === true || patch.admin_mode_enabled === "true"
   }
   const storage = getStorage()
   await storage.set(SETTINGS_KEY, next)

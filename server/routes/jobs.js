@@ -119,4 +119,30 @@ router.get("/:id", async (req, res) => {
   }
 })
 
+// DELETE /api/jobs — prune old jobs (admin mode)
+router.delete("/", async (req, res) => {
+  try {
+    const storage = getStorage()
+    const olderThanDays = parseInt(req.query.older_than) || 7
+    const cutoff = new Date(Date.now() - olderThanDays * 24 * 60 * 60 * 1000)
+    
+    const keys = await storage.listKeys("job:")
+    const jobs = await Promise.all(keys.map(k => storage.get(k)))
+    
+    let pruned = 0
+    for (const job of jobs) {
+      if (!job || !job.timestamp) continue
+      const jobDate = new Date(job.timestamp)
+      if (jobDate < cutoff) {
+        await storage.delete(job._id)
+        pruned++
+      }
+    }
+    
+    res.json({ ok: true, pruned, older_than_days: olderThanDays })
+  } catch (err) {
+    res.status(500).json({ error: err.message })
+  }
+})
+
 module.exports = router

@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const { getStorage } = require("./storage/adapter");
 
+const dashboardRouter = require("./routes/dashboard");
 const commandsRouter = require("./routes/commands");
 const configRouter = require("./routes/config");
 const specsRouter = require("./routes/specs");
@@ -24,6 +25,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/static", express.static(path.join(__dirname, "public")));
 
 // API routes
+app.use("/api/dashboard", dashboardRouter);
 app.use("/api/config", configRouter);
 app.use("/api/commands", commandsRouter);
 app.use("/api/specs", specsRouter);
@@ -36,8 +38,9 @@ app.use("/api/plugins", pluginsRouter);
 // Tree/command endpoints under /api (config router handles them)
 app.use("/api", configRouter);
 
+app.use("/", dashboardRouter);
+
 // UI page redirects
-app.get("/", (req, res) => res.redirect("/api/commands"));
 app.get("/commands", (req, res) => res.redirect("/api/commands"));
 app.get("/commands/new", (req, res) => res.redirect("/api/commands/new"));
 app.get("/specs", (req, res) => res.redirect("/api/specs"));
