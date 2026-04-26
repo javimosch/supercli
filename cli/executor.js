@@ -7,7 +7,6 @@ const ADAPTERS = {
   mcp: () => require("./adapters/mcp"),
   http: () => require("./adapters/http"),
   process: () => require("./adapters/process"),
-  builtin: () => require("./adapters/builtin"),
   shell: () => require("./adapters/shell")
 }
 

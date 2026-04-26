@@ -14,6 +14,7 @@ const { execute } = require("./executor");
 const { buildCapabilities } = require("./help-json");
 const { handleMcpRegistryCommand } = require("./mcp-local");
 const { handlePluginsCommand } = require("./plugins-command");
+const { handleServerCommand } = require("./server-command");
 const { handleHarnessOnboard, handleHarnessOffboard } = require("./harness-onboard");
 const {
   buildLocalPlan,
@@ -235,6 +236,7 @@ function renderTopLevelHelp(config) {
       console.log('  AI: supercli ask "<your natural language query>"   # LLM-powered suggestions (no execution)');
     }
     console.log("  Server: supercli --server");
+    console.log("  Server CLI: supercli server status | supercli server plugins <list|add|remove> | supercli server mcp <list|add|remove> | supercli server commands <list|add|remove> | supercli server jobs <list|prune>");
     console.log(
       "  Flags: --help | --json | --human | --compact | --schema | --help-json | --server\n",
     );
@@ -494,6 +496,18 @@ async function main() {
 
     if (positional[0] === "plugins") {
       await handlePluginsCommand({
+        positional,
+        flags,
+        humanMode,
+        output,
+        outputHumanTable,
+        outputError,
+      });
+      return;
+    }
+
+    if (positional[0] === "server") {
+      await handleServerCommand({
         positional,
         flags,
         humanMode,

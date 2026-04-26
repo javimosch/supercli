@@ -1,4 +1,4 @@
-const SUPPORTED_ADAPTERS = ["http", "openapi", "mcp", "process", "builtin", "shell"]
+const SUPPORTED_ADAPTERS = ["http", "openapi", "mcp", "process", "shell"]
 
 function asInvalid(message, suggestions = []) {
   return Object.assign(new Error(message), {
@@ -91,11 +91,6 @@ function validateAdapterConfig(cmd) {
     if (config.interactiveFlags !== undefined && config.interactiveFlags.some(v => typeof v !== "string")) {
       throw asInvalid("adapterConfig.interactiveFlags values must be strings")
     }
-    return
-  }
-
-  if (adapterName === "builtin") {
-    if (!config.builtin || typeof config.builtin !== "string") throw asInvalid("Builtin adapter requires adapterConfig.builtin")
     return
   }
 
