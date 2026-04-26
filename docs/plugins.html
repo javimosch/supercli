@@ -119,7 +119,12 @@
             </div>
             <div>
               <p class="text-xs uppercase tracking-widest text-[#787774] mb-3">Popular Tags</p>
-              <div id="sidebarTags" class="flex flex-wrap gap-2">
+              <div id="sidebarPopularTags" class="flex flex-wrap gap-2">
+              </div>
+            </div>
+            <div>
+              <p class="text-xs uppercase tracking-widest text-[#787774] mb-3">All Tags</p>
+              <div id="sidebarAllTags" class="flex flex-wrap gap-2 max-h-96 overflow-y-auto">
               </div>
             </div>
           </nav>
@@ -138,9 +143,9 @@
         <main class="flex-1 overflow-y-auto bg-[#FBFBFA]">
           <section class="border-b border-[#EAEAEA] bg-white px-8 py-12">
             <div class="max-w-6xl">
-              <div class="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
-                <div class="flex-1 w-full">
-                  <input id="searchInput" type="text" placeholder="Search plugins by name or description..." class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] placeholder:text-[#787774] focus:outline-none focus:border-[#111111] transition-colors" />
+              <div class="flex flex-col gap-4">
+                <div class="w-full">
+                  <input id="searchInput" type="text" placeholder="Search plugins by name or description..." class="w-full px-8 py-8 bg-[#F7F6F3] border border-[#EAEAEA] rounded-xl text-[#111111] placeholder:text-[#787774] focus:outline-none focus:border-[#111111] transition-colors text-2xl" />
                 </div>
                 <div class="flex flex-wrap gap-2" id="tagFilters">
                 </div>
@@ -206,26 +211,35 @@
           });
         });
         return Object.entries(tags)
-          .sort((a, b) => b[1] - a[1])
-          .slice(0, 20)
-          .map(([tag]) => tag);
+          .sort((a, b) => b[1] - a[1]);
       }
 
       function renderTagFilters() {
-        const tags = getAllTags();
-        const container = document.getElementById('tagFilters');
-        const sidebarTags = document.getElementById('sidebarTags');
+        const tagsWithCounts = getAllTags();
+        const popularTags = tagsWithCounts.slice(0, 20).map(([tag]) => tag);
+        const allTags = tagsWithCounts.map(([tag]) => tag);
         
-        container.innerHTML = tags.map(tag => `
+        const container = document.getElementById('tagFilters');
+        const sidebarPopularTags = document.getElementById('sidebarPopularTags');
+        const sidebarAllTags = document.getElementById('sidebarAllTags');
+        
+        container.innerHTML = popularTags.map(tag => `
           <button class="tag px-3 py-1 ${activeTags.has(tag) ? 'active' : ''}"
-                  data-tag="${tag}" onclick="toggleTag('${tag}')">
+                  data-tag="${tag}" onclick="toggleTag('${tag}')" title="Filter by tag: ${tag}">
             ${tag}
           </button>
         `).join('');
         
-        sidebarTags.innerHTML = tags.slice(0, 10).map(tag => `
+        sidebarPopularTags.innerHTML = popularTags.map(tag => `
           <button class="tag px-3 py-1 ${activeTags.has(tag) ? 'active' : ''}"
-                  data-tag="${tag}" onclick="toggleTag('${tag}')">
+                  data-tag="${tag}" onclick="toggleTag('${tag}')" title="Filter by tag: ${tag}">
+            ${tag}
+          </button>
+        `).join('');
+        
+        sidebarAllTags.innerHTML = allTags.map(tag => `
+          <button class="tag px-3 py-1 ${activeTags.has(tag) ? 'active' : ''}"
+                  data-tag="${tag}" onclick="toggleTag('${tag}')" title="Filter by tag: ${tag}">
             ${tag}
           </button>
         `).join('');
@@ -265,7 +279,8 @@
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-lg font-semibold text-[#111111]">${p.name}</h3>
               <div class="flex items-center gap-2">
-                ${p.has_learn ? '<span class="tag px-2 py-0.5 text-[10px]">learn</span>' : ''}
+                ${p.score ? `<span class="px-2 py-0.5 bg-[#EDF3EC] text-[#346538] rounded-full text-xs font-semibold" title="Plugin quality score (out of 12)">${p.score.value}/12</span>` : ''}
+                ${p.has_learn ? '<span class="tag px-2 py-0.5 text-[10px]" title="Has quickstart skill guide">learn</span>' : ''}
                 <button class="copy-btn p-2 text-[#787774] hover:text-[#111111] transition-colors" 
                         data-cmd="supercli plugins install ${p.name}" 
                         onclick="copyCmd(this)"
@@ -277,6 +292,14 @@
               </div>
             </div>
             <p class="text-[#2F3437] text-sm mb-4 line-clamp-2">${p.description}</p>
+            ${p.score ? `
+            <div class="flex flex-wrap gap-2 mb-4 text-xs">
+              <span class="px-2 py-1 rounded bg-[#F7F6F3] text-[#787774]" title="Programming language">${p.score.language}</span>
+              <span class="px-2 py-1 rounded bg-[#F7F6F3] text-[#787774]" title="Installation complexity">${p.score.complexity}</span>
+              ${p.score.json_support ? '<span class="px-2 py-1 rounded bg-[#E1F3FE] text-[#1F6C9F]" title="Supports JSON input/output">json</span>' : ''}
+              ${p.score.no_interactive ? '<span class="px-2 py-1 rounded bg-[#EDF3EC] text-[#346538]" title="No interactive prompts">no-interactive</span>' : ''}
+            </div>
+            ` : ''}
             <div class="bg-[#F7F6F3] border border-[#EAEAEA] rounded-md px-3 py-2 mb-4 flex items-center justify-between">
               <code class="text-xs mono-text text-[#1F6C9F]">supercli plugins install ${p.name}</code>
               <button class="copy-btn p-1 text-[#787774] hover:text-[#111111] transition-colors" 
@@ -290,7 +313,7 @@
             </div>
             <div class="flex flex-wrap gap-1">
               ${p.tags.slice(0, 5).map(t => `
-                <span class="text-xs px-2 py-1 rounded-full bg-[#F7F6F3] text-[#787774]">${t}</span>
+                <span class="text-xs px-2 py-1 rounded-full bg-[#F7F6F3] text-[#787774]" title="Tag: ${t}">${t}</span>
               `).join('')}
             </div>
           </div>
