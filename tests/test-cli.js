@@ -292,7 +292,7 @@ test("gwc plugin supports install/show/doctor and passthrough", () => {
   assert(passData.data.args[0] === "drive", "gwc passthrough should preserve positional args");
 
   const installSteps = runNoServer("gwc install steps --json", { env });
-  assert(installSteps.ok, "gwc install steps should use builtin command");
+  assert(installSteps.ok, "gwc install steps should use shell command");
   const installData = JSON.parse(installSteps.output);
   assert(Array.isArray(installData.data.install_steps), "gwc install steps should include install steps");
 

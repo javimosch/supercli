@@ -48,8 +48,8 @@ function makeRemotePluginRepo() {
         resource: "install",
         action: "steps",
         description: "Returns install guidance",
-        adapter: "builtin",
-        adapterConfig: { builtin: "beads_install_steps" },
+        adapter: "shell",
+        adapterConfig: { script: "cat install-guidance.json", unsafe: true },
         args: []
       }
     ]
