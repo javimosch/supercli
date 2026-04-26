@@ -1,0 +1,165 @@
+{
+  "name": "twarc",
+  "version": "0.1.0",
+  "description": "CLI tool for archiving Twitter/X data",
+  "source": "https://github.com/DocNow/twarc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "twarc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "twarc",
+    "binary": "twarc",
+    "check": "which twarc",
+    "install_steps": [
+      "pip install twarc",
+      "Verify: twarc --version",
+      "supercli plugins install ./plugins/twarc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "twarc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print twarc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twarc",
+        "missingDependencyHelp": "Install twarc: pip install twarc",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "twarc",
+      "resource": "configure",
+      "action": "run",
+      "description": "Configure twarc with X API credentials",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twarc",
+        "missingDependencyHelp": "Install twarc: pip install twarc",
+        "baseArgs": [
+          "configure"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "twarc",
+      "resource": "timeline",
+      "action": "export",
+      "description": "Export user timeline to JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twarc",
+        "missingDependencyHelp": "Install twarc: pip install twarc",
+        "baseArgs": [
+          "timeline"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true,
+          "description": "Twitter/X username (without @)"
+        },
+        {
+          "name": "output_file",
+          "type": "string",
+          "required": false,
+          "description": "Output file path"
+        }
+      ]
+    },
+    {
+      "namespace": "twarc",
+      "resource": "timeline",
+      "action": "export_csv",
+      "description": "Export user timeline to CSV",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twarc",
+        "missingDependencyHelp": "Install twarc: pip install twarc",
+        "baseArgs": [
+          "timeline",
+          "--format",
+          "csv"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true,
+          "description": "Twitter/X username (without @)"
+        },
+        {
+          "name": "output_file",
+          "type": "string",
+          "required": false,
+          "description": "Output file path"
+        }
+      ]
+    },
+    {
+      "namespace": "twarc",
+      "resource": "help",
+      "action": "show",
+      "description": "Show twarc help",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twarc",
+        "missingDependencyHelp": "Install twarc: pip install twarc",
+        "baseArgs": [
+          "--help"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": []
+    },
+    {
+      "namespace": "twarc",
+      "resource": "_",
+      "action": "_",
+      "description": "Run any twarc command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twarc",
+        "missingDependencyHelp": "Install twarc: pip install twarc",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
