@@ -185,21 +185,6 @@ describe("adapter-schema", () => {
     ).not.toThrow();
   });
 
-  test("builtin adapter validation", () => {
-    expect(() =>
-      validateAdapterConfig({
-        adapter: "builtin",
-        adapterConfig: { builtin: 1 },
-      }),
-    ).toThrow(/requires adapterConfig.builtin/);
-    expect(() =>
-      validateAdapterConfig({
-        adapter: "builtin",
-        adapterConfig: { builtin: "b" },
-      }),
-    ).not.toThrow();
-  });
-
   test("shell adapter validation", () => {
     expect(() =>
       validateAdapterConfig({

@@ -7,7 +7,6 @@ jest.mock("../cli/adapter-schema")
 // Mock adapters
 const mockAdapters = {
   process: { execute: jest.fn() },
-  builtin: { execute: jest.fn() },
   shell: { execute: jest.fn() },
   http: { execute: jest.fn() },
   mcp: { execute: jest.fn() },
@@ -15,7 +14,6 @@ const mockAdapters = {
 }
 
 jest.mock("../cli/adapters/process", () => mockAdapters.process, { virtual: true })
-jest.mock("../cli/adapters/builtin", () => mockAdapters.builtin, { virtual: true })
 jest.mock("../cli/adapters/shell", () => mockAdapters.shell, { virtual: true })
 jest.mock("../cli/adapters/http", () => mockAdapters.http, { virtual: true })
 jest.mock("../cli/adapters/mcp", () => mockAdapters.mcp, { virtual: true })
@@ -67,13 +65,13 @@ describe("executor", () => {
       config: {
         commands: [
           { namespace: "ns1", resource: "res1", action: "act1", adapter: "process" },
-          { namespace: "ns2", resource: "res2", action: "act2", adapter: "builtin" }
+          { namespace: "ns2", resource: "res2", action: "act2", adapter: "process" }
         ]
       }
     }
 
     mockAdapters.process.execute.mockResolvedValue({ data: "result1" })
-    mockAdapters.builtin.execute.mockResolvedValue({ data: "result2" })
+    mockAdapters.process.execute.mockResolvedValue({ data: "result2" })
 
     const result = await execute(workflow, { initial: "flag" }, context)
 
@@ -82,7 +80,7 @@ describe("executor", () => {
     expect(result.steps[1].result).toEqual({ data: "result2" })
     
     // Verify data piping and merging
-    expect(mockAdapters.builtin.execute).toHaveBeenCalledWith(
+    expect(mockAdapters.process.execute).toHaveBeenCalledWith(
       expect.objectContaining({ namespace: "ns2" }),
       expect.objectContaining({ initial: "flag", extra: "val", data: "result1" }),
       context
@@ -101,19 +99,19 @@ describe("executor", () => {
     const context = {
       config: {
         commands: [
-          { namespace: "ns", resource: "res", action: "act1", adapter: "builtin" },
-          { namespace: "ns", resource: "res", action: "act2", adapter: "builtin" }
+          { namespace: "ns", resource: "res", action: "act1", adapter: "process" },
+          { namespace: "ns", resource: "res", action: "act2", adapter: "process" }
         ]
       }
     }
 
-    mockAdapters.builtin.execute
+    mockAdapters.process.execute
       .mockResolvedValueOnce({ data: "first-result" })
       .mockResolvedValueOnce({ data: "second-result" })
 
     await execute(workflow, { user: "Alice" }, context)
 
-    expect(mockAdapters.builtin.execute).toHaveBeenLastCalledWith(
+    expect(mockAdapters.process.execute).toHaveBeenLastCalledWith(
       expect.anything(),
       expect.objectContaining({
         greeting: "Hello Alice",
@@ -135,19 +133,19 @@ describe("executor", () => {
     const context = {
       config: {
         commands: [
-          { namespace: "ns", resource: "res", action: "act1", adapter: "builtin" },
-          { namespace: "ns", resource: "res", action: "act2", adapter: "builtin" }
+          { namespace: "ns", resource: "res", action: "act1", adapter: "process" },
+          { namespace: "ns", resource: "res", action: "act2", adapter: "process" }
         ]
       }
     }
 
-    mockAdapters.builtin.execute
+    mockAdapters.process.execute
       .mockResolvedValueOnce({ data: "result" })
       .mockResolvedValueOnce({ ok: true })
 
     await execute(workflow, {}, context)
 
-    expect(mockAdapters.builtin.execute).toHaveBeenLastCalledWith(
+    expect(mockAdapters.process.execute).toHaveBeenLastCalledWith(
       expect.anything(),
       expect.objectContaining({
         info: "Val is "
@@ -167,16 +165,16 @@ describe("executor", () => {
     const context = {
       config: {
         commands: [
-          { namespace: "ns", resource: "res", action: "act", adapter: "builtin" }
+          { namespace: "ns", resource: "res", action: "act", adapter: "process" }
         ]
       }
     }
 
-    mockAdapters.builtin.execute.mockResolvedValue({ ok: true })
+    mockAdapters.process.execute.mockResolvedValue({ ok: true })
 
     await execute(workflow, {}, context)
 
-    expect(mockAdapters.builtin.execute).toHaveBeenCalledWith(
+    expect(mockAdapters.process.execute).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({
         info: "Val is "
@@ -197,20 +195,20 @@ describe("executor", () => {
     const context = {
       config: {
         commands: [
-          { namespace: "ns", resource: "res", action: "act1", adapter: "builtin" },
-          { namespace: "ns", resource: "res", action: "act2", adapter: "builtin" }
+          { namespace: "ns", resource: "res", action: "act1", adapter: "process" },
+          { namespace: "ns", resource: "res", action: "act2", adapter: "process" }
         ]
       }
     }
 
     // result.data is a string, not an object, so data.sub should hit line 108
-    mockAdapters.builtin.execute
+    mockAdapters.process.execute
       .mockResolvedValueOnce({ data: "not-an-object" })
       .mockResolvedValueOnce({ ok: true })
 
     await execute(workflow, {}, context)
 
-    expect(mockAdapters.builtin.execute).toHaveBeenLastCalledWith(
+    expect(mockAdapters.process.execute).toHaveBeenLastCalledWith(
       expect.anything(),
       expect.objectContaining({
         info: "Val is "
