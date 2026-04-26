@@ -1,0 +1,111 @@
+{
+  "name": "zmk-viewer",
+  "version": "0.1.0",
+  "description": "Generate preview images from ZMK keymap files",
+  "source": "https://github.com/MrMarble/zmk-viewer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zmk-viewer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zmk-viewer",
+    "binary": "zmk-viewer",
+    "check": "which zmk-viewer",
+    "install_steps": [
+      "go install github.com/MrMarble/zmk-viewer@latest",
+      "Verify: zmk-viewer --version",
+      "supercli plugins install ./plugins/zmk-viewer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zmk-viewer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zmk-viewer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zmk-viewer",
+        "missingDependencyHelp": "Install zmk-viewer: go install github.com/MrMarble/zmk-viewer@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "zmk-viewer",
+      "resource": "keymap",
+      "action": "generate",
+      "description": "generate keymap via zmk-viewer",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zmk-viewer",
+        "missingDependencyHelp": "Install zmk-viewer: go install github.com/MrMarble/zmk-viewer@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "zmk-viewer",
+      "resource": "board",
+      "action": "list",
+      "description": "list board via zmk-viewer",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zmk-viewer",
+        "missingDependencyHelp": "Install zmk-viewer: go install github.com/MrMarble/zmk-viewer@latest",
+        "baseArgs": [
+          "--list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "zmk-viewer",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via zmk-viewer",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zmk-viewer",
+        "missingDependencyHelp": "Install zmk-viewer: go install github.com/MrMarble/zmk-viewer@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
