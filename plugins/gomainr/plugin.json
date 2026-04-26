@@ -1,0 +1,136 @@
+{
+  "name": "gomainr",
+  "version": "0.1.0",
+  "description": "CLI app that checks domain availability for keyword configurations",
+  "source": "https://github.com/MichaelThessel/gomainr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gomainr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gomainr",
+    "binary": "gomainr",
+    "check": "which gomainr",
+    "install_steps": [
+      "go install github.com/MichaelThessel/gomainr@latest",
+      "Verify: gomainr --version",
+      "supercli plugins install ./plugins/gomainr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gomainr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gomainr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gomainr",
+        "missingDependencyHelp": "Install gomainr: go install github.com/MichaelThessel/gomainr@latest",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "gomainr",
+      "resource": "domain",
+      "action": "check",
+      "description": "check domain via gomainr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gomainr",
+        "missingDependencyHelp": "Install gomainr: go install github.com/MichaelThessel/gomainr@latest",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gomainr",
+      "resource": "keyword",
+      "action": "generate",
+      "description": "generate keyword via gomainr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gomainr",
+        "missingDependencyHelp": "Install gomainr: go install github.com/MichaelThessel/gomainr@latest",
+        "baseArgs": [
+          "--generate"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gomainr",
+      "resource": "config",
+      "action": "show",
+      "description": "show config via gomainr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gomainr",
+        "missingDependencyHelp": "Install gomainr: go install github.com/MichaelThessel/gomainr@latest",
+        "baseArgs": [
+          "--config"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "gomainr",
+      "resource": "_",
+      "action": "_",
+      "description": "_ _ via gomainr",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gomainr",
+        "missingDependencyHelp": "Install gomainr: go install github.com/MichaelThessel/gomainr@latest",
+        "passthrough": true,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
