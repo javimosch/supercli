@@ -236,7 +236,7 @@ function renderTopLevelHelp(config) {
       console.log('  AI: supercli ask "<your natural language query>"   # LLM-powered suggestions (no execution)');
     }
     console.log("  Server: supercli --server");
-    console.log("  Server CLI: supercli server status | supercli server plugins <list|add|remove> | supercli server mcp <list|add|remove> | supercli server commands <list|add|remove> | supercli server jobs <list|prune>");
+    console.log("  Server CLI: supercli server status | supercli server plugins <list|add|remove> | supercli server mcp <list|add|remove> | supercli server commands <list|add|remove> | supercli server jobs <list|prune> | supercli server adapters <list|add|remove|update> | supercli server adapters packages <list|add|remove> <name>");
     console.log(
       "  Flags: --help | --json | --human | --compact | --schema | --help-json | --server\n",
     );

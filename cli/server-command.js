@@ -17,6 +17,7 @@ async function serverFetch(endpoint, options = {}) {
     ...options,
     headers: {
       "Content-Type": "application/json",
+      "Accept": "application/json",
       ...options.headers,
     },
   })
@@ -76,6 +77,8 @@ async function handleServerCommand(options) {
         return await handleOpenapi({ action, arg, flags, humanMode, output })
       case "jobs":
         return await handleJobs({ action, flags, humanMode, output, outputHumanTable })
+      case "adapters":
+        return await handleAdapters({ action, arg, flags, humanMode, output, outputHumanTable, positional })
       default:
         outputError({ code: 85, type: "invalid_argument", message: `Unknown server resource: ${resource}`, recoverable: false })
         return true
@@ -390,6 +393,168 @@ async function handleJobs({ action, flags, humanMode, output, outputHumanTable }
   }
 
   throw new Error(`Unknown jobs action: ${action}. Use: list, prune`)
+}
+
+async function handleAdapters({ action, arg, flags, humanMode, output, outputHumanTable, positional }) {
+  if (action === "list") {
+    const data = await serverFetch("/api/adapters?format=json")
+    if (humanMode) {
+      console.log("\n  ⚡ Adapters\n")
+      outputHumanTable(data.adapters, [
+        { key: "name", label: "Name" },
+        { key: "execution_context", label: "Context" },
+        { key: "timeout_ms", label: "Timeout" },
+        { key: "allow_network", label: "Network" },
+      ])
+      console.log("")
+    } else {
+      output(data)
+    }
+    return true
+  }
+
+  if (action === "add") {
+    let payload
+    const jsonPath = flags["from-file"]
+    const sourcePath = flags["source-file"]
+    const jsonData = positional[3]
+
+    if (jsonPath) {
+      payload = readJsonFile(jsonPath)
+      if (sourcePath) {
+        payload.source = fs.readFileSync(path.resolve(sourcePath), "utf-8")
+      }
+    } else if (sourcePath) {
+      if (!jsonData) {
+        throw new Error("Usage: supercli server adapters add '{metadata}' --source-file <path>")
+      }
+      payload = JSON.parse(jsonData)
+      payload.source = fs.readFileSync(path.resolve(sourcePath), "utf-8")
+    } else if (flags["from-stdin"]) {
+      let stdinData = ""
+      for await (const chunk of process.stdin) {
+        stdinData += chunk
+      }
+      payload = JSON.parse(stdinData)
+    } else if (jsonData) {
+      payload = JSON.parse(jsonData)
+    } else {
+      throw new Error("Usage: supercli server adapters add '{json}' or --from-file <path> or --source-file <path>")
+    }
+
+    if (!payload.name || !payload.source) {
+      throw new Error("Adapter requires 'name' and 'source' fields")
+    }
+
+    const result = await serverFetch("/api/adapters", {
+      method: "POST",
+      body: JSON.stringify(payload),
+    })
+    output(result)
+    return true
+  }
+
+  if (action === "remove") {
+    const adapterName = positional[3]
+    if (!adapterName) {
+      throw new Error("Usage: supercli server adapters remove <name>")
+    }
+    const result = await serverFetch(`/api/adapters/${encodeURIComponent(adapterName)}`, {
+      method: "DELETE",
+    })
+    output(result)
+    return true
+  }
+
+  if (action === "update") {
+    const adapterName = positional[3]
+    const updateData = positional[4]
+    if (!adapterName) {
+      throw new Error("Usage: supercli server adapters update <name> '{json}' or --from-file <path>")
+    }
+    let payload
+    const jsonPath = flags["from-file"]
+    const sourcePath = flags["source-file"]
+
+    if (jsonPath) {
+      payload = readJsonFile(jsonPath)
+      if (sourcePath) {
+        payload.source = fs.readFileSync(path.resolve(sourcePath), "utf-8")
+      }
+    } else if (sourcePath) {
+      payload = JSON.parse(updateData || "{}")
+      payload.source = fs.readFileSync(path.resolve(sourcePath), "utf-8")
+    } else if (flags["from-stdin"]) {
+      let stdinData = ""
+      for await (const chunk of process.stdin) {
+        stdinData += chunk
+      }
+      payload = JSON.parse(stdinData)
+    } else {
+      payload = JSON.parse(updateData || "{}")
+    }
+
+    const result = await serverFetch(`/api/adapters/${encodeURIComponent(adapterName)}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+    })
+    output(result)
+    return true
+  }
+
+  if (action === "packages") {
+    const packageAction = arg
+    const targetAdapterName = positional[4]
+
+    if (!targetAdapterName) {
+      throw new Error("Usage: supercli server adapters packages <list|add|remove> <name>")
+    }
+
+    if (packageAction === "list") {
+      const data = await serverFetch(`/api/adapters/${encodeURIComponent(targetAdapterName)}/packages?format=json`)
+      if (humanMode) {
+        console.log(`\n  ⚡ Packages for ${targetAdapterName}\n`)
+        outputHumanTable(data.packages || [], [
+          { key: "package", label: "Package" },
+          { key: "version", label: "Version" },
+        ])
+        console.log("")
+      } else {
+        output(data)
+      }
+      return true
+    }
+
+    if (packageAction === "add") {
+      const packageName = flags.package
+      const version = flags.version
+      if (!packageName) {
+        throw new Error("Usage: supercli server adapters packages add <name> --package <pkg> --version <ver>")
+      }
+      const result = await serverFetch(`/api/adapters/${encodeURIComponent(targetAdapterName)}/packages`, {
+        method: "POST",
+        body: JSON.stringify({ package: packageName, version }),
+      })
+      output(result)
+      return true
+    }
+
+    if (packageAction === "remove") {
+      const packageName = flags.package
+      if (!packageName) {
+        throw new Error("Usage: supercli server adapters packages remove <name> --package <pkg>")
+      }
+      const result = await serverFetch(`/api/adapters/${encodeURIComponent(targetAdapterName)}/packages/${encodeURIComponent(packageName)}`, {
+        method: "DELETE",
+      })
+      output(result)
+      return true
+    }
+
+    throw new Error(`Unknown packages action: ${packageAction}. Use: list, add, remove`)
+  }
+
+  throw new Error(`Unknown adapters action: ${action}. Use: list, add, remove, update, packages`)
 }
 
 module.exports = { handleServerCommand }
