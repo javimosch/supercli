@@ -1,0 +1,226 @@
+<%- include("partials/head", { title: adapter ? "Edit Adapter" : "New Adapter" }) %>
+
+<div class="max-w-4xl">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Management</p>
+      <h1 class="text-2xl editorial-heading text-[#111111]"><%= adapter ? "Edit Adapter" : "New Adapter" %></h1>
+    </div>
+    <div class="flex gap-2">
+      <% if (adapter) { %>
+        <a href="/api/adapters/<%= adapter.name %>/packages" class="btn">Packages</a>
+      <% } %>
+      <a href="/api/adapters" class="btn">Back</a>
+    </div>
+  </div>
+
+  <div id="adapter-editor">
+    <div v-if="message.text" :class="['alert mb-4', message.type === 'error' ? 'alert-error' : 'alert-success']">
+      <span>{{ message.text }}</span>
+    </div>
+
+    <form @submit.prevent="save" class="flex flex-col gap-4">
+      <div class="form-control">
+        <label class="label"><span class="label-text">Name</span></label>
+        <input v-model="form.name" class="input input-bordered input-sm" required 
+               placeholder="e.g. postgres" :disabled="!!editName"
+               pattern="[a-zA-Z][a-zA-Z0-9_-]*"
+               title="Must start with letter, contain only letters, numbers, underscores, hyphens">
+        <span class="text-xs text-[#787774] mt-1">Unique identifier for this adapter</span>
+      </div>
+
+      <div class="form-control">
+        <label class="label"><span class="label-text">Description</span></label>
+        <input v-model="form.description" class="input input-bordered input-sm" 
+               placeholder="What does this adapter do?">
+      </div>
+
+      <div class="form-control">
+        <label class="label"><span class="label-text">Execution Context</span></label>
+        <div class="flex gap-4 mt-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" v-model="form.execution_context" value="server" class="radio">
+            <span>Server (runs on server, CLI receives result)</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" v-model="form.execution_context" value="cli" class="radio">
+            <span>CLI (syncs to CLI, runs locally)</span>
+          </label>
+        </div>
+        <span class="text-xs text-[#787774] mt-1">
+          {{ form.execution_context === 'server' ? 
+             'Adapter runs on the server. Use for accessing server-side resources like internal databases.' :
+             'Adapter code is synced to CLI and runs locally. Use for accessing user machine resources.' }}
+        </span>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4">
+        <div class="form-control">
+          <label class="label"><span class="label-text">Timeout (ms)</span></label>
+          <input v-model.number="form.timeout_ms" type="number" class="input input-bordered input-sm" 
+                 min="1000" max="300000" step="1000">
+        </div>
+        <div class="form-control">
+          <label class="label"><span class="label-text">Memory Limit (MB)</span></label>
+          <input v-model.number="form.memory_limit_mb" type="number" class="input input-bordered input-sm" 
+                 min="16" max="512" step="16">
+        </div>
+        <div class="form-control">
+          <label class="label"><span class="label-text">Allow Network</span></label>
+          <input v-model="form.allow_network" type="checkbox" class="checkbox">
+        </div>
+      </div>
+
+      <div class="form-control">
+        <label class="label flex justify-between">
+          <span>Source Code</span>
+          <span class="text-xs text-[#787774]">Must export an 'execute' function</span>
+        </label>
+        <div ref="editor" class="border border-[#EAEAEA] rounded" style="height: 400px;"></div>
+        <span class="text-xs text-[#787774] mt-1">
+          The adapter must export an 'execute' function: <code>function execute(cmd, flags, context)</code>
+        </span>
+      </div>
+
+      <div class="flex gap-2 mt-4">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" @click="testAdapter" class="btn" :disabled="form.execution_context === 'cli'">
+          {{ form.execution_context === 'cli' ? 'Test (CLI only)' : 'Test' }}
+        </button>
+        <a href="/api/adapters" class="btn">Cancel</a>
+      </div>
+    </form>
+
+    <div v-if="testResult" class="mt-6 p-4 rounded bg-[#F7F6F3]">
+      <h3 class="text-sm font-medium mb-2">Test Result</h3>
+      <div v-if="testResult.ok" class="text-green-600 text-sm">
+        ✓ Success ({{ testResult.duration_ms }}ms)
+      </div>
+      <div v-else class="text-red-600 text-sm">
+        ✗ Failed ({{ testResult.duration_ms }}ms): {{ testResult.error }}
+      </div>
+      <pre v-if="testResult.result" class="mt-2 p-2 bg-white rounded text-xs overflow-auto">{{ JSON.stringify(testResult.result, null, 2) }}</pre>
+    </div>
+  </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/eclipse.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+
+<script>
+const defaultSource = `function execute(cmd, flags, context) {
+  // cmd: { namespace, resource, action, adapter, adapterConfig, args }
+  // flags: { key: value } - command line arguments
+  // context: { config, ... } - execution context
+
+  // Example: return data
+  return {
+    data: {
+      message: "Hello from custom adapter",
+      flags: flags
+    }
+  }
+}
+
+module.exports = { execute }
+`
+
+const editData = <%- JSON.stringify(adapter || null) %>
+const editName = '<%= adapter ? adapter.name : "" %>'
+
+Vue.createApp({
+  data() {
+    return {
+      editName,
+      form: {
+        name: editData?.name || '',
+        description: editData?.description || '',
+        execution_context: editData?.execution_context || 'server',
+        timeout_ms: editData?.timeout_ms || 30000,
+        memory_limit_mb: editData?.memory_limit_mb || 128,
+        allow_network: editData?.allow_network || false,
+      },
+      source: editData?.source || defaultSource,
+      message: { text: '', type: '' },
+      testResult: null,
+      editor: null,
+    }
+  },
+  mounted() {
+    this.editor = CodeMirror(this.$refs.editor, {
+      value: this.source,
+      mode: 'javascript',
+      theme: 'eclipse',
+      lineNumbers: true,
+      indentUnit: 2,
+      tabSize: 2,
+      lineWrapping: true,
+      viewportMargin: Infinity,
+    })
+    this.editor.on('change', () => {
+      this.source = this.editor.getValue()
+    })
+  },
+  methods: {
+    async save() {
+      this.message.text = ''
+      this.testResult = null
+      
+      const payload = {
+        ...this.form,
+        source: this.source,
+      }
+      
+      try {
+        const url = this.editName ? `/api/adapters/${this.editName}` : '/api/adapters'
+        const method = this.editName ? 'PUT' : 'POST'
+        
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        
+        const data = await res.json()
+        
+        if (!res.ok) {
+          throw new Error(data.error || 'Save failed')
+        }
+        
+        this.message = { text: 'Adapter saved successfully', type: 'success' }
+        
+        if (!this.editName) {
+          setTimeout(() => {
+            window.location.href = `/api/adapters/${data.adapter.name}/edit`
+          }, 500)
+        }
+      } catch (err) {
+        this.message = { text: err.message, type: 'error' }
+      }
+    },
+    
+    async testAdapter() {
+      if (this.form.execution_context === 'cli') return
+      
+      this.testResult = null
+      this.message.text = ''
+      
+      try {
+        const res = await fetch(`/api/adapters/${this.editName}/test`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ flags: { test: true } })
+        })
+        
+        this.testResult = await res.json()
+      } catch (err) {
+        this.testResult = { ok: false, error: err.message, duration_ms: 0 }
+      }
+    }
+  }
+}).mount('#adapter-editor')
+</script>
+
+<%- include("partials/foot") %>

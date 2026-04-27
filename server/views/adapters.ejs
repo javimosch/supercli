@@ -1,0 +1,112 @@
+<%- include("partials/head", { title: "Adapters" }) %>
+
+<div class="flex justify-between items-center mb-8">
+  <div>
+    <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Management</p>
+    <h1 class="text-2xl editorial-heading text-[#111111]">Custom Adapters</h1>
+    <p class="text-sm text-[#787774] mt-1">Create and manage JavaScript adapters for custom integrations</p>
+  </div>
+  <a href="/api/adapters/new" class="btn btn-primary">+ New Adapter</a>
+</div>
+
+<div class="bento-card overflow-hidden">
+  <table class="w-full">
+    <thead>
+      <tr class="border-b border-[#EAEAEA] bg-[#F7F6F3]">
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Name</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Context</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Packages</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Updated</th>
+        <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (adapters.length === 0) { %>
+        <tr><td colspan="5" class="px-6 py-12 text-center text-[#787774]">No adapters yet. Create one to get started.</td></tr>
+      <% } %>
+      <% adapters.forEach(a => { %>
+        <tr class="border-b border-[#EAEAEA] hover:bg-[#F7F6F3] transition-colors">
+          <td class="px-6 py-4">
+            <div class="flex flex-col">
+              <span class="font-medium text-[#111111]"><%= a.name %></span>
+              <% if (a.description) { %>
+                <span class="text-xs text-[#787774] mt-1"><%= a.description %></span>
+              <% } %>
+            </div>
+          </td>
+          <td class="px-6 py-4">
+            <span class="badge <%= a.execution_context === 'cli' ? 'badge-warning' : 'badge-success' %>">
+              <%= a.execution_context %>
+            </span>
+          </td>
+          <td class="px-6 py-4">
+            <span class="mono-text text-sm text-[#2F3437]"><%= a.dependencies.length %> deps</span>
+          </td>
+          <td class="px-6 py-4 text-sm text-[#787774]">
+            <%= new Date(a.updated_at).toLocaleDateString() %>
+          </td>
+          <td class="px-6 py-4 flex gap-2">
+            <a href="/api/adapters/<%= a.name %>/edit" class="btn text-xs">Edit</a>
+            <a href="/api/adapters/<%= a.name %>/packages" class="btn text-xs">Packages</a>
+            <% if (a.execution_context === 'server') { %>
+              <button onclick="testAdapter('<%= a.name %>')" class="btn text-xs">Test</button>
+            <% } %>
+            <button onclick="deleteAdapter('<%= a.name %>')" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">Delete</button>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<div id="test-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+  <div class="bg-white rounded-lg p-6 max-w-lg w-full mx-4 shadow-xl">
+    <h3 class="text-lg font-medium text-[#111111] mb-4">Test Adapter</h3>
+    <div id="test-result" class="mb-4"></div>
+    <button onclick="closeTestModal()" class="btn btn-primary">Close</button>
+  </div>
+</div>
+
+<script>
+async function deleteAdapter(name) {
+  if (!confirm(`Delete adapter '${name}'?`)) return
+  await fetch('/api/adapters/' + name, { method: 'DELETE' })
+  location.reload()
+}
+
+async function testAdapter(name) {
+  const modal = document.getElementById('test-modal')
+  const result = document.getElementById('test-result')
+  modal.classList.remove('hidden')
+  result.innerHTML = '<p class="text-[#787774]">Running test...</p>'
+  
+  try {
+    const res = await fetch(`/api/adapters/${name}/test`, { method: 'POST' })
+    const data = await res.json()
+    
+    if (data.ok) {
+      result.innerHTML = `
+        <div class="space-y-2">
+          <p class="text-green-600 font-medium">✓ Test passed (${data.duration_ms}ms)</p>
+          <pre class="bg-[#F7F6F3] p-3 rounded text-xs overflow-auto">${JSON.stringify(data.result, null, 2)}</pre>
+        </div>
+      `
+    } else {
+      result.innerHTML = `
+        <div class="space-y-2">
+          <p class="text-red-600 font-medium">✗ Test failed (${data.duration_ms}ms)</p>
+          <p class="text-sm text-red-500">${data.error}</p>
+        </div>
+      `
+    }
+  } catch (err) {
+    result.innerHTML = `<p class="text-red-600">Error: ${err.message}</p>`
+  }
+}
+
+function closeTestModal() {
+  document.getElementById('test-modal').classList.add('hidden')
+}
+</script>
+
+<%- include("partials/foot") %>

@@ -1,0 +1,176 @@
+<%- include("partials/head", { title: `${adapter.name} - Packages` }) %>
+
+<div class="max-w-2xl">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Adapter Packages</p>
+      <h1 class="text-2xl editorial-heading text-[#111111]"><%= adapter.name %></h1>
+    </div>
+    <div class="flex gap-2">
+      <a href="/api/adapters/<%= adapter.name %>/edit" class="btn">Edit Adapter</a>
+      <a href="/api/adapters" class="btn">Back</a>
+    </div>
+  </div>
+
+  <div id="packages-manager">
+    <div v-if="message.text" :class="['alert mb-4', message.type === 'error' ? 'alert-error' : 'alert-success']">
+      <span>{{ message.text }}</span>
+    </div>
+
+    <div class="bento-card p-6 mb-6">
+      <h3 class="text-sm font-medium text-[#111111] mb-4">Add Package</h3>
+      <div class="flex gap-2">
+        <input v-model="newPackage" class="input input-bordered input-sm flex-1" 
+               placeholder="package-name@version (e.g., pg@8.11.0)"
+               @keyup.enter="addPackage">
+        <button @click="addPackage" class="btn btn-primary btn-sm" :disabled="!newPackage.trim()">
+          Add
+        </button>
+      </div>
+      <p class="text-xs text-[#787774] mt-2">
+        Enter package name with optional version. Examples: <code>pg</code>, <code>pg@8.11.0</code>, <code>redis@latest</code>
+      </p>
+    </div>
+
+    <div class="bento-card overflow-hidden">
+      <div class="px-6 py-4 border-b border-[#EAEAEA] bg-[#F7F6F3] flex justify-between items-center">
+        <h3 class="text-sm font-medium text-[#111111]">Installed Packages ({{ packages.length }})</h3>
+        <button v-if="packages.length > 0" @click="prunePackages" class="btn btn-xs border-red-200 text-red-600 hover:bg-red-50">
+          Prune All
+        </button>
+      </div>
+      
+      <table class="w-full">
+        <thead>
+          <tr class="border-b border-[#EAEAEA] bg-[#F7F6F3]">
+            <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Package</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Version</th>
+            <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-if="packages.length === 0">
+            <td colspan="3" class="px-6 py-12 text-center text-[#787774]">
+              No packages installed. Add packages above.
+            </td>
+          </tr>
+          <tr v-for="pkg in packages" :key="pkg" class="border-b border-[#EAEAEA] hover:bg-[#F7F6F3] transition-colors">
+            <td class="px-6 py-4 font-medium text-[#111111]">{{ parsePackageName(pkg).name }}</td>
+            <td class="px-6 py-4 text-sm text-[#2F3437]">{{ parsePackageName(pkg).version }}</td>
+            <td class="px-6 py-4">
+              <button @click="removePackage(pkg)" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded">
+      <h4 class="text-sm font-medium text-blue-800 mb-2">Auto-Install</h4>
+      <p class="text-xs text-blue-700">
+        Packages are automatically installed when the adapter runs. 
+        For CLI-context adapters, packages are installed on the user's machine when they sync.
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+const adapterName = '<%= adapter.name %>'
+const initialPackages = <%- JSON.stringify(packages) %>
+
+Vue.createApp({
+  data() {
+    return {
+      packages: initialPackages,
+      newPackage: '',
+      message: { text: '', type: '' }
+    }
+  },
+  methods: {
+    parsePackageName(pkg) {
+      if (pkg.includes('@') && !pkg.startsWith('@')) {
+        const parts = pkg.split('@')
+        return { name: parts[0], version: parts[1] }
+      }
+      return { name: pkg, version: 'latest' }
+    },
+    
+    async addPackage() {
+      const pkg = this.newPackage.trim()
+      if (!pkg) return
+      
+      this.message.text = ''
+      
+      try {
+        const res = await fetch(`/api/adapters/${adapterName}/packages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ package: pkg })
+        })
+        
+        const data = await res.json()
+        
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to add package')
+        }
+        
+        this.packages = data.packages
+        this.newPackage = ''
+        this.message = { text: `Package '${pkg}' added`, type: 'success' }
+      } catch (err) {
+        this.message = { text: err.message, type: 'error' }
+      }
+    },
+    
+    async removePackage(pkg) {
+      if (!confirm(`Remove package '${this.parsePackageName(pkg).name}'?`)) return
+      
+      this.message.text = ''
+      
+      try {
+        const name = this.parsePackageName(pkg).name
+        const res = await fetch(`/api/adapters/${adapterName}/packages/${name}`, {
+          method: 'DELETE'
+        })
+        
+        const data = await res.json()
+        
+        if (!res.ok) {
+          throw new Error(data.error || 'Failed to remove package')
+        }
+        
+        this.packages = data.packages
+        this.message = { text: `Package '${name}' removed`, type: 'success' }
+      } catch (err) {
+        this.message = { text: err.message, type: 'error' }
+      }
+    },
+    
+    async prunePackages() {
+      if (!confirm('Remove all packages? This will not uninstall them from disk.')) return
+      
+      this.message.text = ''
+      
+      try {
+        // Set empty packages array
+        const res = await fetch(`/api/adapters/${adapterName}/packages`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ packages: [] })
+        })
+        
+        const data = await res.json()
+        this.packages = []
+        this.message = { text: 'All packages removed', type: 'success' }
+      } catch (err) {
+        this.message = { text: err.message, type: 'error' }
+      }
+    }
+  }
+}).mount('#packages-manager')
+</script>
+
+<%- include("partials/foot") %>
