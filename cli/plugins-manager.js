@@ -11,14 +11,7 @@ const {
   listInstalledPlugins
 } = require("./plugins-store")
 
-const BUNDLED_PLUGINS = {
-  beads: path.resolve(__dirname, "..", "plugins", "beads", "plugin.json"),
-  gwc: path.resolve(__dirname, "..", "plugins", "gwc", "plugin.json"),
-  docker: path.resolve(__dirname, "..", "plugins", "docker", "plugin.json"),
-  squirrelscan: path.resolve(__dirname, "..", "plugins", "squirrelscan", "plugin.json"),
-  "agency-agents": path.resolve(__dirname, "..", "plugins", "agency-agents", "plugin.json"),
-  "visual-explainer": path.resolve(__dirname, "..", "plugins", "visual-explainer", "plugin.json")
-}
+const BUNDLED_PLUGINS = {}
 
 function validateNodeHook(hook, kind) {
   if (!hook) return null
