@@ -37,13 +37,22 @@
       <div class="form-control">
         <label class="label"><span class="label-text">Adapter</span></label>
         <select v-model="form.adapter" @change="onAdapterChange" class="select select-bordered select-sm">
-          <option value="http">http</option>
-          <option value="openapi">openapi</option>
-          <option value="mcp">mcp</option>
-          <option value="shell">shell</option>
-          <option value="process">process</option>
-          <option value="custom">custom</option>
+          <optgroup label="Built-in">
+            <option value="http">http</option>
+            <option value="openapi">openapi</option>
+            <option value="mcp">mcp</option>
+            <option value="shell">shell</option>
+            <option value="process">process</option>
+          </optgroup>
+          <optgroup v-if="customAdapters.length > 0" label="Custom">
+            <option v-for="adapter in customAdapters" :key="adapter.name" :value="adapter.name">
+              {{ adapter.name }} ({{ adapter.execution_context }})
+            </option>
+          </optgroup>
         </select>
+        <span v-if="customAdapters.length === 0" class="text-xs text-[#787774] mt-1">
+          <a href="/api/adapters" class="text-blue-600 hover:underline">Create custom adapters</a> to see them here
+        </span>
       </div>
 
       <div class="rounded border border-base-300 p-3 bg-base-100">
@@ -149,7 +158,7 @@
     },
     custom: {
       required: "Depends on your custom adapter",
-      help: "Use when loading adapters/<name>.js from the CLI workspace.",
+      help: "Custom adapters are loaded dynamically from the server. Create them in the Adapters section.",
       template: {}
     }
   };
@@ -169,19 +178,45 @@
         adapterConfigStr: editData && editData.adapterConfig ? JSON.stringify(editData.adapterConfig, null, 2) : '{}',
         message: { type: '', text: '' },
         validationResult: null,
+        customAdapters: [],
       }
     },
-    computed: {
-      adapterGuide() {
-        return ADAPTER_GUIDES[this.form.adapter] || ADAPTER_GUIDES.http
-      }
-    },
-    mounted() {
+    async mounted() {
+      await this.loadCustomAdapters()
       if (!this.editId && this.adapterConfigStr.trim() === '{}') {
         this.loadTemplate(false)
       }
     },
+    computed: {
+      adapterGuide() {
+        // Check if it's a built-in adapter
+        if (ADAPTER_GUIDES[this.form.adapter]) {
+          return ADAPTER_GUIDES[this.form.adapter]
+        }
+        // Check if it's a custom adapter
+        const customAdapter = this.customAdapters.find(a => a.name === this.form.adapter)
+        if (customAdapter) {
+          return {
+            required: "adapterConfig (custom per adapter)",
+            help: `Custom adapter: ${customAdapter.description || 'No description'} (${customAdapter.execution_context} context)`,
+            template: {}
+          }
+        }
+        return ADAPTER_GUIDES.http
+      }
+    },
     methods: {
+      async loadCustomAdapters() {
+        try {
+          const res = await fetch('/api/adapters', { headers: { 'Accept': 'application/json' } })
+          if (res.ok) {
+            const data = await res.json()
+            this.customAdapters = data.adapters || []
+          }
+        } catch (err) {
+          console.error('Failed to load custom adapters:', err)
+        }
+      },
       setMessage(type, text) {
         this.message = { type, text }
       },
