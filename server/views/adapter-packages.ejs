@@ -22,9 +22,11 @@
       <div class="flex gap-2">
         <input v-model="newPackage" class="input input-bordered input-sm flex-1" 
                placeholder="package-name@version (e.g., pg@8.11.0)"
-               @keyup.enter="addPackage">
-        <button @click="addPackage" class="btn btn-primary btn-sm" :disabled="!newPackage.trim()">
-          Add
+               @keyup.enter="addPackage"
+               :disabled="adding">
+        <button @click="addPackage" class="btn btn-primary btn-sm" :disabled="!newPackage.trim() || adding">
+          <span v-if="adding" class="loading loading-spinner loading-sm"></span>
+          <span v-else>Add</span>
         </button>
       </div>
       <p class="text-xs text-[#787774] mt-2">
@@ -35,8 +37,9 @@
     <div class="bento-card overflow-hidden">
       <div class="px-6 py-4 border-b border-[#EAEAEA] bg-[#F7F6F3] flex justify-between items-center">
         <h3 class="text-sm font-medium text-[#111111]">Installed Packages ({{ packages.length }})</h3>
-        <button v-if="packages.length > 0" @click="prunePackages" class="btn btn-xs border-red-200 text-red-600 hover:bg-red-50">
-          Prune All
+        <button v-if="packages.length > 0" @click="prunePackages" class="btn btn-xs border-red-200 text-red-600 hover:bg-red-50" :disabled="pruning">
+          <span v-if="pruning" class="loading loading-spinner loading-sm"></span>
+          <span v-else>Prune All</span>
         </button>
       </div>
       
@@ -58,8 +61,9 @@
             <td class="px-6 py-4 font-medium text-[#111111]">{{ parsePackageName(pkg).name }}</td>
             <td class="px-6 py-4 text-sm text-[#2F3437]">{{ parsePackageName(pkg).version }}</td>
             <td class="px-6 py-4">
-              <button @click="removePackage(pkg)" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">
-                Remove
+              <button @click="removePackage(pkg)" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300" :disabled="removing === pkg">
+                <span v-if="removing === pkg" class="loading loading-spinner loading-sm"></span>
+                <span v-else>Remove</span>
               </button>
             </td>
           </tr>
@@ -86,7 +90,10 @@ Vue.createApp({
     return {
       packages: initialPackages,
       newPackage: '',
-      message: { text: '', type: '' }
+      message: { text: '', type: '' },
+      adding: false,
+      removing: null,
+      pruning: false
     }
   },
   methods: {
@@ -103,6 +110,7 @@ Vue.createApp({
       if (!pkg) return
       
       this.message.text = ''
+      this.adding = true
       
       try {
         const res = await fetch(`/api/adapters/${adapterName}/packages`, {
@@ -122,6 +130,8 @@ Vue.createApp({
         this.message = { text: `Package '${pkg}' added`, type: 'success' }
       } catch (err) {
         this.message = { text: err.message, type: 'error' }
+      } finally {
+        this.adding = false
       }
     },
     
@@ -129,6 +139,7 @@ Vue.createApp({
       if (!confirm(`Remove package '${this.parsePackageName(pkg).name}'?`)) return
       
       this.message.text = ''
+      this.removing = pkg
       
       try {
         const name = this.parsePackageName(pkg).name
@@ -146,16 +157,18 @@ Vue.createApp({
         this.message = { text: `Package '${name}' removed`, type: 'success' }
       } catch (err) {
         this.message = { text: err.message, type: 'error' }
+      } finally {
+        this.removing = null
       }
     },
     
     async prunePackages() {
-      if (!confirm('Remove all packages? This will not uninstall them from disk.')) return
+      if (!confirm('Remove all packages and uninstall them from disk?')) return
       
       this.message.text = ''
+      this.pruning = true
       
       try {
-        // Set empty packages array
         const res = await fetch(`/api/adapters/${adapterName}/packages`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -167,6 +180,8 @@ Vue.createApp({
         this.message = { text: 'All packages removed', type: 'success' }
       } catch (err) {
         this.message = { text: err.message, type: 'error' }
+      } finally {
+        this.pruning = false
       }
     }
   }
