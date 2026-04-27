@@ -55,6 +55,9 @@ router.get("/:name/packages", async (req, res, next) => {
       return res.status(404).render("error", { message: `Adapter '${name}' not found` })
     }
     const packages = await adaptersService.getAdapterPackages(name)
+    if (req.headers.accept?.includes("application/json") || req.query.format === "json") {
+      return res.json({ packages })
+    }
     res.render("adapter-packages", { adapter, packages })
   } catch (err) {
     next(err)
@@ -146,17 +149,6 @@ router.delete("/:name", async (req, res, next) => {
       return res.status(404).json({ error: `Adapter '${name}' not found` })
     }
     res.json({ ok: true, message: `Adapter '${name}' deleted` })
-  } catch (err) {
-    next(err)
-  }
-})
-
-// Get adapter packages
-router.get("/:name/packages", async (req, res, next) => {
-  try {
-    const { name } = req.params
-    const packages = await adaptersService.getAdapterPackages(name)
-    res.json({ packages })
   } catch (err) {
     next(err)
   }
