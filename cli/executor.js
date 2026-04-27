@@ -122,7 +122,7 @@ async function executeCustomAdapter(adapterName, cmd, flags, context) {
   
   // If server is available, delegate to server
   if (context.server) {
-    const res = await fetch(`${context.server}/api/execute`, {
+    const res = await fetch(`${context.server}/api/adapters/execute`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ cmd, flags })
@@ -130,10 +130,11 @@ async function executeCustomAdapter(adapterName, cmd, flags, context) {
     
     if (!res.ok) {
       const err = await res.json()
-      throw Object.assign(new Error(err.error || `Adapter '${adapterName}' execution failed`), {
-        code: 110,
-        type: "internal_error",
-        recoverable: false
+      const errorMessage = err.error?.message || err.error || `Adapter '${adapterName}' execution failed`
+      throw Object.assign(new Error(errorMessage), {
+        code: err.error?.code || 110,
+        type: err.error?.type || "internal_error",
+        recoverable: err.error?.recoverable || false
       })
     }
     

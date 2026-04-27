@@ -369,7 +369,15 @@ async function main() {
     }
 
     if (flags.help) {
-      displayComprehensiveHelp();
+      if (flags.human) {
+        displayComprehensiveHelp();
+      } else if (flags.json || flags.compact) {
+        output(displayJsonHelp());
+      } else if (humanMode) {
+        displayComprehensiveHelp();
+      } else {
+        output(displayJsonHelp());
+      }
       return;
     }
 
@@ -998,6 +1006,64 @@ async function main() {
       suggestions: err.suggestions || [],
     });
   }
+}
+
+function displayJsonHelp() {
+  return {
+    name: "SuperCLI",
+    description: "Universal Capability Router for AI Agents",
+    repository: "https://github.com/javimosch/supercli",
+    quick_overview: [
+      "Capabilities: namespace.resource.action commands",
+      "Plugin System: Install external CLIs as harnesses",
+      "MCP Support: Model Context Protocol server integration",
+      "Skill Docs: Agent-facing guidance in SKILL.md format",
+      "AI Integration: Natural language query execution"
+    ],
+    getting_started: [
+      "supercli help                  # List available harnesses",
+      "supercli skills teach          # Learn about skill documents",
+      "supercli plugins explore       # Browse available plugins",
+      'supercli discover --intent "<task>"  # Find capabilities for a task'
+    ],
+    core_commands: [
+      "supercli <namespace> <resource> <action>  # Execute capability",
+      "supercli inspect <ns> <res> <act>       # View command details",
+      "supercli plan <ns> <res> <act>          # Create execution plan",
+      "supercli execute <plan_id>              # Run stored plan",
+      'supercli ask "<query>"                  # LLM-powered suggestions (no execution)'
+    ],
+    plugin_management: [
+      "supercli plugins list           # Show installed plugins",
+      "supercli plugins install <name> # Install a plugin",
+      "supercli plugins explore        # Browse plugin registry"
+    ],
+    harness_onboarding: [
+      "supercli onboard                # Auto-detect and install skill",
+      "supercli onboard --detect       # List detected harnesses",
+      "supercli onboard --harness claude,cursor,opencode,windsurf",
+      "supercli offboard              # Remove installed skill"
+    ],
+    documentation: [
+      "Full README: https://github.com/javimosch/supercli#readme",
+      "Supported Harnesses: docs/supported-harnesses.md",
+      "Plugin Creation Guide: docs/plugin-harness-guide.md"
+    ],
+    output_modes: [
+      "(default)   JSON if piped, human-readable if TTY",
+      "--json      Structured JSON envelope",
+      "--human     Formatted tables and key-value output",
+      "--compact   Compressed JSON (shortened keys)"
+    ],
+    exit_codes: [
+      { code: 0, description: "success" },
+      { code: 82, description: "validation_error" },
+      { code: 85, description: "invalid_argument" },
+      { code: 92, description: "resource_not_found" },
+      { code: 105, description: "integration_error" },
+      { code: 110, description: "internal_error" }
+    ]
+  };
 }
 
 function displayComprehensiveHelp() {

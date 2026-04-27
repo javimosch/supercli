@@ -404,10 +404,26 @@ async function syncCliAdapters(server) {
   
   // Filter CLI-context adapters
   const cliAdapters = adapters.filter(a => a.execution_context === "cli")
+  const cliAdapterNames = new Set(cliAdapters.map(a => a.name))
   
   // Ensure adapters directory exists
   const adaptersDir = path.join(process.cwd(), ".supercli", "adapters")
   fs.mkdirSync(adaptersDir, { recursive: true })
+  
+  // Remove local adapter files that are no longer CLI-context
+  if (fs.existsSync(adaptersDir)) {
+    const localFiles = fs.readdirSync(adaptersDir)
+    for (const file of localFiles) {
+      if (file.endsWith('.js')) {
+        const adapterName = file.slice(0, -3) // Remove .js extension
+        if (!cliAdapterNames.has(adapterName)) {
+          // Remove local file since adapter is no longer CLI-context
+          const filePath = path.join(adaptersDir, file)
+          fs.unlinkSync(filePath)
+        }
+      }
+    }
+  }
   
   let synced = 0
   let failed = 0
