@@ -1,4 +1,6 @@
 const path = require("path")
+const fs = require("fs")
+const { NodeVM } = require("vm2")
 const { validateAdapterConfig } = require("./adapter-schema")
 
 // Adapter registry — lazy-loaded
@@ -21,16 +23,7 @@ async function execute(cmd, flags, context) {
   validateAdapterConfig(cmd)
 
   if (!ADAPTERS[adapterName]) {
-    try {
-      const custom = require(path.resolve("adapters", adapterName))
-      return custom.execute(cmd, flags, context)
-    } catch (e) {
-      throw Object.assign(new Error(`Unknown adapter: ${adapterName}`), {
-        code: 110,
-        type: "internal_error",
-        recoverable: false
-      })
-    }
+    return executeCustomAdapter(adapterName, cmd, flags, context)
   }
 
   const adapter = ADAPTERS[adapterName]()
@@ -116,6 +109,92 @@ async function executeWorkflow(workflow, flags, context, steps) {
   }
 
   return { workflow: workflow.namespace + "." + workflow.resource + "." + workflow.action, steps: results }
+}
+
+async function executeCustomAdapter(adapterName, cmd, flags, context) {
+  // Check if adapter exists in local .supercli/adapters/ directory
+  const localAdapterPath = path.join(process.cwd(), ".supercli", "adapters", `${adapterName}.js`)
+  
+  if (fs.existsSync(localAdapterPath)) {
+    // Execute locally using vm2
+    return executeLocalAdapter(localAdapterPath, cmd, flags, context)
+  }
+  
+  // If server is available, delegate to server
+  if (context.server) {
+    const res = await fetch(`${context.server}/api/execute`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ cmd, flags })
+    })
+    
+    if (!res.ok) {
+      const err = await res.json()
+      throw Object.assign(new Error(err.error || `Adapter '${adapterName}' execution failed`), {
+        code: 110,
+        type: "internal_error",
+        recoverable: false
+      })
+    }
+    
+    return res.json()
+  }
+  
+  throw Object.assign(new Error(`Adapter '${adapterName}' not found locally and server is unavailable`), {
+    code: 110,
+    type: "internal_error",
+    recoverable: false
+  })
+}
+
+async function executeLocalAdapter(adapterPath, cmd, flags, context) {
+  const source = fs.readFileSync(adapterPath, "utf-8")
+  
+  // Extract metadata from adapter (first comment block if exists)
+  const metadataMatch = source.match(/\/\*\*?\s*\n([\s\S]*?)\n\s*\*\//)
+  const metadata = {}
+  if (metadataMatch) {
+    const metaText = metadataMatch[1]
+    const timeoutMatch = metaText.match(/@timeout\s+(\d+)/)
+    const memoryMatch = metaText.match(/@memory\s+(\d+)/)
+    const networkMatch = metaText.match(/@network\s+(true|false)/)
+    if (timeoutMatch) metadata.timeout = parseInt(timeoutMatch[1])
+    if (memoryMatch) metadata.memory = parseInt(memoryMatch[1])
+    if (networkMatch) metadata.network = networkMatch[1] === "true"
+  }
+  
+  const vm = new NodeVM({
+    timeout: metadata.timeout || 30000,
+    sandbox: {
+      console: {
+        log: (...args) => {},
+        error: (...args) => {},
+        warn: (...args) => {},
+      },
+    },
+    require: {
+      external: metadata.network !== false,
+      root: path.dirname(adapterPath),
+    },
+    memoryLimit: (metadata.memory || 128) * 1024 * 1024,
+  })
+  
+  const script = `
+    ${source}
+    module.exports = { execute }
+  `
+  
+  const fn = vm.run(script, adapterPath)
+  
+  if (typeof fn.execute !== "function") {
+    throw Object.assign(new Error(`Adapter must export an 'execute' function`), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false
+    })
+  }
+  
+  return fn.execute(cmd, flags, context)
 }
 
 module.exports = { execute }

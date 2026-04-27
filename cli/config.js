@@ -369,10 +369,89 @@ async function syncConfig(server) {
       reason: err.message,
     }
   }
+
+  // Sync CLI-context adapters
+  let cliAdapters = { total: 0, synced: 0, failed: 0 }
+  try {
+    cliAdapters = await syncCliAdapters(server)
+  } catch (err) {
+    cliAdapters = { total: 0, synced: 0, failed: 0, error: err.message }
+  }
+
   const written = writeCache(normalizeConfig(config))
   return {
     ...written,
     server_plugins: serverPlugins,
+    cli_adapters: cliAdapters,
+  }
+}
+
+async function syncCliAdapters(server) {
+  const fs = require("fs")
+  const path = require("path")
+  
+  // Fetch all adapters from server
+  const res = await fetch(`${server}/api/adapters`, {
+    headers: { Accept: "application/json" },
+  })
+  
+  if (!res.ok) {
+    throw new Error(`Failed to fetch adapters: ${res.status}`)
+  }
+  
+  const data = await res.json()
+  const adapters = data.adapters || []
+  
+  // Filter CLI-context adapters
+  const cliAdapters = adapters.filter(a => a.execution_context === "cli")
+  
+  // Ensure adapters directory exists
+  const adaptersDir = path.join(process.cwd(), ".supercli", "adapters")
+  fs.mkdirSync(adaptersDir, { recursive: true })
+  
+  let synced = 0
+  let failed = 0
+  
+  for (const adapter of cliAdapters) {
+    try {
+      // Fetch adapter source
+      const sourceRes = await fetch(`${server}/api/adapters/${adapter.name}/source`, {
+        headers: { Accept: "application/json" },
+      })
+      
+      if (!sourceRes.ok) {
+        throw new Error(`Failed to fetch source for ${adapter.name}`)
+      }
+      
+      const sourceData = await sourceRes.json()
+      const source = sourceData.source || ""
+      
+      // Write adapter file with metadata header
+      const adapterPath = path.join(adaptersDir, `${adapter.name}.js`)
+      const metadataHeader = `/**
+ * @name ${adapter.name}
+ * @description ${adapter.description || ""}
+ * @context cli
+ * @timeout ${adapter.timeout_ms || 30000}
+ * @memory ${adapter.memory_limit_mb || 128}
+ * @network ${adapter.allow_network || false}
+ * @updated ${adapter.updated_at}
+ */
+
+`
+      
+      fs.writeFileSync(adapterPath, metadataHeader + source, "utf-8")
+      synced++
+    } catch (err) {
+      console.error(`Failed to sync adapter ${adapter.name}:`, err.message)
+      failed++
+    }
+  }
+  
+  return {
+    total: cliAdapters.length,
+    synced,
+    failed,
   }
 }
 

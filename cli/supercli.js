@@ -471,6 +471,7 @@ async function main() {
         ok: true,
         message: "Config synced",
         server_plugins: result.server_plugins || null,
+        cli_adapters: result.cli_adapters || null,
       });
       return;
     }
