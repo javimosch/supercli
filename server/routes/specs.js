@@ -30,7 +30,9 @@ router.post("/", async (req, res) => {
     const storage = getStorage()
     const { name, url, auth } = req.body
     const key = `spec:${name}`
-    const doc = { _id: key, name, url, auth: auth || "none", createdAt: new Date() }
+    // Support both simple string auth and object auth
+    const authValue = auth || "none"
+    const doc = { _id: key, name, url, auth: authValue, createdAt: new Date() }
     await storage.set(key, doc)
     await bumpVersion()
     if (req.headers["content-type"]?.includes("urlencoded")) {
@@ -54,7 +56,9 @@ router.put("/:id", async (req, res) => {
       await storage.delete(id)
     }
 
-    const doc = { _id: newKey, name, url, auth: auth || "none" }
+    // Support both simple string auth and object auth
+    const authValue = auth || "none"
+    const doc = { _id: newKey, name, url, auth: authValue }
     await storage.set(newKey, doc)
     await bumpVersion()
     res.json({ ok: true })
