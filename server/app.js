@@ -3,6 +3,7 @@ const path = require("path");
 const { getStorage } = require("./storage/adapter");
 
 const dashboardRouter = require("./routes/dashboard");
+const adaptersRouter = require("./routes/adapters");
 const commandsRouter = require("./routes/commands");
 const configRouter = require("./routes/config");
 const specsRouter = require("./routes/specs");
@@ -26,6 +27,7 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 
 // API routes
 app.use("/api/dashboard", dashboardRouter);
+app.use("/api/adapters", adaptersRouter);
 app.use("/api/config", configRouter);
 app.use("/api/commands", commandsRouter);
 app.use("/api/specs", specsRouter);
@@ -47,6 +49,7 @@ app.get("/specs", (req, res) => res.redirect("/api/specs"));
 app.get("/mcp", (req, res) => res.redirect("/api/mcp"));
 app.get("/jobs", (req, res) => res.redirect("/api/jobs"));
 app.get("/plugins", (req, res) => res.redirect("/api/plugins"));
+app.get("/adapters", (req, res) => res.redirect("/api/adapters"));
 
 async function start() {
   try {
