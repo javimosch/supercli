@@ -98,6 +98,65 @@ function buildUrl(baseUrl, pathStr, method, operation, flags) {
   return { url: fullUrl, method };
 }
 
+function resolveAuthValue(authConfig, flags) {
+  if (!authConfig) return null;
+
+  const { argName, envVar } = authConfig;
+
+  // Check command arguments first (highest priority)
+  if (argName && flags[argName] !== undefined) {
+    return flags[argName];
+  }
+
+  // Check environment variable
+  if (envVar && process.env[envVar] !== undefined) {
+    return process.env[envVar];
+  }
+
+  return null;
+}
+
+function applyAuth(fetchOpts, authConfig, authValue) {
+  if (!authConfig || !authValue) return;
+
+  const { type, bearer, headerName, queryName, bodyName } = authConfig;
+
+  switch (type) {
+    case "bearer":
+      fetchOpts.headers["Authorization"] = `Bearer ${authValue}`;
+      break;
+    case "basic": {
+      const base64 = Buffer.from(authValue).toString("base64");
+      fetchOpts.headers["Authorization"] = `Basic ${base64}`;
+      break;
+    }
+    case "api-key":
+      if (headerName) {
+        fetchOpts.headers[headerName] = authValue;
+      } else if (queryName) {
+        // Add to URL query params
+        const url = new URL(fetchOpts.url || "");
+        url.searchParams.set(queryName, authValue);
+        fetchOpts.url = url.toString();
+      } else if (bodyName) {
+        // Add to body for POST/PUT/PATCH
+        if (fetchOpts.body) {
+          try {
+            const bodyObj = JSON.parse(fetchOpts.body);
+            bodyObj[bodyName] = authValue;
+            fetchOpts.body = JSON.stringify(bodyObj);
+          } catch {
+            // If body isn't JSON, can't add auth field
+          }
+        }
+      }
+      break;
+    default:
+      // Unknown auth type, ignore
+      break;
+  }
+}
+
 async function execute(cmd, flags, context) {
   const config = cmd.adapterConfig || {};
   const specName = config.spec;
@@ -123,7 +182,7 @@ async function execute(cmd, flags, context) {
     flags,
   );
 
-  const fetchOpts = { method: httpMethod, headers: {} };
+  const fetchOpts = { method: httpMethod, headers: {}, url };
 
   // Handle request body for POST/PUT/PATCH
   if (["POST", "PUT", "PATCH"].includes(httpMethod)) {
@@ -137,7 +196,17 @@ async function execute(cmd, flags, context) {
     fetchOpts.headers["Content-Type"] = "application/json";
   }
 
-  const r = await fetch(url, fetchOpts);
+  // Apply auth if configured
+  const authConfig = config.auth;
+  const authValue = resolveAuthValue(authConfig, flags);
+  if (authConfig && authValue) {
+    applyAuth(fetchOpts, authConfig, authValue);
+  }
+
+  const finalUrl = fetchOpts.url || url;
+  delete fetchOpts.url;
+
+  const r = await fetch(finalUrl, fetchOpts);
   if (!r.ok) {
     const text = await r.text().catch(() => "");
     throw Object.assign(
