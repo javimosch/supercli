@@ -65,6 +65,7 @@ async function listAdapters() {
   const records = await Promise.all(keys.map(k => storage.get(k)))
   return records
     .filter(Boolean)
+    .filter(record => record.name) // Filter out records without name (e.g., package records)
     .sort((a, b) => String(a.name || "").localeCompare(String(b.name || "")))
     .map(toPublicAdapter)
 }
