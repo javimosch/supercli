@@ -1,5 +1,6 @@
 const { Router } = require("express")
 const { NodeVM } = require("vm2")
+const path = require("path")
 const adaptersService = require("../services/adaptersService")
 
 const router = Router()
@@ -165,14 +166,22 @@ router.get("/:name/packages", async (req, res, next) => {
 router.post("/:name/packages", async (req, res, next) => {
   try {
     const { name } = req.params
-    const { package: packageName, version } = req.body
+    const { package: packageName, version, packages } = req.body
     
+    // Handle prune all (set packages array)
+    if (packages !== undefined) {
+      const result = await adaptersService.setAdapterPackages(name, packages)
+      res.json({ packages: result })
+      return
+    }
+    
+    // Handle add single package
     if (!packageName) {
       throw invalid("package is required")
     }
     
-    const packages = await adaptersService.addAdapterPackage(name, packageName, version)
-    res.json({ packages })
+    const result = await adaptersService.addAdapterPackage(name, packageName, version)
+    res.json({ packages: result })
   } catch (err) {
     next(err)
   }
@@ -299,6 +308,9 @@ router.post("/execute", async (req, res, next) => {
       return res.status(404).json({ error: `Adapter '${cmd.adapter}' source not found` })
     }
     
+    const adapterDir = path.join(process.cwd(), "supercli_storage", "adapters", cmd.adapter)
+    const adapterNodeModules = path.join(adapterDir, "node_modules")
+    
     const vm = new NodeVM({
       timeout: adapter.timeout_ms,
       sandbox: {
@@ -309,8 +321,16 @@ router.post("/execute", async (req, res, next) => {
         },
       },
       require: {
-        external: adapter.allow_network,
-        root: process.cwd(),
+        external: true,
+        root: [adapterDir, adapterNodeModules],
+        builtin: ["*"],
+        resolve: (moduleName) => {
+          try {
+            return require.resolve(moduleName, { paths: [adapterNodeModules] })
+          } catch {
+            return require.resolve(moduleName)
+          }
+        }
       },
       memoryLimit: adapter.memory_limit_mb * 1024 * 1024,
     })

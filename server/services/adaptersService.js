@@ -159,6 +159,10 @@ async function getAdapterPackages(name) {
 }
 
 async function addAdapterPackage(name, packageName, version = "latest") {
+  const { execSync } = require("child_process")
+  const path = require("path")
+  const fs = require("fs")
+  
   const storage = getStorage()
   const key = adapterPackagesKey(name)
   const current = await storage.get(key) || []
@@ -166,27 +170,104 @@ async function addAdapterPackage(name, packageName, version = "latest") {
   const packageSpec = version === "latest" ? packageName : `${packageName}@${version}`
   
   if (!current.includes(packageSpec)) {
+    // Create adapter directory if it doesn't exist
+    const adapterDir = path.join(process.cwd(), "supercli_storage", "adapters", name)
+    fs.mkdirSync(adapterDir, { recursive: true })
+    
+    // Initialize package.json if it doesn't exist
+    const packageJsonPath = path.join(adapterDir, "package.json")
+    if (!fs.existsSync(packageJsonPath)) {
+      fs.writeFileSync(packageJsonPath, JSON.stringify({ name, version: "1.0.0" }, null, 2))
+    }
+    
     current.push(packageSpec)
     await storage.set(key, current)
+    
+    try {
+      // Install only in adapter-specific directory
+      execSync(`npm install ${packageSpec}`, {
+        cwd: adapterDir,
+        stdio: "inherit",
+      })
+    } catch (err) {
+      // Rollback if install fails
+      const filtered = current.filter(p => p !== packageSpec)
+      await storage.set(key, filtered)
+      throw Object.assign(new Error(`Failed to install package ${packageSpec}`), {
+        code: 105,
+        type: "integration_error",
+        recoverable: false
+      })
+    }
   }
   
   return current
 }
 
 async function removeAdapterPackage(name, packageName) {
+  const { execSync } = require("child_process")
+  const path = require("path")
+  const fs = require("fs")
+  
   const storage = getStorage()
   const key = adapterPackagesKey(name)
   const current = await storage.get(key) || []
   
   const filtered = current.filter(p => !p.startsWith(`${packageName}@`) && p !== packageName)
-  await storage.set(key, filtered)
+  
+  if (filtered.length !== current.length) {
+    await storage.set(key, filtered)
+    
+    // Uninstall from adapter-specific directory only
+    const adapterDir = path.join(process.cwd(), "supercli_storage", "adapters", name)
+    if (fs.existsSync(adapterDir)) {
+      try {
+        execSync(`npm uninstall ${packageName}`, {
+          cwd: adapterDir,
+          stdio: "inherit",
+        })
+      } catch (err) {
+        // Don't fail if uninstall fails, just log
+        console.error(`Failed to uninstall ${packageName} from adapter directory:`, err.message)
+      }
+    }
+  }
+  
   return filtered
 }
 
 async function setAdapterPackages(name, packages) {
+  const { execSync } = require("child_process")
+  const path = require("path")
+  const fs = require("fs")
+  
   const storage = getStorage()
   const key = adapterPackagesKey(name)
-  await storage.set(key, Array.isArray(packages) ? packages : [])
+  
+  // Get current packages to determine which ones to uninstall
+  const current = await storage.get(key) || []
+  const newPackages = Array.isArray(packages) ? packages : []
+  
+  // Find packages that are being removed
+  const packagesToRemove = current.filter(p => !newPackages.includes(p))
+  
+  // Uninstall removed packages from adapter directory
+  const adapterDir = path.join(process.cwd(), "supercli_storage", "adapters", name)
+  if (packagesToRemove.length > 0 && fs.existsSync(adapterDir)) {
+    for (const pkg of packagesToRemove) {
+      const packageName = pkg.split('@')[0]
+      try {
+        execSync(`npm uninstall ${packageName}`, {
+          cwd: adapterDir,
+          stdio: "inherit",
+        })
+      } catch (err) {
+        console.error(`Failed to uninstall ${packageName} during prune:`, err.message)
+      }
+    }
+  }
+  
+  await storage.set(key, newPackages)
 }
 
 module.exports = {

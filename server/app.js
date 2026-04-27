@@ -42,6 +42,22 @@ app.use("/api", configRouter);
 
 app.use("/", dashboardRouter);
 
+// Error handler - return JSON for API requests
+app.use((err, req, res, next) => {
+  if (req.path.startsWith('/api') || req.headers.accept?.includes('application/json')) {
+    res.status(err.status || 500).json({
+      error: {
+        code: err.code || 500,
+        type: err.type || 'internal_error',
+        message: err.message || 'Internal server error',
+        recoverable: !!err.recoverable
+      }
+    });
+  } else {
+    res.status(err.status || 500).render('error', { message: err.message || 'Internal server error' });
+  }
+});
+
 // UI page redirects
 app.get("/commands", (req, res) => res.redirect("/api/commands"));
 app.get("/commands/new", (req, res) => res.redirect("/api/commands/new"));
