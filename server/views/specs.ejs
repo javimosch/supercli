@@ -9,28 +9,32 @@
     <button @click="showForm=!showForm" class="btn btn-primary">+ Add Spec</button>
   </div>
 
-  <!-- Add form -->
+  <!-- Add/Edit form -->
   <div v-if="showForm" class="bento-card p-6 mb-6">
-    <form @submit.prevent="create" class="flex flex-col md:flex-row gap-4 items-end">
-      <div class="flex-1 w-full">
-        <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Name</label>
-        <input v-model="form.name" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" required placeholder="e.g. referential-api">
+    <form @submit.prevent="editing ? update() : create()">
+      <div class="flex flex-col md:flex-row gap-4 items-end mb-4">
+        <div class="flex-1 w-full">
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Name</label>
+          <input v-model="form.name" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" required placeholder="e.g. referential-api">
+        </div>
+        <div class="flex-1 w-full">
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">URL</label>
+          <input v-model="form.url" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" required placeholder="https://api.example.com/openapi.json">
+        </div>
+        <div class="w-full md:w-32">
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Auth</label>
+          <select v-model="form.auth" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
+            <option value="none">none</option>
+            <option value="oauth">oauth</option>
+            <option value="apiKey">apiKey</option>
+            <option value="jwt">jwt</option>
+          </select>
+        </div>
       </div>
-      <div class="flex-1 w-full">
-        <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">URL</label>
-        <input v-model="form.url" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" required placeholder="https://api.example.com/openapi.json">
+      <div class="flex gap-4 items-center mt-4">
+        <button type="submit" class="btn btn-primary">{{ editing ? 'Update' : 'Save' }}</button>
+        <button type="button" @click="cancelEdit" class="btn">Cancel</button>
       </div>
-      <div class="w-full md:w-32">
-        <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Auth</label>
-        <select v-model="form.auth" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors">
-          <option value="none">none</option>
-          <option value="oauth">oauth</option>
-          <option value="apiKey">apiKey</option>
-          <option value="jwt">jwt</option>
-        </select>
-      </div>
-      <button type="submit" class="btn btn-primary">Save</button>
-      <button type="button" @click="showForm=false" class="btn">Cancel</button>
     </form>
   </div>
 
@@ -47,10 +51,25 @@
       <tbody>
         <tr v-if="specs.length===0"><td colspan="4" class="px-6 py-12 text-center text-[#787774]">No specs registered.</td></tr>
         <tr v-for="s in specs" :key="s._id" class="border-b border-[#EAEAEA] hover:bg-[#F7F6F3] transition-colors">
-          <td class="px-6 py-4"><code class="mono-text text-sm text-[#1F6C9F]">{{ s.name }}</code></td>
-          <td class="px-6 py-4 max-w-xs truncate text-[#2F3437]">{{ s.url }}</td>
-          <td class="px-6 py-4"><span class="badge">{{ s.auth }}</span></td>
           <td class="px-6 py-4">
+            <code class="mono-text text-sm text-[#1F6C9F]">{{ s.name }}</code>
+            <div v-if="getUsedCommands(s).length > 0" class="mt-1 text-xs text-[#787774]">
+              used by: {{ getUsedCommands(s).map(c => `${c.namespace}.${c.resource}.${c.action}`).join(', ') }}
+            </div>
+          </td>
+          <td class="px-6 py-4 max-w-xs truncate text-[#2F3437]">{{ s.url }}</td>
+          <td class="px-6 py-4">
+            <span class="badge">{{ s.auth }}</span>
+            <span v-if="s.status" class="ml-2 text-xs" :class="{'text-green-600': s.status === 'alive', 'text-red-600': s.status === 'error', 'text-orange-600': s.status === 'cors'}">
+              {{ s.status === 'alive' ? '✓' : s.status === 'cors' ? '⚠ CORS' : '✗' }} {{ s.lastCheck }}
+              <button v-if="s.checkedUrl" @click="copyUrl(s.checkedUrl)" class="ml-2 text-[#787774] hover:text-[#111111]" title="Copy checked URL">📋</button>
+            </span>
+          </td>
+          <td class="px-6 py-4">
+            <button @click="check(s)" :disabled="s.checking" class="btn text-xs border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 mr-2" :class="{'opacity-50': s.checking}">
+              {{ s.checking ? 'Checking...' : 'Check' }}
+            </button>
+            <button @click="edit(s)" class="btn text-xs border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 mr-2">Edit</button>
             <button @click="remove(s._id)" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">Delete</button>
           </td>
         </tr>
@@ -66,11 +85,161 @@
     data() {
       return {
         specs: initialSpecs,
+        commands: [],
         showForm: false,
+        editing: false,
+        editId: null,
         form: { name: '', url: '', auth: 'none' }
       }
     },
+    async mounted() {
+      await this.fetchCommands()
+      setInterval(() => {
+        this.fetchCommands()
+      }, 30000)
+    },
     methods: {
+      async fetchCommands() {
+        try {
+          const res = await fetch('/api/commands?format=json')
+          const data = await res.json()
+          this.commands = data.commands || data || []
+        } catch (err) {
+          console.error('Failed to fetch commands:', err)
+        }
+      },
+      getUsedCommands(spec) {
+        return this.commands.filter(cmd => {
+          const adapterConfig = cmd.adapterConfig || {}
+          return adapterConfig.spec === spec.name
+        })
+      },
+      copyUrl(url) {
+        navigator.clipboard.writeText(url).catch(err => {
+          console.error('Failed to copy URL:', err)
+        })
+      },
+      async check(spec) {
+        spec.checking = true
+        spec.checkedUrl = null
+        try {
+          const timeout = 10000
+          const controller = new AbortController()
+          const timeoutId = setTimeout(() => controller.abort(), timeout)
+          
+          // Fetch the spec to find health endpoint
+          const specRes = await fetch(spec.url, { signal: controller.signal })
+          clearTimeout(timeoutId)
+          
+          if (specRes.ok) {
+            const specData = await specRes.json()
+            // Find health endpoint in paths
+            let healthPath = null
+            const healthKeywords = ['health', 'ping', 'status']
+            
+            for (const [path, methods] of Object.entries(specData.paths || {})) {
+              for (const keyword of healthKeywords) {
+                if (path.toLowerCase().includes(keyword)) {
+                  healthPath = path
+                  break
+                }
+              }
+              if (healthPath) break
+            }
+            
+            if (healthPath) {
+              // Try to call the health endpoint
+              // Use server URL from spec if available, otherwise derive from spec URL
+              let baseUrl
+              if (specData.servers && specData.servers.length > 0) {
+                baseUrl = specData.servers[0].url.replace(/\/$/, '') // Remove trailing slash
+              } else {
+                baseUrl = spec.url.replace(/\/[^/]*$/, '') // Remove filename
+              }
+              const healthUrl = baseUrl + healthPath
+              spec.checkedUrl = healthUrl
+              try {
+                const healthRes = await fetch(healthUrl, { signal: controller.signal })
+                
+                if (healthRes.ok) {
+                  spec.status = 'alive'
+                  spec.lastCheck = new Date().toLocaleTimeString()
+                } else if (healthRes.status === 404) {
+                  // 404 on health endpoint, try root URL as fallback
+                  spec.checkedUrl = baseUrl
+                  try {
+                    const rootRes = await fetch(baseUrl, { signal: controller.signal })
+                    if (rootRes.ok) {
+                      spec.status = 'alive'
+                      spec.lastCheck = new Date().toLocaleTimeString()
+                    } else {
+                      spec.status = 'error'
+                      spec.lastCheck = new Date().toLocaleTimeString()
+                    }
+                  } catch (rootErr) {
+                    if (rootErr instanceof TypeError) {
+                      spec.status = 'cors'
+                      spec.lastCheck = new Date().toLocaleTimeString()
+                    } else {
+                      spec.status = 'error'
+                      spec.lastCheck = new Date().toLocaleTimeString()
+                    }
+                  }
+                } else {
+                  spec.status = 'error'
+                  spec.lastCheck = new Date().toLocaleTimeString()
+                }
+              } catch (healthErr) {
+                // Detect CORS error (TypeError without proper response)
+                if (healthErr instanceof TypeError) {
+                  spec.status = 'cors'
+                  spec.lastCheck = new Date().toLocaleTimeString()
+                } else {
+                  spec.status = 'error'
+                  spec.lastCheck = new Date().toLocaleTimeString()
+                }
+              }
+            } else {
+              // No health endpoint found, just check if spec is accessible
+              spec.checkedUrl = spec.url
+              spec.status = 'alive'
+              spec.lastCheck = new Date().toLocaleTimeString()
+            }
+          } else {
+            spec.checkedUrl = spec.url
+            spec.status = 'error'
+            spec.lastCheck = new Date().toLocaleTimeString()
+          }
+        } catch (err) {
+          spec.checkedUrl = spec.url
+          // Detect CORS error on spec fetch
+          if (err instanceof TypeError) {
+            spec.status = 'cors'
+            spec.lastCheck = new Date().toLocaleTimeString()
+          } else {
+            spec.status = 'error'
+            spec.lastCheck = new Date().toLocaleTimeString()
+          }
+        } finally {
+          spec.checking = false
+        }
+      },
+      edit(spec) {
+        this.editing = true
+        this.editId = spec._id
+        this.form = {
+          name: spec.name,
+          url: spec.url,
+          auth: spec.auth
+        }
+        this.showForm = true
+      },
+      cancelEdit() {
+        this.editing = false
+        this.editId = null
+        this.form = { name: '', url: '', auth: 'none' }
+        this.showForm = false
+      },
       async create() {
         const r = await fetch('/api/specs', {
           method: 'POST',
@@ -81,11 +250,25 @@
         this.specs.push(doc)
         this.form = { name: '', url: '', auth: 'none' }
         this.showForm = false
+        await this.fetchCommands()
+      },
+      async update() {
+        const r = await fetch('/api/specs/' + this.editId, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.form)
+        })
+        const doc = await r.json()
+        const idx = this.specs.findIndex(s => s._id === this.editId)
+        if (idx !== -1) this.specs[idx] = { ...this.specs[idx], ...this.form, updatedAt: new Date() }
+        this.cancelEdit()
+        await this.fetchCommands()
       },
       async remove(id) {
         if (!confirm('Delete this spec?')) return
         await fetch('/api/specs/' + id, { method: 'DELETE' })
         this.specs = this.specs.filter(s => s._id !== id)
+        await this.fetchCommands()
       }
     }
   }).mount('#specs-app')
