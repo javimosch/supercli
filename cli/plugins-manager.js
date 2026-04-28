@@ -1,10 +1,10 @@
 const fs = require("fs")
 const path = require("path")
-const os = require("os")
 const { spawnSync } = require("child_process")
 const { SUPPORTED_ADAPTERS } = require("./adapter-schema")
 const { getRegistryPlugin } = require("./plugins-registry")
 const { getPluginInstallGuidance } = require("./plugin-install-guidance")
+const { syncClientPluginResources } = require("./config")
 const {
   readPluginsLock,
   writePluginsLock,
@@ -78,6 +78,36 @@ function parseManifestFile(manifestPath) {
       recoverable: false
     })
   }
+  
+  // Validate server_resources if present
+  if (raw.server_resources) {
+    if (typeof raw.server_resources !== "object" || Array.isArray(raw.server_resources)) {
+      throw Object.assign(new Error("Invalid plugin manifest: server_resources must be an object"), {
+        code: 85,
+        type: "invalid_argument",
+        recoverable: false
+      })
+    }
+    
+    // Validate mcp resources
+    if (raw.server_resources.mcp && !Array.isArray(raw.server_resources.mcp)) {
+      throw Object.assign(new Error("Invalid plugin manifest: server_resources.mcp must be an array"), {
+        code: 85,
+        type: "invalid_argument",
+        recoverable: false
+      })
+    }
+    
+    // Validate spec resources
+    if (raw.server_resources.specs && !Array.isArray(raw.server_resources.specs)) {
+      throw Object.assign(new Error("Invalid plugin manifest: server_resources.specs must be an array"), {
+        code: 85,
+        type: "invalid_argument",
+        recoverable: false
+      })
+    }
+  }
+  
   return raw
 }
 
@@ -504,6 +534,7 @@ function installPlugin(ref, options = {}) {
       installed_at: new Date().toISOString(),
       commands: installedCommands,
       checks: manifest.checks || [],
+      server_resources: manifest.server_resources || {},
       lifecycle_hooks: {
         post_uninstall: serializeHook(loaded.manifestPath, manifest.post_uninstall, "post_uninstall")
       }
@@ -511,6 +542,15 @@ function installPlugin(ref, options = {}) {
 
     const postInstall = runPostInstall(manifest, loaded.manifestPath)
     writePluginsLock(lock)
+    
+    // Sync client plugin resources to server if SUPERCLI_SERVER is set (fire and forget)
+    const server = process.env.SUPERCLI_SERVER
+    if (server && manifest.server_resources) {
+      syncClientPluginResources(server).catch(err => {
+        console.warn(`[Plugin ${manifest.name}] Failed to sync resources to server:`, err.message)
+      })
+    }
+    
     return {
       plugin: manifest.name,
       version: manifest.version || "0.0.0",
