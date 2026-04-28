@@ -331,6 +331,44 @@ async function syncServerPlugins(server) {
   return diagnostics
 }
 
+async function syncClientPluginResources(server) {
+  const { readPluginsLock } = require("./plugins-store")
+  const lock = readPluginsLock()
+  const installed = lock.installed || {}
+  
+  // Filter plugins with server_resources
+  const pluginsWithResources = []
+  for (const [name, plugin] of Object.entries(installed)) {
+    if (plugin.server_resources && (plugin.server_resources.mcp || plugin.server_resources.specs)) {
+      pluginsWithResources.push({
+        name: name,
+        server_resources: plugin.server_resources
+      })
+    }
+  }
+  
+  if (pluginsWithResources.length === 0) {
+    return { synced: 0, errors: [] }
+  }
+  
+  try {
+    const r = await fetch(`${server}/api/plugins/client-resources`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ plugins: pluginsWithResources })
+    })
+    
+    if (!r.ok) {
+      throw new Error(`Failed to sync plugin resources: ${r.status} ${r.statusText}`)
+    }
+    
+    const result = await r.json()
+    return { synced: pluginsWithResources.length, result }
+  } catch (err) {
+    return { synced: 0, errors: [err.message] }
+  }
+}
+
 async function syncConfig(server) {
   const config = await fetchRemoteConfig(server)
 
@@ -370,6 +408,14 @@ async function syncConfig(server) {
     }
   }
 
+  // Sync client plugin resources
+  let clientResources = { synced: 0, errors: [] }
+  try {
+    clientResources = await syncClientPluginResources(server)
+  } catch (err) {
+    clientResources = { synced: 0, errors: [err.message] }
+  }
+
   // Sync CLI-context adapters
   let cliAdapters = { total: 0, synced: 0, failed: 0 }
   try {
@@ -382,6 +428,7 @@ async function syncConfig(server) {
   return {
     ...written,
     server_plugins: serverPlugins,
+    client_resources: clientResources,
     cli_adapters: cliAdapters,
   }
 }
@@ -549,4 +596,4 @@ async function showConfig() {
   }
 }
 
-module.exports = { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers, upsertCommand, removeCommandsByNamespace }
+module.exports = { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers, upsertCommand, removeCommandsByNamespace, syncClientPluginResources }
