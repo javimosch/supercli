@@ -19,6 +19,8 @@ function defaultSettings() {
     max_zip_mb: 10,
     default_hooks_policy: "deny",
     admin_mode_enabled: false,
+    public_access: true,
+    api_keys: [],
   }
 }
 
@@ -119,6 +121,15 @@ async function updateSettings(patch = {}) {
   }
   if (patch.admin_mode_enabled !== undefined) {
     next.admin_mode_enabled = patch.admin_mode_enabled === true || patch.admin_mode_enabled === "true"
+  }
+  if (patch.public_access !== undefined) {
+    next.public_access = patch.public_access === true || patch.public_access === "true"
+  }
+  if (patch.api_keys !== undefined) {
+    if (!Array.isArray(patch.api_keys)) {
+      throw invalid("api_keys must be an array")
+    }
+    next.api_keys = patch.api_keys
   }
   const storage = getStorage()
   await storage.set(SETTINGS_KEY, next)

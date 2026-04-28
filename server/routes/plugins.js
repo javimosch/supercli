@@ -13,6 +13,7 @@ const {
 const { getStorage } = require("../storage/adapter")
 const { registerPluginResources, unregisterPluginResources } = require("../services/pluginResourceService")
 const { bumpVersion } = require("../services/configService")
+const { requireAuth } = require("../middleware/auth")
 
 const router = Router()
 
@@ -150,7 +151,7 @@ async function parseMultipartFormData(req) {
   }
 }
 
-router.get("/", async (req, res) => {
+router.get("/", requireAuth, async (req, res) => {
   try {
     const plugins = await listServerPlugins()
     const settings = await getSettings()
@@ -163,7 +164,7 @@ router.get("/", async (req, res) => {
   }
 })
 
-router.get("/settings", async (req, res) => {
+router.get("/settings", allowIfNoApiKeys, async (req, res) => {
   try {
     const settings = await getSettings()
     res.json(settings)
@@ -172,7 +173,7 @@ router.get("/settings", async (req, res) => {
   }
 })
 
-router.put("/settings", async (req, res) => {
+router.put("/settings", allowIfNoApiKeys, async (req, res) => {
   try {
     const settings = await updateSettings(req.body || {})
     res.json({ ok: true, settings })
@@ -181,7 +182,25 @@ router.put("/settings", async (req, res) => {
   }
 })
 
-router.post("/", async (req, res) => {
+// Bootstrapping middleware for settings and api-keys when no API keys exist
+async function allowIfNoApiKeys(req, res, next) {
+  try {
+    const { getCachedSettings } = require("../middleware/auth")
+    const settings = await getCachedSettings()
+    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
+    if (apiKeys.length === 0) {
+      return next()
+    }
+    // If API keys exist, require auth
+    return requireAuth(req, res, next)
+  } catch (err) {
+    console.error("Bootstrapping middleware error:", err)
+    // Fail open on error
+    next()
+  }
+}
+
+router.post("/", requireAuth, async (req, res) => {
   try {
     const sourceType = String((req.body && req.body.source_type) || "json").trim().toLowerCase()
     const plugin = sourceType === "zip"
@@ -193,7 +212,7 @@ router.post("/", async (req, res) => {
   }
 })
 
-router.post("/upload", async (req, res) => {
+router.post("/upload", requireAuth, async (req, res) => {
   try {
     const contentType = String(req.headers["content-type"] || "")
     const payload = contentType.includes("multipart/form-data")
@@ -206,7 +225,38 @@ router.post("/upload", async (req, res) => {
   }
 })
 
-router.get("/:name", async (req, res) => {
+// List clients endpoint (must be before /:name)
+router.get("/clients", requireAuth, async (req, res) => {
+  try {
+    const storage = getStorage()
+    const clientKeys = await storage.listKeys("client:")
+    const clients = []
+    
+    for (const key of clientKeys) {
+      try {
+        const client = await storage.get(key)
+        if (client && client.client_id) {
+          clients.push(client)
+        }
+      } catch (err) {
+        // Skip if client read fails
+      }
+    }
+    
+    // Sort by last_seen descending
+    clients.sort((a, b) => new Date(b.last_seen) - new Date(a.last_seen))
+    
+    if (req.query.format !== "json" && req.accepts("html") && !req.xhr && !req.headers["x-requested-with"]) {
+      return res.render("clients", { clients })
+    }
+    
+    res.json({ clients })
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+router.get("/:name", requireAuth, async (req, res) => {
   try {
     const plugin = await getServerPlugin(req.params.name)
     if (!plugin) {
@@ -218,7 +268,7 @@ router.get("/:name", async (req, res) => {
   }
 })
 
-router.patch("/:name", async (req, res) => {
+router.patch("/:name", requireAuth, async (req, res) => {
   try {
     const plugin = await updatePluginMetadata(req.params.name, req.body || {})
     res.json({ ok: true, plugin })
@@ -227,7 +277,7 @@ router.patch("/:name", async (req, res) => {
   }
 })
 
-router.delete("/:name", async (req, res) => {
+router.delete("/:name", requireAuth, async (req, res) => {
   try {
     const removed = await removeServerPlugin(req.params.name)
     res.json({ ok: true, removed })
@@ -236,7 +286,7 @@ router.delete("/:name", async (req, res) => {
   }
 })
 
-router.get("/:name/manifest", async (req, res) => {
+router.get("/:name/manifest", requireAuth, async (req, res) => {
   try {
     const plugin = await getServerPlugin(req.params.name)
     if (!plugin) {
@@ -248,7 +298,7 @@ router.get("/:name/manifest", async (req, res) => {
   }
 })
 
-router.get("/:name/archive", async (req, res) => {
+router.get("/:name/archive", requireAuth, async (req, res) => {
   try {
     const archive = await getPluginArchiveBuffer(req.params.name)
     if (!archive) {
@@ -262,26 +312,37 @@ router.get("/:name/archive", async (req, res) => {
   }
 })
 
-router.post("/client-resources", async (req, res) => {
+router.post("/client-resources", requireAuth, async (req, res) => {
   try {
     const storage = getStorage()
-    const { plugins } = req.body || {}
+    const { client_id, plugins } = req.body || {}
     
     if (!Array.isArray(plugins)) {
       return res.status(400).json({ error: "plugins must be an array", type: "invalid_argument" })
     }
     
-    // Replace all cli-origin resources with fresh sync
+    if (!client_id || typeof client_id !== "string") {
+      return res.status(400).json({ error: "client_id is required", type: "invalid_argument" })
+    }
+    
+    // Update client last_seen
+    await storage.set(`client:${client_id}`, {
+      client_id: client_id,
+      last_seen: new Date(),
+      plugin_count: plugins.length
+    })
+    
+    // Remove existing cli resources from this specific client only
     const allMcpKeys = await storage.listKeys("mcp:")
     const allSpecKeys = await storage.listKeys("spec:")
-    const cliMcpKeys = allMcpKeys.filter(k => k.startsWith("mcp:cli:"))
-    const cliSpecKeys = allSpecKeys.filter(k => k.startsWith("spec:cli:"))
+    const clientMcpKeys = allMcpKeys.filter(k => k.startsWith(`mcp:cli:${client_id}:`))
+    const clientSpecKeys = allSpecKeys.filter(k => k.startsWith(`spec:cli:${client_id}:`))
     
-    // Remove existing cli resources
-    for (const key of cliMcpKeys) {
+    // Remove this client's existing resources
+    for (const key of clientMcpKeys) {
       await storage.delete(key)
     }
-    for (const key of cliSpecKeys) {
+    for (const key of clientSpecKeys) {
       await storage.delete(key)
     }
     
@@ -292,15 +353,16 @@ router.post("/client-resources", async (req, res) => {
       if (!plugin.name || !plugin.server_resources) continue
       
       try {
-        // Store plugin metadata
-        await storage.set(`plugin_client:${plugin.name}`, {
+        // Store plugin metadata with client_id
+        await storage.set(`plugin_client:${client_id}:${plugin.name}`, {
           name: plugin.name,
           server_resources: plugin.server_resources,
+          client_id: client_id,
           synced_at: new Date()
         })
         
-        // Register resources
-        const regResults = await registerPluginResources(plugin.name, plugin.server_resources, "cli")
+        // Register resources with client_id in key
+        const regResults = await registerPluginResources(plugin.name, plugin.server_resources, "cli", client_id)
         results.registered_mcp += regResults.mcp.length
         results.registered_specs += regResults.specs.length
         results.errors.push(...regResults.errors)
@@ -311,6 +373,86 @@ router.post("/client-resources", async (req, res) => {
     
     await bumpVersion()
     res.json({ ok: true, ...results })
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+// List clients endpoint
+router.get("/clients", async (req, res) => {
+  try {
+    const storage = getStorage()
+    const clientKeys = await storage.listKeys("client:")
+    const clients = []
+    
+    for (const key of clientKeys) {
+      try {
+        const client = await storage.get(key)
+        if (client && client.client_id) {
+          clients.push(client)
+        }
+      } catch (err) {
+        // Skip if client read fails
+      }
+    }
+    
+    // Sort by last_seen descending
+    clients.sort((a, b) => new Date(b.last_seen) - new Date(a.last_seen))
+    
+    if (req.query.format !== "json" && req.accepts("html") && !req.xhr && !req.headers["x-requested-with"]) {
+      return res.render("clients", { clients })
+    }
+    
+    res.json({ clients })
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+// API Keys endpoints
+
+// POST /api/plugins/api-keys - Create API key
+router.post("/api-keys", allowIfNoApiKeys, async (req, res) => {
+  try {
+    const { name } = req.body || {}
+    if (!name || typeof name !== "string") {
+      return res.status(400).json({ error: "name is required", type: "invalid_argument" })
+    }
+
+    const settings = await getSettings()
+    const crypto = require("crypto")
+    const key = crypto.randomBytes(32).toString("hex")
+
+    const newApiKey = {
+      name: String(name).trim(),
+      key,
+      created_at: new Date().toISOString()
+    }
+
+    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
+    apiKeys.push(newApiKey)
+
+    await updateSettings({ api_keys: apiKeys })
+    res.status(201).json(newApiKey)
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+// DELETE /api/plugins/api-keys/:key - Delete API key
+router.delete("/api-keys/:key", allowIfNoApiKeys, async (req, res) => {
+  try {
+    const keyToDelete = req.params.key
+    const settings = await getSettings()
+    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
+    const filtered = apiKeys.filter(k => k.key !== keyToDelete)
+
+    if (filtered.length === apiKeys.length) {
+      return res.status(404).json({ error: "API key not found", type: "resource_not_found" })
+    }
+
+    await updateSettings({ api_keys: filtered })
+    res.json({ ok: true })
   } catch (err) {
     handleError(res, err)
   }

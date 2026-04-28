@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const { getStorage } = require("./storage/adapter");
 const { registerAllPluginResources, syncPluginResources } = require("./services/pluginResourceService");
+const { requireAuth } = require("./middleware/auth");
 
 const dashboardRouter = require("./routes/dashboard");
 const adaptersRouter = require("./routes/adapters");
@@ -30,21 +31,21 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/docs", express.static(path.join(__dirname, "../docs")));
 
-// API routes
-app.use("/api/dashboard", dashboardRouter);
-app.use("/api/adapters", adaptersRouter);
-app.use("/api/config", configRouter);
-app.use("/api/commands", commandsRouter);
-app.use("/api/specs", specsRouter);
-app.use("/api/mcp", mcpRouter);
-app.use("/api/plans", plansRouter);
-app.use("/api/jobs", jobsRouter);
-app.use("/api/ask", askRouter);
+// API routes (with authentication)
+app.use("/api/dashboard", requireAuth, dashboardRouter);
+app.use("/api/adapters", requireAuth, adaptersRouter);
+app.use("/api/config", requireAuth, configRouter);
+app.use("/api/commands", requireAuth, commandsRouter);
+app.use("/api/specs", requireAuth, specsRouter);
+app.use("/api/mcp", requireAuth, mcpRouter);
+app.use("/api/plans", requireAuth, plansRouter);
+app.use("/api/jobs", requireAuth, jobsRouter);
+app.use("/api/ask", requireAuth, askRouter);
 app.use("/api/plugins", pluginsRouter);
-app.use("/api/docs", docsRouter);
+app.use("/api/docs", requireAuth, docsRouter);
 
 // Tree/command endpoints under /api (config router handles them)
-app.use("/api", configRouter);
+app.use("/api", requireAuth, configRouter);
 
 app.use("/", dashboardRouter);
 
