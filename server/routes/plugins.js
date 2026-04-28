@@ -10,6 +10,9 @@ const {
   removeServerPlugin,
   getPluginArchiveBuffer,
 } = require("../services/pluginsService")
+const { getStorage } = require("../storage/adapter")
+const { registerPluginResources, unregisterPluginResources } = require("../services/pluginResourceService")
+const { bumpVersion } = require("../services/configService")
 
 const router = Router()
 
@@ -254,6 +257,60 @@ router.get("/:name/archive", async (req, res) => {
     res.setHeader("Content-Type", "application/zip")
     res.setHeader("Content-Length", String(archive.length))
     res.send(archive)
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+router.post("/client-resources", async (req, res) => {
+  try {
+    const storage = getStorage()
+    const { plugins } = req.body || {}
+    
+    if (!Array.isArray(plugins)) {
+      return res.status(400).json({ error: "plugins must be an array", type: "invalid_argument" })
+    }
+    
+    // Replace all cli-origin resources with fresh sync
+    const allMcpKeys = await storage.listKeys("mcp:")
+    const allSpecKeys = await storage.listKeys("spec:")
+    const cliMcpKeys = allMcpKeys.filter(k => k.startsWith("mcp:cli:"))
+    const cliSpecKeys = allSpecKeys.filter(k => k.startsWith("spec:cli:"))
+    
+    // Remove existing cli resources
+    for (const key of cliMcpKeys) {
+      await storage.delete(key)
+    }
+    for (const key of cliSpecKeys) {
+      await storage.delete(key)
+    }
+    
+    // Store plugin metadata and register resources
+    const results = { synced: plugins.length, registered_mcp: 0, registered_specs: 0, errors: [] }
+    
+    for (const plugin of plugins) {
+      if (!plugin.name || !plugin.server_resources) continue
+      
+      try {
+        // Store plugin metadata
+        await storage.set(`plugin_client:${plugin.name}`, {
+          name: plugin.name,
+          server_resources: plugin.server_resources,
+          synced_at: new Date()
+        })
+        
+        // Register resources
+        const regResults = await registerPluginResources(plugin.name, plugin.server_resources, "cli")
+        results.registered_mcp += regResults.mcp.length
+        results.registered_specs += regResults.specs.length
+        results.errors.push(...regResults.errors)
+      } catch (err) {
+        results.errors.push(`Failed to sync plugin ${plugin.name}: ${err.message}`)
+      }
+    }
+    
+    await bumpVersion()
+    res.json({ ok: true, ...results })
   } catch (err) {
     handleError(res, err)
   }
