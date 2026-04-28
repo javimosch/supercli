@@ -1,0 +1,82 @@
+<%- include("partials/head", { title: "Clients" }) %>
+
+<div id="clients-app">
+  <div class="flex justify-between items-center mb-8">
+    <div>
+      <p class="text-xs uppercase tracking-[0.2em] text-[#787774] mb-1">Monitoring</p>
+      <h1 class="text-2xl editorial-heading text-[#111111]">Connected Clients</h1>
+      <p class="text-sm text-[#787774] mt-1">CLI clients that have synced plugin resources to this server</p>
+    </div>
+  </div>
+
+  <div class="bento-card">
+    <div v-if="clients.length === 0" class="p-12 text-center text-[#787774]">
+      No clients have synced yet.
+    </div>
+    
+    <table v-else class="min-w-full divide-y divide-[#EAEAEA]">
+      <thead class="bg-[#F7F6F3]">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Client ID</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Last Seen</th>
+          <th class="px-6 py-3 text-left text-xs font-semibold text-[#787774] uppercase tracking-wider">Plugin Count</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-[#EAEAEA]">
+        <tr v-for="client in clients" :key="client.client_id" class="hover:bg-[#F7F6F3] transition-colors">
+          <td class="px-6 py-4">
+            <code class="mono-text text-sm text-[#1F6C9F]">{{ client.client_id.substring(0, 8) }}...</code>
+          </td>
+          <td class="px-6 py-4 text-sm text-[#2F3437]">
+            {{ formatLastSeen(client.last_seen) }}
+          </td>
+          <td class="px-6 py-4 text-sm text-[#2F3437]">
+            {{ client.plugin_count || 0 }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+  const { createApp } = Vue
+
+  createApp({
+    data() {
+      return {
+        clients: []
+      }
+    },
+    async mounted() {
+      await this.fetchClients()
+    },
+    methods: {
+      async fetchClients() {
+        try {
+          const r = await fetch('/api/plugins/clients?format=json')
+          const data = await r.json()
+          this.clients = data.clients || []
+        } catch (err) {
+          console.error('Failed to fetch clients:', err)
+        }
+      },
+      formatLastSeen(dateStr) {
+        if (!dateStr) return 'Never'
+        const date = new Date(dateStr)
+        const now = new Date()
+        const diffMs = now - date
+        const diffMins = Math.floor(diffMs / 60000)
+        const diffHours = Math.floor(diffMs / 3600000)
+        const diffDays = Math.floor(diffMs / 86400000)
+        
+        if (diffMins < 1) return 'Just now'
+        if (diffMins < 60) return `${diffMins} min ago`
+        if (diffHours < 24) return `${diffHours}h ago`
+        if (diffDays < 7) return `${diffDays}d ago`
+        return date.toLocaleDateString()
+      }
+    }
+  }).mount('#clients-app')
+</script>
+

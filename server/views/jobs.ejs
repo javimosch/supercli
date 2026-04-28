@@ -34,10 +34,11 @@
           <th>Status</th>
           <th>Duration</th>
           <th>Timestamp</th>
+          <th>Client</th>
         </tr>
       </thead>
       <tbody>
-        <tr v-if="jobs.length===0"><td colspan="4" class="text-center opacity-60">No executions recorded yet.</td></tr>
+        <tr v-if="jobs.length===0"><td colspan="5" class="text-center opacity-60">No executions recorded yet.</td></tr>
         <tr v-for="j in jobs" :key="j._id">
           <td><code>{{ j.command }}</code></td>
           <td>
@@ -46,7 +47,15 @@
             </span>
           </td>
           <td>{{ j.duration_ms }}ms</td>
-          <td class="opacity-70">{{ new Date(j.timestamp).toLocaleString() }}</td>
+          <td class="opacity-70">
+            <span :title="new Date(j.timestamp).toLocaleString()" class="cursor-help">
+              {{ formatRelativeTime(j.timestamp) }}
+            </span>
+          </td>
+          <td class="opacity-70">
+            <code v-if="j.client_id" class="text-xs">{{ j.client_id.substring(0, 8) }}...</code>
+            <span v-else class="text-xs opacity-50">-</span>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -64,6 +73,21 @@
       async loadStats() {
         const r = await fetch('/api/jobs/stats')
         this.stats = await r.json()
+      },
+      formatRelativeTime(dateStr) {
+        if (!dateStr) return 'Never'
+        const date = new Date(dateStr)
+        const now = new Date()
+        const diffMs = now - date
+        const diffMins = Math.floor(diffMs / 60000)
+        const diffHours = Math.floor(diffMs / 3600000)
+        const diffDays = Math.floor(diffMs / 86400000)
+
+        if (diffMins < 1) return 'Just now'
+        if (diffMins < 60) return `${diffMins}m ago`
+        if (diffHours < 24) return `${diffHours}h ago`
+        if (diffDays < 7) return `${diffDays}d ago`
+        return date.toLocaleDateString()
       }
     }
   }).mount('#jobs-app')

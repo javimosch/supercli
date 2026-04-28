@@ -7,7 +7,7 @@ const router = Router()
 router.post("/", async (req, res) => {
   try {
     const storage = getStorage()
-    const { command, args, status, duration_ms, timestamp, plan_id, error } = req.body
+    const { command, args, status, duration_ms, timestamp, plan_id, error, client_id } = req.body
     
     // Generate a unique sequential-ish ID
     const jobId = `job:${Date.now()}_${Math.random().toString(36).substring(2, 9)}`
@@ -20,7 +20,8 @@ router.post("/", async (req, res) => {
       duration_ms: duration_ms || 0,
       plan_id: plan_id || null,
       error: error || null,
-      timestamp: timestamp || new Date().toISOString()
+      timestamp: timestamp || new Date().toISOString(),
+      client_id: client_id || null
     }
     
     await storage.set(jobId, doc)

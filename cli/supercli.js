@@ -9,6 +9,7 @@ const {
   removeMcpServer,
   listMcpServers,
   upsertCommand,
+  getClientId,
 } = require("./config");
 const { execute } = require("./executor");
 const { buildCapabilities } = require("./help-json");
@@ -25,6 +26,7 @@ const { handleAskCommand } = require("./ask");
 const { handleSkillsCommand } = require("./skills");
 const { findNamespacePassthrough } = require("./namespace-passthrough");
 const { discoverPluginsByIntent } = require("./discover");
+const { startDaemon, stopDaemon, getDaemonStatus, writeLog } = require("./daemon");
 
 const SERVER = process.env.SUPERCLI_SERVER;
 const hasServer = !!SERVER;
@@ -570,6 +572,29 @@ async function main() {
       return;
     }
 
+    if (positional[0] === "daemon") {
+      const subcommand = positional[1] || "status";
+      switch (subcommand) {
+        case "start":
+          output(startDaemon());
+          break;
+        case "stop":
+          output(stopDaemon());
+          break;
+        case "status":
+          output(getDaemonStatus());
+          break;
+        default:
+          outputError({
+            code: 85,
+            type: "invalid_argument",
+            message: "Unknown daemon subcommand. Use: start|stop|status",
+            recoverable: false,
+          });
+      }
+      return;
+    }
+
     if (positional[0] === "commands") {
       const config = await loadConfig(SERVER);
       const namespaceFilter = flags.namespace
@@ -959,20 +984,15 @@ async function main() {
       data: result,
     };
 
-    // Post job record (async, non-blocking)
-    if (hasServer) {
-      fetch(`${SERVER}/api/jobs`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          command: `${namespace}.${resource}.${action}`,
-          args: uFlags,
-          status: "success",
-          duration_ms: duration,
-          timestamp: new Date().toISOString(),
-        }),
-      }).catch(() => {}); // silent fail
-    }
+    // Write job record to local log (daemon will sync to server)
+    writeLog({
+      command: `${namespace}.${resource}.${action}`,
+      args: uFlags,
+      status: "success",
+      duration_ms: duration,
+      timestamp: new Date().toISOString(),
+      client_id: getClientId(),
+    });
 
     if (humanMode) {
       process.stderr.write(

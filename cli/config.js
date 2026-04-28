@@ -1,6 +1,7 @@
 const fs = require("fs")
 const path = require("path")
 const os = require("os")
+const crypto = require("crypto")
 const {
   getEffectivePluginCommands,
   listInstalledPlugins,
@@ -12,6 +13,22 @@ const { spawnSync } = require("child_process")
 
 const CACHE_DIR = path.join(os.homedir(), ".supercli")
 const CACHE_FILE = path.join(CACHE_DIR, "config.json")
+
+function getClientId() {
+  // Allow ENV override for custom identification
+  if (process.env.SUPERCLI_CLIENT_ID) {
+    return String(process.env.SUPERCLI_CLIENT_ID).trim()
+  }
+  // Minimal machine fingerprint
+  const pieces = [
+    os.hostname(),
+    os.type(),
+    os.release(),
+    os.arch(),
+    os.userInfo().username,
+  ]
+  return crypto.createHash('sha256').update(pieces.join('|')).digest('hex')
+}
 
 function ensureCacheDir() {
   if (!fs.existsSync(CACHE_DIR)) {
@@ -335,6 +352,7 @@ async function syncClientPluginResources(server) {
   const { readPluginsLock } = require("./plugins-store")
   const lock = readPluginsLock()
   const installed = lock.installed || {}
+  const clientId = getClientId()
   
   // Filter plugins with server_resources
   const pluginsWithResources = []
@@ -355,7 +373,10 @@ async function syncClientPluginResources(server) {
     const r = await fetch(`${server}/api/plugins/client-resources`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plugins: pluginsWithResources })
+      body: JSON.stringify({ 
+        client_id: clientId,
+        plugins: pluginsWithResources 
+      })
     })
     
     if (!r.ok) {
@@ -596,4 +617,4 @@ async function showConfig() {
   }
 }
 
-module.exports = { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers, upsertCommand, removeCommandsByNamespace, syncClientPluginResources }
+module.exports = { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers, upsertCommand, removeCommandsByNamespace, syncClientPluginResources, getClientId }
