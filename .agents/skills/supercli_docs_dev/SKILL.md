@@ -13,6 +13,8 @@ Work on supercli documentation including docs/index.html, docs/plugins.html, and
 docs/
 ├── index.html           # Main documentation page (single-page app)
 ├── plugins.html         # Plugin directory page
+├── server.md            # Server documentation (loaded dynamically)
+├── adapters.md          # Adapters documentation (loaded dynamically)
 ├── meta-plugins.json    # Generated plugin metadata (don't edit manually)
 ├── features/            # Feature-specific docs
 └── ...other .md files
@@ -47,6 +49,19 @@ Single-page documentation with:
 **Update mobile nav:** Clone happens automatically via JS from sidebar
 **Add section:** Create `<article class="doc-section" id="..." data-keywords="...">`
 **Link to another doc page:** `<a href="plugins.html">Plugin Directory</a>`
+**Add dynamic .md section:** 
+1. Create `docs/<section>.md` file
+2. Add empty div in HTML: `<div id="<section>-content" class="prose prose-lg max-w-none text-[#2F3437]"></div>`
+3. Add JS loader at bottom of page:
+```javascript
+async function loadSectionDocs() {
+  const res = await fetch('<section>.md');
+  const markdown = await res.text();
+  const html = marked.parse(markdown);
+  document.getElementById('<section>-content').innerHTML = html;
+}
+loadSectionDocs();
+```
 
 ## docs/plugins.html
 
