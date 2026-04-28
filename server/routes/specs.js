@@ -28,11 +28,12 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const storage = getStorage()
-    const { name, url, auth } = req.body
+    const { name, url, auth, pluginSource } = req.body
     const key = `spec:${name}`
     // Support both simple string auth and object auth
     const authValue = auth || "none"
     const doc = { _id: key, name, url, auth: authValue, createdAt: new Date() }
+    if (typeof pluginSource === "string") doc.pluginSource = pluginSource
     await storage.set(key, doc)
     await bumpVersion()
     if (req.headers["content-type"]?.includes("urlencoded")) {
