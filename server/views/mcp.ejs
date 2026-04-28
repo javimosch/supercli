@@ -9,30 +9,62 @@
     <button @click="showForm=!showForm" class="btn btn-primary">+ Add Server</button>
   </div>
 
-  <!-- Add form -->
+  <!-- Add/Edit form -->
   <div v-if="showForm" class="bento-card p-6 mb-6">
-    <form @submit.prevent="create">
+    <form @submit.prevent="editing ? update() : create()">
       <div class="flex flex-col md:flex-row gap-4 items-end mb-4">
         <div class="flex-1 w-full">
           <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Name</label>
           <input v-model="form.name" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" required placeholder="e.g. context-mode">
         </div>
-        <div class="flex-1 w-full">
-          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">URL (HTTP MCP)</label>
-          <input v-model="form.url" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="https://mcp.example.com">
-        </div>
-        <div class="flex-1 w-full">
-          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Command (stdio MCP)</label>
-          <input v-model="form.command" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="e.g. context-mode">
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-3">Transport Mode</label>
+        <div class="flex gap-6">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" v-model="form.transport" value="http" class="w-4 h-4 accent-[#111111]">
+            <span class="text-sm text-[#2F3437]">SSE/HTTP</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="radio" v-model="form.transport" value="stdio" class="w-4 h-4 accent-[#111111]">
+            <span class="text-sm text-[#2F3437]">STDIO</span>
+          </label>
         </div>
       </div>
-      <div class="flex gap-4 items-center">
+
+      <!-- SSE/HTTP fields -->
+      <div v-if="form.transport === 'http'" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">URL</label>
+          <input v-model="form.url" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="https://mcp.example.com">
+          <p class="text-xs text-[#787774] mt-1">Uses SSE with HTTP fallback</p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Timeout (ms)</label>
+          <input v-model="form.timeout_ms" type="number" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="30000">
+          <p class="text-xs text-[#787774] mt-1">Default: 30000ms (30 seconds)</p>
+        </div>
+      </div>
+
+      <!-- STDIO fields -->
+      <div v-if="form.transport === 'stdio'" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-[#787774] uppercase tracking-wider mb-2">Command</label>
+          <input v-model="form.command" class="w-full px-4 py-3 bg-[#F7F6F3] border border-[#EAEAEA] rounded-md text-[#111111] focus:outline-none focus:border-[#111111] transition-colors" placeholder="e.g. context-mode">
+        </div>
         <label class="flex items-center gap-2 cursor-pointer">
           <input type="checkbox" v-model="form.stateful" class="w-4 h-4 accent-[#111111]">
-          <span class="text-sm text-[#2F3437]">Stateful (requires daemon)</span>
+          <div class="flex flex-col">
+            <span class="text-sm text-[#2F3437]">Stateful (requires daemon)</span>
+            <span class="text-xs text-[#787774]">Daemon runs on CLI side, starts when command is executed via CLI (not server)</span>
+          </div>
         </label>
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" @click="showForm=false" class="btn">Cancel</button>
+      </div>
+
+      <div class="flex gap-4 items-center mt-4">
+        <button type="submit" class="btn btn-primary">{{ editing ? 'Update' : 'Save' }}</button>
+        <button type="button" @click="cancelEdit" class="btn">Cancel</button>
       </div>
     </form>
   </div>
@@ -50,13 +82,25 @@
       <tbody>
         <tr v-if="servers.length===0"><td colspan="4" class="px-6 py-12 text-center text-[#787774]">No MCP servers registered.</td></tr>
         <tr v-for="s in servers" :key="s._id" class="border-b border-[#EAEAEA] hover:bg-[#F7F6F3] transition-colors">
-          <td class="px-6 py-4"><code class="mono-text text-sm text-[#1F6C9F]">{{ s.name }}</code></td>
+          <td class="px-6 py-4">
+            <code class="mono-text text-sm text-[#1F6C9F]">{{ s.name }}</code>
+            <div v-if="getUsedCommands(s).length > 0" class="mt-1 text-xs text-[#787774]">
+              used by: {{ getUsedCommands(s).map(c => `${c.namespace}.${c.resource}.${c.action}`).join(', ') }}
+            </div>
+          </td>
           <td class="px-6 py-4 max-w-xs truncate text-[#2F3437]">{{ s.url || s.command || '' }}</td>
           <td class="px-6 py-4">
             <span v-if="s.stateful" class="badge bg-[#111111] text-white">stateful</span>
-            <span v-else class="badge">{{ s.url ? 'http' : 'stdio' }}</span>
+            <span v-else class="badge">{{ s.url ? 'sse/http' : 'stdio' }}</span>
+            <span v-if="s.url && s.status" class="ml-2 text-xs" :class="{'text-green-600': s.status === 'alive', 'text-red-600': s.status === 'error'}">
+              {{ s.status === 'alive' ? '✓' : '✗' }} {{ s.lastCheck }}
+            </span>
           </td>
           <td class="px-6 py-4">
+            <button v-if="s.url" @click="check(s)" :disabled="s.checking" class="btn text-xs border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 mr-2" :class="{'opacity-50': s.checking}">
+              {{ s.checking ? 'Checking...' : 'Check' }}
+            </button>
+            <button @click="edit(s)" class="btn text-xs border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 mr-2">Edit</button>
             <button @click="remove(s._id)" class="btn text-xs border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300">Delete</button>
           </td>
         </tr>
@@ -72,16 +116,84 @@
     data() {
       return {
         servers: initialServers,
+        commands: [],
         showForm: false,
-        form: { name: '', url: '', command: '', stateful: false }
+        editing: false,
+        editId: null,
+        form: { name: '', transport: 'http', url: '', timeout_ms: 30000, command: '', stateful: false },
+        autoCheckInterval: null
+      }
+    },
+    mounted() {
+      // Start auto-check every minute for HTTP/SSE servers
+      this.autoCheckInterval = setInterval(() => {
+        this.autoCheck()
+      }, 60000)
+      
+      // Fetch commands
+      this.fetchCommands()
+      
+      // Refresh commands every 30 seconds
+      setInterval(() => {
+        this.fetchCommands()
+      }, 30000)
+    },
+    beforeUnmount() {
+      if (this.autoCheckInterval) {
+        clearInterval(this.autoCheckInterval)
       }
     },
     methods: {
+      async fetchCommands() {
+        try {
+          const res = await fetch('/api/commands?format=json')
+          const data = await res.json()
+          this.commands = data.commands || data || []
+        } catch (err) {
+          console.error('Failed to fetch commands:', err)
+        }
+      },
+      getUsedCommands(server) {
+        // Find commands that use this MCP server
+        return this.commands.filter(cmd => {
+          const adapterConfig = cmd.adapterConfig || {}
+          // Match by server name (for stdio) or URL (for HTTP)
+          if (server.url) {
+            return adapterConfig.url === server.url
+          } else {
+            return adapterConfig.server === server.name
+          }
+        })
+      },
+      edit(server) {
+        this.editing = true
+        this.editId = server._id
+        this.form = {
+          name: server.name,
+          transport: server.url ? 'http' : 'stdio',
+          url: server.url || '',
+          timeout_ms: server.timeout_ms || 30000,
+          command: server.command || '',
+          stateful: server.stateful || false
+        }
+        this.showForm = true
+      },
+      cancelEdit() {
+        this.editing = false
+        this.editId = null
+        this.form = { name: '', transport: 'http', url: '', timeout_ms: 30000, command: '', stateful: false }
+        this.showForm = false
+      },
       async create() {
         const payload = { name: this.form.name }
-        if (this.form.url) payload.url = this.form.url
-        if (this.form.command) payload.command = this.form.command
-        if (this.form.stateful) payload.stateful = true
+        if (this.form.transport === 'http') {
+          payload.url = this.form.url
+          if (this.form.timeout_ms) payload.timeout_ms = parseInt(this.form.timeout_ms)
+        }
+        if (this.form.transport === 'stdio') {
+          payload.command = this.form.command
+          if (this.form.stateful) payload.stateful = true
+        }
         const r = await fetch('/api/mcp', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -89,14 +201,147 @@
         })
         const doc = await r.json()
         this.servers.push(doc)
-        this.form = { name: '', url: '', command: '', stateful: false }
-        this.showForm = false
+        this.cancelEdit()
+        await this.fetchCommands()
+      },
+      async update() {
+        const payload = { name: this.form.name }
+        if (this.form.transport === 'http') {
+          payload.url = this.form.url
+          if (this.form.timeout_ms) payload.timeout_ms = parseInt(this.form.timeout_ms)
+        }
+        if (this.form.transport === 'stdio') {
+          payload.command = this.form.command
+          if (this.form.stateful) payload.stateful = true
+        }
+        const r = await fetch('/api/mcp/' + this.editId, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        })
+        const doc = await r.json()
+        const idx = this.servers.findIndex(s => s._id === this.editId)
+        if (idx !== -1) this.servers[idx] = { ...this.servers[idx], ...payload, updatedAt: new Date() }
+        this.cancelEdit()
+        await this.fetchCommands()
+      },
+      async check(server) {
+        server.checking = true
+        let sessionId = null
+        try {
+          const timeout = server.timeout_ms || 10000
+          const controller = new AbortController()
+          const timeoutId = setTimeout(() => controller.abort(), timeout)
+          
+          // Try different endpoints
+          const endpoints = ['/mcp', '/tool', '/sse']
+          let response = null
+          
+          // First try without session (stateless)
+          for (const endpoint of endpoints) {
+            try {
+              response = await fetch(server.url + endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/event-stream' },
+                body: JSON.stringify({ jsonrpc: '2.0', method: 'tools/list', id: 1 }),
+                signal: controller.signal
+              })
+              // Accept any response that returns data (SSE might not be 200)
+              if (response.status >= 200 && response.status < 500) break
+            } catch (e) {
+              // Try next endpoint
+            }
+          }
+          
+          // If stateless check failed with session error, try with session
+          if (!response || response.status >= 500) {
+            // Try to create a session
+            for (const endpoint of endpoints) {
+              try {
+                const sessionRes = await fetch(server.url + endpoint, {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Accept': 'application/json, text/event-stream' },
+                  body: JSON.stringify({ jsonrpc: '2.0', method: 'initialize', id: 1 }),
+                  signal: controller.signal
+                })
+                if (sessionRes.status >= 200 && sessionRes.status < 500) {
+                  const text = await sessionRes.text()
+                  // Extract session ID from response
+                  const match = text.match(/id:\s*([^\s_]+)/)
+                  if (match) {
+                    sessionId = match[1]
+                    break
+                  }
+                }
+              } catch (e) {
+                // Try next endpoint
+              }
+            }
+            
+            // If we got a session, try the check with it
+            if (sessionId) {
+              for (const endpoint of endpoints) {
+                try {
+                  response = await fetch(server.url + endpoint, {
+                    method: 'POST',
+                    headers: { 
+                      'Content-Type': 'application/json', 
+                      'Accept': 'application/json, text/event-stream',
+                      'X-MCP-Session-Id': sessionId
+                    },
+                    body: JSON.stringify({ jsonrpc: '2.0', method: 'tools/list', id: 1 }),
+                    signal: controller.signal
+                  })
+                  if (response.status >= 200 && response.status < 500) break
+                } catch (e) {
+                  // Try next endpoint
+                }
+              }
+            }
+          }
+          
+          clearTimeout(timeoutId)
+          
+          if (response && response.status >= 200 && response.status < 500) {
+            server.status = 'alive'
+            server.lastCheck = new Date().toLocaleTimeString()
+          } else {
+            server.status = 'error'
+            server.lastCheck = new Date().toLocaleTimeString()
+          }
+        } catch (err) {
+          server.status = 'error'
+          server.lastCheck = new Date().toLocaleTimeString()
+        } finally {
+          server.checking = false
+          // Clean up session if created
+          if (sessionId) {
+            try {
+              await fetch(server.url + '/mcp', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ jsonrpc: '2.0', method: 'shutdown', id: 1 })
+              })
+            } catch (e) {
+              // Ignore cleanup errors
+            }
+          }
+        }
       },
       async remove(id) {
         if (!confirm('Delete this server?')) return
         await fetch('/api/mcp/' + id, { method: 'DELETE' })
         this.servers = this.servers.filter(s => s._id !== id)
-      }
+        await this.fetchCommands()
+      },
+      autoCheck() {
+        // Check all HTTP/SSE servers that aren't already being checked
+        this.servers.forEach(server => {
+          if (server.url && !server.checking) {
+            this.check(server)
+          }
+        })
+      },
     }
   }).mount('#mcp-app')
 </script>
