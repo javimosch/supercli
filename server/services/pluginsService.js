@@ -1,6 +1,7 @@
 const crypto = require("crypto")
 const { getStorage } = require("../storage/adapter")
 const { bumpVersion } = require("./configService")
+const { registerPluginResources, unregisterPluginResources } = require("./pluginResourceService")
 
 const PLUGIN_PREFIX = "plugin_server:"
 const SETTINGS_KEY = "settings:plugins"
@@ -194,6 +195,12 @@ async function upsertJsonPlugin(payload) {
   }
   const storage = getStorage()
   await storage.set(pluginKey(common.name), next)
+  
+  // Register server resources if present
+  if (manifest.server_resources) {
+    await registerPluginResources(common.name, manifest.server_resources, "server")
+  }
+  
   await bumpVersion()
   return toPublicPlugin(next)
 }
@@ -233,6 +240,12 @@ async function upsertZipPlugin(payload) {
   }
   const storage = getStorage()
   await storage.set(pluginKey(common.name), next)
+  
+  // Register server resources if present
+  if (manifest.server_resources) {
+    await registerPluginResources(common.name, manifest.server_resources, "server")
+  }
+  
   await bumpVersion()
   return toPublicPlugin(next)
 }
