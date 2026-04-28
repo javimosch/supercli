@@ -28,7 +28,7 @@ async function runCommand(cmd, args) {
 
 async function main() {
   try {
-    // Register context-mode as a stateful MCP server
+    // Register context-mode as a stateful MCP server locally
     await runCommand('sc', ['mcp', 'add', 'context-mode', '--command', 'context-mode', '--args-json', '[]', '--stateful']);
     console.log('✓ context-mode registered as stateful MCP server');
 
