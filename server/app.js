@@ -12,6 +12,7 @@ const plansRouter = require("./routes/plans");
 const jobsRouter = require("./routes/jobs");
 const askRouter = require("./routes/ask");
 const pluginsRouter = require("./routes/plugins");
+const docsRouter = require("./routes/docs");
 
 const PORT = process.env.PORT || 3000;
 
@@ -23,8 +24,10 @@ app.use(express.urlencoded({ extended: true, limit: "20mb" }));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Static file serving - must be before API routes
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/docs", express.static(path.join(__dirname, "../docs")));
 
 // API routes
 app.use("/api/dashboard", dashboardRouter);
@@ -37,6 +40,7 @@ app.use("/api/plans", plansRouter);
 app.use("/api/jobs", jobsRouter);
 app.use("/api/ask", askRouter);
 app.use("/api/plugins", pluginsRouter);
+app.use("/api/docs", docsRouter);
 
 // Tree/command endpoints under /api (config router handles them)
 app.use("/api", configRouter);
@@ -67,6 +71,13 @@ app.get("/mcp", (req, res) => res.redirect("/api/mcp"));
 app.get("/jobs", (req, res) => res.redirect("/api/jobs"));
 app.get("/plugins", (req, res) => res.redirect("/api/plugins"));
 app.get("/adapters", (req, res) => res.redirect("/api/adapters"));
+app.get("/docs", (req, res) => res.redirect("/api/docs"));
+
+// Doc sub-page redirects
+app.get("/api/plugins.html", (req, res) => res.redirect("/docs/plugins.html"));
+app.get("/api/adapters.html", (req, res) => res.redirect("/docs/adapters.html"));
+app.get("/api/server.md", (req, res) => res.redirect("/docs/server.md"));
+app.get("/api/changelog.html", (req, res) => res.redirect("/docs/changelog.html"));
 
 async function start() {
   try {
