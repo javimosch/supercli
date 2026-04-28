@@ -4,7 +4,7 @@
  */
 const { getStorage } = require("../storage/adapter")
 
-async function registerPluginResources(pluginName, serverResources, origin = "cli") {
+async function registerPluginResources(pluginName, serverResources, origin = "cli", clientId = null) {
   const storage = getStorage()
   const results = { mcp: [], specs: [], errors: [] }
   
@@ -18,13 +18,18 @@ async function registerPluginResources(pluginName, serverResources, origin = "cl
             continue
           }
           
-          const key = `mcp:${origin}:${pluginName}:${mcpResource.name}`
+          // Build key with client_id if origin is cli
+          const key = origin === "cli" && clientId
+            ? `mcp:${origin}:${clientId}:${pluginName}:${mcpResource.name}`
+            : `mcp:${origin}:${pluginName}:${mcpResource.name}`
+          
           const doc = {
             _id: key,
             name: key,
             displayName: mcpResource.name,
             pluginSource: pluginName,
             origin: origin,
+            clientId: clientId || null,
             createdAt: new Date()
           }
           
@@ -54,7 +59,11 @@ async function registerPluginResources(pluginName, serverResources, origin = "cl
             continue
           }
           
-          const key = `spec:${origin}:${pluginName}:${specResource.name}`
+          // Build key with client_id if origin is cli
+          const key = origin === "cli" && clientId
+            ? `spec:${origin}:${clientId}:${pluginName}:${specResource.name}`
+            : `spec:${origin}:${pluginName}:${specResource.name}`
+          
           const doc = {
             _id: key,
             name: key,
@@ -63,6 +72,7 @@ async function registerPluginResources(pluginName, serverResources, origin = "cl
             auth: specResource.auth || "none",
             pluginSource: pluginName,
             origin: origin,
+            clientId: clientId || null,
             createdAt: new Date()
           }
           
@@ -119,13 +129,13 @@ async function registerAllPluginResources() {
   const storage = getStorage()
   const results = { plugins: {}, totalErrors: 0, registeredMcp: 0, registeredSpecs: 0 }
   
-  // Register resources from client plugins (plugin_client:*)
+  // Register resources from client plugins (plugin_client:{client-id}:*)
   const clientPluginKeys = await storage.listKeys("plugin_client:")
   for (const key of clientPluginKeys) {
     try {
       const plugin = await storage.get(key)
-      if (plugin && plugin.server_resources) {
-        const pluginResults = await registerPluginResources(plugin.name, plugin.server_resources, "cli")
+      if (plugin && plugin.server_resources && plugin.client_id) {
+        const pluginResults = await registerPluginResources(plugin.name, plugin.server_resources, "cli", plugin.client_id)
         results.plugins[plugin.name] = pluginResults
         results.totalErrors += pluginResults.errors.length
         results.registeredMcp += pluginResults.mcp.length
@@ -178,15 +188,15 @@ async function syncPluginResources() {
   for (const key of clientPluginKeys) {
     try {
       const plugin = await storage.get(key)
-      if (plugin && plugin.server_resources) {
+      if (plugin && plugin.server_resources && plugin.client_id) {
         if (plugin.server_resources.mcp) {
           for (const mcp of plugin.server_resources.mcp) {
-            expectedMcpKeys.add(`mcp:cli:${plugin.name}:${mcp.name}`)
+            expectedMcpKeys.add(`mcp:cli:${plugin.client_id}:${plugin.name}:${mcp.name}`)
           }
         }
         if (plugin.server_resources.specs) {
           for (const spec of plugin.server_resources.specs) {
-            expectedSpecKeys.add(`spec:cli:${plugin.name}:${spec.name}`)
+            expectedSpecKeys.add(`spec:cli:${plugin.client_id}:${plugin.name}:${spec.name}`)
           }
         }
       }
