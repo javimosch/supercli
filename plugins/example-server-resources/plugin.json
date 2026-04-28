@@ -1,0 +1,46 @@
+{
+  "name": "example-server-resources",
+  "version": "1.0.0",
+  "description": "Example plugin demonstrating server resource auto-registration",
+  "source": "https://github.com/example/server-resources-plugin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "node"
+    }
+  ],
+  "server_resources": {
+    "mcp": [
+      {
+        "name": "example-mcp",
+        "url": "http://localhost:8080/mcp",
+        "headers": {
+          "Authorization": "Bearer ${EXAMPLE_TOKEN}"
+        },
+        "stateful": true,
+        "timeout_ms": 30000
+      }
+    ],
+    "specs": [
+      {
+        "name": "example-api",
+        "url": "http://localhost:8080/openapi.json",
+        "auth": "apiKey"
+      }
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "example",
+      "resource": "server",
+      "action": "status",
+      "description": "Check example server status",
+      "adapter": "http",
+      "adapterConfig": {
+        "url": "http://localhost:8080/status",
+        "method": "GET"
+      },
+      "args": []
+    }
+  ]
+}
