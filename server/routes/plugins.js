@@ -259,6 +259,64 @@ router.get("/clients", requireAuth, async (req, res) => {
   }
 })
 
+// API Keys endpoints
+
+// GET /api/plugins/api-keys - Render API keys view
+router.get("/api-keys", allowIfNoApiKeys, async (req, res) => {
+  try {
+    const settings = await getSettings()
+    if (req.query.format !== "json" && req.accepts("html") && !req.xhr && !req.headers["x-requested-with"]) {
+      return res.render("api-keys", { settings })
+    }
+    res.json({ api_keys: settings.api_keys || [] })
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+// POST /api/plugins/api-keys - Create API key
+router.post("/api-keys", allowIfNoApiKeys, async (req, res) => {
+  try {
+    const { name } = req.body || {}
+    if (!name || typeof name !== "string") {
+      return res.status(400).json({ error: "name is required", type: "invalid_argument" })
+    }
+
+    const settings = await getSettings()
+    const crypto = require("crypto")
+    const key = crypto.randomBytes(32).toString("hex")
+
+    const newApiKey = {
+      name: String(name).trim(),
+      key,
+      created_at: new Date().toISOString()
+    }
+
+    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
+    apiKeys.push(newApiKey)
+
+    await updateSettings({ api_keys: apiKeys })
+    res.status(201).json(newApiKey)
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
+// DELETE /api/plugins/api-keys/:key - Delete API key
+router.delete("/api-keys/:key", allowIfNoApiKeys, async (req, res) => {
+  try {
+    const keyToDelete = req.params.key
+    const settings = await getSettings()
+    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
+    const filtered = apiKeys.filter(k => k.key !== keyToDelete)
+
+    await updateSettings({ api_keys: filtered })
+    res.json({ ok: true })
+  } catch (err) {
+    handleError(res, err)
+  }
+})
+
 router.get("/:name", requireAuth, async (req, res) => {
   try {
     const plugin = await getServerPlugin(req.params.name)
@@ -407,68 +465,6 @@ router.get("/clients", async (req, res) => {
     }
     
     res.json({ clients })
-  } catch (err) {
-    handleError(res, err)
-  }
-})
-
-// API Keys endpoints
-
-// GET /api/plugins/api-keys - Render API keys view
-router.get("/api-keys", allowIfNoApiKeys, async (req, res) => {
-  try {
-    const settings = await getSettings()
-    if (req.query.format !== "json" && req.accepts("html") && !req.xhr && !req.headers["x-requested-with"]) {
-      return res.render("api-keys", { settings })
-    }
-    res.json({ api_keys: settings.api_keys || [] })
-  } catch (err) {
-    handleError(res, err)
-  }
-})
-
-// POST /api/plugins/api-keys - Create API key
-router.post("/api-keys", allowIfNoApiKeys, async (req, res) => {
-  try {
-    const { name } = req.body || {}
-    if (!name || typeof name !== "string") {
-      return res.status(400).json({ error: "name is required", type: "invalid_argument" })
-    }
-
-    const settings = await getSettings()
-    const crypto = require("crypto")
-    const key = crypto.randomBytes(32).toString("hex")
-
-    const newApiKey = {
-      name: String(name).trim(),
-      key,
-      created_at: new Date().toISOString()
-    }
-
-    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
-    apiKeys.push(newApiKey)
-
-    await updateSettings({ api_keys: apiKeys })
-    res.status(201).json(newApiKey)
-  } catch (err) {
-    handleError(res, err)
-  }
-})
-
-// DELETE /api/plugins/api-keys/:key - Delete API key
-router.delete("/api-keys/:key", allowIfNoApiKeys, async (req, res) => {
-  try {
-    const keyToDelete = req.params.key
-    const settings = await getSettings()
-    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : []
-    const filtered = apiKeys.filter(k => k.key !== keyToDelete)
-
-    if (filtered.length === apiKeys.length) {
-      return res.status(404).json({ error: "API key not found", type: "resource_not_found" })
-    }
-
-    await updateSettings({ api_keys: filtered })
-    res.json({ ok: true })
   } catch (err) {
     handleError(res, err)
   }
