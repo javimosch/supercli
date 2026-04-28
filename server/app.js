@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const { getStorage } = require("./storage/adapter");
+const { registerAllPluginResources, syncPluginResources } = require("./services/pluginResourceService");
 
 const dashboardRouter = require("./routes/dashboard");
 const adaptersRouter = require("./routes/adapters");
@@ -83,6 +84,24 @@ async function start() {
   try {
     // Initialize storage singleton
     getStorage();
+
+    // Sync plugin resources (cleanup orphaned)
+    console.log("[Plugin Resources] Syncing plugin resources...");
+    const syncResults = await syncPluginResources();
+    if (syncResults.removedMcp.length > 0 || syncResults.removedSpecs.length > 0) {
+      console.log(`[Plugin Resources] Cleaned up ${syncResults.removedMcp.length} MCP and ${syncResults.removedSpecs.length} orphaned specs`);
+    }
+    if (syncResults.errors.length > 0) {
+      console.warn(`[Plugin Resources] ${syncResults.errors.length} sync errors`);
+    }
+
+    // Register plugin resources (self-healing)
+    console.log("[Plugin Resources] Registering plugin resources...");
+    const resourceResults = await registerAllPluginResources();
+    if (resourceResults.totalErrors > 0) {
+      console.warn(`[Plugin Resources] ${resourceResults.totalErrors} errors during registration`);
+    }
+    console.log(`[Plugin Resources] Registered ${resourceResults.registeredMcp} MCP servers and ${resourceResults.registeredSpecs} OpenAPI specs`);
 
     app.listen(PORT, () => {
       console.log(`SUPERCLI server running on http://localhost:${PORT}`);
