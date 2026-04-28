@@ -19,6 +19,7 @@ function sanitizeMcpPayload(payload, fallbackName) {
   }
   if (typeof payload.timeout_ms === "number" && payload.timeout_ms > 0) out.timeout_ms = payload.timeout_ms
   if (payload.stateful === true || payload.stateful === "true" || payload.stateful === "on") out.stateful = true
+  if (typeof payload.pluginSource === "string") out.pluginSource = payload.pluginSource
   return out
 }
 
