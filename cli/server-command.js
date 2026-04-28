@@ -2,6 +2,7 @@ const fs = require("fs")
 const path = require("path")
 
 const SERVER = process.env.SUPERCLI_SERVER
+const API_KEY = process.env.SUPERCLI_API_KEY
 
 function getServerUrl() {
   return SERVER ? SERVER.replace(/\/$/, "") : null
@@ -13,13 +14,17 @@ async function serverFetch(endpoint, options = {}) {
     throw new Error("SUPERCLI_SERVER not set. Set it to your server URL.")
   }
   const url = `${base}${endpoint}`
+  const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    ...options.headers,
+  }
+  if (API_KEY) {
+    headers["X-API-Key"] = API_KEY
+  }
   const res = await fetch(url, {
     ...options,
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json",
-      ...options.headers,
-    },
+    headers,
   })
   if (!res.ok) {
     const text = await res.text()
