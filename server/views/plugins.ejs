@@ -15,76 +15,7 @@
     <span><strong>Admin Mode Enabled:</strong> CLI clients can modify server state without authentication. Disable when not needed.</span>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-6">
-    <div class="card bg-base-100 border border-base-300">
-      <div class="card-body p-4">
-        <h2 class="card-title text-base">Settings</h2>
-        <label class="form-control mb-2">
-          <span class="label-text text-xs">Max ZIP Size (MB)</span>
-          <input v-model.number="settings.max_zip_mb" type="number" min="1" class="input input-bordered input-sm" />
-        </label>
-        <label class="form-control mb-3">
-          <span class="label-text text-xs">Default Hooks Policy</span>
-          <select v-model="settings.default_hooks_policy" class="select select-bordered select-sm">
-            <option value="deny">deny</option>
-            <option value="allow">allow</option>
-          </select>
-        </label>
-        <label class="label cursor-pointer justify-start gap-2 mb-3">
-          <input type="checkbox" v-model="settings.admin_mode_enabled" class="checkbox checkbox-error checkbox-sm" />
-          <span class="label-text text-xs text-error font-semibold">Admin Mode (allows CLI modifications)</span>
-        </label>
-        <label class="label cursor-pointer justify-start gap-2 mb-3">
-          <input type="checkbox" v-model="settings.public_access" class="checkbox checkbox-sm" />
-          <span class="label-text text-xs">Public Access (allow without API key)</span>
-        </label>
-        <button class="btn btn-sm btn-primary" @click="saveSettings">Save Settings</button>
-      </div>
-    </div>
-
-    <div class="card bg-base-100 border border-base-300">
-      <div class="card-body p-4">
-        <h2 class="card-title text-base">API Keys</h2>
-        <div class="form-control mb-3">
-          <div class="label">
-            <span class="label-text text-xs">Create New API Key</span>
-          </div>
-          <div class="flex gap-2">
-            <input v-model="newKeyName" class="input input-bordered input-sm flex-1" placeholder="Key name (e.g., 'CLI Agent')" />
-            <button class="btn btn-sm btn-primary" @click="createApiKey">Create</button>
-          </div>
-        </div>
-        <div v-if="settings.api_keys && settings.api_keys.length > 0" class="overflow-x-auto">
-          <table class="table table-zebra table-xs">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Key</th>
-                <th>Created</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="apiKey in settings.api_keys" :key="apiKey.key">
-                <td>{{ apiKey.name }}</td>
-                <td>
-                  <code class="text-xs">{{ apiKey.key.slice(0, 8) }}...</code>
-                  <button class="btn btn-xs btn-ghost ml-1" @click="copyApiKey(apiKey.key)">📋</button>
-                </td>
-                <td class="text-xs">{{ new Date(apiKey.created_at).toLocaleDateString() }}</td>
-                <td>
-                  <button class="btn btn-xs btn-error" @click="deleteApiKey(apiKey.key)">Delete</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div v-else class="text-xs opacity-60 text-center py-2">
-          No API keys created yet
-        </div>
-      </div>
-    </div>
-
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6">
     <div class="card bg-base-100 border border-base-300">
       <div class="card-body p-4">
         <h2 class="card-title text-base">Create JSON Plugin</h2>
@@ -201,7 +132,6 @@
           archive_file: null,
           manifestStr: '{\n  "name": "my-plugin",\n  "version": "0.0.0",\n  "commands": []\n}',
         },
-        newKeyName: '',
       }
     },
     methods: {
@@ -227,15 +157,6 @@
         const out = await this.api('/api/plugins?format=json', 'GET')
         this.plugins = out.plugins || []
         if (out.settings) this.settings = out.settings
-      },
-      async saveSettings() {
-        try {
-          await this.api('/api/plugins/settings', 'PUT', this.settings)
-          this.setMessage('success', 'Settings updated')
-          await this.reloadPlugins()
-        } catch (err) {
-          this.setMessage('error', err.message)
-        }
       },
       async createJsonPlugin() {
         try {

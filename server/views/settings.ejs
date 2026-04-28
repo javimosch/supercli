@@ -1,0 +1,97 @@
+<%- include("partials/head", { title: "Server Settings" }) %>
+
+<div id="settings-app" class="max-w-4xl">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Server Settings</h1>
+    <div class="text-sm opacity-80">Configure server-wide behavior and security.</div>
+  </div>
+
+  <div v-if="message.text" :class="['alert mb-4', message.type === 'error' ? 'alert-error' : 'alert-success']">
+    <span>{{ message.text }}</span>
+  </div>
+
+  <div v-if="settings.admin_mode_enabled" class="alert alert-error mb-4">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+    <span><strong>Admin Mode Enabled:</strong> CLI clients can modify server state without authentication. Disable when not needed.</span>
+  </div>
+
+  <div class="card bg-base-100 border border-base-300">
+    <div class="card-body">
+      <h2 class="card-title">General Settings</h2>
+      <label class="form-control mb-3">
+        <span class="label-text">Max ZIP Size (MB)</span>
+        <input v-model.number="settings.max_zip_mb" type="number" min="1" class="input input-bordered" />
+      </label>
+      <label class="form-control mb-3">
+        <span class="label-text">Default Hooks Policy</span>
+        <select v-model="settings.default_hooks_policy" class="select select-bordered">
+          <option value="deny">deny</option>
+          <option value="allow">allow</option>
+        </select>
+      </label>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 border border-base-300 mt-4">
+    <div class="card-body">
+      <h2 class="card-title">Security Settings</h2>
+      <label class="label cursor-pointer justify-start gap-2 mb-3">
+        <input type="checkbox" v-model="settings.admin_mode_enabled" class="checkbox checkbox-error" />
+        <span class="label-text text-error font-semibold">Admin Mode (allows CLI modifications without auth)</span>
+      </label>
+      <label class="label cursor-pointer justify-start gap-2 mb-3">
+        <input type="checkbox" v-model="settings.public_access" class="checkbox" />
+        <span class="label-text">Public Access (allow API requests without API key)</span>
+      </label>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <button class="btn btn-primary" @click="saveSettings">Save Settings</button>
+  </div>
+</div>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+  data() {
+    return {
+      settings: {},
+      message: { text: '', type: 'success' }
+    }
+  },
+  async mounted() {
+    await this.loadSettings()
+  },
+  methods: {
+    async loadSettings() {
+      try {
+        const res = await fetch('/api/plugins/settings')
+        const data = await res.json()
+        this.settings = data
+      } catch (err) {
+        this.setMessage('error', err.message)
+      }
+    },
+    async saveSettings() {
+      try {
+        const res = await fetch('/api/plugins/settings', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(this.settings)
+        })
+        const data = await res.json()
+        this.settings = data.settings
+        this.setMessage('success', 'Settings saved')
+      } catch (err) {
+        this.setMessage('error', err.message)
+      }
+    },
+    setMessage(type, text) {
+      this.message = { type, text }
+      setTimeout(() => this.message = { text: '', type: 'success' }, 3000)
+    }
+  }
+}).mount('#settings-app')
+</script>

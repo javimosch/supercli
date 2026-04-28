@@ -1,0 +1,133 @@
+<%- include("partials/head", { title: "API Keys" }) %>
+
+<div id="api-keys-app" class="max-w-4xl">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">API Keys</h1>
+    <div class="text-sm opacity-80">Manage API keys for CLI and programmatic access.</div>
+  </div>
+
+  <div v-if="message.text" :class="['alert mb-4', message.type === 'error' ? 'alert-error' : 'alert-success']">
+    <span>{{ message.text }}</span>
+  </div>
+
+  <div class="card bg-base-100 border border-base-300">
+    <div class="card-body">
+      <h2 class="card-title">Create New API Key</h2>
+      <div class="form-control">
+        <div class="label">
+          <span class="label-text">Key Name</span>
+        </div>
+        <div class="flex gap-2">
+          <input v-model="newKeyName" class="input input-bordered flex-1" placeholder="e.g., 'CLI Agent' or 'Production'" />
+          <button class="btn btn-primary" @click="createApiKey">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 border border-base-300 mt-4">
+    <div class="card-body">
+      <h2 class="card-title">Active API Keys</h2>
+      <div v-if="settings.api_keys && settings.api_keys.length > 0">
+        <table class="table table-zebra">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Key</th>
+              <th>Created</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="apiKey in settings.api_keys" :key="apiKey.key">
+              <td>{{ apiKey.name }}</td>
+              <td>
+                <code>{{ apiKey.key.slice(0, 12) }}...</code>
+                <button class="btn btn-xs btn-ghost ml-2" @click="copyApiKey(apiKey.key)">📋</button>
+              </td>
+              <td>{{ new Date(apiKey.created_at).toLocaleString() }}</td>
+              <td>
+                <button class="btn btn-sm btn-error" @click="deleteApiKey(apiKey.key)">Delete</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div v-else class="text-center py-8 opacity-60">
+        <p>No API keys created yet</p>
+        <p class="text-sm mt-2">Create an API key to enable CLI and programmatic access to the server.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const { createApp } = Vue
+
+createApp({
+  data() {
+    return {
+      settings: {},
+      newKeyName: '',
+      message: { text: '', type: 'success' }
+    }
+  },
+  async mounted() {
+    await this.loadSettings()
+  },
+  methods: {
+    async loadSettings() {
+      try {
+        const res = await fetch('/api/plugins/settings')
+        const data = await res.json()
+        this.settings = data
+      } catch (err) {
+        this.setMessage('error', err.message)
+      }
+    },
+    async createApiKey() {
+      if (!this.newKeyName.trim()) {
+        this.setMessage('error', 'API key name is required')
+        return
+      }
+      try {
+        const res = await fetch('/api/plugins/api-keys', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: this.newKeyName })
+        })
+        const result = await res.json()
+        this.setMessage('success', `Created API key '${result.name}'`)
+        this.newKeyName = ''
+        await this.loadSettings()
+      } catch (err) {
+        this.setMessage('error', err.message)
+      }
+    },
+    async deleteApiKey(key) {
+      if (!confirm('Delete this API key?')) return
+      try {
+        await fetch(`/api/plugins/api-keys/${encodeURIComponent(key)}`, {
+          method: 'DELETE'
+        })
+        this.setMessage('success', 'API key deleted')
+        await this.loadSettings()
+      } catch (err) {
+        this.setMessage('error', err.message)
+      }
+    },
+    async copyApiKey(key) {
+      try {
+        await navigator.clipboard.writeText(key)
+        this.setMessage('success', 'API key copied to clipboard')
+      } catch (err) {
+        this.setMessage('error', 'Failed to copy API key')
+      }
+    },
+    setMessage(type, text) {
+      this.message = { type, text }
+      setTimeout(() => this.message = { text: '', type: 'success' }, 3000)
+    }
+  }
+}).mount('#api-keys-app')
+</script>

@@ -167,6 +167,9 @@ router.get("/", requireAuth, async (req, res) => {
 router.get("/settings", allowIfNoApiKeys, async (req, res) => {
   try {
     const settings = await getSettings()
+    if (req.query.format !== "json" && req.accepts("html") && !req.xhr && !req.headers["x-requested-with"]) {
+      return res.render("settings", { settings })
+    }
     res.json(settings)
   } catch (err) {
     handleError(res, err)
@@ -410,6 +413,19 @@ router.get("/clients", async (req, res) => {
 })
 
 // API Keys endpoints
+
+// GET /api/plugins/api-keys - Render API keys view
+router.get("/api-keys", allowIfNoApiKeys, async (req, res) => {
+  try {
+    const settings = await getSettings()
+    if (req.query.format !== "json" && req.accepts("html") && !req.xhr && !req.headers["x-requested-with"]) {
+      return res.render("api-keys", { settings })
+    }
+    res.json({ api_keys: settings.api_keys || [] })
+  } catch (err) {
+    handleError(res, err)
+  }
+})
 
 // POST /api/plugins/api-keys - Create API key
 router.post("/api-keys", allowIfNoApiKeys, async (req, res) => {
