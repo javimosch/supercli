@@ -38,10 +38,9 @@ async function requireAuth(req, res, next) {
       return next();
     }
 
-    // Allow settings and API keys endpoints when no API keys exist (bootstrapping)
-    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : [];
-    const fullPath = (req.baseUrl || "") + (req.path || "");
-    if (apiKeys.length === 0 && (fullPath.includes("/settings") || fullPath.includes("/api-keys"))) {
+    // Allow HTML views (browser navigation) without auth
+    // This allows users to navigate the UI without API keys
+    if (req.accepts("html") && !req.headers["x-requested-with"] && req.query.format !== "json") {
       return next();
     }
 
@@ -52,6 +51,7 @@ async function requireAuth(req, res, next) {
     }
 
     // Validate API key against stored keys
+    const apiKeys = Array.isArray(settings.api_keys) ? settings.api_keys : [];
     const isValid = apiKeys.some(k => k.key === apiKey);
 
     if (!isValid) {
