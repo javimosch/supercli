@@ -117,6 +117,9 @@
             <h1 class="text-2xl font-semibold mt-3 text-[#111111]">supercli</h1>
             <p class="text-sm text-[#787774] mt-1">Universal Capability Router</p>
           </div>
+          <div id="backToServerUI" class="hidden">
+            <a href="/" class="block px-3 py-2 text-sm text-[#1F6C9F] hover:bg-[#F7F6F3] rounded-md">← Back to Server UI</a>
+          </div>
           <nav class="space-y-6">
             <div>
               <p class="text-xs uppercase tracking-widest text-[#787774] mb-3">Overview</p>
@@ -490,6 +493,33 @@ supercli plugins show &lt;name&gt;</code></pre>
         }
       }
       loadServerDocs();
+
+      // Show "Back to Server UI" link if fromServerUI parameter is present
+      const urlParams = new URLSearchParams(window.location.search);
+      const fromServerUI = urlParams.get('fromServerUI') === '1';
+      
+      if (fromServerUI) {
+        const backToServerUI = document.getElementById('backToServerUI');
+        if (backToServerUI) {
+          backToServerUI.classList.remove('hidden');
+        }
+        
+        // Propagate fromServerUI parameter to all sidebar links (except back to server UI)
+        const sidebarLinks = document.querySelectorAll('#sidebar a');
+        sidebarLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          // Skip the back to server UI link
+          if (link.closest('#backToServerUI')) return;
+          
+          if (href && !href.startsWith('http') && !href.startsWith('#')) {
+            // Get current path to preserve /docs/ base
+            const currentPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+            const url = new URL(currentPath + href, window.location.origin);
+            url.searchParams.set('fromServerUI', '1');
+            link.setAttribute('href', url.pathname + url.search);
+          }
+        });
+      }
 
       // Load adapters documentation dynamically
       async function loadAdaptersDocs() {
