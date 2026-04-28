@@ -220,7 +220,7 @@ async function execute(cmd, flags, context) {
 
   const input = {};
   for (const [k, v] of Object.entries(flags)) {
-    if (!["human", "json", "compact"].includes(k)) {
+    if (!["human", "json", "compact", "stream"].includes(k)) {
       input[k] = v;
     }
   }
@@ -271,11 +271,35 @@ async function execute(cmd, flags, context) {
     );
   }
 
+  const result = await callHttpMcpTool(config, toolName, input, flags.stream === true);
+  return result;
+}
+
+async function callHttpMcpTool(config, toolName, input, streamMode = false) {
   const toolUrl = config.url.replace(/\/+$/, "");
+  
+  // Try SSE first, then fallback to simple HTTP
+  const headers = {
+    "Content-Type": "application/json",
+    "Accept": "text/event-stream, application/json",
+    ...(config.headers || {}),
+  };
+
+  // Use JSON-RPC format for MCP protocol compatibility
+  const body = JSON.stringify({
+    jsonrpc: "2.0",
+    method: "tools/call",
+    params: {
+      name: toolName,
+      arguments: input,
+    },
+    id: 1,
+  });
+
   const tr = await fetch(`${toolUrl}/tool`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", ...(config.headers || {}) },
-    body: JSON.stringify({ tool: toolName, input }),
+    headers,
+    body,
   });
 
   if (!tr.ok) {
@@ -290,7 +314,69 @@ async function execute(cmd, flags, context) {
     );
   }
 
+  const contentType = tr.headers.get("content-type") || "";
+  
+  // Check if response is SSE
+  if (contentType.includes("text/event-stream")) {
+    return parseSseResponse(tr, streamMode);
+  }
+  
+  // Standard JSON response
   return tr.json();
+}
+
+async function parseSseResponse(response, streamMode) {
+  const body = await response.text();
+  const lines = body.split("\n");
+  const events = [];
+  let currentEvent = null;
+  
+  for (const line of lines) {
+    if (line.startsWith("event: ")) {
+      currentEvent = { event: line.substring(7), data: "" };
+    } else if (line.startsWith("data: ")) {
+      if (currentEvent) {
+        currentEvent.data += line.substring(6);
+      }
+    } else if (line === "" && currentEvent) {
+      // End of event
+      try {
+        currentEvent.parsed = JSON.parse(currentEvent.data);
+        events.push(currentEvent);
+        
+        // In stream mode, we could yield here
+        if (streamMode) {
+          // For now, just accumulate - streaming support would need generator
+        }
+      } catch {
+        // Invalid JSON, skip
+      }
+      currentEvent = null;
+    }
+  }
+  
+  // Handle final event if not terminated properly
+  if (currentEvent && currentEvent.data) {
+    try {
+      currentEvent.parsed = JSON.parse(currentEvent.data);
+      events.push(currentEvent);
+    } catch {
+      // Invalid JSON, skip
+    }
+  }
+  
+  // Find the result event (usually the last one with content)
+  const resultEvent = events.find(e => e.event === "message" || e.parsed?.content);
+  
+  if (resultEvent && resultEvent.parsed) {
+    return resultEvent.parsed;
+  }
+  
+  // Fallback: return all parsed events
+  return {
+    events: events.map(e => e.parsed || e.data),
+    stream: streamMode,
+  };
 }
 
 module.exports = { execute };
