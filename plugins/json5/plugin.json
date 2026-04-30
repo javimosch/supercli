@@ -1,0 +1,88 @@
+{
+  "name": "json5",
+  "version": "0.1.0",
+  "description": "Convert JSON5 to standard JSON with comments and trailing comma support",
+  "source": "https://github.com/yosuke-furukawa/json5",
+  "checks": [
+    { "type": "binary", "name": "json5" }
+  ],
+  "install_guidance": {
+    "plugin": "json5",
+    "binary": "json5",
+    "check": "which json5",
+    "install_steps": [
+      "brew tap yosuke-furukawa/json5",
+      "brew install json5",
+      "Verify: json5 -c test.json5",
+      "supercli plugins install ./plugins/json5 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "json5",
+      "resource": "self",
+      "action": "help",
+      "description": "Show json5 help",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json5",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install json5: brew tap yosuke-furukawa/json5 && brew install json5"
+      },
+      "args": []
+    },
+    {
+      "namespace": "json5",
+      "resource": "convert",
+      "action": "to-json",
+      "description": "Convert JSON5 file to standard JSON (output to stdout)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json5",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install json5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to JSON5 file" }
+      ]
+    },
+    {
+      "namespace": "json5",
+      "resource": "convert",
+      "action": "to-file",
+      "description": "Convert JSON5 file to standard JSON (output to file)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json5",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["input", "-o", "output"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install json5"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Path to JSON5 input file" },
+        { "name": "output", "type": "string", "required": true, "description": "Path to JSON output file" }
+      ]
+    },
+    {
+      "namespace": "json5",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to json5 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "json5",
+        "passthrough": true,
+        "missingDependencyHelp": "Install json5"
+      },
+      "args": []
+    }
+  ]
+}

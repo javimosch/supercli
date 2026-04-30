@@ -1,0 +1,102 @@
+{
+  "name": "pv-migrate",
+  "version": "0.1.0",
+  "description": "CLI tool to easily migrate or backup/restore Kubernetes persistent volumes",
+  "source": "https://github.com/utkuozdemir/pv-migrate",
+  "checks": [
+    { "type": "binary", "name": "pv-migrate" }
+  ],
+  "install_guidance": {
+    "plugin": "pv-migrate",
+    "binary": "pv-migrate",
+    "check": "which pv-migrate",
+    "install_steps": [
+      "brew install pv-migrate",
+      "Verify: pv-migrate --version",
+      "supercli plugins install ./plugins/pv-migrate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pv-migrate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pv-migrate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv-migrate",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pv-migrate: brew install pv-migrate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pv-migrate",
+      "resource": "pvc",
+      "action": "migrate",
+      "description": "Migrate data from one PVC to another",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv-migrate",
+        "baseArgs": ["migrate"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install pv-migrate"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source PVC name" },
+        { "name": "dest", "type": "string", "required": true, "description": "Destination PVC name" }
+      ]
+    },
+    {
+      "namespace": "pv-migrate",
+      "resource": "pvc",
+      "action": "backup",
+      "description": "Backup a PVC to S3/Azure/GCS bucket storage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv-migrate",
+        "baseArgs": ["backup"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install pv-migrate"
+      },
+      "args": [
+        { "name": "pvc", "type": "string", "required": true, "description": "PVC name to backup" }
+      ]
+    },
+    {
+      "namespace": "pv-migrate",
+      "resource": "pvc",
+      "action": "restore",
+      "description": "Restore a PVC from S3/Azure/GCS bucket storage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv-migrate",
+        "baseArgs": ["restore"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install pv-migrate"
+      },
+      "args": [
+        { "name": "pvc", "type": "string", "required": true, "description": "PVC name to restore to" }
+      ]
+    },
+    {
+      "namespace": "pv-migrate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pv-migrate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv-migrate",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pv-migrate"
+      },
+      "args": []
+    }
+  ]
+}
