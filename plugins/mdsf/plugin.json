@@ -1,0 +1,101 @@
+{
+  "name": "mdsf",
+  "version": "0.1.0",
+  "description": "Format markdown code blocks using your favorite formatters",
+  "source": "https://github.com/hougesen/mdsf",
+  "checks": [
+    { "type": "binary", "name": "mdsf" }
+  ],
+  "install_guidance": {
+    "plugin": "mdsf",
+    "binary": "mdsf",
+    "check": "which mdsf",
+    "install_steps": [
+      "cargo install mdsf",
+      "Verify: mdsf --version",
+      "supercli plugins install ./plugins/mdsf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdsf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdsf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdsf",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mdsf: cargo install mdsf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdsf",
+      "resource": "file",
+      "action": "format",
+      "description": "Format markdown code blocks in files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdsf",
+        "baseArgs": ["format"],
+        "positionalArgs": ["input"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mdsf"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "Path to markdown file or directory" }
+      ]
+    },
+    {
+      "namespace": "mdsf",
+      "resource": "file",
+      "action": "verify",
+      "description": "Verify formatting without modifying files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdsf",
+        "baseArgs": ["verify"],
+        "positionalArgs": ["input"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mdsf"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "Path to markdown file or directory" }
+      ]
+    },
+    {
+      "namespace": "mdsf",
+      "resource": "cache",
+      "action": "prune",
+      "description": "Remove old formatting caches",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdsf",
+        "baseArgs": ["cache-prune"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mdsf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdsf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdsf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdsf",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mdsf"
+      },
+      "args": []
+    }
+  ]
+}

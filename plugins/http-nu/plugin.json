@@ -1,0 +1,84 @@
+{
+  "name": "http-nu",
+  "version": "0.1.0",
+  "description": "Nushell-scriptable HTTP server with Datastar support, SSE, and reverse proxy",
+  "source": "https://github.com/cablehead/http-nu",
+  "checks": [
+    { "type": "binary", "name": "http-nu" }
+  ],
+  "install_guidance": {
+    "plugin": "http-nu",
+    "binary": "http-nu",
+    "check": "which http-nu",
+    "install_steps": [
+      "cargo binstall http-nu",
+      "Verify: http-nu --version",
+      "supercli plugins install ./plugins/http-nu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "http-nu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print http-nu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-nu",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install http-nu: cargo binstall http-nu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "http-nu",
+      "resource": "server",
+      "action": "start",
+      "description": "Start HTTP server with Nushell script handler",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-nu",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install http-nu"
+      },
+      "args": [
+        { "name": "address", "type": "string", "required": true, "description": "Bind address (e.g., :3001)" },
+        { "name": "script", "type": "string", "required": false, "description": "Path to .nu script or inline closure" }
+      ]
+    },
+    {
+      "namespace": "http-nu",
+      "resource": "eval",
+      "action": "run",
+      "description": "Evaluate a Nushell expression via http-nu",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-nu",
+        "baseArgs": ["eval"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install http-nu"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Nushell expression to evaluate" }
+      ]
+    },
+    {
+      "namespace": "http-nu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to http-nu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "http-nu",
+        "passthrough": true,
+        "missingDependencyHelp": "Install http-nu"
+      },
+      "args": []
+    }
+  ]
+}

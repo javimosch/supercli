@@ -1,0 +1,85 @@
+{
+  "name": "rash",
+  "version": "0.1.0",
+  "description": "Declarative shell scripting using Rust native bindings inspired by Ansible",
+  "source": "https://github.com/rash-sh/rash",
+  "checks": [
+    { "type": "binary", "name": "rash" }
+  ],
+  "install_guidance": {
+    "plugin": "rash",
+    "binary": "rash",
+    "check": "which rash",
+    "install_steps": [
+      "cargo install rash_core",
+      "Verify: rash --version",
+      "supercli plugins install ./plugins/rash --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rash",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rash version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rash",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rash: cargo install rash_core"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rash",
+      "resource": "script",
+      "action": "run",
+      "description": "Execute a rash declarative script (YAML)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rash",
+        "positionalArgs": ["script"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rash"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to rash YAML script" }
+      ]
+    },
+    {
+      "namespace": "rash",
+      "resource": "script",
+      "action": "doc",
+      "description": "Show rash script documentation (docopt)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rash",
+        "baseArgs": ["--doc"],
+        "positionalArgs": ["script"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rash"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to rash YAML script" }
+      ]
+    },
+    {
+      "namespace": "rash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rash CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rash",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rash"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "name": "cymbal",
+  "version": "0.1.0",
+  "description": "Language-agnostic code navigation CLI powered by tree-sitter with dependency tracing",
+  "source": "https://github.com/1broseidon/cymbal",
+  "checks": [
+    { "type": "binary", "name": "cymbal" }
+  ],
+  "install_guidance": {
+    "plugin": "cymbal",
+    "binary": "cymbal",
+    "check": "which cymbal",
+    "install_steps": [
+      "brew install 1broseidon/tap/cymbal",
+      "Verify: cymbal --version",
+      "supercli plugins install ./plugins/cymbal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cymbal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cymbal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cymbal",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cymbal: brew install 1broseidon/tap/cymbal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cymbal",
+      "resource": "symbol",
+      "action": "investigate",
+      "description": "Investigate a symbol (source + callers + impact)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cymbal",
+        "baseArgs": ["investigate"],
+        "positionalArgs": ["symbol"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cymbal"
+      },
+      "args": [
+        { "name": "symbol", "type": "string", "required": true, "description": "Symbol name to investigate" }
+      ]
+    },
+    {
+      "namespace": "cymbal",
+      "resource": "symbol",
+      "action": "trace",
+      "description": "Trace dependencies of a symbol",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cymbal",
+        "baseArgs": ["trace"],
+        "positionalArgs": ["symbol"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cymbal"
+      },
+      "args": [
+        { "name": "symbol", "type": "string", "required": true, "description": "Symbol name to trace" }
+      ]
+    },
+    {
+      "namespace": "cymbal",
+      "resource": "symbol",
+      "action": "impact",
+      "description": "Show upstream blast radius of a symbol",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cymbal",
+        "baseArgs": ["impact"],
+        "positionalArgs": ["symbol"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cymbal"
+      },
+      "args": [
+        { "name": "symbol", "type": "string", "required": true, "description": "Symbol name to analyze impact" }
+      ]
+    },
+    {
+      "namespace": "cymbal",
+      "resource": "repo",
+      "action": "index",
+      "description": "Build or refresh the repo index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cymbal",
+        "baseArgs": ["index"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cymbal"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to repository (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "cymbal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cymbal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cymbal",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cymbal"
+      },
+      "args": []
+    }
+  ]
+}
