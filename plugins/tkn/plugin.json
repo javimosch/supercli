@@ -1,0 +1,98 @@
+{
+  "name": "tkn",
+  "version": "0.1.0",
+  "description": "CLI for interacting with Tekton CI/CD pipelines on Kubernetes",
+  "source": "https://github.com/tektoncd/cli",
+  "checks": [
+    { "type": "binary", "name": "tkn" }
+  ],
+  "install_guidance": {
+    "plugin": "tkn",
+    "binary": "tkn",
+    "check": "which tkn",
+    "install_steps": [
+      "brew install tektoncd-cli",
+      "Verify: tkn version",
+      "supercli plugins install ./plugins/tkn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tkn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tkn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tkn",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install tkn: brew install tektoncd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tkn",
+      "resource": "pipeline",
+      "action": "list",
+      "description": "List Tekton pipelines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tkn",
+        "baseArgs": ["pipeline", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tkn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tkn",
+      "resource": "task",
+      "action": "list",
+      "description": "List Tekton tasks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tkn",
+        "baseArgs": ["task", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tkn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tkn",
+      "resource": "pipeline",
+      "action": "logs",
+      "description": "Show logs for a pipeline run",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tkn",
+        "baseArgs": ["pipeline", "logs"],
+        "positionalArgs": ["pipeline"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tkn"
+      },
+      "args": [
+        { "name": "pipeline", "type": "string", "required": false, "description": "Pipeline name (interactive if omitted)" }
+      ]
+    },
+    {
+      "namespace": "tkn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tkn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tkn",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tkn"
+      },
+      "args": []
+    }
+  ]
+}

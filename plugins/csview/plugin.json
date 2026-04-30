@@ -1,0 +1,67 @@
+{
+  "name": "csview",
+  "version": "0.1.0",
+  "description": "Pretty and fast CSV viewer for CLI with CJK and emoji support",
+  "source": "https://github.com/wfxr/csview",
+  "checks": [
+    { "type": "binary", "name": "csview" }
+  ],
+  "install_guidance": {
+    "plugin": "csview",
+    "binary": "csview",
+    "check": "which csview",
+    "install_steps": [
+      "cargo install csview",
+      "Verify: csview --version",
+      "supercli plugins install ./plugins/csview --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "csview",
+      "resource": "self",
+      "action": "version",
+      "description": "Print csview version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "csview",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install csview: cargo install csview"
+      },
+      "args": []
+    },
+    {
+      "namespace": "csview",
+      "resource": "csv",
+      "action": "view",
+      "description": "Pretty-print a CSV file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "csview",
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install csview"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Path to CSV file (reads stdin if omitted)" }
+      ]
+    },
+    {
+      "namespace": "csview",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to csview CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "csview",
+        "passthrough": true,
+        "missingDependencyHelp": "Install csview"
+      },
+      "args": []
+    }
+  ]
+}

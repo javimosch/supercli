@@ -1,0 +1,85 @@
+{
+  "name": "dlm",
+  "version": "0.1.0",
+  "description": "Minimal HTTP download manager with concurrent downloads and resume support",
+  "source": "https://github.com/agourlay/dlm",
+  "checks": [
+    { "type": "binary", "name": "dlm" }
+  ],
+  "install_guidance": {
+    "plugin": "dlm",
+    "binary": "dlm",
+    "check": "which dlm",
+    "install_steps": [
+      "cargo install dlm",
+      "Verify: dlm --version",
+      "supercli plugins install ./plugins/dlm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dlm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dlm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dlm: cargo install dlm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dlm",
+      "resource": "download",
+      "action": "url",
+      "description": "Download a file from URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlm",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install dlm"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to download" }
+      ]
+    },
+    {
+      "namespace": "dlm",
+      "resource": "download",
+      "action": "batch",
+      "description": "Download multiple files from a list",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlm",
+        "baseArgs": ["--input-file"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install dlm"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Text file with one URL per line" }
+      ]
+    },
+    {
+      "namespace": "dlm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dlm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dlm"
+      },
+      "args": []
+    }
+  ]
+}
