@@ -1,0 +1,95 @@
+{
+  "name": "temporal",
+  "version": "0.1.0",
+  "description": "CLI for running Temporal Server and interacting with Workflows, Activities, and Namespaces",
+  "source": "https://github.com/temporalio/cli",
+  "checks": [
+    { "type": "binary", "name": "temporal" }
+  ],
+  "install_guidance": {
+    "plugin": "temporal",
+    "binary": "temporal",
+    "check": "which temporal",
+    "install_steps": [
+      "brew install temporal",
+      "Verify: temporal --version",
+      "supercli plugins install ./plugins/temporal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "temporal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print temporal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "temporal",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install temporal: brew install temporal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "temporal",
+      "resource": "server",
+      "action": "start-dev",
+      "description": "Start Temporal development server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "temporal",
+        "baseArgs": ["server", "start-dev"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install temporal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "temporal",
+      "resource": "workflow",
+      "action": "list",
+      "description": "List Temporal workflows",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "temporal",
+        "baseArgs": ["workflow", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install temporal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "temporal",
+      "resource": "namespace",
+      "action": "list",
+      "description": "List Temporal namespaces",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "temporal",
+        "baseArgs": ["namespace", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install temporal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "temporal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to temporal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "temporal",
+        "passthrough": true,
+        "missingDependencyHelp": "Install temporal"
+      },
+      "args": []
+    }
+  ]
+}

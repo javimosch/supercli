@@ -1,0 +1,99 @@
+{
+  "name": "bluebuild",
+  "version": "0.1.0",
+  "description": "Build custom Fedora Atomic images based on recipe.yml",
+  "source": "https://github.com/blue-build/cli",
+  "checks": [
+    { "type": "binary", "name": "bluebuild" }
+  ],
+  "install_guidance": {
+    "plugin": "bluebuild",
+    "binary": "bluebuild",
+    "check": "which bluebuild",
+    "install_steps": [
+      "cargo install bluebuild",
+      "Verify: bluebuild --version",
+      "supercli plugins install ./plugins/bluebuild --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bluebuild",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bluebuild version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bluebuild",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bluebuild: cargo install bluebuild"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bluebuild",
+      "resource": "image",
+      "action": "build",
+      "description": "Build a custom image from recipe.yml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bluebuild",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install bluebuild"
+      },
+      "args": [
+        { "name": "recipe", "type": "string", "required": false, "description": "Path to recipe.yml (default: ./recipe.yml)" }
+      ]
+    },
+    {
+      "namespace": "bluebuild",
+      "resource": "image",
+      "action": "generate",
+      "description": "Generate a Containerfile from recipe.yml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bluebuild",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install bluebuild"
+      },
+      "args": [
+        { "name": "recipe", "type": "string", "required": false, "description": "Path to recipe.yml (default: ./recipe.yml)" }
+      ]
+    },
+    {
+      "namespace": "bluebuild",
+      "resource": "template",
+      "action": "new",
+      "description": "Generate a new recipe template",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bluebuild",
+        "baseArgs": ["template"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install bluebuild"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bluebuild",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bluebuild CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bluebuild",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bluebuild"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "name": "rsonpath",
+  "version": "0.1.0",
+  "description": "SIMD-powered JSONPath query engine written in Rust",
+  "source": "https://github.com/rsonquery/rsonpath",
+  "checks": [
+    { "type": "binary", "name": "rq" }
+  ],
+  "install_guidance": {
+    "plugin": "rsonpath",
+    "binary": "rq",
+    "check": "which rq",
+    "install_steps": [
+      "cargo install rsonpath",
+      "Verify: rq --version",
+      "supercli plugins install ./plugins/rsonpath --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rsonpath",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rsonpath (rq) version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rq",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rsonpath: cargo install rsonpath"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rsonpath",
+      "resource": "query",
+      "action": "run",
+      "description": "Run a JSONPath query on a JSON file or stdin",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rq",
+        "positionalArgs": ["query", "file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rsonpath"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "JSONPath query string" },
+        { "name": "file", "type": "string", "required": false, "description": "Path to JSON file (reads stdin if omitted)" }
+      ]
+    },
+    {
+      "namespace": "rsonpath",
+      "resource": "json",
+      "action": "inline",
+      "description": "Run JSONPath query on inline JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rq",
+        "baseArgs": ["--json"],
+        "positionalArgs": ["query", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rsonpath"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "JSONPath query string" },
+        { "name": "json", "type": "string", "required": true, "description": "Inline JSON string to query" }
+      ]
+    },
+    {
+      "namespace": "rsonpath",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rsonpath"
+      },
+      "args": []
+    }
+  ]
+}
