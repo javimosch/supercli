@@ -1,0 +1,87 @@
+{
+  "name": "difftastic",
+  "version": "0.1.0",
+  "description": "Structural diff tool that understands syntax across 30+ languages",
+  "source": "https://github.com/Wilfred/difftastic",
+  "checks": [
+    { "type": "binary", "name": "difft" }
+  ],
+  "install_guidance": {
+    "plugin": "difftastic",
+    "binary": "difft",
+    "check": "which difft",
+    "install_steps": [
+      "cargo install difftastic",
+      "Verify: difft --version",
+      "supercli plugins install ./plugins/difftastic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "difftastic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print difftastic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "difft",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install difftastic: cargo install difftastic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "difftastic",
+      "resource": "files",
+      "action": "diff",
+      "description": "Compare two files with structural diff",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "difft",
+        "positionalArgs": ["old", "new"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install difftastic"
+      },
+      "args": [
+        { "name": "old", "type": "string", "required": true, "description": "Path to old file" },
+        { "name": "new", "type": "string", "required": true, "description": "Path to new file" }
+      ]
+    },
+    {
+      "namespace": "difftastic",
+      "resource": "dirs",
+      "action": "diff",
+      "description": "Compare two directories recursively",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "difft",
+        "baseArgs": ["--display", "inline"],
+        "positionalArgs": ["old", "new"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install difftastic"
+      },
+      "args": [
+        { "name": "old", "type": "string", "required": true, "description": "Path to old directory" },
+        { "name": "new", "type": "string", "required": true, "description": "Path to new directory" }
+      ]
+    },
+    {
+      "namespace": "difftastic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to difft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "difft",
+        "passthrough": true,
+        "missingDependencyHelp": "Install difftastic"
+      },
+      "args": []
+    }
+  ]
+}

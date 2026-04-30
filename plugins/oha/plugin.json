@@ -1,0 +1,67 @@
+{
+  "name": "oha",
+  "version": "0.1.0",
+  "description": "HTTP load generator written in Rust, inspired by rakyll/hey",
+  "source": "https://github.com/hatoo/oha",
+  "checks": [
+    { "type": "binary", "name": "oha" }
+  ],
+  "install_guidance": {
+    "plugin": "oha",
+    "binary": "oha",
+    "check": "which oha",
+    "install_steps": [
+      "cargo install oha",
+      "Verify: oha --version",
+      "supercli plugins install ./plugins/oha --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oha",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oha version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oha",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install oha: cargo install oha"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oha",
+      "resource": "load",
+      "action": "test",
+      "description": "Run HTTP load test against a URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oha",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install oha"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Target URL to benchmark" }
+      ]
+    },
+    {
+      "namespace": "oha",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oha CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oha",
+        "passthrough": true,
+        "missingDependencyHelp": "Install oha"
+      },
+      "args": []
+    }
+  ]
+}

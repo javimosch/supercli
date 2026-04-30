@@ -1,0 +1,85 @@
+{
+  "name": "toml2json",
+  "version": "0.1.0",
+  "description": "Convert TOML to JSON from stdin or files",
+  "source": "https://github.com/woodruffw/toml2json",
+  "checks": [
+    { "type": "binary", "name": "toml2json" }
+  ],
+  "install_guidance": {
+    "plugin": "toml2json",
+    "binary": "toml2json",
+    "check": "which toml2json",
+    "install_steps": [
+      "cargo install toml2json",
+      "Verify: toml2json --version",
+      "supercli plugins install ./plugins/toml2json --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "toml2json",
+      "resource": "self",
+      "action": "version",
+      "description": "Print toml2json version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toml2json",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install toml2json: cargo install toml2json"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toml2json",
+      "resource": "convert",
+      "action": "file",
+      "description": "Convert a TOML file to JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toml2json",
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install toml2json"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to TOML file" }
+      ]
+    },
+    {
+      "namespace": "toml2json",
+      "resource": "convert",
+      "action": "pretty",
+      "description": "Convert TOML to pretty-printed JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toml2json",
+        "baseArgs": ["--pretty"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install toml2json"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Path to TOML file (reads stdin if omitted)" }
+      ]
+    },
+    {
+      "namespace": "toml2json",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to toml2json CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toml2json",
+        "passthrough": true,
+        "missingDependencyHelp": "Install toml2json"
+      },
+      "args": []
+    }
+  ]
+}

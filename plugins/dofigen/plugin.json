@@ -1,0 +1,84 @@
+{
+  "name": "dofigen",
+  "version": "0.1.0",
+  "description": "Generate Dockerfiles and OCI images from YAML configuration",
+  "source": "https://github.com/lenra-io/dofigen",
+  "checks": [
+    { "type": "binary", "name": "dofigen" }
+  ],
+  "install_guidance": {
+    "plugin": "dofigen",
+    "binary": "dofigen",
+    "check": "which dofigen",
+    "install_steps": [
+      "cargo install dofigen",
+      "Verify: dofigen --version",
+      "supercli plugins install ./plugins/dofigen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dofigen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dofigen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dofigen",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dofigen: cargo install dofigen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dofigen",
+      "resource": "dockerfile",
+      "action": "generate",
+      "description": "Generate a Dockerfile from dofigen configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dofigen",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install dofigen"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": false, "description": "Path to dofigen.yml (default: dofigen.yml)" }
+      ]
+    },
+    {
+      "namespace": "dofigen",
+      "resource": "image",
+      "action": "build",
+      "description": "Build a Docker/OCI image from dofigen configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dofigen",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install dofigen"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": false, "description": "Path to dofigen.yml (default: dofigen.yml)" }
+      ]
+    },
+    {
+      "namespace": "dofigen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dofigen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dofigen",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dofigen"
+      },
+      "args": []
+    }
+  ]
+}
