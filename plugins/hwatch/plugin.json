@@ -1,0 +1,100 @@
+{
+  "name": "hwatch",
+  "version": "0.1.0",
+  "description": "Modern alternative to watch command with history and diff support",
+  "source": "https://github.com/blacknon/hwatch",
+  "checks": [
+    { "type": "binary", "name": "hwatch" }
+  ],
+  "install_guidance": {
+    "plugin": "hwatch",
+    "binary": "hwatch",
+    "check": "which hwatch",
+    "install_steps": [
+      "cargo install hwatch",
+      "Verify: hwatch --version",
+      "supercli plugins install ./plugins/hwatch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hwatch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hwatch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hwatch",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hwatch: cargo install hwatch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hwatch",
+      "resource": "watch",
+      "action": "run",
+      "description": "Watch a command and show output with history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hwatch",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install hwatch"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to watch" }
+      ]
+    },
+    {
+      "namespace": "hwatch",
+      "resource": "watch",
+      "action": "diff",
+      "description": "Watch a command and show diff between runs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hwatch",
+        "baseArgs": ["-d"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install hwatch"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to watch with diff" }
+      ]
+    },
+    {
+      "namespace": "hwatch",
+      "resource": "watch",
+      "action": "batch",
+      "description": "Run hwatch in batch mode (non-interactive) for specified duration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hwatch",
+        "baseArgs": ["--batch"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install hwatch"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to watch in batch mode" }
+      ]
+    },
+    {
+      "namespace": "hwatch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hwatch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hwatch",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hwatch"
+      },
+      "args": []
+    }
+  ]
+}

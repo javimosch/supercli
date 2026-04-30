@@ -1,0 +1,88 @@
+{
+  "name": "cargo-public-api",
+  "version": "0.1.0",
+  "description": "List and diff the public API of Rust library crates between releases and commits",
+  "source": "https://github.com/cargo-public-api/cargo-public-api",
+  "checks": [
+    { "type": "binary", "name": "cargo-public-api" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-public-api",
+    "binary": "cargo-public-api",
+    "check": "which cargo-public-api",
+    "install_steps": [
+      "cargo install cargo-public-api",
+      "Verify: cargo public-api --version",
+      "supercli plugins install ./plugins/cargo-public-api --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-public-api",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cargo-public-api version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["public-api", "--version"],
+        "missingDependencyHelp": "Install cargo-public-api: cargo install cargo-public-api"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-public-api",
+      "resource": "api",
+      "action": "list",
+      "description": "List the public API of a Rust crate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["public-api"],
+        "passthrough": true,
+        "cwd": "${cwd}",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cargo-public-api"
+      },
+      "args": [
+        { "name": "cwd", "type": "string", "required": false, "description": "Working directory containing Cargo.toml" }
+      ]
+    },
+    {
+      "namespace": "cargo-public-api",
+      "resource": "api",
+      "action": "diff",
+      "description": "Diff public API between two versions/commits",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["public-api", "diff"],
+        "passthrough": true,
+        "cwd": "${cwd}",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cargo-public-api"
+      },
+      "args": [
+        { "name": "cwd", "type": "string", "required": false, "description": "Working directory containing Cargo.toml" }
+      ]
+    },
+    {
+      "namespace": "cargo-public-api",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo public-api CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo",
+        "baseArgs": ["public-api"],
+        "passthrough": true,
+        "cwd": "${cwd}",
+        "missingDependencyHelp": "Install cargo-public-api"
+      },
+      "args": []
+    }
+  ]
+}

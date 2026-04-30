@@ -1,0 +1,116 @@
+{
+  "name": "worktrunk",
+  "version": "0.1.0",
+  "description": "CLI for Git worktree management, designed for parallel AI agent workflows",
+  "source": "https://github.com/max-sixty/worktrunk",
+  "checks": [
+    { "type": "binary", "name": "wt" }
+  ],
+  "install_guidance": {
+    "plugin": "worktrunk",
+    "binary": "wt",
+    "check": "which wt",
+    "install_steps": [
+      "cargo install worktrunk",
+      "wt config shell install",
+      "supercli plugins install ./plugins/worktrunk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "worktrunk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print worktrunk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wt",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install worktrunk: cargo install worktrunk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "worktrunk",
+      "resource": "branch",
+      "action": "switch",
+      "description": "Switch to a worktree branch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wt",
+        "baseArgs": ["switch"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install worktrunk"
+      },
+      "args": [
+        { "name": "branch", "type": "string", "required": true, "description": "Branch name to switch to" }
+      ]
+    },
+    {
+      "namespace": "worktrunk",
+      "resource": "branch",
+      "action": "create",
+      "description": "Create and switch to a new worktree branch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wt",
+        "baseArgs": ["switch", "-c"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install worktrunk"
+      },
+      "args": [
+        { "name": "branch", "type": "string", "required": true, "description": "New branch name" }
+      ]
+    },
+    {
+      "namespace": "worktrunk",
+      "resource": "branch",
+      "action": "list",
+      "description": "List all worktree branches",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wt",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install worktrunk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "worktrunk",
+      "resource": "branch",
+      "action": "remove",
+      "description": "Remove a worktree branch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wt",
+        "baseArgs": ["remove"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install worktrunk"
+      },
+      "args": [
+        { "name": "branch", "type": "string", "required": false, "description": "Branch name to remove (uses current if omitted)" }
+      ]
+    },
+    {
+      "namespace": "worktrunk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wt",
+        "passthrough": true,
+        "missingDependencyHelp": "Install worktrunk"
+      },
+      "args": []
+    }
+  ]
+}

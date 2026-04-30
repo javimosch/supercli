@@ -1,0 +1,84 @@
+{
+  "name": "rsql",
+  "version": "0.1.0",
+  "description": "Command line SQL interface supporting 30+ databases and data files",
+  "source": "https://github.com/theseus-rs/rsql",
+  "checks": [
+    { "type": "binary", "name": "rsql" }
+  ],
+  "install_guidance": {
+    "plugin": "rsql",
+    "binary": "rsql",
+    "check": "which rsql",
+    "install_steps": [
+      "cargo install rsql_cli",
+      "Verify: rsql --version",
+      "supercli plugins install ./plugins/rsql --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rsql",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rsql version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsql",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rsql: cargo install rsql_cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rsql",
+      "resource": "query",
+      "action": "run",
+      "description": "Execute a SQL query against a database or data file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsql",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rsql"
+      },
+      "args": [
+        { "name": "connection", "type": "string", "required": true, "description": "Database connection URL or file path" },
+        { "name": "sql", "type": "string", "required": true, "description": "SQL query to execute" }
+      ]
+    },
+    {
+      "namespace": "rsql",
+      "resource": "file",
+      "action": "query",
+      "description": "Query a data file (CSV, JSON, Parquet, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsql",
+        "baseArgs": ["-d", "${file}"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rsql"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to data file" }
+      ]
+    },
+    {
+      "namespace": "rsql",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rsql CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsql",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rsql"
+      },
+      "args": []
+    }
+  ]
+}
