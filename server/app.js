@@ -15,6 +15,8 @@ const jobsRouter = require("./routes/jobs");
 const askRouter = require("./routes/ask");
 const pluginsRouter = require("./routes/plugins");
 const docsRouter = require("./routes/docs");
+const settingsRouter = require("./routes/settings");
+const clientsRouter = require("./routes/clients");
 
 const PORT = process.env.PORT || 3000;
 
@@ -34,7 +36,6 @@ app.use("/docs", express.static(path.join(__dirname, "../docs")));
 // API routes (with authentication)
 app.use("/api/dashboard", requireAuth, dashboardRouter);
 app.use("/api/adapters", requireAuth, adaptersRouter);
-app.use("/api/config", requireAuth, configRouter);
 app.use("/api/commands", requireAuth, commandsRouter);
 app.use("/api/specs", requireAuth, specsRouter);
 app.use("/api/mcp", requireAuth, mcpRouter);
@@ -43,9 +44,9 @@ app.use("/api/jobs", requireAuth, jobsRouter);
 app.use("/api/ask", requireAuth, askRouter);
 app.use("/api/plugins", pluginsRouter);
 app.use("/api/docs", requireAuth, docsRouter);
-
-// Tree/command endpoints under /api (config router handles them)
-app.use("/api", requireAuth, configRouter);
+app.use("/api/clients", requireAuth, clientsRouter);
+app.use("/api", settingsRouter);
+app.use("/api/config", requireAuth, configRouter);
 
 app.use("/", dashboardRouter);
 

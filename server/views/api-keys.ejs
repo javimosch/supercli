@@ -78,7 +78,7 @@ createApp({
   methods: {
     async loadSettings() {
       try {
-        const res = await fetch('/api/plugins/settings')
+        const res = await fetch('/api/settings?format=json')
         const data = await res.json()
         this.settings = data
       } catch (err) {
@@ -91,7 +91,7 @@ createApp({
         return
       }
       try {
-        const res = await fetch('/api/plugins/api-keys', {
+        const res = await fetch('/api/api-keys', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: this.newKeyName })
@@ -107,7 +107,7 @@ createApp({
     async deleteApiKey(key) {
       if (!confirm('Delete this API key?')) return
       try {
-        await fetch(`/api/plugins/api-keys/${encodeURIComponent(key)}`, {
+        await fetch(`/api/api-keys/${encodeURIComponent(key)}`, {
           method: 'DELETE'
         })
         this.setMessage('success', 'API key deleted')
@@ -118,8 +118,20 @@ createApp({
     },
     async copyApiKey(key) {
       try {
-        await navigator.clipboard.writeText(key)
-        this.setMessage('success', 'API key copied to clipboard')
+        // Fallback for non-HTTPS contexts
+        const textArea = document.createElement("textarea")
+        textArea.value = key
+        textArea.style.position = "fixed"
+        textArea.style.left = "-9999px"
+        document.body.appendChild(textArea)
+        textArea.select()
+        try {
+          document.execCommand("copy")
+          this.setMessage('success', 'API key copied to clipboard')
+        } catch (err) {
+          throw new Error('Copy failed')
+        }
+        document.body.removeChild(textArea)
       } catch (err) {
         this.setMessage('error', 'Failed to copy API key')
       }
@@ -131,3 +143,5 @@ createApp({
   }
 }).mount('#api-keys-app')
 </script>
+
+<%- include("partials/foot") %>
