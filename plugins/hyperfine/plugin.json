@@ -1,7 +1,7 @@
 {
   "name": "hyperfine",
   "version": "0.1.0",
-  "description": "A command-line benchmarking tool. Compare command execution times, run warmup/preparation commands, parameterized benchmarks, and export results to various formats.",
+  "description": "Hyperfine — command-line benchmarking tool to measure and compare command execution times with statistical analysis",
   "source": "https://github.com/sharkdp/hyperfine",
   "checks": [
     { "type": "binary", "name": "hyperfine" }
@@ -9,9 +9,9 @@
   "install_guidance": {
     "plugin": "hyperfine",
     "binary": "hyperfine",
-    "check": "which hyperfine",
+    "check": "hyperfine --version",
     "install_steps": [
-      "brew install hyperfine",
+      "cargo install hyperfine",
       "Verify: hyperfine --version",
       "supercli plugins install ./plugins/hyperfine --on-conflict replace --json"
     ]
@@ -22,26 +22,49 @@
   "commands": [
     {
       "namespace": "hyperfine",
-      "resource": "benchmark",
-      "action": "run",
-      "description": "Run benchmark on one or more commands",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hyperfine version",
       "adapter": "process",
       "adapterConfig": {
         "command": "hyperfine",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hyperfine: cargo install hyperfine"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hyperfine",
+      "resource": "benchmark",
+      "action": "run",
+      "description": "Benchmark a command with statistical analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hyperfine",
+        "positionalArgs": ["command"],
         "passthrough": true,
-        "missingDependencyHelp": "Install hyperfine: brew install hyperfine"
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hyperfine"
       },
       "args": [
-        { "name": "--runs", "type": "integer", "description": "Number of benchmark runs" },
-        { "name": "--warmup", "type": "integer", "description": "Number of warmup runs" },
-        { "name": "--prepare", "type": "string", "description": "Command to run before each timing run" },
-        { "name": "--parameter-scan", "type": "string", "description": "Scan parameter range" },
-        { "name": "--parameter-list", "type": "string", "description": "List of parameter values" },
-        { "name": "--shell", "type": "string", "description": "Shell to use for command execution" },
-        { "name": "--export-json", "type": "string", "description": "Export results to JSON file" },
-        { "name": "--export-csv", "type": "string", "description": "Export results to CSV file" },
-        { "name": "--export-markdown", "type": "string", "description": "Export results to Markdown file" },
-        { "name": "commands", "type": "string", "required": true, "description": "Commands to benchmark" }
+        { "name": "command", "type": "string", "required": true, "description": "Command to benchmark" }
+      ]
+    },
+    {
+      "namespace": "hyperfine",
+      "resource": "benchmark",
+      "action": "compare",
+      "description": "Compare multiple commands",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hyperfine",
+        "positionalArgs": ["commands"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hyperfine"
+      },
+      "args": [
+        { "name": "commands", "type": "string", "required": true, "description": "Commands to compare (space-separated)" }
       ]
     },
     {
@@ -53,7 +76,7 @@
       "adapterConfig": {
         "command": "hyperfine",
         "passthrough": true,
-        "missingDependencyHelp": "Install hyperfine: brew install hyperfine"
+        "missingDependencyHelp": "Install hyperfine"
       },
       "args": []
     }

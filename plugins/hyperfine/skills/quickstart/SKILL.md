@@ -1,92 +1,64 @@
 ---
 name: hyperfine
-description: Use this skill when the user wants to benchmark command execution times, compare performance of different commands, or measure program performance with warmup and preparation commands.
+description: Use this skill when the user wants to benchmark command execution times, compare performance of different commands, measure script performance, or analyze CLI tool speed.
 ---
 
 # hyperfine Plugin
 
-A command-line benchmarking tool. Compare command execution times, run warmup/preparation commands, parameterized benchmarks, and export results to various formats.
+Command-line benchmarking tool to measure and compare command execution times with statistical analysis.
 
 ## Commands
 
-### Benchmarking
-- `hyperfine benchmark run` — Run benchmark on one or more commands
-
-### Utility
-- `hyperfine _ _` — Passthrough to hyperfine CLI
+### Benchmark
+- `hyperfine benchmark run` — Benchmark a single command
+- `hyperfine benchmark compare` — Compare multiple commands
 
 ## Usage Examples
 - "Benchmark this command"
-- "Compare the performance of these two commands"
-- "Run benchmarks with warmup"
-- "Benchmark with parameter scan"
+- "Compare the speed of these two commands"
+- "Measure execution time of this script"
+- "Which command is faster: A or B?"
 
 ## Installation
 
 ```bash
-brew install hyperfine
-```
-
-Or via Cargo:
-```bash
 cargo install hyperfine
+# or
+brew install hyperfine
+# or
+apt install hyperfine
 ```
 
 ## Examples
 
 ```bash
 # Basic benchmark
-hyperfine benchmark run 'sleep 0.3'
+hyperfine "sleep 0.5"
 
-# Compare two commands
-hyperfine benchmark run 'hexdump file' 'xxd file'
+# Compare commands
+hyperfine "sleep 0.5" "sleep 1"
 
-# Specify number of runs
-hyperfine benchmark run --runs 5 'sleep 0.3'
+# Warmup runs
+hyperfine --warmup 3 "sleep 0.5"
 
-# Warmup runs for disk cache
-hyperfine benchmark run --warmup 3 'grep -R TODO *'
-
-# Cold cache with preparation command
-hyperfine benchmark run --prepare 'sync; echo 3 | sudo tee /proc/sys/vm/drop_caches' 'grep -R TODO *'
-
-# Parameter scan (numeric)
-hyperfine benchmark run --parameter-scan num_threads 1 12 'make -j {num_threads}'
-
-# Parameter scan with step size
-hyperfine benchmark run --parameter-scan delay 0.3 0.7 -D 0.2 'sleep {delay}'
-
-# Parameter list (non-numeric)
-hyperfine benchmark run -L compiler gcc,clang '{compiler} -O2 main.cpp'
-
-# Use specific shell
-hyperfine benchmark run --shell zsh 'for i in {1..10000}; do echo test; done'
-
-# No shell (for very fast commands)
-hyperfine benchmark run -N 'grep TODO /home/user'
+# Multiple runs
+hyperfine --runs 10 "sleep 0.5"
 
 # Export results
-hyperfine benchmark run --export-json results.json 'sleep 0.3'
-hyperfine benchmark run --export-csv results.csv 'sleep 0.3'
-hyperfine benchmark run --export-markdown results.md 'sleep 0.3'
+hyperfine --export-json results.json "sleep 0.5"
 
-# Any hyperfine command with passthrough
-hyperfine _ _ --runs 10 'sleep 0.1'
+# Compare with parameter
+hyperfine --prepare 'make build' './program arg1'
 ```
 
-## Key Features
-- **Automatic run detection** — Determines optimal number of benchmarking runs
-- **Warmup runs** — Execute warmup runs for disk cache benchmarks
-- **Preparation commands** — Run commands before each timing run for cold cache
-- **Parameterized benchmarks** — Vary parameters across benchmark runs
-- **Shell selection** — Use custom shells or run without shell
-- **Export formats** — Export results to JSON, CSV, or Markdown
-- **Comparison mode** — Compare multiple commands in a single run
-- **Statistical analysis** — Automatic statistical analysis of results
-
-## Notes
-- Default: at least 10 runs, measuring for at least 3 seconds
-- Shell spawning time is automatically corrected via calibration
-- Use -N/--shell=none for very fast commands (< 5ms)
-- Can benchmark shell functions and aliases
-- Supports all major platforms via package managers
+## Common Flags
+- `--warmup N` — Number of warmup runs
+- `--runs N` — Number of benchmark runs
+- `--min-runs N` — Minimum number of runs
+- `--export-json FILE` — Export results as JSON
+- `--export-markdown FILE` — Export results as Markdown
+- `--export-csv FILE` — Export results as CSV
+- `--prepare CMD` — Command to run before each benchmark
+- `--cleanup CMD` — Command to run after each benchmark
+- `-s` — Shell to use
+- `-n NAME` — Name for the command
