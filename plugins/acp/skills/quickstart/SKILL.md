@@ -136,3 +136,40 @@ acp server start @agentclientprotocol/claude-agent-acp
 - npx agents auto-install on first run
 - Binary agents need manual download from their releases page
 - The ACP registry is at cdn.agentclientprotocol.com
+
+## Tested ACP Agents (18/35 handshake OK)
+
+### Full prompt response (tested via OpenRouter free models)
+| Agent | Handshake | Prompt Response | Notes |
+|-------|-----------|----------------|-------|
+| opencode | ✅ | ✅ "Hello" via mimo-v2-flash | Full ACP lifecycle works |
+| claude-acp | ✅ | ✅ "Hello! How can I help?" via mimo | 18k tokens |
+| qoder | ✅ | ✅ "Hello! How can I help?" via mimo | Works with model override |
+| dirac | ✅ | ✅ "Hello! I'm Dirac, ready to help" | Uses own model, no key needed |
+| agoragentic | ✅ | ✅ Tool bridge (tools/list, tools/call) | Not a chat agent |
+| auggie | ✅ | ✅ Workspace index prompt | Needs workspace config |
+
+### Handshake OK, prompt auth-gated
+| Agent | Handshake | Needs |
+|-------|-----------|-------|
+| cline | ✅ | ANTHROPIC_API_KEY |
+| goose | ✅ | GOOGLE_API_KEY / ANTHROPIC_API_KEY |
+| kimi | ✅ | KIMI_API_KEY |
+| dimcode | ✅ | OPENAI_API_KEY |
+| glm-acp-agent | ✅ | Z_AI_API_KEY |
+| deepagents | ✅ | API key |
+| pi-acp | ✅ | API key |
+| nova | ✅ | API key |
+| fast-agent | ✅ | API key |
+| qwen-code | ✅ | API key |
+| autohand | ✅ | API key |
+| codebuddy-code | ✅ | API key |
+
+### Free model support via OpenRouter
+Configure opencode with `xiaomi/mimo-v2-flash` or `openrouter/free` via `--model` flag:
+
+```bash
+acp-cli session:create opencode --model xiaomi/mimo-v2-flash --prompt "Hello"
+acp-cli session:create claude-acp --model xiaomi/mimo-v2-flash --prompt "Hello"
+```
+
