@@ -1,0 +1,84 @@
+{
+  "name": "cargo-outdated",
+  "version": "0.1.0",
+  "description": "cargo-outdated — display when Rust dependencies have newer versions available",
+  "source": "https://github.com/kbknapp/cargo-outdated",
+  "checks": [
+    { "type": "binary", "name": "cargo-outdated" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-outdated",
+    "binary": "cargo-outdated",
+    "check": "which cargo-outdated",
+    "install_steps": [
+      "cargo install cargo-outdated",
+      "Verify: cargo outdated --version",
+      "supercli plugins install ./plugins/cargo-outdated --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-outdated",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cargo-outdated version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-outdated",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cargo-outdated: cargo install cargo-outdated"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-outdated",
+      "resource": "outdated",
+      "action": "list",
+      "description": "List outdated Rust dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-outdated",
+        "baseArgs": ["outdated"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cargo-outdated"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": false, "description": "Output format: list or json" }
+      ]
+    },
+    {
+      "namespace": "cargo-outdated",
+      "resource": "outdated",
+      "action": "json",
+      "description": "List outdated dependencies as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-outdated",
+        "baseArgs": ["outdated", "--format", "json"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cargo-outdated"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-outdated",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo-outdated CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-outdated",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-outdated"
+      },
+      "args": []
+    }
+  ]
+}

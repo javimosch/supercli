@@ -1,0 +1,88 @@
+{
+  "name": "shellcheck",
+  "version": "0.1.0",
+  "description": "shellcheck — static analysis tool for shell scripts (bash/sh)",
+  "source": "https://github.com/koalaman/shellcheck",
+  "checks": [
+    { "type": "binary", "name": "shellcheck" }
+  ],
+  "install_guidance": {
+    "plugin": "shellcheck",
+    "binary": "shellcheck",
+    "check": "which shellcheck",
+    "install_steps": [
+      "brew install shellcheck",
+      "Verify: shellcheck --version",
+      "supercli plugins install ./plugins/shellcheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shellcheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shellcheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shellcheck",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install shellcheck: brew install shellcheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shellcheck",
+      "resource": "check",
+      "action": "run",
+      "description": "Lint a shell script",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shellcheck",
+        "positionalArgs": ["script"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install shellcheck"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Shell script file to check" },
+        { "name": "severity", "type": "string", "required": false, "description": "Minimum severity: error, warning, info, style" }
+      ]
+    },
+    {
+      "namespace": "shellcheck",
+      "resource": "check",
+      "action": "json",
+      "description": "Lint script and output JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shellcheck",
+        "baseArgs": ["--format", "json"],
+        "positionalArgs": ["script"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install shellcheck"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Shell script file to check" }
+      ]
+    },
+    {
+      "namespace": "shellcheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shellcheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shellcheck",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shellcheck"
+      },
+      "args": []
+    }
+  ]
+}

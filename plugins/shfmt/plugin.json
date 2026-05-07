@@ -1,0 +1,109 @@
+{
+  "name": "shfmt",
+  "version": "0.1.0",
+  "description": "shfmt — shell script formatter (bash, POSIX shell, mksh, zsh)",
+  "source": "https://github.com/mvdan/sh",
+  "checks": [
+    { "type": "binary", "name": "shfmt" }
+  ],
+  "install_guidance": {
+    "plugin": "shfmt",
+    "binary": "shfmt",
+    "check": "which shfmt",
+    "install_steps": [
+      "go install mvdan.cc/sh/v3/cmd/shfmt@latest",
+      "Verify: shfmt --version",
+      "supercli plugins install ./plugins/shfmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shfmt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shfmt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shfmt",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install shfmt: go install mvdan.cc/sh/v3/cmd/shfmt@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shfmt",
+      "resource": "format",
+      "action": "run",
+      "description": "Format a shell script",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shfmt",
+        "positionalArgs": ["script"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install shfmt"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Shell script file to format" },
+        { "name": "language", "type": "string", "required": false, "description": "Language variant: bash, posix, mksh, zsh (-ln)" },
+        { "name": "indent", "type": "string", "required": false, "description": "Indent width (-i)" }
+      ]
+    },
+    {
+      "namespace": "shfmt",
+      "resource": "format",
+      "action": "write",
+      "description": "Format and write in-place",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shfmt",
+        "baseArgs": ["-w"],
+        "positionalArgs": ["script"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install shfmt"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Shell script file to format in-place" }
+      ]
+    },
+    {
+      "namespace": "shfmt",
+      "resource": "format",
+      "action": "list",
+      "description": "List unformatted shell scripts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shfmt",
+        "baseArgs": ["-l"],
+        "positionalArgs": ["pattern"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install shfmt"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": false, "description": "File glob pattern" }
+      ]
+    },
+    {
+      "namespace": "shfmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shfmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shfmt",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shfmt"
+      },
+      "args": []
+    }
+  ]
+}

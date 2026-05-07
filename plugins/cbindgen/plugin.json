@@ -1,0 +1,86 @@
+{
+  "name": "cbindgen",
+  "version": "0.1.0",
+  "description": "cbindgen — generate C/C++ headers from Rust libraries with public C API",
+  "source": "https://github.com/mozilla/cbindgen",
+  "checks": [
+    { "type": "binary", "name": "cbindgen" }
+  ],
+  "install_guidance": {
+    "plugin": "cbindgen",
+    "binary": "cbindgen",
+    "check": "which cbindgen",
+    "install_steps": [
+      "cargo install cbindgen",
+      "Verify: cbindgen --version",
+      "supercli plugins install ./plugins/cbindgen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cbindgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cbindgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cbindgen",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cbindgen: cargo install cbindgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cbindgen",
+      "resource": "generate",
+      "action": "run",
+      "description": "Generate C/C++ header from Rust crate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cbindgen",
+        "positionalArgs": ["crate_dir"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cbindgen"
+      },
+      "args": [
+        { "name": "crate_dir", "type": "string", "required": false, "description": "Path to Rust crate directory" },
+        { "name": "lang", "type": "string", "required": false, "description": "Language: c or c++" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "cbindgen",
+      "resource": "generate",
+      "action": "config",
+      "description": "Generate template cbindgen.toml config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cbindgen",
+        "baseArgs": ["--config", "cbindgen.toml"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cbindgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cbindgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cbindgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cbindgen",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cbindgen"
+      },
+      "args": []
+    }
+  ]
+}
