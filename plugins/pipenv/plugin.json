@@ -1,0 +1,151 @@
+{
+  "name": "pipenv",
+  "version": "0.1.0",
+  "description": "pipenv — Python dependency management and packaging tool",
+  "source": "https://github.com/pypa/pipenv",
+  "checks": [
+    { "type": "binary", "name": "pipenv" }
+  ],
+  "install_guidance": {
+    "plugin": "pipenv",
+    "binary": "pipenv",
+    "check": "which pipenv",
+    "install_steps": [
+      "pip install pipenv",
+      "Verify: pipenv --version",
+      "supercli plugins install ./plugins/pipenv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pipenv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pipenv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pipenv: pip install pipenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "install",
+      "action": "run",
+      "description": "Install packages from Pipfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["install"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": [
+        { "name": "packages", "type": "string", "required": false, "description": "Package(s) to install" }
+      ]
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "install",
+      "action": "dev",
+      "description": "Install dev packages from Pipfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["install", "--dev"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": [
+        { "name": "packages", "type": "string", "required": false, "description": "Dev package(s) to install" }
+      ]
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "sync",
+      "action": "run",
+      "description": "Sync environment with Pipfile.lock",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["sync"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "graph",
+      "action": "show",
+      "description": "Show dependency graph",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["graph"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "check",
+      "action": "run",
+      "description": "Check for security vulnerabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["check"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "lock",
+      "action": "run",
+      "description": "Generate Pipfile.lock",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "baseArgs": ["lock"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipenv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pipenv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipenv",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pipenv"
+      },
+      "args": []
+    }
+  ]
+}

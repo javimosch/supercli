@@ -1,0 +1,88 @@
+{
+  "name": "bandit",
+  "version": "0.1.0",
+  "description": "bandit — Python security linter to find common security issues",
+  "source": "https://github.com/PyCQA/bandit",
+  "checks": [
+    { "type": "binary", "name": "bandit" }
+  ],
+  "install_guidance": {
+    "plugin": "bandit",
+    "binary": "bandit",
+    "check": "which bandit",
+    "install_steps": [
+      "pip install bandit",
+      "Verify: bandit --version",
+      "supercli plugins install ./plugins/bandit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bandit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bandit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bandit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bandit: pip install bandit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bandit",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan Python files for security issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bandit",
+        "baseArgs": ["-r"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install bandit"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "File or directory to scan" }
+      ]
+    },
+    {
+      "namespace": "bandit",
+      "resource": "scan",
+      "action": "json",
+      "description": "Scan and output JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bandit",
+        "baseArgs": ["-r", "--format", "json"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install bandit"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "File or directory to scan" }
+      ]
+    },
+    {
+      "namespace": "bandit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bandit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bandit",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bandit"
+      },
+      "args": []
+    }
+  ]
+}

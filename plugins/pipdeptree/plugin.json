@@ -1,0 +1,94 @@
+{
+  "name": "pipdeptree",
+  "version": "0.1.0",
+  "description": "pipdeptree — display Python package dependency tree",
+  "source": "https://github.com/naiquevin/pipdeptree",
+  "checks": [
+    { "type": "binary", "name": "pipdeptree" }
+  ],
+  "install_guidance": {
+    "plugin": "pipdeptree",
+    "binary": "pipdeptree",
+    "check": "which pipdeptree",
+    "install_steps": [
+      "pip install pipdeptree",
+      "Verify: pipdeptree --version",
+      "supercli plugins install ./plugins/pipdeptree --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pipdeptree",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pipdeptree version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipdeptree",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pipdeptree: pip install pipdeptree"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipdeptree",
+      "resource": "tree",
+      "action": "show",
+      "description": "Show package dependency tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipdeptree",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pipdeptree"
+      },
+      "args": [
+        { "name": "packages", "type": "string", "required": false, "description": "Specific package(s) to show" }
+      ]
+    },
+    {
+      "namespace": "pipdeptree",
+      "resource": "tree",
+      "action": "json",
+      "description": "Show package dependency tree as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipdeptree",
+        "baseArgs": ["--json"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pipdeptree"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipdeptree",
+      "resource": "tree",
+      "action": "warn",
+      "description": "Show conflicting/warning packages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipdeptree",
+        "baseArgs": ["--warn"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pipdeptree"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipdeptree",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pipdeptree CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipdeptree",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pipdeptree"
+      },
+      "args": []
+    }
+  ]
+}

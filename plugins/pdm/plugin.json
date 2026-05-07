@@ -1,0 +1,119 @@
+{
+  "name": "pdm",
+  "version": "0.1.0",
+  "description": "pdm — Python package and dependency manager supporting PEP 582",
+  "source": "https://github.com/pdm-project/pdm",
+  "checks": [
+    { "type": "binary", "name": "pdm" }
+  ],
+  "install_guidance": {
+    "plugin": "pdm",
+    "binary": "pdm",
+    "check": "which pdm",
+    "install_steps": [
+      "pip install pdm",
+      "Verify: pdm --version",
+      "supercli plugins install ./plugins/pdm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pdm: pip install pdm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdm",
+      "resource": "install",
+      "action": "run",
+      "description": "Install dependencies from pyproject.toml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdm",
+        "baseArgs": ["install"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pdm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdm",
+      "resource": "add",
+      "action": "run",
+      "description": "Add package dependency",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdm",
+        "baseArgs": ["add"],
+        "positionalArgs": ["package"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pdm"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name to add" },
+        { "name": "dev", "type": "boolean", "required": false, "description": "Add as dev dependency (--dev)" }
+      ]
+    },
+    {
+      "namespace": "pdm",
+      "resource": "build",
+      "action": "run",
+      "description": "Build package for distribution",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdm",
+        "baseArgs": ["build"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pdm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdm",
+      "resource": "publish",
+      "action": "run",
+      "description": "Publish package to PyPI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdm",
+        "baseArgs": ["publish"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pdm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdm",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pdm"
+      },
+      "args": []
+    }
+  ]
+}

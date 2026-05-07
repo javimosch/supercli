@@ -1,0 +1,85 @@
+{
+  "name": "pip-audit",
+  "version": "0.1.0",
+  "description": "pip-audit — audit Python environments for known vulnerabilities",
+  "source": "https://github.com/pypa/pip-audit",
+  "checks": [
+    { "type": "binary", "name": "pip-audit" }
+  ],
+  "install_guidance": {
+    "plugin": "pip-audit",
+    "binary": "pip-audit",
+    "check": "which pip-audit",
+    "install_steps": [
+      "pip install pip-audit",
+      "Verify: pip-audit --version",
+      "supercli plugins install ./plugins/pip-audit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pip-audit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pip-audit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-audit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pip-audit: pip install pip-audit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pip-audit",
+      "resource": "audit",
+      "action": "run",
+      "description": "Audit Python dependencies for vulnerabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-audit",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pip-audit"
+      },
+      "args": [
+        { "name": "requirements", "type": "string", "required": false, "description": "Path to requirements file" }
+      ]
+    },
+    {
+      "namespace": "pip-audit",
+      "resource": "audit",
+      "action": "json",
+      "description": "Audit and output JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-audit",
+        "baseArgs": ["--format", "json"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pip-audit"
+      },
+      "args": [
+        { "name": "requirements", "type": "string", "required": false, "description": "Path to requirements file" }
+      ]
+    },
+    {
+      "namespace": "pip-audit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pip-audit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-audit",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pip-audit"
+      },
+      "args": []
+    }
+  ]
+}
