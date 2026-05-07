@@ -1,0 +1,84 @@
+{
+  "name": "cargo-audit",
+  "version": "0.1.0",
+  "description": "cargo-audit — audit Cargo.lock for crates with security vulnerabilities",
+  "source": "https://github.com/rustsec/rustsec",
+  "checks": [
+    { "type": "binary", "name": "cargo-audit" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-audit",
+    "binary": "cargo-audit",
+    "check": "which cargo-audit",
+    "install_steps": [
+      "cargo install cargo-audit",
+      "Verify: cargo audit --version",
+      "supercli plugins install ./plugins/cargo-audit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-audit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cargo-audit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-audit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cargo-audit: cargo install cargo-audit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-audit",
+      "resource": "audit",
+      "action": "run",
+      "description": "Audit Cargo.lock for vulnerabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-audit",
+        "baseArgs": ["audit"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cargo-audit"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to project directory" }
+      ]
+    },
+    {
+      "namespace": "cargo-audit",
+      "resource": "audit",
+      "action": "json",
+      "description": "Audit with JSON output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-audit",
+        "baseArgs": ["audit", "--json"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cargo-audit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-audit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo-audit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-audit",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-audit"
+      },
+      "args": []
+    }
+  ]
+}

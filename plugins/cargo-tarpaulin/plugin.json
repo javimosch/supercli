@@ -1,0 +1,100 @@
+{
+  "name": "cargo-tarpaulin",
+  "version": "0.1.0",
+  "description": "cargo-tarpaulin — code coverage reporting tool for Rust/Cargo projects",
+  "source": "https://github.com/xd009642/tarpaulin",
+  "checks": [
+    { "type": "binary", "name": "cargo-tarpaulin" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-tarpaulin",
+    "binary": "cargo-tarpaulin",
+    "check": "which cargo-tarpaulin",
+    "install_steps": [
+      "cargo install cargo-tarpaulin",
+      "Verify: cargo tarpaulin --version",
+      "supercli plugins install ./plugins/cargo-tarpaulin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-tarpaulin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cargo-tarpaulin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-tarpaulin",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cargo-tarpaulin: cargo install cargo-tarpaulin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-tarpaulin",
+      "resource": "coverage",
+      "action": "run",
+      "description": "Run code coverage analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-tarpaulin",
+        "baseArgs": ["tarpaulin"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cargo-tarpaulin"
+      },
+      "args": [
+        { "name": "out", "type": "string", "required": false, "description": "Output format: Xml, Json, Html, Lcov, Stdout" },
+        { "name": "timeout", "type": "string", "required": false, "description": "Timeout in seconds" }
+      ]
+    },
+    {
+      "namespace": "cargo-tarpaulin",
+      "resource": "coverage",
+      "action": "html",
+      "description": "Run coverage and generate HTML report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-tarpaulin",
+        "baseArgs": ["tarpaulin", "--out", "Html"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cargo-tarpaulin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-tarpaulin",
+      "resource": "coverage",
+      "action": "xml",
+      "description": "Run coverage and generate XML report (Cobertura)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-tarpaulin",
+        "baseArgs": ["tarpaulin", "--out", "Xml"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cargo-tarpaulin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-tarpaulin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo-tarpaulin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-tarpaulin",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cargo-tarpaulin"
+      },
+      "args": []
+    }
+  ]
+}

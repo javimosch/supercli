@@ -1,0 +1,139 @@
+{
+  "name": "mdbook",
+  "version": "0.1.0",
+  "description": "mdBook — create modern online books from Markdown files (like Gitbook but in Rust)",
+  "source": "https://github.com/rust-lang/mdBook",
+  "checks": [
+    { "type": "binary", "name": "mdbook" }
+  ],
+  "install_guidance": {
+    "plugin": "mdbook",
+    "binary": "mdbook",
+    "check": "which mdbook",
+    "install_steps": [
+      "cargo install mdbook",
+      "Verify: mdbook --version",
+      "supercli plugins install ./plugins/mdbook --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdbook",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdbook version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mdbook: cargo install mdbook"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdbook",
+      "resource": "build",
+      "action": "run",
+      "description": "Build a book from markdown files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "baseArgs": ["build"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mdbook"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Book directory (default: current dir)" }
+      ]
+    },
+    {
+      "namespace": "mdbook",
+      "resource": "serve",
+      "action": "run",
+      "description": "Serve book with live reload",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "baseArgs": ["serve"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mdbook"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Book directory" },
+        { "name": "open", "type": "boolean", "required": false, "description": "Open in browser (-o)" }
+      ]
+    },
+    {
+      "namespace": "mdbook",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize a new book",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "baseArgs": ["init"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mdbook"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Book directory" },
+        { "name": "title", "type": "string", "required": false, "description": "Book title" }
+      ]
+    },
+    {
+      "namespace": "mdbook",
+      "resource": "clean",
+      "action": "run",
+      "description": "Delete built book",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "baseArgs": ["clean"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mdbook"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdbook",
+      "resource": "test",
+      "action": "run",
+      "description": "Test Rust code examples in book",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "baseArgs": ["test"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mdbook"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdbook",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdbook CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdbook",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mdbook"
+      },
+      "args": []
+    }
+  ]
+}

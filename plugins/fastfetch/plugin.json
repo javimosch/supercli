@@ -1,0 +1,94 @@
+{
+  "name": "fastfetch",
+  "version": "0.1.0",
+  "description": "fastfetch — neofetch-like system information tool with performance focus and JSON output",
+  "source": "https://github.com/fastfetch-cli/fastfetch",
+  "checks": [
+    { "type": "binary", "name": "fastfetch" }
+  ],
+  "install_guidance": {
+    "plugin": "fastfetch",
+    "binary": "fastfetch",
+    "check": "which fastfetch",
+    "install_steps": [
+      "brew install fastfetch",
+      "Verify: fastfetch --version",
+      "supercli plugins install ./plugins/fastfetch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fastfetch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fastfetch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastfetch",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install fastfetch: brew install fastfetch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastfetch",
+      "resource": "system",
+      "action": "info",
+      "description": "Display system information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastfetch",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install fastfetch"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": false, "description": "Output format (--format json)" }
+      ]
+    },
+    {
+      "namespace": "fastfetch",
+      "resource": "system",
+      "action": "json",
+      "description": "Display system info as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastfetch",
+        "baseArgs": ["--format", "json"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install fastfetch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastfetch",
+      "resource": "modules",
+      "action": "list",
+      "description": "List all supported modules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastfetch",
+        "baseArgs": ["-c", "all.jsonc"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install fastfetch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastfetch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fastfetch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastfetch",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fastfetch"
+      },
+      "args": []
+    }
+  ]
+}
