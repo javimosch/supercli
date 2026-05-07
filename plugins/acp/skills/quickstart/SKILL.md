@@ -173,3 +173,49 @@ acp-cli session:create opencode --model xiaomi/mimo-v2-flash --prompt "Hello"
 acp-cli session:create claude-acp --model xiaomi/mimo-v2-flash --prompt "Hello"
 ```
 
+## Adding OpenRouter for Free Model Access
+
+Some ACP agents support overriding the LLM model via the ACP `session/set_config_option` protocol method. To use free models via OpenRouter:
+
+### 1. Get an OpenRouter API key
+Get a key from https://openrouter.ai/keys (free tier available with rate limits).
+
+### 2. Add provider to opencode config
+Edit `~/.config/opencode/opencode.json` and add under the `"provider"` key:
+
+```json
+"openrouter": {
+  "npm": "@ai-sdk/openai-compatible",
+  "name": "OpenRouter.ai (free models)",
+  "options": {
+    "baseURL": "https://openrouter.ai/api/v1",
+    "apiKey": "sk-or-v1-YOUR_KEY_HERE"
+  },
+  "models": {
+    "free": { "name": "openrouter/free" },
+    "mimo-v2-flash": { "name": "xiaomi/mimo-v2-flash" },
+    "gemini-flash": { "name": "google/gemini-2.0-flash-exp" }
+  }
+}
+```
+
+### 3. Use with acp-cli
+```bash
+# Override model via ACP protocol
+acp-cli session:create opencode --model xiaomi/mimo-v2-flash --prompt "Say hi"
+
+# Works with agents that support config overrides
+acp-cli session:create claude-acp --model xiaomi/mimo-v2-flash --prompt "Hello"
+```
+
+### How it works
+The `--model` flag sends `session/set_config_option` with `{configId: "model", value: "provider/model-name", type: true}` after session creation. The agent then routes prompts through that provider's model.
+
+### Which agents support model override
+- **opencode** ✅ (tested: `xiaomi/mimo-v2-flash` → responded "Hello" with 15k tokens)
+- **claude-acp** ✅ (tested: `xiaomi/mimo-v2-flash` → responded with greeting, 18k tokens)
+- **qoder** ✅ (tested: `xiaomi/mimo-v2-flash` → responded with greeting)
+- **dirac** ⚡ Works out of the box with its own model (no override needed)
+- Others: depends on whether the agent implements `session/set_config_option`
+
+
