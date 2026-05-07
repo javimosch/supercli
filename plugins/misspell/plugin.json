@@ -1,0 +1,88 @@
+{
+  "name": "misspell",
+  "version": "0.1.0",
+  "description": "misspell — correct commonly misspelled English words in source files",
+  "source": "https://github.com/client9/misspell",
+  "checks": [
+    { "type": "binary", "name": "misspell" }
+  ],
+  "install_guidance": {
+    "plugin": "misspell",
+    "binary": "misspell",
+    "check": "which misspell",
+    "install_steps": [
+      "go install github.com/client9/misspell/cmd/misspell@latest",
+      "Verify: misspell --version",
+      "supercli plugins install ./plugins/misspell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "misspell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print misspell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "misspell",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install misspell: go install github.com/client9/misspell/cmd/misspell@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "misspell",
+      "resource": "check",
+      "action": "run",
+      "description": "Check files for misspellings",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "misspell",
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install misspell"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "misspell",
+      "resource": "check",
+      "action": "fix",
+      "description": "Fix misspellings in-place",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "misspell",
+        "baseArgs": ["-w"],
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install misspell"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to fix" }
+      ]
+    },
+    {
+      "namespace": "misspell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to misspell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "misspell",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install misspell"
+      },
+      "args": []
+    }
+  ]
+}

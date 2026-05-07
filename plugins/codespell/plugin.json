@@ -1,0 +1,88 @@
+{
+  "name": "codespell",
+  "version": "0.1.0",
+  "description": "codespell — check source code for common misspellings",
+  "source": "https://github.com/codespell-project/codespell",
+  "checks": [
+    { "type": "binary", "name": "codespell" }
+  ],
+  "install_guidance": {
+    "plugin": "codespell",
+    "binary": "codespell",
+    "check": "which codespell",
+    "install_steps": [
+      "pip install codespell",
+      "Verify: codespell --version",
+      "supercli plugins install ./plugins/codespell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "codespell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print codespell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codespell",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install codespell: pip install codespell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codespell",
+      "resource": "check",
+      "action": "run",
+      "description": "Check files for common misspellings",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codespell",
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install codespell"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "codespell",
+      "resource": "check",
+      "action": "interactive",
+      "description": "Check and interactively fix misspellings",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codespell",
+        "baseArgs": ["-i"],
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install codespell"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "codespell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to codespell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codespell",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install codespell"
+      },
+      "args": []
+    }
+  ]
+}

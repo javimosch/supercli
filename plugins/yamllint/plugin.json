@@ -1,0 +1,89 @@
+{
+  "name": "yamllint",
+  "version": "0.1.0",
+  "description": "yamllint — linter for YAML files with configurable rules",
+  "source": "https://github.com/adrienverge/yamllint",
+  "checks": [
+    { "type": "binary", "name": "yamllint" }
+  ],
+  "install_guidance": {
+    "plugin": "yamllint",
+    "binary": "yamllint",
+    "check": "which yamllint",
+    "install_steps": [
+      "pip install yamllint",
+      "Verify: yamllint --version",
+      "supercli plugins install ./plugins/yamllint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yamllint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print yamllint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yamllint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install yamllint: pip install yamllint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yamllint",
+      "resource": "lint",
+      "action": "run",
+      "description": "Lint YAML files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yamllint",
+        "positionalArgs": ["file_or_dir"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install yamllint"
+      },
+      "args": [
+        { "name": "file_or_dir", "type": "string", "required": false, "description": "File or directory to lint" }
+      ]
+    },
+    {
+      "namespace": "yamllint",
+      "resource": "lint",
+      "action": "format",
+      "description": "Lint with specific output format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yamllint",
+        "baseArgs": ["--format"],
+        "positionalArgs": ["format", "file_or_dir"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install yamllint"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": true, "description": "Output format: parsable, standard, colored, github, auto" },
+        { "name": "file_or_dir", "type": "string", "required": false, "description": "File or directory to lint" }
+      ]
+    },
+    {
+      "namespace": "yamllint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yamllint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yamllint",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install yamllint"
+      },
+      "args": []
+    }
+  ]
+}

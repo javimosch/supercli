@@ -1,0 +1,87 @@
+{
+  "name": "hadolint",
+  "version": "0.1.0",
+  "description": "hadolint — Dockerfile linter with inline-comment ignore support",
+  "source": "https://github.com/hadolint/hadolint",
+  "checks": [
+    { "type": "binary", "name": "hadolint" }
+  ],
+  "install_guidance": {
+    "plugin": "hadolint",
+    "binary": "hadolint",
+    "check": "which hadolint",
+    "install_steps": [
+      "brew install hadolint",
+      "Verify: hadolint --version",
+      "supercli plugins install ./plugins/hadolint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hadolint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hadolint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hadolint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hadolint: brew install hadolint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hadolint",
+      "resource": "lint",
+      "action": "run",
+      "description": "Lint a Dockerfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hadolint",
+        "positionalArgs": ["dockerfile"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hadolint"
+      },
+      "args": [
+        { "name": "dockerfile", "type": "string", "required": false, "description": "Path to Dockerfile (default: ./Dockerfile)" }
+      ]
+    },
+    {
+      "namespace": "hadolint",
+      "resource": "lint",
+      "action": "json",
+      "description": "Lint a Dockerfile and output JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hadolint",
+        "baseArgs": ["--format", "json"],
+        "positionalArgs": ["dockerfile"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hadolint"
+      },
+      "args": [
+        { "name": "dockerfile", "type": "string", "required": false, "description": "Path to Dockerfile" }
+      ]
+    },
+    {
+      "namespace": "hadolint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hadolint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hadolint",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hadolint"
+      },
+      "args": []
+    }
+  ]
+}
