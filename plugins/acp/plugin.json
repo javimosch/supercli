@@ -1,0 +1,519 @@
+{
+  "name": "acp",
+  "version": "0.1.0",
+  "description": "acp — Agent Communication Protocol CLI. List, inspect, and interact with 35+ ACP coding agents (Claude, Gemini, Cursor, Copilot, Cline, Goose, Codex, Kilo, Junie, Qwen, Mistral, Kimi, OpenCode, etc.)",
+  "source": "https://github.com/agentclientprotocol/agent-client-protocol",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "acp",
+    "binary": "npx",
+    "check": "which npx",
+    "install_steps": [
+      "npx is included with Node.js (nodejs.org)",
+      "Verify: npx --version",
+      "supercli plugins install ./plugins/acp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "acp",
+      "resource": "registry",
+      "action": "list",
+      "description": "List all ACP agents from registry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "curl",
+        "baseArgs": ["-s", "https://cdn.agentclientprotocol.com/registry/v1/latest/registry.json"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install curl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "registry",
+      "action": "info",
+      "description": "Get info about a specific ACP agent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["agent_id"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install bash"
+      },
+      "args": [
+        { "name": "agent_id", "type": "string", "required": true, "description": "ACP agent ID (e.g., claude-acp, gemini, cursor)" }
+      ]
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "start",
+      "description": "Start an ACP agent server via npx (read-only mode)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "positionalArgs": ["package"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js to get npx"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "npm package to run (e.g., @agentclientprotocol/claude-agent-acp)" },
+        { "name": "args", "type": "string", "required": false, "description": "Additional args (e.g., -- --acp)" }
+      ]
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "claude",
+      "description": "Start Claude Agent ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@agentclientprotocol/claude-agent-acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js. Requires ANTHROPIC_API_KEY"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "gemini",
+      "description": "Start Gemini CLI ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@google/gemini-cli", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js. Requires GEMINI_API_KEY"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "copilot",
+      "description": "Start GitHub Copilot ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@github/copilot", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js. Requires GitHub Copilot subscription"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "cursor",
+      "description": "Start Cursor ACP server (binary download required)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cursor-agent",
+        "baseArgs": ["acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Download from cursor.com/docs/cli/acp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "opencode",
+      "description": "Start OpenCode ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install opencode from github.com/anomalyco/opencode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "codex",
+      "description": "Start Codex CLI ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@zed-industries/codex-acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js. Requires CODEX_API_KEY or OPEN_AI_API_KEY"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "cline",
+      "description": "Start Cline ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["cline", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "kilo",
+      "description": "Start Kilo ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@kilocode/cli", "acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "goose",
+      "description": "Start Goose ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goose",
+        "baseArgs": ["acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install goose from github.com/block/goose"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "qwen",
+      "description": "Start Qwen Code ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@qwen-code/qwen-code", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "mistral",
+      "description": "Start Mistral Vibe ACP server (binary download required)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vibe-acp",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Download from github.com/mistralai/mistral-vibe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "kimi",
+      "description": "Start Kimi CLI ACP server (binary download required)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kimi",
+        "baseArgs": ["acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install kimi from github.com/MoonshotAI/kimi-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "deepagents",
+      "description": "Start DeepAgents ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["deepagents-acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "dimcode",
+      "description": "Start DimCode ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["dimcode", "acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "auggie",
+      "description": "Start Auggie CLI ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@augmentcode/auggie", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "dirac",
+      "description": "Start Dirac ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["dirac-cli", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "junie",
+      "description": "Start Junie ACP server (binary download required)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "junie",
+        "baseArgs": ["--acp=true"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install junie from github.com/JetBrains/junie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "nova",
+      "description": "Start Nova ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@compass-ai/nova", "acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "factory",
+      "description": "Start Factory Droid ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["droid", "exec", "--output-format", "acp-daemon"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "qoder",
+      "description": "Start Qoder CLI ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@qoder-ai/qodercli", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "agoragentic",
+      "description": "Start Agoragentic ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["agoragentic-mcp", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "glm",
+      "description": "Start GLM Agent ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["glm-acp-agent"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "autohand",
+      "description": "Start Autohand Code ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@autohandai/autohand-acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "codebuddy",
+      "description": "Start Codebuddy Code ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@tencent-ai/codebuddy-code", "--acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "pi",
+      "description": "Start pi ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["pi-acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Node.js"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "fast",
+      "description": "Start fast-agent ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uvx",
+        "baseArgs": ["fast-agent-acp", "-x"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install uv (docs.astral.sh/uv)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "server",
+      "action": "minion",
+      "description": "Start Minion Code ACP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uvx",
+        "baseArgs": ["minion-code", "acp"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install uv (docs.astral.sh/uv)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "acp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to npx for ACP server launch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install Node.js to get npx"
+      },
+      "args": []
+    }
+  ]
+}
