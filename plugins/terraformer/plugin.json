@@ -1,0 +1,104 @@
+{
+  "name": "terraformer",
+  "version": "0.1.0",
+  "description": "terraformer — generate Terraform files from existing infrastructure",
+  "source": "https://github.com/GoogleCloudPlatform/terraformer",
+  "checks": [
+    { "type": "binary", "name": "terraformer" }
+  ],
+  "install_guidance": {
+    "plugin": "terraformer",
+    "binary": "terraformer",
+    "check": "which terraformer",
+    "install_steps": [
+      "brew install terraformer",
+      "Verify: terraformer --version",
+      "supercli plugins install ./plugins/terraformer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "terraformer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print terraformer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terraformer",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install terraformer: brew install terraformer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terraformer",
+      "resource": "import",
+      "action": "aws",
+      "description": "Import AWS resources into Terraform",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terraformer",
+        "baseArgs": ["import", "aws"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install terraformer"
+      },
+      "args": [
+        { "name": "resources", "type": "string", "required": true, "description": "Comma-separated resources (e.g., 'vpc,ec2,s3')" },
+        { "name": "regions", "type": "string", "required": false, "description": "AWS regions (e.g., 'us-east-1,us-west-2')" }
+      ]
+    },
+    {
+      "namespace": "terraformer",
+      "resource": "import",
+      "action": "gcp",
+      "description": "Import GCP resources into Terraform",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terraformer",
+        "baseArgs": ["import", "gcp"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install terraformer"
+      },
+      "args": [
+        { "name": "resources", "type": "string", "required": true, "description": "Comma-separated resources (e.g., 'compute,storage')" },
+        { "name": "projects", "type": "string", "required": false, "description": "GCP project ID" }
+      ]
+    },
+    {
+      "namespace": "terraformer",
+      "resource": "import",
+      "action": "github",
+      "description": "Import GitHub resources into Terraform",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terraformer",
+        "baseArgs": ["import", "github"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install terraformer"
+      },
+      "args": [
+        { "name": "organizations", "type": "string", "required": false, "description": "GitHub organization" },
+        { "name": "token", "type": "string", "required": false, "description": "GitHub token" }
+      ]
+    },
+    {
+      "namespace": "terraformer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to terraformer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terraformer",
+        "passthrough": true,
+        "missingDependencyHelp": "Install terraformer"
+      },
+      "args": []
+    }
+  ]
+}

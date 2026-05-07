@@ -1,0 +1,108 @@
+{
+  "name": "kustomize",
+  "version": "0.1.0",
+  "description": "kustomize — Kubernetes configuration customization tool with template-free YAML management",
+  "source": "https://github.com/kubernetes-sigs/kustomize",
+  "checks": [
+    { "type": "binary", "name": "kustomize" }
+  ],
+  "install_guidance": {
+    "plugin": "kustomize",
+    "binary": "kustomize",
+    "check": "which kustomize",
+    "install_steps": [
+      "brew install kustomize",
+      "Verify: kustomize version",
+      "supercli plugins install ./plugins/kustomize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kustomize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kustomize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kustomize",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install kustomize: brew install kustomize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kustomize",
+      "resource": "build",
+      "action": "run",
+      "description": "Build kustomization to produce Kubernetes resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kustomize",
+        "baseArgs": ["build"],
+        "positionalArgs": ["dir"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install kustomize"
+      },
+      "args": [
+        { "name": "dir", "type": "string", "required": false, "description": "Directory containing kustomization.yaml" }
+      ]
+    },
+    {
+      "namespace": "kustomize",
+      "resource": "build",
+      "action": "output",
+      "description": "Build and write output to file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kustomize",
+        "baseArgs": ["build"],
+        "positionalArgs": ["dir"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install kustomize"
+      },
+      "args": [
+        { "name": "dir", "type": "string", "required": false, "description": "Directory containing kustomization.yaml" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path (-o)" }
+      ]
+    },
+    {
+      "namespace": "kustomize",
+      "resource": "edit",
+      "action": "add-resource",
+      "description": "Add a resource to kustomization.yaml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kustomize",
+        "baseArgs": ["edit", "add", "resource"],
+        "positionalArgs": ["resource"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install kustomize"
+      },
+      "args": [
+        { "name": "resource", "type": "string", "required": true, "description": "Resource file path" }
+      ]
+    },
+    {
+      "namespace": "kustomize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kustomize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kustomize",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kustomize"
+      },
+      "args": []
+    }
+  ]
+}

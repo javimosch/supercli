@@ -1,0 +1,135 @@
+{
+  "name": "hatch",
+  "version": "0.1.0",
+  "description": "hatch — modern Python project manager with version management and builds",
+  "source": "https://github.com/pypa/hatch",
+  "checks": [
+    { "type": "binary", "name": "hatch" }
+  ],
+  "install_guidance": {
+    "plugin": "hatch",
+    "binary": "hatch",
+    "check": "which hatch",
+    "install_steps": [
+      "pip install hatch",
+      "Verify: hatch --version",
+      "supercli plugins install ./plugins/hatch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hatch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hatch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hatch: pip install hatch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hatch",
+      "resource": "new",
+      "action": "run",
+      "description": "Create a new Python project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "baseArgs": ["new"],
+        "positionalArgs": ["name"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hatch"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Project name" }
+      ]
+    },
+    {
+      "namespace": "hatch",
+      "resource": "build",
+      "action": "run",
+      "description": "Build Python package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "baseArgs": ["build"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hatch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hatch",
+      "resource": "env",
+      "action": "create",
+      "description": "Create a Python virtual environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "baseArgs": ["env", "create"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hatch"
+      },
+      "args": [
+        { "name": "env_name", "type": "string", "required": false, "description": "Environment name" }
+      ]
+    },
+    {
+      "namespace": "hatch",
+      "resource": "publish",
+      "action": "run",
+      "description": "Publish package to PyPI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "baseArgs": ["publish"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hatch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hatch",
+      "resource": "version",
+      "action": "show",
+      "description": "Show/update project version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "baseArgs": ["version"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hatch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hatch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hatch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hatch",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hatch"
+      },
+      "args": []
+    }
+  ]
+}

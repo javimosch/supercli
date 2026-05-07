@@ -1,0 +1,152 @@
+{
+  "name": "rye",
+  "version": "0.1.0",
+  "description": "rye — Python package manager with uv backend, lockfile, and workspace support",
+  "source": "https://github.com/astral-sh/rye",
+  "checks": [
+    { "type": "binary", "name": "rye" }
+  ],
+  "install_guidance": {
+    "plugin": "rye",
+    "binary": "rye",
+    "check": "which rye",
+    "install_steps": [
+      "curl -fsSL https://rye.astral.sh/get | bash",
+      "Verify: rye --version",
+      "supercli plugins install ./plugins/rye --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rye",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rye version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rye: curl -fsSL https://rye.astral.sh/get | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rye",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize a new Python project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": false, "description": "Project name" }
+      ]
+    },
+    {
+      "namespace": "rye",
+      "resource": "sync",
+      "action": "run",
+      "description": "Sync environment with lockfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["sync"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rye",
+      "resource": "add",
+      "action": "run",
+      "description": "Add a Python package dependency",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["add"],
+        "positionalArgs": ["package"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name" }
+      ]
+    },
+    {
+      "namespace": "rye",
+      "resource": "build",
+      "action": "run",
+      "description": "Build Python package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["build"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rye",
+      "resource": "publish",
+      "action": "run",
+      "description": "Publish package to PyPI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["publish"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rye",
+      "resource": "lock",
+      "action": "run",
+      "description": "Generate lockfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "baseArgs": ["lock"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rye",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rye CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rye",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rye"
+      },
+      "args": []
+    }
+  ]
+}
