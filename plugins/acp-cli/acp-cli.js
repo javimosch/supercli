@@ -18,13 +18,11 @@ COMMANDS
 
   session:create <agent-id>   Create a new session with an ACP agent
     --cwd <dir>               Working directory (default: .)
-    --prompt <text>           Optional prompt to send after creation
+    --prompt <text>           Prompt to send after session creation
+    --model <model>           Override model (e.g. gemini/gemini-2.0-flash)
+    --mode <mode>             Set session mode (e.g. code, ask, architect)
 
-  session:prompt <session-id> Send a prompt to an existing session
-    --msg <text>              The prompt message
-    --cwd <dir>               Working directory
-
-  server:start <agent-npx>    Launch an ACP server via npx
+  server:start <agent>        Launch an ACP server and show capabilities
     --cwd <dir>               Working directory
 
   help                        Show this help
@@ -32,8 +30,8 @@ COMMANDS
 EXAMPLES
   acp-cli registry
   acp-cli registry:info claude-acp
-  acp-cli session:create @google/gemini-cli --prompt "Hello"
-  acp-cli server:start @agentclientprotocol/claude-agent-acp
+  acp-cli session:create opencode --prompt "Hello" --model nvidia-minimax/zai-org/GLM-5.1-FP8
+  acp-cli server:start @google/gemini-cli
 `);
 }
 
@@ -199,21 +197,27 @@ async function cmdServerStart() {
 
 async function cmdSessionCreate() {
   const agentId = args[0];
-  if (!agentId) { console.error('Usage: acp-cli session:create <agent-npx-package> [--prompt <text>] [--cwd <dir>]'); process.exit(1); }
+  if (!agentId) { console.error('Usage: acp-cli session:create <agent> [--prompt <text>] [--model <m>] [--mode <m>] [--cwd <d>]'); process.exit(1); }
 
-  const promptIdx = args.indexOf('--prompt');
-  const prompt = promptIdx >= 0 ? args[promptIdx + 1] : null;
-  const cwdIdx = args.indexOf('--cwd');
-  const cwd = cwdIdx >= 0 ? args[cwdIdx + 1] : '.';
+  const flags = { prompt: null, model: null, mode: null, cwd: '.' };
+  ['prompt', 'model', 'mode', 'cwd'].forEach(k => {
+    const i = args.indexOf('--' + k);
+    if (i >= 0) flags[k] = args[i + 1];
+  });
+
+  let rid = 0;
+  function rpc(method, params) { return jsonRpc(++rid, method, params); }
+  let sessionId = null;
 
   console.error(`Connecting to ACP agent: ${agentId}`);
-  const proc = startAgentProcess(agentId, cwd);
+  const proc = startAgentProcess(agentId, flags.cwd);
   let buf = '';
+  let configSent = false;
 
   proc.stderr.on('data', d => process.stderr.write(d));
 
   // Initialize
-  proc.stdin.write(jsonRpc(1, 'initialize', {
+  proc.stdin.write(rpc('initialize', {
     protocolVersion: 1,
     clientCapabilities: {
       fs: { readTextFile: true, writeTextFile: true },
@@ -236,60 +240,74 @@ async function cmdSessionCreate() {
 
         // Handle initialize response - create session
         if (msg.id === 1 && msg.result) {
-          const sessionReq = jsonRpc(2, 'session/new', {
-            cwd: resolve(cwd),
+          proc.stdin.write(rpc('session/new', {
+            cwd: resolve(flags.cwd),
             mcpServers: [],
             title: 'acp-cli session'
-          });
-          proc.stdin.write(sessionReq);
+          }));
         }
         // Handle session create response
         else if (msg.id === 2 && msg.result) {
-          const sessionId = msg.result.sessionId;
+          sessionId = msg.result.sessionId;
           console.log(JSON.stringify({ sessionId, ...msg.result }, null, 2));
 
-          if (prompt) {
-            const promptReq = jsonRpc(3, 'session/prompt', {
+          // Set model via ACP protocol if specified
+          if (flags.model) {
+            configSent = true;
+            proc.stdin.write(rpc('session/set_config_option', {
               sessionId,
-              prompt: [{ type: 'text', text: prompt }]
-            });
-            proc.stdin.write(promptReq);
-
-            setTimeout(() => {
-              console.log('\n--- prompt sent, reading response ---');
-            }, 500);
+              configId: 'model',
+              value: flags.model,
+              type: true
+            }));
+          }
+          // Set mode via ACP protocol if specified
+          if (flags.mode) {
+            configSent = true;
+            proc.stdin.write(rpc('session/set_mode', {
+              sessionId,
+              modeId: flags.mode
+            }));
+          }
+          // Send prompt if no config options (or after config in next handler)
+          if (!configSent && flags.prompt) {
+            proc.stdin.write(rpc('session/prompt', {
+              sessionId,
+              prompt: [{ type: 'text', text: flags.prompt }]
+            }));
           }
         }
+        // Handle config responses, then send prompt
+        else if ((msg.id === 3 || msg.id === 4) && sessionId && flags.prompt) {
+          // Config option response received, now send prompt
+          proc.stdin.write(rpc('session/prompt', {
+            sessionId,
+            prompt: [{ type: 'text', text: flags.prompt }]
+          }));
+        }
         // Handle prompt response
-        else if (msg.id === 3 && (msg.result || msg.error)) {
-          console.log(JSON.stringify(msg, null, 2));
+        else if (msg.result?.stopReason) {
+          console.log('\n[stopReason:', msg.result.stopReason, '| tokens:', msg.result.usage?.totalTokens, ']');
         }
         // Handle notifications (session/update)
         else if (msg.method) {
-          // Standard ACP format: msg.params.delta
+          // Standard ACP delta format
           if (msg.params?.delta?.content?.text) {
             process.stdout.write(msg.params.delta.content.text);
           } else if (typeof msg.params?.delta === 'string') {
             process.stdout.write(msg.params.delta);
           }
-          // OpenCode format: msg.params.update.sessionUpdate = agent_message_chunk
+          // OpenCode format
           if (msg.params?.update?.sessionUpdate === 'agent_message_chunk' && msg.params?.update?.content?.text) {
             process.stdout.write(msg.params.update.content.text);
           }
         }
-        // Forward other messages
-        else if (msg.result || msg.error) {
-          console.log(JSON.stringify(msg, null, 2));
-        }
-      } catch { /* partial JSON, wait for more data */ }
+      } catch { /* partial JSON */ }
     }
   });
 
-  proc.on('exit', code => {
-    process.exit(code || 0);
-  });
+  proc.on('exit', code => { process.exit(code || 0); });
 
-  // Timeout cleanup
   setTimeout(() => {
     console.error('\nACP session timed out after 60s');
     proc.kill();
