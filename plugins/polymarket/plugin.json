@@ -1,0 +1,272 @@
+{
+  "name": "polymarket",
+  "version": "0.1.0",
+  "description": "polymarket — CLI for Polymarket prediction markets. Browse markets, view prices, place orders, manage positions.",
+  "source": "https://github.com/Polymarket/polymarket-cli",
+  "checks": [
+    { "type": "binary", "name": "polymarket" }
+  ],
+  "install_guidance": {
+    "plugin": "polymarket",
+    "binary": "polymarket",
+    "check": "which polymarket",
+    "install_steps": [
+      "brew tap Polymarket/polymarket-cli https://github.com/Polymarket/polymarket-cli && brew install polymarket",
+      "Verify: polymarket --version",
+      "supercli plugins install ./plugins/polymarket --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "polymarket",
+      "resource": "self",
+      "action": "version",
+      "description": "Print polymarket version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install polymarket: brew tap Polymarket/polymarket-cli && brew install polymarket"
+      },
+      "args": []
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "self",
+      "action": "status",
+      "description": "Check API health status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["status"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": []
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "markets",
+      "action": "list",
+      "description": "List prediction markets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["markets", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "limit", "type": "string", "required": false, "description": "Max results (--limit)" },
+        { "name": "active", "type": "string", "required": false, "description": "Filter by active (--active true/false)" },
+        { "name": "closed", "type": "string", "required": false, "description": "Filter by closed (--closed true/false)" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "markets",
+      "action": "search",
+      "description": "Search prediction markets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["markets", "search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" },
+        { "name": "limit", "type": "string", "required": false, "description": "Max results" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "markets",
+      "action": "get",
+      "description": "Get a single market by ID or slug",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["markets", "get"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Market ID or slug" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "events",
+      "action": "list",
+      "description": "List events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["events", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "limit", "type": "string", "required": false, "description": "Max results" },
+        { "name": "tag", "type": "string", "required": false, "description": "Filter by tag (e.g., politics)" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "clob",
+      "action": "book",
+      "description": "View order book for a token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["clob", "book"],
+        "positionalArgs": ["token_id"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "token_id", "type": "string", "required": true, "description": "Token ID" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "clob",
+      "action": "price",
+      "description": "Get price for a token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["clob", "price"],
+        "positionalArgs": ["token_id"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "token_id", "type": "string", "required": true, "description": "Token ID" },
+        { "name": "side", "type": "string", "required": false, "description": "Side: buy or sell" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "clob",
+      "action": "midpoint",
+      "description": "Get midpoint price",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["clob", "midpoint"],
+        "positionalArgs": ["token_id"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "token_id", "type": "string", "required": true, "description": "Token ID" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "clob",
+      "action": "history",
+      "description": "Get price history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["clob", "price-history"],
+        "positionalArgs": ["token_id"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "token_id", "type": "string", "required": true, "description": "Token ID" },
+        { "name": "interval", "type": "string", "required": false, "description": "Interval: 1m, 1h, 6h, 1d, 1w, max" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "data",
+      "action": "positions",
+      "description": "Get positions for a wallet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["data", "positions"],
+        "positionalArgs": ["wallet"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "wallet", "type": "string", "required": true, "description": "Wallet address" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "data",
+      "action": "leaderboard",
+      "description": "View leaderboard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["data", "leaderboard"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": [
+        { "name": "period", "type": "string", "required": false, "description": "Period: week, month, all" },
+        { "name": "limit", "type": "string", "required": false, "description": "Max results" }
+      ]
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "wallet",
+      "action": "show",
+      "description": "Show wallet info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["wallet", "show"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": []
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "tags",
+      "action": "list",
+      "description": "List all tags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "baseArgs": ["tags", "list"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": []
+    },
+    {
+      "namespace": "polymarket",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to polymarket CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "polymarket",
+        "passthrough": true,
+        "missingDependencyHelp": "Install polymarket"
+      },
+      "args": []
+    }
+  ]
+}
