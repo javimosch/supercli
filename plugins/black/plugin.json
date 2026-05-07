@@ -1,0 +1,88 @@
+{
+  "name": "black",
+  "version": "0.1.0",
+  "description": "black — uncompromising Python code formatter",
+  "source": "https://github.com/psf/black",
+  "checks": [
+    { "type": "binary", "name": "black" }
+  ],
+  "install_guidance": {
+    "plugin": "black",
+    "binary": "black",
+    "check": "which black",
+    "install_steps": [
+      "pip install black",
+      "Verify: black --version",
+      "supercli plugins install ./plugins/black --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "black",
+      "resource": "self",
+      "action": "version",
+      "description": "Print black version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "black",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install black: pip install black"
+      },
+      "args": []
+    },
+    {
+      "namespace": "black",
+      "resource": "format",
+      "action": "run",
+      "description": "Format Python files (dry run)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "black",
+        "baseArgs": ["--check", "--diff"],
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install black"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "black",
+      "resource": "format",
+      "action": "write",
+      "description": "Format Python files in-place",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "black",
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install black"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to format" }
+      ]
+    },
+    {
+      "namespace": "black",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to black CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "black",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install black"
+      },
+      "args": []
+    }
+  ]
+}

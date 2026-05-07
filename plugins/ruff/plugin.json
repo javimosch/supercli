@@ -1,0 +1,123 @@
+{
+  "name": "ruff",
+  "version": "0.1.0",
+  "description": "ruff — extremely fast Python linter and formatter, written in Rust",
+  "source": "https://github.com/astral-sh/ruff",
+  "checks": [
+    { "type": "binary", "name": "ruff" }
+  ],
+  "install_guidance": {
+    "plugin": "ruff",
+    "binary": "ruff",
+    "check": "which ruff",
+    "install_steps": [
+      "pip install ruff",
+      "Verify: ruff --version",
+      "supercli plugins install ./plugins/ruff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ruff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ruff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruff",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ruff: pip install ruff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ruff",
+      "resource": "check",
+      "action": "run",
+      "description": "Lint Python files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruff",
+        "baseArgs": ["check"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ruff"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "ruff",
+      "resource": "check",
+      "action": "fix",
+      "description": "Lint and auto-fix Python files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruff",
+        "baseArgs": ["check", "--fix"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ruff"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to fix" }
+      ]
+    },
+    {
+      "namespace": "ruff",
+      "resource": "format",
+      "action": "run",
+      "description": "Format Python files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruff",
+        "baseArgs": ["format"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ruff"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to format" }
+      ]
+    },
+    {
+      "namespace": "ruff",
+      "resource": "format",
+      "action": "check",
+      "description": "Check formatting without applying",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruff",
+        "baseArgs": ["format", "--check"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ruff"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "ruff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ruff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruff",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ruff"
+      },
+      "args": []
+    }
+  ]
+}

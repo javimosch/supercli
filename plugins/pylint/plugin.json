@@ -1,0 +1,87 @@
+{
+  "name": "pylint",
+  "version": "0.1.0",
+  "description": "pylint — Python static code analysis and linter",
+  "source": "https://github.com/pylint-dev/pylint",
+  "checks": [
+    { "type": "binary", "name": "pylint" }
+  ],
+  "install_guidance": {
+    "plugin": "pylint",
+    "binary": "pylint",
+    "check": "which pylint",
+    "install_steps": [
+      "pip install pylint",
+      "Verify: pylint --version",
+      "supercli plugins install ./plugins/pylint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pylint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pylint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pylint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pylint: pip install pylint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pylint",
+      "resource": "lint",
+      "action": "run",
+      "description": "Lint Python files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pylint",
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pylint"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Python files or modules to lint" }
+      ]
+    },
+    {
+      "namespace": "pylint",
+      "resource": "lint",
+      "action": "json",
+      "description": "Lint Python files and output JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pylint",
+        "baseArgs": ["--output-format", "json"],
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pylint"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Python files or modules to lint" }
+      ]
+    },
+    {
+      "namespace": "pylint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pylint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pylint",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pylint"
+      },
+      "args": []
+    }
+  ]
+}

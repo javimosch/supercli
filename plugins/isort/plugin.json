@@ -1,0 +1,88 @@
+{
+  "name": "isort",
+  "version": "0.1.0",
+  "description": "isort — Python import sorter",
+  "source": "https://github.com/PyCQA/isort",
+  "checks": [
+    { "type": "binary", "name": "isort" }
+  ],
+  "install_guidance": {
+    "plugin": "isort",
+    "binary": "isort",
+    "check": "which isort",
+    "install_steps": [
+      "pip install isort",
+      "Verify: isort --version",
+      "supercli plugins install ./plugins/isort --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isort",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isort version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isort",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install isort: pip install isort"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isort",
+      "resource": "sort",
+      "action": "check",
+      "description": "Check import sorting (dry run)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isort",
+        "baseArgs": ["--check-only", "--diff"],
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install isort"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to check" }
+      ]
+    },
+    {
+      "namespace": "isort",
+      "resource": "sort",
+      "action": "write",
+      "description": "Sort imports in-place",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isort",
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install isort"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files or directories to sort" }
+      ]
+    },
+    {
+      "namespace": "isort",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isort CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isort",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install isort"
+      },
+      "args": []
+    }
+  ]
+}

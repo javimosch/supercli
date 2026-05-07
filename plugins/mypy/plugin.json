@@ -1,0 +1,88 @@
+{
+  "name": "mypy",
+  "version": "0.1.0",
+  "description": "mypy — Python static type checker (PEP 484)",
+  "source": "https://github.com/python/mypy",
+  "checks": [
+    { "type": "binary", "name": "mypy" }
+  ],
+  "install_guidance": {
+    "plugin": "mypy",
+    "binary": "mypy",
+    "check": "which mypy",
+    "install_steps": [
+      "pip install mypy",
+      "Verify: mypy --version",
+      "supercli plugins install ./plugins/mypy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mypy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mypy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mypy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mypy: pip install mypy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mypy",
+      "resource": "check",
+      "action": "run",
+      "description": "Type-check Python files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mypy",
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mypy"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Python files or modules to check" }
+      ]
+    },
+    {
+      "namespace": "mypy",
+      "resource": "check",
+      "action": "strict",
+      "description": "Type-check with strict mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mypy",
+        "baseArgs": ["--strict"],
+        "positionalArgs": ["files"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mypy"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Python files or modules to check" }
+      ]
+    },
+    {
+      "namespace": "mypy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mypy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mypy",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mypy"
+      },
+      "args": []
+    }
+  ]
+}
