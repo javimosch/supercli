@@ -127,7 +127,7 @@ async function cmdServerStart() {
 
   // Read initialize response
   const initReq = jsonRpc(1, 'initialize', {
-    protocolVersion: 'v1',
+    protocolVersion: 1,
     clientCapabilities: {
       fs: { readTextFile: true, writeTextFile: true },
       terminal: true,
@@ -164,7 +164,7 @@ async function cmdSessionCreate() {
 
   // Initialize
   proc.stdin.write(jsonRpc(1, 'initialize', {
-    protocolVersion: 'v1',
+    protocolVersion: 1,
     clientCapabilities: {
       fs: { readTextFile: true, writeTextFile: true },
       terminal: true,
@@ -186,8 +186,9 @@ async function cmdSessionCreate() {
 
         // Handle initialize response - create session
         if (msg.id === 1 && msg.result) {
-          const sessionReq = jsonRpc(2, 'sessions/new', {
+          const sessionReq = jsonRpc(2, 'session/new', {
             cwd: resolve(cwd),
+            mcpServers: [],
             title: 'acp-cli session'
           });
           proc.stdin.write(sessionReq);
@@ -198,10 +199,9 @@ async function cmdSessionCreate() {
           console.log(JSON.stringify({ sessionId, ...msg.result }, null, 2));
 
           if (prompt) {
-            const promptReq = jsonRpc(3, 'sessions/prompt', {
+            const promptReq = jsonRpc(3, 'session/prompt', {
               sessionId,
-              prompt,
-              tools: []
+              prompt: [{ type: 'text', text: prompt }]
             });
             proc.stdin.write(promptReq);
 
