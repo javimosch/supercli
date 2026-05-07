@@ -98,17 +98,53 @@ async function cmdRegistryInfo(agentId) {
 }
 
 function startAgentProcess(packageName, cwd) {
-  const isNpx = !packageName.includes('/') && !packageName.endsWith('.sh') && !existsSync(packageName);
+  const { execSync } = require('child_process');
+  let isNpx = true;
+  let acpArgs = ['--acp'];
+
+  // Check if packageName is a known binary in PATH
+  try {
+    execSync(`which ${packageName}`, { stdio: 'ignore' });
+    isNpx = false;
+  } catch { isNpx = true; }
+
+  // If it's a local path, use it directly
+  if (existsSync(packageName)) { isNpx = false; }
+
+  // Detect ACP invocation style per agent
+  const knownAgents = {
+    'opencode': { cmd: 'opencode', args: ['acp'] },
+    'cursor-agent': { cmd: 'cursor-agent', args: ['acp'] },
+    'goose': { cmd: 'goose', args: ['acp'] },
+    'kimi': { cmd: 'kimi', args: ['acp'] },
+    'kilo': { cmd: 'npx', args: ['@kilocode/cli', 'acp'] },
+    'vibe-acp': { cmd: 'vibe-acp', args: [] },
+    'junie': { cmd: 'junie', args: ['--acp=true'] },
+    'stakpak': { cmd: 'stakpak', args: ['acp'] },
+  };
+
+  const binName = isNpx ? packageName : packageName.split('/').pop();
+  if (knownAgents[binName]) {
+    const agent = knownAgents[binName];
+    const cmd = isNpx && agent.cmd === 'npx' ? 'npx' : agent.cmd;
+    const cmdArgs = isNpx && agent.cmd === 'npx' ? [packageName, ...agent.args] : [...agent.args];
+    const proc = spawn(cmd, cmdArgs, {
+      cwd: resolve(cwd || '.'),
+      stdio: ['pipe', 'pipe', 'pipe'],
+      env: { ...process.env }
+    });
+    proc.on('error', err => { console.error('Failed to start agent:', err.message); process.exit(1); });
+    return proc;
+  }
+
+  // Default: npx <package> --acp
   const cmd = isNpx ? 'npx' : packageName;
   const cmdArgs = isNpx ? [packageName] : [];
-
-  // Detect ACP args from registry
-  const proc = spawn(cmd, [...cmdArgs, ...['--acp']], {
+  const proc = spawn(cmd, [...cmdArgs, ...acpArgs], {
     cwd: resolve(cwd || '.'),
     stdio: ['pipe', 'pipe', 'pipe'],
     env: { ...process.env }
   });
-
   proc.on('error', err => { console.error('Failed to start agent:', err.message); process.exit(1); });
   return proc;
 }
@@ -119,14 +155,14 @@ async function cmdServerStart() {
   const cwdIdx = args.indexOf('--cwd');
   const cwd = cwdIdx >= 0 ? args[cwdIdx + 1] : '.';
 
-  console.error(`Starting ACP server: npx ${pkg} --acp`);
+  console.error(`Starting ACP server: ${pkg}`);
   const proc = startAgentProcess(pkg, cwd);
 
   // Forward stderr
   proc.stderr.on('data', d => process.stderr.write(d));
 
-  // Read initialize response
-  const initReq = jsonRpc(1, 'initialize', {
+  // Initialize
+  proc.stdin.write(jsonRpc(1, 'initialize', {
     protocolVersion: 1,
     clientCapabilities: {
       fs: { readTextFile: true, writeTextFile: true },
@@ -134,17 +170,31 @@ async function cmdServerStart() {
       auth: { terminal: true }
     },
     clientInfo: { name: 'acp-cli', version: '0.1.0' }
+  }));
+
+  // Create session
+  let buf = '';
+  proc.stdout.on('data', d => {
+    buf += d.toString();
+    const lines = buf.split('\n');
+    buf = lines.pop() || '';
+    for (const line of lines) {
+      if (!line.trim()) continue;
+      try {
+        const msg = JSON.parse(line);
+        if (msg.id === 1 && msg.result) {
+          console.log('AGENT:', msg.result.agentInfo.name, msg.result.agentInfo.version);
+          console.log('CAPABILITIES:', JSON.stringify(msg.result.agentCapabilities, null, 2));
+        } else if (msg.method === 'session/update' && msg.params?.update?.sessionUpdate === 'agent_message_chunk') {
+          process.stdout.write(msg.params.update.content.text || '');
+        } else if (msg.result) {
+          console.log(JSON.stringify(msg.result, null, 2));
+        }
+      } catch {}
+    }
   });
 
-  proc.stdin.write(initReq);
-  const initRes = await readJson(proc.stdout);
-  if (initRes) {
-    console.log(JSON.stringify(initRes.line, null, 2));
-  }
-
-  // Keep alive and forward any more messages
-  proc.stdout.on('data', d => process.stdout.write(d));
-  proc.on('exit', code => process.exit(code));
+  proc.on('exit', code => { process.exit(code || 0); });
 }
 
 async function cmdSessionCreate() {
@@ -216,9 +266,15 @@ async function cmdSessionCreate() {
         }
         // Handle notifications (session/update)
         else if (msg.method) {
-          // Stream content updates
-          if (msg.params?.delta) {
+          // Standard ACP format: msg.params.delta
+          if (msg.params?.delta?.content?.text) {
+            process.stdout.write(msg.params.delta.content.text);
+          } else if (typeof msg.params?.delta === 'string') {
             process.stdout.write(msg.params.delta);
+          }
+          // OpenCode format: msg.params.update.sessionUpdate = agent_message_chunk
+          if (msg.params?.update?.sessionUpdate === 'agent_message_chunk' && msg.params?.update?.content?.text) {
+            process.stdout.write(msg.params.update.content.text);
           }
         }
         // Forward other messages
