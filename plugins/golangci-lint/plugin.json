@@ -1,0 +1,68 @@
+{
+  "name": "golangci-lint",
+  "version": "0.1.0",
+  "description": "golangci-lint — fast Go linter suite with 100+ linters",
+  "source": "https://github.com/golangci/golangci-lint",
+  "checks": [{"type": "binary", "name": "golangci-lint"}],
+  "install_guidance": {
+    "plugin": "golangci-lint",
+    "binary": "golangci-lint",
+    "check": "which golangci-lint",
+    "install_steps": ["brew install golangci-lint", "Verify: golangci-lint --version", "supercli plugins install ./plugins/golangci-lint --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "golangci-lint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print golangci-lint version",
+      "adapter": "process",
+      "adapterConfig": {"command": "golangci-lint", "baseArgs": ["--version"], "missingDependencyHelp": "Install: brew install golangci-lint"},
+      "args": []
+    },
+    {
+      "namespace": "golangci-lint",
+      "resource": "lint",
+      "action": "run",
+      "description": "Lint Go code",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "golangci-lint",
+        "baseArgs": ["run"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install golangci-lint"
+      },
+      "args": [{"name": "path", "type": "string", "required": false, "description": "Directory or file to lint"}]
+    },
+    {
+      "namespace": "golangci-lint",
+      "resource": "lint",
+      "action": "json-output",
+      "description": "Lint with JSON output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "golangci-lint",
+        "baseArgs": ["run", "--out-format=json"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install golangci-lint"
+      },
+      "args": [{"name": "path", "type": "string", "required": false, "description": "Directory to lint"}]
+    },
+    {
+      "namespace": "golangci-lint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to golangci-lint CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "golangci-lint", "cwd": "invoke_cwd", "passthrough": true, "missingDependencyHelp": "Install golangci-lint"},
+      "args": []
+    }
+  ]
+}
