@@ -1,0 +1,49 @@
+{
+  "name": "htmlq",
+  "version": "0.1.0",
+  "description": "htmlq — CSS selector queries on HTML (like jq for HTML)",
+  "source": "https://github.com/mgdm/htmlq",
+  "checks": [{"type": "binary", "name": "htmlq"}],
+  "install_guidance": {
+    "plugin": "htmlq",
+    "binary": "htmlq",
+    "check": "which htmlq",
+    "install_steps": ["cargo install htmlq", "Verify: htmlq --version", "supercli plugins install ./plugins/htmlq --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "htmlq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print htmlq version",
+      "adapter": "process",
+      "adapterConfig": {"command": "htmlq", "baseArgs": ["--version"], "missingDependencyHelp": "Install: cargo install htmlq"},
+      "args": []
+    },
+    {
+      "namespace": "htmlq",
+      "resource": "query",
+      "action": "select",
+      "description": "Query HTML with CSS selector",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htmlq",
+        "positionalArgs": ["selector"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install htmlq"
+      },
+      "args": [{"name": "selector", "type": "string", "required": true, "description": "CSS selector"}]
+    },
+    {
+      "namespace": "htmlq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to htmlq CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "htmlq", "passthrough": true, "missingDependencyHelp": "Install htmlq"},
+      "args": []
+    }
+  ]
+}
