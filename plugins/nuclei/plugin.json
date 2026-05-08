@@ -1,0 +1,106 @@
+{
+  "name": "nuclei",
+  "version": "0.1.0",
+  "description": "nuclei — fast vulnerability scanner powered by 12K+ community templates (CVEs, misconfigurations, exposures)",
+  "source": "https://github.com/projectdiscovery/nuclei",
+  "checks": [
+    { "type": "binary", "name": "nuclei" }
+  ],
+  "install_guidance": {
+    "plugin": "nuclei",
+    "binary": "nuclei",
+    "check": "which nuclei",
+    "install_steps": [
+      "go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest",
+      "Verify: nuclei -version",
+      "supercli plugins install ./plugins/nuclei --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nuclei",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nuclei version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nuclei",
+        "baseArgs": ["-version"],
+        "missingDependencyHelp": "Install nuclei: go install -v github.com/projectdiscovery/nuclei/v3/cmd/nuclei@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nuclei",
+      "resource": "scan",
+      "action": "http",
+      "description": "Scan HTTP target for vulnerabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nuclei",
+        "baseArgs": ["-u"],
+        "positionalArgs": ["target"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nuclei"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target URL (e.g., http://example.com)" }
+      ]
+    },
+    {
+      "namespace": "nuclei",
+      "resource": "scan",
+      "action": "template",
+      "description": "Scan with specific template",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nuclei",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["template", "target"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nuclei"
+      },
+      "args": [
+        { "name": "template", "type": "string", "required": true, "description": "Template name or path (e.g., cves/2024)" },
+        { "name": "target", "type": "string", "required": true, "description": "Target to scan" }
+      ]
+    },
+    {
+      "namespace": "nuclei",
+      "resource": "scan",
+      "action": "json-output",
+      "description": "Scan and output results as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nuclei",
+        "baseArgs": ["-json"],
+        "positionalArgs": ["target"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nuclei"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target to scan" }
+      ]
+    },
+    {
+      "namespace": "nuclei",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nuclei CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nuclei",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nuclei"
+      },
+      "args": []
+    }
+  ]
+}
