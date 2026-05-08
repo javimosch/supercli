@@ -64,3 +64,25 @@ return {
 - `console.log(...)` goes to stderr.
 - Prefer returning small, structured objects.
 - If `context.navigation` is `null`, your run started without `--url`.
+
+## Caveats
+
+### SPA / Client-Side Rendered Pages
+
+`extract run` navigates with the browser and then exposes `$` / `html` from `page.content()`. For SPAs (Vue, React, Angular), `page.content()` reflects the pre-render HTML shell — the `$` instance operates on an empty app container, not the rendered component tree.
+
+Prefer using the injected `fetch` to retrieve raw HTML from an endpoint and parsing it with cheerio manually when the target is a SPA:
+```js
+const resp = await fetch('http://localhost:8080/');
+const html = await resp.text();
+const $ = cheerio.load(html);
+return { title: $('title').text(), hasApp: !!$('#app').length };
+```
+
+### resilientGoto Falls Back Silently
+
+When `resilientGoto` falls back to HTTP, `pageData.mode` is `http_fallback` and `pageData.$` is populated from the raw HTTP response. Always check `pageData.mode` before using `pageData.$` to understand which path ran.
+
+### Hash Fragment Navigation
+
+Do not pass hash URLs (`#/route`) to `resilientGoto`. The `#` fragment is sent to Lightpanda as a literal path component and may be percent-encoded or ignored. Target hash-routed pages by fetching the base URL instead.

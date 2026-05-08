@@ -101,3 +101,41 @@ return posts
 - Use `--timeout-ms` to cap long runs and keep automation deterministic.
 - `extract run` returns your custom `data` plus `meta` fields like `execution_ms`, `extraction_mode`, `target_url`, and `navigation_error`.
 - `contacts discover` scans the landing page plus a small set of likely contact/about/legal pages and returns emails, phones, `mailto:`, `tel:`, and social links.
+
+## Known Caveats and Pitfalls
+
+### CWD Dependency — scripts/ Must Exist in Your Working Directory
+
+`dcli lightpanda script run` resolves `scripts/lightpanda-wrapper.js` relative to the **current working directory**, not the plugin directory. Running from any project folder without a `scripts/` subdirectory fails immediately with `MODULE_NOT_FOUND`.
+
+Fix: symlink the plugin scripts into your working directory before running:
+```bash
+ln -sf ~/ai/supercli/plugins/lightpanda/scripts ./scripts
+```
+
+### Lightpanda Does Not Fully Execute Modern JavaScript SPAs
+
+Vue, React, and Angular apps typically mount (the root element receives framework attributes like `data-v-app`) but components do not render and router navigation does not fire. `page.content()` and `page.evaluate()` return the pre-render shell, not the rendered DOM.
+
+Use `fetch()` inside your script to assert on static HTML structure instead:
+```js
+const resp = await fetch('http://localhost:8080/');
+const html = await resp.text();
+return { status: resp.status, hasApp: html.includes('id="app"') };
+```
+
+### Hash URLs Are Percent-Encoded by page.goto()
+
+Passing `http://example.com/#/path` to `page.goto()` encodes `#` as `%23`, producing a broken navigation target. Navigate to the base URL only and let the SPA handle hash routing — or test hash-route logic via unit tests instead.
+
+### waitUntil and setTimeout Do Not Fix SPA Rendering
+
+`networkidle0` and added `setTimeout` delays do not unblock SPA rendering when Lightpanda does not execute the full JavaScript bundle. The navigation resolves but the DOM stays in its initial mount state regardless of how long you wait.
+
+### page.title() Returns Static HTML Title Only
+
+Dynamically updated titles (`document.title = ...` from JavaScript) are not reflected. Only the static `<title>` tag value from the served HTML is returned.
+
+### Default Timeout Is 15 000 ms
+
+Hitting the timeout produces an `integration_error` with exit code 105. Increase with `--timeout-ms` for slow targets — but note that SPA rendering failures are not timing problems; more time does not fix them.
