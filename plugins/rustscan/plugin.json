@@ -1,0 +1,105 @@
+{
+  "name": "rustscan",
+  "version": "0.1.0",
+  "description": "RustScan — lightning-fast port scanner written in Rust, scans all 65,000 ports in ~3 seconds",
+  "source": "https://github.com/RustScan/RustScan",
+  "checks": [
+    { "type": "binary", "name": "rustscan" }
+  ],
+  "install_guidance": {
+    "plugin": "rustscan",
+    "binary": "rustscan",
+    "check": "which rustscan",
+    "install_steps": [
+      "cargo install rustscan",
+      "Verify: rustscan --version",
+      "supercli plugins install ./plugins/rustscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rustscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print RustScan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rustscan",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install RustScan: cargo install rustscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rustscan",
+      "resource": "port",
+      "action": "scan",
+      "description": "Scan all ports on a target host",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rustscan",
+        "positionalArgs": ["-a"],
+        "positionalArgs": ["target"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install RustScan"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target IP, hostname, or CIDR range (e.g., 192.168.1.1, example.com, 10.0.0.0/8)" }
+      ]
+    },
+    {
+      "namespace": "rustscan",
+      "resource": "port",
+      "action": "range",
+      "description": "Scan specific port range on target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rustscan",
+        "baseArgs": ["-p"],
+        "positionalArgs": ["ports", "target"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install RustScan"
+      },
+      "args": [
+        { "name": "ports", "type": "string", "required": true, "description": "Port range (e.g., 1-1000, 80,443,8080)" },
+        { "name": "target", "type": "string", "required": true, "description": "Target to scan" }
+      ]
+    },
+    {
+      "namespace": "rustscan",
+      "resource": "port",
+      "action": "with-nmap",
+      "description": "Scan with RustScan and pipe to Nmap",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rustscan",
+        "baseArgs": ["--script", "nmap-safe"],
+        "positionalArgs": ["-a", "target"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install RustScan"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target IP or hostname" }
+      ]
+    },
+    {
+      "namespace": "rustscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to RustScan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rustscan",
+        "passthrough": true,
+        "missingDependencyHelp": "Install RustScan"
+      },
+      "args": []
+    }
+  ]
+}
