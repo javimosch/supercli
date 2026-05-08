@@ -1,0 +1,68 @@
+{
+  "name": "vector",
+  "version": "0.1.0",
+  "description": "vector — high-performance log processing and routing pipeline",
+  "source": "https://github.com/vectordotdev/vector",
+  "checks": [{"type": "binary", "name": "vector"}],
+  "install_guidance": {
+    "plugin": "vector",
+    "binary": "vector",
+    "check": "which vector",
+    "install_steps": ["brew install vector", "Verify: vector --version", "supercli plugins install ./plugins/vector --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "vector",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vector version",
+      "adapter": "process",
+      "adapterConfig": {"command": "vector", "baseArgs": ["--version"], "missingDependencyHelp": "Install: brew install vector"},
+      "args": []
+    },
+    {
+      "namespace": "vector",
+      "resource": "config",
+      "action": "validate",
+      "description": "Validate configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vector",
+        "baseArgs": ["validate"],
+        "positionalArgs": ["config"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install vector"
+      },
+      "args": [{"name": "config", "type": "string", "required": true, "description": "Config file path"}]
+    },
+    {
+      "namespace": "vector",
+      "resource": "run",
+      "action": "pipeline",
+      "description": "Run vector pipeline",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vector",
+        "baseArgs": ["--config"],
+        "positionalArgs": ["config"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install vector"
+      },
+      "args": [{"name": "config", "type": "string", "required": true, "description": "Config file"}]
+    },
+    {
+      "namespace": "vector",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vector CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "vector", "cwd": "invoke_cwd", "passthrough": true, "missingDependencyHelp": "Install vector"},
+      "args": []
+    }
+  ]
+}
