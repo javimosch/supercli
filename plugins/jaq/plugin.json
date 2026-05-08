@@ -1,0 +1,103 @@
+{
+  "name": "jaq",
+  "version": "0.1.0",
+  "description": "jaq — a high-performance Rust clone of jq with support for JSON, YAML, TOML, CBOR, and XML",
+  "source": "https://github.com/01mf02/jaq",
+  "checks": [
+    { "type": "binary", "name": "jaq" }
+  ],
+  "install_guidance": {
+    "plugin": "jaq",
+    "binary": "jaq",
+    "check": "which jaq",
+    "install_steps": [
+      "cargo install --locked jaq",
+      "Verify: jaq --version",
+      "supercli plugins install ./plugins/jaq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jaq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jaq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaq",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jaq: cargo install --locked jaq"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jaq",
+      "resource": "json",
+      "action": "process",
+      "description": "Process JSON data with jq filter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaq",
+        "positionalArgs": ["filter"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install jaq"
+      },
+      "args": [
+        { "name": "filter", "type": "string", "required": true, "description": "jq filter expression (e.g., '.', '.field', 'map(.x)'" }
+      ]
+    },
+    {
+      "namespace": "jaq",
+      "resource": "json",
+      "action": "query",
+      "description": "Query JSON/YAML/TOML/XML data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaq",
+        "baseArgs": ["-r"],
+        "positionalArgs": ["filter"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install jaq"
+      },
+      "args": [
+        { "name": "filter", "type": "string", "required": true, "description": "Query filter" }
+      ]
+    },
+    {
+      "namespace": "jaq",
+      "resource": "data",
+      "action": "format",
+      "description": "Format and prettify data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaq",
+        "baseArgs": ["-M"],
+        "positionalArgs": ["filter"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install jaq"
+      },
+      "args": [
+        { "name": "filter", "type": "string", "required": false, "description": "Optional filter (default: identity)" }
+      ]
+    },
+    {
+      "namespace": "jaq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jaq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jaq",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jaq"
+      },
+      "args": []
+    }
+  ]
+}
