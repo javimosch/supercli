@@ -1,0 +1,90 @@
+{
+  "name": "pandoc",
+  "version": "0.1.0",
+  "description": "pandoc — universal document converter (Markdown, HTML, LaTeX, DOCX, PDF, etc.)",
+  "source": "https://github.com/jgm/pandoc",
+  "checks": [{ "type": "binary", "name": "pandoc" }],
+  "install_guidance": {
+    "plugin": "pandoc",
+    "binary": "pandoc",
+    "check": "which pandoc",
+    "install_steps": ["brew install pandoc", "Verify: pandoc --version", "supercli plugins install ./plugins/pandoc --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "pandoc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pandoc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pandoc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pandoc: brew install pandoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pandoc",
+      "resource": "convert",
+      "action": "markdown-to-html",
+      "description": "Convert Markdown to HTML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pandoc",
+        "baseArgs": ["-f", "markdown", "-t", "html"],
+        "positionalArgs": ["file"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pandoc"
+      },
+      "args": [{"name": "file", "type": "string", "required": true, "description": "Input Markdown file"}]
+    },
+    {
+      "namespace": "pandoc",
+      "resource": "convert",
+      "action": "document",
+      "description": "Convert document between formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pandoc",
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pandoc"
+      },
+      "args": [{"name": "file", "type": "string", "required": true, "description": "Input file (extension determines format)"}]
+    },
+    {
+      "namespace": "pandoc",
+      "resource": "list",
+      "action": "formats",
+      "description": "List supported input/output formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pandoc",
+        "baseArgs": ["--list-input-formats"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install pandoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pandoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pandoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pandoc",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pandoc"
+      },
+      "args": []
+    }
+  ]
+}
