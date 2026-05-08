@@ -1,34 +1,17 @@
----
-name: goreleaser
-description: Use this skill when the user wants to deliver go binaries as fast and easily as possible.
----
+# Quickstart
 
-# Goreleaser Plugin
-
-Deliver Go binaries as fast and easily as possible.
-
-## Commands
-
-### Operations
-- `goreleaser release run` — run release via goreleaser
-- `goreleaser build run` — run build via goreleaser
-
-## Usage Examples
-- "goreleaser --help"
-- "goreleaser <args>"
+See GitHub repository for full documentation.
 
 ## Installation
 
 ```bash
-brew install goreleaser
+# See install-guidance.json
 ```
 
-## Examples
+## Basic Usage
 
-```bash
-goreleaser --version
-goreleaser --help
-```
+Refer to the tool's official documentation.
 
-## Key Features
-- go\n- release\n- ci-cd
+## Resources
+
+- GitHub repository in plugin source
