@@ -1,0 +1,103 @@
+{
+  "name": "ripsecrets",
+  "version": "0.1.0",
+  "description": "ripsecrets — detect secret keys in code before committing, 95x faster than alternatives",
+  "source": "https://github.com/sirwart/ripsecrets",
+  "checks": [
+    { "type": "binary", "name": "ripsecrets" }
+  ],
+  "install_guidance": {
+    "plugin": "ripsecrets",
+    "binary": "ripsecrets",
+    "check": "which ripsecrets",
+    "install_steps": [
+      "cargo install --git https://github.com/sirwart/ripsecrets --branch main",
+      "Verify: ripsecrets --version",
+      "supercli plugins install ./plugins/ripsecrets --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ripsecrets",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ripsecrets version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ripsecrets",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ripsecrets: cargo install --git https://github.com/sirwart/ripsecrets --branch main"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ripsecrets",
+      "resource": "scan",
+      "action": "directory",
+      "description": "Scan directory/repository for secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ripsecrets",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ripsecrets"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory or file to scan (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "ripsecrets",
+      "resource": "scan",
+      "action": "install-hook",
+      "description": "Install ripsecrets as pre-commit hook",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ripsecrets",
+        "baseArgs": ["--install-pre-commit"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install ripsecrets"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ripsecrets",
+      "resource": "scan",
+      "action": "custom-pattern",
+      "description": "Scan with additional secret pattern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ripsecrets",
+        "baseArgs": ["--additional-pattern"],
+        "positionalArgs": ["pattern", "path"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ripsecrets"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Custom secret pattern to detect (e.g., my-secret-*)" },
+        { "name": "path", "type": "string", "required": false, "description": "Directory or file to scan" }
+      ]
+    },
+    {
+      "namespace": "ripsecrets",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ripsecrets CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ripsecrets",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ripsecrets"
+      },
+      "args": []
+    }
+  ]
+}
