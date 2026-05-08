@@ -1,0 +1,102 @@
+{
+  "name": "duckdb",
+  "version": "0.1.0",
+  "description": "DuckDB — in-process analytical SQL database, fast data analysis on CSV/Parquet/JSON",
+  "source": "https://github.com/duckdb/duckdb",
+  "checks": [
+    { "type": "binary", "name": "duckdb" }
+  ],
+  "install_guidance": {
+    "plugin": "duckdb",
+    "binary": "duckdb",
+    "check": "which duckdb",
+    "install_steps": [
+      "brew install duckdb",
+      "Verify: duckdb --version",
+      "supercli plugins install ./plugins/duckdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "duckdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print DuckDB version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duckdb",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install DuckDB: brew install duckdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "duckdb",
+      "resource": "query",
+      "action": "file",
+      "description": "Execute SQL query on file (CSV, Parquet, JSON)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duckdb",
+        "baseArgs": [":memory:"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install DuckDB"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "SQL query (e.g., 'SELECT * FROM read_csv(\"file.csv\")')" }
+      ]
+    },
+    {
+      "namespace": "duckdb",
+      "resource": "query",
+      "action": "database",
+      "description": "Query a DuckDB database file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duckdb",
+        "positionalArgs": ["dbfile", "query"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install DuckDB"
+      },
+      "args": [
+        { "name": "dbfile", "type": "string", "required": true, "description": "DuckDB database file path" },
+        { "name": "query", "type": "string", "required": true, "description": "SQL query" }
+      ]
+    },
+    {
+      "namespace": "duckdb",
+      "resource": "interactive",
+      "action": "shell",
+      "description": "Open DuckDB interactive shell",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duckdb",
+        "positionalArgs": ["dbfile"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install DuckDB"
+      },
+      "args": [
+        { "name": "dbfile", "type": "string", "required": false, "description": "Database file (optional, default: :memory:)" }
+      ]
+    },
+    {
+      "namespace": "duckdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to DuckDB CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duckdb",
+        "passthrough": true,
+        "missingDependencyHelp": "Install DuckDB"
+      },
+      "args": []
+    }
+  ]
+}
