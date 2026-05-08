@@ -1,0 +1,101 @@
+{
+  "name": "deno",
+  "version": "0.1.0",
+  "description": "Deno — secure TypeScript/JavaScript runtime, alternative to Node.js",
+  "source": "https://github.com/denoland/deno",
+  "checks": [{"type": "binary", "name": "deno"}],
+  "install_guidance": {
+    "plugin": "deno",
+    "binary": "deno",
+    "check": "which deno",
+    "install_steps": ["brew install deno", "Verify: deno --version", "supercli plugins install ./plugins/deno --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "deno",
+      "resource": "self",
+      "action": "version",
+      "description": "Print Deno version",
+      "adapter": "process",
+      "adapterConfig": {"command": "deno", "baseArgs": ["--version"], "missingDependencyHelp": "Install Deno: brew install deno"},
+      "args": []
+    },
+    {
+      "namespace": "deno",
+      "resource": "run",
+      "action": "script",
+      "description": "Run TypeScript/JavaScript file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deno",
+        "baseArgs": ["run"],
+        "positionalArgs": ["file"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install Deno"
+      },
+      "args": [{"name": "file", "type": "string", "required": true, "description": "TypeScript/JavaScript file to run"}]
+    },
+    {
+      "namespace": "deno",
+      "resource": "run",
+      "action": "eval",
+      "description": "Evaluate inline TypeScript/JavaScript",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deno",
+        "baseArgs": ["eval"],
+        "positionalArgs": ["code"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Deno"
+      },
+      "args": [{"name": "code", "type": "string", "required": true, "description": "Code to evaluate"}]
+    },
+    {
+      "namespace": "deno",
+      "resource": "fmt",
+      "action": "format",
+      "description": "Format TypeScript/JavaScript files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deno",
+        "baseArgs": ["fmt"],
+        "positionalArgs": ["file"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Deno"
+      },
+      "args": [{"name": "file", "type": "string", "required": false, "description": "File or directory to format"}]
+    },
+    {
+      "namespace": "deno",
+      "resource": "lint",
+      "action": "check",
+      "description": "Lint TypeScript/JavaScript files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deno",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["file"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install Deno"
+      },
+      "args": [{"name": "file", "type": "string", "required": false, "description": "File or directory to lint"}]
+    },
+    {
+      "namespace": "deno",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to Deno CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "deno", "cwd": "invoke_cwd", "passthrough": true, "missingDependencyHelp": "Install Deno"},
+      "args": []
+    }
+  ]
+}
