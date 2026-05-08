@@ -53,6 +53,8 @@ sms-cli providers check twilio --json
 | `MAILERSEND_FROM` | mailersend | yes |
 | `CLICKATELL_API_KEY` | clickatell | yes |
 | `CLICKATELL_FROM` | clickatell | optional |
+| `TELNYX_API_KEY` | telnyx | yes |
+| `TELNYX_FROM` | telnyx | yes |
 
 ## Exit Codes
 
