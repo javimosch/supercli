@@ -1,0 +1,51 @@
+{
+  "name": "asciidoctor",
+  "version": "0.1.0",
+  "description": "asciidoctor — AsciiDoc processor for documents, books, and slides",
+  "source": "https://github.com/asciidoctor/asciidoctor",
+  "checks": [{"type": "binary", "name": "asciidoctor"}],
+  "install_guidance": {
+    "plugin": "asciidoctor",
+    "binary": "asciidoctor",
+    "check": "which asciidoctor",
+    "install_steps": ["brew install asciidoctor", "Verify: asciidoctor --version", "supercli plugins install ./plugins/asciidoctor --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "asciidoctor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print asciidoctor version",
+      "adapter": "process",
+      "adapterConfig": {"command": "asciidoctor", "baseArgs": ["--version"], "missingDependencyHelp": "Install: brew install asciidoctor"},
+      "args": []
+    },
+    {
+      "namespace": "asciidoctor",
+      "resource": "convert",
+      "action": "html",
+      "description": "Convert AsciiDoc to HTML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asciidoctor",
+        "baseArgs": ["-b", "html5"],
+        "positionalArgs": ["file"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install asciidoctor"
+      },
+      "args": [{"name": "file", "type": "string", "required": true, "description": "AsciiDoc file"}]
+    },
+    {
+      "namespace": "asciidoctor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to asciidoctor CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "asciidoctor", "cwd": "invoke_cwd", "passthrough": true, "missingDependencyHelp": "Install asciidoctor"},
+      "args": []
+    }
+  ]
+}
