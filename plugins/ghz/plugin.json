@@ -1,0 +1,49 @@
+{
+  "name": "ghz",
+  "version": "0.1.0",
+  "description": "ghz — gRPC load testing and benchmarking tool",
+  "source": "https://github.com/bojand/ghz",
+  "checks": [{"type": "binary", "name": "ghz"}],
+  "install_guidance": {
+    "plugin": "ghz",
+    "binary": "ghz",
+    "check": "which ghz",
+    "install_steps": ["brew install ghz", "Verify: ghz --version", "supercli plugins install ./plugins/ghz --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "ghz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ghz version",
+      "adapter": "process",
+      "adapterConfig": {"command": "ghz", "baseArgs": ["--version"], "missingDependencyHelp": "Install: brew install ghz"},
+      "args": []
+    },
+    {
+      "namespace": "ghz",
+      "resource": "load",
+      "action": "test",
+      "description": "Run gRPC load test",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghz",
+        "positionalArgs": ["target"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install ghz"
+      },
+      "args": [{"name": "target", "type": "string", "required": true, "description": "gRPC service target (host:port)"}]
+    },
+    {
+      "namespace": "ghz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ghz CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "ghz", "passthrough": true, "missingDependencyHelp": "Install ghz"},
+      "args": []
+    }
+  ]
+}
