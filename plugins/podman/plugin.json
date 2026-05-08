@@ -1,0 +1,52 @@
+{
+  "name": "podman",
+  "version": "0.1.0",
+  "description": "podman — OCI container runtime and Docker-compatible CLI without daemon",
+  "source": "https://github.com/containers/podman",
+  "checks": [{"type": "binary", "name": "podman"}],
+  "install_guidance": {
+    "plugin": "podman",
+    "binary": "podman",
+    "check": "which podman",
+    "install_steps": ["brew install podman", "Verify: podman --version", "supercli plugins install ./plugins/podman --on-conflict replace --json"]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "podman",
+      "resource": "self",
+      "action": "version",
+      "description": "Print podman version",
+      "adapter": "process",
+      "adapterConfig": {"command": "podman", "baseArgs": ["--version"], "missingDependencyHelp": "Install: brew install podman"},
+      "args": []
+    },
+    {
+      "namespace": "podman",
+      "resource": "container",
+      "action": "run",
+      "description": "Run container",
+      "adapter": "process",
+      "adapterConfig": {"command": "podman", "baseArgs": ["run"], "positionalArgs": ["image"], "passthrough": true, "timeout_ms": 300000, "missingDependencyHelp": "Install podman"},
+      "args": [{"name": "image", "type": "string", "required": true, "description": "Container image"}]
+    },
+    {
+      "namespace": "podman",
+      "resource": "image",
+      "action": "pull",
+      "description": "Pull container image",
+      "adapter": "process",
+      "adapterConfig": {"command": "podman", "baseArgs": ["pull"], "positionalArgs": ["image"], "timeout_ms": 300000, "missingDependencyHelp": "Install podman"},
+      "args": [{"name": "image", "type": "string", "required": true, "description": "Image name"}]
+    },
+    {
+      "namespace": "podman",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to podman CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "podman", "passthrough": true, "missingDependencyHelp": "Install podman"},
+      "args": []
+    }
+  ]
+}
