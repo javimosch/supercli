@@ -1,0 +1,114 @@
+{
+  "name": "sms-cli",
+  "version": "1.0.0",
+  "description": "Agent-friendly SMS CLI for sending messages via Twilio, Vonage, MailerSend, and Clickatell. Structured JSON output, semantic exit codes, non-interactive by design.",
+  "source": "https://github.com/jarancibia/sms-cli",
+  "checks": [
+    { "type": "binary", "name": "sms-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "sms-cli",
+    "binary": "sms-cli",
+    "check": "sms-cli --help-json",
+    "install_steps": [
+      "Clone: git clone https://github.com/jarancibia/sms-cli",
+      "Build: cd sms-cli && bun build src/index.ts --compile --outfile bin/sms-cli",
+      "Add to PATH: export PATH=$PATH:/path/to/sms-cli/bin",
+      "Set provider env vars (see: sms-cli --help-json)"
+    ],
+    "note": "Requires bun (bun.sh) to compile. Binary has no runtime dependencies."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sms",
+      "resource": "message",
+      "action": "send",
+      "description": "Send an SMS via the configured provider (Twilio, Vonage, MailerSend, or Clickatell)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sms-cli",
+        "baseArgs": ["send", "--json"],
+        "timeout_ms": 20000,
+        "missingDependencyHelp": "Install sms-cli: see sms-cli plugin install-guidance"
+      },
+      "args": [
+        {
+          "name": "--to",
+          "type": "string",
+          "required": true,
+          "description": "Recipient phone number in E.164 format (e.g. +15551234567)"
+        },
+        {
+          "name": "--message",
+          "type": "string",
+          "required": true,
+          "description": "SMS message body text"
+        },
+        {
+          "name": "--provider",
+          "type": "string",
+          "required": false,
+          "description": "Provider: twilio|vonage|mailersend|clickatell (defaults to SMS_PROVIDER env)"
+        },
+        {
+          "name": "--from",
+          "type": "string",
+          "required": false,
+          "description": "Sender phone number or ID (overrides provider env default)"
+        }
+      ]
+    },
+    {
+      "namespace": "sms",
+      "resource": "providers",
+      "action": "list",
+      "description": "List all SMS providers and their configuration status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sms-cli",
+        "baseArgs": ["providers", "list", "--json"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install sms-cli: see sms-cli plugin install-guidance"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sms",
+      "resource": "providers",
+      "action": "check",
+      "description": "Check configuration status for a specific SMS provider",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sms-cli",
+        "baseArgs": ["providers", "check"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install sms-cli: see sms-cli plugin install-guidance"
+      },
+      "args": [
+        {
+          "name": "provider",
+          "type": "string",
+          "required": true,
+          "description": "Provider name: twilio|vonage|mailersend|clickatell"
+        }
+      ]
+    },
+    {
+      "namespace": "sms",
+      "resource": "schema",
+      "action": "get",
+      "description": "Get sms-cli JSON schema: commands, flags, exit codes, env vars",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sms-cli",
+        "baseArgs": ["--help-json"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install sms-cli: see sms-cli plugin install-guidance"
+      },
+      "args": []
+    }
+  ]
+}
