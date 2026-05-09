@@ -1,0 +1,416 @@
+{
+  "name": "playwright-cli",
+  "version": "0.1.0",
+  "description": "Playwright CLI for browser automation — token-efficient browser control for coding agents",
+  "source": "https://github.com/microsoft/playwright-cli",
+  "checks": [
+    { "type": "binary", "name": "playwright-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "playwright-cli",
+    "binary": "playwright-cli",
+    "check": "which playwright-cli",
+    "install_steps": [
+      "npm install -g @playwright/cli@latest",
+      "playwright-cli install --skills",
+      "Verify: playwright-cli --version",
+      "supercli plugins install ./plugins/playwright-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "playwright-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print playwright-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "self",
+      "action": "install-skills",
+      "description": "Install Playwright skills for coding agents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["install", "--skills"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "browser",
+      "action": "open",
+      "description": "Open browser, optionally navigate to URL. Use --headed to see the browser.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["open"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": false, "description": "URL to navigate to (optional)" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "browser",
+      "action": "goto",
+      "description": "Navigate to a URL in the current browser session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["goto"],
+        "positionalArgs": ["url"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to navigate to" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "browser",
+      "action": "close",
+      "description": "Close the current browser page/session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["close"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "browser",
+      "action": "reload",
+      "description": "Reload the current page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["reload"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "click",
+      "description": "Click element by ref, CSS selector, or Playwright locator",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["click"],
+        "positionalArgs": ["ref"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Element ref (e.g. e15), CSS selector, or Playwright locator" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "dblclick",
+      "description": "Double click element by ref, CSS selector, or Playwright locator",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["dblclick"],
+        "positionalArgs": ["ref"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Element ref (e.g. e15), CSS selector, or Playwright locator" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "type",
+      "description": "Type text into the currently focused editable element",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["type"],
+        "positionalArgs": ["text"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Text to type" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "fill",
+      "description": "Fill text into an editable element. Use --submit to press Enter after filling.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["fill"],
+        "positionalArgs": ["ref", "text"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Element ref, CSS selector, or Playwright locator" },
+        { "name": "text", "type": "string", "required": true, "description": "Text to fill" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "check",
+      "description": "Check a checkbox or radio button",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["check"],
+        "positionalArgs": ["ref"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Element ref, CSS selector, or Playwright locator" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "select",
+      "description": "Select an option in a dropdown by value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["select"],
+        "positionalArgs": ["ref", "value"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Element ref, CSS selector, or Playwright locator" },
+        { "name": "value", "type": "string", "required": true, "description": "Option value to select" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "hover",
+      "description": "Hover over an element on the page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["hover"],
+        "positionalArgs": ["ref"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": true, "description": "Element ref, CSS selector, or Playwright locator" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "snapshot",
+      "description": "Capture page snapshot to obtain element refs for interaction. Use --filename, --depth=N, --boxes.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["snapshot"],
+        "positionalArgs": ["ref"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": false, "description": "Element ref to snapshot (optional, snapshots full page by default)" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "element",
+      "action": "upload",
+      "description": "Upload one or multiple files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["upload"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File path to upload" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "keyboard",
+      "action": "press",
+      "description": "Press a key on the keyboard (e.g., Enter, ArrowLeft, Tab, a, Shift+a)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["press"],
+        "positionalArgs": ["key"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Key to press (e.g., Enter, Escape, ArrowLeft, Tab, a)" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "screenshot",
+      "action": "take",
+      "description": "Take screenshot of the current page or element. Use --filename= to set output path.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["screenshot"],
+        "positionalArgs": ["ref"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "ref", "type": "string", "required": false, "description": "Element ref to screenshot (optional, screenshots full page by default)" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "tab",
+      "action": "new",
+      "description": "Create a new browser tab, optionally navigating to URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["tab-new"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": false, "description": "URL to navigate to in the new tab (optional)" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "tab",
+      "action": "close",
+      "description": "Close a browser tab by index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["tab-close"],
+        "positionalArgs": ["index"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "index", "type": "number", "required": false, "description": "Tab index to close (optional, closes current if omitted)" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "tab",
+      "action": "select",
+      "description": "Select a browser tab by index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["tab-select"],
+        "positionalArgs": ["index"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": [
+        { "name": "index", "type": "number", "required": true, "description": "Tab index to select" }
+      ]
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "session",
+      "action": "list",
+      "description": "List all active browser sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["list"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "session",
+      "action": "close-all",
+      "description": "Close all browser sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["close-all"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "session",
+      "action": "kill-all",
+      "description": "Forcefully kill all browser processes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "baseArgs": ["kill-all"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to playwright-cli CLI for any command not covered by specific resources. Includes: cookie operations, local/session storage, network routing, devtools, dialog, mouse, eval, etc.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playwright-cli",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install playwright-cli: npm install -g @playwright/cli@latest"
+      },
+      "args": []
+    }
+  ]
+}
