@@ -1,0 +1,137 @@
+{
+  "name": "tealdeer",
+  "version": "0.1.0",
+  "description": "tealdeer — fast tldr client for simplified, example-based man pages. Quick CLI reference for any tool, with offline caching and JSON output.",
+  "source": "https://github.com/tealdeer-rs/tealdeer",
+  "checks": [
+    { "type": "binary", "name": "tldr" }
+  ],
+  "install_guidance": {
+    "plugin": "tealdeer",
+    "binary": "tldr",
+    "check": "which tldr",
+    "install_steps": [
+      "cargo install tealdeer",
+      "tldr --update",
+      "Verify: tldr --version",
+      "supercli plugins install ./plugins/tealdeer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tealdeer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tealdeer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "page",
+      "action": "show",
+      "description": "Show tldr page for a command (passthrough: tldr <command> [--platform linux] [--language en])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "page",
+      "action": "raw",
+      "description": "Show raw markdown for a tldr page (passthrough: tldr --raw <command>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--raw"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "cache",
+      "action": "update",
+      "description": "Update the local tldr page cache from the tldr-pages repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--update"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "cache",
+      "action": "list",
+      "description": "List all cached tldr commands available offline",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "cache",
+      "action": "clear",
+      "description": "Clear the local tldr page cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--clear-cache"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "config",
+      "action": "paths",
+      "description": "Show file and directory paths used by tealdeer",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--show-paths"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tealdeer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tldr CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tealdeer: cargo install tealdeer"
+      },
+      "args": []
+    }
+  ]
+}
