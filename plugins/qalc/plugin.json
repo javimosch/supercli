@@ -1,0 +1,171 @@
+{
+  "name": "qalc",
+  "version": "0.1.0",
+  "description": "qalc — powerful command-line calculator from Qalculate!. Evaluate math expressions, convert units, calculate currency exchange rates, solve equations, and more. Non-interactive by default with --terse flag for clean agent-friendly output.",
+  "source": "https://github.com/Qalculate/libqalculate",
+  "checks": [
+    { "type": "binary", "name": "qalc" }
+  ],
+  "install_guidance": {
+    "plugin": "qalc",
+    "binary": "qalc",
+    "check": "which qalc",
+    "install_steps": [
+      "brew install qalculate-tools",
+      "Verify: qalc --version",
+      "Test: qalc -t '42 * 3.14'",
+      "supercli plugins install ./plugins/qalc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qalc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qalc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qalc: brew install qalculate-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qalc",
+      "resource": "calc",
+      "action": "eval",
+      "description": "Evaluate a mathematical expression (e.g., arithmetic, trigonometry, units, currency)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["expression"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install qalc: brew install qalculate-tools"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Math expression (e.g., '5 + 2 * 3', 'sin(45deg)', 'sqrt(144)')" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "convert",
+      "action": "units",
+      "description": "Convert between units (length, mass, volume, temperature, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["expression"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install qalc"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Unit conversion (e.g., '100 meters to feet', '1 gallon to liters', '50 celsius to fahrenheit')" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "convert",
+      "action": "currency",
+      "description": "Convert between currencies (requires exchange rates)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["expression"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install qalc"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Currency conversion (e.g., '100 EUR to USD', '50 GBP to JPY')" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "solve",
+      "action": "equation",
+      "description": "Solve an equation for a variable",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["expression"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install qalc"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Equation to solve (e.g., 'x^2 - 4 = 0', '2*x + 5 = 13')" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "list",
+      "action": "units",
+      "description": "List available units, optionally filtered by search term",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["--list-units"],
+        "positionalArgs": ["search"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install qalc"
+      },
+      "args": [
+        { "name": "search", "type": "string", "required": false, "description": "Optional search term to filter units (e.g., 'length', 'mass')" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "list",
+      "action": "functions",
+      "description": "List available functions, optionally filtered by search term",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["--list-functions"],
+        "positionalArgs": ["search"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install qalc"
+      },
+      "args": [
+        { "name": "search", "type": "string", "required": false, "description": "Optional search term to filter functions" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "set",
+      "action": "option",
+      "description": "Set a qalc option (e.g., number base, precision)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "baseArgs": ["-s"],
+        "positionalArgs": ["option"],
+        "passthrough": true,
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install qalc"
+      },
+      "args": [
+        { "name": "option", "type": "string", "required": true, "description": "Option to set (e.g., 'base 16', 'precision 20')" }
+      ]
+    },
+    {
+      "namespace": "qalc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qalc CLI for any command (interactive mode, file input, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qalc: brew install qalculate-tools"
+      },
+      "args": []
+    }
+  ]
+}
