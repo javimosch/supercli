@@ -1,0 +1,179 @@
+{
+  "name": "netlify-cli",
+  "version": "0.1.0",
+  "description": "Netlify CLI — deploy sites, manage functions, environment variables, blobs, and team settings. Full Netlify platform management from the terminal. JSON output via --json flag. npm-installable.",
+  "source": "https://github.com/netlify/cli",
+  "checks": [
+    { "type": "binary", "name": "netlify" }
+  ],
+  "install_guidance": {
+    "plugin": "netlify-cli",
+    "binary": "netlify",
+    "check": "which netlify",
+    "install_steps": [
+      "npm install -g netlify-cli",
+      "Verify: netlify --version",
+      "Authenticate: netlify login",
+      "Alternative: export NETLIFY_AUTH_TOKEN=...",
+      "supercli plugins install ./plugins/netlify-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "netlify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print netlify-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install netlify-cli: npm install -g netlify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netlify",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check Netlify authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["status", "--json"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate: netlify login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netlify",
+      "resource": "sites",
+      "action": "list",
+      "description": "List all Netlify sites with JSON output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["sites:list", "--json"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netlify",
+      "resource": "site",
+      "action": "create",
+      "description": "Create a new Netlify site",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["sites:create", "--json"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "required": false, "description": "Site name" }
+      ]
+    },
+    {
+      "namespace": "netlify",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy a project to Netlify (draft by default, use --prod for production)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["deploy", "--json"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate"
+      },
+      "args": [
+        { "name": "--prod", "type": "boolean", "required": false, "description": "Deploy to production" },
+        { "name": "--dir", "type": "string", "required": false, "description": "Directory to deploy (default: build output)" },
+        { "name": "--build", "type": "boolean", "required": false, "description": "Run build command before deploying" },
+        { "name": "--message", "type": "string", "required": false, "description": "Deploy message" },
+        { "name": "--site", "type": "string", "required": false, "description": "Site ID or name" }
+      ]
+    },
+    {
+      "namespace": "netlify",
+      "resource": "functions",
+      "action": "list",
+      "description": "List Netlify Functions for the current site",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["functions:list", "--json"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netlify",
+      "resource": "env",
+      "action": "list",
+      "description": "List environment variables for a Netlify site",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["env:list", "--json"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netlify",
+      "resource": "api",
+      "action": "request",
+      "description": "Make a raw Netlify REST API request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["api"],
+        "positionalArgs": ["endpoint"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install netlify-cli and authenticate"
+      },
+      "args": [
+        { "name": "endpoint", "type": "string", "required": true, "description": "API endpoint path (e.g., /api/v1/sites)" },
+        { "name": "--data", "type": "string", "required": false, "description": "JSON data for POST/PUT requests" }
+      ]
+    },
+    {
+      "namespace": "netlify",
+      "resource": "build",
+      "action": "run",
+      "description": "Build a Netlify project locally",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install netlify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netlify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to netlify CLI for any command (dev, watch, link, unlink, switch, logs, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netlify",
+        "passthrough": true,
+        "missingDependencyHelp": "Install netlify-cli: npm install -g netlify-cli. Authenticate: netlify login"
+      },
+      "args": []
+    }
+  ]
+}

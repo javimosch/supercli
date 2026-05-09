@@ -1,0 +1,198 @@
+{
+  "name": "wrangler",
+  "version": "0.1.0",
+  "description": "Cloudflare Wrangler — deploy and manage Workers, Pages, KV, R2, D1, Queues, Durable Objects, and more. Full Cloudflare edge platform from the CLI. JSON output support. npm-installable.",
+  "source": "https://github.com/cloudflare/workers-sdk",
+  "checks": [
+    { "type": "binary", "name": "wrangler" }
+  ],
+  "install_guidance": {
+    "plugin": "wrangler",
+    "binary": "wrangler",
+    "check": "which wrangler",
+    "install_steps": [
+      "npm install -g wrangler",
+      "Verify: wrangler --version",
+      "Authenticate: wrangler login",
+      "Alternative: export CLOUDFLARE_API_TOKEN=...",
+      "supercli plugins install ./plugins/wrangler --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wrangler",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wrangler version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wrangler: npm install -g wrangler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "whoami",
+      "action": "check",
+      "description": "Check current Cloudflare authentication status and account",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["whoami"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install wrangler and authenticate: wrangler login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy a Worker to Cloudflare's global network",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["deploy"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "required": false, "description": "Worker name" },
+        { "name": "--env", "type": "string", "required": false, "description": "Environment (e.g., production, staging)" }
+      ]
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize a new Cloudflare Worker project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["init"],
+        "positionalArgs": ["name"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wrangler"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": false, "description": "Project name" },
+        { "name": "-y", "type": "boolean", "required": false, "description": "Skip prompts (accept defaults)" }
+      ]
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "tail",
+      "action": "run",
+      "description": "Start a tail session to view Worker logs in real-time",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["tail"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "required": false, "description": "Output format (json, pretty)" }
+      ]
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "kv",
+      "action": "list",
+      "description": "List KV namespaces",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["kv:namespace", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "r2",
+      "action": "list",
+      "description": "List R2 buckets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["r2", "bucket", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "d1",
+      "action": "list",
+      "description": "List D1 databases",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["d1", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "pages",
+      "action": "deploy",
+      "description": "Deploy a Cloudflare Pages project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["pages", "deploy"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": [
+        { "name": "--directory", "type": "string", "required": true, "description": "Directory to deploy" },
+        { "name": "--project-name", "type": "string", "required": false, "description": "Pages project name" },
+        { "name": "--branch", "type": "string", "required": false, "description": "Branch name" }
+      ]
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "secret",
+      "action": "list",
+      "description": "List secrets for a Worker",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "baseArgs": ["secret", "list"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install wrangler and authenticate"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "required": false, "description": "Worker name" },
+        { "name": "--env", "type": "string", "required": false, "description": "Environment" }
+      ]
+    },
+    {
+      "namespace": "wrangler",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wrangler CLI for any command (queues, durable-objects, mtls-certificate, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrangler",
+        "passthrough": true,
+        "missingDependencyHelp": "Install wrangler: npm install -g wrangler. Authenticate: wrangler login"
+      },
+      "args": []
+    }
+  ]
+}
