@@ -53,7 +53,7 @@
       "namespace": "agent-reach",
       "resource": "setup",
       "action": "doctor",
-      "description": "Run health check on all channels — shows which are working (green), which need attention (yellow), and which are broken (red)",
+      "description": "Run health check on all channels — shows which are working and which need attention",
       "adapter": "process",
       "adapterConfig": {
         "command": "agent-reach",
@@ -95,7 +95,7 @@
       "namespace": "agent-reach",
       "resource": "configure",
       "action": "run",
-      "description": "Configure a setting: proxy URL, twitter-cookies, xhs-cookies, groq-key, or --from-browser for auto-extraction",
+      "description": "Configure a setting: proxy, twitter-cookies, xhs-cookies, groq-key, or --from-browser",
       "adapter": "process",
       "adapterConfig": {
         "command": "agent-reach",
@@ -127,9 +127,129 @@
     },
     {
       "namespace": "agent-reach",
+      "resource": "twitter",
+      "action": "search",
+      "description": "Search Twitter/X for tweets matching a query (passthrough: twitter search <query>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twitter",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install twitter-cli via agent-reach: sc agent-reach setup install --channels=twitter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "twitter",
+      "action": "read",
+      "description": "Read a tweet by URL (passthrough: twitter tweet <url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twitter",
+        "baseArgs": ["tweet"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install twitter-cli via agent-reach: sc agent-reach setup install --channels=twitter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "reddit",
+      "action": "search",
+      "description": "Search Reddit for posts (passthrough: rdt search <query>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdt",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rdt-cli via agent-reach: sc agent-reach setup install --channels=reddit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "reddit",
+      "action": "read",
+      "description": "Read a Reddit post by ID (passthrough: rdt read <post_id>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdt",
+        "baseArgs": ["read"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rdt-cli via agent-reach: sc agent-reach setup install --channels=reddit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "youtube",
+      "action": "info",
+      "description": "Get YouTube video metadata (passthrough: yt-dlp --dump-json <url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yt-dlp",
+        "baseArgs": ["--dump-json"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install yt-dlp via agent-reach: sc agent-reach setup install"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "web",
+      "action": "read",
+      "description": "Fetch a web page (passthrough: curl -sL <url>). Prefix with https://r.jina.ai/ for clean Markdown.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "curl",
+        "baseArgs": ["-sL"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "curl is pre-installed on most systems"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "bilibili",
+      "action": "hot",
+      "description": "Show trending Bilibili videos (passthrough: bili hot)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bili",
+        "baseArgs": ["hot"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install bili-cli via agent-reach: sc agent-reach setup install --channels=bilibili"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "bilibili",
+      "action": "search",
+      "description": "Search Bilibili videos (passthrough: bili search <query>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bili",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install bili-cli via agent-reach: sc agent-reach setup install --channels=bilibili"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
       "resource": "_",
       "action": "_",
-      "description": "Passthrough to agent-reach CLI for any command or flag not covered by specific resources",
+      "description": "Passthrough to agent-reach CLI",
       "adapter": "process",
       "adapterConfig": {
         "command": "agent-reach",

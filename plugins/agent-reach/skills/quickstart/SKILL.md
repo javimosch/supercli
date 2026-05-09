@@ -9,29 +9,49 @@ Give AI agents full internet access with zero API fees. Installs and manages ups
 
 ## Commands
 
-### Setup
-- `agent-reach setup install` — Install core channels (use `--channels=twitter,weibo` or `--channels=all` for more)
-- `agent-reach setup doctor` — Run health check on all channels
-- `agent-reach setup watch` — Quick health + update check (for cron/scheduled tasks)
+### Self
+- `agent-reach self version` — Print version
+
+### Setup Management
+- `agent-reach setup install` — Install channels (use `--channels=twitter,weibo` or `--channels=all`)
+- `agent-reach setup doctor` — Run health check
+- `agent-reach setup watch` — Quick health + update check
 - `agent-reach setup check-update` — Check for new versions
 
 ### Configure
-- `agent-reach configure run` — Configure settings: proxy, twitter-cookies, xhs-cookies, groq-key, or `--from-browser`
+- `agent-reach configure run` — Configure proxy, cookies, API keys
 
 ### Uninstall
-- `agent-reach uninstall run` — Uninstall agent-reach (`--dry-run` to preview, `--keep-config` to preserve)
+- `agent-reach uninstall run` — Remove agent-reach
+
+### Twitter/X
+- `agent-reach twitter search` — Search tweets (uses `twitter search <query>`)
+- `agent-reach twitter read` — Read a tweet by URL (uses `twitter tweet <url>`)
+
+### Reddit
+- `agent-reach reddit search` — Search Reddit (uses `rdt search <query>`)
+- `agent-reach reddit read` — Read post by ID (uses `rdt read <id>`)
+
+### YouTube
+- `agent-reach youtube info` — Get metadata + transcript (uses `yt-dlp --dump-json`)
+
+### Web
+- `agent-reach web read` — Fetch a web page (prefix URL with `https://r.jina.ai/` for clean Markdown)
+
+### Bilibili
+- `agent-reach bilibili hot` — Show trending videos (uses `bili hot`)
+- `agent-reach bilibili search` — Search videos (uses `bili search <query>`)
 
 ### Passthrough
 - `agent-reach _ _` — Direct passthrough for any agent-reach command
 
 ## Usage Examples
-- "Set up agent-reach and check what channels are working"
-- "Install core channels and enable Twitter and Weibo"
 - "Search Twitter for mentions of our product"
 - "Read this Reddit thread and summarize"
-- "Get YouTube transcripts for this tutorial"
-- "Read this RSS feed and find recent articles"
-- "Search GitHub for LLM frameworks"
+- "Get YouTube transcript for this tutorial"
+- "Read this web page as clean Markdown"
+- "Check if all my channels are working"
+- "Show trending Bilibili videos"
 
 ## Installation
 
@@ -42,26 +62,45 @@ agent-reach install --env=auto
 agent-reach install --env=auto --channels=twitter,weibo,reddit
 ```
 
-## Channel Commands (after setup)
+## Common Workflows
 
-| Platform | Command |
-|----------|---------|
-| Web | `curl -s "https://r.jina.ai/URL"` |
-| Twitter/X | `twitter search "query" -n 10` |
-| YouTube | `yt-dlp --dump-json URL` |
-| Reddit | `rdt search "query"` / `rdt read POST_ID` |
-| GitHub | `gh search repos "query"` |
-| RSS | `python3 -c "import feedparser; ..."` |
-| Bilibili | `bili hot` / `bili search "query"` |
-| 小红书 | via mcporter MCP |
-| 微博 | via mcporter MCP |
-| Exa Search | `mcporter call 'exa.web_search_exa(...)'` |
+```bash
+# Check what's working
+agent-reach doctor
+
+# Install Twitter + Weibo
+agent-reach install --env=auto --channels=twitter,weibo
+
+# Read a web page as clean Markdown (Jina Reader, no API key needed)
+curl -sL "https://r.jina.ai/https://example.com"
+
+# Get YouTube video info
+yt-dlp --dump-json "https://youtube.com/watch?v=VIDEO_ID"
+
+# Search Reddit
+rdt search "query"
+
+# Read Reddit post
+rdt read POST_ID
+
+# Search Twitter
+twitter search "query" -n 10
+
+# Read Tweet
+twitter tweet URL
+
+# Bilibili
+bili hot
+bili search "query" --type video
+
+# Exa search (via mcporter)
+mcporter call 'exa.web_search_exa(query: "your query", num_results: 5)'
+```
 
 ## Key Features
 - 15+ platforms with zero API fees
 - Cookie-based auth for platforms that need login
 - Health check (`doctor`) tells you exactly what's working
 - `--safe` mode for security-conscious setups
-- `--dry-run` to preview all operations
 - All config/tokens stored locally in `~/.agent-reach/`
 - Upstream tools can be swapped out (pluggable architecture)
