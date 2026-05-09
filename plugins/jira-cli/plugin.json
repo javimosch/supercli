@@ -1,0 +1,219 @@
+{
+  "name": "jira-cli",
+  "version": "0.1.0",
+  "description": "Jira CLI — create, search, edit, assign, and manage Jira issues from the terminal. Supports epics, sprints, projects, and releases. JSON output via --raw, non-interactive mode via --no-input. Go binary with brew install.",
+  "source": "https://github.com/ankitpokhrel/jira-cli",
+  "checks": [
+    { "type": "binary", "name": "jira" }
+  ],
+  "install_guidance": {
+    "plugin": "jira-cli",
+    "binary": "jira",
+    "check": "which jira",
+    "install_steps": [
+      "brew install jira-cli",
+      "Verify: jira --version",
+      "Initialize: jira init (select Cloud or Server, provide Jira URL and credentials)",
+      "Export JIRA_API_TOKEN env var or use .netrc",
+      "supercli plugins install ./plugins/jira-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jira",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jira-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jira-cli: brew install jira-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jira",
+      "resource": "self",
+      "action": "me",
+      "description": "Get current Jira user information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["me"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jira-cli and run: jira init"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jira",
+      "resource": "issue",
+      "action": "list",
+      "description": "List Jira issues with optional JQL, status, priority, and label filters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["issue", "list", "--raw"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install jira-cli and configure: jira init"
+      },
+      "args": [
+        { "name": "--jql", "type": "string", "required": false, "description": "Raw JQL query (e.g., 'summary ~ cli')" },
+        { "name": "-s", "type": "string", "required": false, "description": "Filter by status (e.g., 'To Do', 'In Progress')" },
+        { "name": "-y", "type": "string", "required": false, "description": "Filter by priority (e.g., 'High', 'Medium')" },
+        { "name": "-l", "type": "string", "required": false, "description": "Filter by label (can be specified multiple times)" },
+        { "name": "-a", "type": "string", "required": false, "description": "Filter by assignee (use $(jira me) for self, -ax for unassigned)" },
+        { "name": "--created", "type": "string", "required": false, "description": "When created (e.g., '-7d', 'week', 'month')" },
+        { "name": "--order-by", "type": "string", "required": false, "description": "Sort field (default: created)" },
+        { "name": "--reverse", "type": "boolean", "required": false, "description": "Reverse sort order" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "issue",
+      "action": "view",
+      "description": "View a single Jira issue with full details in JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["issue", "view", "--raw"],
+        "positionalArgs": ["issueKey"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": [
+        { "name": "issueKey", "type": "string", "required": true, "description": "Issue key (e.g., PROJ-123)" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "issue",
+      "action": "create",
+      "description": "Create a Jira issue with required fields (non-interactive with --no-input)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["issue", "create", "--no-input", "--raw"],
+        "passthrough": true,
+        "timeout_ms": 20000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": [
+        { "name": "-t", "type": "string", "required": true, "description": "Issue type (e.g., 'Task', 'Bug', 'Story')" },
+        { "name": "-s", "type": "string", "required": true, "description": "Summary/title of the issue" },
+        { "name": "-y", "type": "string", "required": false, "description": "Priority (e.g., 'High', 'Medium', 'Low')" },
+        { "name": "-b", "type": "string", "required": false, "description": "Description text" },
+        { "name": "-l", "type": "string", "required": false, "description": "Label (can be specified multiple times)" },
+        { "name": "--fix-version", "type": "string", "required": false, "description": "Fix version" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "issue",
+      "action": "edit",
+      "description": "Edit a Jira issue (update summary, priority, labels, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["issue", "edit", "--no-input", "--raw"],
+        "positionalArgs": ["issueKey"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": [
+        { "name": "issueKey", "type": "string", "required": true, "description": "Issue key to edit (e.g., PROJ-123)" },
+        { "name": "-s", "type": "string", "required": false, "description": "New summary" },
+        { "name": "-y", "type": "string", "required": false, "description": "New priority" },
+        { "name": "-l", "type": "string", "required": false, "description": "Add/remove label (prefix - to remove: -lp2)" },
+        { "name": "-C", "type": "string", "required": false, "description": "Component" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "issue",
+      "action": "assign",
+      "description": "Assign a Jira issue to a user",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["issue", "assign", "--no-input"],
+        "positionalArgs": ["issueKey", "assignee"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": [
+        { "name": "issueKey", "type": "string", "required": true, "description": "Issue key (e.g., PROJ-123)" },
+        { "name": "assignee", "type": "string", "required": true, "description": "Assignee display name or email" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "epic",
+      "action": "list",
+      "description": "List epics in a project with JSON output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["epic", "list", "--raw"],
+        "positionalArgs": ["project"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": [
+        { "name": "project", "type": "string", "required": true, "description": "Project key (e.g., PROJ)" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "sprint",
+      "action": "list",
+      "description": "List sprints with JSON output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["sprint", "list", "--raw"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": [
+        { "name": "--board", "type": "string", "required": false, "description": "Board ID or name" },
+        { "name": "--state", "type": "string", "required": false, "description": "Sprint state (active, future, closed)" }
+      ]
+    },
+    {
+      "namespace": "jira",
+      "resource": "project",
+      "action": "list",
+      "description": "List all accessible Jira projects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "baseArgs": ["project", "list", "--raw"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install jira-cli and configure"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jira",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jira CLI for any command (epic, sprint, release, board, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jira",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jira-cli: brew install jira-cli. Configure: jira init"
+      },
+      "args": []
+    }
+  ]
+}
