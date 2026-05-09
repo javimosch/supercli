@@ -1,0 +1,151 @@
+{
+  "name": "jrnl",
+  "version": "0.1.0",
+  "description": "jrnl — a command-line journal for collecting thoughts, notes, logs, and records. Write entries with natural language timestamps, filter by date/tags, export as JSON. Zero platform dependencies, pure local storage.",
+  "source": "https://github.com/jrnl-org/jrnl",
+  "checks": [
+    { "type": "binary", "name": "jrnl" }
+  ],
+  "install_guidance": {
+    "plugin": "jrnl",
+    "binary": "jrnl",
+    "check": "which jrnl",
+    "install_steps": [
+      "pip install jrnl",
+      "Verify: jrnl --version",
+      "Initialize: jrnl (creates config and journal)",
+      "supercli plugins install ./plugins/jrnl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jrnl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jrnl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jrnl: pip install jrnl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "entry",
+      "action": "create",
+      "description": "Write a journal entry with natural language timestamp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jrnl"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Entry text (e.g., 'yesterday at 3pm: Had a great meeting' or 'today: Deployed new release')" }
+      ]
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "entry",
+      "action": "create-from-stdin",
+      "description": "Write a journal entry by piping content from stdin",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jrnl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "entries",
+      "action": "list",
+      "description": "List recent journal entries (default: last 10)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "baseArgs": ["-n", "10"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jrnl"
+      },
+      "args": [
+        { "name": "-n", "type": "number", "required": false, "description": "Number of entries to show (e.g., 20)" },
+        { "name": "--export", "type": "string", "required": false, "description": "Export format: json, text, markdown (default: text)" }
+      ]
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "entries",
+      "action": "search",
+      "description": "Search journal entries by tag or keyword",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jrnl"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Tag or keyword to search (e.g., '@meeting', 'deploy')" }
+      ]
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "entries",
+      "action": "range",
+      "description": "View journal entries within a date range",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "baseArgs": ["--export", "json"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jrnl"
+      },
+      "args": [
+        { "name": "-from", "type": "string", "required": true, "description": "Start date (e.g., 'last week', '2024-01-01')" },
+        { "name": "-to", "type": "string", "required": false, "description": "End date (e.g., 'yesterday', '2024-06-01')" },
+        { "name": "--export", "type": "string", "required": false, "description": "Export format: json, text, markdown" }
+      ]
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "entries",
+      "action": "export",
+      "description": "Export journal in various formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "baseArgs": ["--export"],
+        "positionalArgs": ["format"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install jrnl"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": true, "description": "Export format: json, text, markdown, csv, xml, fancy" }
+      ]
+    },
+    {
+      "namespace": "jrnl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jrnl CLI for any command (configure, encrypt, import, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jrnl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jrnl: pip install jrnl"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "plugin": "msmtp",
+  "binary": "msmtp",
+  "check": "which msmtp",
+  "install_steps": [
+    "brew install msmtp",
+    "Verify: msmtp --version",
+    "Create config: cat > ~/.msmtprc << 'EOF'",
+    "defaults",
+    "  auth on",
+    "  tls on",
+    "  tls_trust_file /etc/ssl/cert.pem",
+    "",
+    "account default",
+    "  host smtp.gmail.com",
+    "  port 587",
+    "  from your@gmail.com",
+    "  user your@gmail.com",
+    "  password password123",
+    "EOF",
+    "Set permissions: chmod 600 ~/.msmtprc",
+    "Test: echo 'Subject: test\n\nHello' | msmtp -f your@gmail.com recipient@example.com",
+    "supercli plugins install ./plugins/msmtp --on-conflict replace --json"
+  ],
+  "note": "The password can be stored in the config file or retrieved from an external command (e.g., 'passwordeval gpg -d ...'). For Gmail, use an App Password with 2FA enabled. For other providers, check their SMTP settings."
+}

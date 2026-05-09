@@ -1,0 +1,107 @@
+{
+  "name": "msmtp",
+  "version": "0.1.0",
+  "description": "msmtp — SMTP client for sending email via any SMTP server. Read mail body from stdin, send to one or more recipients. Compatible with sendmail interface. Works with Gmail, Outlook, any SMTP provider. No platform lock-in.",
+  "source": "https://github.com/marlam/msmtp",
+  "checks": [
+    { "type": "binary", "name": "msmtp" }
+  ],
+  "install_guidance": {
+    "plugin": "msmtp",
+    "binary": "msmtp",
+    "check": "which msmtp",
+    "install_steps": [
+      "brew install msmtp",
+      "Verify: msmtp --version",
+      "Configure: create ~/.msmtprc with SMTP server credentials",
+      "Example: echo 'subject: test\n\nbody' | msmtp -f from@example.com to@example.com",
+      "supercli plugins install ./plugins/msmtp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msmtp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msmtp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msmtp",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install msmtp: brew install msmtp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msmtp",
+      "resource": "message",
+      "action": "send",
+      "description": "Send an email via SMTP. Pipe mail body (headers + body) to stdin.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msmtp",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install msmtp and configure ~/.msmtprc"
+      },
+      "args": [
+        { "name": "-f", "type": "string", "required": true, "description": "Envelope sender address (e.g., user@example.com)" },
+        { "name": "recipient", "type": "string", "required": true, "description": "Recipient email address(es)" },
+        { "name": "-t", "type": "boolean", "required": false, "description": "Extract recipients from To:/Cc:/Bcc: headers in mail body" },
+        { "name": "-a", "type": "string", "required": false, "description": "Account name in config to use" }
+      ]
+    },
+    {
+      "namespace": "msmtp",
+      "resource": "server",
+      "action": "info",
+      "description": "Print information about the configured SMTP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msmtp",
+        "baseArgs": ["--serverinfo"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install msmtp and configure ~/.msmtprc"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": false, "description": "Account name in config to use" },
+        { "name": "--host", "type": "string", "required": false, "description": "SMTP server hostname" },
+        { "name": "--port", "type": "number", "required": false, "description": "SMTP server port" },
+        { "name": "--tls", "type": "string", "required": false, "description": "TLS option: on, off, starttls" }
+      ]
+    },
+    {
+      "namespace": "msmtp",
+      "resource": "config",
+      "action": "check",
+      "description": "Print the configuration that would be used (pretend mode)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msmtp",
+        "baseArgs": ["-P"],
+        "positionalArgs": ["recipient"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install msmtp"
+      },
+      "args": [
+        { "name": "recipient", "type": "string", "required": false, "description": "Optional test recipient" }
+      ]
+    },
+    {
+      "namespace": "msmtp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msmtp CLI for any command (debug, configure wizard, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msmtp",
+        "passthrough": true,
+        "missingDependencyHelp": "Install msmtp: brew install msmtp. Configure: create ~/.msmtprc"
+      },
+      "args": []
+    }
+  ]
+}

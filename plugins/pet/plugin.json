@@ -1,0 +1,146 @@
+{
+  "name": "pet",
+  "version": "0.1.0",
+  "description": "pet — simple CLI snippet manager. Save, search, tag, and execute command snippets. Store patterns, commands, and templates for reuse. Go binary, local storage, no platform dependencies.",
+  "source": "https://github.com/knqyf263/pet",
+  "checks": [
+    { "type": "binary", "name": "pet" }
+  ],
+  "install_guidance": {
+    "plugin": "pet",
+    "binary": "pet",
+    "check": "which pet",
+    "install_steps": [
+      "brew install pet",
+      "Verify: pet --version",
+      "Optional: pet configure (set editor, selector, sync options)",
+      "supercli plugins install ./plugins/pet --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pet",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pet version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pet: brew install pet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pet",
+      "resource": "snippet",
+      "action": "create",
+      "description": "Save a new command snippet with optional tags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["new"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install pet"
+      },
+      "args": [
+        { "name": "-t", "type": "string", "required": false, "description": "Tags (comma-separated, e.g., 'docker,deploy')" },
+        { "name": "--description", "type": "string", "required": false, "description": "Description for the snippet" }
+      ]
+    },
+    {
+      "namespace": "pet",
+      "resource": "snippets",
+      "action": "list",
+      "description": "List all saved snippets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["list"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install pet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pet",
+      "resource": "snippets",
+      "action": "search",
+      "description": "Search snippets by keyword or tag",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install pet"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query (matches command text and description)" }
+      ]
+    },
+    {
+      "namespace": "pet",
+      "resource": "snippet",
+      "action": "edit",
+      "description": "Open snippet config in editor for manual editing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["edit"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pet",
+      "resource": "snippet",
+      "action": "exec",
+      "description": "Search and execute a snippet interactively",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["exec"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pet"
+      },
+      "args": [
+        { "name": "-t", "type": "string", "required": false, "description": "Filter by tag (e.g., 'docker')" },
+        { "name": "--color", "type": "boolean", "required": false, "description": "Colorized output" }
+      ]
+    },
+    {
+      "namespace": "pet",
+      "resource": "snippets",
+      "action": "sync",
+      "description": "Sync snippets with Gist or GitLab Snippets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "baseArgs": ["sync"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install pet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pet",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pet CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pet",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pet: brew install pet"
+      },
+      "args": []
+    }
+  ]
+}
