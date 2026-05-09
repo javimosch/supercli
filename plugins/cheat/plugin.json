@@ -1,0 +1,147 @@
+{
+  "name": "cheat",
+  "version": "0.1.0",
+  "description": "cheat — create and view interactive cheatsheets on the command-line. Look up command usage, search by keyword or regex, filter by tag. Community-driven cheatsheets for hundreds of commands. Go binary, fully non-interactive stdout output.",
+  "source": "https://github.com/cheat/cheat",
+  "checks": [
+    { "type": "binary", "name": "cheat" }
+  ],
+  "install_guidance": {
+    "plugin": "cheat",
+    "binary": "cheat",
+    "check": "which cheat",
+    "install_steps": [
+      "brew install cheat",
+      "Verify: cheat --version",
+      "Initialize: cheat --init (downloads community cheatsheets)",
+      "supercli plugins install ./plugins/cheat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cheat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cheat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cheat: brew install cheat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cheat",
+      "resource": "sheet",
+      "action": "view",
+      "description": "View a cheatsheet for a specific command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "positionalArgs": ["command"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install cheat: brew install cheat"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command name to look up (e.g., tar, git, docker, find)" }
+      ]
+    },
+    {
+      "namespace": "cheat",
+      "resource": "sheets",
+      "action": "list",
+      "description": "List all available cheatsheets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "baseArgs": ["-l"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install cheat"
+      },
+      "args": [
+        { "name": "-p", "type": "string", "required": false, "description": "Filter by cheatpath (e.g., personal, community)" },
+        { "name": "-t", "type": "string", "required": false, "description": "Filter by tag (e.g., networking, git)" }
+      ]
+    },
+    {
+      "namespace": "cheat",
+      "resource": "sheets",
+      "action": "list-brief",
+      "description": "List cheatsheets briefly (names and tags only)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "baseArgs": ["-b"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install cheat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cheat",
+      "resource": "sheets",
+      "action": "search",
+      "description": "Search cheatsheets by keyword or regex",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "baseArgs": ["-s"],
+        "positionalArgs": ["phrase"],
+        "passthrough": true,
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install cheat"
+      },
+      "args": [
+        { "name": "phrase", "type": "string", "required": true, "description": "Search phrase or regex pattern" },
+        { "name": "--regex", "type": "boolean", "required": false, "description": "Treat search phrase as a regular expression" },
+        { "name": "-t", "type": "string", "required": false, "description": "Filter by tag" },
+        { "name": "-p", "type": "string", "required": false, "description": "Filter by cheatpath" }
+      ]
+    },
+    {
+      "namespace": "cheat",
+      "resource": "tags",
+      "action": "list",
+      "description": "List all tags in use across cheatsheets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "baseArgs": ["-T"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install cheat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cheat",
+      "resource": "directories",
+      "action": "list",
+      "description": "List cheatsheet directories (cheatpaths)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "baseArgs": ["-d"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install cheat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cheat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cheat CLI for any command (edit, init, rm, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cheat",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cheat: brew install cheat"
+      },
+      "args": []
+    }
+  ]
+}

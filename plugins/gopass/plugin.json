@@ -1,0 +1,167 @@
+{
+  "name": "gopass",
+  "version": "0.1.0",
+  "description": "gopass — the slightly more awesome standard UNIX password manager for teams. Store, retrieve, and manage credentials encrypted with GPG and versioned with git. List secrets, show passwords, generate new ones, sync with git. Go binary.",
+  "source": "https://github.com/gopasspw/gopass",
+  "checks": [
+    { "type": "binary", "name": "gopass" }
+  ],
+  "install_guidance": {
+    "plugin": "gopass",
+    "binary": "gopass",
+    "check": "which gopass",
+    "install_steps": [
+      "brew install gopass",
+      "Verify: gopass --version",
+      "Initialize: gopass init (creates GPG keys and local store)",
+      "Optionally setup git: gopass git init",
+      "supercli plugins install ./plugins/gopass --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gopass",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gopass version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gopass: brew install gopass"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
+      "resource": "secret",
+      "action": "show",
+      "description": "Show a secret (password/credential) by path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["show"],
+        "positionalArgs": ["path"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install gopass and initialize: gopass init"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Secret path (e.g., api/github/token, personal/email)" }
+      ]
+    },
+    {
+      "namespace": "gopass",
+      "resource": "secret",
+      "action": "create",
+      "description": "Create a new secret with an optional password",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["insert"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install gopass"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Secret path (e.g., api/stripe/key)" }
+      ]
+    },
+    {
+      "namespace": "gopass",
+      "resource": "secrets",
+      "action": "list",
+      "description": "List all stored secrets in the store tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["list"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install gopass"
+      },
+      "args": [
+        { "name": "--flat", "type": "boolean", "required": false, "description": "Flat listing (no tree)" }
+      ]
+    },
+    {
+      "namespace": "gopass",
+      "resource": "secret",
+      "action": "generate",
+      "description": "Generate a new random password and store it",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["generate"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install gopass"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Secret path (e.g., api/aws/secret-key)" },
+        { "name": "length", "type": "number", "required": false, "description": "Password length (default: 24)" }
+      ]
+    },
+    {
+      "namespace": "gopass",
+      "resource": "secret",
+      "action": "delete",
+      "description": "Delete a secret from the store",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["delete"],
+        "positionalArgs": ["path"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install gopass"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Secret path to delete" }
+      ]
+    },
+    {
+      "namespace": "gopass",
+      "resource": "store",
+      "action": "status",
+      "description": "Show gopass store status and configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["status"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install gopass"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
+      "resource": "git",
+      "action": "sync",
+      "description": "Sync secrets with remote git repository (pull + push)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "baseArgs": ["sync"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install gopass and configure git remote"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gopass CLI for any command (fsck, git, mounts, audit, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gopass",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gopass: brew install gopass"
+      },
+      "args": []
+    }
+  ]
+}
