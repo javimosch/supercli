@@ -1,0 +1,143 @@
+{
+  "name": "agent-reach",
+  "version": "0.1.0",
+  "description": "agent-reach — give AI agents internet access: search Twitter, Reddit, YouTube, GitHub, RSS, and more with zero API fees",
+  "source": "https://github.com/Panniantong/agent-reach",
+  "checks": [
+    { "type": "binary", "name": "agent-reach" }
+  ],
+  "install_guidance": {
+    "plugin": "agent-reach",
+    "binary": "agent-reach",
+    "check": "which agent-reach",
+    "install_steps": [
+      "pipx install https://github.com/Panniantong/agent-reach/archive/main.zip",
+      "agent-reach install --env=auto",
+      "Verify: agent-reach doctor",
+      "supercli plugins install ./plugins/agent-reach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "agent-reach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print agent-reach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "setup",
+      "action": "install",
+      "description": "Install core channels (web, YouTube, GitHub, RSS, Exa search). Use --channels=twitter,weibo,all for optional channels. Use --safe for safe mode, --dry-run to preview.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["install", "--env=auto"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "setup",
+      "action": "doctor",
+      "description": "Run health check on all channels — shows which are working (green), which need attention (yellow), and which are broken (red)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["doctor"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "setup",
+      "action": "watch",
+      "description": "Quick health + update check (for scheduled/cron monitoring)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["watch"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "setup",
+      "action": "check-update",
+      "description": "Check for new versions of agent-reach",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["check-update"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "configure",
+      "action": "run",
+      "description": "Configure a setting: proxy URL, twitter-cookies, xhs-cookies, groq-key, or --from-browser for auto-extraction",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["configure"],
+        "positionalArgs": ["setting", "value"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": [
+        { "name": "setting", "type": "string", "required": true, "description": "Setting name: proxy, twitter-cookies, xhs-cookies, groq-key" },
+        { "name": "value", "type": "string", "required": false, "description": "Value for the setting (omit for --from-browser flag)" }
+      ]
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "uninstall",
+      "action": "run",
+      "description": "Uninstall agent-reach. Use --dry-run to preview, --keep-config to preserve settings.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "baseArgs": ["uninstall"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agent-reach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to agent-reach CLI for any command or flag not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agent-reach",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install agent-reach: pipx install https://github.com/Panniantong/agent-reach/archive/main.zip"
+      },
+      "args": []
+    }
+  ]
+}
