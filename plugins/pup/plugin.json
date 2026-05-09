@@ -1,0 +1,177 @@
+{
+  "name": "pup",
+  "version": "0.1.0",
+  "description": "Datadog Pup CLI — AI-agent-native observability with 200+ commands across 33+ Datadog products. Monitors, logs, metrics, incidents, dashboards, SLOs, traces, security, and more. Structured JSON/YAML output, OAuth2 auth, self-discoverable schema.",
+  "source": "https://github.com/DataDog/pup",
+  "checks": [
+    { "type": "binary", "name": "pup" }
+  ],
+  "install_guidance": {
+    "plugin": "pup",
+    "binary": "pup",
+    "check": "which pup",
+    "install_steps": [
+      "brew tap datadog-labs/pack && brew install datadog-labs/pack/pup",
+      "Verify: pup --version",
+      "Authenticate: pup auth login (OAuth2) or set DD_API_KEY + DD_APP_KEY",
+      "supercli plugins install ./plugins/pup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pup: brew tap datadog-labs/pack && brew install datadog-labs/pack/pup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pup",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check Datadog authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["auth", "status", "--output", "json"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install pup and run: pup auth login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pup",
+      "resource": "monitors",
+      "action": "list",
+      "description": "List Datadog monitors with optional tag filtering",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["monitors", "list", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pup and authenticate: pup auth login"
+      },
+      "args": [
+        { "name": "--tags", "type": "string", "required": false, "description": "Filter by tags (e.g., 'team:api-platform,env:prod')" }
+      ]
+    },
+    {
+      "namespace": "pup",
+      "resource": "logs",
+      "action": "search",
+      "description": "Search Datadog logs with query and time range",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["logs", "search", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pup and authenticate: pup auth login"
+      },
+      "args": [
+        { "name": "--query", "type": "string", "required": true, "description": "Log search query (e.g., 'status:error service:api')" },
+        { "name": "--from", "type": "string", "required": false, "description": "Start time (e.g., '1h', '2024-01-01T00:00:00Z')" },
+        { "name": "--to", "type": "string", "required": false, "description": "End time (e.g., 'now', '2024-01-02T00:00:00Z')" }
+      ]
+    },
+    {
+      "namespace": "pup",
+      "resource": "metrics",
+      "action": "query",
+      "description": "Query Datadog metrics timeseries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["metrics", "query", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pup and authenticate: pup auth login"
+      },
+      "args": [
+        { "name": "--query", "type": "string", "required": true, "description": "Metrics query (e.g., 'avg:system.cpu.user{*}')" },
+        { "name": "--from", "type": "string", "required": false, "description": "Start time" },
+        { "name": "--to", "type": "string", "required": false, "description": "End time" }
+      ]
+    },
+    {
+      "namespace": "pup",
+      "resource": "incidents",
+      "action": "list",
+      "description": "List Datadog incidents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["incidents", "list", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pup and authenticate: pup auth login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pup",
+      "resource": "dashboards",
+      "action": "list",
+      "description": "List Datadog dashboards",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["dashboards", "list", "--output", "json"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pup and authenticate: pup auth login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pup",
+      "resource": "slos",
+      "action": "list",
+      "description": "List Datadog SLOs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["slos", "list", "--output", "json"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pup and authenticate: pup auth login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pup",
+      "resource": "schema",
+      "action": "get",
+      "description": "Get pup's machine-readable command schema for self-discovery",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "baseArgs": ["agent", "schema", "--compact"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install pup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pup CLI — any Datadog domain command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pup",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pup: brew tap datadog-labs/pack && brew install datadog-labs/pack/pup. Authenticate: pup auth login"
+      },
+      "args": []
+    }
+  ]
+}
