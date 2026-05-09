@@ -1,0 +1,14 @@
+{
+  "plugin": "signal-cli",
+  "binary": "signal-cli",
+  "check": "which signal-cli",
+  "install_steps": [
+    "Download latest release: VERSION=$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/AsamK/signal-cli/releases/latest | sed -e 's/^.*\\/v//') && curl -LO https://github.com/AsamK/signal-cli/releases/download/v${VERSION}/signal-cli-${VERSION}.tar.gz",
+    "Extract: sudo tar xf signal-cli-*.tar.gz -C /opt",
+    "Symlink: sudo ln -sf /opt/signal-cli-*/bin/signal-cli /usr/local/bin/signal-cli",
+    "Register: signal-cli -a +15551234567 register",
+    "Verify: signal-cli -a +15551234567 verify CODE",
+    "supercli plugins install ./plugins/signal-cli --on-conflict replace --json"
+  ],
+  "note": "Also available as GraalVM native build (no JVM required): replace .tar.gz with -Linux-native.tar.gz. Requires phone number for registration. Data stored in ~/.local/share/signal-cli/. Supports daemon mode with JSON-RPC interface on TCP (localhost:7583) or HTTP (localhost:8080)."
+}

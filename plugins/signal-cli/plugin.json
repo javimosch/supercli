@@ -1,0 +1,211 @@
+{
+  "name": "signal-cli",
+  "version": "0.1.0",
+  "description": "Signal CLI — send and receive encrypted messages via the Signal messenger. Register, verify, send messages, receive messages, manage groups, list contacts, and more. Structured JSON output supported via --output json flag.",
+  "source": "https://github.com/AsamK/signal-cli",
+  "checks": [
+    { "type": "binary", "name": "signal-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "signal-cli",
+    "binary": "signal-cli",
+    "check": "which signal-cli",
+    "install_steps": [
+      "Download latest release: curl -LO https://github.com/AsamK/signal-cli/releases/latest/download/signal-cli-$(curl -Ls -o /dev/null -w %{url_effective} https://github.com/AsamK/signal-cli/releases/latest | sed -e 's/^.*\\/v//').tar.gz",
+      "Extract: sudo tar xf signal-cli-*.tar.gz -C /opt",
+      "Symlink: sudo ln -sf /opt/signal-cli-*/bin/signal-cli /usr/local/bin/signal-cli",
+      "Register: signal-cli -a +<PHONE_NUMBER> register",
+      "Verify: signal-cli -a +<PHONE_NUMBER> verify <CODE>",
+      "supercli plugins install ./plugins/signal-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "signal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print signal-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install signal-cli: download from https://github.com/AsamK/signal-cli/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "signal",
+      "resource": "self",
+      "action": "config",
+      "description": "View or set signal-cli config path and options",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["--help"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "signal",
+      "resource": "message",
+      "action": "send",
+      "description": "Send an encrypted Signal message to a recipient (phone number or username)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["send", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install signal-cli and register an account"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your account phone number in international format (e.g., +15551234567)" },
+        { "name": "-m", "type": "string", "required": false, "description": "Message text to send" },
+        { "name": "--message-from-stdin", "type": "boolean", "required": false, "description": "Read message from stdin (for piping)" },
+        { "name": "recipient", "type": "string", "required": true, "description": "Recipient phone number or username (prefix with u: for username, e.g. u:test.000)" },
+        { "name": "-g", "type": "string", "required": false, "description": "Group ID in base64 encoding to send to a group" },
+        { "name": "--note-to-self", "type": "boolean", "required": false, "description": "Send message to self" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "message",
+      "action": "receive",
+      "description": "Receive new Signal messages (queries server for pending messages)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["receive", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install signal-cli and register an account"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your account phone number" },
+        { "name": "-t", "type": "string", "required": false, "description": "Timeout in seconds (negative = no timeout, default 5)" },
+        { "name": "--max-messages", "type": "number", "required": false, "description": "Maximum number of messages to receive before returning" },
+        { "name": "--ignore-attachments", "type": "boolean", "required": false, "description": "Don't download attachments" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "account",
+      "action": "register",
+      "description": "Register a phone number with Signal (SMS or voice verification required)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["register"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your phone number in international format (e.g., +15551234567)" },
+        { "name": "--voice", "type": "boolean", "required": false, "description": "Use voice call instead of SMS for verification" },
+        { "name": "--captcha", "type": "string", "required": false, "description": "Captcha token if required" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "account",
+      "action": "verify",
+      "description": "Verify phone number with the code received via SMS or voice",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["verify", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your phone number" },
+        { "name": "verificationCode", "type": "string", "required": true, "description": "Verification code received via SMS or voice" },
+        { "name": "-p", "type": "string", "required": false, "description": "Registration lock PIN if set" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "account",
+      "action": "status",
+      "description": "Check if one or more users are registered on Signal",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["getUserStatus", "--output", "json"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your account phone number" },
+        { "name": "recipient", "type": "string", "required": true, "description": "Recipient phone number(s) to check" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "groups",
+      "action": "list",
+      "description": "List known Signal groups with member details",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["listGroups", "--output", "json", "--detailed"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your account phone number" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "contacts",
+      "action": "list",
+      "description": "List known Signal contacts with names and profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["listContacts", "--output", "json"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": [
+        { "name": "-a", "type": "string", "required": true, "description": "Your account phone number" }
+      ]
+    },
+    {
+      "namespace": "signal",
+      "resource": "account",
+      "action": "list",
+      "description": "List all local Signal accounts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "baseArgs": ["listAccounts", "--output", "json"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install signal-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "signal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to signal-cli CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signal-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install signal-cli: https://github.com/AsamK/signal-cli/releases"
+      },
+      "args": []
+    }
+  ]
+}
