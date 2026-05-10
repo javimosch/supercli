@@ -1,0 +1,1 @@
+---\nname: hjson\ndescription: Human-friendly JSON format CLI\n---\n# hjson Plugin
