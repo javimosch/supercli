@@ -1,0 +1,1 @@
+---\nname: flatpak\ndescription: Flatpak package manager\n---\n# flatpak Plugin\nFlatpak package manager

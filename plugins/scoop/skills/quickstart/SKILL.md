@@ -1,0 +1,1 @@
+---\nname: scoop\ndescription: Scoop Windows package manager\n---\n# scoop Plugin\nScoop Windows package manager

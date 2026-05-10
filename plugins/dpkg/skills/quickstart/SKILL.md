@@ -1,0 +1,1 @@
+---\nname: dpkg\ndescription: Debian package manager\n---\n# dpkg Plugin\nDebian package manager

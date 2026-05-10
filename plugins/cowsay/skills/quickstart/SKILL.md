@@ -1,0 +1,1 @@
+---\nname: cowsay\ndescription: Configurable speaking cow\n---\n# cowsay Plugin\nConfigurable speaking cow

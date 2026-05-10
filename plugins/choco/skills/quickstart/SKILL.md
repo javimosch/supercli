@@ -1,0 +1,1 @@
+---\nname: choco\ndescription: Chocolatey Windows package manager\n---\n# choco Plugin\nChocolatey Windows package manager

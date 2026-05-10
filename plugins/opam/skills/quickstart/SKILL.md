@@ -1,0 +1,1 @@
+---\nname: opam\ndescription: OCaml package manager\n---\n# opam Plugin\nOCaml package manager

@@ -1,0 +1,1 @@
+---\nname: eth\ndescription: Ethereum Go client\n---\n# eth Plugin\nEthereum Go client

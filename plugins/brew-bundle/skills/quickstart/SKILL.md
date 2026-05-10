@@ -1,0 +1,1 @@
+---\nname: brew-bundle\ndescription: Homebrew Bundle extension\n---\n# brew-bundle Plugin\nHomebrew Bundle extension

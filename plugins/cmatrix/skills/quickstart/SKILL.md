@@ -1,0 +1,1 @@
+---\nname: cmatrix\ndescription: The Matrix screen animation\n---\n# cmatrix Plugin\nThe Matrix screen animation

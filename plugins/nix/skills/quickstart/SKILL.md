@@ -1,0 +1,1 @@
+---\nname: nix\ndescription: Nix package manager\n---\n# nix Plugin\nNix package manager

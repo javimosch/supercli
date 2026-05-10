@@ -1,0 +1,1 @@
+---\nname: snap\ndescription: Snap package manager\n---\n# snap Plugin\nSnap package manager
