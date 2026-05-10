@@ -1,0 +1,82 @@
+{
+  "name": "svgbob",
+  "version": "0.1.0",
+  "description": "svgbob — convert ASCII art diagrams into beautiful SVG graphics. Sketch architecture, flowcharts, and box diagrams in text, render as images.",
+  "source": "https://github.com/ivanceras/svgbob",
+  "checks": [
+    { "type": "binary", "name": "svgbob_cli" }
+  ],
+  "install_guidance": {
+    "plugin": "svgbob",
+    "binary": "svgbob_cli",
+    "check": "which svgbob_cli",
+    "install_steps": [
+      "cargo install svgbob_cli",
+      "Verify: svgbob_cli --version",
+      "supercli plugins install ./plugins/svgbob --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "svgbob",
+      "resource": "self",
+      "action": "version",
+      "description": "Print svgbob version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svgbob_cli",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install svgbob: cargo install svgbob_cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "svgbob",
+      "resource": "convert",
+      "action": "file",
+      "description": "Convert an ASCII diagram file to SVG (passthrough: svgbob_cli <file> [--background color] [--fill-color color])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svgbob_cli",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install svgbob: cargo install svgbob_cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "svgbob",
+      "resource": "convert",
+      "action": "string",
+      "description": "Convert an inline ASCII diagram string to SVG (passthrough: svgbob_cli -s '<diagram>')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svgbob_cli",
+        "baseArgs": ["-s"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install svgbob: cargo install svgbob_cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "svgbob",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to svgbob CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svgbob_cli",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install svgbob: cargo install svgbob_cli"
+      },
+      "args": []
+    }
+  ]
+}

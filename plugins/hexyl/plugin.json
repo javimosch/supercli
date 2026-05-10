@@ -1,0 +1,67 @@
+{
+  "name": "hexyl",
+  "version": "0.1.0",
+  "description": "hexyl — a command-line hex viewer by sharkdp (fd/bat author). Pretty-print binary files, inspect byte streams, with colored output and smart formatting.",
+  "source": "https://github.com/sharkdp/hexyl",
+  "checks": [
+    { "type": "binary", "name": "hexyl" }
+  ],
+  "install_guidance": {
+    "plugin": "hexyl",
+    "binary": "hexyl",
+    "check": "which hexyl",
+    "install_steps": [
+      "cargo install hexyl",
+      "Verify: hexyl --version",
+      "supercli plugins install ./plugins/hexyl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hexyl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hexyl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hexyl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hexyl: cargo install hexyl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hexyl",
+      "resource": "hex",
+      "action": "view",
+      "description": "View hex dump of a file or stdin (passthrough: hexyl [file] [-n bytes] [-s skip])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hexyl",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hexyl: cargo install hexyl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hexyl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hexyl CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hexyl",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hexyl: cargo install hexyl"
+      },
+      "args": []
+    }
+  ]
+}
