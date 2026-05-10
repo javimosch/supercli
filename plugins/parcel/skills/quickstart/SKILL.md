@@ -1,0 +1,1 @@
+---\nname: parcel\ndescription: Zero-config web application bundler\n---\n# parcel Plugin\nZero-config web application bundler

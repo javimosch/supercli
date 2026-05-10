@@ -1,0 +1,1 @@
+---\nname: puppeteer\ndescription: Browser automation library\n---\n# puppeteer Plugin\nBrowser automation library

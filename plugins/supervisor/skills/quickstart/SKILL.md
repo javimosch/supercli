@@ -1,0 +1,1 @@
+---\nname: supervisor\ndescription: Node.js process monitor\n---\n# supervisor Plugin\nNode.js process monitor

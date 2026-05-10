@@ -1,0 +1,1 @@
+---\nname: browserify\ndescription: JavaScript bundler for browsers\n---\n# browserify Plugin\nJavaScript bundler for browsers

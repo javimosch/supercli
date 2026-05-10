@@ -1,0 +1,1 @@
+---\nname: tailwindcss\ndescription: Utility-first CSS framework CLI\n---\n# tailwindcss Plugin\nUtility-first CSS framework CLI

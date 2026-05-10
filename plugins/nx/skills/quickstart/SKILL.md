@@ -1,0 +1,1 @@
+---\nname: nx\ndescription: Smart monorepo build system\n---\n# nx Plugin\nSmart monorepo build system
