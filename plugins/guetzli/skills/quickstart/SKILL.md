@@ -1,0 +1,1 @@
+---\nname: guetzli\ndescription: Google JPEG encoder\n---\n# guetzli Plugin\nGoogle JPEG encoder

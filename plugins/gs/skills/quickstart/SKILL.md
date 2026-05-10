@@ -1,0 +1,1 @@
+---\nname: gs\ndescription: GhostScript interpreter\n---\n# gs Plugin\nGhostScript interpreter

@@ -1,0 +1,1 @@
+---\nname: eps2eps\ndescription: EPS file processing\n---\n# eps2eps Plugin\nEPS file processing

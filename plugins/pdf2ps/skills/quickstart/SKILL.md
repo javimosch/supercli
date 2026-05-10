@@ -1,0 +1,1 @@
+---\nname: pdf2ps\ndescription: PDF to PostScript converter\n---\n# pdf2ps Plugin\nPDF to PostScript converter

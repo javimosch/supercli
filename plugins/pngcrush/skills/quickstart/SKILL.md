@@ -1,0 +1,1 @@
+---\nname: pngcrush\ndescription: PNG compression optimizer\n---\n# pngcrush Plugin\nPNG compression optimizer

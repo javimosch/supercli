@@ -1,0 +1,1 @@
+---\nname: ps2pdf\ndescription: PostScript to PDF converter\n---\n# ps2pdf Plugin\nPostScript to PDF converter

@@ -1,0 +1,1 @@
+---\nname: oxipng\ndescription: Rust PNG optimizer\n---\n# oxipng Plugin\nRust PNG optimizer

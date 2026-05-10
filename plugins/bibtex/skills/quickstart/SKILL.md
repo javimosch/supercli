@@ -1,0 +1,1 @@
+---\nname: bibtex\ndescription: Bibliography tool for LaTeX\n---\n# bibtex Plugin\nBibliography tool for LaTeX

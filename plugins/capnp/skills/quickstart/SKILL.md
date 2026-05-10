@@ -1,0 +1,1 @@
+---\nname: capnp\ndescription: Cap'n Proto serialization\n---\n# capnp Plugin\nCap'n Proto serialization

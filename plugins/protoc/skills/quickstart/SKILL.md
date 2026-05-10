@@ -1,0 +1,1 @@
+---\nname: protoc\ndescription: Protocol Buffers compiler\n---\n# protoc Plugin\nProtocol Buffers compiler

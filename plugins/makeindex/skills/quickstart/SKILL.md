@@ -1,0 +1,1 @@
+---\nname: makeindex\ndescription: Index generator for LaTeX\n---\n# makeindex Plugin\nIndex generator for LaTeX

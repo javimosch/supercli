@@ -1,0 +1,1 @@
+---\nname: sam2p\ndescription: Convert raster images to EPS/PDF\n---\n# sam2p Plugin\nConvert raster images to EPS/PDF

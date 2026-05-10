@@ -1,0 +1,1 @@
+---\nname: dvips\ndescription: DVI to PostScript converter\n---\n# dvips Plugin\nDVI to PostScript converter

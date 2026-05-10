@@ -1,0 +1,1 @@
+---\nname: potrace\ndescription: Bitmap to vector trace\n---\n# potrace Plugin\nBitmap to vector trace

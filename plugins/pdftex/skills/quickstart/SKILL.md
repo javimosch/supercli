@@ -1,0 +1,1 @@
+---\nname: pdftex\ndescription: PDFTeX typesetter\n---\n# pdftex Plugin\nPDFTeX typesetter

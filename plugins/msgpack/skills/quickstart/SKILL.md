@@ -1,0 +1,1 @@
+---\nname: msgpack\ndescription: MessagePack serialization\n---\n# msgpack Plugin\nMessagePack serialization

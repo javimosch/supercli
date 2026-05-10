@@ -1,0 +1,1 @@
+---\nname: flatc\ndescription: FlatBuffers compiler\n---\n# flatc Plugin\nFlatBuffers compiler

@@ -1,0 +1,1 @@
+---\nname: thrift\ndescription: Apache Thrift framework\n---\n# thrift Plugin\nApache Thrift framework
