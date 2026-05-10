@@ -1,0 +1,38 @@
+{
+  "name": "host",
+  "version": "0.1.0",
+  "description": "DNS lookup utility for finding IP addresses",
+  "source": "https",
+  "checks": [{"type": "binary", "name": "host"}],
+  "install_guidance": {
+    "plugin": "host",
+    "binary": "host",
+    "check": "which host",
+    "install_steps": [
+      "brew install bind",
+      "Verify: host --version",
+      "supercli plugins install ./plugins/host --on-conflict replace --json"
+    ]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "host",
+      "resource": "self",
+      "action": "version",
+      "description": "Print host version",
+      "adapter": "process",
+      "adapterConfig": {"command": "host", "baseArgs": ["--version"], "missingDependencyHelp": "Install host: brew install bind"},
+      "args": []
+    },
+    {
+      "namespace": "host",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to host CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "host", "passthrough": true, "missingDependencyHelp": "Install host: brew install bind"},
+      "args": []
+    }
+  ]
+}
