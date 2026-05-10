@@ -1,0 +1,1 @@
+---\nname: cargo-udeps\ndescription: Find unused Rust dependencies\n---\n# cargo-udeps Plugin\nFind unused Rust dependencies

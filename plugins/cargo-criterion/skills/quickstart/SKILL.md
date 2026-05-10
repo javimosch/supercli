@@ -1,0 +1,1 @@
+---\nname: cargo-criterion\ndescription: Rust benchmark runner\n---\n# cargo-criterion Plugin\nRust benchmark runner

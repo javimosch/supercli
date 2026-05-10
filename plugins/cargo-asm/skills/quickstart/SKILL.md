@@ -1,0 +1,1 @@
+---\nname: cargo-asm\ndescription: Rust assembly output\n---\n# cargo-asm Plugin\nRust assembly output

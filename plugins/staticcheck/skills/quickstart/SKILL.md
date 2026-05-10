@@ -1,0 +1,1 @@
+---\nname: staticcheck\ndescription: Go static analysis\n---\n# staticcheck Plugin\nGo static analysis

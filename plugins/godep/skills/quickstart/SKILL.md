@@ -1,0 +1,1 @@
+---\nname: godep\ndescription: Go dependency tool\n---\n# godep Plugin\nGo dependency tool

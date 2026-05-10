@@ -1,0 +1,1 @@
+---\nname: hasura\ndescription: Hasura CLI for GraphQL APIs\n---\n# hasura Plugin\nHasura CLI for GraphQL APIs

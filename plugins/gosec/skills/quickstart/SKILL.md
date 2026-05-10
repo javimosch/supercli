@@ -1,0 +1,1 @@
+---\nname: gosec\ndescription: Go security checker\n---\n# gosec Plugin\nGo security checker

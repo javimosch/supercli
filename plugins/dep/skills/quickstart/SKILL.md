@@ -1,0 +1,1 @@
+---\nname: dep\ndescription: Go dependency management\n---\n# dep Plugin\nGo dependency management

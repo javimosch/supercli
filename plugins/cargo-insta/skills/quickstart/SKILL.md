@@ -1,0 +1,1 @@
+---\nname: cargo-insta\ndescription: Rust snapshot testing\n---\n# cargo-insta Plugin\nRust snapshot testing

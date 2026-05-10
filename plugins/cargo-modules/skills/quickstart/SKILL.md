@@ -1,0 +1,1 @@
+---\nname: cargo-modules\ndescription: Visualize Rust module structure\n---\n# cargo-modules Plugin\nVisualize Rust module structure

@@ -1,0 +1,1 @@
+---\nname: revive\ndescription: Faster Go linter\n---\n# revive Plugin\nFaster Go linter

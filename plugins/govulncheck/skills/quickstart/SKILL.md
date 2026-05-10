@@ -1,0 +1,1 @@
+---\nname: govulncheck\ndescription: Go vulnerability checker\n---\n# govulncheck Plugin\nGo vulnerability checker

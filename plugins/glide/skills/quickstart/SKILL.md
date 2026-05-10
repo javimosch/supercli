@@ -1,0 +1,1 @@
+---\nname: glide\ndescription: Go package manager\n---\n# glide Plugin\nGo package manager

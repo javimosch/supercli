@@ -1,0 +1,1 @@
+---\nname: golint\ndescription: Go linter\n---\n# golint Plugin\nGo linter
