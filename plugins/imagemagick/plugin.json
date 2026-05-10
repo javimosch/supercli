@@ -1,0 +1,177 @@
+{
+  "name": "imagemagick",
+  "version": "0.1.0",
+  "description": "ImageMagick — suite of CLI tools for image processing. Convert formats, resize, compress, apply effects, identify metadata, create montages, compare images. Non-interactive, scriptable. Already installed on most systems.",
+  "source": "https://github.com/ImageMagick/ImageMagick",
+  "checks": [
+    { "type": "binary", "name": "convert" }
+  ],
+  "install_guidance": {
+    "plugin": "imagemagick",
+    "binary": "convert",
+    "check": "which convert",
+    "install_steps": [
+      "brew install imagemagick",
+      "Verify: convert --version",
+      "Test: convert logo: -resize 100x100 /tmp/logo.png",
+      "supercli plugins install ./plugins/imagemagick --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "magick",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ImageMagick version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "convert",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ImageMagick: brew install imagemagick"
+      },
+      "args": []
+    },
+    {
+      "namespace": "magick",
+      "resource": "image",
+      "action": "identify",
+      "description": "Get metadata of an image (dimensions, format, colorspace, size)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "identify",
+        "baseArgs": ["-verbose"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install ImageMagick: brew install imagemagick"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to image file" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "image",
+      "action": "identify-brief",
+      "description": "Quickly identify image format and dimensions (one line)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "identify",
+        "positionalArgs": ["file"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install ImageMagick"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to image file" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "image",
+      "action": "resize",
+      "description": "Resize an image to specified dimensions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "convert",
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ImageMagick"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" },
+        { "name": "-resize", "type": "string", "required": true, "description": "Dimensions (e.g., '800x600', '50%', '1920x')" },
+        { "name": "output", "type": "string", "required": true, "description": "Output image path" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "image",
+      "action": "convert-format",
+      "description": "Convert an image from one format to another",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "convert",
+        "positionalArgs": ["input", "output"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ImageMagick"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path (e.g., image.jpg)" },
+        { "name": "output", "type": "string", "required": true, "description": "Output image path (e.g., image.png). Format is inferred from extension" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "image",
+      "action": "compress",
+      "description": "Compress an image by adjusting quality (JPEG/PNG/WEBP)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "convert",
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ImageMagick"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" },
+        { "name": "-quality", "type": "number", "required": true, "description": "Quality percentage (1-100, lower = smaller file)" },
+        { "name": "output", "type": "string", "required": true, "description": "Output image path" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "image",
+      "action": "thumbnail",
+      "description": "Create a thumbnail of an image (preserves aspect ratio)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "convert",
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ImageMagick"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input image path" },
+        { "name": "-thumbnail", "type": "string", "required": true, "description": "Thumbnail size (e.g., '200x200', '100x100^')" },
+        { "name": "output", "type": "string", "required": true, "description": "Output thumbnail path" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "batch",
+      "action": "mogrify",
+      "description": "Batch process images in-place (resize, format change, effects)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mogrify",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ImageMagick"
+      },
+      "args": [
+        { "name": "args", "type": "string", "required": true, "description": "Mogrify options (e.g., '-resize 800x600 -format png *.jpg')" }
+      ]
+    },
+    {
+      "namespace": "magick",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to any ImageMagick command (montage, compare, composite, animate, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "convert",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ImageMagick: brew install imagemagick"
+      },
+      "args": []
+    }
+  ]
+}
