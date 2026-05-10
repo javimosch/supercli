@@ -1,10 +1,12 @@
-# supercli — The Capability Layer for Every Tool
+# supercli — 1000+ CLI Tools + Standardized Execution Layer
 
 [![npm version](https://img.shields.io/npm/v/superacli.svg)](https://www.npmjs.com/package/superacli)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-> Think: "Stripe API for CLIs and tools"  
-> Standardized inputs, outputs, and execution for everything.
+> 1000+ curated CLI tools (shells, DevOps, data, web, cloud) + a unified capability interface
+> — consistent inputs, outputs, and execution for everything.
+
+**The complete developer toolkit:** bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 990+ more—all discoverable, quality-checked, and ready to install.
 
 ## ⚡ TL;DR
 
@@ -87,14 +89,32 @@ npx supercli skills get <capability> --json
 Install globally: `npm install -g superacli` for repeated use.
 Server mode: See [docs/features/server-plugins.md](docs/features/server-plugins.md)
 
+## 1000+ CLI Tools, Discoverable & Ready
+
+Every tool includes complete metadata (description, tags, source URL, install methods). Browse by category, search by tag, install what you need:
+
+```bash
+# Discover
+supercli plugins list
+supercli plugins search --tag rust
+supercli plugins search --tag devops
+
+# Install
+supercli plugins install ./plugins/cargo ./plugins/tokio
+supercli plugins install ./plugins/docker ./plugins/kubernetes
+```
+
+Complete toolkit: Shells, DevOps, cloud providers (AWS, Azure, GCP), databases, data tools, development frameworks, testing, security, and more.
+
 ## For Humans & Agents
 
 ### For Humans
 
-Stop juggling CLI tools with different syntax and outputs. supercli gives you one consistent interface to AWS, GitHub, Docker, Kubernetes, and more—so you stop learning syntax and start executing faster.
+Stop juggling CLI tools with different syntax and outputs. supercli gives you one consistent interface to 1000+ quality-checked tools—so you stop learning syntax and start executing faster.
 
 | Instead of | You do |
 | ---------- | ------ |
+| Hunting for tools | `supercli plugins search "deploy"` or `supercli plugins list` |
 | Reading 50-page docs | `supercli skills get <tool>.*` |
 | Guessing flags | `supercli inspect ...` |
 | Parsing output | `--json` everywhere |
@@ -112,8 +132,8 @@ Stop juggling CLI tools with different syntax and outputs. supercli gives you on
 
 ## What You Get
 
-- 🔍 Find any capability instantly — no docs hunting
-- ⚡ Run tools with one consistent interface
+- 🔍 **1000+ curated CLI tools** — bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 990+ more
+- ⚡ Run any tool with one consistent interface — no syntax juggling
 - 🤖 Give agents predictable, structured execution
 - 🔗 Combine multiple tools without glue code
 - 📦 Extend anything via plugins
