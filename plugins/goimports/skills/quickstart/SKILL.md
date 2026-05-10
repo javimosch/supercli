@@ -1,0 +1,1 @@
+---\nname: goimports\ndescription: Go code formatter with import management\n---\n# goimports Plugin\nGo code formatter with import management\n## Usage\n- `goimports _ _ <args>` — Run goimports

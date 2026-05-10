@@ -1,0 +1,1 @@
+---\nname: scala\ndescription: Scala programming language\n---\n# scala Plugin\nScala programming language

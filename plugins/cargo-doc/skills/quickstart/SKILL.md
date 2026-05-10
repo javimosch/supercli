@@ -1,0 +1,1 @@
+---\nname: cargo-doc\ndescription: Generate Rust documentation\n---\n# cargo-doc Plugin\nGenerate Rust documentation\n## Usage\n- `cargo-doc _ _ <args>` — Run cargo-doc

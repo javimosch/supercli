@@ -1,0 +1,1 @@
+---\nname: jupyter\ndescription: Jupyter notebook CLI\n---\n# jupyter Plugin\nJupyter notebook CLI

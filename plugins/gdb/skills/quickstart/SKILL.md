@@ -1,0 +1,1 @@
+---\nname: gdb\ndescription: GNU debugger\n---\n# gdb Plugin\nGNU debugger\n## Usage\n- `gdb _ _ <args>` — Run gdb

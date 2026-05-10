@@ -1,0 +1,1 @@
+---\nname: promtool\ndescription: Prometheus metrics inspection tool\n---\n# promtool Plugin\nPrometheus metrics inspection tool

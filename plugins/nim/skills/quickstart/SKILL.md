@@ -1,0 +1,1 @@
+---\nname: nim\ndescription: Nim programming language compiler\n---\n# nim Plugin\nNim programming language compiler

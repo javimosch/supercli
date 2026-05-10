@@ -1,0 +1,1 @@
+---\nname: pip3\ndescription: Python package installer\n---\n# pip3 Plugin\nPython package installer\n## Usage\n- `pip3 _ _ <args>` — Run pip3

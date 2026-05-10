@@ -1,0 +1,1 @@
+---\nname: pipx\ndescription: Install Python applications in isolated environments\n---\n# pipx Plugin\nInstall Python applications in isolated environments\n## Usage\n- `pipx _ _ <args>` — Run pipx

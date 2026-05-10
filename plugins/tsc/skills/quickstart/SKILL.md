@@ -1,0 +1,1 @@
+---\nname: tsc\ndescription: TypeScript compiler\n---\n# tsc Plugin\nTypeScript compiler

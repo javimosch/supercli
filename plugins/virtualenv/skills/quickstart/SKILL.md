@@ -1,0 +1,1 @@
+---\nname: virtualenv\ndescription: Python virtual environment manager\n---\n# virtualenv Plugin\nPython virtual environment manager

@@ -1,0 +1,1 @@
+---\nname: amtool\ndescription: Alertmanager admin tool\n---\n# amtool Plugin\nAlertmanager admin tool

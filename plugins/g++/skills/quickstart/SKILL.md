@@ -1,0 +1,1 @@
+---\nname: g++\ndescription: GNU C++ Compiler\n---\n# g++ Plugin\nGNU C++ Compiler\n## Usage\n- `g++ _ _ <args>` — Run g++

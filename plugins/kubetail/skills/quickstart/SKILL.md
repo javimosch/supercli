@@ -1,0 +1,1 @@
+---\nname: kubetail\ndescription: Kubernetes log aggregator\n---\n# kubetail Plugin\nKubernetes log aggregator

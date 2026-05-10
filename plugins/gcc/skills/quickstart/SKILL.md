@@ -1,0 +1,1 @@
+---\nname: gcc\ndescription: GNU Compiler Collection\n---\n# gcc Plugin\nGNU Compiler Collection\n## Usage\n- `gcc _ _ <args>` — Run gcc

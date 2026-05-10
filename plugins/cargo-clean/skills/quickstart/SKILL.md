@@ -1,0 +1,1 @@
+---\nname: cargo-clean\ndescription: Clean Rust build artifacts\n---\n# cargo-clean Plugin\nClean Rust build artifacts\n## Usage\n- `cargo-clean _ _ <args>` — Run cargo-clean

@@ -1,0 +1,1 @@
+---\nname: grafana-cli\ndescription: Grafana CLI for provisioning and admin\n---\n# grafana-cli Plugin\nGrafana CLI for provisioning and admin

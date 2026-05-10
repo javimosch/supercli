@@ -1,0 +1,1 @@
+---\nname: kubeadm\ndescription: Kubernetes cluster bootstrapper\n---\n# kubeadm Plugin\nKubernetes cluster bootstrapper

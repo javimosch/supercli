@@ -1,0 +1,1 @@
+---\nname: vault\ndescription: HashiCorp secrets management\n---\n# vault Plugin\nHashiCorp secrets management

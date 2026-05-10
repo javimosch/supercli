@@ -1,0 +1,1 @@
+---\nname: sentinel\ndescription: Sentinel policy as code\n---\n# sentinel Plugin\nSentinel policy as code

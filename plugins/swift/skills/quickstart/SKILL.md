@@ -1,0 +1,1 @@
+---\nname: swift\ndescription: Swift programming language compiler\n---\n# swift Plugin\nSwift programming language compiler

@@ -1,0 +1,1 @@
+---\nname: thanos\ndescription: Prometheus scaling and long-term storage\n---\n# thanos Plugin\nPrometheus scaling and long-term storage

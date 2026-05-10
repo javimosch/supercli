@@ -1,0 +1,1 @@
+---\nname: python2\ndescription: Python 2 interpreter\n---\n# python2 Plugin\nPython 2 interpreter

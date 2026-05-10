@@ -1,0 +1,1 @@
+---\nname: cargo-check\ndescription: Check Rust code without producing binary\n---\n# cargo-check Plugin\nCheck Rust code without producing binary\n## Usage\n- `cargo-check _ _ <args>` — Run cargo-check

@@ -1,0 +1,1 @@
+---\nname: java\ndescription: Java Runtime Environment\n---\n# java Plugin\nJava Runtime Environment

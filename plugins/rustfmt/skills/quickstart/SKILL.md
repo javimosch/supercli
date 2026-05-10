@@ -1,0 +1,1 @@
+---\nname: rustfmt\ndescription: Rust code formatter\n---\n# rustfmt Plugin\nRust code formatter\n## Usage\n- `rustfmt _ _ <args>` — Run rustfmt

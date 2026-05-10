@@ -1,0 +1,1 @@
+---\nname: envconsul\ndescription: Consul environment variable manager\n---\n# envconsul Plugin\nConsul environment variable manager

@@ -1,0 +1,1 @@
+---\nname: serf\ndescription: HashiCorp cluster membership\n---\n# serf Plugin\nHashiCorp cluster membership

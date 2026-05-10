@@ -1,0 +1,1 @@
+---\nname: cmake\ndescription: Cross-platform build system generator\n---\n# cmake Plugin\nCross-platform build system generator\n## Usage\n- `cmake _ _ <args>` — Run cmake

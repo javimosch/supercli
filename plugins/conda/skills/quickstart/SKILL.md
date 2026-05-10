@@ -1,0 +1,1 @@
+---\nname: conda\ndescription: Package manager for scientific computing\n---\n# conda Plugin\nPackage manager for scientific computing\n## Usage\n- `conda _ _ <args>` — Run conda

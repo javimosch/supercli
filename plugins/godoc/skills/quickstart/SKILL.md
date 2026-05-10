@@ -1,0 +1,1 @@
+---\nname: godoc\ndescription: Go documentation server\n---\n# godoc Plugin\nGo documentation server\n## Usage\n- `godoc _ _ <args>` — Run godoc

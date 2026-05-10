@@ -1,0 +1,1 @@
+---\nname: as\ndescription: GNU assembler\n---\n# as Plugin\nGNU assembler\n## Usage\n- `as _ _ <args>` — Run as

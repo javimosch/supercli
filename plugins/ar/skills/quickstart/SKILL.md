@@ -1,0 +1,1 @@
+---\nname: ar\ndescription: GNU archiver for static libraries\n---\n# ar Plugin\nGNU archiver for static libraries\n## Usage\n- `ar _ _ <args>` — Run ar

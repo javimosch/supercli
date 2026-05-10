@@ -1,0 +1,1 @@
+---\nname: stack\ndescription: Haskell build tool\n---\n# stack Plugin\nHaskell build tool

@@ -1,0 +1,1 @@
+---\nname: zig\ndescription: Zig programming language compiler\n---\n# zig Plugin\nZig programming language compiler

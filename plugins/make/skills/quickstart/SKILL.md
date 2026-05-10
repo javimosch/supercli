@@ -1,0 +1,1 @@
+---\nname: make\ndescription: GNU build automation tool\n---\n# make Plugin\nGNU build automation tool\n## Usage\n- `make _ _ <args>` — Run make

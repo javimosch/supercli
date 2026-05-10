@@ -1,0 +1,1 @@
+---\nname: racket\ndescription: Racket programming language\n---\n# racket Plugin\nRacket programming language

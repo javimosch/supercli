@@ -1,0 +1,1 @@
+---\nname: nm\ndescription: List symbols from object files\n---\n# nm Plugin\nList symbols from object files\n## Usage\n- `nm _ _ <args>` — Run nm

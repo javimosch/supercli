@@ -1,0 +1,1 @@
+---\nname: objdump\ndescription: Display object file information\n---\n# objdump Plugin\nDisplay object file information\n## Usage\n- `objdump _ _ <args>` — Run objdump

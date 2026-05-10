@@ -1,0 +1,1 @@
+---\nname: strip\ndescription: Remove symbols from object files\n---\n# strip Plugin\nRemove symbols from object files\n## Usage\n- `strip _ _ <args>` — Run strip

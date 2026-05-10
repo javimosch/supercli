@@ -1,0 +1,1 @@
+---\nname: clojure\ndescription: Clojure programming language\n---\n# clojure Plugin\nClojure programming language

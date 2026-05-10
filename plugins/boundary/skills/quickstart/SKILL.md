@@ -1,0 +1,1 @@
+---\nname: boundary\ndescription: HashiCorp identity-based access\n---\n# boundary Plugin\nHashiCorp identity-based access
