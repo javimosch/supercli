@@ -1,0 +1,1 @@
+---\nname: safety\ndescription: Python dependency checker\n---\n# safety Plugin\nPython dependency checker

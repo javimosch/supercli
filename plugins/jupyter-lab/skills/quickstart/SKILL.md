@@ -1,0 +1,1 @@
+---\nname: jupyter-lab\ndescription: JupyterLab notebook server\n---\n# jupyter-lab Plugin\nJupyterLab notebook server

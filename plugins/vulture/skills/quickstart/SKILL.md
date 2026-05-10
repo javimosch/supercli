@@ -1,0 +1,1 @@
+---\nname: vulture\ndescription: Find dead Python code\n---\n# vulture Plugin\nFind dead Python code

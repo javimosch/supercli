@@ -1,0 +1,1 @@
+---\nname: darglint\ndescription: Python docstring linter\n---\n# darglint Plugin\nPython docstring linter

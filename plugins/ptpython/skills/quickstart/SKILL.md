@@ -1,0 +1,1 @@
+---\nname: ptpython\ndescription: Python REPL with prompt_toolkit\n---\n# ptpython Plugin\nPython REPL with prompt_toolkit

@@ -1,0 +1,1 @@
+---\nname: docformatter\ndescription: Python docstring formatter\n---\n# docformatter Plugin\nPython docstring formatter

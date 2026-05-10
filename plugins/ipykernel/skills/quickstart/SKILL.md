@@ -1,0 +1,1 @@
+---\nname: ipykernel\ndescription: IPython kernel for Jupyter\n---\n# ipykernel Plugin\nIPython kernel for Jupyter

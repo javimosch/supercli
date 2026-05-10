@@ -1,0 +1,1 @@
+---\nname: pyright\ndescription: Python type checker from Microsoft\n---\n# pyright Plugin\nPython type checker from Microsoft
