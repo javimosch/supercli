@@ -1,0 +1,180 @@
+{
+  "name": "qpdf",
+  "version": "0.1.0",
+  "description": "qpdf — content-preserving PDF transformation tool. Split, merge, encrypt, decrypt, linearize, compress, and inspect PDF files. JSON metadata output. Non-interactive, scriptable. Essential for document processing.",
+  "source": "https://github.com/qpdf/qpdf",
+  "checks": [
+    { "type": "binary", "name": "qpdf" }
+  ],
+  "install_guidance": {
+    "plugin": "qpdf",
+    "binary": "qpdf",
+    "check": "which qpdf",
+    "install_steps": [
+      "brew install qpdf",
+      "Verify: qpdf --version",
+      "supercli plugins install ./plugins/qpdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qpdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qpdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qpdf: brew install qpdf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "info",
+      "action": "check",
+      "description": "Check PDF structure and integrity (validation report)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--check"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "info",
+      "action": "json",
+      "description": "Get PDF metadata as JSON (pages, objects, info)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--json"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "split",
+      "action": "pages",
+      "description": "Extract specific pages from a PDF into a new file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--empty", "--pages"],
+        "positionalArgs": ["input", "pages", "--", "output"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input PDF file" },
+        { "name": "pages", "type": "string", "required": true, "description": "Page range (e.g., '1-5', '1,3,7-10', '1-')" },
+        { "name": "output", "type": "string", "required": true, "description": "Output PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "merge",
+      "action": "files",
+      "description": "Merge multiple PDF files into one",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--empty", "--pages"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Input PDF files (e.g., 'file1.pdf file2.pdf file3.pdf')" },
+        { "name": "--", "type": "string", "required": true, "description": "Separator before output file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "encrypt",
+      "action": "set",
+      "description": "Encrypt a PDF with user and owner passwords (256-bit AES)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "--encrypt", "type": "string", "required": true, "description": "User password and owner password (e.g., 'user-pw owner-pw')" },
+        { "name": "--password-mode", "type": "string", "required": false, "description": "Password mode (e.g., 'aes', '256')" },
+        { "name": "input", "type": "string", "required": true, "description": "Input PDF file" },
+        { "name": "output", "type": "string", "required": true, "description": "Encrypted output PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "decrypt",
+      "action": "set",
+      "description": "Decrypt a password-protected PDF",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--decrypt"],
+        "positionalArgs": ["input", "output"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Encrypted PDF file" },
+        { "name": "--password", "type": "string", "required": false, "description": "PDF password" },
+        { "name": "output", "type": "string", "required": true, "description": "Decrypted output PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "optimize",
+      "action": "linearize",
+      "description": "Linearize (optimize for web) a PDF for fast page viewing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "baseArgs": ["--linearize"],
+        "positionalArgs": ["input", "output"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install qpdf"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input PDF file" },
+        { "name": "output", "type": "string", "required": true, "description": "Linearized output PDF file" }
+      ]
+    },
+    {
+      "namespace": "qpdf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qpdf CLI for any command (--compress-streams, --show-object, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qpdf",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qpdf: brew install qpdf"
+      },
+      "args": []
+    }
+  ]
+}

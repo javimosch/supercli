@@ -1,0 +1,130 @@
+{
+  "name": "qrencode",
+  "version": "0.1.0",
+  "description": "qrencode — encode data into QR codes from the command line. Generate QR code images for URLs, text, WiFi configs, contact info, and more. Output as PNG or EPS. Non-interactive, scriptable.",
+  "source": "https://github.com/fukuchi/libqrencode",
+  "checks": [
+    { "type": "binary", "name": "qrencode" }
+  ],
+  "install_guidance": {
+    "plugin": "qrencode",
+    "binary": "qrencode",
+    "check": "which qrencode",
+    "install_steps": [
+      "brew install qrencode",
+      "Verify: qrencode --version",
+      "Test: qrencode -o /tmp/qr.png 'Hello World'",
+      "supercli plugins install ./plugins/qrencode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qrencode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qrencode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrencode",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qrencode: brew install qrencode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qrencode",
+      "resource": "encode",
+      "action": "text",
+      "description": "Encode plain text into a QR code image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrencode",
+        "baseArgs": [],
+        "positionalArgs": ["text"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install qrencode"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Text to encode" },
+        { "name": "-o", "type": "string", "required": true, "description": "Output image file (e.g., qr.png)" },
+        { "name": "-s", "type": "number", "required": false, "description": "Module size in pixels (default: 3)" },
+        { "name": "-l", "type": "string", "required": false, "description": "Error correction level: L (lowest), M, Q, H (highest). Default: L" },
+        { "name": "-m", "type": "number", "required": false, "description": "Margin width in modules (default: 4)" }
+      ]
+    },
+    {
+      "namespace": "qrencode",
+      "resource": "encode",
+      "action": "url",
+      "description": "Encode a URL into a QR code image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrencode",
+        "baseArgs": [],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install qrencode"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to encode (e.g., https://example.com)" },
+        { "name": "-o", "type": "string", "required": true, "description": "Output image file (e.g., site-qr.png)" },
+        { "name": "-s", "type": "number", "required": false, "description": "Module size in pixels" },
+        { "name": "-l", "type": "string", "required": false, "description": "Error correction level" }
+      ]
+    },
+    {
+      "namespace": "qrencode",
+      "resource": "encode",
+      "action": "from-file",
+      "description": "Encode content from a file into a QR code image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrencode",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install qrencode"
+      },
+      "args": [
+        { "name": "-r", "type": "string", "required": true, "description": "Read input data from file" },
+        { "name": "-o", "type": "string", "required": true, "description": "Output image file" }
+      ]
+    },
+    {
+      "namespace": "qrencode",
+      "resource": "encode",
+      "action": "stdout",
+      "description": "Encode text into a QR code and output raw PNG data to stdout",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrencode",
+        "baseArgs": ["-o", "-"],
+        "positionalArgs": ["text"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install qrencode"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Text to encode" },
+        { "name": "-s", "type": "number", "required": false, "description": "Module size" }
+      ]
+    },
+    {
+      "namespace": "qrencode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qrencode CLI for advanced options (case-insensitive, structured append, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qrencode",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qrencode: brew install qrencode"
+      },
+      "args": []
+    }
+  ]
+}
