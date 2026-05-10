@@ -1,0 +1,1 @@
+---\nname: rev\ndescription: Reverse lines of a file\n---\n# rev Plugin\nReverse lines of a file

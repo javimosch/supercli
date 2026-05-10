@@ -1,0 +1,1 @@
+---\nname: fgrep\ndescription: Fixed-string grep\n---\n# fgrep Plugin\nFixed-string grep

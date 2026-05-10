@@ -1,0 +1,1 @@
+---\nname: plzip\ndescription: Parallel lzip compressor\n---\n# plzip Plugin\nParallel lzip compressor

@@ -1,0 +1,1 @@
+---\nname: grok\ndescription: Grok pattern matching\n---\n# grok Plugin\nGrok pattern matching

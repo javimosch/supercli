@@ -1,0 +1,1 @@
+---\nname: lzop\ndescription: LZO compression utility\n---\n# lzop Plugin\nLZO compression utility

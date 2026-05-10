@@ -1,0 +1,1 @@
+---\nname: clamav\ndescription: Antivirus scanning\n---\n# clamav Plugin\nAntivirus scanning

@@ -1,0 +1,1 @@
+---\nname: screen\ndescription: GNU Screen terminal multiplexer\n---\n# screen Plugin\nGNU Screen terminal multiplexer

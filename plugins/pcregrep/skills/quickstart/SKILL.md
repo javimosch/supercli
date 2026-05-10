@@ -1,0 +1,1 @@
+---\nname: pcregrep\ndescription: Grep with Perl-compatible regex\n---\n# pcregrep Plugin\nGrep with Perl-compatible regex

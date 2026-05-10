@@ -1,0 +1,1 @@
+---\nname: diff\ndescription: Compare files line by line\n---\n# diff Plugin\nCompare files line by line

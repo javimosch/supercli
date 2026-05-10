@@ -1,0 +1,1 @@
+---\nname: sed\ndescription: Stream editor for text filtering\n---\n# sed Plugin\nStream editor for text filtering

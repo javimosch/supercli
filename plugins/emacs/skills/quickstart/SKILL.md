@@ -1,0 +1,1 @@
+---\nname: emacs\ndescription: GNU Emacs text editor\n---\n# emacs Plugin\nGNU Emacs text editor

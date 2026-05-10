@@ -1,0 +1,1 @@
+---\nname: mg\ndescription: Micro GNU Emacs\n---\n# mg Plugin\nMicro GNU Emacs

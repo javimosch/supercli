@@ -1,0 +1,1 @@
+---\nname: bmon\ndescription: Bandwidth monitor\n---\n# bmon Plugin\nBandwidth monitor

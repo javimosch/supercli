@@ -1,0 +1,1 @@
+---\nname: otf2ttf\ndescription: Convert OpenType fonts to TrueType\n---\n# otf2ttf Plugin\nConvert OpenType fonts to TrueType

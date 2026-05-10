@@ -1,0 +1,1 @@
+---\nname: cmp\ndescription: Byte-by-byte file comparison\n---\n# cmp Plugin\nByte-by-byte file comparison

@@ -1,0 +1,1 @@
+---\nname: pixz\ndescription: Parallel XZ compressor\n---\n# pixz Plugin\nParallel XZ compressor

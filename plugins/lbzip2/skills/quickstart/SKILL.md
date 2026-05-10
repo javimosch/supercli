@@ -1,0 +1,1 @@
+---\nname: lbzip2\ndescription: Parallel bzip2 compressor\n---\n# lbzip2 Plugin\nParallel bzip2 compressor

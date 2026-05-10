@@ -1,0 +1,1 @@
+---\nname: compress\ndescription: Traditional Unix compression\n---\n# compress Plugin\nTraditional Unix compression

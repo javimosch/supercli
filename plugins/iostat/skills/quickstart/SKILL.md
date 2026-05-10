@@ -1,0 +1,1 @@
+---\nname: iostat\ndescription: Report CPU and I/O statistics\n---\n# iostat Plugin\nReport CPU and I/O statistics

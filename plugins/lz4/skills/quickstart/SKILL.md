@@ -1,0 +1,1 @@
+---\nname: lz4\ndescription: LZ4 compression utility\n---\n# lz4 Plugin\nLZ4 compression utility

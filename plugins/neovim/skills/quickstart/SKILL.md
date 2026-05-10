@@ -1,0 +1,1 @@
+---\nname: neovim\ndescription: Modern Vim-based text editor\n---\n# neovim Plugin\nModern Vim-based text editor

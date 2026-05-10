@@ -1,0 +1,1 @@
+---\nname: column\ndescription: Columnate text files\n---\n# column Plugin\nColumnate text files

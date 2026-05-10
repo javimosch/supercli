@@ -1,0 +1,1 @@
+---\nname: rkhunter\ndescription: Rootkit hunter scanner\n---\n# rkhunter Plugin\nRootkit hunter scanner

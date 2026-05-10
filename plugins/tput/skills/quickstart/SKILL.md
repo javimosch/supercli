@@ -1,0 +1,1 @@
+---\nname: tput\ndescription: Terminal capability database\n---\n# tput Plugin\nTerminal capability database

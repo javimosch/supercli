@@ -1,0 +1,1 @@
+---\nname: nano\ndescription: Nano text editor\n---\n# nano Plugin\nNano text editor

@@ -1,0 +1,1 @@
+---\nname: dnstop\ndescription: DNS traffic analyzer\n---\n# dnstop Plugin\nDNS traffic analyzer

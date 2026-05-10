@@ -1,0 +1,1 @@
+---\nname: ossec\ndescription: Host intrusion detection\n---\n# ossec Plugin\nHost intrusion detection

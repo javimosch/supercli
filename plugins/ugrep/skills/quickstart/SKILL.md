@@ -1,0 +1,1 @@
+---\nname: ugrep\ndescription: Ultra fast grep with Unicode\n---\n# ugrep Plugin\nUltra fast grep with Unicode

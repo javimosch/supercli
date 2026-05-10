@@ -1,0 +1,1 @@
+---\nname: aide\ndescription: File integrity checker\n---\n# aide Plugin\nFile integrity checker

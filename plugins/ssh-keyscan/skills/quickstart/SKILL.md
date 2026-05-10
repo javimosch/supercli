@@ -1,0 +1,1 @@
+---\nname: ssh-keyscan\ndescription: Collect SSH public keys\n---\n# ssh-keyscan Plugin\nCollect SSH public keys

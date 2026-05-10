@@ -1,0 +1,1 @@
+---\nname: collectl\ndescription: System resource monitor\n---\n# collectl Plugin\nSystem resource monitor

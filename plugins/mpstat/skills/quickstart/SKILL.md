@@ -1,0 +1,1 @@
+---\nname: mpstat\ndescription: Report processor statistics\n---\n# mpstat Plugin\nReport processor statistics

@@ -1,0 +1,1 @@
+---\nname: patch\ndescription: Apply diff patches to files\n---\n# patch Plugin\nApply diff patches to files

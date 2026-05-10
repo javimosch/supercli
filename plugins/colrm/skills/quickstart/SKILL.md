@@ -1,0 +1,1 @@
+---\nname: colrm\ndescription: Remove columns from lines\n---\n# colrm Plugin\nRemove columns from lines

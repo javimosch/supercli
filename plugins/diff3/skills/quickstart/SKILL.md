@@ -1,0 +1,1 @@
+---\nname: diff3\ndescription: Compare three files\n---\n# diff3 Plugin\nCompare three files

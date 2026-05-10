@@ -1,0 +1,1 @@
+---\nname: gawk\ndescription: GNU Awk\n---\n# gawk Plugin\nGNU Awk

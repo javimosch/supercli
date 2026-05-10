@@ -1,0 +1,1 @@
+---\nname: sdiff\ndescription: Side-by-side file merge\n---\n# sdiff Plugin\nSide-by-side file merge

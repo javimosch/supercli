@@ -1,0 +1,1 @@
+---\nname: chkrootkit\ndescription: Rootkit detection tool\n---\n# chkrootkit Plugin\nRootkit detection tool

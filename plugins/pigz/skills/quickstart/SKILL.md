@@ -1,0 +1,1 @@
+---\nname: pigz\ndescription: Parallel gzip implementation\n---\n# pigz Plugin\nParallel gzip implementation

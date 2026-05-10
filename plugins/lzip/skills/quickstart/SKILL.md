@@ -1,0 +1,1 @@
+---\nname: lzip\ndescription: LZip compression utility\n---\n# lzip Plugin\nLZip compression utility

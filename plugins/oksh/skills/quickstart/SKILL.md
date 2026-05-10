@@ -1,0 +1,1 @@
+---\nname: oksh\ndescription: Portable OpenBSD ksh\n---\n# oksh Plugin\nPortable OpenBSD ksh

@@ -1,0 +1,1 @@
+---\nname: col\ndescription: Filter reverse line feeds\n---\n# col Plugin\nFilter reverse line feeds

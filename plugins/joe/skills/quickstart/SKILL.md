@@ -1,0 +1,1 @@
+---\nname: joe\ndescription: Joe's Own Editor\n---\n# joe Plugin\nJoe's Own Editor

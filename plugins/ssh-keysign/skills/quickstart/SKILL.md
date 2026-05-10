@@ -1,0 +1,1 @@
+---\nname: ssh-keysign\ndescription: SSH host-based authentication\n---\n# ssh-keysign Plugin\nSSH host-based authentication

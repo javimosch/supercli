@@ -1,0 +1,1 @@
+---\nname: ssh-add\ndescription: Add private key to SSH agent\n---\n# ssh-add Plugin\nAdd private key to SSH agent

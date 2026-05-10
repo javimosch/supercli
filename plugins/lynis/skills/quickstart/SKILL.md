@@ -1,0 +1,1 @@
+---\nname: lynis\ndescription: Security auditing tool\n---\n# lynis Plugin\nSecurity auditing tool

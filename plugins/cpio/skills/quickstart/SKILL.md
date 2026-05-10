@@ -1,0 +1,1 @@
+---\nname: cpio\ndescription: Copy files to/from archives\n---\n# cpio Plugin\nCopy files to/from archives

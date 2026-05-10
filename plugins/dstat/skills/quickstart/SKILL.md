@@ -1,0 +1,1 @@
+---\nname: dstat\ndescription: Versatile resource statistics\n---\n# dstat Plugin\nVersatile resource statistics

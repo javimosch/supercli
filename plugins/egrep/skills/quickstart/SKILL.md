@@ -1,0 +1,1 @@
+---\nname: egrep\ndescription: Extended grep with ERE\n---\n# egrep Plugin\nExtended grep with ERE

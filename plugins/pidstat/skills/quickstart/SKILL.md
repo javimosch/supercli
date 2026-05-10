@@ -1,0 +1,1 @@
+---\nname: pidstat\ndescription: Report statistics for running processes\n---\n# pidstat Plugin\nReport statistics for running processes

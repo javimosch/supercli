@@ -1,0 +1,1 @@
+---\nname: rg\ndescription: ripgrep ultra-fast text search\n---\n# rg Plugin\nripgrep ultra-fast text search

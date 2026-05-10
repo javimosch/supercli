@@ -1,0 +1,1 @@
+---\nname: ed\ndescription: GNU Ed line editor\n---\n# ed Plugin\nGNU Ed line editor

@@ -1,0 +1,1 @@
+---\nname: ag\ndescription: The Silver Searcher\n---\n# ag Plugin\nThe Silver Searcher
