@@ -1,0 +1,1 @@
+---\nname: socat\ndescription: Multipurpose socket relay tool\n---\n# socat Plugin\nMultipurpose socket relay tool

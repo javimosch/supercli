@@ -1,0 +1,1 @@
+---\nname: memcached\ndescription: Distributed memory caching system\n---\n# memcached Plugin\nDistributed memory caching system

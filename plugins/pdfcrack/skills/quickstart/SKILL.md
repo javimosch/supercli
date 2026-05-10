@@ -1,0 +1,1 @@
+---\nname: pdfcrack\ndescription: PDF password cracking tool\n---\n# pdfcrack Plugin\nPDF password cracking tool

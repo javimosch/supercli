@@ -1,0 +1,1 @@
+---\nname: minisign\ndescription: Minimal cryptographic signing tool\n---\n# minisign Plugin\nMinimal cryptographic signing tool

@@ -1,0 +1,1 @@
+---\nname: dhall\ndescription: Dhall configuration language\n---\n# dhall Plugin\nDhall configuration language

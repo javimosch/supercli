@@ -1,0 +1,1 @@
+---\nname: mpg321\ndescription: MPEG audio player and decoder\n---\n# mpg321 Plugin\nMPEG audio player and decoder

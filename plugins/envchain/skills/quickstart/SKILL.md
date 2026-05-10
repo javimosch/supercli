@@ -1,0 +1,1 @@
+---\nname: envchain\ndescription: Secure environment variable management\n---\n# envchain Plugin\nSecure environment variable management

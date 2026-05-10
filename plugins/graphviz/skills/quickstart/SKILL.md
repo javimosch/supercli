@@ -1,0 +1,1 @@
+---\nname: graphviz\ndescription: Graph visualization from DOT files\n---\n# graphviz Plugin\nGraph visualization from DOT files

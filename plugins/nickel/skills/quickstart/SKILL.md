@@ -1,0 +1,1 @@
+---\nname: nickel\ndescription: Nickel configuration language\n---\n# nickel Plugin\nNickel configuration language

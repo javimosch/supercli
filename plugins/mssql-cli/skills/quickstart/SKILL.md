@@ -1,0 +1,1 @@
+---\nname: mssql-cli\ndescription: SQL Server command-line query tool\n---\n# mssql-cli Plugin\nSQL Server command-line query tool

@@ -1,0 +1,1 @@
+---\nname: webp\ndescription: WebP image encoder and decoder\n---\n# webp Plugin\nWebP image encoder and decoder

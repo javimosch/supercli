@@ -1,0 +1,1 @@
+---\nname: pdfgrep\ndescription: Search text in PDF files\n---\n# pdfgrep Plugin\nSearch text in PDF files

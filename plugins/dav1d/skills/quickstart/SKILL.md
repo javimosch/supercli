@@ -1,0 +1,1 @@
+---\nname: dav1d\ndescription: AV1 video decoder\n---\n# dav1d Plugin\nAV1 video decoder

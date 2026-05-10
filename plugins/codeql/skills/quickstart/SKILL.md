@@ -1,0 +1,1 @@
+---\nname: codeql\ndescription: CodeQL security analysis CLI\n---\n# codeql Plugin\nCodeQL security analysis CLI

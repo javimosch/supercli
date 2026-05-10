@@ -1,0 +1,1 @@
+---\nname: meilisearch\ndescription: Meilisearch search engine\n---\n# meilisearch Plugin\nMeilisearch search engine

@@ -1,0 +1,1 @@
+---\nname: signify\ndescription: OpenBSD cryptographic signing\n---\n# signify Plugin\nOpenBSD cryptographic signing

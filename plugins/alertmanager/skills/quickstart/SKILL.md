@@ -1,0 +1,1 @@
+---\nname: alertmanager\ndescription: Alertmanager for Prometheus alerts\n---\n# alertmanager Plugin\nAlertmanager for Prometheus alerts

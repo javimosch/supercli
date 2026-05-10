@@ -1,0 +1,1 @@
+---\nname: gnuplot\ndescription: Interactive plotting and charting\n---\n# gnuplot Plugin\nInteractive plotting and charting

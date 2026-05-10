@@ -1,0 +1,1 @@
+---\nname: influxdb\ndescription: InfluxDB time-series database\n---\n# influxdb Plugin\nInfluxDB time-series database

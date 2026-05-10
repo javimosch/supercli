@@ -1,0 +1,1 @@
+---\nname: svt-av1\ndescription: SVT-AV1 video encoder\n---\n# svt-av1 Plugin\nSVT-AV1 video encoder

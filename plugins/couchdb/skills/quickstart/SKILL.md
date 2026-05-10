@@ -1,0 +1,1 @@
+---\nname: couchdb\ndescription: Apache CouchDB NoSQL database\n---\n# couchdb Plugin\nApache CouchDB NoSQL database

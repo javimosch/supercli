@@ -1,0 +1,1 @@
+---\nname: sqlfmt\ndescription: SQL formatter\n---\n# sqlfmt Plugin\nSQL formatter

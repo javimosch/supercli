@@ -1,0 +1,1 @@
+---\nname: nats\ndescription: NATS messaging system CLI\n---\n# nats Plugin\nNATS messaging system CLI

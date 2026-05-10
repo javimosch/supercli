@@ -1,0 +1,1 @@
+---\nname: dotenv\ndescription: Load .env files into environment\n---\n# dotenv Plugin\nLoad .env files into environment

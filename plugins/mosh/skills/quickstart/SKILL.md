@@ -1,0 +1,1 @@
+---\nname: mosh\ndescription: Mobile SSH with roaming and intermittent connectivity\n---\n# mosh Plugin\nMobile SSH with roaming and intermittent connectivity

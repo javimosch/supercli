@@ -1,0 +1,1 @@
+---\nname: usql\ndescription: Universal SQL client for multiple databases\n---\n# usql Plugin\nUniversal SQL client for multiple databases

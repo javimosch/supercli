@@ -1,0 +1,1 @@
+---\nname: rav1e\ndescription: AV1 video encoder in Rust\n---\n# rav1e Plugin\nAV1 video encoder in Rust

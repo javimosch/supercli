@@ -1,0 +1,1 @@
+---\nname: semgrep\ndescription: Static analysis security scanner\n---\n# semgrep Plugin\nStatic analysis security scanner

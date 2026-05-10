@@ -1,0 +1,1 @@
+---\nname: proxychains\ndescription: Force TCP connections through proxies\n---\n# proxychains Plugin\nForce TCP connections through proxies

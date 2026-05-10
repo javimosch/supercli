@@ -1,0 +1,1 @@
+---\nname: R\ndescription: R programming language for statistics\n---\n# R Plugin\nR programming language for statistics

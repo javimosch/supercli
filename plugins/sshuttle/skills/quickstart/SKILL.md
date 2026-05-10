@@ -1,0 +1,1 @@
+---\nname: sshuttle\ndescription: Transparent VPN over SSH\n---\n# sshuttle Plugin\nTransparent VPN over SSH

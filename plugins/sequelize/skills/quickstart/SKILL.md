@@ -1,0 +1,1 @@
+---\nname: sequelize\ndescription: Sequelize ORM CLI\n---\n# sequelize Plugin\nSequelize ORM CLI

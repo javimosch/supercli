@@ -1,0 +1,1 @@
+---\nname: pgformatter\ndescription: PostgreSQL SQL formatter\n---\n# pgformatter Plugin\nPostgreSQL SQL formatter

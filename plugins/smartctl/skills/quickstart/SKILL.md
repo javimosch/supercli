@@ -1,0 +1,1 @@
+---\nname: smartctl\ndescription: S.M.A.R.T. disk health monitoring\n---\n# smartctl Plugin\nS.M.A.R.T. disk health monitoring
