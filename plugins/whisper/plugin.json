@@ -1,0 +1,38 @@
+{
+  "name": "whisper",
+  "version": "0.1.0",
+  "description": "OpenAI Whisper speech-to-text CLI",
+  "source": "https",
+  "checks": [{"type": "binary", "name": "whisper"}],
+  "install_guidance": {
+    "plugin": "whisper",
+    "binary": "whisper",
+    "check": "which whisper",
+    "install_steps": [
+      "brew install whisper-cpp",
+      "Verify: whisper --version",
+      "supercli plugins install ./plugins/whisper --on-conflict replace --json"
+    ]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "whisper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print whisper version",
+      "adapter": "process",
+      "adapterConfig": {"command": "whisper", "baseArgs": ["--version"], "missingDependencyHelp": "Install whisper: brew install whisper-cpp"},
+      "args": []
+    },
+    {
+      "namespace": "whisper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to whisper CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "whisper", "passthrough": true, "missingDependencyHelp": "Install whisper: brew install whisper-cpp"},
+      "args": []
+    }
+  ]
+}
