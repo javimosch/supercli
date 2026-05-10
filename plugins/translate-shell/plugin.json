@@ -1,0 +1,112 @@
+{
+  "name": "translate-shell",
+  "version": "0.1.0",
+  "description": "translate-shell — CLI translator using Google Translate, Bing Translator, Yandex.Translate, etc. Pipe-friendly, 40+ languages, no API key needed.",
+  "source": "https://github.com/soimort/translate-shell",
+  "checks": [
+    { "type": "binary", "name": "trans" },
+    { "type": "binary", "name": "gawk" }
+  ],
+  "install_guidance": {
+    "plugin": "translate-shell",
+    "binary": "trans",
+    "check": "which trans",
+    "install_steps": [
+      "brew install translate-shell  # macOS, or:",
+      "sudo apt-get install translate-shell  # Debian/Ubuntu, or:",
+      "git clone https://github.com/soimort/translate-shell && cd translate-shell && make && sudo make install",
+      "Verify: trans --version",
+      "supercli plugins install ./plugins/translate-shell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "translate-shell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print translate-shell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "baseArgs": ["-V"],
+        "missingDependencyHelp": "Install translate-shell: brew install translate-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "translate-shell",
+      "resource": "text",
+      "action": "translate",
+      "description": "Translate text (passthrough: trans [source]:[target] text). Example: trans :es 'Hello world'",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "baseArgs": ["-j", "-no-ansi"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install translate-shell: brew install translate-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "translate-shell",
+      "resource": "text",
+      "action": "brief",
+      "description": "Brief translation output, no extra info (passthrough: trans -b [source]:[target] text)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "baseArgs": ["-b", "-no-ansi"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install translate-shell: brew install translate-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "translate-shell",
+      "resource": "list",
+      "action": "languages",
+      "description": "Print reference table of languages and codes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "baseArgs": ["-R"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install translate-shell: brew install translate-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "translate-shell",
+      "resource": "list",
+      "action": "engines",
+      "description": "List available translation engines (google, bing, yandex, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "baseArgs": ["-S"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install translate-shell: brew install translate-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "translate-shell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trans CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install translate-shell: brew install translate-shell"
+      },
+      "args": []
+    }
+  ]
+}

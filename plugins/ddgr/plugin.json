@@ -1,0 +1,80 @@
+{
+  "name": "ddgr",
+  "version": "0.1.0",
+  "description": "ddgr — DuckDuckGo from the terminal. Search the web via DuckDuckGo with JSON output, site filters, time ranges, and safe search. No API key needed.",
+  "source": "https://github.com/jarun/ddgr",
+  "checks": [
+    { "type": "binary", "name": "ddgr" }
+  ],
+  "install_guidance": {
+    "plugin": "ddgr",
+    "binary": "ddgr",
+    "check": "which ddgr",
+    "install_steps": [
+      "pip install ddgr",
+      "Verify: ddgr --version",
+      "supercli plugins install ./plugins/ddgr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ddgr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ddgr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ddgr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ddgr: pip install ddgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ddgr",
+      "resource": "web",
+      "action": "search",
+      "description": "Search DuckDuckGo (passthrough: ddgr <keywords> [--json] [-t week] [-w site.com] [--unsafe])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ddgr",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ddgr: pip install ddgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ddgr",
+      "resource": "web",
+      "action": "json",
+      "description": "Search DuckDuckGo with JSON output (passthrough: ddgr --json <keywords>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ddgr",
+        "baseArgs": ["--json", "--np"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ddgr: pip install ddgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ddgr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ddgr CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ddgr",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ddgr: pip install ddgr"
+      },
+      "args": []
+    }
+  ]
+}
