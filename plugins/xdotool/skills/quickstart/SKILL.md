@@ -1,0 +1,1 @@
+---\nname: xdotool\ndescription: X11 automation\n---\n# xdotool Plugin\nX11 automation

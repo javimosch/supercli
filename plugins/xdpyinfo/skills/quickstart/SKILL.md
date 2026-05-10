@@ -1,0 +1,1 @@
+---\nname: xdpyinfo\ndescription: X11 display info\n---\n# xdpyinfo Plugin\nX11 display info

@@ -1,0 +1,1 @@
+---\nname: xman\ndescription: X11 manual browser\n---\n# xman Plugin\nX11 manual browser

@@ -1,0 +1,1 @@
+---\nname: xrandr\ndescription: X11 resolution/rotation\n---\n# xrandr Plugin\nX11 resolution/rotation

@@ -1,0 +1,1 @@
+---\nname: xcalc\ndescription: X11 scientific calculator\n---\n# xcalc Plugin\nX11 scientific calculator

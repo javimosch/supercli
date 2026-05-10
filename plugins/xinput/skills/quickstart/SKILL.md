@@ -1,0 +1,1 @@
+---\nname: xinput\ndescription: X11 input device config\n---\n# xinput Plugin\nX11 input device config

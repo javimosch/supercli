@@ -1,0 +1,1 @@
+---\nname: xmessage\ndescription: X11 message display\n---\n# xmessage Plugin\nX11 message display

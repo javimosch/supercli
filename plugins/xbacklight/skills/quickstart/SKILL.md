@@ -1,0 +1,1 @@
+---\nname: xbacklight\ndescription: X11 backlight control\n---\n# xbacklight Plugin\nX11 backlight control

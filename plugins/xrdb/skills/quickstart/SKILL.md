@@ -1,0 +1,1 @@
+---\nname: xrdb\ndescription: X11 resource database\n---\n# xrdb Plugin\nX11 resource database

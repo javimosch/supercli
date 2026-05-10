@@ -1,0 +1,1 @@
+---\nname: xprop\ndescription: X11 property display\n---\n# xprop Plugin\nX11 property display

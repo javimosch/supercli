@@ -1,0 +1,1 @@
+---\nname: xterm\ndescription: X terminal emulator\n---\n# xterm Plugin\nX terminal emulator

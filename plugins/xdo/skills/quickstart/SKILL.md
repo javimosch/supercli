@@ -1,0 +1,1 @@
+---\nname: xdo\ndescription: X11 window control\n---\n# xdo Plugin\nX11 window control

@@ -1,0 +1,1 @@
+---\nname: xhost\ndescription: X11 access control\n---\n# xhost Plugin\nX11 access control

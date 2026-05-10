@@ -1,0 +1,1 @@
+---\nname: xpr\ndescription: X11 print window\n---\n# xpr Plugin\nX11 print window

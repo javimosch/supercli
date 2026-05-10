@@ -1,0 +1,1 @@
+---\nname: xcursorgen\ndescription: X11 cursor generator\n---\n# xcursorgen Plugin\nX11 cursor generator

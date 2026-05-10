@@ -1,0 +1,1 @@
+---\nname: xmore\ndescription: X11 text pager\n---\n# xmore Plugin\nX11 text pager
