@@ -1,0 +1,100 @@
+{
+  "name": "gopassui-adm",
+  "version": "0.1.0",
+  "description": "Administrative commands for gopassui - change UI password, manage remote deployment",
+  "source": "https://github.com/jarancibia/gopassui",
+  "commands": [
+    {
+      "namespace": "gopassui-adm",
+      "resource": "password",
+      "action": "change",
+      "description": "Change the gopassui basic authentication password on dk1",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": [
+          "-c",
+          "ssh dk1@92.113.145.178 \"sudo sed -i 's/BASIC_AUTH_PASS=.*/BASIC_AUTH_PASS=$1/' /etc/systemd/system/gopassui.service && sudo systemctl daemon-reload && sudo systemctl restart gopassui && echo 'Password changed successfully'\""
+        ],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Ensure SSH access to dk1 is configured"
+      },
+      "args": [
+        {
+          "name": "password",
+          "type": "string",
+          "required": true,
+          "description": "New password for gopassui authentication"
+        }
+      ]
+    },
+    {
+      "namespace": "gopassui-adm",
+      "resource": "password",
+      "action": "generate",
+      "description": "Generate a random password and set it for gopassui authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": [
+          "-c",
+          "NEW_PASS=$(openssl rand -base64 16 | tr -d '=+/' | cut -c1-16) && ssh dk1@92.113.145.178 \"sudo sed -i \\\"s/BASIC_AUTH_PASS=.*/BASIC_AUTH_PASS=$NEW_PASS/\\\" /etc/systemd/system/gopassui.service && sudo systemctl daemon-reload && sudo systemctl restart gopassui\" && echo \"Password changed to: $NEW_PASS\""
+        ],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Ensure SSH access to dk1 is configured"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopassui-adm",
+      "resource": "password",
+      "action": "show",
+      "description": "Show the current gopassui authentication password",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": [
+          "-c",
+          "ssh dk1@92.113.145.178 'sudo systemctl show gopassui.service | grep BASIC_AUTH_PASS'"
+        ],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Ensure SSH access to dk1 is configured"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopassui-adm",
+      "resource": "service",
+      "action": "restart",
+      "description": "Restart the gopassui service on dk1",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": [
+          "-c",
+          "ssh dk1@92.113.145.178 'sudo systemctl restart gopassui'"
+        ],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Ensure SSH access to dk1 is configured"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopassui-adm",
+      "resource": "service",
+      "action": "status",
+      "description": "Check the status of the gopassui service on dk1",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": [
+          "-c",
+          "ssh dk1@92.113.145.178 'sudo systemctl status gopassui'"
+        ],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Ensure SSH access to dk1 is configured"
+      },
+      "args": []
+    }
+  ]
+}
