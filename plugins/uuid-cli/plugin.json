@@ -1,12 +1,39 @@
 {
   "name": "uuid-cli",
   "version": "1.0.0",
-  "description": "uuid-cli — generate UUID v4 identifiers. Takes an optional count argument for bulk generation. Simple, fast, non-interactive.",
-  "source": "https://github.com/jarancibia/uuid-cli",
+  "description": "uuid-cli — generate UUID v4 identifiers. Takes an optional count argument for bulk generation. Simple, fast, non-interactive. Written in Go.",
+  "source": "https://github.com/javimosch/uuid-cli",
   "checks": [{"type": "binary", "name": "uuid-cli"}],
-  "install_guidance": {"plugin":"uuid-cli","binary":"uuid-cli","check":"which uuid-cli","install_steps":["Install from ~/ai/uuid-cli/bin: cp ~/ai/uuid-cli/bin/uuid-cli /usr/local/bin/","Verify: uuid-cli","supercli plugins install ./plugins/uuid-cli --on-conflict replace --json"]},
+  "install_guidance": {
+    "plugin": "uuid-cli",
+    "binary": "uuid-cli",
+    "check": "which uuid-cli",
+    "install_steps": [
+      "Download: curl -LO https://github.com/javimosch/uuid-cli/releases/latest/download/uuid-cli-linux-amd64",
+      "chmod +x uuid-cli-linux-amd64",
+      "sudo mv uuid-cli-linux-amd64 /usr/local/bin/uuid-cli",
+      "Verify: uuid-cli",
+      "supercli plugins install ./plugins/uuid-cli --on-conflict replace --json"
+    ],
+    "note": "Go binary from GitHub releases. Also buildable from source: git clone https://github.com/javimosch/uuid-cli && cd uuid-cli && go build -o uuid-cli ."
+  },
   "learn": {"file": "skills/quickstart/SKILL.md"},
   "commands": [
-    {"namespace":"uuid","resource":"self","action":"generate","description":"Generate one or more UUID v4 identifiers","adapter":"process","adapterConfig":{"command":"uuid-cli","positionalArgs":["count"],"timeout_ms":5000,"missingDependencyHelp":"Install uuid-cli"},"args":[{"name":"count","type":"number","required":false,"description":"Number of UUIDs to generate (default: 1)"}]}
+    {
+      "namespace": "uuid",
+      "resource": "self",
+      "action": "generate",
+      "description": "Generate one or more UUID v4 identifiers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uuid-cli",
+        "positionalArgs": ["count"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install uuid-cli: download from https://github.com/javimosch/uuid-cli"
+      },
+      "args": [
+        {"name": "count", "type": "number", "required": false, "description": "Number of UUIDs to generate (default: 1)"}
+      ]
+    }
   ]
 }
