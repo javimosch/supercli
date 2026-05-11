@@ -1,0 +1,6 @@
+---
+name: s3fs
+description: s3fs — S3 mount filesystem CLI. Mount S3 buckets as local filesystem via FUSE.
+---
+# s3fs
+s3fs — S3 mount filesystem CLI. Mount S3 buckets as local filesystem via FUSE.
