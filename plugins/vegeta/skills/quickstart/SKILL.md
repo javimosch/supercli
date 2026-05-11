@@ -1,34 +1,11 @@
 ---
 name: vegeta
-description: Use this skill when the user wants to http load testing tool and library.
+description: vegeta — HTTP load testing CLI and library. Attack mode with configurable rate, duration, and concurrency. JSON reports with latency percentiles.
 ---
+# vegeta
+vegeta — HTTP load testing CLI and library. Attack mode with configurable rate, duration, and concurrency. JSON reports with latency percentiles.
 
-# Vegeta Plugin
-
-HTTP load testing tool and library.
-
-## Commands
-
-### Operations
-- `vegeta attack run` — run attack via vegeta
-- `vegeta report generate` — generate report via vegeta
-
-## Usage Examples
-- "vegeta --help"
-- "vegeta <args>"
-
-## Installation
-
+## Install
 ```bash
-go install github.com/tsenart/vegeta@latest
+curl -LO https://github.com/tsenart/vegeta/releases/download/v12.13.0/vegeta_12.13.0_linux_amd64.tar.gz && tar xzf vegeta_12.13.0_linux_amd64.tar.gz && sudo mv vegeta /usr/local/bin/ && rm -f vegeta_12.13.0_linux_amd64.tar.gz LICENSE README.md
 ```
-
-## Examples
-
-```bash
-vegeta --version
-vegeta --help
-```
-
-## Key Features
-- http\n- benchmark\n- load-testing
