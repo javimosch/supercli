@@ -1,1 +1,0 @@
----\nname: xclock\ndescription: X11 clock application\n---\n# xclock Plugin\nX11 clock application

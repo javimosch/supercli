@@ -1,1 +1,0 @@
----\nname: xeyes\ndescription: X11 eye tracking demo\n---\n# xeyes Plugin\nX11 eye tracking demo
