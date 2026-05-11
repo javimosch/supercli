@@ -150,6 +150,9 @@ async function handleRemoteMessage(ws, message) {
       case 'generate':
         result = await executeGopassCommand(['generate', message.path, message.length || '24']);
         break;
+      case 'delete':
+        result = await executeGopassCommand(['delete', message.path], message.password);
+        break;
       default:
         result = { success: false, error: 'Unknown command' };
     }
