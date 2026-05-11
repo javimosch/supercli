@@ -1,0 +1,14 @@
+{
+  "name": "dig",
+  "version": "0.1.0",
+  "description": "dig — DNS lookup utility. Query DNS name servers for A, AAAA, MX, NS, TXT, CNAME records and more. Non-interactive, scriptable. Part of bind-utils.",
+  "source": "https://gitlab.isc.org/isc-projects/bind9",
+  "checks": [{"type": "binary", "name": "dig"}],
+  "install_guidance": {"plugin":"dig","binary":"dig","check":"which dig","install_steps":["brew install bind","Verify: dig --version","supercli plugins install ./plugins/dig --on-conflict replace --json"],"note":"Also available via apt install dnsutils."},
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {"namespace":"dig","resource":"self","action":"version","description":"Print dig version","adapter":"process","adapterConfig":{"command":"dig","baseArgs":["-v"],"missingDependencyHelp":"Install dig: brew install bind"},"args":[]},
+    {"namespace":"dig","resource":"dns","action":"resolve","description":"Resolve DNS records for a domain","adapter":"process","adapterConfig":{"command":"dig","positionalArgs":["domain"],"passthrough":true,"timeout_ms":15000,"missingDependencyHelp":"Install dig"},"args":[{"name":"domain","type":"string","required":true,"description":"Domain to query (e.g., example.com)"},{"name":"record_type","type":"string","required":false,"description":"Record type: A, AAAA, MX, NS, TXT, CNAME, SOA (default: A)"}]},
+    {"namespace":"dig","resource":"_","action":"_","description":"Passthrough to dig CLI","adapter":"process","adapterConfig":{"command":"dig","passthrough":true,"missingDependencyHelp":"Install dig"},"args":[]}
+  ]
+}

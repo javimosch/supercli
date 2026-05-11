@@ -37,6 +37,62 @@
     },
     {
       "namespace": "gopass",
+      "resource": "self",
+      "action": "setup",
+      "description": "Show instructions for running the interactive setup script",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["🔐 gopass Interactive Setup", "==========================", "", "For security reasons, the setup script must be run manually.", "This ensures your master password is never seen by the AI.", "", "Find your gopass plugin directory:", "", "If you installed supercli globally (npm install -g):", "  npm root -g | xargs -I {} find {} -name setup.sh -path \"*/gopass/*\"", "", "If you're in the supercli repository:", "  find . -name setup.sh -path \"*/gopass/*\"", "", "Or search your home directory:", "  find ~ -name setup.sh -path \"*/gopass/*\" 2>/dev/null", "", "Once found, run:", "  cd <path-to-gopass-plugin> && ./setup.sh", "", "The setup script will:", "  - Prompt for your master password interactively (AI never sees it)", "  - Generate GPG keys with your chosen password", "  - Initialize gopass with the new key", "  - Configure environment variables in your shell config", "", "After setup, restart your shell or source your config file."],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Setup instructions not available. Please run the setup script manually from the gopass plugin directory."
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Show instructions to start the gopass remote daemon (run manually due to supercli timeout)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["🔐 To start the gopass daemon, run:", "", "cd ~/ai/supercli/plugins/gopass", "./start-daemon.sh", "", "Or directly:", "node daemon.js start --background"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Daemon script not found. Ensure gopass plugin is properly installed."
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
+      "resource": "daemon",
+      "action": "stop",
+      "description": "Stop the gopass remote daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": ["-c", "find . -name 'daemon.js' -path '*/gopass/*' 2>/dev/null | head -1 | xargs -I {} node {} stop || (echo 'Daemon script not found.' && exit 1)"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Daemon script not found. Ensure gopass plugin is properly installed."
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
+      "resource": "daemon",
+      "action": "status",
+      "description": "Check the status of the gopass remote daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": ["-c", "find . -name 'daemon.js' -path '*/gopass/*' 2>/dev/null | head -1 | xargs -I {} node {} status || (echo 'Daemon script not found.' && exit 1)"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Daemon script not found. Ensure gopass plugin is properly installed."
+      },
+      "args": []
+    },
+    {
+      "namespace": "gopass",
       "resource": "secret",
       "action": "show",
       "description": "Show a secret (password/credential) by path",

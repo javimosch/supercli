@@ -1,83 +1,33 @@
 {
   "name": "fkill",
-  "version": "0.1.0",
-  "description": "Fabulously kill processes. Cross-platform",
-  "source": "https://github.com/sindresorhus/fkill-cli",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "fkill"
-    }
-  ],
-  "install_guidance": {
-    "plugin": "fkill",
-    "binary": "fkill",
-    "check": "which fkill",
-    "install_steps": [
-      "npm install -g fkill-cli",
-      "Verify: fkill --version",
-      "supercli plugins install ./plugins/fkill --on-conflict replace --json"
-    ]
+  "description": "Fabulously kill processes. Cross-platform process killer with interactive UI.",
+  "version": "1.0.0",
+  "binary": "fkill",
+  "check": "fkill --version",
+  "install": {
+    "method": "npm",
+    "command": "npm install --global fkill-cli"
   },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
-  },
-  "commands": [
-    {
-      "namespace": "fkill",
-      "resource": "self",
-      "action": "version",
-      "description": "Print fkill version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "fkill",
-        "missingDependencyHelp": "Install fkill: npm install -g fkill-cli",
-        "baseArgs": [
-          "--version"
-        ]
-      },
+  "commands": {
+    "kill": {
+      "command": "fkill {{process}}",
+      "description": "Kill process by name, PID, or port",
+      "args": ["process"]
+    },
+    "interactive": {
+      "command": "fkill",
+      "description": "Launch interactive process killer UI",
       "args": []
     },
-    {
-      "namespace": "fkill",
-      "resource": "process",
-      "action": "kill",
-      "description": "kill process via fkill",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "fkill",
-        "missingDependencyHelp": "Install fkill: npm install -g fkill-cli",
-        "passthrough": true,
-        "timeout_ms": 30000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
+    "force": {
+      "command": "fkill --force {{process}}",
+      "description": "Force kill a process",
+      "args": ["process"]
     },
-    {
-      "namespace": "fkill",
-      "resource": "_",
-      "action": "_",
-      "description": "_ _ via fkill",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "fkill",
-        "missingDependencyHelp": "Install fkill: npm install -g fkill-cli",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
+    "port": {
+      "command": "fkill :{{port}}",
+      "description": "Kill process by port number",
+      "args": ["port"]
     }
-  ]
+  }
 }
