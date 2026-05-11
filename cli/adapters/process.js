@@ -12,8 +12,8 @@ function toCliFlags(flags) {
       continue
     }
     if (v === true) args.push(`--${k}`)
-    else if (typeof v === "object") args.push(`--${k}`, JSON.stringify(v))
-    else args.push(`--${k}`, String(v))
+    else if (typeof v === "object") args.push(`--${k}=${JSON.stringify(v)}`)
+    else args.push(`--${k}=${String(v)}`)
   }
   return args
 }
