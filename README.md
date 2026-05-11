@@ -1,253 +1,192 @@
-# supercli — 3,000+ CLI Tools + Standardized Execution Layer
+<p align="center">
+  <img src="https://img.shields.io/npm/v/superacli" alt="npm">
+  <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+  <img src="https://img.shields.io/github/stars/javimosch/supercli?style=social" alt="Stars">
+</p>
 
-[![npm version](https://img.shields.io/npm/v/superacli.svg)](https://www.npmjs.com/package/superacli)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+<h1 align="center">supercli ⎯ 3,000 CLI Tools, One Command</h1>
 
-> **3,000 curated CLI tools** (shells, DevOps, data, web, cloud, security, AI) + a unified capability interface
-> — consistent inputs, outputs, and execution for everything.
+<p align="center">
+  <b>Zero install.</b> Run any CLI tool with <code>npx supercli</code>.<br>
+  Works for humans. Works for AI agents. Everything returns JSON.
+</p>
 
-**The complete developer toolkit:** bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 2,990+ more — all discoverable, quality-checked, and ready to install.
+<p align="center">
+  <a href="#-quick-start"><b>Quick Start →</b></a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-examples"><b>Examples →</b></a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="#-for-ai-agents"><b>For AI Agents →</b></a>
+</p>
 
-## ⚡ TL;DR
+<br>
 
-> 3,000 CLI tools. One consistent interface. JSON envelopes. Zero glue code.
+---
 
-```bash
-# 1. Discover capabilities
-npx supercli skills search "deploy" --json
+**The problem:** Every CLI tool has different flags, different output formats, different install methods. You waste time learning syntax instead of getting work done. AI agents can't use most tools because output is unpredictable.
 
-# 2. Inspect it
-npx supercli skills get aws.cfn.deploy --json
+**supercli fixes this.** 3,000 tools. One interface. JSON out. Zero guesswork.
 
-# 3. Execute with predictable output
-npx supercli aws cfn deploy --stack-name my-stack --json
-```
+---
 
-👉 Works the same across CLI tools, APIs, MCP servers, and workflows
-👉 No glue code, no parsing, no guesswork
-👉 Every command returns deterministic JSON envelopes
-
-## ⚡ Example
-
-```bash
-npx supercli ask "list my tasks and recent commits"
-```
-
-```json
-{
-  "tasks": [...],
-  "commits": [...]
-}
-```
-
-→ Combines multiple tools into one structured response (multi-tool execution).
-
-## The Problem
-
-Every tool speaks a different language:
-
-- CLIs → flags & inconsistent output
-- APIs → schemas & auth
-- MCP/tools → custom protocols
-- Workflows → glue code everywhere
-
-Humans waste time learning syntax. Agents fail because nothing is predictable.
-
-## The Solution
-
-supercli turns everything into capabilities:
-
-- Same structure → `supercli <namespace> <resource> <action>`
-- Same output → deterministic JSON envelopes
-- Same discovery → searchable skill graph
-- Same execution → no custom integrations
-
-## 🚀 Quick Start
+## ⚡ Quick Start
 
 ```bash
-# Explore capabilities
-npx supercli skills list
-npx supercli skills search "database"
-
-# Run real commands
+# Run without installing anything
 npx supercli uuid self generate
+# → {"uuid":"550e8400-e29b-41d4-a716-446655440000"}
+
+# Check if a website is up
 npx supercli http check health --url https://example.com
-npx supercli beads issue list --json
+# → {"status":"ok","ms":142,"code":200}
 
-# AI-driven execution
-npx supercli ask "show my tasks and recent commits"
+# Generate a password
+npx supercli passgen
+# → {"password":"xK9#mP2$vL7@nQ5%"}
 
-# Manage plugins
-npx supercli plugins list
-npx supercli plugins explore
-npx supercli plugins install ./plugins/uuid-cli
+# Convert CSV to JSON
+echo "name,age\nAlice,30\nBob,25" | npx supercli csv json convert
+# → [{"name":"Alice","age":"30"},{"name":"Bob","age":"25"}]
 
-# Agent mode
-npx supercli --help-json
-npx supercli skills get <capability> --json
+# AI mode — describe what you want
+npx supercli ask "generate a uuid and check if google.com is up"
+# → Combines multiple tools automatically
 ```
 
-Install globally: `npm install -g superacli` for repeated use.
-Server mode: See [docs/features/server-plugins.md](docs/features/server-plugins.md)
+> 💡 No install? Correct. `npx supercli` works immediately.<br>
+> Want it global? `npm install -g superacli`
 
+---
 
-## 1000+ CLI Tools, Discoverable & Ready
+## 🚀 What Makes This Different
 
-Every tool includes complete metadata (description, tags, source URL, install methods). Browse by category, search by tag, install what you need:
+| Instead of... | You do... |
+|--------------|-----------|
+| Installing 50 tools separately | One command: `npx supercli` |
+| Reading man pages for flags | `supercli skills get <tool>.*` → structured metadata |
+| Parsing inconsistent output | `--json` on *every* tool |
+| Gluing tools with shell scripts | `supercli ask "do X and Y"` |
+| Teaching agents tool syntax | JSON envelopes, machine-readable errors |
+
+---
+
+## 🛠️ Examples
 
 ```bash
-# Discover
-supercli plugins list
-supercli plugins search --tag rust
-supercli plugins search --tag devops
+# ---- EVERYDAY TOOLS ----
 
-# Install
-supercli plugins install ./plugins/cargo ./plugins/tokio
-supercli plugins install ./plugins/docker ./plugins/kubernetes
+# Get weather for any city
+npx supercli weather now "Tokyo"
+# → {"temp_C":22,"condition":"Clear","humidity":65}
+
+# Get system info as JSON
+npx supercli sys info
+# → {"host":"my-server","cpus":8,"mem":"32GB","uptime":"14d"}
+
+# Encode/decode base64
+npx supercli base64 encode "hello world"
+npx supercli base64 decode "aGVsbG8gd29ybGQ="
+
+# Format a JSON file
+cat data.json | npx supercli json validate
+cat data.json | npx supercli json pick "users.*.name"
+
+# Check SSL certificate details
+npx supercli cert info --domain github.com
+# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
+
+# ---- AI & DATA ----
+
+# Count tokens in text (LLM context planning)
+echo "Your prompt text here" | npx supercli token count
+# → {"chars":142,"words":24,"tokens_estimate":32}
+
+# Profile a CSV file
+npx supercli data profile data.csv
+# → {"columns":5,"rows":1000,"types":{"age":"numeric","name":"string"}}
+
+# Scan for secrets in code
+npx supercli secret scan ./src
+# → [{"file":"config.js","line":42,"type":"AWS Access Key"}]
 ```
 
-Complete toolkit: Shells, DevOps, cloud providers (AWS, Azure, GCP), databases, data tools, development frameworks, testing, security, and more.
+---
 
-## For Humans & Agents
+## 🤖 For AI Agents
 
-### For Humans
+supercli was designed for agents from day one.
 
-Stop juggling CLI tools with different syntax and outputs. supercli gives you one consistent interface to 1000+ quality-checked tools—so you stop learning syntax and start executing faster.
-
-| Instead of | You do |
-| ---------- | ------ |
-| Hunting for tools | `supercli plugins search "deploy"` or `supercli plugins list` |
-| Reading 50-page docs | `supercli skills get <tool>.*` |
-| Guessing flags | `supercli inspect ...` |
-| Parsing output | `--json` everywhere |
-| Gluing tools together | `supercli ask "do X and Y"` |
-
-### For AI Agents
-
-**Agents don't guess—they query, inspect, and execute.** Access a standardized skill graph where every capability follows predictable input/output envelopes. Discover, compose, and execute workflows with machine-readable metadata that enables reliable automation.
-
-- **Explicit Boundaries:** Each skill declares capabilities, inputs, outputs—nothing hidden
-- **Consistent Wrappers:** `--json`, `--silent` modes prevent interactive prompts
-- **Audit Trail:** Every invocation logs plugin, action, inputs, and outputs
-- **Opt-In Power:** Full CLI access requires explicit passthrough
-- **Predictable Errors:** Standardized error envelopes with machine-readable codes
-
-## What You Get
-
-- 🔍 **3,000 curated CLI tools** — system utilities, compilers, databases, cloud, security, monitoring, and more
-- ⚡ Run any tool with one consistent interface — no syntax juggling
-- 🤖 Give agents predictable, structured execution
-- 🔗 Combine multiple tools without glue code
-- 📦 Extend anything via plugins
-- 🛠️ **25 custom Go CLI tools** published at [github.com/javimosch](https://github.com/javimosch?tab=repositories)
-
-## CLI Usage Examples
-
-```bash
-# --- Discovery ---
-npx supercli skills list
-npx supercli skills search "database"
-
-# --- Inspection (for agents) ---
-npx supercli inspect beads issue create
-npx supercli skills get beads.issue.create --json
-
-# --- Execution ---
-npx supercli beads issue create --title "Fix bug"
-npx supercli beads issue list --json
-npx supercli gwc drive files list
-
-# --- AI ---
-npx supercli ask "do X and Y"
-
-# --- Plugins ---
-npx supercli plugins list
-npx supercli plugins install commiat
-npx supercli plugins show commiat
-```
-
-See [docs/plugin-harness-guide.md](docs/plugin-harness-guide.md) for creating your own harnesses.
-
-## Architecture
-
-The supercli router:
-
-- **Discovers** capabilities from every adapter, caches metadata for instant lookup
-- **Routes** commands to correct harness based on namespace
-- **Executes** with unified error handling, envelopes, and output formatting
-- **Surfaces** machine-readable descriptions so agents can plan against the capability graph
-
-supercli replaces tool-specific syntax with a **queryable, executable capability graph**.
-
-## Capability Sources
-
-supercli generates capabilities from multiple sources:
-
-- **Bundled Harnesses** – beads, gwc (Google Workspace), commiat
-- **Built-in Adapters** – OpenAPI specs, HTTP, MCP servers
-- **Plugin Harnesses** – CLIs installed via `supercli plugins install`
-- **AI & Plans** – natural-language `ask` commands create execution DAGs
-
-## Output Envelope
-
-Every command returns a deterministic envelope:
-
-```json
+```python
+# Every tool returns the same envelope
 {
   "version": "1.0",
-  "command": "namespace.resource.action",
-  "duration_ms": 42,
-  "data": { ... }
+  "command": "http.check.health",
+  "duration_ms": 142,
+  "data": { "status": "ok" }
 }
 ```
 
-## Exit Codes
+**Why agents love supercli:**
 
-| Code | Type | Action |
-| ---- | ---- | ------ |
-| 0 | success | Proceed |
-| 82 | validation_error | Fix input |
-| 85 | invalid_argument | Fix argument |
-| 92 | resource_not_found | Try different resource |
-| 105 | integration_error | Retry with backoff |
-| 110 | internal_error | Report bug |
+- 🔍 **Discoverable** — `supercli skills search "database"` returns machine-readable metadata
+- 📦 **Deterministic** — Every tool accepts `--json`, `--silent` (no interactive prompts)
+- 🚨 **Predictable errors** — Standard error codes: `82` (validation), `105` (integration), `110` (internal)
+- 🔗 **Composable** — `supercli ask "check status and send alert"` chains tools automatically
+- 📋 **Auditable** — Every call logs namespace, resource, action, inputs, outputs
 
-## Operating Modes
+```bash
+# Agent workflow: discover → inspect → execute
+supercli skills search "deploy" --json
+supercli skills get aws.cfn.deploy --json
+supercli aws cfn deploy --stack my-stack --json
+```
 
-| Mode | What it means | Best for |
-| ---- | ------------- | -------- |
-| Local-only (default) | CLI runs directly from local config/cache and plugins | Personal workflows, offline, quick setup |
-| Server mode | Supercli server hosts shared config/plugins via API | Team-shared capabilities, centralized governance |
+---
 
-`supercli sync` only relevant when `SUPERCLI_SERVER` is configured. See [docs/features/server-plugins.md](docs/features/server-plugins.md).
+## 📦 3,000 CLI Tools — Organized
 
-## Tech Stack
+| Category | Count | Examples |
+|----------|-------|---------|
+| **System** | 450+ | `curl`, `jq`, `git`, `tmux`, `htop`, `rsync` |
+| **Development** | 380+ | `cargo`, `npm`, `go`, `rustc`, `gcc`, `make` |
+| **Databases** | 120+ | `mysql`, `postgres`, `redis`, `mongodb`, `sqlite`, `cockroach` |
+| **Cloud** | 160+ | `aws`, `gcloud`, `azure`, `kubectl`, `terraform`, `pulumi` |
+| **Security** | 200+ | `nmap`, `gitleaks`, `trufflehog`, `openssl`, `git-crypt` |
+| **Network** | 180+ | `ncat`, `tshark`, `mtr`, `socat`, `chisel`, `doggo` |
+| **Data** | 150+ | `csvkit`, `xsv`, `miller`, `qsv`, `datamash` |
+| **Media** | 100+ | `ffmpeg`, `sox`, `imagemagick`, `exiftool`, `gstreamer` |
+| **Testing** | 90+ | `k6`, `vegeta`, `fortio`, `hey`, `siege`, `wrk2` |
+| **Blockchain** | 30+ | `foundry`, `cast`, `hardhat`, `truffle`, `solana` |
+| **Serverless** | 40+ | `fission`, `openfaas`, `kn`, `serverless`, `chalice` |
+| **Web** | 80+ | `wrangler`, `netlify`, `vercel`, `surge`, `heroku` |
+> Every tool includes: description, tags, source URL, install method, binary check, and commands.
 
-- NodeJS + Express
-- Pluggable KV Storage (Local JSON files by default, MongoDB optional)
-- Vue3 + Tailwind + DaisyUI
-- Zero build tools
-- Plugin system for registering new harnesses
+---
 
-## What People Are Saying
+## 📦 Install
 
-Early users (including agent builders):
+```bash
+# Run immediately (no install)
+npx supercli uuid self generate
 
-![Testimonial zetsi77](docs/images/testimonial-zetsi77.png)
+# Install globally
+npm install -g superacli
+supercli uuid self generate
+```
 
-> "Yooooooo, my agent nearly shit himself when I showed him this. TY! I'll keep an eye out for updates from you. This is a fantastic tool!"
+---
+
+## 💬 What People Say
+
+> *"Yooooooo, my agent nearly shit himself when I showed him this. TY! I'll keep an eye out for updates from you. This is a fantastic tool!"*
 > — **zetsi77** ([@Hadu_Ken77](https://x.com/Hadu_Ken77))
 
-## Contributors
+<br>
 
-Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+> ## ⭐ If supercli saved you time, [**star the repo**](https://github.com/javimosch/supercli). Takes one click, means the world to us.
 
-## ⭐ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=javimosch/supercli&type=date&legend=top-left)](https://www.star-history.com/#javimosch/supercli&type=date&legend=top-left)
+---
 
 ## License
 
-MIT License - Copyright (c) 2026 Javier Leandro Arancibia
-
-See [LICENSE](LICENSE) file for details.
+MIT — [Javier Leandro Arancibia](https://github.com/javimosch)
