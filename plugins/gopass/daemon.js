@@ -154,6 +154,9 @@ async function handleRemoteMessage(ws, message) {
       case 'delete':
         result = await executeGopassCommand(['delete', message.path], message.password);
         break;
+      case 'sync':
+        result = await executeGopassCommand(['sync']);
+        break;
       default:
         result = { success: false, error: 'Unknown command' };
     }
