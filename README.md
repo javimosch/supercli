@@ -1,16 +1,16 @@
-# supercli — 1000+ CLI Tools + Standardized Execution Layer
+# supercli — 3,000+ CLI Tools + Standardized Execution Layer
 
 [![npm version](https://img.shields.io/npm/v/superacli.svg)](https://www.npmjs.com/package/superacli)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-> **2,650+ curated CLI tools** (shells, DevOps, data, web, cloud, security, AI) + a unified capability interface
+> **3,000 curated CLI tools** (shells, DevOps, data, web, cloud, security, AI) + a unified capability interface
 > — consistent inputs, outputs, and execution for everything.
 
-**The complete developer toolkit:** bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 2,640+ more — all discoverable, quality-checked, and ready to install.
+**The complete developer toolkit:** bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 2,990+ more — all discoverable, quality-checked, and ready to install.
 
 ## ⚡ TL;DR
 
-> 2,650+ CLI tools. One consistent interface. JSON envelopes. Zero glue code.
+> 3,000 CLI tools. One consistent interface. JSON envelopes. Zero glue code.
 
 ```bash
 # 1. Discover capabilities
@@ -134,7 +134,7 @@ Stop juggling CLI tools with different syntax and outputs. supercli gives you on
 
 ## What You Get
 
-- 🔍 **2,650+ curated CLI tools** — system utilities, compilers, databases, cloud, security, monitoring, and more
+- 🔍 **3,000 curated CLI tools** — system utilities, compilers, databases, cloud, security, monitoring, and more
 - ⚡ Run any tool with one consistent interface — no syntax juggling
 - 🤖 Give agents predictable, structured execution
 - 🔗 Combine multiple tools without glue code
