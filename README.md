@@ -90,22 +90,6 @@ npx supercli skills get <capability> --json
 Install globally: `npm install -g superacli` for repeated use.
 Server mode: See [docs/features/server-plugins.md](docs/features/server-plugins.md)
 
-## 🛠️ Custom Go CLI Ecosystem
-
-supercli ships **25 custom Go CLI tools** built specifically for agent-first workflows. Each tool is published as a standalone GitHub repo with automated CI/CD releases:
-
-| Category | Tools |
-|----------|-------|
-| **UUID** | [uuid-cli](https://github.com/javimosch/uuid-cli) — generate UUID v4 |
-| **Text** | [slug-cli](https://github.com/javimosch/slug-cli), [color-format](https://github.com/javimosch/color-format), [user-agent](https://github.com/javimosch/user-agent) |
-| **Security** | [passgen](https://github.com/javimosch/passgen), [cert-info](https://github.com/javimosch/cert-info), [port-check](https://github.com/javimosch/port-check) |
-| **Data** | [csv2json](https://github.com/javimosch/csv2json), [json2csv](https://github.com/javimosch/json2csv), [json2env](https://github.com/javimosch/json2env), [jsonpath](https://github.com/javimosch/jsonpath), [json-validate](https://github.com/javimosch/json-validate) |
-| **Time** | [ts2date](https://github.com/javimosch/ts2date), [countdown](https://github.com/javimosch/countdown), [date-calc](https://github.com/javimosch/date-calc) |
-| **Network** | [http-check](https://github.com/javimosch/http-check), [ip-geo](https://github.com/javimosch/ip-geo), [mime-type](https://github.com/javimosch/mime-type) |
-| **Dev** | [cron-validate](https://github.com/javimosch/cron-validate), [env-lint](https://github.com/javimosch/env-lint), [ascii-table](https://github.com/javimosch/ascii-table) |
-| **Fun** | [spinner](https://github.com/javimosch/spinner), [progress-bar](https://github.com/javimosch/progress-bar) |
-
-All built with Go, licensed MIT, installable via `curl` from GitHub releases or buildable from source.
 
 ## 1000+ CLI Tools, Discoverable & Ready
 
