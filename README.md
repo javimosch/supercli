@@ -3,15 +3,14 @@
 [![npm version](https://img.shields.io/npm/v/superacli.svg)](https://www.npmjs.com/package/superacli)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-> 1000+ curated CLI tools (shells, DevOps, data, web, cloud) + a unified capability interface
+> **2,650+ curated CLI tools** (shells, DevOps, data, web, cloud, security, AI) + a unified capability interface
 > — consistent inputs, outputs, and execution for everything.
 
-**The complete developer toolkit:** bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 990+ more—all discoverable, quality-checked, and ready to install.
+**The complete developer toolkit:** bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 2,640+ more — all discoverable, quality-checked, and ready to install.
 
 ## ⚡ TL;DR
 
-> Turn any CLI, API, or workflow into a discoverable, executable capability
-> — with consistent inputs, outputs, and zero glue code.
+> 2,650+ CLI tools. One consistent interface. JSON envelopes. Zero glue code.
 
 ```bash
 # 1. Discover capabilities
@@ -26,6 +25,7 @@ npx supercli aws cfn deploy --stack-name my-stack --json
 
 👉 Works the same across CLI tools, APIs, MCP servers, and workflows
 👉 No glue code, no parsing, no guesswork
+👉 Every command returns deterministic JSON envelopes
 
 ## ⚡ Example
 
@@ -67,11 +67,12 @@ supercli turns everything into capabilities:
 ```bash
 # Explore capabilities
 npx supercli skills list
-npx supercli skills search "github"
+npx supercli skills search "database"
 
 # Run real commands
+npx supercli uuid self generate
+npx supercli http check health --url https://example.com
 npx supercli beads issue list --json
-npx supercli gh issue list --json
 
 # AI-driven execution
 npx supercli ask "show my tasks and recent commits"
@@ -79,7 +80,7 @@ npx supercli ask "show my tasks and recent commits"
 # Manage plugins
 npx supercli plugins list
 npx supercli plugins explore
-npx supercli plugins install commiat
+npx supercli plugins install ./plugins/uuid-cli
 
 # Agent mode
 npx supercli --help-json
@@ -88,6 +89,23 @@ npx supercli skills get <capability> --json
 
 Install globally: `npm install -g superacli` for repeated use.
 Server mode: See [docs/features/server-plugins.md](docs/features/server-plugins.md)
+
+## 🛠️ Custom Go CLI Ecosystem
+
+supercli ships **25 custom Go CLI tools** built specifically for agent-first workflows. Each tool is published as a standalone GitHub repo with automated CI/CD releases:
+
+| Category | Tools |
+|----------|-------|
+| **UUID** | [uuid-cli](https://github.com/javimosch/uuid-cli) — generate UUID v4 |
+| **Text** | [slug-cli](https://github.com/javimosch/slug-cli), [color-format](https://github.com/javimosch/color-format), [user-agent](https://github.com/javimosch/user-agent) |
+| **Security** | [passgen](https://github.com/javimosch/passgen), [cert-info](https://github.com/javimosch/cert-info), [port-check](https://github.com/javimosch/port-check) |
+| **Data** | [csv2json](https://github.com/javimosch/csv2json), [json2csv](https://github.com/javimosch/json2csv), [json2env](https://github.com/javimosch/json2env), [jsonpath](https://github.com/javimosch/jsonpath), [json-validate](https://github.com/javimosch/json-validate) |
+| **Time** | [ts2date](https://github.com/javimosch/ts2date), [countdown](https://github.com/javimosch/countdown), [date-calc](https://github.com/javimosch/date-calc) |
+| **Network** | [http-check](https://github.com/javimosch/http-check), [ip-geo](https://github.com/javimosch/ip-geo), [mime-type](https://github.com/javimosch/mime-type) |
+| **Dev** | [cron-validate](https://github.com/javimosch/cron-validate), [env-lint](https://github.com/javimosch/env-lint), [ascii-table](https://github.com/javimosch/ascii-table) |
+| **Fun** | [spinner](https://github.com/javimosch/spinner), [progress-bar](https://github.com/javimosch/progress-bar) |
+
+All built with Go, licensed MIT, installable via `curl` from GitHub releases or buildable from source.
 
 ## 1000+ CLI Tools, Discoverable & Ready
 
@@ -132,11 +150,12 @@ Stop juggling CLI tools with different syntax and outputs. supercli gives you on
 
 ## What You Get
 
-- 🔍 **1000+ curated CLI tools** — bash, rust, python, go, docker, kubernetes, aws, postgres, terraform, and 990+ more
+- 🔍 **2,650+ curated CLI tools** — system utilities, compilers, databases, cloud, security, monitoring, and more
 - ⚡ Run any tool with one consistent interface — no syntax juggling
 - 🤖 Give agents predictable, structured execution
 - 🔗 Combine multiple tools without glue code
 - 📦 Extend anything via plugins
+- 🛠️ **25 custom Go CLI tools** published at [github.com/javimosch](https://github.com/javimosch?tab=repositories)
 
 ## CLI Usage Examples
 
