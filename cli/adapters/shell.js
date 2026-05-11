@@ -17,9 +17,17 @@ async function execute(cmd, flags) {
   const timeoutMs = Number(cfg.timeout_ms) > 0 ? Number(cfg.timeout_ms) : 15000
   const parseJson = cfg.parseJson !== false
 
+  // Build environment variables
+  const pluginEnv = {}
+  if (cmd.plugin_dir) pluginEnv.SUPERCLI_PLUGIN_DIR = cmd.plugin_dir
+  if (cmd.plugin_name) pluginEnv.SUPERCLI_PLUGIN_NAME = cmd.plugin_name
+  pluginEnv.SUPERCLI_INVOKE_CWD = process.cwd()
+  const env = (cfg.env && typeof cfg.env === "object") ? { ...process.env, ...cfg.env, ...pluginEnv } : { ...process.env, ...pluginEnv }
+
   return new Promise((resolve, reject) => {
     const child = spawn(shellBin, ["-lc", script], {
-      stdio: ["ignore", "pipe", "pipe"]
+      stdio: ["ignore", "pipe", "pipe"],
+      env
     })
 
     let stdout = ""

@@ -91,6 +91,9 @@ function validateAdapterConfig(cmd) {
     if (config.interactiveFlags !== undefined && config.interactiveFlags.some(v => typeof v !== "string")) {
       throw asInvalid("adapterConfig.interactiveFlags values must be strings")
     }
+    if (config.detached !== undefined && typeof config.detached !== "boolean") throw asInvalid("adapterConfig.detached must be boolean")
+    if (config.noTimeout !== undefined && typeof config.noTimeout !== "boolean") throw asInvalid("adapterConfig.noTimeout must be boolean")
+    if (config.noWait !== undefined && typeof config.noWait !== "boolean") throw asInvalid("adapterConfig.noWait must be boolean")
     return
   }
 

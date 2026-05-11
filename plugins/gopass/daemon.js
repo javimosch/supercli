@@ -10,7 +10,8 @@ const crypto = require('crypto');
 const REMOTE_UI_URL = process.env.GOPASS_UI_URL || 'ws://92.113.145.178:8768';
 const STATIC_AUTH_TOKEN = process.env.GOPASS_AUTH_TOKEN || 'gopass-daemon-shared-secret-2024';
 const SESSION_ID = process.env.GOPASS_SESSION_ID || crypto.randomBytes(16).toString('hex');
-const PID_FILE = path.join(__dirname, '.daemon.pid');
+const PLUGIN_DIR = process.env.SUPERCLI_PLUGIN_DIR || __dirname;
+const PID_FILE = path.join(PLUGIN_DIR, '.daemon.pid');
 
 // Get static auth token
 function getAuthToken() {

@@ -145,6 +145,9 @@ async function execute(cmd, flags, context = {}) {
   const timeoutMs = Number(cfg.timeout_ms) > 0 ? Number(cfg.timeout_ms) : 15000
   const flagsBeforePositionals = cfg.flagsBeforePositionals === true || binary === "docker"
   const passthroughInteractive = passthroughMode && flags.__passthroughInteractive === true
+  const detachedMode = cfg.detached === true
+  const noTimeout = cfg.noTimeout === true
+  const noWait = cfg.noWait === true
   const cwd = resolveCwd(cfg, cmd)
   const pluginEnv = {}
   if (cmd.plugin_dir) pluginEnv.SUPERCLI_PLUGIN_DIR = cmd.plugin_dir
@@ -202,7 +205,27 @@ async function execute(cmd, flags, context = {}) {
   validateNonTtySafety(cfg, args)
 
   return new Promise((resolve, reject) => {
-    const child = spawn(binary, args, { stdio: passthroughInteractive ? "inherit" : ["ignore", "pipe", "pipe"], cwd, env })
+    const spawnOptions = {
+      stdio: detachedMode ? "ignore" : (passthroughInteractive ? "inherit" : ["ignore", "pipe", "pipe"]),
+      cwd,
+      env
+    }
+
+    if (detachedMode) {
+      spawnOptions.detached = true
+    }
+
+    const child = spawn(binary, args, spawnOptions)
+
+    // For detached mode, unref the child and return immediately
+    if (detachedMode) {
+      child.unref()
+      if (noWait) {
+        resolve({ raw: `Process started in background (PID: ${child.pid})` })
+        return
+      }
+    }
+
     let out = ""
     let err = ""
     let streamBuffer = ""
@@ -210,7 +233,8 @@ async function execute(cmd, flags, context = {}) {
     let lastStreamEvent = null
     let settled = false
 
-    const timer = setTimeout(() => {
+    // Only set timeout if not in noTimeout mode
+    const timer = !noTimeout ? setTimeout(() => {
       if (settled) return
       settled = true
       child.kill("SIGTERM")
@@ -219,9 +243,9 @@ async function execute(cmd, flags, context = {}) {
         type: "integration_error",
         recoverable: true
       }))
-    }, timeoutMs)
+    }, timeoutMs) : null
 
-    if (!passthroughInteractive) {
+    if (!passthroughInteractive && !detachedMode) {
       child.stdout.setEncoding("utf-8")
       child.stderr.setEncoding("utf-8")
       child.stdout.on("data", chunk => {
@@ -240,7 +264,7 @@ async function execute(cmd, flags, context = {}) {
     child.on("error", e => {
       if (settled) return
       settled = true
-      clearTimeout(timer)
+      if (timer) clearTimeout(timer)
       if (e && e.code === "ENOENT") {
         const help = cfg.missingDependencyHelp || `Run: dcli plugins doctor`
         reject(Object.assign(new Error(`Missing dependency '${binary}'. ${help}`), {
@@ -260,7 +284,7 @@ async function execute(cmd, flags, context = {}) {
     child.on("close", code => {
       if (settled) return
       settled = true
-      clearTimeout(timer)
+      if (timer) clearTimeout(timer)
       if (code !== 0) {
         const errorText = err.trim()
         let parsedError = null

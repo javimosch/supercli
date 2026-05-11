@@ -53,11 +53,15 @@
       "namespace": "gopass",
       "resource": "daemon",
       "action": "start",
-      "description": "Show instructions to start the gopass remote daemon (run manually due to supercli timeout)",
+      "description": "Start the gopass remote daemon in background",
       "adapter": "process",
       "adapterConfig": {
-        "command": "echo",
-        "baseArgs": ["🔐 To start the gopass daemon, run:", "", "cd ~/ai/supercli/plugins/gopass", "./start-daemon.sh", "", "Or directly:", "node daemon.js start --background"],
+        "command": "node",
+        "baseArgs": ["daemon.js", "start"],
+        "detached": true,
+        "noTimeout": true,
+        "noWait": true,
+        "cwd": "plugin_dir",
         "timeout_ms": 5000,
         "missingDependencyHelp": "Daemon script not found. Ensure gopass plugin is properly installed."
       },
@@ -68,10 +72,11 @@
       "resource": "daemon",
       "action": "stop",
       "description": "Stop the gopass remote daemon",
-      "adapter": "process",
+      "adapter": "shell",
       "adapterConfig": {
-        "command": "bash",
-        "baseArgs": ["-c", "find . -name 'daemon.js' -path '*/gopass/*' 2>/dev/null | head -1 | xargs -I {} node {} stop || (echo 'Daemon script not found.' && exit 1)"],
+        "unsafe": true,
+        "script": "node \"$SUPERCLI_PLUGIN_DIR/daemon.js\" stop",
+        "parseJson": false,
         "timeout_ms": 5000,
         "missingDependencyHelp": "Daemon script not found. Ensure gopass plugin is properly installed."
       },
@@ -82,10 +87,11 @@
       "resource": "daemon",
       "action": "status",
       "description": "Check the status of the gopass remote daemon",
-      "adapter": "process",
+      "adapter": "shell",
       "adapterConfig": {
-        "command": "bash",
-        "baseArgs": ["-c", "find . -name 'daemon.js' -path '*/gopass/*' 2>/dev/null | head -1 | xargs -I {} node {} status || (echo 'Daemon script not found.' && exit 1)"],
+        "unsafe": true,
+        "script": "node \"$SUPERCLI_PLUGIN_DIR/daemon.js\" status",
+        "parseJson": false,
         "timeout_ms": 5000,
         "missingDependencyHelp": "Daemon script not found. Ensure gopass plugin is properly installed."
       },
