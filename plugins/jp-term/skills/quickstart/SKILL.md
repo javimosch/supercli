@@ -1,0 +1,6 @@
+---
+name: jp-term
+description: jp — JSON parser CLI. Extract and manipulate JSON data with JMESPath expressions.
+---
+# jp-term
+jp — JSON parser CLI. Extract and manipulate JSON data with JMESPath expressions.
