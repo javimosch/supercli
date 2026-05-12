@@ -1,5 +1,6 @@
 const fs = require("fs")
 const path = require("path")
+const os = require("os")
 const { spawnSync } = require("child_process")
 const { SUPPORTED_ADAPTERS } = require("./adapter-schema")
 const { getRegistryPlugin } = require("./plugins-registry")
