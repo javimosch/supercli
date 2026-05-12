@@ -1,0 +1,545 @@
+{
+  "name": "minipostiz-cli",
+  "version": "0.1.0",
+  "description": "minipostiz-cli \u2014 offline social media scheduler for X, Bluesky, Mastodon, Discord, Telegram, LinkedIn, Reddit, Dev.to, Facebook",
+  "source": "https://github.com/jarancibia/minipostiz-cli",
+  "tags": [
+    "social-media",
+    "scheduler",
+    "productivity",
+    "automation",
+    "offline",
+    "sqlite"
+  ],
+  "install_guidance": {
+    "plugin": "minipostiz-cli",
+    "binary": "minipostiz",
+    "check": "which minipostiz",
+    "install_steps": [
+      "cd ~/ai/minipostiz-cli && bun build src/main.ts --compile --outfile bin/minipostiz",
+      "ln -sf ~/ai/minipostiz-cli/bin/minipostiz ~/.local/bin/minipostiz",
+      "supercli plugins install ~/ai/minipostiz-cli --on-conflict replace --json"
+    ],
+    "note": "Requires Bun runtime. 100% offline, SQLite-backed, no cloud dependencies."
+  },
+  "commands": [
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-x",
+      "description": "Store X/Twitter OAuth 1.0a credentials (apiKey, apiSecret, accessToken, accessSecret)",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform x --apiKey {{apiKey}} --apiSecret {{apiSecret}} --accessToken {{accessToken}} --accessSecret {{accessSecret}}"
+      },
+      "args": [
+        {
+          "name": "apiKey",
+          "type": "string",
+          "required": true,
+          "description": "Twitter API key"
+        },
+        {
+          "name": "apiSecret",
+          "type": "string",
+          "required": true,
+          "description": "Twitter API secret"
+        },
+        {
+          "name": "accessToken",
+          "type": "string",
+          "required": true,
+          "description": "Twitter access token"
+        },
+        {
+          "name": "accessSecret",
+          "type": "string",
+          "required": true,
+          "description": "Twitter access token secret"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-bluesky",
+      "description": "Store Bluesky credentials (handle + app password)",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform bluesky --handle {{handle}} --password {{password}}"
+      },
+      "args": [
+        {
+          "name": "handle",
+          "type": "string",
+          "required": true,
+          "description": "Bluesky handle e.g. user.bsky.social"
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true,
+          "description": "Bluesky app password"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-discord",
+      "description": "Store Discord webhook URL",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform discord --webhookUrl {{webhookUrl}}"
+      },
+      "args": [
+        {
+          "name": "webhookUrl",
+          "type": "string",
+          "required": true,
+          "description": "Discord webhook URL"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-telegram",
+      "description": "Store Telegram bot token and chat ID",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform telegram --botToken {{botToken}} --chatId {{chatId}}"
+      },
+      "args": [
+        {
+          "name": "botToken",
+          "type": "string",
+          "required": true,
+          "description": "Telegram bot token"
+        },
+        {
+          "name": "chatId",
+          "type": "string",
+          "required": true,
+          "description": "Telegram chat ID"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-mastodon",
+      "description": "Store Mastodon instance URL and access token",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform mastodon --instanceUrl {{instanceUrl}} --accessToken {{accessToken}}"
+      },
+      "args": [
+        {
+          "name": "instanceUrl",
+          "type": "string",
+          "required": true,
+          "description": "Mastodon instance URL e.g. https://mastodon.social"
+        },
+        {
+          "name": "accessToken",
+          "type": "string",
+          "required": true,
+          "description": "Mastodon access token"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-devto",
+      "description": "Store Dev.to API key",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform devto --apiKey {{apiKey}}"
+      },
+      "args": [
+        {
+          "name": "apiKey",
+          "type": "string",
+          "required": true,
+          "description": "Dev.to API key"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-linkedin",
+      "description": "Store LinkedIn access token and person URN",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform linkedin --accessToken {{accessToken}} {{#personUrn}}--personUrn {{personUrn}}{{/personUrn}}"
+      },
+      "args": [
+        {
+          "name": "accessToken",
+          "type": "string",
+          "required": true,
+          "description": "LinkedIn OAuth access token"
+        },
+        {
+          "name": "personUrn",
+          "type": "string",
+          "required": false,
+          "description": "LinkedIn person URN e.g. urn:li:person:PROFILE_ID"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-reddit",
+      "description": "Store Reddit OAuth credentials and target subreddit",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform reddit --clientId {{clientId}} --clientSecret {{clientSecret}} --username {{username}} --password {{password}} --subreddit {{subreddit}}"
+      },
+      "args": [
+        {
+          "name": "clientId",
+          "type": "string",
+          "required": true,
+          "description": "Reddit app client ID"
+        },
+        {
+          "name": "clientSecret",
+          "type": "string",
+          "required": true,
+          "description": "Reddit app client secret"
+        },
+        {
+          "name": "username",
+          "type": "string",
+          "required": true,
+          "description": "Reddit username"
+        },
+        {
+          "name": "password",
+          "type": "string",
+          "required": true,
+          "description": "Reddit password"
+        },
+        {
+          "name": "subreddit",
+          "type": "string",
+          "required": true,
+          "description": "Target subreddit name"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "set-facebook",
+      "description": "Store Facebook page access token and page ID",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "timeout_ms": 10000,
+        "script": "minipostiz auth --platform facebook --pageAccessToken {{pageAccessToken}} --pageId {{pageId}}"
+      },
+      "args": [
+        {
+          "name": "pageAccessToken",
+          "type": "string",
+          "required": true,
+          "description": "Facebook page access token"
+        },
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Facebook page ID"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "list",
+      "description": "List all configured social media platform credentials",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz auth list",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "remove",
+      "description": "Remove stored credentials for a platform",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz auth remove --platform {{platform}}",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": true,
+          "description": "Platform name to remove credentials for"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "auth",
+      "action": "verify",
+      "description": "Verify stored credentials for a platform are valid",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz auth verify --platform {{platform}}",
+        "timeout_ms": 15000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": true,
+          "description": "Platform name to verify"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "post",
+      "action": "publish",
+      "description": "Publish a message immediately to one or more social media platforms",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz publish --platform {{platform}} --message \"{{message}}\" {{#media}}--media {{media}}{{/media}}",
+        "timeout_ms": 30000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": true,
+          "description": "Platform(s): x, bluesky, discord, telegram, all, or comma-separated list"
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "description": "Message content to post"
+        },
+        {
+          "name": "media",
+          "type": "string",
+          "required": false,
+          "description": "Path to media file (image) to attach"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "post",
+      "action": "schedule",
+      "description": "Schedule a post for future publication on a social media platform",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz schedule --platform {{platform}} --message \"{{message}}\" --date \"{{date}}\" {{#media}}--media {{media}}{{/media}}",
+        "timeout_ms": 10000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": true,
+          "description": "Platform(s) to post to"
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "description": "Message content to post"
+        },
+        {
+          "name": "date",
+          "type": "string",
+          "required": true,
+          "description": "Schedule date/time: '2026-06-20 20:30:00' or ISO 8601"
+        },
+        {
+          "name": "media",
+          "type": "string",
+          "required": false,
+          "description": "Path to media file to attach"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "schedule",
+      "action": "list",
+      "description": "List scheduled posts, optionally filtered by platform",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz schedule list {{#platform}}--platform {{platform}}{{/platform}} {{#limit}}--limit {{limit}}{{/limit}}",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": false,
+          "description": "Filter by platform"
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "required": false,
+          "description": "Max results (default 50)"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "schedule",
+      "action": "cancel",
+      "description": "Cancel a scheduled post by ID",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz schedule cancel --id {{id}}",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Post ID to cancel"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "history",
+      "action": "list",
+      "description": "Show post history with optional platform and status filters",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz history {{#platform}}--platform {{platform}}{{/platform}} {{#limit}}--limit {{limit}}{{/limit}} {{#status}}--status {{status}}{{/status}}",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "platform",
+          "type": "string",
+          "required": false,
+          "description": "Filter by platform"
+        },
+        {
+          "name": "limit",
+          "type": "string",
+          "required": false,
+          "description": "Max results (default 20)"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": false,
+          "description": "Filter by status: published, failed, scheduled, cancelled"
+        }
+      ]
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "platforms",
+      "action": "list",
+      "description": "List all supported platforms and their auth requirements",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz platforms",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Start the background scheduler daemon",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz daemon start",
+        "timeout_ms": 10000,
+        "unsafe": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "daemon",
+      "action": "stop",
+      "description": "Stop the background scheduler daemon",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz daemon stop",
+        "timeout_ms": 10000,
+        "unsafe": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "daemon",
+      "action": "status",
+      "description": "Check if the scheduler daemon is running",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz daemon status",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "self",
+      "action": "status",
+      "description": "Show minipostiz-cli system status: version, db path, platforms, daemon",
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "minipostiz status",
+        "timeout_ms": 5000,
+        "unsafe": true
+      },
+      "args": []
+    }
+  ]
+}
