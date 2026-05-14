@@ -222,7 +222,7 @@ function renderTopLevelHelp(config) {
     console.log("\n  Usage: supercli <namespace> <resource> <action> [--args]");
     if (hasServer) console.log("  Sync: supercli sync");
     console.log(
-      "  Plugins: supercli plugins explore | supercli plugins learn <name> | supercli plugins install <name|path> | supercli plugins install --git <repo>",
+      "  Plugins: supercli plugins explore | supercli plugins learn <name> | supercli plugins install <name|path> | supercli plugins install --git <repo> | supercli plugins update",
       "  Onboard: supercli onboard [--harness claude,opencode,cursor,windsurf] [--detect] | supercli offboard [--harness <harness>]",
     );
     console.log(
@@ -412,6 +412,7 @@ async function main() {
             'supercli discover --intent "<task>" --json',
             "supercli ask \"<query>\" --json",
             "supercli plugins learn <name> --json",
+            "supercli plugins update --json",
             "supercli commands --query <keyword> --limit 50 --json",
             "supercli inspect <namespace> <resource> <action> --json",
           ],
