@@ -1,0 +1,51 @@
+{
+  "name": "drawio-skill",
+  "version": "0.1.0",
+  "description": "Agent skill that generates draw.io diagrams from natural language and exports to PNG/SVG/PDF",
+  "source": "https://github.com/Agents365-ai/drawio-skill",
+  "checks": [
+    { "type": "binary", "name": "draw.io" }
+  ],
+  "install_guidance": {
+    "plugin": "drawio-skill",
+    "binary": "draw.io",
+    "check": "which draw.io",
+    "install_steps": [
+      "git clone https://github.com/Agents365-ai/drawio-skill.git",
+      "supercli plugins install ./plugins/drawio-skill --on-conflict replace --json",
+      "Then teach skills: sc skills teach drawio-skill:quickstart"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "drawio-skill",
+      "resource": "self",
+      "action": "version",
+      "description": "Print drawio-skill info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["drawio-skill v0.1.0 — use sc skills teach drawio-skill:quickstart to load"],
+        "missingDependencyHelp": "Install draw.io CLI first, then clone repo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "drawio-skill",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough — clone the repo and teach the skill",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["drawio-skill is a SKILL.md file. Clone https://github.com/Agents365-ai/drawio-skill.git then run: sc skills teach drawio-skill:quickstart"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install: git clone https://github.com/Agents365-ai/drawio-skill.git"
+      },
+      "args": []
+    }
+  ]
+}

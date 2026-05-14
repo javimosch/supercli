@@ -1,0 +1,84 @@
+{
+  "name": "writing-style-skill",
+  "version": "0.1.0",
+  "description": "Writing style skill template with auto-learning — AI writes, you edit, rules auto-extracted, SKILL.md improves over time",
+  "source": "https://github.com/jzOcb/writing-style-skill",
+  "checks": [
+    { "type": "binary", "name": "python3" }
+  ],
+  "install_guidance": {
+    "plugin": "writing-style-skill",
+    "binary": "python3",
+    "check": "which python3",
+    "install_steps": [
+      "git clone https://github.com/jzOcb/writing-style-skill.git",
+      "supercli plugins install ./plugins/writing-style-skill --on-conflict replace --json",
+      "sc skills teach writing-style-skill:quickstart"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "writing-style-skill",
+      "resource": "self",
+      "action": "version",
+      "description": "Print writing-style-skill info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["writing-style-skill v0.1.0 — Use sc skills teach writing-style-skill:quickstart"],
+        "missingDependencyHelp": "Clone: git clone https://github.com/jzOcb/writing-style-skill.git"
+      },
+      "args": []
+    },
+    {
+      "namespace": "writing-style-skill",
+      "resource": "observe",
+      "action": "record",
+      "description": "Record original/final versions for style learning (draft or final)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python3",
+        "baseArgs": ["scripts/observe.py"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Clone writing-style-skill repo first"
+      },
+      "args": [
+        { "name": "mode", "type": "string", "required": true, "description": "record-original or record-final" },
+        { "name": "file", "type": "string", "required": true, "description": "File path to record" }
+      ]
+    },
+    {
+      "namespace": "writing-style-skill",
+      "resource": "improve",
+      "action": "run",
+      "description": "Auto-extract writing style rules from recorded edits",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python3",
+        "baseArgs": ["scripts/improve.py", "auto", "--skill", "."],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Clone writing-style-skill repo first"
+      },
+      "args": []
+    },
+    {
+      "namespace": "writing-style-skill",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["Clone https://github.com/jzOcb/writing-style-skill.git then: sc skills teach writing-style-skill:quickstart"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install: git clone https://github.com/jzOcb/writing-style-skill.git"
+      },
+      "args": []
+    }
+  ]
+}
