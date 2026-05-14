@@ -144,7 +144,9 @@ function extractPluginsFromTarball(tarPath, pluginNames, destDir) {
         suggestions: ["Ensure tar is installed"]
       })
     }
-    if (res.status !== 0) {
+    // exit 2 means some paths were not found in archive — tolerable when
+    // catalog is slightly out of sync with tarball (e.g. gitignored dirs)
+    if (res.status !== 0 && res.status !== 2) {
       throw Object.assign(new Error(`tar exited with status ${res.status}: ${(res.stderr || "").trim()}`), {
         code: 105,
         type: "integration_error",
