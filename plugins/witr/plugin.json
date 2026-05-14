@@ -1,13 +1,11 @@
 {
   "name": "witr",
   "version": "0.1.0",
-  "description": "CLI tool that answers 'Why is this running?' \u2014 traces process ancestry, supervisors, containers, and service managers",
+  "description": "CLI tool that answers 'Why is this running?' — traces process ancestry, supervisors, containers, and service managers",
   "source": "https://github.com/pranshuparmar/witr",
   "checks": [
-    {
-      "type": "binary",
-      "name": "witr"
-    }
+    { "type": "binary", "name": "witr" },
+    { "type": "binary", "name": "node" }
   ],
   "install_guidance": {
     "plugin": "witr",
@@ -31,11 +29,9 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "witr",
-        "baseArgs": [
-          "--version"
-        ],
+        "baseArgs": ["--version"],
         "timeout_ms": 5000,
-        "missingDependencyHelp": "Install witr: brew install witr or download from https://github.com/pranshuparmar/witr"
+        "missingDependencyHelp": "Install witr: brew install witr"
       },
       "args": []
     },
@@ -43,14 +39,15 @@
       "namespace": "witr",
       "resource": "process",
       "action": "explain",
-      "description": "Explain why a process is running (by name, positional)",
+      "description": "Explain why a process is running",
       "adapter": "process",
       "adapterConfig": {
-        "command": "witr",
-        "cwd": "invoke_cwd",
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/witr-wrapper.js"],
         "passthrough": true,
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install witr: see https://github.com/pranshuparmar/witr"
+        "missingDependencyHelp": "Install witr: brew install witr"
       },
       "args": []
     },
@@ -58,14 +55,15 @@
       "namespace": "witr",
       "resource": "_",
       "action": "_",
-      "description": "Passthrough to witr CLI",
+      "description": "Passthrough to witr CLI (via wrapper that handles exit codes)",
       "adapter": "process",
       "adapterConfig": {
-        "command": "witr",
-        "cwd": "invoke_cwd",
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/witr-wrapper.js"],
         "passthrough": true,
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install witr: see https://github.com/pranshuparmar/witr"
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install witr: brew install witr"
       },
       "args": []
     }
