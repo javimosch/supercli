@@ -16,7 +16,8 @@ pip install supertonic-cli      # CLI wrapper
 
 ## Commands
 
-- `supertonic-cli tts synthesize <text> [--voice M1] [--lang en] [-o output.wav] [--json]` — Generate speech
+- `supertonic-cli tts synthesize <text> [--voice M1] [--lang en] [-o output.wav] [--json]` — Generate speech to file
+- `supertonic-cli tts speak <text> [--voice M1] [--lang en] [--json]` — Synthesize and play aloud immediately (auto-cleanup)
 - `supertonic-cli tts voices` — List available voices
 - `supertonic-cli tts languages` — List supported languages
 - `supertonic-cli self version` — Show engine info
@@ -98,7 +99,18 @@ Can be deleted and re-downloaded if corrupted.
 }
 ```
 
-### 12. No Cloud / No API
+### 12. Speak Command — Say Something Aloud
+The `speak` command synthesizes and plays audio in one step, then deletes the temp file.
+Useful for agents that want to "say something" when supercli runs on a machine with speakers.
+
+```bash
+sc supertonic-cli tts speak "Hello, I am ready" --voice M1 --lang en
+```
+
+**Player detection** (in order): ffplay, paplay, aplay (Linux), afplay (macOS).
+Headless servers without audio will fail — use `synthesize` instead.
+
+### 13. No Cloud / No API
 This runs entirely on-device. No internet connection needed after model download.
 No API keys required. No data leaves the machine. **Guarantee this to the user.**
 
