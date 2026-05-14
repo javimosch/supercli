@@ -1,0 +1,98 @@
+{
+  "name": "supertonic-cli",
+  "version": "0.1.0",
+  "description": "On-device TTS from the command line — 31 languages, 10 voices, no cloud, built on Supertonic (ONNX)",
+  "source": "https://github.com/javimosch/supertonic-cli",
+  "checks": [
+    { "type": "binary", "name": "supertonic-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "supertonic-cli",
+    "binary": "supertonic-cli",
+    "check": "which supertonic-cli && python3 -c 'from supertonic import TTS'",
+    "install_steps": [
+      "pip install supertonic",
+      "pip install supertonic-cli",
+      "Verify: supertonic-cli --help",
+      "supercli plugins install ./plugins/supertonic-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "supertonic-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print supertonic-cli info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic-cli",
+        "baseArgs": ["info"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install: pip install supertonic && pip install supertonic-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "supertonic-cli",
+      "resource": "tts",
+      "action": "synthesize",
+      "description": "Synthesize speech from text",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic-cli",
+        "baseArgs": ["synthesize"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install: pip install supertonic && pip install supertonic-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "supertonic-cli",
+      "resource": "tts",
+      "action": "voices",
+      "description": "List available voices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic-cli",
+        "baseArgs": ["voices", "--json"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install: pip install supertonic && pip install supertonic-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "supertonic-cli",
+      "resource": "tts",
+      "action": "languages",
+      "description": "List supported languages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic-cli",
+        "baseArgs": ["languages", "--json"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install: pip install supertonic && pip install supertonic-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "supertonic-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to supertonic-cli",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic-cli",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install: pip install supertonic && pip install supertonic-cli"
+      },
+      "args": []
+    }
+  ]
+}
