@@ -23,6 +23,23 @@ function pluginChecksum(pluginDir) {
   return crypto.createHash("sha256").update(parts.join("\n")).digest("hex").slice(0, 16)
 }
 
+function trackedPluginNames() {
+  // Use git ls-files to find only git-tracked plugin dirs (skips gitignored dirs)
+  const { spawnSync } = require("child_process")
+  const res = spawnSync("git", ["ls-files", "--", "plugins/"], {
+    encoding: "utf-8",
+    cwd: path.join(__dirname, ".."),
+    timeout: 15000,
+  })
+  if (res.error || res.status !== 0) return null  // fall back to fs scan if git unavailable
+  const names = new Set()
+  for (const line of res.stdout.split("\n")) {
+    const m = line.match(/^plugins\/([^/]+)\//)
+    if (m) names.add(m[1])
+  }
+  return names
+}
+
 function discoverPlugins() {
   let entries
   try {
@@ -31,9 +48,13 @@ function discoverPlugins() {
     return []
   }
 
+  const tracked = trackedPluginNames()
+
   const plugins = []
   for (const entry of entries) {
     if (!entry.isDirectory()) continue
+    // Skip directories not tracked by git (e.g. gitignored output dirs)
+    if (tracked && !tracked.has(entry.name)) continue
     const pluginDir = path.join(PLUGINS_DIR, entry.name)
     const manifestPath = path.join(pluginDir, "plugin.json")
     if (!fs.existsSync(manifestPath)) continue

@@ -88,10 +88,10 @@ function downloadTarball(tmpDir) {
   const tarPath = path.join(tmpDir, "supercli-master.tar.gz")
   const res = spawnSync("curl", [
     "-fsSL",
-    "--max-time", "15",
+    "--max-time", "60",
     "-o", tarPath,
     TARBALL_URL
-  ], { encoding: "utf-8", timeout: 15000 })
+  ], { encoding: "utf-8", timeout: 60000 })
 
   if (res.error) {
     throw Object.assign(new Error(`Failed to download plugin archive: ${res.error.message}`), {
@@ -121,34 +121,36 @@ function downloadTarball(tmpDir) {
 function extractPluginsFromTarball(tarPath, pluginNames, destDir) {
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true })
 
-  // Build include patterns: supercli-master/plugins/<name>/*
-  const includes = pluginNames.map(n => `supercli-master/plugins/${n}`)
+  // Extract in batches of 200 to avoid arg-list limits; exact paths (no wildcards)
+  // so tar exits 0 when paths are found and skips gracefully when not
+  const BATCH = 200
+  for (let i = 0; i < pluginNames.length; i += BATCH) {
+    const batch = pluginNames.slice(i, i + BATCH)
+    const paths = batch.map(n => `supercli-master/plugins/${n}`)
+    const args = [
+      "-xzf", tarPath,
+      "-C", destDir,
+      "--strip-components=2",  // strips "supercli-master/plugins" → plugin dir lands in destDir
+      ...paths
+    ]
 
-  const args = [
-    "-xzf", tarPath,
-    "-C", destDir,
-    "--strip-components=2",  // strips "supercli-master/plugins" → plugin dir lands directly in destDir
-    "--wildcards",
-    ...includes.map(p => `${p}/*`)
-  ]
+    const res = spawnSync("tar", args, { encoding: "utf-8", timeout: 30000 })
 
-  const res = spawnSync("tar", args, { encoding: "utf-8", timeout: 15000 })
-
-  if (res.error) {
-    throw Object.assign(new Error(`Failed to extract plugin archive: ${res.error.message}`), {
-      code: 105,
-      type: "integration_error",
-      recoverable: true,
-      suggestions: ["Ensure tar is installed"]
-    })
-  }
-  // tar may exit non-zero if some wildcards matched nothing — tolerate exit 1
-  if (res.status !== 0 && res.status !== 1) {
-    throw Object.assign(new Error(`tar exited with status ${res.status}: ${(res.stderr || "").trim()}`), {
-      code: 105,
-      type: "integration_error",
-      recoverable: true
-    })
+    if (res.error) {
+      throw Object.assign(new Error(`Failed to extract plugin archive: ${res.error.message}`), {
+        code: 105,
+        type: "integration_error",
+        recoverable: true,
+        suggestions: ["Ensure tar is installed"]
+      })
+    }
+    if (res.status !== 0) {
+      throw Object.assign(new Error(`tar exited with status ${res.status}: ${(res.stderr || "").trim()}`), {
+        code: 105,
+        type: "integration_error",
+        recoverable: true
+      })
+    }
   }
 }
 
