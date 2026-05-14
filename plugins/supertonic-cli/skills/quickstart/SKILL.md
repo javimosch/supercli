@@ -1,39 +1,134 @@
 ---
 name: supertonic-cli
-description: Use this skill when the user needs to generate speech from text using on-device TTS — 31 languages, 10 voice styles, no cloud.
+description: Use this skill when the user needs to generate speech from text using on-device TTS — 31 languages, 10 voice styles, no cloud, ONNX Runtime.
 ---
 
 # supertonic-cli — On-Device TTS
 
-Generate speech from text using Supertonic — lightning-fast, on-device, multilingual TTS via ONNX Runtime.
+Generate speech from text using Supertonic — lightning-fast, on-device, multilingual TTS via ONNX Runtime (5.3k ⭐, MIT).
 
-## Installation
+## Installation & Dependencies
 
 ```bash
-pip install supertonic
-pip install supertonic-cli
+pip install supertonic          # Core TTS engine + ONNX Runtime (~100MB)
+pip install supertonic-cli      # CLI wrapper
 ```
-
-First run downloads the model (~300MB) from Hugging Face automatically.
 
 ## Commands
 
-- `supertonic-cli tts synthesize <text> [--voice M1] [--lang en] [-o output.wav]` — Generate speech
+- `supertonic-cli tts synthesize <text> [--voice M1] [--lang en] [-o output.wav] [--json]` — Generate speech
 - `supertonic-cli tts voices` — List available voices
 - `supertonic-cli tts languages` — List supported languages
 - `supertonic-cli self version` — Show engine info
 
-## Usage Examples
+## Critical Caveats & Pitfalls
 
-- "Synthesize 'Hello, world!' with voice F1 in French, save to hello.wav"
-- "What languages does supertonic support?"
-- "List available voice styles"
-- "Generate speech from this text: The quick brown fox jumps over the lazy dog"
+### 1. First Run: Model Download (Mandatory)
+The first `synthesize` or `info` call downloads the ONNX model from Hugging Face (~300MB, 26 files).
+**Always warn the user** about this before running. Do NOT run synthesize without warning.
 
-## Key Features
+```bash
+# Expected first-run output:
+Fetching 26 files:   0%|  | 0/26 [00:00<?, ?it/s]
+# Download can take 2-5 minutes depending on connection.
+```
 
-- 31 languages: EN, KO, JA, AR, DE, FR, ES, and more
-- 10 voices: M1-M5 (male), F1-F5 (female)
-- On-device inference, zero network after model download
-- CPU real-time, ~99M parameters
-- JSON output for automation
+**Affected commands**: `synthesize`, `voices`, `info`
+**Safe commands** (no download): `languages`
+
+### 2. Timeout Configuration
+The default supercli timeout may not be enough for first-run model download.
+Always use `--json` flag which returns faster (no file I/O), OR set `timeout_ms` higher.
+First-run synthesize typically needs **120-300 seconds**.
+
+### 3. soundfile / _ctypes Issues
+On some Python installations, `_ctypes` module is missing, causing `save_audio()` to fail.
+The CLI has a built-in fallback that writes raw WAV without soundfile.
+**If you see "soundfile library is required"**, the fallback should handle it automatically.
+
+### 4. Duration is numpy.float32, not a plain float
+When processing JSON output, the `duration_s` field may be a numpy type (not serializable to JSON).
+The CLI handles this internally by converting to float.
+
+### 5. Output Format
+- Default: 24kHz mono 16-bit WAV
+- No streaming support yet (must wait for full synthesis)
+- The `--json` flag returns metadata without audio to stdout; the WAV file is written to disk
+
+### 6. Voice Styles
+| Voice | Style | Best For |
+|-------|-------|----------|
+| M1-M5 | Male voices (5 variants) | General purpose, varies by language |
+| F1-F5 | Female voices (5 variants) | General purpose, varies by language |
+
+Not all voices are equally good for all languages. If output sounds wrong, suggest trying a different voice.
+
+### 7. Language Codes (31 languages)
+Use ISO 639-1 two-letter codes. Full list via `supertonic-cli tts languages`:
+`en, ko, ja, ar, bg, cs, da, de, el, es, et, fi, fr, hi, hr, hu, id, it, lt, lv, nl, pl, pt, ro, ru, sk, sl, sv, tr, uk, vi`
+
+### 8. Text Length & Quality
+- Short text (< 200 chars) works best
+- Long text may cause OOM on low-memory systems
+- For long text (> 500 chars), consider splitting into sentences and synthesizing separately
+- Supertonic handles punctuation, numbers, dates, currency, and abbreviations well
+- Supports expressive tags: `<laugh>`, `<breath>`, `<sigh>`
+
+### 9. Performance Characteristics
+- Typical RTF (Real-Time Factor): **0.2-0.5** on modern CPU (faster than real-time)
+- ~99M parameters, runs entirely on CPU (no GPU needed)
+- Memory usage: ~500MB-1GB during synthesis
+- Faster after model is cached (subsequent runs skip download)
+
+### 10. Model Cache
+The ONNX model is cached at Hugging Face's default cache location:
+`~/.cache/huggingface/hub/`
+Can be deleted and re-downloaded if corrupted.
+
+### 11. JSON Output Format
+```json
+{
+  "ok": true,
+  "output": "/path/to/output.wav",
+  "duration_s": 2.08,
+  "real_time_s": 0.56,
+  "rtf": 0.267,
+  "voice": "M1",
+  "lang": "es"
+}
+```
+
+### 12. No Cloud / No API
+This runs entirely on-device. No internet connection needed after model download.
+No API keys required. No data leaves the machine. **Guarantee this to the user.**
+
+## Prompt Templates
+
+Best prompts to use with this plugin:
+
+- "Synthesize '[text]' with voice [M1-F5] in [language], save as [filename]"
+- "Generate Spanish speech: Hola Ma, anda a dormir — voice M1, save to hola_ma.wav"
+- "List available voices and their languages"
+- "What languages does supertonic support? Output as a table"
+- "Create audio from this text: [long text]. Split into sentences if too long."
+- "Download the supertonic model first (warn user about 300MB), then synthesize..."
+
+## Common Workflows
+
+### One-shot TTS
+```
+→ "Generate 'Hello world' in French with voice F2"
+← supertonic-cli tts synthesize "Hello world" --voice F2 --lang fr -o hello.wav
+```
+
+### Multi-language comparison
+```
+→ "Synthesize 'Good morning' in English, Spanish, and Japanese"
+← Run 3 separate commands with different --lang codes
+```
+
+### JSON for automation
+```
+→ "Generate speech from this text and return the duration: 'The quick brown fox'"
+← Use --json flag to get structured output
+```
