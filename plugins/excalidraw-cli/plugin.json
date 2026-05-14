@@ -1,0 +1,117 @@
+{
+  "name": "excalidraw-cli",
+  "version": "0.1.0",
+  "description": "CLI for creating Excalidraw flowcharts and diagrams programmatically from text-based DSL or JSON",
+  "source": "https://github.com/swiftlysingh/excalidraw-cli",
+  "checks": [
+    { "type": "binary", "name": "excalidraw-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "excalidraw-cli",
+    "binary": "excalidraw-cli",
+    "check": "which excalidraw-cli",
+    "install_steps": [
+      "npm install -g @swiftlysingh/excalidraw-cli",
+      "Verify: excalidraw-cli --version",
+      "supercli plugins install ./plugins/excalidraw-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "excalidraw-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print excalidraw-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "excalidraw-cli",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install excalidraw-cli: npm install -g @swiftlysingh/excalidraw-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "excalidraw-cli",
+      "resource": "diagram",
+      "action": "create",
+      "description": "Create an Excalidraw flowchart from DSL or JSON input",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "excalidraw-cli",
+        "baseArgs": ["create"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install excalidraw-cli: npm install -g @swiftlysingh/excalidraw-cli"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": false, "description": "Input file path (DSL or JSON)" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output file path (default: flowchart.excalidraw)" },
+        { "name": "--inline", "type": "string", "required": false, "description": "Inline DSL string" },
+        { "name": "--stdin", "type": "boolean", "required": false, "description": "Read DSL from stdin" },
+        { "name": "-d", "type": "string", "required": false, "description": "Flow direction: TB, BT, LR, RL" },
+        { "name": "-s", "type": "string", "required": false, "description": "Node spacing in pixels" },
+        { "name": "--format", "type": "string", "required": false, "description": "Input format: dsl, json, dot" }
+      ]
+    },
+    {
+      "namespace": "excalidraw-cli",
+      "resource": "diagram",
+      "action": "convert",
+      "description": "Convert an .excalidraw file to PNG or SVG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "excalidraw-cli",
+        "baseArgs": ["convert"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install excalidraw-cli: npm install -g @swiftlysingh/excalidraw-cli"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input .excalidraw file path" },
+        { "name": "--format", "type": "string", "required": false, "description": "Export format: png or svg" },
+        { "name": "-o", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "--scale", "type": "string", "required": false, "description": "Scale factor for PNG export" },
+        { "name": "--dark", "type": "boolean", "required": false, "description": "Export with dark mode theme" },
+        { "name": "--padding", "type": "string", "required": false, "description": "Padding in pixels" }
+      ]
+    },
+    {
+      "namespace": "excalidraw-cli",
+      "resource": "diagram",
+      "action": "parse",
+      "description": "Parse and validate DSL/JSON input without generating output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "excalidraw-cli",
+        "baseArgs": ["parse"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install excalidraw-cli: npm install -g @swiftlysingh/excalidraw-cli"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input file path to validate" },
+        { "name": "--inline", "type": "string", "required": false, "description": "Inline DSL string to validate" }
+      ]
+    },
+    {
+      "namespace": "excalidraw-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to excalidraw-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "excalidraw-cli",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install excalidraw-cli: npm install -g @swiftlysingh/excalidraw-cli"
+      },
+      "args": []
+    }
+  ]
+}
