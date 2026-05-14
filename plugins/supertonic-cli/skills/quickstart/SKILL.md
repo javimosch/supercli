@@ -16,8 +16,8 @@ pip install supertonic-cli      # CLI wrapper
 
 ## Commands
 
-- `supertonic-cli tts synthesize <text> [--voice M1] [--lang en] [-o output.wav] [--json]` — Generate speech to file
-- `supertonic-cli tts speak <text> [--voice M1] [--lang en] [--json]` — Synthesize and play aloud immediately (auto-cleanup)
+- `supertonic-cli tts synthesize <text> [--voice M1] [--lang en] [-o output.wav] [--machine]` — Generate speech to file
+- `supertonic-cli tts speak <text> [--voice M1] [--lang en] [--machine]` — Synthesize and play aloud immediately (auto-cleanup)
 - `supertonic-cli tts voices` — List available voices
 - `supertonic-cli tts languages` — List supported languages
 - `supertonic-cli self version` — Show engine info
@@ -39,7 +39,7 @@ Fetching 26 files:   0%|  | 0/26 [00:00<?, ?it/s]
 
 ### 2. Timeout Configuration
 The default supercli timeout may not be enough for first-run model download.
-Always use `--json` flag which returns faster (no file I/O), OR set `timeout_ms` higher.
+Always use `--machine` flag which returns faster (no file I/O), OR set `timeout_ms` higher.
 First-run synthesize typically needs **120-300 seconds**.
 
 ### 3. soundfile / _ctypes Issues
@@ -48,13 +48,13 @@ The CLI has a built-in fallback that writes raw WAV without soundfile.
 **If you see "soundfile library is required"**, the fallback should handle it automatically.
 
 ### 4. Duration is numpy.float32, not a plain float
-When processing JSON output, the `duration_s` field may be a numpy type (not serializable to JSON).
+When processing machine JSON output, the `duration_s` field may be a numpy type (not serializable to JSON).
 The CLI handles this internally by converting to float.
 
 ### 5. Output Format
-- Default: 24kHz mono 16-bit WAV
-- No streaming support yet (must wait for full synthesis)
-- The `--json` flag returns metadata without audio to stdout; the WAV file is written to disk
+- Default: **44100Hz** mono 16-bit WAV (correct sample rate is critical for natural sound)
+- The model outputs at 44100Hz. If audio sounds like a "drunk robot" or slowed down, the WAV was saved at the wrong sample rate (early versions hardcoded 24000Hz). Update to the latest CLI to fix.
+- The `--machine` flag returns metadata without audio to stdout; the WAV file is written to disk
 
 ### 6. Voice Styles
 | Voice | Style | Best For |
@@ -142,5 +142,5 @@ Best prompts to use with this plugin:
 ### JSON for automation
 ```
 → "Generate speech from this text and return the duration: 'The quick brown fox'"
-← Use --json flag to get structured output
+← Use --machine flag to get structured output
 ```
