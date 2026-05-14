@@ -176,6 +176,40 @@ supercli uuid self generate
 
 ---
 
+## 🔄 Plugin Updates — Decoupled from npm
+
+supercli includes 3,000+ plugins bundled in the npm package. But plugins change frequently — new tools are added, bugs are fixed, install guidance is updated.
+
+**The old way:** Every plugin update required a new npm release. Users had to `npm update -g superacli` to get the latest plugins.
+
+**The new way:** Plugins update independently from the CLI core.
+
+```bash
+# Check for plugin updates (dry-run)
+sc plugins update --check
+
+# Apply available updates
+sc plugins update
+
+# Force re-download all plugins
+sc plugins update --force
+```
+
+**How it works:**
+1. Fetches a lightweight catalog from GitHub (checksums only)
+2. Compares against local cache (`~/.supercli/plugins/remote-catalog.json`)
+3. Downloads the GitHub tarball of the `plugins/` directory
+4. Extracts only changed plugins to `~/.supercli/plugins/bundled/`
+5. Remote cache takes precedence over npm-bundled plugins
+
+**Why this matters:**
+- Plugin authors can ship fixes immediately without npm releases
+- Users get fresh plugins on-demand, not on npm schedule
+- npm package stays smaller (plugins are cached locally after first update)
+- Fully backwards compatible — works offline after first sync
+
+---
+
 ## 💬 What People Say
 
 > *"Yooooooo, my agent nearly shit himself when I showed him this. TY! I'll keep an eye out for updates from you. This is a fantastic tool!"*
