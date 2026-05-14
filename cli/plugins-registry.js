@@ -1,5 +1,6 @@
 const fs = require("fs")
 const path = require("path")
+const { REMOTE_BUNDLED_DIR } = require("./plugins-store")
 
 const REGISTRY_FILE = path.resolve(__dirname, "..", "plugins", "plugins.json")
 const BUNDLED_PLUGINS_DIR = path.resolve(__dirname, "..", "plugins")
@@ -66,11 +67,11 @@ function readMetaFile(metaPath) {
   }
 }
 
-function discoverBundledPlugins() {
-  if (!fs.existsSync(BUNDLED_PLUGINS_DIR)) return []
+function discoverPluginsInDir(dir, sourceType) {
+  if (!fs.existsSync(dir)) return []
   let entries
   try {
-    entries = fs.readdirSync(BUNDLED_PLUGINS_DIR, { withFileTypes: true })
+    entries = fs.readdirSync(dir, { withFileTypes: true })
   } catch {
     return []
   }
@@ -79,12 +80,12 @@ function discoverBundledPlugins() {
 
   for (const entry of entries) {
     if (!entry || !entry.isDirectory()) continue
-    const manifestPath = path.join(BUNDLED_PLUGINS_DIR, entry.name, "plugin.json")
+    const manifestPath = path.join(dir, entry.name, "plugin.json")
     if (!fs.existsSync(manifestPath)) continue
     const manifest = readManifest(manifestPath)
     if (!manifest) continue
 
-    const metaPath = path.join(BUNDLED_PLUGINS_DIR, entry.name, "meta.json")
+    const metaPath = path.join(dir, entry.name, "meta.json")
     const meta = readMetaFile(metaPath)
 
     plugins.push({
@@ -92,7 +93,7 @@ function discoverBundledPlugins() {
       description: meta && typeof meta.description === "string" ? meta.description : (manifest.description || ""),
       tags: meta && Array.isArray(meta.tags) ? meta.tags : (Array.isArray(manifest.tags) ? manifest.tags : []),
       source: {
-        type: "bundled",
+        type: sourceType,
         manifest_path: path.relative(path.resolve(__dirname, ".."), manifestPath).replace(/\\/g, "/")
       },
       has_learn: meta && meta.has_learn === true
@@ -107,6 +108,21 @@ function discoverBundledPlugins() {
   }
 
   return plugins
+}
+
+function discoverBundledPlugins() {
+  // npm-bundled plugins are the baseline
+  const bundled = discoverPluginsInDir(BUNDLED_PLUGINS_DIR, "bundled")
+  // remote-cached plugins (from sc plugins update) override npm-bundled ones
+  const remote = discoverPluginsInDir(REMOTE_BUNDLED_DIR, "bundled")
+
+  if (remote.length === 0) return bundled
+
+  // remote wins: build map from npm-bundled, then overwrite with remote entries
+  const merged = new Map()
+  for (const p of bundled) merged.set(String(p.name || "").toLowerCase(), p)
+  for (const p of remote) merged.set(String(p.name || "").toLowerCase(), p)
+  return Array.from(merged.values())
 }
 
 function mergedRegistryPlugins() {

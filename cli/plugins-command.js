@@ -10,6 +10,7 @@ const {
 const { listRegistryPlugins } = require("./plugins-registry")
 const { loadConfig } = require("./config")
 const { getPluginLearn } = require("./plugins-learn")
+const { updatePlugins } = require("./plugins-update")
 
 async function handlePluginsCommand(options) {
   const { positional, flags, humanMode, output, outputHumanTable, outputError } = options
@@ -214,7 +215,33 @@ async function handlePluginsCommand(options) {
     return true
   }
 
-  outputError({ code: 85, type: "invalid_argument", message: "Unknown plugins subcommand. Use: list, explore, install, remove, show, doctor, learn", recoverable: false })
+  if (subcommand === "update") {
+    const checkOnly = flags.check === true || flags.check === "true"
+    const force = flags.force === true || flags.force === "true"
+    try {
+      const result = await updatePlugins({ check: checkOnly, force })
+      if (humanMode) {
+        if (result.up_to_date) {
+          console.log("\n  ✓ Plugins already up to date\n")
+        } else if (checkOnly) {
+          console.log(`\n  Plugin update available: ${result.added} new, ${result.changed} changed\n`)
+          if (result.updated.length > 0) {
+            console.log("  Would update: " + result.updated.slice(0, 10).join(", ") + (result.updated.length > 10 ? ` ... (+${result.updated.length - 10} more)` : ""))
+          }
+          console.log("\n  Run: sc plugins update  (without --check) to apply\n")
+        } else {
+          console.log(`\n  ✓ Updated ${result.extracted} plugins (${result.added} new, ${result.changed} changed)\n`)
+        }
+      } else {
+        output({ ok: true, ...result })
+      }
+    } catch (err) {
+      outputError({ code: err.code || 105, type: err.type || "integration_error", message: err.message, recoverable: err.recoverable !== false, suggestions: err.suggestions })
+    }
+    return true
+  }
+
+  outputError({ code: 85, type: "invalid_argument", message: "Unknown plugins subcommand. Use: list, explore, install, remove, show, doctor, learn, update", recoverable: false })
   return true
 }
 

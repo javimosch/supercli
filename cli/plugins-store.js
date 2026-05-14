@@ -6,6 +6,8 @@ const SUPERCLI_DIR = path.join(os.homedir(), ".supercli")
 const SUPERCLI_PLUGINS_DIR = path.join(SUPERCLI_DIR, "plugins")
 const SUPERCLI_LOCAL_LOCK_FILE = path.join(SUPERCLI_PLUGINS_DIR, "plugins.lock.json")
 const SUPERCLI_SERVER_LOCK_FILE = path.join(SUPERCLI_PLUGINS_DIR, "server.lock.json")
+const REMOTE_BUNDLED_DIR = path.join(SUPERCLI_PLUGINS_DIR, "bundled")
+const REMOTE_CATALOG_FILE = path.join(SUPERCLI_PLUGINS_DIR, "remote-catalog.json")
 
 const LEGACY_DCLI_DIR = path.join(os.homedir(), ".dcli")
 const LEGACY_PLUGINS_FILE = path.join(LEGACY_DCLI_DIR, "plugins.lock.json")
@@ -104,6 +106,8 @@ module.exports = {
   SUPERCLI_PLUGINS_DIR,
   SUPERCLI_LOCAL_LOCK_FILE,
   SUPERCLI_SERVER_LOCK_FILE,
+  REMOTE_BUNDLED_DIR,
+  REMOTE_CATALOG_FILE,
   LEGACY_PLUGINS_FILE,
   readPluginsLock,
   writePluginsLock,
