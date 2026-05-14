@@ -26,11 +26,35 @@ nohup sc pocketbase self serve > /tmp/pocketbase.log 2>&1 &
 # Start development server
 sc pocketbase self serve
 
+# Stop server
+sc pocketbase server stop
+
+# Restart server
+sc pocketbase server restart
+
+# Check server status
+sc pocketbase server status
+
+# Health check
+sc pocketbase health check
+
 # Check version
 sc pocketbase --version
 
 # View help
 sc pocketbase --help
+```
+
+### Migration Management (Non-Interactive)
+```bash
+# Create migration file
+sc pocketbase migration create add_user_fields
+
+# Apply pending migrations
+sc pocketbase migration up --force
+
+# Revert last migration
+sc pocketbase migration down 1 --force
 ```
 
 ### Collection Management
@@ -40,15 +64,22 @@ export POCKETBASE_EMAIL="admin@example.com"
 export POCKETBASE_PASSWORD="password123"
 export POCKETBASE_URL="http://127.0.0.1:8090"
 
-# List all collections
+# List all collections (table format)
 sc pocketbase collection list
+
+# List collections (JSON format)
+sc pocketbase collection list --json
+
+# Filter collections
+sc pocketbase collection list --filter=todo
 
 # Create new collection
 sc pocketbase collection create mycollection
 sc pocketbase collection create users auth  # for auth collection
 
-# Delete collection
-sc pocketbase collection delete pbc_1234567890
+# Delete collection (by name or ID - automatic resolution)
+sc pocketbase collection delete todos        # Uses name
+sc pocketbase collection delete pbc_123456   # Uses ID
 ```
 
 ### Database Operations
@@ -89,22 +120,53 @@ sc pocketbase migrate up
 sc pocketbase superuser upsert email@domain.com password123
 ```
 
+## New Features & Improvements
+
+### Automation-Ready Migrations
+- **Non-interactive mode**: Use `--force` flag to skip confirmation prompts
+- **Automated workflows**: Perfect for CI/CD pipelines and scripts
+- **Template generation**: Migration files created with proper structure
+
+### Enhanced Server Management
+- **Process monitoring**: PID file tracking and health monitoring
+- **Auto-restart**: Server automatically restarts on crashes (up to 3 attempts)
+- **Graceful shutdown**: Proper SIGTERM/SIGKILL handling
+- **Health checks**: Built-in health monitoring with response times
+
+### Smart Collection Operations
+- **Name resolution**: Use collection names instead of IDs (automatic ID lookup)
+- **Retry logic**: Automatic retry with exponential backoff for transient failures
+- **Better formatting**: Table and JSON output formats with filtering
+
+### Resilient HTTP Client
+- **Automatic retry**: Handles connection failures gracefully
+- **Exponential backoff**: 1s → 2s → 4s → 8s retry delays
+- **Smart error detection**: Only retries on transient network errors
+
 ## Caveats & Pitfalls
 
 ### 1. Server Process Management
 **Issue:** Long-running server commands timeout in supercli's default execution model.
 
-**Solution:** Use background execution or nohup:
+**Solution:** Use background execution or new server management commands:
 ```bash
-# Good: Background with logging
+# Good: Use dedicated server commands
+sc pocketbase self serve
+sc pocketbase server stop
+sc pocketbase server restart
+sc pocketbase server status
+
+# Or background with logging
 nohup sc pocketbase self serve > /tmp/pocketbase.log 2>&1 &
 
 # Monitor logs
 tail -f /tmp/pocketbase.log
 
-# Stop server
-pkill pocketbase
+# Check health
+sc pocketbase health check
 ```
+
+**Status**: ✅ **Resolved** - New server management commands with process monitoring
 
 ### 2. Binary Installation
 **Issue:** `brew install pocketbase` only works on macOS. Linux requires manual download.
@@ -143,7 +205,9 @@ migrate((app) => {
 });
 ```
 
-Then apply: `sc pocketbase migrate up`
+Then apply: `sc pocketbase migration up --force`
+
+**Status**: ✅ **Improved** - Non-interactive migration mode available
 
 ### 4. Authentication Required
 **Issue:** Most API operations require superuser authentication, not just basic HTTP access.
@@ -158,14 +222,14 @@ export POCKETBASE_URL="http://127.0.0.1:8090"
 ### 5. Collection ID vs Name
 **Issue:** Operations like delete require collection ID (pbc_*), not name.
 
-**Solution:** List collections first to get IDs:
+**Solution**: Collection name resolution is now automatic:
 ```bash
-# List to find ID
-sc pocketbase collection list | jq '.items[] | select(.name=="todos") | .id'
-
-# Then delete with ID
-sc pocketbase collection delete pbc_1234567890
+# Both work now - name resolution is automatic
+sc pocketbase collection delete todos        # Resolves name to ID
+sc pocketbase collection delete pbc_1234567890   # Uses ID directly
 ```
+
+**Status**: ✅ **Resolved** - Automatic name-to-ID resolution implemented
 
 ### 6. Development vs Production
 **Issue:** Development mode (`--dev`) prints SQL queries and logs, not suitable for production.
@@ -220,6 +284,20 @@ const categoryField = new RelationField({
   "presentable": true
 });
 ```
+
+**Status**: ⚠️ **Unchanged** - This is a PocketBase requirement
+
+### 11. Server Stability
+**Issue:** Server may stop unexpectedly during operations despite auto-restart improvements.
+
+**Solution**: Use process managers for production:
+```bash
+# For production, use systemd or PM2
+# Auto-restart is limited to 3 attempts
+# Consider external monitoring for critical deployments
+```
+
+**Status**: ⚠️ **Partially Resolved** - Auto-restart implemented but external monitoring recommended
 
 ## Best Practices
 
