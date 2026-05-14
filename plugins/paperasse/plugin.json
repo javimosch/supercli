@@ -1,0 +1,70 @@
+{
+  "name": "paperasse",
+  "version": "0.1.0",
+  "description": "6 AI agent skills for French bureaucracy: Comptable, Notaire, Fiscaliste, Syndic, CAC, Contrôleur Fiscal",
+  "source": "https://github.com/romainsimon/paperasse",
+  "checks": [
+    { "type": "binary", "name": "node" }
+  ],
+  "install_guidance": {
+    "plugin": "paperasse",
+    "binary": "node",
+    "check": "which node",
+    "install_steps": [
+      "git clone https://github.com/romainsimon/paperasse.git",
+      "cd paperasse && npm install",
+      "cp company.example.json company.json",
+      "supercli plugins install ./plugins/paperasse --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "paperasse",
+      "resource": "skill",
+      "action": "teach",
+      "description": "Skip — skills are auto-loaded via learn. Use sc skills teach paperasse:quickstart instead.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["Paperasse skills are loaded via the learn system. Run: sc skills teach paperasse:quickstart"],
+        "missingDependencyHelp": "Install paperasse: git clone https://github.com/romainsimon/paperasse.git"
+      },
+      "args": []
+    },
+    {
+      "namespace": "paperasse",
+      "resource": "script",
+      "action": "run",
+      "description": "Run a paperasse helper script (calc, fec, statements, pdfs, closing, facture)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npm",
+        "baseArgs": ["run"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Clone paperasse repo first: git clone https://github.com/romainsimon/paperasse.git"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Script name (calc, fec, statements, pdfs, closing, facture, fetch, fetch:qonto, fetch:stripe)" }
+      ]
+    },
+    {
+      "namespace": "paperasse",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough — clone the repo and run npm commands directly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["Paperasse is a SKILL.md collection. Clone the repo and run npm scripts. Or use: sc skills teach paperasse:quickstart"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install paperasse: git clone https://github.com/romainsimon/paperasse.git"
+      },
+      "args": []
+    }
+  ]
+}
