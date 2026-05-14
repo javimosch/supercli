@@ -1,0 +1,73 @@
+{
+  "name": "witr",
+  "version": "0.1.0",
+  "description": "CLI tool that answers 'Why is this running?' \u2014 traces process ancestry, supervisors, containers, and service managers",
+  "source": "https://github.com/pranshuparmar/witr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "witr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "witr",
+    "binary": "witr",
+    "check": "which witr",
+    "install_steps": [
+      "brew install witr",
+      "Verify: witr --version",
+      "supercli plugins install ./plugins/witr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "witr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print witr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "witr",
+        "baseArgs": [
+          "--version"
+        ],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install witr: brew install witr or download from https://github.com/pranshuparmar/witr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "witr",
+      "resource": "process",
+      "action": "explain",
+      "description": "Explain why a process is running (by name, positional)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "witr",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install witr: see https://github.com/pranshuparmar/witr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "witr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to witr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "witr",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install witr: see https://github.com/pranshuparmar/witr"
+      },
+      "args": []
+    }
+  ]
+}
