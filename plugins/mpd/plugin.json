@@ -1,0 +1,53 @@
+{
+  "name": "mpd",
+  "version": "0.1.0",
+  "description": "Music Player Daemon",
+  "source": "https://github.com/MusicPlayerDaemon/MPD",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpd",
+    "binary": "mpd",
+    "check": "which mpd",
+    "install_steps": [
+      "brew install mpd",
+      "Verify: mpd --version",
+      "supercli plugins install ./plugins/mpd --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mpd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpd: brew install mpd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpd: brew install mpd"
+      },
+      "args": []
+    }
+  ]
+}

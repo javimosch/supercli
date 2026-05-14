@@ -1,0 +1,53 @@
+{
+  "name": "urlscan",
+  "version": "0.1.0",
+  "description": "URL scanner/extractor",
+  "source": "https://github.com/firecat53/urlscan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "urlscan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "urlscan",
+    "binary": "urlscan",
+    "check": "which urlscan",
+    "install_steps": [
+      "pip install urlscan",
+      "Verify: urlscan --version",
+      "supercli plugins install ./plugins/urlscan --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "urlscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print urlscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "urlscan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install urlscan: pip install urlscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "urlscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to urlscan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "urlscan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install urlscan: pip install urlscan"
+      },
+      "args": []
+    }
+  ]
+}

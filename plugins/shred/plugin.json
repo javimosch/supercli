@@ -1,0 +1,53 @@
+{
+  "name": "shred",
+  "version": "0.1.0",
+  "description": "Overwrite files for secure deletion",
+  "source": "https://github.com/coreutils/coreutils",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shred"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shred",
+    "binary": "shred",
+    "check": "which shred",
+    "install_steps": [
+      "brew install coreutils",
+      "Verify: shred --version",
+      "supercli plugins install ./plugins/shred --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "shred",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shred version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shred",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shred: brew install coreutils"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shred",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shred CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shred",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shred: brew install coreutils"
+      },
+      "args": []
+    }
+  ]
+}

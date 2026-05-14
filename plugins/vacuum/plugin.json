@@ -1,0 +1,53 @@
+{
+  "name": "vacuum",
+  "version": "0.1.0",
+  "description": "OpenAPI/Spectral-compatible linter in Go",
+  "source": "https://github.com/daveshanley/vacuum",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vacuum"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vacuum",
+    "binary": "vacuum",
+    "check": "which vacuum",
+    "install_steps": [
+      "brew install vacuum",
+      "Verify: vacuum --version",
+      "supercli plugins install ./plugins/vacuum --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "vacuum",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vacuum version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vacuum",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vacuum: brew install vacuum"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vacuum",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vacuum CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vacuum",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vacuum: brew install vacuum"
+      },
+      "args": []
+    }
+  ]
+}

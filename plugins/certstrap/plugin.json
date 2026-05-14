@@ -1,0 +1,53 @@
+{
+  "name": "certstrap",
+  "version": "0.1.0",
+  "description": "Simple certificate management tool",
+  "source": "https://github.com/square/certstrap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "certstrap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "certstrap",
+    "binary": "certstrap",
+    "check": "which certstrap",
+    "install_steps": [
+      "brew install certstrap",
+      "Verify: certstrap --version",
+      "supercli plugins install ./plugins/certstrap --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "certstrap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print certstrap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certstrap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install certstrap: brew install certstrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "certstrap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to certstrap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certstrap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install certstrap: brew install certstrap"
+      },
+      "args": []
+    }
+  ]
+}

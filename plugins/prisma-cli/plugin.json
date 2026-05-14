@@ -1,0 +1,53 @@
+{
+  "name": "prisma-cli",
+  "version": "0.1.0",
+  "description": "Prisma ORM CLI for database management",
+  "source": "https://github.com/prisma/prisma",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prisma"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prisma-cli",
+    "binary": "prisma",
+    "check": "which prisma",
+    "install_steps": [
+      "npm install -g prisma",
+      "Verify: prisma --version",
+      "supercli plugins install ./plugins/prisma-cli --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "prisma-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prisma-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prisma",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prisma-cli: npm install -g prisma"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prisma-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prisma CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prisma",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prisma-cli: npm install -g prisma"
+      },
+      "args": []
+    }
+  ]
+}

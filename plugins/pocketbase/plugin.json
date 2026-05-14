@@ -1,0 +1,118 @@
+{
+  "name": "pocketbase",
+  "version": "0.1.0",
+  "description": "PocketBase open-source backend CLI",
+  "source": "https://github.com/pocketbase/pocketbase",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pocketbase"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pocketbase",
+    "binary": "pocketbase",
+    "check": "which pocketbase",
+    "install_steps": [
+      "brew install pocketbase",
+      "Verify: pocketbase --version",
+      "supercli plugins install ./plugins/pocketbase --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "pocketbase",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pocketbase version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pocketbase",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pocketbase: brew install pocketbase"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pocketbase",
+      "resource": "collection",
+      "action": "create",
+      "description": "Create a new PocketBase collection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": [
+          "/home/jarancibia/ai/supercli/plugins/pocketbase/collection-manager.js",
+          "create"
+        ],
+        "missingDependencyHelp": "Install pocketbase: brew install pocketbase"
+      },
+      "args": [
+        {
+          "name": "name",
+          "description": "Collection name",
+          "required": true
+        },
+        {
+          "name": "type",
+          "description": "Collection type (base or auth)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "pocketbase",
+      "resource": "collection",
+      "action": "list",
+      "description": "List all PocketBase collections",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": [
+          "/home/jarancibia/ai/supercli/plugins/pocketbase/collection-manager.js",
+          "list"
+        ],
+        "missingDependencyHelp": "Install pocketbase: brew install pocketbase"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pocketbase",
+      "resource": "collection",
+      "action": "delete",
+      "description": "Delete a PocketBase collection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": [
+          "/home/jarancibia/ai/supercli/plugins/pocketbase/collection-manager.js",
+          "delete"
+        ],
+        "missingDependencyHelp": "Install pocketbase: brew install pocketbase"
+      },
+      "args": [
+        {
+          "name": "id",
+          "description": "Collection ID",
+          "required": true
+        }
+      ]
+    },
+    {
+      "namespace": "pocketbase",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pocketbase CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pocketbase",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pocketbase: brew install pocketbase"
+      },
+      "args": []
+    }
+  ]
+}

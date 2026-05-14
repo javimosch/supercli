@@ -1,0 +1,53 @@
+{
+  "name": "shuffledns",
+  "version": "0.1.0",
+  "description": "Mass DNS resolver using wordlists",
+  "source": "https://github.com/projectdiscovery/shuffledns",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shuffledns"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shuffledns",
+    "binary": "shuffledns",
+    "check": "which shuffledns",
+    "install_steps": [
+      "go install github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest",
+      "Verify: shuffledns --version",
+      "supercli plugins install ./plugins/shuffledns --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "shuffledns",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shuffledns version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shuffledns",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shuffledns: go install github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shuffledns",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shuffledns CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shuffledns",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shuffledns: go install github.com/projectdiscovery/shuffledns/cmd/shuffledns@latest"
+      },
+      "args": []
+    }
+  ]
+}

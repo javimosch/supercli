@@ -1,0 +1,53 @@
+{
+  "name": "detect-secrets",
+  "version": "0.1.0",
+  "description": "Secrets detection with baseline awareness and JSON output",
+  "source": "https://github.com/Yelp/detect-secrets",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "detect-secrets"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "detect-secrets",
+    "binary": "detect-secrets",
+    "check": "which detect-secrets",
+    "install_steps": [
+      "pip install detect-secrets",
+      "Verify: detect-secrets --version",
+      "supercli plugins install ./plugins/detect-secrets --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "detect-secrets",
+      "resource": "self",
+      "action": "version",
+      "description": "Print detect-secrets version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "detect-secrets",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install detect-secrets: pip install detect-secrets"
+      },
+      "args": []
+    },
+    {
+      "namespace": "detect-secrets",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to detect-secrets CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "detect-secrets",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install detect-secrets: pip install detect-secrets"
+      },
+      "args": []
+    }
+  ]
+}

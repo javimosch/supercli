@@ -1,0 +1,53 @@
+{
+  "name": "recut",
+  "version": "0.1.0",
+  "description": "CSV/TSV cut and reorganize tool",
+  "source": "https://github.com/maplant/recut",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "recut"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "recut",
+    "binary": "recut",
+    "check": "which recut",
+    "install_steps": [
+      "cargo install recut",
+      "Verify: recut --version",
+      "supercli plugins install ./plugins/recut --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "recut",
+      "resource": "self",
+      "action": "version",
+      "description": "Print recut version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recut",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install recut: cargo install recut"
+      },
+      "args": []
+    },
+    {
+      "namespace": "recut",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to recut CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recut",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install recut: cargo install recut"
+      },
+      "args": []
+    }
+  ]
+}

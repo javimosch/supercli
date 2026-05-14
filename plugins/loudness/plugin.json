@@ -1,0 +1,53 @@
+{
+  "name": "loudness",
+  "version": "0.1.0",
+  "description": "Loudness analysis CLI (EBU R128 / ITU-R BS.1770)",
+  "source": "https://github.com/klangfreund/loudness",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "loudness"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "loudness",
+    "binary": "loudness",
+    "check": "which loudness",
+    "install_steps": [
+      "cargo install loudness",
+      "Verify: loudness --version",
+      "supercli plugins install ./plugins/loudness --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "loudness",
+      "resource": "self",
+      "action": "version",
+      "description": "Print loudness version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loudness",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install loudness: cargo install loudness"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loudness",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to loudness CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loudness",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install loudness: cargo install loudness"
+      },
+      "args": []
+    }
+  ]
+}

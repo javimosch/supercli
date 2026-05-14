@@ -1,0 +1,53 @@
+{
+  "name": "secretlint",
+  "version": "0.1.0",
+  "description": "Secret linter with multi-format output",
+  "source": "https://github.com/secretlint/secretlint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "secretlint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "secretlint",
+    "binary": "secretlint",
+    "check": "which secretlint",
+    "install_steps": [
+      "npm install -g secretlint",
+      "Verify: secretlint --version",
+      "supercli plugins install ./plugins/secretlint --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "secretlint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print secretlint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "secretlint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install secretlint: npm install -g secretlint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "secretlint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to secretlint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "secretlint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install secretlint: npm install -g secretlint"
+      },
+      "args": []
+    }
+  ]
+}

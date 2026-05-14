@@ -1,0 +1,53 @@
+{
+  "name": "mise",
+  "version": "0.1.0",
+  "description": "Dev tools manager using TOML config",
+  "source": "https://github.com/jdx/mise",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mise"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mise",
+    "binary": "mise",
+    "check": "which mise",
+    "install_steps": [
+      "brew install mise",
+      "Verify: mise --version",
+      "supercli plugins install ./plugins/mise --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mise",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mise version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mise",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mise: brew install mise"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mise",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mise CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mise",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mise: brew install mise"
+      },
+      "args": []
+    }
+  ]
+}

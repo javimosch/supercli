@@ -1,0 +1,53 @@
+{
+  "name": "gauge",
+  "version": "0.1.0",
+  "description": "Test runner with pluggable reporting",
+  "source": "https://github.com/getgauge/gauge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gauge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gauge",
+    "binary": "gauge",
+    "check": "which gauge",
+    "install_steps": [
+      "brew install gauge",
+      "Verify: gauge --version",
+      "supercli plugins install ./plugins/gauge --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "gauge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gauge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gauge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gauge: brew install gauge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gauge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gauge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gauge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gauge: brew install gauge"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "lychee",
+  "version": "0.1.0",
+  "description": "Link checker with --json output",
+  "source": "https://github.com/lycheeverse/lychee",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lychee"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lychee",
+    "binary": "lychee",
+    "check": "which lychee",
+    "install_steps": [
+      "cargo install lychee",
+      "Verify: lychee --version",
+      "supercli plugins install ./plugins/lychee --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "lychee",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lychee version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lychee",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lychee: cargo install lychee"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lychee",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lychee CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lychee",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lychee: cargo install lychee"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "playerctl",
+  "version": "0.1.0",
+  "description": "Media player control from command line",
+  "source": "https://github.com/altdesktop/playerctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "playerctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "playerctl",
+    "binary": "playerctl",
+    "check": "which playerctl",
+    "install_steps": [
+      "brew install playerctl",
+      "Verify: playerctl --version",
+      "supercli plugins install ./plugins/playerctl --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "playerctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print playerctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playerctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install playerctl: brew install playerctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "playerctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to playerctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "playerctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install playerctl: brew install playerctl"
+      },
+      "args": []
+    }
+  ]
+}

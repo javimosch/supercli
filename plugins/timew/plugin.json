@@ -1,0 +1,53 @@
+{
+  "name": "timew",
+  "version": "0.1.0",
+  "description": "Time tracking CLI",
+  "source": "https://github.com/GothenburgBitFactory/timewarrior",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "timew"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "timew",
+    "binary": "timew",
+    "check": "which timew",
+    "install_steps": [
+      "brew install timewarrior",
+      "Verify: timew --version",
+      "supercli plugins install ./plugins/timew --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "timew",
+      "resource": "self",
+      "action": "version",
+      "description": "Print timew version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timew",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install timew: brew install timewarrior"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timew",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to timew CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timew",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install timew: brew install timewarrior"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "dnsdumpster",
+  "version": "0.1.0",
+  "description": "DNS recon data from dnsdumpster.com",
+  "source": "https://github.com/w0rf/dnsdumpster",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dnsdumpster"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dnsdumpster",
+    "binary": "dnsdumpster",
+    "check": "which dnsdumpster",
+    "install_steps": [
+      "pip install dnsdumpster",
+      "Verify: dnsdumpster --version",
+      "supercli plugins install ./plugins/dnsdumpster --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "dnsdumpster",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dnsdumpster version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dnsdumpster",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dnsdumpster: pip install dnsdumpster"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dnsdumpster",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dnsdumpster CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dnsdumpster",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dnsdumpster: pip install dnsdumpster"
+      },
+      "args": []
+    }
+  ]
+}

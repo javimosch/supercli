@@ -1,0 +1,53 @@
+{
+  "name": "lighthouse-ci",
+  "version": "0.1.0",
+  "description": "Lighthouse automation with JSON reporter",
+  "source": "https://github.com/GoogleChrome/lighthouse-ci",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lighthouse-ci"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lighthouse-ci",
+    "binary": "lighthouse-ci",
+    "check": "which lighthouse-ci",
+    "install_steps": [
+      "npm install -g @lhci/cli",
+      "Verify: lighthouse-ci --version",
+      "supercli plugins install ./plugins/lighthouse-ci --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "lighthouse-ci",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lighthouse-ci version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lighthouse-ci",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lighthouse-ci: npm install -g @lhci/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lighthouse-ci",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lighthouse-ci CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lighthouse-ci",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lighthouse-ci: npm install -g @lhci/cli"
+      },
+      "args": []
+    }
+  ]
+}

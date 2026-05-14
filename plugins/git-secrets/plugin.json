@@ -1,0 +1,53 @@
+{
+  "name": "git-secrets",
+  "version": "0.1.0",
+  "description": "Prevent committing secrets to git repos",
+  "source": "https://github.com/awslabs/git-secrets",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "git-secrets"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "git-secrets",
+    "binary": "git-secrets",
+    "check": "which git-secrets",
+    "install_steps": [
+      "brew install git-secrets",
+      "Verify: git-secrets --version",
+      "supercli plugins install ./plugins/git-secrets --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "git-secrets",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-secrets version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-secrets",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install git-secrets: brew install git-secrets"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-secrets",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-secrets CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-secrets",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install git-secrets: brew install git-secrets"
+      },
+      "args": []
+    }
+  ]
+}

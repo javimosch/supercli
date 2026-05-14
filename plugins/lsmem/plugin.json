@@ -1,0 +1,53 @@
+{
+  "name": "lsmem",
+  "version": "0.1.0",
+  "description": "List memory ranges",
+  "source": "https://github.com/util-linux/util-linux",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lsmem"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lsmem",
+    "binary": "lsmem",
+    "check": "which lsmem",
+    "install_steps": [
+      "brew install util-linux",
+      "Verify: lsmem --version",
+      "supercli plugins install ./plugins/lsmem --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "lsmem",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lsmem version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsmem",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lsmem: brew install util-linux"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lsmem",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lsmem CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsmem",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lsmem: brew install util-linux"
+      },
+      "args": []
+    }
+  ]
+}

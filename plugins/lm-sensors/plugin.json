@@ -1,0 +1,53 @@
+{
+  "name": "lm-sensors",
+  "version": "0.1.0",
+  "description": "Hardware monitoring sensors output",
+  "source": "https://github.com/lm-sensors/lm-sensors",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sensors"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lm-sensors",
+    "binary": "sensors",
+    "check": "which sensors",
+    "install_steps": [
+      "brew install lm-sensors",
+      "Verify: sensors --version",
+      "supercli plugins install ./plugins/lm-sensors --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "lm-sensors",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lm-sensors version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sensors",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lm-sensors: brew install lm-sensors"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lm-sensors",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sensors CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sensors",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lm-sensors: brew install lm-sensors"
+      },
+      "args": []
+    }
+  ]
+}

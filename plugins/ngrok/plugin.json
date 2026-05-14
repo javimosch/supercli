@@ -1,0 +1,53 @@
+{
+  "name": "ngrok",
+  "version": "0.1.0",
+  "description": "Secure introspectable tunnels to localhost",
+  "source": "https://github.com/ngrok/ngrok",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ngrok"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ngrok",
+    "binary": "ngrok",
+    "check": "which ngrok",
+    "install_steps": [
+      "brew install ngrok",
+      "Verify: ngrok --version",
+      "supercli plugins install ./plugins/ngrok --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "ngrok",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ngrok version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ngrok",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ngrok: brew install ngrok"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ngrok",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ngrok CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ngrok",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ngrok: brew install ngrok"
+      },
+      "args": []
+    }
+  ]
+}

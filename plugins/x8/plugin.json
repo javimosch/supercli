@@ -1,0 +1,53 @@
+{
+  "name": "x8",
+  "version": "0.1.0",
+  "description": "Hidden parameter fuzzer with --json output",
+  "source": "https://github.com/Sh1Yo/x8",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "x8"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "x8",
+    "binary": "x8",
+    "check": "which x8",
+    "install_steps": [
+      "go install github.com/Sh1Yo/x8@latest",
+      "Verify: x8 --version",
+      "supercli plugins install ./plugins/x8 --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "x8",
+      "resource": "self",
+      "action": "version",
+      "description": "Print x8 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x8",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install x8: go install github.com/Sh1Yo/x8@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "x8",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to x8 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x8",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install x8: go install github.com/Sh1Yo/x8@latest"
+      },
+      "args": []
+    }
+  ]
+}

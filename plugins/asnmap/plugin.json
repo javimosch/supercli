@@ -1,0 +1,53 @@
+{
+  "name": "asnmap",
+  "version": "0.1.0",
+  "description": "ASN to CIDR mapping tool",
+  "source": "https://github.com/projectdiscovery/asnmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "asnmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "asnmap",
+    "binary": "asnmap",
+    "check": "which asnmap",
+    "install_steps": [
+      "go install github.com/projectdiscovery/asnmap/cmd/asnmap@latest",
+      "Verify: asnmap --version",
+      "supercli plugins install ./plugins/asnmap --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "asnmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print asnmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asnmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install asnmap: go install github.com/projectdiscovery/asnmap/cmd/asnmap@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "asnmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to asnmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asnmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install asnmap: go install github.com/projectdiscovery/asnmap/cmd/asnmap@latest"
+      },
+      "args": []
+    }
+  ]
+}

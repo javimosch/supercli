@@ -1,0 +1,53 @@
+{
+  "name": "wttr",
+  "version": "0.1.0",
+  "description": "Weather from the command line via wttr.in",
+  "source": "https://github.com/chubin/wttr.in",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wttr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wttr",
+    "binary": "wttr",
+    "check": "which wttr",
+    "install_steps": [
+      "curl -s wttr.in > /dev/null && echo 'curl wttr.in for weather'",
+      "Verify: wttr --version",
+      "supercli plugins install ./plugins/wttr --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "wttr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wttr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wttr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wttr: curl -s wttr.in > /dev/null && echo 'curl wttr.in for weather'"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wttr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wttr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wttr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wttr: curl -s wttr.in > /dev/null && echo 'curl wttr.in for weather'"
+      },
+      "args": []
+    }
+  ]
+}

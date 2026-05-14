@@ -1,0 +1,53 @@
+{
+  "name": "flameshot",
+  "version": "0.1.0",
+  "description": "Screenshot tool with CLI options",
+  "source": "https://github.com/flameshot-org/flameshot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "flameshot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "flameshot",
+    "binary": "flameshot",
+    "check": "which flameshot",
+    "install_steps": [
+      "brew install flameshot",
+      "Verify: flameshot --version",
+      "supercli plugins install ./plugins/flameshot --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "flameshot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print flameshot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flameshot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install flameshot: brew install flameshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "flameshot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to flameshot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flameshot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install flameshot: brew install flameshot"
+      },
+      "args": []
+    }
+  ]
+}

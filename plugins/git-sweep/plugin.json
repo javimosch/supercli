@@ -1,0 +1,53 @@
+{
+  "name": "git-sweep",
+  "version": "0.1.0",
+  "description": "Clean up merged git branches",
+  "source": "https://github.com/arc90/git-sweep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "git-sweep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "git-sweep",
+    "binary": "git-sweep",
+    "check": "which git-sweep",
+    "install_steps": [
+      "pip install git-sweep",
+      "Verify: git-sweep --version",
+      "supercli plugins install ./plugins/git-sweep --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "git-sweep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-sweep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-sweep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install git-sweep: pip install git-sweep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-sweep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-sweep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-sweep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install git-sweep: pip install git-sweep"
+      },
+      "args": []
+    }
+  ]
+}

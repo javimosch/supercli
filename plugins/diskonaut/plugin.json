@@ -1,0 +1,53 @@
+{
+  "name": "diskonaut",
+  "version": "0.1.0",
+  "description": "Terminal disk space viewer with JSON output",
+  "source": "https://github.com/imsnif/diskonaut",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "diskonaut"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "diskonaut",
+    "binary": "diskonaut",
+    "check": "which diskonaut",
+    "install_steps": [
+      "cargo install diskonaut",
+      "Verify: diskonaut --version",
+      "supercli plugins install ./plugins/diskonaut --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "diskonaut",
+      "resource": "self",
+      "action": "version",
+      "description": "Print diskonaut version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diskonaut",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install diskonaut: cargo install diskonaut"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diskonaut",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to diskonaut CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diskonaut",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install diskonaut: cargo install diskonaut"
+      },
+      "args": []
+    }
+  ]
+}

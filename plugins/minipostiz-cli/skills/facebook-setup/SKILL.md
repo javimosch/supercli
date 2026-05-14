@@ -20,38 +20,49 @@ minipostiz-cli posts to **Facebook Pages** (not personal profiles — the Graph 
 ## Step 1 — Create a Facebook App
 
 1. Go to https://developers.facebook.com/apps → **Create App**
-2. Select **Business** type → **Next**
+2. Choose **"Authenticate and request data from users"** use case (Consumer type) → **Next**
+   - ⚠️ Do NOT pick Business type — it won't show `pages_manage_posts` in Graph Explorer
 3. Fill in app name and contact email → **Create App**
-4. In the dashboard → **Add Product** → find **Facebook Login** → **Set Up**
 
 ---
 
-## Step 2 — Add Pages API permissions
+## Step 2 — Add Pages permissions via Use Cases
 
-1. In your app → **App Review** → **Permissions and Features**
-2. Request (or for development, use directly):
+The new Facebook developer dashboard (2024+) uses **use cases** instead of individual permission requests:
+
+1. In your app dashboard → click **"Customize the Manage everything on your Page use case"**
+2. Add the following permissions to that use case:
    - `pages_manage_posts`
    - `pages_read_engagement`
-3. For development/testing: these permissions work without review on pages you admin
+3. Save — these are available in development mode without App Review for pages you admin
+
+> **Note:** There is no longer an "App Review → Permissions and Features" link in the dashboard. The use case customization screen is the replacement.
 
 ---
 
 ## Step 3 — Get your Page Access Token
 
-**Easiest method — Graph API Explorer:**
+**Via Graph API Explorer (recommended):**
 
 1. Go to https://developers.facebook.com/tools/explorer/
 2. Select your app in the **Application** dropdown
-3. Click **Generate Access Token** → authorize
-4. In the **User or Page** dropdown → select your **Page** (not "User")
-5. In **Permissions** → add `pages_manage_posts` and `pages_read_engagement`
-6. Click **Generate Access Token** → copy the Page Access Token
+3. Click the blue **Generate Access Token** button (opens a Facebook Login popup — NOT "Get App Token")
+4. In the **Permissions** list, add `pages_manage_posts` and `pages_read_engagement`
+5. Authorize → in the **User or Page** dropdown → switch to your **Page** (e.g. "Savoie Tech")
+6. Copy the Page Access Token shown
+
+**Get your Page ID and a proper Page Token via curl (alternative):**
+
+```bash
+# Use the User token to list all pages you manage + their page tokens
+curl "https://graph.facebook.com/v21.0/me/accounts?access_token=YOUR_USER_TOKEN"
+# Response includes each page's id and access_token — use those directly
+```
 
 **Get a long-lived token (60 days instead of ~1 hour):**
 
 ```bash
-# Exchange short-lived token for long-lived
-curl "https://graph.facebook.com/v19.0/oauth/access_token?\
+curl "https://graph.facebook.com/v21.0/oauth/access_token?\
   grant_type=fb_exchange_token&\
   client_id=YOUR_APP_ID&\
   client_secret=YOUR_APP_SECRET&\
@@ -60,23 +71,7 @@ curl "https://graph.facebook.com/v19.0/oauth/access_token?\
 
 ---
 
-## Step 4 — Get your Page ID
-
-**Option A** — from the Graph API Explorer:
-After getting the page token, call: `GET /<page-name>?fields=id,name`
-
-**Option B** — from your Page URL:
-Go to your Facebook Page → **About** → scroll to find Page ID
-(or check `facebook.com/pg/YOUR_PAGE/about/`)
-
-**Option C** — via curl:
-```bash
-curl "https://graph.facebook.com/v19.0/me?access_token=YOUR_PAGE_TOKEN&fields=id,name"
-```
-
----
-
-## Step 5 — Store in minipostiz-cli
+## Step 4 — Store in minipostiz-cli
 
 ```bash
 minipostiz auth --platform facebook \
@@ -91,7 +86,7 @@ sc minipostiz auth set-facebook \
 
 ---
 
-## Step 6 — Test
+## Step 5 — Test
 
 ```bash
 minipostiz auth verify --platform facebook
@@ -104,9 +99,10 @@ minipostiz publish --platform facebook --message "Hello from minipostiz-cli"
 
 | Error | Cause | Fix |
 |-------|-------|-----|
-| `190 Invalid OAuth access token` | Token expired or wrong type | Regenerate — ensure you selected the **Page** token, not User token |
-| `200 Permission error` | Missing `pages_manage_posts` | Add permission in Graph API Explorer before generating token |
-| `100 Invalid parameter` | Wrong pageId | Verify pageId via `GET /me?access_token=TOKEN&fields=id` |
+| `190 Invalid OAuth access token` | Token expired or wrong type | Regenerate — ensure you clicked **Generate Access Token** (not "Get App Token") and switched to the **Page** token |
+| `283 Requires pages_read_engagement` | Missing permission on token | Re-generate token with `pages_read_engagement` added; ensure use case is configured in app dashboard |
+| `200 Permission error` | Missing `pages_manage_posts` | Add permission via use case customization in app dashboard |
+| `100 Object does not exist` | Token is a User token, not Page token | Switch to Page in the User/Page dropdown in Graph Explorer |
 | `368 Blocked` | Page or account restricted | Check Page Quality in Facebook Business Suite |
 
 ## Token lifetime

@@ -1,0 +1,53 @@
+{
+  "name": "tzupdate",
+  "version": "0.1.0",
+  "description": "Update timezone based on geolocation",
+  "source": "https://github.com/cdown/tzupdate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tzupdate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tzupdate",
+    "binary": "tzupdate",
+    "check": "which tzupdate",
+    "install_steps": [
+      "pip install tzupdate",
+      "Verify: tzupdate --version",
+      "supercli plugins install ./plugins/tzupdate --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "tzupdate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tzupdate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tzupdate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tzupdate: pip install tzupdate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tzupdate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tzupdate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tzupdate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tzupdate: pip install tzupdate"
+      },
+      "args": []
+    }
+  ]
+}

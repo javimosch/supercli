@@ -1,0 +1,53 @@
+{
+  "name": "typer",
+  "version": "0.1.0",
+  "description": "Build CLIs from Python type hints, with CLI runner",
+  "source": "https://github.com/fastapi/typer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "typer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "typer",
+    "binary": "typer",
+    "check": "which typer",
+    "install_steps": [
+      "pip install typer-cli",
+      "Verify: typer --version",
+      "supercli plugins install ./plugins/typer --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "typer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print typer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "typer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install typer: pip install typer-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "typer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to typer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "typer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install typer: pip install typer-cli"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "uuidgen",
+  "version": "0.1.0",
+  "description": "UUID generation utility",
+  "source": "https://github.com/coreutils/coreutils",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "uuidgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "uuidgen",
+    "binary": "uuidgen",
+    "check": "which uuidgen",
+    "install_steps": [
+      "brew install uuidgen",
+      "Verify: uuidgen --version",
+      "supercli plugins install ./plugins/uuidgen --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "uuidgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uuidgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uuidgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install uuidgen: brew install uuidgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uuidgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uuidgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uuidgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install uuidgen: brew install uuidgen"
+      },
+      "args": []
+    }
+  ]
+}

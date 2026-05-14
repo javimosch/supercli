@@ -1,0 +1,53 @@
+{
+  "name": "depcheck",
+  "version": "0.1.0",
+  "description": "Check for unused/missing dependencies",
+  "source": "https://github.com/depcheck/depcheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "depcheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "depcheck",
+    "binary": "depcheck",
+    "check": "which depcheck",
+    "install_steps": [
+      "npm install -g depcheck",
+      "Verify: depcheck --version",
+      "supercli plugins install ./plugins/depcheck --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "depcheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print depcheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "depcheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install depcheck: npm install -g depcheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "depcheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to depcheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "depcheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install depcheck: npm install -g depcheck"
+      },
+      "args": []
+    }
+  ]
+}

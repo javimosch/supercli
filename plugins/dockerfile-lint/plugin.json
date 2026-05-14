@@ -1,0 +1,53 @@
+{
+  "name": "dockerfile-lint",
+  "version": "0.1.0",
+  "description": "Dockerfile linter and validator",
+  "source": "https://github.com/projectatomic/dockerfile-lint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dockerfile-lint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dockerfile-lint",
+    "binary": "dockerfile-lint",
+    "check": "which dockerfile-lint",
+    "install_steps": [
+      "npm install -g dockerfile-lint",
+      "Verify: dockerfile-lint --version",
+      "supercli plugins install ./plugins/dockerfile-lint --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "dockerfile-lint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dockerfile-lint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerfile-lint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dockerfile-lint: npm install -g dockerfile-lint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dockerfile-lint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dockerfile-lint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerfile-lint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dockerfile-lint: npm install -g dockerfile-lint"
+      },
+      "args": []
+    }
+  ]
+}

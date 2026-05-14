@@ -1,0 +1,53 @@
+{
+  "name": "semantic-release",
+  "version": "0.1.0",
+  "description": "Automated package publishing and version management",
+  "source": "https://github.com/semantic-release/semantic-release",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "semantic-release"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "semantic-release",
+    "binary": "semantic-release",
+    "check": "which semantic-release",
+    "install_steps": [
+      "npm install -g semantic-release",
+      "Verify: semantic-release --version",
+      "supercli plugins install ./plugins/semantic-release --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "semantic-release",
+      "resource": "self",
+      "action": "version",
+      "description": "Print semantic-release version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "semantic-release",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install semantic-release: npm install -g semantic-release"
+      },
+      "args": []
+    },
+    {
+      "namespace": "semantic-release",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to semantic-release CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "semantic-release",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install semantic-release: npm install -g semantic-release"
+      },
+      "args": []
+    }
+  ]
+}

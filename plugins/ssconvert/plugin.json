@@ -1,0 +1,53 @@
+{
+  "name": "ssconvert",
+  "version": "0.1.0",
+  "description": "Spreadsheet format converter",
+  "source": "https://github.com/GNOME/gnumeric",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ssconvert"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ssconvert",
+    "binary": "ssconvert",
+    "check": "which ssconvert",
+    "install_steps": [
+      "brew install gnumeric",
+      "Verify: ssconvert --version",
+      "supercli plugins install ./plugins/ssconvert --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "ssconvert",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ssconvert version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssconvert",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ssconvert: brew install gnumeric"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ssconvert",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ssconvert CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssconvert",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ssconvert: brew install gnumeric"
+      },
+      "args": []
+    }
+  ]
+}

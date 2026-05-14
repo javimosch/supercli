@@ -1,0 +1,53 @@
+{
+  "name": "gpg-agent",
+  "version": "0.1.0",
+  "description": "GPG key agent",
+  "source": "https://github.com/gpg/gnupg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpg-agent"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpg-agent",
+    "binary": "gpg-agent",
+    "check": "which gpg-agent",
+    "install_steps": [
+      "brew install gnupg",
+      "Verify: gpg-agent --version",
+      "supercli plugins install ./plugins/gpg-agent --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "gpg-agent",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpg-agent version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpg-agent",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpg-agent: brew install gnupg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpg-agent",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpg-agent CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpg-agent",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpg-agent: brew install gnupg"
+      },
+      "args": []
+    }
+  ]
+}

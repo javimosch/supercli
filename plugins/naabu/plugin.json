@@ -1,0 +1,53 @@
+{
+  "name": "naabu",
+  "version": "0.1.0",
+  "description": "Fast port scanner with --json output",
+  "source": "https://github.com/projectdiscovery/naabu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "naabu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "naabu",
+    "binary": "naabu",
+    "check": "which naabu",
+    "install_steps": [
+      "go install github.com/projectdiscovery/naabu/v2/cmd/naabu@latest",
+      "Verify: naabu --version",
+      "supercli plugins install ./plugins/naabu --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "naabu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print naabu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "naabu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install naabu: go install github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "naabu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to naabu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "naabu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install naabu: go install github.com/projectdiscovery/naabu/v2/cmd/naabu@latest"
+      },
+      "args": []
+    }
+  ]
+}

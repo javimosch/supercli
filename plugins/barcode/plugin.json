@@ -1,0 +1,53 @@
+{
+  "name": "barcode",
+  "version": "0.1.0",
+  "description": "Barcode generation tool",
+  "source": "https://github.com/mtib/barcode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "barcode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "barcode",
+    "binary": "barcode",
+    "check": "which barcode",
+    "install_steps": [
+      "brew install barcode",
+      "Verify: barcode --version",
+      "supercli plugins install ./plugins/barcode --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "barcode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print barcode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "barcode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install barcode: brew install barcode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "barcode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to barcode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "barcode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install barcode: brew install barcode"
+      },
+      "args": []
+    }
+  ]
+}

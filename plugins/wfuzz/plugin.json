@@ -1,0 +1,53 @@
+{
+  "name": "wfuzz",
+  "version": "0.1.0",
+  "description": "Web fuzzer with scriptable batch mode",
+  "source": "https://github.com/xmendez/wfuzz",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wfuzz"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wfuzz",
+    "binary": "wfuzz",
+    "check": "which wfuzz",
+    "install_steps": [
+      "pip install wfuzz",
+      "Verify: wfuzz --version",
+      "supercli plugins install ./plugins/wfuzz --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "wfuzz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wfuzz version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wfuzz",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wfuzz: pip install wfuzz"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wfuzz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wfuzz CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wfuzz",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wfuzz: pip install wfuzz"
+      },
+      "args": []
+    }
+  ]
+}

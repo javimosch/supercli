@@ -1,0 +1,53 @@
+{
+  "name": "dirsearch",
+  "version": "0.1.0",
+  "description": "Web path discovery with --json-report",
+  "source": "https://github.com/maurosoria/dirsearch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dirsearch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dirsearch",
+    "binary": "dirsearch",
+    "check": "which dirsearch",
+    "install_steps": [
+      "pip install dirsearch",
+      "Verify: dirsearch --version",
+      "supercli plugins install ./plugins/dirsearch --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "dirsearch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dirsearch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dirsearch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dirsearch: pip install dirsearch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dirsearch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dirsearch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dirsearch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dirsearch: pip install dirsearch"
+      },
+      "args": []
+    }
+  ]
+}

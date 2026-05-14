@@ -1,0 +1,53 @@
+{
+  "name": "wapiti",
+  "version": "0.1.0",
+  "description": "Web vulnerability scanner with --json output",
+  "source": "https://github.com/wapiti-scanner/wapiti",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wapiti"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wapiti",
+    "binary": "wapiti",
+    "check": "which wapiti",
+    "install_steps": [
+      "pip install wapiti3",
+      "Verify: wapiti --version",
+      "supercli plugins install ./plugins/wapiti --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "wapiti",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wapiti version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wapiti",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wapiti: pip install wapiti3"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wapiti",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wapiti CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wapiti",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wapiti: pip install wapiti3"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "notify",
+  "version": "0.1.0",
+  "description": "Multi-provider notification tool",
+  "source": "https://github.com/projectdiscovery/notify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "notify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "notify",
+    "binary": "notify",
+    "check": "which notify",
+    "install_steps": [
+      "go install github.com/projectdiscovery/notify/cmd/notify@latest",
+      "Verify: notify --version",
+      "supercli plugins install ./plugins/notify --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "notify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print notify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install notify: go install github.com/projectdiscovery/notify/cmd/notify@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "notify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to notify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install notify: go install github.com/projectdiscovery/notify/cmd/notify@latest"
+      },
+      "args": []
+    }
+  ]
+}

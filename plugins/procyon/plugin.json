@@ -1,1 +1,53 @@
-{"name":"procyon","version":"0.1.0","description":"Procyon decompiler","source":"https","checks":[{"type":"binary","name":"procyon"}],"install_guidance":{"plugin":"procyon","binary":"procyon","check":"which procyon","install_steps":["brew install procyon"],"note":"Testing/security."},"learn":{"file":"skills/quickstart/SKILL.md"},"commands":[{"namespace":"procyon","resource":"_","action":"_","description":"Passthrough","adapter":"process","adapterConfig":{"command":"procyon","passthrough":true,"missingDependencyHelp":"Install procyon: brew install procyon"},"args":[]}]}
+{
+  "name": "procyon",
+  "version": "0.1.0",
+  "description": "Java decompiler with --output-dir",
+  "source": "https://github.com/mstrobel/procyon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "procyon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "procyon",
+    "binary": "procyon",
+    "check": "which procyon",
+    "install_steps": [
+      "brew install procyon-decompiler",
+      "Verify: procyon --version",
+      "supercli plugins install ./plugins/procyon --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "procyon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print procyon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "procyon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install procyon: brew install procyon-decompiler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "procyon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to procyon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "procyon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install procyon: brew install procyon-decompiler"
+      },
+      "args": []
+    }
+  ]
+}

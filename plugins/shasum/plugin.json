@@ -1,0 +1,53 @@
+{
+  "name": "shasum",
+  "version": "0.1.0",
+  "description": "Compute SHA hashes of files",
+  "source": "https://github.com/jbenet/shasum",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shasum"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shasum",
+    "binary": "shasum",
+    "check": "which shasum",
+    "install_steps": [
+      "brew install shasum",
+      "Verify: shasum --version",
+      "supercli plugins install ./plugins/shasum --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "shasum",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shasum version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shasum",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shasum: brew install shasum"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shasum",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shasum CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shasum",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shasum: brew install shasum"
+      },
+      "args": []
+    }
+  ]
+}

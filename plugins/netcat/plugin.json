@@ -1,0 +1,53 @@
+{
+  "name": "netcat",
+  "version": "0.1.0",
+  "description": "TCP/IP networking utility",
+  "source": "https://github.com/networktools/netcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "netcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "netcat",
+    "binary": "netcat",
+    "check": "which netcat",
+    "install_steps": [
+      "brew install netcat",
+      "Verify: netcat --version",
+      "supercli plugins install ./plugins/netcat --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "netcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print netcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install netcat: brew install netcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to netcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install netcat: brew install netcat"
+      },
+      "args": []
+    }
+  ]
+}

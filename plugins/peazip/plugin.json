@@ -1,0 +1,53 @@
+{
+  "name": "peazip",
+  "version": "0.1.0",
+  "description": "Cross-format archive manager CLI",
+  "source": "https://github.com/peazip/PeaZip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "peazip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "peazip",
+    "binary": "peazip",
+    "check": "which peazip",
+    "install_steps": [
+      "brew install peazip",
+      "Verify: peazip --version",
+      "supercli plugins install ./plugins/peazip --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "peazip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print peazip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peazip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install peazip: brew install peazip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "peazip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to peazip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peazip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install peazip: brew install peazip"
+      },
+      "args": []
+    }
+  ]
+}

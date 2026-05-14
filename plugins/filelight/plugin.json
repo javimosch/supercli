@@ -1,0 +1,53 @@
+{
+  "name": "filelight",
+  "version": "0.1.0",
+  "description": "Disk usage visualizer with CLI scanning",
+  "source": "https://github.com/KDE/filelight",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "filelight"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "filelight",
+    "binary": "filelight",
+    "check": "which filelight",
+    "install_steps": [
+      "brew install filelight",
+      "Verify: filelight --version",
+      "supercli plugins install ./plugins/filelight --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "filelight",
+      "resource": "self",
+      "action": "version",
+      "description": "Print filelight version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filelight",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install filelight: brew install filelight"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filelight",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to filelight CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filelight",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filelight: brew install filelight"
+      },
+      "args": []
+    }
+  ]
+}

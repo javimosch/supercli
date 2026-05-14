@@ -1,0 +1,53 @@
+{
+  "name": "detex",
+  "version": "0.1.0",
+  "description": "Strip LaTeX commands from source",
+  "source": "https://github.com/pkuhn/detex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "detex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "detex",
+    "binary": "detex",
+    "check": "which detex",
+    "install_steps": [
+      "brew install detex",
+      "Verify: detex --version",
+      "supercli plugins install ./plugins/detex --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "detex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print detex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "detex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install detex: brew install detex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "detex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to detex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "detex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install detex: brew install detex"
+      },
+      "args": []
+    }
+  ]
+}

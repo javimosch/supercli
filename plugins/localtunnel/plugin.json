@@ -1,0 +1,53 @@
+{
+  "name": "localtunnel",
+  "version": "0.1.0",
+  "description": "Expose localhost to the internet",
+  "source": "https://github.com/localtunnel/localtunnel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "localtunnel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "localtunnel",
+    "binary": "localtunnel",
+    "check": "which localtunnel",
+    "install_steps": [
+      "npm install -g localtunnel",
+      "Verify: localtunnel --version",
+      "supercli plugins install ./plugins/localtunnel --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "localtunnel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print localtunnel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localtunnel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install localtunnel: npm install -g localtunnel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "localtunnel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to localtunnel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localtunnel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install localtunnel: npm install -g localtunnel"
+      },
+      "args": []
+    }
+  ]
+}

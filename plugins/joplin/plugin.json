@@ -1,0 +1,53 @@
+{
+  "name": "joplin",
+  "version": "0.1.0",
+  "description": "Note-taking app with CLI",
+  "source": "https://github.com/laurent22/joplin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "joplin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "joplin",
+    "binary": "joplin",
+    "check": "which joplin",
+    "install_steps": [
+      "npm install -g joplin",
+      "Verify: joplin --version",
+      "supercli plugins install ./plugins/joplin --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "joplin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print joplin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "joplin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install joplin: npm install -g joplin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "joplin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to joplin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "joplin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install joplin: npm install -g joplin"
+      },
+      "args": []
+    }
+  ]
+}

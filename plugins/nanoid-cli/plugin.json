@@ -1,0 +1,53 @@
+{
+  "name": "nanoid-cli",
+  "version": "0.1.0",
+  "description": "Generate NanoIDs from command line",
+  "source": "https://github.com/ai/nanoid",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nanoid"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nanoid-cli",
+    "binary": "nanoid",
+    "check": "which nanoid",
+    "install_steps": [
+      "npm install -g nanoid-cli",
+      "Verify: nanoid --version",
+      "supercli plugins install ./plugins/nanoid-cli --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "nanoid-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nanoid-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nanoid",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nanoid-cli: npm install -g nanoid-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nanoid-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nanoid CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nanoid",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nanoid-cli: npm install -g nanoid-cli"
+      },
+      "args": []
+    }
+  ]
+}

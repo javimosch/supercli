@@ -1,0 +1,53 @@
+{
+  "name": "syncpack",
+  "version": "0.1.0",
+  "description": "Manage multiple package.json files in monorepos",
+  "source": "https://github.com/JamieMason/syncpack",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "syncpack"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "syncpack",
+    "binary": "syncpack",
+    "check": "which syncpack",
+    "install_steps": [
+      "npm install -g syncpack",
+      "Verify: syncpack --version",
+      "supercli plugins install ./plugins/syncpack --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "syncpack",
+      "resource": "self",
+      "action": "version",
+      "description": "Print syncpack version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syncpack",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install syncpack: npm install -g syncpack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "syncpack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to syncpack CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "syncpack",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install syncpack: npm install -g syncpack"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "renovate",
+  "version": "0.1.0",
+  "description": "Automated dependency update tool",
+  "source": "https://github.com/renovatebot/renovate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "renovate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "renovate",
+    "binary": "renovate",
+    "check": "which renovate",
+    "install_steps": [
+      "npm install -g renovate",
+      "Verify: renovate --version",
+      "supercli plugins install ./plugins/renovate --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "renovate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print renovate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "renovate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install renovate: npm install -g renovate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "renovate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to renovate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "renovate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install renovate: npm install -g renovate"
+      },
+      "args": []
+    }
+  ]
+}

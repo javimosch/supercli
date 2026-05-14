@@ -1,0 +1,53 @@
+{
+  "name": "rlwrap",
+  "version": "0.1.0",
+  "description": "Readline wrapper for interactive CLI programs",
+  "source": "https://github.com/hanslub42/rlwrap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rlwrap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rlwrap",
+    "binary": "rlwrap",
+    "check": "which rlwrap",
+    "install_steps": [
+      "brew install rlwrap",
+      "Verify: rlwrap --version",
+      "supercli plugins install ./plugins/rlwrap --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "rlwrap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rlwrap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rlwrap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rlwrap: brew install rlwrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rlwrap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rlwrap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rlwrap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rlwrap: brew install rlwrap"
+      },
+      "args": []
+    }
+  ]
+}

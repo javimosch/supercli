@@ -1,0 +1,53 @@
+{
+  "name": "greenclip",
+  "version": "0.1.0",
+  "description": "Clipboard manager daemon",
+  "source": "https://github.com/erebe/greenclip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "greenclip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "greenclip",
+    "binary": "greenclip",
+    "check": "which greenclip",
+    "install_steps": [
+      "go install github.com/erebe/greenclip@latest",
+      "Verify: greenclip --version",
+      "supercli plugins install ./plugins/greenclip --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "greenclip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print greenclip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "greenclip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install greenclip: go install github.com/erebe/greenclip@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "greenclip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to greenclip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "greenclip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install greenclip: go install github.com/erebe/greenclip@latest"
+      },
+      "args": []
+    }
+  ]
+}

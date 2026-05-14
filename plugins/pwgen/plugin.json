@@ -1,0 +1,53 @@
+{
+  "name": "pwgen",
+  "version": "0.1.0",
+  "description": "Password generator with options",
+  "source": "https://github.com/jbernard/pwgen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pwgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pwgen",
+    "binary": "pwgen",
+    "check": "which pwgen",
+    "install_steps": [
+      "brew install pwgen",
+      "Verify: pwgen --version",
+      "supercli plugins install ./plugins/pwgen --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "pwgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pwgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pwgen: brew install pwgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pwgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pwgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pwgen: brew install pwgen"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "fabric",
+  "version": "0.1.0",
+  "description": "AI-powered CLI for content processing and pattern-based AI workflows",
+  "source": "https://github.com/danielmiessler/fabric",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fabric"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fabric",
+    "binary": "fabric",
+    "check": "which fabric",
+    "install_steps": [
+      "pip install fabric-ai",
+      "Verify: fabric --version",
+      "supercli plugins install ./plugins/fabric --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "fabric",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fabric version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fabric",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fabric: pip install fabric-ai"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fabric",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fabric CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fabric",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fabric: pip install fabric-ai"
+      },
+      "args": []
+    }
+  ]
+}

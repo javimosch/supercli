@@ -1,0 +1,53 @@
+{
+  "name": "noti",
+  "version": "0.1.0",
+  "description": "Trigger notifications for long-running commands",
+  "source": "https://github.com/variadico/noti",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "noti"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "noti",
+    "binary": "noti",
+    "check": "which noti",
+    "install_steps": [
+      "brew install noti",
+      "Verify: noti --version",
+      "supercli plugins install ./plugins/noti --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "noti",
+      "resource": "self",
+      "action": "version",
+      "description": "Print noti version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noti",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install noti: brew install noti"
+      },
+      "args": []
+    },
+    {
+      "namespace": "noti",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to noti CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noti",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install noti: brew install noti"
+      },
+      "args": []
+    }
+  ]
+}

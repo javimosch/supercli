@@ -1,0 +1,53 @@
+{
+  "name": "git-annex",
+  "version": "0.1.0",
+  "description": "Manage files with git, without checking them in",
+  "source": "https://github.com/joeyh/git-annex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "git-annex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "git-annex",
+    "binary": "git-annex",
+    "check": "which git-annex",
+    "install_steps": [
+      "brew install git-annex",
+      "Verify: git-annex --version",
+      "supercli plugins install ./plugins/git-annex --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "git-annex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-annex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-annex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install git-annex: brew install git-annex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-annex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-annex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-annex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install git-annex: brew install git-annex"
+      },
+      "args": []
+    }
+  ]
+}

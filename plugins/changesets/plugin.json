@@ -1,0 +1,53 @@
+{
+  "name": "changesets",
+  "version": "0.1.0",
+  "description": "Version management with automated changelogs",
+  "source": "https://github.com/changesets/changesets",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "changesets"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "changesets",
+    "binary": "changesets",
+    "check": "which changesets",
+    "install_steps": [
+      "npm install -g @changesets/cli",
+      "Verify: changesets --version",
+      "supercli plugins install ./plugins/changesets --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "changesets",
+      "resource": "self",
+      "action": "version",
+      "description": "Print changesets version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "changesets",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install changesets: npm install -g @changesets/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "changesets",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to changesets CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "changesets",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install changesets: npm install -g @changesets/cli"
+      },
+      "args": []
+    }
+  ]
+}

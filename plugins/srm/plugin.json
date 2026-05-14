@@ -1,0 +1,53 @@
+{
+  "name": "srm",
+  "version": "0.1.0",
+  "description": "Secure file removal tool",
+  "source": "https://github.com/berke/srm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "srm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "srm",
+    "binary": "srm",
+    "check": "which srm",
+    "install_steps": [
+      "brew install srm",
+      "Verify: srm --version",
+      "supercli plugins install ./plugins/srm --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "srm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print srm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "srm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install srm: brew install srm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "srm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to srm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "srm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install srm: brew install srm"
+      },
+      "args": []
+    }
+  ]
+}

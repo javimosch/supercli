@@ -1,0 +1,53 @@
+{
+  "name": "primes",
+  "version": "0.1.0",
+  "description": "Generate prime numbers",
+  "source": "https://github.com/coreutils/coreutils",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "primes"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "primes",
+    "binary": "primes",
+    "check": "which primes",
+    "install_steps": [
+      "brew install bsdgames",
+      "Verify: primes --version",
+      "supercli plugins install ./plugins/primes --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "primes",
+      "resource": "self",
+      "action": "version",
+      "description": "Print primes version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "primes",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install primes: brew install bsdgames"
+      },
+      "args": []
+    },
+    {
+      "namespace": "primes",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to primes CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "primes",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install primes: brew install bsdgames"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "dnsenum",
+  "version": "0.1.0",
+  "description": "Multi-threaded DNS enumeration with report export",
+  "source": "https://github.com/fwaeytens/dnsenum",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dnsenum"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dnsenum",
+    "binary": "dnsenum",
+    "check": "which dnsenum",
+    "install_steps": [
+      "brew install dnsenum",
+      "Verify: dnsenum --version",
+      "supercli plugins install ./plugins/dnsenum --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "dnsenum",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dnsenum version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dnsenum",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dnsenum: brew install dnsenum"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dnsenum",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dnsenum CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dnsenum",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dnsenum: brew install dnsenum"
+      },
+      "args": []
+    }
+  ]
+}

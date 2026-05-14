@@ -1,0 +1,53 @@
+{
+  "name": "borgmatic",
+  "version": "0.1.0",
+  "description": "Borg backup automation tool",
+  "source": "https://github.com/borgmatic-collective/borgmatic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "borgmatic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "borgmatic",
+    "binary": "borgmatic",
+    "check": "which borgmatic",
+    "install_steps": [
+      "pip install borgmatic",
+      "Verify: borgmatic --version",
+      "supercli plugins install ./plugins/borgmatic --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "borgmatic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print borgmatic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "borgmatic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install borgmatic: pip install borgmatic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "borgmatic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to borgmatic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "borgmatic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install borgmatic: pip install borgmatic"
+      },
+      "args": []
+    }
+  ]
+}

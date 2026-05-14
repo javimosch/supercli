@@ -1,0 +1,53 @@
+{
+  "name": "pzstd",
+  "version": "0.1.0",
+  "description": "Parallel Zstandard compression",
+  "source": "https://github.com/facebook/zstd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pzstd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pzstd",
+    "binary": "pzstd",
+    "check": "which pzstd",
+    "install_steps": [
+      "brew install pzstd",
+      "Verify: pzstd --version",
+      "supercli plugins install ./plugins/pzstd --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "pzstd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pzstd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pzstd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pzstd: brew install pzstd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pzstd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pzstd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pzstd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pzstd: brew install pzstd"
+      },
+      "args": []
+    }
+  ]
+}

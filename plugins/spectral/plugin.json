@@ -1,0 +1,53 @@
+{
+  "name": "spectral",
+  "version": "0.1.0",
+  "description": "OpenAPI/Spectral linter with JSON output",
+  "source": "https://github.com/stoplightio/spectral",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spectral"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spectral",
+    "binary": "spectral",
+    "check": "which spectral",
+    "install_steps": [
+      "npm install -g @stoplight/spectral-cli",
+      "Verify: spectral --version",
+      "supercli plugins install ./plugins/spectral --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "spectral",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spectral version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spectral",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spectral: npm install -g @stoplight/spectral-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spectral",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spectral CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spectral",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spectral: npm install -g @stoplight/spectral-cli"
+      },
+      "args": []
+    }
+  ]
+}

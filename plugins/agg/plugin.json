@@ -1,1 +1,53 @@
-{"name":"agg","version":"1.0.0","description":"agg — asciicast to GIF converter. Convert terminal recordings (asciicast v2) to animated GIFs. Non-interactive.","source":"https://github.com/asciinema/agg","checks":[{"type":"binary","name":"agg"}],"install_guidance":{"plugin":"agg","binary":"agg","check":"agg --version","install_steps":["curl -LO https://github.com/asciinema/agg/releases/download/v1.8.1/agg-x86_64-unknown-linux-gnu && chmod +x agg-x86_64-unknown-linux-gnu && sudo mv agg-x86_64-unknown-linux-gnu /usr/local/bin/agg"],"note":"Binary from GitHub releases."},"learn":{"file":"skills/quickstart/SKILL.md"},"commands":[{"namespace":"agg","resource":"agg","action":"run","description":"agg — asciicast to GIF converter. Convert terminal recordings (asciicast v2) to animated GIFs. Non-interactive.","adapter":"process","adapterConfig":{"command":"agg","passthrough":true,"timeout_ms":30000,"missingDependencyHelp":"Install from https://github.com/asciinema/agg"},"args":[]}]}
+{
+  "name": "agg",
+  "version": "0.1.0",
+  "description": "Asciicast to GIF converter",
+  "source": "https://github.com/asciinema/agg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "agg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "agg",
+    "binary": "agg",
+    "check": "which agg",
+    "install_steps": [
+      "cargo install agg",
+      "Verify: agg --version",
+      "supercli plugins install ./plugins/agg --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "agg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print agg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install agg: cargo install agg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "agg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to agg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install agg: cargo install agg"
+      },
+      "args": []
+    }
+  ]
+}

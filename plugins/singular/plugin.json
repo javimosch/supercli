@@ -1,0 +1,53 @@
+{
+  "name": "singular",
+  "version": "0.1.0",
+  "description": "Computer algebra system for polynomial computations",
+  "source": "https://github.com/Singular/Singular",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "singular"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "singular",
+    "binary": "singular",
+    "check": "which singular",
+    "install_steps": [
+      "brew install singular",
+      "Verify: singular --version",
+      "supercli plugins install ./plugins/singular --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "singular",
+      "resource": "self",
+      "action": "version",
+      "description": "Print singular version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "singular",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install singular: brew install singular"
+      },
+      "args": []
+    },
+    {
+      "namespace": "singular",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to singular CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "singular",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install singular: brew install singular"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "newman",
+  "version": "0.1.0",
+  "description": "Postman collection runner from CLI",
+  "source": "https://github.com/postmanlabs/newman",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "newman"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "newman",
+    "binary": "newman",
+    "check": "which newman",
+    "install_steps": [
+      "npm install -g newman",
+      "Verify: newman --version",
+      "supercli plugins install ./plugins/newman --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "newman",
+      "resource": "self",
+      "action": "version",
+      "description": "Print newman version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "newman",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install newman: npm install -g newman"
+      },
+      "args": []
+    },
+    {
+      "namespace": "newman",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to newman CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "newman",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install newman: npm install -g newman"
+      },
+      "args": []
+    }
+  ]
+}

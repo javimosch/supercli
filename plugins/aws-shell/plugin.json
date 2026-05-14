@@ -1,0 +1,53 @@
+{
+  "name": "aws-shell",
+  "version": "0.1.0",
+  "description": "AWS CLI with auto-completion",
+  "source": "https://github.com/awslabs/aws-shell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "aws-shell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "aws-shell",
+    "binary": "aws-shell",
+    "check": "which aws-shell",
+    "install_steps": [
+      "pip install aws-shell",
+      "Verify: aws-shell --version",
+      "supercli plugins install ./plugins/aws-shell --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "aws-shell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print aws-shell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aws-shell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install aws-shell: pip install aws-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "aws-shell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aws-shell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aws-shell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install aws-shell: pip install aws-shell"
+      },
+      "args": []
+    }
+  ]
+}

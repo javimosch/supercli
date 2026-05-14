@@ -1,50 +1,53 @@
 {
   "name": "vale",
   "version": "0.1.0",
-  "description": "Markup-aware linter for prose",
-  "source": "https://github.com/vale-cli/vale",
+  "description": "Grammar and style checker with --output JSON",
+  "source": "https://github.com/errata-ai/vale",
   "checks": [
     {
       "type": "binary",
       "name": "vale"
     }
   ],
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
+  "install_guidance": {
+    "plugin": "vale",
+    "binary": "vale",
+    "check": "which vale",
+    "install_steps": [
+      "brew install vale",
+      "Verify: vale --version",
+      "supercli plugins install ./plugins/vale --on-conflict replace --json"
+    ]
   },
   "commands": [
     {
       "namespace": "vale",
-      "resource": "lint",
-      "action": "run",
-      "description": "Lint prose files",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "vale",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "files",
-          "type": "string",
-          "required": true,
-          "description": "Files to lint"
-        }
-      ]
-    },
-    {
-      "namespace": "vale",
-      "resource": "config",
-      "action": "init",
-      "description": "Initialize vale config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vale version",
       "adapter": "process",
       "adapterConfig": {
         "command": "vale",
         "baseArgs": [
-          "--config"
+          "--version"
         ],
-        "passthrough": true
-      }
+        "missingDependencyHelp": "Install vale: brew install vale"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vale",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vale",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vale: brew install vale"
+      },
+      "args": []
     }
   ]
 }

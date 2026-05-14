@@ -1,0 +1,53 @@
+{
+  "name": "logrotate",
+  "version": "0.1.0",
+  "description": "Log rotation and management tool",
+  "source": "https://github.com/logrotate/logrotate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "logrotate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "logrotate",
+    "binary": "logrotate",
+    "check": "which logrotate",
+    "install_steps": [
+      "brew install logrotate",
+      "Verify: logrotate --version",
+      "supercli plugins install ./plugins/logrotate --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "logrotate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print logrotate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "logrotate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install logrotate: brew install logrotate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "logrotate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to logrotate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "logrotate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install logrotate: brew install logrotate"
+      },
+      "args": []
+    }
+  ]
+}

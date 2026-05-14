@@ -1,0 +1,53 @@
+{
+  "name": "alert",
+  "version": "0.1.0",
+  "description": "Create desktop notifications from CLI",
+  "source": "https://github.com/alebcay/alert",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "alert"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "alert",
+    "binary": "alert",
+    "check": "which alert",
+    "install_steps": [
+      "npm install -g alert",
+      "Verify: alert --version",
+      "supercli plugins install ./plugins/alert --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "alert",
+      "resource": "self",
+      "action": "version",
+      "description": "Print alert version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "alert",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install alert: npm install -g alert"
+      },
+      "args": []
+    },
+    {
+      "namespace": "alert",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to alert CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "alert",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install alert: npm install -g alert"
+      },
+      "args": []
+    }
+  ]
+}

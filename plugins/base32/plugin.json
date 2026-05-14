@@ -1,0 +1,53 @@
+{
+  "name": "base32",
+  "version": "0.1.0",
+  "description": "Base32 encode/decode utility",
+  "source": "https://github.com/coreutils/coreutils",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "base32"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "base32",
+    "binary": "base32",
+    "check": "which base32",
+    "install_steps": [
+      "brew install coreutils",
+      "Verify: base32 --version",
+      "supercli plugins install ./plugins/base32 --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "base32",
+      "resource": "self",
+      "action": "version",
+      "description": "Print base32 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "base32",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install base32: brew install coreutils"
+      },
+      "args": []
+    },
+    {
+      "namespace": "base32",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to base32 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "base32",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install base32: brew install coreutils"
+      },
+      "args": []
+    }
+  ]
+}

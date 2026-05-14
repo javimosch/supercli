@@ -1,0 +1,53 @@
+{
+  "name": "aspell",
+  "version": "0.1.0",
+  "description": "Interactive and batch spell checker",
+  "source": "https://github.com/gnuaspell/aspell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "aspell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "aspell",
+    "binary": "aspell",
+    "check": "which aspell",
+    "install_steps": [
+      "brew install aspell",
+      "Verify: aspell --version",
+      "supercli plugins install ./plugins/aspell --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "aspell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print aspell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aspell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install aspell: brew install aspell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "aspell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aspell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aspell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install aspell: brew install aspell"
+      },
+      "args": []
+    }
+  ]
+}

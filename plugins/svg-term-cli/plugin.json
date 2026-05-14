@@ -1,28 +1,53 @@
 {
   "name": "svg-term-cli",
-  "description": "Share terminal sessions as razor-sharp animated SVG everywhere",
-  "version": "1.0.0",
-  "binary": "svg-term",
-  "check": "svg-term --version",
-  "install": {
-    "method": "npm",
-    "command": "npm install -g svg-term-cli"
-  },
-  "commands": {
-    "record-cast": {
-      "command": "svg-term --cast {cast_id} --out {output}",
-      "description": "Generate SVG from asciinema cast",
-      "args": ["cast_id", "output"]
-    },
-    "record-window": {
-      "command": "svg-term --cast {cast_id} --out {output} --window",
-      "description": "Generate SVG with window frame",
-      "args": ["cast_id", "output"]
-    },
-    "record-no-cursor": {
-      "command": "svg-term --cast {cast_id} --out {output} --no-cursor",
-      "description": "Generate SVG without cursor",
-      "args": ["cast_id", "output"]
+  "version": "0.1.0",
+  "description": "Convert terminal recordings to SVG",
+  "source": "https://github.com/marionebl/svg-term-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "svg-term"
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "svg-term-cli",
+    "binary": "svg-term",
+    "check": "which svg-term",
+    "install_steps": [
+      "npm install -g svg-term-cli",
+      "Verify: svg-term --version",
+      "supercli plugins install ./plugins/svg-term-cli --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "svg-term-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print svg-term-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install svg-term-cli: npm install -g svg-term-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "svg-term-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to svg-term CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install svg-term-cli: npm install -g svg-term-cli"
+      },
+      "args": []
+    }
+  ]
 }

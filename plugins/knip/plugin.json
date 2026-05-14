@@ -1,0 +1,53 @@
+{
+  "name": "knip",
+  "version": "0.1.0",
+  "description": "Find unused files and dependencies",
+  "source": "https://github.com/webpro/knip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "knip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "knip",
+    "binary": "knip",
+    "check": "which knip",
+    "install_steps": [
+      "npm install -g knip",
+      "Verify: knip --version",
+      "supercli plugins install ./plugins/knip --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "knip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print knip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "knip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install knip: npm install -g knip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "knip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to knip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "knip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install knip: npm install -g knip"
+      },
+      "args": []
+    }
+  ]
+}

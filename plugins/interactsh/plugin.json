@@ -1,0 +1,53 @@
+{
+  "name": "interactsh",
+  "version": "0.1.0",
+  "description": "OOB interaction server for security testing",
+  "source": "https://github.com/projectdiscovery/interactsh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "interactsh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "interactsh",
+    "binary": "interactsh",
+    "check": "which interactsh",
+    "install_steps": [
+      "go install github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest",
+      "Verify: interactsh --version",
+      "supercli plugins install ./plugins/interactsh --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "interactsh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print interactsh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "interactsh",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install interactsh: go install github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "interactsh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to interactsh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "interactsh",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install interactsh: go install github.com/projectdiscovery/interactsh/cmd/interactsh-client@latest"
+      },
+      "args": []
+    }
+  ]
+}

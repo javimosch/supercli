@@ -1,0 +1,53 @@
+{
+  "name": "mkpasswd",
+  "version": "0.1.0",
+  "description": "Password hash generation tool",
+  "source": "https://github.com/rfc1036/whois",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkpasswd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkpasswd",
+    "binary": "mkpasswd",
+    "check": "which mkpasswd",
+    "install_steps": [
+      "brew install mkpasswd",
+      "Verify: mkpasswd --version",
+      "supercli plugins install ./plugins/mkpasswd --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mkpasswd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkpasswd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkpasswd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkpasswd: brew install mkpasswd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkpasswd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkpasswd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkpasswd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkpasswd: brew install mkpasswd"
+      },
+      "args": []
+    }
+  ]
+}

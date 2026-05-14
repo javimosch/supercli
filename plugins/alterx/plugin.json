@@ -1,0 +1,53 @@
+{
+  "name": "alterx",
+  "version": "0.1.0",
+  "description": "Subdomain alteration generator with --json",
+  "source": "https://github.com/projectdiscovery/alterx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "alterx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "alterx",
+    "binary": "alterx",
+    "check": "which alterx",
+    "install_steps": [
+      "go install github.com/projectdiscovery/alterx/cmd/alterx@latest",
+      "Verify: alterx --version",
+      "supercli plugins install ./plugins/alterx --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "alterx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print alterx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "alterx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install alterx: go install github.com/projectdiscovery/alterx/cmd/alterx@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "alterx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to alterx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "alterx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install alterx: go install github.com/projectdiscovery/alterx/cmd/alterx@latest"
+      },
+      "args": []
+    }
+  ]
+}

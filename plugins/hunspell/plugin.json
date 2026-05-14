@@ -1,0 +1,53 @@
+{
+  "name": "hunspell",
+  "version": "0.1.0",
+  "description": "Spell checker with multiple language support",
+  "source": "https://github.com/hunspell/hunspell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hunspell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hunspell",
+    "binary": "hunspell",
+    "check": "which hunspell",
+    "install_steps": [
+      "brew install hunspell",
+      "Verify: hunspell --version",
+      "supercli plugins install ./plugins/hunspell --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "hunspell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hunspell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hunspell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hunspell: brew install hunspell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hunspell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hunspell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hunspell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hunspell: brew install hunspell"
+      },
+      "args": []
+    }
+  ]
+}

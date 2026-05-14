@@ -1,7 +1,7 @@
 {
   "name": "polaris",
   "version": "0.1.0",
-  "description": "Validate Kubernetes best practices in CI/CD",
+  "description": "Kubernetes config validator with audit path",
   "source": "https://github.com/FairwindsOps/polaris",
   "checks": [
     {
@@ -14,13 +14,10 @@
     "binary": "polaris",
     "check": "which polaris",
     "install_steps": [
-      "brew install FairwindsOps/tap/polaris",
+      "curl -sfL https://raw.githubusercontent.com/FairwindsOps/polaris/main/install.sh | sh",
       "Verify: polaris --version",
       "supercli plugins install ./plugins/polaris --on-conflict replace --json"
     ]
-  },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
   },
   "commands": [
     {
@@ -31,80 +28,26 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "polaris",
-        "missingDependencyHelp": "Install polaris: brew install FairwindsOps/tap/polaris",
         "baseArgs": [
           "--version"
-        ]
+        ],
+        "missingDependencyHelp": "Install polaris: curl -sfL https://raw.githubusercontent.com/FairwindsOps/polaris/main/install.sh | sh"
       },
       "args": []
     },
     {
       "namespace": "polaris",
-      "resource": "cluster",
-      "action": "audit",
-      "description": "audit cluster via polaris",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "polaris",
-        "missingDependencyHelp": "Install polaris: brew install FairwindsOps/tap/polaris",
-        "baseArgs": [
-          "audit"
-        ],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "polaris",
-      "resource": "manifest",
-      "action": "audit",
-      "description": "audit manifest via polaris",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "polaris",
-        "missingDependencyHelp": "Install polaris: brew install FairwindsOps/tap/polaris",
-        "baseArgs": [
-          "audit"
-        ],
-        "passthrough": true,
-        "timeout_ms": 30000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "polaris",
       "resource": "_",
       "action": "_",
-      "description": "_ _ via polaris",
+      "description": "Passthrough to polaris CLI",
       "adapter": "process",
       "adapterConfig": {
         "command": "polaris",
-        "missingDependencyHelp": "Install polaris: brew install FairwindsOps/tap/polaris",
-        "passthrough": true
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install polaris: curl -sfL https://raw.githubusercontent.com/FairwindsOps/polaris/main/install.sh | sh"
       },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
+      "args": []
     }
   ]
 }

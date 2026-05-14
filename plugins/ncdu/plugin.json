@@ -1,0 +1,53 @@
+{
+  "name": "ncdu",
+  "version": "0.1.0",
+  "description": "Disk usage analyzer with --export-json",
+  "source": "https://github.com/rofl0r/ncdu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ncdu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ncdu",
+    "binary": "ncdu",
+    "check": "which ncdu",
+    "install_steps": [
+      "brew install ncdu",
+      "Verify: ncdu --version",
+      "supercli plugins install ./plugins/ncdu --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "ncdu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ncdu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncdu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ncdu: brew install ncdu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ncdu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ncdu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncdu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ncdu: brew install ncdu"
+      },
+      "args": []
+    }
+  ]
+}

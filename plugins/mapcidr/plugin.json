@@ -1,0 +1,53 @@
+{
+  "name": "mapcidr",
+  "version": "0.1.0",
+  "description": "CIDR processing utility with stdin/stdout pipe",
+  "source": "https://github.com/projectdiscovery/mapcidr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mapcidr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mapcidr",
+    "binary": "mapcidr",
+    "check": "which mapcidr",
+    "install_steps": [
+      "go install github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest",
+      "Verify: mapcidr --version",
+      "supercli plugins install ./plugins/mapcidr --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mapcidr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mapcidr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mapcidr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mapcidr: go install github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mapcidr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mapcidr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mapcidr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mapcidr: go install github.com/projectdiscovery/mapcidr/cmd/mapcidr@latest"
+      },
+      "args": []
+    }
+  ]
+}

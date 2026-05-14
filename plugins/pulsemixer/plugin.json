@@ -1,0 +1,53 @@
+{
+  "name": "pulsemixer",
+  "version": "0.1.0",
+  "description": "PulseAudio volume control CLI",
+  "source": "https://github.com/GeorgeFilipkin/pulsemixer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pulsemixer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pulsemixer",
+    "binary": "pulsemixer",
+    "check": "which pulsemixer",
+    "install_steps": [
+      "brew install pulsemixer",
+      "Verify: pulsemixer --version",
+      "supercli plugins install ./plugins/pulsemixer --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "pulsemixer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pulsemixer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pulsemixer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pulsemixer: brew install pulsemixer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pulsemixer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pulsemixer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pulsemixer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pulsemixer: brew install pulsemixer"
+      },
+      "args": []
+    }
+  ]
+}

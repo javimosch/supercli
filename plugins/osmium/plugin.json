@@ -1,0 +1,53 @@
+{
+  "name": "osmium",
+  "version": "0.1.0",
+  "description": "OpenStreetMap data processing tool",
+  "source": "https://github.com/osmcode/osmium-tool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "osmium"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "osmium",
+    "binary": "osmium",
+    "check": "which osmium",
+    "install_steps": [
+      "brew install osmium",
+      "Verify: osmium --version",
+      "supercli plugins install ./plugins/osmium --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "osmium",
+      "resource": "self",
+      "action": "version",
+      "description": "Print osmium version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osmium",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install osmium: brew install osmium"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osmium",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to osmium CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osmium",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osmium: brew install osmium"
+      },
+      "args": []
+    }
+  ]
+}

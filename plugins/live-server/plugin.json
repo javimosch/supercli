@@ -1,0 +1,53 @@
+{
+  "name": "live-server",
+  "version": "0.1.0",
+  "description": "Live-reloading static file server",
+  "source": "https://github.com/tapio/live-server",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "live-server"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "live-server",
+    "binary": "live-server",
+    "check": "which live-server",
+    "install_steps": [
+      "npm install -g live-server",
+      "Verify: live-server --version",
+      "supercli plugins install ./plugins/live-server --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "live-server",
+      "resource": "self",
+      "action": "version",
+      "description": "Print live-server version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "live-server",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install live-server: npm install -g live-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "live-server",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to live-server CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "live-server",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install live-server: npm install -g live-server"
+      },
+      "args": []
+    }
+  ]
+}

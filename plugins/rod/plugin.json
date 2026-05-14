@@ -1,0 +1,53 @@
+{
+  "name": "rod",
+  "version": "0.1.0",
+  "description": "High-level Chrome DevTools Protocol client",
+  "source": "https://github.com/go-rod/rod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rod",
+    "binary": "rod",
+    "check": "which rod",
+    "install_steps": [
+      "go install github.com/go-rod/rod@latest",
+      "Verify: rod --version",
+      "supercli plugins install ./plugins/rod --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "rod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rod: go install github.com/go-rod/rod@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rod: go install github.com/go-rod/rod@latest"
+      },
+      "args": []
+    }
+  ]
+}

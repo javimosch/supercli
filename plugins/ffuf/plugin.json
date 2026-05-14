@@ -1,0 +1,53 @@
+{
+  "name": "ffuf",
+  "version": "0.1.0",
+  "description": "Web fuzzer with --json output",
+  "source": "https://github.com/ffuf/ffuf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ffuf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ffuf",
+    "binary": "ffuf",
+    "check": "which ffuf",
+    "install_steps": [
+      "brew install ffuf",
+      "Verify: ffuf --version",
+      "supercli plugins install ./plugins/ffuf --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "ffuf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ffuf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffuf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ffuf: brew install ffuf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ffuf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ffuf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ffuf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ffuf: brew install ffuf"
+      },
+      "args": []
+    }
+  ]
+}

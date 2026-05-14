@@ -1,0 +1,53 @@
+{
+  "name": "mailx",
+  "version": "0.1.0",
+  "description": "Send and receive mail from CLI",
+  "source": "https://github.com/nbsd/mailx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mailx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mailx",
+    "binary": "mailx",
+    "check": "which mailx",
+    "install_steps": [
+      "brew install mailutils",
+      "Verify: mailx --version",
+      "supercli plugins install ./plugins/mailx --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mailx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mailx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mailx: brew install mailutils"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mailx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mailx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mailx: brew install mailutils"
+      },
+      "args": []
+    }
+  ]
+}

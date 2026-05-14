@@ -1,42 +1,39 @@
 {
   "name": "typos",
   "version": "0.1.0",
-  "description": "Source code spell checker. Find and fix typos in source code files. Fast, customizable, and easy to integrate into CI/CD pipelines.",
+  "description": "Source code spell checker with --write-changes",
   "source": "https://github.com/crate-ci/typos",
   "checks": [
-    { "type": "binary", "name": "typos" }
+    {
+      "type": "binary",
+      "name": "typos"
+    }
   ],
   "install_guidance": {
     "plugin": "typos",
     "binary": "typos",
     "check": "which typos",
     "install_steps": [
-      "brew install typos",
+      "cargo install typos-cli",
       "Verify: typos --version",
       "supercli plugins install ./plugins/typos --on-conflict replace --json"
     ]
   },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
-  },
   "commands": [
     {
       "namespace": "typos",
-      "resource": "code",
-      "action": "check",
-      "description": "Check code for typos",
+      "resource": "self",
+      "action": "version",
+      "description": "Print typos version",
       "adapter": "process",
       "adapterConfig": {
         "command": "typos",
-        "passthrough": true,
-        "missingDependencyHelp": "Install typos: brew install typos"
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install typos: cargo install typos-cli"
       },
-      "args": [
-        { "name": "path", "type": "string", "description": "Path to check" },
-        { "name": "--fix", "type": "boolean", "description": "Auto-fix typos" },
-        { "name": "--format", "type": "string", "description": "Output format" },
-        { "name": "--exclude", "type": "string", "description": "Exclude files" }
-      ]
+      "args": []
     },
     {
       "namespace": "typos",
@@ -47,7 +44,8 @@
       "adapterConfig": {
         "command": "typos",
         "passthrough": true,
-        "missingDependencyHelp": "Install typos: brew install typos"
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install typos: cargo install typos-cli"
       },
       "args": []
     }

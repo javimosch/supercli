@@ -1,0 +1,53 @@
+{
+  "name": "git-secret",
+  "version": "0.1.0",
+  "description": "Encrypt secrets in git repos",
+  "source": "https://github.com/sobolevn/git-secret",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "git-secret"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "git-secret",
+    "binary": "git-secret",
+    "check": "which git-secret",
+    "install_steps": [
+      "brew install git-secret",
+      "Verify: git-secret --version",
+      "supercli plugins install ./plugins/git-secret --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "git-secret",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-secret version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-secret",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install git-secret: brew install git-secret"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-secret",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-secret CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-secret",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install git-secret: brew install git-secret"
+      },
+      "args": []
+    }
+  ]
+}

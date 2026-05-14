@@ -1,0 +1,53 @@
+{
+  "name": "pv",
+  "version": "0.1.0",
+  "description": "Pipe viewer \u2014 monitor data progress through pipes",
+  "source": "https://github.com/icetee/pv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pv",
+    "binary": "pv",
+    "check": "which pv",
+    "install_steps": [
+      "brew install pv",
+      "Verify: pv --version",
+      "supercli plugins install ./plugins/pv --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "pv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pv: brew install pv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pv: brew install pv"
+      },
+      "args": []
+    }
+  ]
+}

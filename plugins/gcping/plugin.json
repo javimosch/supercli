@@ -1,0 +1,53 @@
+{
+  "name": "gcping",
+  "version": "0.1.0",
+  "description": "Google Cloud latency tester",
+  "source": "https://github.com/GoogleCloudPlatform/gcping",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gcping"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gcping",
+    "binary": "gcping",
+    "check": "which gcping",
+    "install_steps": [
+      "go install github.com/GoogleCloudPlatform/gcping@latest",
+      "Verify: gcping --version",
+      "supercli plugins install ./plugins/gcping --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "gcping",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gcping version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcping",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gcping: go install github.com/GoogleCloudPlatform/gcping@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gcping",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gcping CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcping",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gcping: go install github.com/GoogleCloudPlatform/gcping@latest"
+      },
+      "args": []
+    }
+  ]
+}

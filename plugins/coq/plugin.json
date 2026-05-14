@@ -1,0 +1,53 @@
+{
+  "name": "coq",
+  "version": "0.1.0",
+  "description": "Interactive theorem prover",
+  "source": "https://github.com/coq/coq",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "coq"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "coq",
+    "binary": "coq",
+    "check": "which coq",
+    "install_steps": [
+      "brew install coq",
+      "Verify: coq --version",
+      "supercli plugins install ./plugins/coq --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "coq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print coq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "coq",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install coq: brew install coq"
+      },
+      "args": []
+    },
+    {
+      "namespace": "coq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to coq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "coq",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install coq: brew install coq"
+      },
+      "args": []
+    }
+  ]
+}

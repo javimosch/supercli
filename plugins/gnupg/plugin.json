@@ -1,0 +1,53 @@
+{
+  "name": "gnupg",
+  "version": "0.1.0",
+  "description": "GNU Privacy Guard encryption tool",
+  "source": "https://github.com/gpg/gnupg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnupg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnupg",
+    "binary": "gnupg",
+    "check": "which gnupg",
+    "install_steps": [
+      "brew install gnupg",
+      "Verify: gnupg --version",
+      "supercli plugins install ./plugins/gnupg --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "gnupg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnupg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnupg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnupg: brew install gnupg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnupg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnupg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnupg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnupg: brew install gnupg"
+      },
+      "args": []
+    }
+  ]
+}

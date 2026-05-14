@@ -1,0 +1,53 @@
+{
+  "name": "mpc",
+  "version": "0.1.0",
+  "description": "Music Player Daemon client",
+  "source": "https://github.com/MusicPlayerDaemon/mpc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpc",
+    "binary": "mpc",
+    "check": "which mpc",
+    "install_steps": [
+      "brew install mpc",
+      "Verify: mpc --version",
+      "supercli plugins install ./plugins/mpc --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "mpc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpc: brew install mpc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpc: brew install mpc"
+      },
+      "args": []
+    }
+  ]
+}
