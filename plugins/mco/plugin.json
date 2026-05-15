@@ -1,0 +1,141 @@
+{
+  "name": "mco",
+  "version": "0.1.0",
+  "description": "Orchestrate AI coding agents in parallel — Claude Code, Codex CLI, Gemini CLI, OpenCode, Qwen Code. Fan out prompts, deduplicate findings, generate consensus reports.",
+  "source": "https://github.com/mco-org/mco",
+  "checks": [
+    { "type": "binary", "name": "mco" },
+    { "type": "binary", "name": "node" },
+    { "type": "binary", "name": "python3" }
+  ],
+  "install_guidance": {
+    "plugin": "mco",
+    "binary": "mco",
+    "check": "mco --version",
+    "install_steps": [
+      "npm i -g @tt-a1i/mco",
+      "Verify: mco --help",
+      "supercli plugins install ./plugins/mco --on-conflict replace --json"
+    ],
+    "note": "Requires at least one AI coding agent CLI installed (claude, codex, gemini, opencode, or qwen). Run 'mco doctor' to check."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mco",
+      "resource": "doctor",
+      "action": "check",
+      "description": "Check installed AI agents and auth status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mco",
+        "baseArgs": ["doctor", "--json"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mco: npm i -g @tt-a1i/mco"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mco",
+      "resource": "review",
+      "action": "run",
+      "description": "Run multi-agent code review with consensus",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mco",
+        "baseArgs": ["review"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install mco: npm i -g @tt-a1i/mco"
+      },
+      "args": [
+        {
+          "name": "repo",
+          "type": "string",
+          "required": true,
+          "description": "Repo path or URL"
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": true,
+          "description": "Review prompt"
+        },
+        {
+          "name": "providers",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated providers (claude,codex,gemini,opencode,qwen)"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output"
+        }
+      ]
+    },
+    {
+      "namespace": "mco",
+      "resource": "run",
+      "action": "exec",
+      "description": "Run general multi-agent task execution",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mco",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install mco: npm i -g @tt-a1i/mco"
+      },
+      "args": [
+        {
+          "name": "repo",
+          "type": "string",
+          "required": true,
+          "description": "Repo path or URL"
+        },
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": true,
+          "description": "Task prompt"
+        },
+        {
+          "name": "providers",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated providers"
+        }
+      ]
+    },
+    {
+      "namespace": "mco",
+      "resource": "agent",
+      "action": "list",
+      "description": "List available and configured agents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mco",
+        "baseArgs": ["agent", "list"],
+        "missingDependencyHelp": "Install mco: npm i -g @tt-a1i/mco"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mco",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mco CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mco",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mco: npm i -g @tt-a1i/mco"
+      },
+      "args": []
+    }
+  ]
+}
