@@ -11,11 +11,11 @@
     "plugin": "scrumboy",
     "binary": "docker",
     "check": "docker --version && curl --version",
-    "install_steps": [
-      "Run: sc scrumboy self start  (pulls Docker image, starts on :8080)",
-      "Then: sc scrumboy self mcp   (register MCP server for agent use)",
-      "Open http://localhost:8080 in browser for the UI"
-    ]
+      "install_steps": [
+        "Run: sc scrumboy self start  (pulls Docker image, starts on :8081)",
+        "Then: sc scrumboy self mcp   (register MCP server for agent use)",
+        "Open http://localhost:8081 in browser for the UI"
+      ]
   },
   "learn": {
     "file": "skills/quickstart/SKILL.md"
@@ -24,8 +24,23 @@
     {
       "namespace": "scrumboy",
       "resource": "self",
+      "action": "login",
+      "description": "Login to scrumboy and save session cookie (needs SCRUMBOY_EMAIL + SCRUMBOY_PASSWORD env vars)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/login.sh"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Start scrumboy first: sc scrumboy self start"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scrumboy",
+      "resource": "self",
       "action": "start",
-      "description": "Start scrumboy Docker container",
+      "description": "Start scrumboy Docker container (requires Docker)",
       "adapter": "process",
       "adapterConfig": {
         "command": "bash",
@@ -59,7 +74,8 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "bash",
-        "baseArgs": ["-c", "OUT=$(docker ps --filter name=scrumboy --format '{{.Names}} {{.Status}}' 2>/dev/null); if [ -z \"$OUT\" ]; then echo 'not running'; else echo \"$OUT\"; fi"],
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/status.sh"],
         "timeout_ms": 10000,
         "missingDependencyHelp": "Install Docker: https://docs.docker.com/engine/install/"
       },
@@ -105,12 +121,11 @@
         "command": "bash",
         "cwd": "plugin_dir",
         "baseArgs": ["scripts/todos.sh"],
+        "passthrough": true,
         "timeout_ms": 15000,
         "missingDependencyHelp": "Start scrumboy first: sc scrumboy self start"
       },
-      "args": [
-        {"name": "project", "type": "string", "required": true, "description": "Project slug"}
-      ]
+      "args": []
     },
     {
       "namespace": "scrumboy",

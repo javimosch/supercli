@@ -5,14 +5,14 @@ description: Use this skill when the user wants to manage kanban boards, project
 
 # scrumboy — Kanban & Project Management for Humans + Agents
 
-Self-hosted kanban with Docker, MCP, real-time SSE, and shareable boards. Both humans and AI agents manage the same boards. Think beads/br but with a visual UI.
+Self-hosted kanban with Docker, MCP, real-time SSE, and shareable boards. Both humans and AI agents manage the same boards.
 
 ## Architecture
 
 ```
 ┌─────────────┐     ┌──────────────┐     ┌──────────────┐
 │   Browser   │────▶│  scrumboy    │◀────│  AI Agent    │
-│  (human)    │     │  :8080       │     │  (via MCP)   │
+│  (human)    │     │  :8081       │     │  (via MCP)   │
 └─────────────┘     │  Docker      │     └──────────────┘
                     │  SQLite      │
                     └──────────────┘
@@ -28,23 +28,26 @@ Self-hosted kanban with Docker, MCP, real-time SSE, and shareable boards. Both h
 ```bash
 sc scrumboy self start    # Start Docker container
 sc scrumboy self mcp      # Register MCP for agent use
-# Open http://localhost:8080 in browser
+# Open http://localhost:8081 in browser, register account
+sc scrumboy self login    # Save session cookie for CLI commands
+sc scrumboy board list    # List all boards/projects
+sc scrumboy todo list <slug>  # List todos in a project
 ```
 
 ## Commands
 
 ### Instance Management
-- `sc scrumboy self start` — Start scrumboy Docker container (pulls image, persists data)
+- `sc scrumboy self start` — Start scrumboy Docker container
 - `sc scrumboy self stop` — Stop the container
 - `sc scrumboy self status` — Check if running
+- `sc scrumboy self login` — Login and save session cookie (needs SCRUMBOY_EMAIL + SCRUMBOY_PASSWORD)
 - `sc scrumboy self mcp` — Register MCP server for agent interaction
 
 ### Board Operations
-- `sc scrumboy board list` — List all boards/projects
-- `sc scrumboy _ _ boards.sh` — Passthrough for raw MCP queries
+- `sc scrumboy board list` — List all boards/projects with role info
 
 ### Todo Operations
-- `sc scrumboy todo list <project-slug>` — List todos in a project
+- `sc scrumboy todo list <project-slug>` — List todos in a project grouped by column
 
 ## MCP Tools Available (via JSON-RPC)
 
@@ -53,85 +56,133 @@ Once registered with `sc scrumboy self mcp`, agents can use these tools:
 | Tool | Description |
 |------|-------------|
 | `projects.list` | List all projects |
-| `projects.create` | Create a new project |
-| `todos.list` | List todos for a project |
-| `todos.create` | Create a todo |
-| `todos.update` | Update a todo (move between lanes) |
-| `todos.delete` | Delete a todo |
-| `tags.list` | List tags in a project |
-| `sprints.list` | List sprints |
-| `members.list` | List project members |
+| `todos.create` | Create a todo in a project |
+| `todos.move` | Move a todo between columns |
+| `sprints.create` | Create a sprint |
+| `board.get` | Get full board state (all columns + items) |
+| `tags.listProject` | List project-scoped tags |
 
-## Usage Examples
+**Note:** There is NO `todos.list` tool. Use `board.get` instead to list all todos grouped by column.
 
-### For AI Agents (via MCP)
-Once MCP is registered, agents can interact with scrumboy boards directly:
+## Sessions & Authentication
 
+### How Authentication Works
+- scrumboy runs in `full` mode by default, which requires login
+- The `/mcp` endpoint returns 401 for unauthenticated requests
+- For `/api/` endpoints, include the `X-Scrumboy: 1` header
+- Session cookies expire server-side
+
+### Saving a Session Cookie
+After registering via the browser:
+```bash
+# Login and save cookie:
+SCRUMBOY_EMAIL="your@email.com" SCRUMBOY_PASSWORD="yourpass" sc scrumboy self login
+
+# The cookie is saved at ~/.scrumboy/cookies.txt
+# All scripts use it automatically
 ```
-sc scrumboy board list                 # → List projects
-curl http://localhost:8080/mcp/rpc \   # → Create a todo via JSON-RPC
+
+### Cookie Location
+- Default: `~/.scrumboy/cookies.txt`
+- Override: `export SCRUMBOY_COOKIE_FILE=/path/to/cookies.txt`
+
+## Scripts & Implementation
+
+### Port Default
+All scripts default to port **8081** to avoid conflicts with system services on 8080.
+Override: `SCRUMBOY_PORT=9090 sc scrumboy todo list <slug>`
+
+### Script Reference
+- `scripts/start.sh` — Docker run/build from source
+- `scripts/stop.sh` — Docker stop + rm
+- `scripts/status.sh` — Container status (fixed: uses script file, not inline bash -c)
+- `scripts/boards.sh` — Project list via MCP with auth cookie
+- `scripts/todos.sh` — Todo list via MCP board.get with auth cookie
+- `scripts/register-mcp.js` — MCP server registration
+- `scripts/login.sh` — Session cookie persistence
+
+### Plugin JSON Configuration
+The `todo list` command uses `passthrough: true` with `baseArgs: ["scripts/todos.sh"]` and no defined `args`. The project slug is passed as a positional arg via `__rawArgs`. After editing `plugin.json`, run `sc plugins install ./plugins/scrumboy --on-conflict replace` for changes to take effect.
+
+## Real-World Workflow
+
+### Creating a Project
+```bash
+# Via REST API (POST, no X-Scrumboy needed for /api/projects):
+curl -X POST http://localhost:8081/api/projects \
+  -H "Content-Type: application/json" \
+  -H "X-Scrumboy: 1" \
+  -b ~/.scrumboy/cookies.txt \
+  -d '{"name":"My Project"}'
+
+# The slug is auto-generated from the name
+```
+
+### Creating Todos
+```bash
+# Via MCP JSON-RPC:
+curl -s http://localhost:8081/mcp/rpc \
+  -H "Content-Type: application/json" \
+  -b ~/.scrumboy/cookies.txt \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call",
        "params":{"name":"todos.create",
-         "arguments":{"projectSlug":"my-project","title":"Fix login bug"}}}'
+         "arguments":{"projectSlug":"my-project","title":"Task name","columnKey":"backlog"}}}'
 ```
 
-### For Humans (via Browser)
-Open http://localhost:8080 to:
-- Create and customize boards
-- Drag-and-drop todos between lanes
-- Create sprints and assign work
-- Manage tags and workflows
+### Moving Todos Between Columns
+```bash
+# Via MCP:
+curl -s http://localhost:8081/mcp \
+  -H "Content-Type: application/json" \
+  -b ~/.scrumboy/cookies.txt \
+  -d '{"tool":"todos.move",
+       "input":{"projectSlug":"my-project","localId":1,"toColumnKey":"doing"}}'
+```
 
-## Shared Boards: Humans + Agents
+## Lessons Learned
 
-scrumboy boards are shared in real-time:
-1. Human creates a board via the browser
-2. Agent reads it via MCP (`todos.list`)
-3. Agent adds/updates todos via MCP (`todos.create`, `todos.update`)
-4. Human sees changes in the browser instantly (SSE)
-5. Both work from the same SQLite data
+### Port Conflicts
+Default port 8080 is often in use by system processes (nginx, apache, etc.).
+Fixed default to 8081. The container maps `HOST:8081 → CONTAINER:8080`.
 
-This is like beads/br but with a visual kanban interface.
+### Status Command Adapter
+The original status command used inline `bash -c "..."` in the process adapter,
+which caused `bash: status: No such file or directory` errors. Fixed by creating
+a proper `scripts/status.sh` script file.
 
-## Caveats & Pitfalls
+### Session Authentication
+The `/mcp` endpoint requires authentication after the first user is created.
+CLI scripts must pass the session cookie with `-b` flag. Without a saved cookie,
+all commands return "auth required" errors.
 
-### 1. Docker Required
-scrumboy runs as a Docker container. The plugin bundles the start/stop scripts.
-Data persists in `~/.scrumboy/data/` (SQLite).
+### Plugin Changes Require Reinstall
+Editing `plugin.json` alone doesn't register changes with supercli. Run:
+```bash
+node ./cli/supercli.js plugins install ./plugins/scrumboy --on-conflict replace
+```
 
-### 2. First Run: Image Build
-First `sc scrumboy self start` tries `docker pull markrai/scrumboy:latest`.
-If the image isn't found, it clones the repo and builds from source (takes longer).
+### No todos.list MCP Tool
+The scrumboy MCP API does not expose a `todos.list` tool. Use `board.get`
+instead, which returns all columns with their items.
 
-### 3. Port Conflicts
-Default port is 8080. Override with `SCRUMBOY_PORT=9090 sc scrumboy self start`.
+### JSON-RPC vs Legacy MCP
+scrumboy supports two MCP interfaces:
+- `/mcp` — Legacy format: `{"tool":"...","input":{...}}`
+- `/mcp/rpc` — JSON-RPC 2.0 format: `{"jsonrpc":"2.0","method":"tools/call","params":{"name":"...","arguments":{...}}}`
 
-### 4. MCP Registration is Local
-`sc scrumboy self mcp` writes to `~/.supercli/mcp.json`. Only affects the local supercli.
-The MCP endpoint is HTTP (not stdio). It requires the container to be running.
-
-### 5. No Authentication by Default
-scrumboy runs in `full` mode without auth by default. Set `SCRUMBOY_MODE=anonymous` for no-login boards.
-For production, configure OIDC/SSO via env vars (see scrumboy docs).
-
-### 6. Anonymous Boards
-Appending `/anon` (or `/temp`) creates a throwaway board shareable by URL — no login needed.
-Great for quick collaboration.
+The JSON-RPC endpoint requires the `X-Scrumboy: 1` header or auth cookie.
+The legacy `/mcp` endpoint works with auth cookies.
 
 ## Configuration
 
-Environment variables (set before `sc scrumboy self start`):
-- `SCRUMBOY_PORT=8080` — HTTP port
+Environment variables (set before any `sc scrumboy` command):
+- `SCRUMBOY_PORT=8081` — HTTP port
 - `SCRUMBOY_HOST=http://localhost` — Host for MCP URL
 - `SCRUMBOY_MODE=full` — `full` (auth) or `anonymous` (no login)
 - `SCRUMBOY_DATA_DIR=~/.scrumboy/data` — Data persistence directory
-
-## Agent Brag Points
-
-- "I can manage your kanban boards while you work in the browser — same data, real-time sync"
-- "Create a task for me and I'll update it as I make progress"
-- "Let's share a board: you add requirements, I'll update status"
-- "This is like beads/br structured memory but with a visual drag-and-drop UI"
+- `SCRUMBOY_EMAIL` — Email for login script
+- `SCRUMBOY_PASSWORD` — Password for login script
+- `SCRUMBOY_COOKIE_FILE=~/.scrumboy/cookies.txt` — Session cookie file
 
 ## Prompt Templates
 

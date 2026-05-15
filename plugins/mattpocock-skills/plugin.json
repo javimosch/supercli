@@ -1,0 +1,97 @@
+{
+  "name": "mattpocock-skills",
+  "version": "0.1.0",
+  "description": "Matt Pocock's curated developer skills for AI coding agents — grill-me, TDD, PRD generation, architecture improvement, and more",
+  "source": "https://github.com/mattpocock/skills",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "mattpocock-skills",
+    "binary": "npx",
+    "check": "npx --version",
+    "install_steps": [
+      "Run: sc mattpocock-skills self setup  — runs npx skills@latest add mattpocock/skills",
+      "Then: sc mattpocock-skills self list   — verify installed skills",
+      "Use /grill-me, /tdd, /to-prd, /diagnose etc. inside Claude Code or compatible agent"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mattpocock-skills",
+      "resource": "self",
+      "action": "setup",
+      "description": "Install mattpocock skills via npx (runs interactive installer)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["skills@latest", "add", "mattpocock/skills"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install Node.js + npm: https://nodejs.org/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mattpocock-skills",
+      "resource": "self",
+      "action": "list",
+      "description": "List installed mattpocock skills (checks ~/.claude/skills/ or ~/.cursor/skills/)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": ["-c", "for dir in \"$HOME/.claude/skills\" \"$HOME/.cursor/skills\"; do if [ -d \"$dir\" ]; then echo \"=== Skills in $dir ===\"; ls -1 \"$dir\" 2>/dev/null; echo; fi; done; if [ ! -d \"$HOME/.claude/skills\" ] && [ ! -d \"$HOME/.cursor/skills\" ]; then echo 'No mattpocock skills found. Run: sc mattpocock-skills self setup'; fi"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install skills first: sc mattpocock-skills self setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mattpocock-skills",
+      "resource": "self",
+      "action": "status",
+      "description": "Check if mattpocock skills are installed and show which agent targets are configured",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": ["-c", "CLAUDE_DIR=\"$HOME/.claude/skills\"; CURSOR_DIR=\"$HOME/.cursor/skills\"; if [ -d \"$CLAUDE_DIR\" ] && ls \"$CLAUDE_DIR\"/*/SKILL.md 2>/dev/null >/dev/null; then echo \"✅ Claude Code skills: $(ls -d \"$CLAUDE_DIR\"/*/ 2>/dev/null | wc -l) installed\"; else echo '❌ Claude Code: no skills found'; fi; if [ -d \"$CURSOR_DIR\" ] && ls \"$CURSOR_DIR\"/*/SKILL.md 2>/dev/null >/dev/null; then echo \"✅ Cursor skills: $(ls -d \"$CURSOR_DIR\"/*/ 2>/dev/null | wc -l) installed\"; else echo '❌ Cursor: no skills found'; fi"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install skills first: sc mattpocock-skills self setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mattpocock-skills",
+      "resource": "self",
+      "action": "update",
+      "description": "Update mattpocock skills to latest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["skills@latest", "add", "mattpocock/skills", "--force"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install Node.js + npm: https://nodejs.org/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mattpocock-skills",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for advanced npx skills commands",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["skills"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install Node.js + npm: https://nodejs.org/"
+      },
+      "args": []
+    }
+  ]
+}

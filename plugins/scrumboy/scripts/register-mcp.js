@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 
-const PORT = process.env.SCRUMBOY_PORT || "8080";
+const PORT = process.env.SCRUMBOY_PORT || "8081";
 const HOST = process.env.SCRUMBOY_HOST || "http://localhost";
 
 const configDir = process.env.SUPERCLI_HOME || path.join(os.homedir(), ".supercli");

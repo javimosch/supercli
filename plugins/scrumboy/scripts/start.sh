@@ -14,7 +14,7 @@ fi
 docker run -d \
   --name scrumboy \
   --restart unless-stopped \
-  -p "${SCRUMBOY_PORT:-8080}:8080" \
+  -p "${SCRUMBOY_PORT:-8081}:8080" \
   -v "$DATA_DIR:/data" \
   -e DATA_DIR=/data \
   -e SCRUMBOY_MODE="${SCRUMBOY_MODE:-full}" \
@@ -28,4 +28,4 @@ docker run -d \
     cd / && rm -rf "$TMPDIR"
   }
 
-echo "scrumboy started on http://localhost:${SCRUMBOY_PORT:-8080}"
+echo "scrumboy started on http://localhost:${SCRUMBOY_PORT:-8081}"
