@@ -221,6 +221,48 @@ function syncCatalog() {
       continue
     }
 
+    if (provider.type === "remote_repo") {
+      const sourceRepo = provider.source_repo || ""
+      const rootPath = provider.root || ""
+      if (!sourceRepo) continue
+
+      const match = sourceRepo.match(/github\.com\/([^\/]+)\/([^\/\s#?]+)/)
+      if (!match) continue
+      const owner = match[1]
+      const repo = match[2].replace(/\.git$/, "")
+      const ref = provider.ref || "main"
+      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${ref}?recursive=1`
+
+      const res = spawnSync("curl", ["-fsSL", apiUrl], { encoding: "utf-8", timeout: 15000 })
+      if (res.error || res.status !== 0) continue
+
+      let tree
+      try { tree = JSON.parse(res.stdout).tree } catch { continue }
+      if (!Array.isArray(tree)) continue
+
+      for (const entry of tree) {
+        if (!entry.path || !entry.path.endsWith("SKILL.md")) continue
+        const relPath = rootPath ? entry.path.replace(rootPath + "/", "") : entry.path
+        const baseId = relPath.replace(/\/SKILL\.md$/, "").replace(/\//g, ".")
+        const sourceUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${ref}/${entry.path}`
+        const dirName = entry.path.split("/").slice(-2, -1)[0] || baseId
+        const name = dirName.replace(/[-_]/g, " ").replace(/\b\w/g, c => c.toUpperCase())
+        const description = `Skill from ${entry.path}`
+
+        skills.push({
+          id: provider.name + ":" + baseId,
+          provider: provider.name,
+          name,
+          description,
+          source_url: sourceUrl,
+          source_repo: sourceRepo,
+          tags: entry.path.split("/").slice(0, -2).filter(Boolean),
+          updated_at: new Date().toISOString()
+        })
+      }
+      continue
+    }
+
     if (provider.type === "plugin_fs") {
       const pluginDir = provider.plugin_dir
       if (!pluginDir || !fs.existsSync(pluginDir)) continue
@@ -378,6 +420,10 @@ function getCatalogInfo() {
       skillsCount = Array.isArray(provider.entries) ? provider.entries.length : 0
       details.entries_count = skillsCount
       details.source_repo = provider.source_repo
+    } else if (provider.type === 'remote_repo') {
+      skillsCount = (idx.skills || []).filter(s => s.provider === provider.name).length
+      details.source_repo = provider.source_repo
+      details.root = provider.root || "."
     }
     
     return {
@@ -440,6 +486,17 @@ function describeProviderTypes() {
           type: 'remote_static',
           source_repo: 'https://github.com/user/repo',
           entries: [{ id: 'skill-1', source_url: 'https://raw.githubusercontent.com/...' }]
+        }
+      },
+      {
+        name: 'remote_repo',
+        description: 'Auto-discovers SKILL.md files from a remote GitHub repository via the GitHub Tree API',
+        example: {
+          name: 'goose-skills',
+          type: 'remote_repo',
+          source_repo: 'https://github.com/gooseworks-ai/goose-skills',
+          root: 'skills',
+          ref: 'main'
         }
       },
       {

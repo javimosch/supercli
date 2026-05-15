@@ -306,6 +306,26 @@ function handleSkillsCommand(options) {
       const name = flags.name || positional[3]
       const type = flags.type || "local_fs"
       const rootsRaw = flags.roots || flags.root
+      const sourceRepo = flags.sourceRepo || flags["source-repo"] || ""
+      const ref = flags.ref || "main"
+
+      if (type === "remote_repo" || type === "remote_static") {
+        if (!name || !sourceRepo) {
+          outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills providers add --name <provider> --type remote_repo --source-repo <url> [--root <path>] [--ref <branch>]", recoverable: false })
+          return true
+        }
+        const provider = addProvider({
+          name,
+          type,
+          source_repo: sourceRepo,
+          root: flags.root || "",
+          ref,
+          enabled: flags.enabled !== "false"
+        })
+        output({ ok: true, provider })
+        return true
+      }
+
       if (!name || !rootsRaw) {
         outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills providers add --name <provider> --roots <path1,path2> [--type local_fs|repo_fs]", recoverable: false })
         return true
