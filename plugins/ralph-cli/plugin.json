@@ -1,0 +1,173 @@
+{
+  "name": "ralph-cli",
+  "version": "1.0.0",
+  "description": "ralph-cli \u2014 autonomous PRD-driven agent loop. Reads stories from a PRD JSON file and executes them one at a time via an agent CLI.",
+  "source": "https://github.com/javimosch/ralph-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ralph"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ralph-cli",
+    "binary": "ralph",
+    "check": "ralph --help",
+    "install_steps": [
+      "curl -LO https://github.com/javimosch/ralph-cli/releases/latest/download/ralph-linux-amd64",
+      "chmod +x ralph-linux-amd64",
+      "sudo mv ralph-linux-amd64 /usr/local/bin/ralph"
+    ],
+    "note": "Go binary. MIT. Requires an agent CLI (opencode, claude, codex) to execute stories. Install supercli: npm install -g superacli"
+  },
+  "commands": [
+    {
+      "namespace": "ralph-cli",
+      "resource": "run",
+      "action": "run",
+      "description": "Execute the PRD agent loop \u2014 runs stories one at a time until all pass",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ralph",
+        "baseArgs": [
+          "run"
+        ],
+        "missingDependencyHelp": "Install ralph-cli from https://github.com/javimosch/ralph-cli"
+      },
+      "args": [
+        {
+          "name": "prd",
+          "type": "string",
+          "required": true,
+          "description": "Path to PRD JSON file"
+        },
+        {
+          "name": "agent",
+          "type": "string",
+          "description": "Agent CLI command to use (default: auto-detect)"
+        },
+        {
+          "name": "dry-run",
+          "type": "boolean",
+          "description": "Print prompts without executing"
+        }
+      ]
+    },
+    {
+      "namespace": "ralph-cli",
+      "resource": "status",
+      "action": "run",
+      "description": "Show PRD progress \u2014 completed vs total stories, next story, blocked stories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ralph",
+        "baseArgs": [
+          "status"
+        ],
+        "missingDependencyHelp": "Install ralph-cli from https://github.com/javimosch/ralph-cli"
+      },
+      "args": [
+        {
+          "name": "prd",
+          "type": "string",
+          "required": true,
+          "description": "Path to PRD JSON file"
+        }
+      ]
+    },
+    {
+      "namespace": "ralph-cli",
+      "resource": "story",
+      "action": "next",
+      "description": "Show the next available story from the PRD",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ralph",
+        "baseArgs": [
+          "story",
+          "next"
+        ],
+        "missingDependencyHelp": "Install ralph-cli from https://github.com/javimosch/ralph-cli"
+      },
+      "args": [
+        {
+          "name": "prd",
+          "type": "string",
+          "required": true,
+          "description": "Path to PRD JSON file"
+        }
+      ]
+    },
+    {
+      "namespace": "ralph-cli",
+      "resource": "prompt",
+      "action": "run",
+      "description": "Generate and print the agent prompt for a specific story (or next available)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ralph",
+        "baseArgs": [
+          "story",
+          "prompt"
+        ],
+        "missingDependencyHelp": "Install ralph-cli from https://github.com/javimosch/ralph-cli"
+      },
+      "args": [
+        {
+          "name": "prd",
+          "type": "string",
+          "required": true,
+          "description": "Path to PRD JSON file"
+        },
+        {
+          "name": "story",
+          "type": "string",
+          "description": "Specific story ID (optional, defaults to next)"
+        }
+      ]
+    },
+    {
+      "namespace": "ralph-cli",
+      "resource": "init",
+      "action": "run",
+      "description": "Scaffold a new PRD JSON file with starter stories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ralph",
+        "baseArgs": [
+          "init"
+        ],
+        "missingDependencyHelp": "Install ralph-cli from https://github.com/javimosch/ralph-cli",
+        "positionalArgs": [
+          "name"
+        ]
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Project name for the PRD"
+        },
+        {
+          "name": "prd",
+          "type": "string",
+          "description": "Output path for PRD file (default: ./prd.json)"
+        }
+      ]
+    },
+    {
+      "namespace": "ralph-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ralph CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ralph",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ralph-cli from https://github.com/javimosch/ralph-cli"
+      },
+      "args": []
+    }
+  ]
+}
