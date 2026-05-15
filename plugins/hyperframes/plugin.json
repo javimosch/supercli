@@ -1,0 +1,50 @@
+{
+  "name": "hyperframes",
+  "version": "1.0.0",
+  "description": "HyperFrames video rendering skills + MCP (HeyGen, 18.4k⭐). 15 agent skills for video compositing, animations, and rendering. MCP server for agent-driven video creation.",
+  "source": "https://github.com/heygen-com/hyperframes",
+  "checks": [],
+  "install_guidance": {
+    "plugin": "hyperframes",
+    "check": "supercli skills search 'animation' --provider hyperframes 2>&1 | head -3",
+    "install_steps": [
+      "15 skills auto-indexed via remote_repo provider.",
+      "Search: sc skills search <query> --provider hyperframes",
+      "MCP: sc hyperframes self mcp  (requires npx, heavy deps ~500MB)"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hyperframes",
+      "resource": "self",
+      "action": "mcp",
+      "description": "Register hyperframes MCP server for agent use (requires npx, installs heavy deps)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["../../scripts/register-mcp.js", "hyperframes", "npx", "[\"--yes\",\"hyperframes\",\"mcp\"]", "HyperFrames video rendering MCP server (HeyGen)"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "hyperframes",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for hyperframes CLI (heavy deps, use only if already installed)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "hyperframes"],
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 300000
+      },
+      "args": []
+    }
+  ]
+}
