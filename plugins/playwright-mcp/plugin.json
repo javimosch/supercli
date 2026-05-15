@@ -1,0 +1,66 @@
+{
+  "name": "playwright-mcp",
+  "version": "1.0.0",
+  "description": "Playwright MCP server — browser automation (Microsoft, 32.5k⭐). Control Chrome/Chromium via MCP tools.",
+  "source": "https://github.com/microsoft/playwright-mcp",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "playwright-mcp",
+    "binary": "npx",
+    "check": "npx --yes @playwright/mcp --help 2>&1 | head -3",
+    "install_steps": [
+      "Run: sc playwright-mcp self mcp  (registers MCP server)",
+      "Requires: npx (comes with Node.js)",
+      "First run downloads @playwright/mcp from npm"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "playwright-mcp",
+      "resource": "self",
+      "action": "mcp",
+      "description": "Register playwright-mcp MCP server for agent use",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["../../scripts/register-mcp.js", "playwright-mcp", "npx", "[\"--yes\",\"@playwright/mcp\"]", "Browser automation via Playwright MCP (Microsoft)"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-mcp",
+      "resource": "self",
+      "action": "start",
+      "description": "Start playwright-mcp MCP server manually",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@playwright/mcp"],
+        "timeout_ms": 120000,
+        "requiresInteractive": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "playwright-mcp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to playwright-mcp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "@playwright/mcp"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": []
+    }
+  ]
+}

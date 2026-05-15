@@ -1,0 +1,66 @@
+{
+  "name": "github-mcp",
+  "version": "1.0.0",
+  "description": "GitHub MCP server — official GitHub API via MCP (29.8k⭐). Issues, PRs, repos, code search, and more.",
+  "source": "https://github.com/github/github-mcp-server",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "github-mcp",
+    "binary": "npx",
+    "check": "npx --yes @github/github-mcp-server --help 2>&1 | head -3",
+    "install_steps": [
+      "Run: sc github-mcp self mcp  (registers MCP server)",
+      "Requires: npx (comes with Node.js)",
+      "Set GITHUB_TOKEN env var for authenticated access"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "github-mcp",
+      "resource": "self",
+      "action": "mcp",
+      "description": "Register github-mcp MCP server for agent use",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["../../scripts/register-mcp.js", "github-mcp", "npx", "[\"--yes\",\"@github/github-mcp-server\"]", "GitHub MCP server (official)"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "github-mcp",
+      "resource": "self",
+      "action": "start",
+      "description": "Start github-mcp MCP server manually",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@github/github-mcp-server"],
+        "timeout_ms": 120000,
+        "requiresInteractive": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "github-mcp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to github-mcp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "@github/github-mcp-server"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": []
+    }
+  ]
+}

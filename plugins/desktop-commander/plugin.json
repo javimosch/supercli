@@ -1,0 +1,65 @@
+{
+  "name": "desktop-commander",
+  "version": "1.0.0",
+  "description": "Desktop Commander MCP — terminal control, file search, and diff editing for AI agents (6k⭐).",
+  "source": "https://github.com/wonderwhy-er/DesktopCommanderMCP",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "desktop-commander",
+    "binary": "npx",
+    "check": "npx --yes @wonderwhy-er/desktop-commander --help 2>&1 | head -3",
+    "install_steps": [
+      "Run: sc desktop-commander self mcp  (registers MCP server)",
+      "Requires: npx (comes with Node.js)"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "desktop-commander",
+      "resource": "self",
+      "action": "mcp",
+      "description": "Register desktop-commander MCP server for agent use",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["../../scripts/register-mcp.js", "desktop-commander", "npx", "[\"--yes\",\"@wonderwhy-er/desktop-commander\"]", "Desktop Commander MCP — terminal, file search, diff editing"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "desktop-commander",
+      "resource": "self",
+      "action": "start",
+      "description": "Start desktop-commander MCP server manually",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["@wonderwhy-er/desktop-commander"],
+        "timeout_ms": 120000,
+        "requiresInteractive": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "desktop-commander",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to desktop-commander CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "@wonderwhy-er/desktop-commander"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": []
+    }
+  ]
+}
