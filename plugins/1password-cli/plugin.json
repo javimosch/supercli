@@ -1,0 +1,144 @@
+{
+  "name": "1password-cli",
+  "version": "0.1.0",
+  "description": "1Password CLI plugin — manage vaults, items, and accounts. Securely access credentials, passwords, and TOTPs from 1Password vaults.",
+  "source": "https://developer.1password.com/docs/cli",
+  "checks": [
+    { "type": "binary", "name": "op" }
+  ],
+  "install_guidance": {
+    "plugin": "1password-cli",
+    "binary": "op",
+    "check": "which op",
+    "install_steps": [
+      "brew install 1password-cli",
+      "Verify: op --version",
+      "supercli plugins install ./plugins/1password-cli --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "op",
+      "resource": "account",
+      "action": "list",
+      "description": "List all signed-in 1Password accounts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["account", "list", "--format", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "op",
+      "resource": "item",
+      "action": "list",
+      "description": "List items in a vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["item", "list", "--format", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": [
+        { "name": "--vault", "type": "string", "description": "Vault name or ID" },
+        { "name": "--category", "type": "string", "description": "Category filter (repeat for multiple)" },
+        { "name": "--tags", "type": "string", "description": "Comma-separated tag filter" }
+      ]
+    },
+    {
+      "namespace": "op",
+      "resource": "item",
+      "action": "get",
+      "description": "Get a specific item by name or ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["item", "get", "--format", "json"],
+        "parseJson": true,
+        "positionalArgs": ["identifier"],
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": [
+        { "name": "identifier", "type": "string", "required": true, "description": "Item name, ID, or share link" },
+        { "name": "--vault", "type": "string", "description": "Vault name or ID" },
+        { "name": "--fields", "type": "string", "description": "Comma-separated fields to show (e.g. password,username)" }
+      ]
+    },
+    {
+      "namespace": "op",
+      "resource": "vault",
+      "action": "list",
+      "description": "List all available vaults",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["vault", "list", "--format", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "op",
+      "resource": "user",
+      "action": "list",
+      "description": "List users in the account",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["user", "list", "--format", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "op",
+      "resource": "read",
+      "action": "get",
+      "description": "Read a secret reference (op://) or file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["read"],
+        "positionalArgs": ["reference"],
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": [
+        { "name": "reference", "type": "string", "required": true, "description": "Secret reference URI (op://vault/item/field)" },
+        { "name": "--no-newline", "type": "boolean", "description": "Omit trailing newline" }
+      ]
+    },
+    {
+      "namespace": "op",
+      "resource": "self",
+      "action": "version",
+      "description": "Show 1Password CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "op",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to op CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Install 1Password CLI: brew install 1password-cli"
+      },
+      "args": []
+    }
+  ]
+}

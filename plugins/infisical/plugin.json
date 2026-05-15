@@ -1,0 +1,104 @@
+{
+  "name": "infisical",
+  "version": "0.1.0",
+  "description": "Infisical CLI plugin — open-source secrets management. Manage environment variables, secrets, and configs across teams with end-to-end encryption.",
+  "source": "https://infisical.com/docs/cli/overview",
+  "checks": [
+    { "type": "binary", "name": "infisical" }
+  ],
+  "install_guidance": {
+    "plugin": "infisical",
+    "binary": "infisical",
+    "check": "which infisical",
+    "install_steps": [
+      "brew install infisical/get-cli/infisical",
+      "Verify: infisical --version",
+      "supercli plugins install ./plugins/infisical --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "infisical",
+      "resource": "secrets",
+      "action": "list",
+      "description": "List all secrets for the current project/environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infisical",
+        "baseArgs": ["secrets", "--output", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install Infisical CLI: brew install infisical/get-cli/infisical"
+      },
+      "args": [
+        { "name": "--projectId", "type": "string", "description": "Infisical project ID" },
+        { "name": "--env", "type": "string", "description": "Environment slug (dev, staging, prod)" },
+        { "name": "--secret-path", "type": "string", "description": "Secrets folder path" },
+        { "name": "--expand-secrets", "type": "boolean", "description": "Expand secret references" }
+      ]
+    },
+    {
+      "namespace": "infisical",
+      "resource": "secrets",
+      "action": "download",
+      "description": "Download secrets as .env to stdout or file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infisical",
+        "baseArgs": ["secrets", "download"],
+        "missingDependencyHelp": "Install Infisical CLI: brew install infisical/get-cli/infisical"
+      },
+      "args": [
+        { "name": "--projectId", "type": "string", "description": "Infisical project ID" },
+        { "name": "--env", "type": "string", "description": "Environment slug" },
+        { "name": "-f", "type": "string", "description": "Output file path (defaults to .env)" },
+        { "name": "--format", "type": "string", "description": "Output format (dotenv, json, yaml)" }
+      ]
+    },
+    {
+      "namespace": "infisical",
+      "resource": "secrets",
+      "action": "set",
+      "description": "Set a secret value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infisical",
+        "baseArgs": ["secrets", "set"],
+        "missingDependencyHelp": "Install Infisical CLI: brew install infisical/get-cli/infisical"
+      },
+      "args": [
+        { "name": "secretName", "type": "string", "required": true, "description": "Secret name" },
+        { "name": "secretValue", "type": "string", "required": true, "description": "Secret value" },
+        { "name": "--projectId", "type": "string", "description": "Infisical project ID" },
+        { "name": "--env", "type": "string", "description": "Environment slug" },
+        { "name": "--secret-path", "type": "string", "description": "Secrets folder path" }
+      ]
+    },
+    {
+      "namespace": "infisical",
+      "resource": "self",
+      "action": "version",
+      "description": "Show Infisical CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infisical",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install Infisical CLI: brew install infisical/get-cli/infisical"
+      },
+      "args": []
+    },
+    {
+      "namespace": "infisical",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to infisical CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infisical",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Install Infisical CLI: brew install infisical/get-cli/infisical"
+      },
+      "args": []
+    }
+  ]
+}

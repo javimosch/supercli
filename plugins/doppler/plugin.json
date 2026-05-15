@@ -1,0 +1,115 @@
+{
+  "name": "doppler",
+  "version": "0.1.0",
+  "description": "Doppler CLI plugin — universal secrets management. Securely manage environment variables, sync secrets across cloud providers, and integrate with CI/CD pipelines.",
+  "source": "https://docs.doppler.com/docs/cli",
+  "checks": [
+    { "type": "binary", "name": "doppler" }
+  ],
+  "install_guidance": {
+    "plugin": "doppler",
+    "binary": "doppler",
+    "check": "which doppler",
+    "install_steps": [
+      "brew install dopplerhq/cli/doppler",
+      "Verify: doppler --version",
+      "supercli plugins install ./plugins/doppler --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "doppler",
+      "resource": "secrets",
+      "action": "list",
+      "description": "List all secrets for the current project/environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doppler",
+        "baseArgs": ["secrets", "list", "--format", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install Doppler CLI: brew install dopplerhq/cli/doppler"
+      },
+      "args": [
+        { "name": "--project", "type": "string", "description": "Doppler project slug" },
+        { "name": "--config", "type": "string", "description": "Doppler config/environment slug" }
+      ]
+    },
+    {
+      "namespace": "doppler",
+      "resource": "secrets",
+      "action": "download",
+      "description": "Download secrets as .env format to stdout or file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doppler",
+        "baseArgs": ["secrets", "download"],
+        "missingDependencyHelp": "Install Doppler CLI: brew install dopplerhq/cli/doppler"
+      },
+      "args": [
+        { "name": "--project", "type": "string", "description": "Doppler project slug" },
+        { "name": "--config", "type": "string", "description": "Doppler config/environment slug" },
+        { "name": "--no-file", "type": "boolean", "description": "Print to stdout instead of file" },
+        { "name": "--format", "type": "string", "description": "Output format (env, json, yaml, docker)" }
+      ]
+    },
+    {
+      "namespace": "doppler",
+      "resource": "configs",
+      "action": "list",
+      "description": "List Doppler configs (environments) for a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doppler",
+        "baseArgs": ["configs", "--json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install Doppler CLI: brew install dopplerhq/cli/doppler"
+      },
+      "args": [
+        { "name": "--project", "type": "string", "description": "Doppler project slug" }
+      ]
+    },
+    {
+      "namespace": "doppler",
+      "resource": "projects",
+      "action": "get",
+      "description": "Get Doppler project info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doppler",
+        "baseArgs": ["projects", "get", "--json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install Doppler CLI: brew install dopplerhq/cli/doppler"
+      },
+      "args": [
+        { "name": "project", "type": "string", "required": true, "description": "Doppler project slug" }
+      ]
+    },
+    {
+      "namespace": "doppler",
+      "resource": "self",
+      "action": "version",
+      "description": "Show Doppler CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doppler",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install Doppler CLI: brew install dopplerhq/cli/doppler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "doppler",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to doppler CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doppler",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Install Doppler CLI: brew install dopplerhq/cli/doppler"
+      },
+      "args": []
+    }
+  ]
+}
