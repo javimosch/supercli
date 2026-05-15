@@ -1,0 +1,123 @@
+{
+  "name": "token-optimizer-cli",
+  "version": "1.0.0",
+  "description": "Token optimization, bloat detection, and context audit for AI coding agents — Go CLI",
+  "source": "https://github.com/javimosch/token-optimizer-cli",
+  "checks": [
+    { "type": "binary", "name": "token-optimizer-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "token-optimizer-cli",
+    "binary": "token-optimizer-cli",
+    "check": "token-optimizer-cli version",
+    "install_steps": [
+      "curl -LO https://github.com/javimosch/token-optimizer-cli/releases/latest/download/token-optimizer-cli-linux-amd64.tar.gz",
+      "tar xzf token-optimizer-cli-linux-amd64.tar.gz",
+      "sudo mv token-optimizer-cli /usr/local/bin/",
+      "Verify: token-optimizer-cli version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "token-optimizer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print token-optimizer-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "token-optimizer-cli",
+        "baseArgs": ["version"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/token-optimizer-cli/releases/latest/download/token-optimizer-cli-linux-amd64.tar.gz && tar xzf token-optimizer-cli-linux-amd64.tar.gz && sudo mv token-optimizer-cli /usr/local/bin/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "token-optimizer",
+      "resource": "project",
+      "action": "scan",
+      "description": "Scan files for token usage and bloat",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "token-optimizer-cli",
+        "baseArgs": ["scan"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to scan (default: .)" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "token-optimizer",
+      "resource": "project",
+      "action": "audit",
+      "description": "Deep audit with bloat detection and suggestions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "token-optimizer-cli",
+        "baseArgs": ["audit"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to audit (default: .)" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "token-optimizer",
+      "resource": "file",
+      "action": "check",
+      "description": "Analyze single file for token usage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "token-optimizer-cli",
+        "baseArgs": ["check"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 10000
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File path to analyze" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "token-optimizer",
+      "resource": "project",
+      "action": "summary",
+      "description": "Project-level token summary with cost estimate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "token-optimizer-cli",
+        "baseArgs": ["summary"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to summarize (default: .)" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "token-optimizer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for advanced token-optimizer-cli usage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "token-optimizer-cli",
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": []
+    }
+  ]
+}
