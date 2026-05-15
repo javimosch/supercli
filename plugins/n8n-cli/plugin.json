@@ -1,0 +1,122 @@
+{
+  "name": "n8n-cli",
+  "version": "1.0.0",
+  "description": "n8n workflow management — list, pull, push, test, verify, and convert workflows via n8nac CLI. Optional MCP server for agent integration.",
+  "source": "https://github.com/EtienneLescot/n8n-as-code",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "n8n-cli",
+    "binary": "npx",
+    "check": "npx --yes n8nac --version 2>&1 | head -3",
+    "install_steps": [
+      "Run: sc n8n-cli self setup  — configure n8n workspace",
+      "Run: sc n8n-cli self mcp     — register MCP server for agent use",
+      "Then: sc n8n-cli workflow list  — list workflows"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "n8n-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print n8nac CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "n8nac", "--version"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Requires npx (Node.js 18+)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "n8n-cli",
+      "resource": "self",
+      "action": "setup",
+      "description": "Configure n8n workspace (runs n8nac setup)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "n8nac", "setup"],
+        "timeout_ms": 60000,
+        "requiresInteractive": true
+      },
+      "args": []
+    },
+    {
+      "namespace": "n8n-cli",
+      "resource": "self",
+      "action": "mcp",
+      "description": "Register n8n-as-code MCP server for agent use",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["../../scripts/register-mcp.js", "n8n-cli", "npx", "[\"--yes\",\"n8nac\",\"mcp\"]", "n8n workflow management MCP server"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "n8n-cli",
+      "resource": "workflow",
+      "action": "list",
+      "description": "List all n8n workflows with status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "n8nac", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": []
+    },
+    {
+      "namespace": "n8n-cli",
+      "resource": "workflow",
+      "action": "pull",
+      "description": "Download a workflow from n8n by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "n8nac", "pull"],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": []
+    },
+    {
+      "namespace": "n8n-cli",
+      "resource": "workflow",
+      "action": "push",
+      "description": "Upload a local workflow to n8n",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "n8nac", "push"],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": []
+    },
+    {
+      "namespace": "n8n-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for advanced n8n commands (find, test, verify, convert, credentials, execution, skills)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["--yes", "n8nac"],
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": []
+    }
+  ]
+}
