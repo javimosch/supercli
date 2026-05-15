@@ -1,87 +1,61 @@
 ---
 name: katana
-description: Use this skill when the user wants to crawl websites, discover endpoints, find URLs, or perform web reconnaissance.
+description: Use this skill when the user needs web crawling — discover endpoints, extract URLs, map attack surface, or gather intelligence on web applications.
 ---
 
-# katana Plugin
+# Katana — Web Crawling & Spidering
 
-A next-generation crawling and spidering framework. Discover URLs, endpoints, and assets from web applications with headless and standard crawling modes.
+Next-gen crawling framework by [projectdiscovery](https://github.com/projectdiscovery/katana) (16.7k⭐). Fast, headless, JS-aware.
+
+## Quick Start
+
+```bash
+sc katana crawl url <target-url>                      # Basic crawl
+sc katana crawl url <url> -jsonl                       # JSONL output (per-line JSON)
+sc katana crawl url <url> -headless -depth 3           # Headless mode, depth 3
+sc katana crawl url <url> -jc                          # Crawl JS files too
+```
 
 ## Commands
 
-### Crawling
-- `katana crawl url` — Crawl URL for endpoints and assets
+### Crawl
+- `sc katana crawl url <url>` — crawl a URL, discover endpoints
+- `sc katana crawl url <url> -depth 5` — set crawl depth
+- `sc katana crawl url <url> -headless` — headless browser (slower, JS-rendered)
+- `sc katana crawl url <url> -jc` — crawl JavaScript files too
+- `sc katana crawl url <url> -json` — JSON output
+- `sc katana crawl url <url> -f qurl` — filter by response type (qurl, url, endpoint)
+- `sc katana crawl url <url> -o output.txt` — save to file
 
-### Utility
-- `katana _ _` — Passthrough to katana CLI
+### Passthrough
+- `sc katana _ -u <url> -list urls.txt` — crawl from file list
+- `sc katana _ -u <url> -scope "example.com"` — scope control
 
-## Usage Examples
-- "Crawl this website for endpoints"
-- "Discover all URLs on this domain"
-- "Find assets and endpoints"
-- "Crawl with JavaScript rendering"
+## Requirements
 
-## Installation
-
-```bash
-brew install katana
-```
-
-Or via Go:
-```bash
-go install github.com/projectdiscovery/katana/cmd/katana@latest
-```
+- Go binary from GitHub releases
+- Linux/macOS/Windows
 
 ## Examples
 
 ```bash
 # Basic crawl
-katana crawl url -u https://example.com
+sc katana crawl url https://example.com
 
-# Crawl with depth limit
-katana crawl url -u https://example.com -d 3
+# Deep headless crawl with JS
+sc katana crawl url https://example.com -headless -depth 5 -jc
 
-# Enable JavaScript crawling
-katana crawl url -u https://example.com -js-crawl
+# JSON output filtered by query
+sc katana crawl url https://example.com -json -f qurl
 
-# Headless browser mode
-katana crawl url -u https://example.com -headless
-
-# Output to file
-katana crawl url -u https://example.com -o results.txt
-
-# JSON output
-katana crawl url -u https://example.com -json
-
-# Set crawl scope
-katana crawl url -u https://example.com -field-scope rdn
-
-# Set concurrency
-katana crawl url -u https://example.com -concurrency 10
-
-# Rate limit requests
-katana crawl url -u https://example.com -rate-limit 5
-
-# Any katana command with passthrough
-katana _ _ -u https://example.com -d 2 -json
-katana _ _ -u https://example.com -js-crawl -headless
+# Crawl from file list
+sc katana _ -list urls.txt -depth 2 -o results.txt
 ```
 
-## Key Features
-- **Standard crawling** - Fast HTTP-based crawling
-- **Headless mode** - JavaScript rendering with browser
-- **JavaScript crawling** - Execute and crawl JS-generated content
-- **Scope control** - Field-based scope configuration
-- **Rate limiting** - Respectful crawling with rate limits
-- **Concurrency control** - Adjustable parallelism
-- **Depth control** - Limit crawl depth
-- **Multiple outputs** - Text, JSON, JSONL formats
-- **Asset discovery** - Find JavaScript, CSS, images, etc.
-- **Endpoint discovery** - Find API endpoints and parameters
+## Tips
 
-## Notes
-- Default depth is unlimited
-- Headless mode requires browser dependencies
-- JavaScript crawling can find dynamically loaded content
-- Can be used for reconnaissance and security testing
-- Supports custom headers and authentication
+- Use `-depth` to control crawl depth (default: 2)
+- `-headless` uses Chrome/Chromium — slower but gets JS-rendered content
+- Combine `-jc` with `-f endpoint` to find API endpoints in JS files
+- Output to file with `-o` for large crawls
+- Pipe to other tools: `katana -u https://example.com | httpx`
