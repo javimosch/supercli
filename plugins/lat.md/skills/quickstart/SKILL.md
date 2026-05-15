@@ -54,7 +54,18 @@ sc lat.md graph section <id>     # Read a specific section
 ### 1. Semantic Search Requires LLM API Key
 `lat search` uses AI-powered semantic search, not grep. It requires `LAT_LLM_KEY` configured via `lat init`. Without it, search returns an error. The `section` command works fine without a key.
 
-### 2. Run from Project Root
+### 2. LLM Provider is Locked to 3 Options
+lat.md does NOT support arbitrary OpenAI-compatible base URLs or models. Provider detection is purely key-prefix based in `search/provider.js`:
+
+| Key prefix | Provider | API Base | Model | Dims |
+|---|---|---|---|---|
+| `sk-...` | OpenAI | `https://api.openai.com/v1` | `text-embedding-3-small` | 1536 |
+| `vck_...` | Vercel AI Gateway | `https://ai-gateway.vercel.sh/v1` | `openai/text-embedding-3-small` | 1536 |
+| `REPLAY_LAT_LLM_KEY::<url>` | Replay (custom URL) | custom | `replay` | 1536 |
+
+No env vars exist for `LAT_LLM_BASE_URL` or `LAT_LLM_MODEL`. To add custom providers (e.g. Ollama, localai), you must patch `search/provider.js` in the installed package. The patch resets on `npm update`. Consider contributing upstream.
+
+### 3. Run from Project Root
 All lat commands must be run from the project root containing `lat.md/`. The plugin uses `cwd: invoke_cwd` so you must `cd` to your project first.
 
 ### 3. Every Section Needs a Leading Paragraph
