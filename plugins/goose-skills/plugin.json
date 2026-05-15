@@ -1,0 +1,84 @@
+{
+  "name": "goose-skills",
+  "version": "1.0.0",
+  "description": "207 GTM skills for AI coding agents \u2014 sales, marketing, SEO, ads, competitive intel, lead gen. Fetched via remote_repo provider from gooseworks-ai/goose-skills.",
+  "source": "https://github.com/gooseworks-ai/goose-skills",
+  "checks": [],
+  "install_guidance": {
+    "plugin": "goose-skills",
+    "check": "supercli skills search 'reddit' --provider goose-skills 2>&1 | head -3",
+    "install_steps": [
+      "Run: sc goose-skills self setup  \u2014 registers remote_repo provider + syncs 207 skills",
+      "Then: sc goose-skills self search <query>  \u2014 find skills",
+      "Skills available via: sc skills search <query> --provider goose-skills"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "goose-skills",
+      "resource": "self",
+      "action": "setup",
+      "description": "Register remote_repo provider and sync all goose-skills into supercli skills system",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/setup.js"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Requires supercli and GitHub API access (rate limited to 60 req/hr for unauthenticated)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "goose-skills",
+      "resource": "self",
+      "action": "sync",
+      "description": "Re-sync the goose-skills catalog to pick up new/updated skills",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/sync.js"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Run setup first: sc goose-skills self setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "goose-skills",
+      "resource": "self",
+      "action": "status",
+      "description": "Check how many goose-skills are indexed",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["scripts/status.js"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Run setup first: sc goose-skills self setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "goose-skills",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for advanced skills commands",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bash",
+        "baseArgs": [
+          "-c",
+          "node \"$(dirname \"$0\")/../../cli/supercli.js\" skills \"$@\"",
+          "--"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": []
+    }
+  ]
+}
