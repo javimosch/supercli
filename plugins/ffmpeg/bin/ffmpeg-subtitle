@@ -1,0 +1,13 @@
+#!/bin/bash
+# FFmpeg subtitle burn-in wrapper
+# Args: input output subtitle_file [font_size] [font_name]
+INPUT="$1"
+OUTPUT="$2"
+SUBTITLE="$3"
+FONTSIZE="${4:-24}"
+FONTNAME="${5:-Poppins}"
+
+ffmpeg -y -i "$INPUT" \
+  -vf "subtitles=${SUBTITLE}:fontsdir=.:force_style='FontName=${FONTNAME},FontSize=${FONTSIZE},PrimaryColour=&HFFFFFF'" \
+  -c:v libx264 -crf 18 -preset slow -c:a copy \
+  "$OUTPUT"

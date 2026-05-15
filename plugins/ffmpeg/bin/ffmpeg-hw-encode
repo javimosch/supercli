@@ -1,0 +1,44 @@
+#!/bin/bash
+# FFmpeg hardware accelerated encoding wrapper
+# Args: input output encoder [codec] [quality]
+# encoder: nvenc, qsv, auto
+INPUT="$1"
+OUTPUT="$2"
+ENCODER="${3:-auto}"
+CODEC="${4:-h264}"
+QUALITY="${5:-medium}"
+
+case "$ENCODER" in
+  nvenc)
+    case "$CODEC" in
+      h264) ENC="h264_nvenc" ;;
+      hevc|h265) ENC="hevc_nvenc" ;;
+      *) ENC="h264_nvenc" ;;
+    esac
+    CMD="ffmpeg -y -i \"$INPUT\" -c:v $ENC -c:a aac \"$OUTPUT\""
+    ;;
+  qsv)
+    case "$CODEC" in
+      h264) ENC="h264_qsv" ;;
+      hevc|h265) ENC="hevc_qsv" ;;
+      *) ENC="h264_qsv" ;;
+    esac
+    CMD="ffmpeg -y -init_hw_device qsv=hw -filter_hw_device hw -i \"$INPUT\" -c:v $ENC -c:a aac \"$OUTPUT\""
+    ;;
+  auto)
+    # Auto-detect: try nvenc first, fall back to qsv, fall back to software
+    if ffmpeg -encoders 2>/dev/null | grep -q h264_nvenc; then
+      CMD="ffmpeg -y -i \"$INPUT\" -c:v h264_nvenc -c:a aac \"$OUTPUT\""
+    elif ffmpeg -encoders 2>/dev/null | grep -q h264_qsv; then
+      CMD="ffmpeg -y -init_hw_device qsv=hw -filter_hw_device hw -i \"$INPUT\" -c:v h264_qsv -c:a aac \"$OUTPUT\""
+    else
+      CMD="ffmpeg -y -i \"$INPUT\" -c:v libx264 -preset $QUALITY -crf 23 -c:a aac \"$OUTPUT\""
+    fi
+    ;;
+  *)
+    echo "Error: unknown encoder '$ENCODER'. Use: nvenc, qsv, auto"
+    exit 1
+    ;;
+esac
+
+eval $CMD

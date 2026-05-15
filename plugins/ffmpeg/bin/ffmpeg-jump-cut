@@ -1,0 +1,25 @@
+#!/bin/bash
+# FFmpeg jump cut wrapper — selective scene/time removal
+# Args: input output timestamps_json
+# timestamps_json: '["0-5.7","11-18"]'  (keep these time ranges)
+INPUT="$1"
+OUTPUT="$2"
+TIMESTAMPS="$3"
+
+# Build select expression from timestamp ranges
+SELECT_EXPR=$(echo "$TIMESTAMPS" | python3 -c "
+import json, sys
+ranges = json.loads(sys.stdin.read())
+expr_parts = []
+for r in ranges:
+    parts = r.split('-')
+    start = parts[0]
+    end = parts[1] if len(parts) > 1 else start
+    expr_parts.append(f'between(t,{start},{end})')
+print('+'.join(expr_parts))
+" 2>/dev/null)
+
+ffmpeg -y -i "$INPUT" \
+  -vf "select='${SELECT_EXPR}',setpts=N/FRAME_RATE/TB" \
+  -af "aselect='${SELECT_EXPR}',asetpts=N/SR/TB" \
+  "$OUTPUT"

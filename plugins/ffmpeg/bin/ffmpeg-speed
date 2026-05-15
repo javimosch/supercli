@@ -1,0 +1,14 @@
+#!/bin/bash
+# FFmpeg video speed wrapper
+# Args: input output speed_factor
+INPUT="$1"
+OUTPUT="$2"
+SPEED="${3:-1.0}"
+
+# Calculate pts factor as 1/speed
+PTS=$(echo "scale=6; 1 / $SPEED" | bc 2>/dev/null || python3 -c "print(1/$SPEED)" 2>/dev/null || awk "BEGIN {print 1/$SPEED}")
+
+ffmpeg -y -i "$INPUT" \
+  -filter_complex "[0:v]setpts=${PTS}*PTS[v];[0:a]atempo=${SPEED}[a]" \
+  -map "[v]" -map "[a]" \
+  "$OUTPUT"

@@ -1,0 +1,29 @@
+#!/bin/bash
+# FFmpeg storyboard wrapper — scene-change thumbnails and tiled storyboards
+# Args: input output [mode] [sensitivity] [tile_cols] [tile_rows]
+# mode: single, tile, keyframes
+INPUT="$1"
+OUTPUT="$2"
+MODE="${3:-single}"
+SENSITIVITY="${4:-0.4}"
+COLS="${5:-4}"
+ROWS="${6:-4}"
+
+case "$MODE" in
+  single)
+    # Scene-change thumbnail (single best frame)
+    ffmpeg -y -i "$INPUT" -vf "select='gt(scene,${SENSITIVITY})'" -frames:v 1 -q:v 2 "$OUTPUT"
+    ;;
+  tile)
+    # Storyboard tile from scene changes
+    ffmpeg -y -i "$INPUT" -vf "select='gt(scene,${SENSITIVITY})',scale=640:480,tile=${COLS}x${ROWS}" -frames:v 1 "$OUTPUT"
+    ;;
+  keyframes)
+    # Tiled keyframe extraction
+    ffmpeg -y -skip_frame nokey -i "$INPUT" -vf "scale=640:480,tile=${COLS}x${ROWS}" -an -vsync 0 "$OUTPUT"
+    ;;
+  *)
+    echo "Error: unknown mode '$MODE'. Use: single, tile, keyframes"
+    exit 1
+    ;;
+esac

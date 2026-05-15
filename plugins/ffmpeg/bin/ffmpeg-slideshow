@@ -1,0 +1,70 @@
+#!/bin/bash
+# FFmpeg slideshow wrapper — images + audio → video with xfade transitions
+# Args: images_json audio output [duration_per_image] [transition]
+INPUTS_JSON="$1"
+AUDIO="$2"
+OUTPUT="$3"
+DURATION="${4:-5}"
+TRANSITION="${5:-fade}"
+
+# Write image list to a temp file to avoid shell escaping issues
+TMPDIR=$(mktemp -d)
+IMGLIST="$TMPDIR/imglist.txt"
+python3 -c "
+import json, sys
+imgs = json.loads(sys.stdin.read())
+with open('$IMGLIST', 'w') as f:
+    for img in imgs:
+        f.write(img + '\n')
+" <<< "$INPUTS_JSON" 2>/dev/null
+
+COUNT=$(wc -l < "$IMGLIST" | tr -d ' ')
+
+if [ "$COUNT" -lt 1 ]; then
+  echo "Error: at least one image required"
+  rm -rf "$TMPDIR"
+  exit 1
+fi
+
+# Build ffmpeg command with concat filter
+# Use concat with individual image inputs for reliable xfade transitions
+CMD="ffmpeg -y"
+
+# Generate inputs with loop
+while IFS= read -r IMG; do
+  CMD="$CMD -loop 1 -t $DURATION \"$IMG\""
+done < "$IMGLIST"
+
+CMD="$CMD -i \"$AUDIO\""
+
+# Generate filter_complex
+FILTER=""
+STREAMS=""
+PREV=""
+OFFSET=0
+
+for i in $(seq 0 $((COUNT - 1))); do
+  if [ "$i" -eq 0 ]; then
+    # First image: format + fade in
+    FILTER="${FILTER}[${i}:v]format=yuv420p,fade=t=in:st=0:d=0.5,setpts=PTS-STARTPTS[v${i}];"
+    PREV="[v${i}]"
+  else
+    # Subsequent images: xfade from previous
+    NEXT_OFFSET=$((OFFSET + DURATION - 1))
+    FILTER="${FILTER}[${i}:v]format=yuv420p,setpts=PTS-STARTPTS[tmp${i}];"
+    FILTER="${FILTER}${PREV}[tmp${i}]xfade=transition=${TRANSITION}:duration=1:offset=${OFFSET},format=yuv420p[v${i}];"
+    PREV="[v${i}]"
+    OFFSET=$((OFFSET + DURATION - 1))
+  fi
+done
+
+CMD="$CMD -filter_complex \"${FILTER}\""
+CMD="$CMD -map \"[v$((COUNT - 1))]\" -map ${COUNT}:a"
+CMD="$CMD -c:v libx264 -c:a aac -shortest \"$OUTPUT\""
+
+echo "=== ffmpeg-slideshow: Running $COUNT images with ${TRANSITION} transition ==="
+eval $CMD
+RC=$?
+
+rm -rf "$TMPDIR"
+exit $RC

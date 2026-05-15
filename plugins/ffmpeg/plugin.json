@@ -1,6 +1,6 @@
 {
   "name": "ffmpeg",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "FFmpeg media plugin — convert, trim, resize, thumbnail, GIF, and inspect video/audio with semantic commands",
   "source": "https://ffmpeg.org",
   "tags": ["ffmpeg", "video", "audio", "media", "convert", "gif", "thumbnail"],
@@ -162,6 +162,171 @@
       "args": [
         { "name": "inputs", "type": "array", "required": true, "description": "JSON array of input video files" },
         { "name": "output", "type": "string", "required": true, "description": "Output video file" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "speed",
+      "description": "Change playback speed (slow-mo / fast-forward)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-speed",
+        "positionalArgs": ["input", "output", "speed"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "speed", "type": "number", "required": false, "description": "Speed factor (0.5 = half speed, 2.0 = double speed)", "default": "1.0" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "jump-cut",
+      "description": "Remove selected time ranges from video (jump cuts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-jump-cut",
+        "positionalArgs": ["input", "output", "timestamps"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "timestamps", "type": "string", "required": true, "description": "JSON array of time ranges to KEEP, e.g. '\"0-5.7\",\"11-18\"'" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "overlay",
+      "description": "Overlay a logo or image on video with position and timing",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-overlay",
+        "positionalArgs": ["input", "output", "overlay", "position", "start_time", "end_time"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "overlay", "type": "string", "required": true, "description": "Overlay image file (logo, watermark)" },
+        { "name": "position", "type": "string", "required": false, "description": "Position: topleft, topright, bottomleft, bottomright, center", "default": "bottomright" },
+        { "name": "start_time", "type": "number", "required": false, "description": "Display start time in seconds" },
+        { "name": "end_time", "type": "number", "required": false, "description": "Display end time in seconds" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "subtitle",
+      "description": "Burn subtitles into video (ASS/SRT)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-subtitle",
+        "positionalArgs": ["input", "output", "subtitle", "font_size", "font_name"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "subtitle", "type": "string", "required": true, "description": "Subtitle file (.srt, .ass)" },
+        { "name": "font_size", "type": "number", "required": false, "description": "Font size for burned-in subtitles", "default": "24" },
+        { "name": "font_name", "type": "string", "required": false, "description": "Font name for subtitles", "default": "Poppins" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "slideshow",
+      "description": "Create video slideshow from images with audio and transitions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-slideshow",
+        "positionalArgs": ["images", "audio", "output", "duration", "transition"],
+        "parseJson": false,
+        "timeout_ms": 300000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "images", "type": "array", "required": true, "description": "JSON array of image paths" },
+        { "name": "audio", "type": "string", "required": true, "description": "Background audio file (MP3, AAC, etc.)" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "duration", "type": "number", "required": false, "description": "Duration per image in seconds", "default": "5" },
+        { "name": "transition", "type": "string", "required": false, "description": "xfade transition type (fade, slideleft, slideright, wipeleft, etc.)", "default": "fade" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "video",
+      "action": "hw-encode",
+      "description": "Hardware-accelerated video encoding (Nvidia NVENC / Intel QSV)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-hw-encode",
+        "positionalArgs": ["input", "output", "encoder", "codec", "quality"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "encoder", "type": "string", "required": false, "description": "Encoder: nvenc, qsv, auto", "default": "auto" },
+        { "name": "codec", "type": "string", "required": false, "description": "Codec: h264, hevc/h265", "default": "h264" },
+        { "name": "quality", "type": "string", "required": false, "description": "Software fallback preset: ultrafast, fast, medium, slow", "default": "medium" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "audio",
+      "action": "mix",
+      "description": "Mix background music under the original audio track",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-audio-mix",
+        "positionalArgs": ["input", "output", "music", "volume"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file with original audio" },
+        { "name": "output", "type": "string", "required": true, "description": "Output video file" },
+        { "name": "music", "type": "string", "required": true, "description": "Background music / audio file" },
+        { "name": "volume", "type": "number", "required": false, "description": "Music volume multiplier (0.0-1.0)", "default": "0.2" }
+      ]
+    },
+    {
+      "namespace": "ffmpeg",
+      "resource": "media",
+      "action": "storyboard",
+      "description": "Generate storyboard thumbnails from scene changes or keyframes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "/home/jarancibia/ai/supercli/plugins/ffmpeg/bin/ffmpeg-storyboard",
+        "positionalArgs": ["input", "output", "mode", "sensitivity", "tile_cols", "tile_rows"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Input video file" },
+        { "name": "output", "type": "string", "required": true, "description": "Output image or image pattern" },
+        { "name": "mode", "type": "string", "required": false, "description": "Mode: single (best scene frame), tile (tiled storyboard), keyframes (tiled keyframes)", "default": "single" },
+        { "name": "sensitivity", "type": "number", "required": false, "description": "Scene change sensitivity (0.0-1.0, lower = more sensitive)", "default": "0.4" },
+        { "name": "tile_cols", "type": "number", "required": false, "description": "Tile grid columns (for tile/keyframes mode)", "default": "4" },
+        { "name": "tile_rows", "type": "number", "required": false, "description": "Tile grid rows (for tile/keyframes mode)", "default": "4" }
       ]
     }
   ]

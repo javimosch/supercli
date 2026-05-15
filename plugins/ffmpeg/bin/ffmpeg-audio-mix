@@ -1,0 +1,12 @@
+#!/bin/bash
+# FFmpeg audio mix wrapper — mix background music under original audio
+# Args: input output music_file [music_volume]
+INPUT="$1"
+OUTPUT="$2"
+MUSIC="$3"
+VOLUME="${4:-0.2}"
+
+ffmpeg -y -i "$INPUT" -i "$MUSIC" \
+  -filter_complex "[1:a]volume=${VOLUME}[bgm];[0:a][bgm]amix=inputs=2:duration=shortest[a]" \
+  -map 0:v -map "[a]" -c:v copy -c:a aac -shortest \
+  "$OUTPUT"
