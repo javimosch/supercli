@@ -4,15 +4,17 @@
   "description": "GitHub MCP server — official GitHub API via MCP (29.8k⭐). Issues, PRs, repos, code search, and more.",
   "source": "https://github.com/github/github-mcp-server",
   "checks": [
-    { "type": "binary", "name": "npx" }
+    { "type": "binary", "name": "github-mcp-server" }
   ],
   "install_guidance": {
     "plugin": "github-mcp",
-    "binary": "npx",
-    "check": "npx --yes @github/github-mcp-server --help 2>&1 | head -3",
+    "binary": "github-mcp-server",
+    "check": "github-mcp-server --help 2>&1 | head -3",
     "install_steps": [
-      "Run: sc github-mcp self mcp  (registers MCP server)",
-      "Requires: npx (comes with Node.js)",
+      "curl -LO https://github.com/github/github-mcp-server/releases/latest/download/github-mcp-server_Linux_x86_64.tar.gz",
+      "tar xzf github-mcp-server_Linux_x86_64.tar.gz",
+      "sudo mv github-mcp-server /usr/local/bin/",
+      "Run: sc github-mcp self mcp",
       "Set GITHUB_TOKEN env var for authenticated access"
     ]
   },
@@ -29,7 +31,7 @@
       "adapterConfig": {
         "command": "node",
         "cwd": "plugin_dir",
-        "baseArgs": ["../../scripts/register-mcp.js", "github-mcp", "npx", "[\"--yes\",\"@github/github-mcp-server\"]", "GitHub MCP server (official)"],
+        "baseArgs": ["../../scripts/register-mcp.js", "github-mcp", "github-mcp-server", "[]", "GitHub MCP server (official)"],
         "timeout_ms": 15000
       },
       "args": []
@@ -41,8 +43,7 @@
       "description": "Start github-mcp MCP server manually",
       "adapter": "process",
       "adapterConfig": {
-        "command": "npx",
-        "baseArgs": ["@github/github-mcp-server"],
+        "command": "github-mcp-server",
         "timeout_ms": 120000,
         "requiresInteractive": true
       },
@@ -52,11 +53,10 @@
       "namespace": "github-mcp",
       "resource": "_",
       "action": "_",
-      "description": "Passthrough to github-mcp CLI",
+      "description": "Passthrough to github-mcp-server CLI",
       "adapter": "process",
       "adapterConfig": {
-        "command": "npx",
-        "baseArgs": ["--yes", "@github/github-mcp-server"],
+        "command": "github-mcp-server",
         "passthrough": true,
         "timeout_ms": 60000
       },
