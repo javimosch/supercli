@@ -1,0 +1,176 @@
+{
+  "name": "devbox",
+  "version": "0.1.0",
+  "description": "Devbox CLI plugin — create reproducible, isolated development environments for any language or tool. Like nix-shell but simpler, powered by Nix under the hood.",
+  "source": "https://www.jetify.com/docs/devbox/",
+  "checks": [
+    { "type": "binary", "name": "devbox" }
+  ],
+  "install_guidance": {
+    "plugin": "devbox",
+    "binary": "devbox",
+    "check": "which devbox",
+    "install_steps": [
+      "curl -fsSL https://get.jetify.com/devbox | bash",
+      "Verify: devbox version",
+      "supercli plugins install ./plugins/devbox --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "devbox",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize a devbox project in the current directory (creates devbox.json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "package",
+      "action": "add",
+      "description": "Add a package to the devbox environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["add"],
+        "positionalArgs": ["package"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name, e.g. python@3.11, go@1.22, nodejs@20" },
+        { "name": "--platform", "type": "string", "description": "Platform filter (e.g. x86_64-linux, aarch64-darwin)" },
+        { "name": "--config", "type": "string", "description": "Path to devbox.json config directory" }
+      ]
+    },
+    {
+      "namespace": "devbox",
+      "resource": "package",
+      "action": "remove",
+      "description": "Remove a package from the devbox environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["rm"],
+        "positionalArgs": ["package"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package name to remove" }
+      ]
+    },
+    {
+      "namespace": "devbox",
+      "resource": "shell",
+      "action": "enter",
+      "description": "Enter a devbox shell with all packages available",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["shell"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "run",
+      "action": "cmd",
+      "description": "Run a command or script inside the devbox environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["run"],
+        "positionalArgs": ["cmd"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": [
+        { "name": "cmd", "type": "string", "required": true, "description": "Command to run inside the devbox environment" },
+        { "name": "--env", "type": "string", "description": "Environment variables (KEY=VALUE, repeatable)" }
+      ]
+    },
+    {
+      "namespace": "devbox",
+      "resource": "install",
+      "action": "run",
+      "description": "Install all packages defined in devbox.json",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["install"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "build",
+      "action": "run",
+      "description": "Build the devbox environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["build"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "generate",
+      "action": "devcontainer",
+      "description": "Generate devcontainer configuration files for the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["generate", "devcontainer"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "plan",
+      "action": "show",
+      "description": "Show the plan for the devbox environment without building",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["plan"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "self",
+      "action": "version",
+      "description": "Show Devbox CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devbox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to devbox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devbox",
+        "passthrough": true,
+        "missingDependencyHelp": "Install Devbox: curl -fsSL https://get.jetify.com/devbox | bash"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "name": "atlas",
+  "version": "0.1.0",
+  "description": "Atlas CLI plugin — modern database schema management. Inspect, plan, and migrate database schemas declaratively or via versioned migrations. Supports MySQL, Postgres, SQLite, MariaDB, and more.",
+  "source": "https://atlasgo.io/docs",
+  "checks": [
+    { "type": "binary", "name": "atlas" }
+  ],
+  "install_guidance": {
+    "plugin": "atlas",
+    "binary": "atlas",
+    "check": "which atlas",
+    "install_steps": [
+      "brew install ariga/tap/atlas",
+      "Verify: atlas version",
+      "supercli plugins install ./plugins/atlas --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "atlas",
+      "resource": "schema",
+      "action": "inspect",
+      "description": "Inspect a database schema and output as HCL, SQL, or JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["schema", "inspect"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "-u", "type": "string", "required": true, "description": "Database URL (e.g. sqlite://dev.db, mysql://user:pass@tcp(localhost:3306)/db)" },
+        { "name": "--format", "type": "string", "description": "Output format: hcl, sql, json (default: hcl)" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "schema",
+      "action": "apply",
+      "description": "Apply a schema (HCL/SQL) to a database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["schema", "apply"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "-u", "type": "string", "required": true, "description": "Database URL to apply to" },
+        { "name": "-f", "type": "string", "required": true, "description": "Schema file path (HCL or SQL)" },
+        { "name": "--auto-approve", "type": "boolean", "description": "Skip interactive approval" },
+        { "name": "--dry-run", "type": "boolean", "description": "Print planned changes without applying" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "schema",
+      "action": "diff",
+      "description": "Compute the diff between two schemas",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["schema", "diff"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "--from", "type": "string", "required": true, "description": "Source schema (URL or file://path)" },
+        { "name": "--to", "type": "string", "required": true, "description": "Desired schema (URL or file://path)" },
+        { "name": "--format", "type": "string", "description": "Output format: hcl, sql, json (default: sql)" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "migrate",
+      "action": "diff",
+      "description": "Generate a versioned migration file by diffing current vs desired schema",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["migrate", "diff"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "--dir", "type": "string", "description": "Migration directory URL (default: file://migrations)" },
+        { "name": "--to", "type": "string", "description": "Desired schema (URL or file://path)" },
+        { "name": "--dev-url", "type": "string", "description": "Dev database URL for computing the diff" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "migrate",
+      "action": "apply",
+      "description": "Apply pending versioned migrations to a database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["migrate", "apply"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "-u", "type": "string", "required": true, "description": "Database URL to apply migrations to" },
+        { "name": "--dir", "type": "string", "description": "Migration directory URL (default: file://migrations)" },
+        { "name": "--dry-run", "type": "boolean", "description": "Print planned changes without applying" },
+        { "name": "--baseline", "type": "string", "description": "Baseline version for first migration apply" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "migrate",
+      "action": "status",
+      "description": "Show the status of versioned migrations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["migrate", "status"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "-u", "type": "string", "required": true, "description": "Database URL to check" },
+        { "name": "--dir", "type": "string", "description": "Migration directory URL (default: file://migrations)" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "migrate",
+      "action": "lint",
+      "description": "Lint migration files for potential issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["migrate", "lint"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": [
+        { "name": "--dir", "type": "string", "description": "Migration directory URL (default: file://migrations)" },
+        { "name": "--dev-url", "type": "string", "description": "Dev database URL for linting" },
+        { "name": "--latest", "type": "string", "description": "Number of latest migrations to lint" }
+      ]
+    },
+    {
+      "namespace": "atlas",
+      "resource": "login",
+      "action": "run",
+      "description": "Log in to Atlas Cloud",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["login"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": []
+    },
+    {
+      "namespace": "atlas",
+      "resource": "self",
+      "action": "version",
+      "description": "Show Atlas CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": []
+    },
+    {
+      "namespace": "atlas",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to atlas CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlas",
+        "passthrough": true,
+        "missingDependencyHelp": "Install Atlas: brew install ariga/tap/atlas"
+      },
+      "args": []
+    }
+  ]
+}
