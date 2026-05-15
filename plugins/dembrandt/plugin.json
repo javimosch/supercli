@@ -1,0 +1,91 @@
+{
+  "name": "dembrandt",
+  "version": "0.1.0",
+  "description": "Extract design tokens from any website URL — colors, typography, spacing, shadows, component patterns, and more",
+  "source": "https://github.com/dembrandt/dembrandt",
+  "checks": [
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "dembrandt",
+    "binary": "dembrandt",
+    "check": "npx dembrandt --help",
+    "install_steps": [
+      "Run: npm install -g dembrandt   — global install",
+      "Or use via npx: npx dembrandt <url>   — no install needed",
+      "Then: sc dembrandt analyze <url>   — extract design tokens"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dembrandt",
+      "resource": "self",
+      "action": "analyze",
+      "description": "Extract design tokens from a website URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["dembrandt"],
+        "positionalArgs": ["url"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install Node.js + npm: https://nodejs.org/"
+      },
+      "args": [
+        {
+          "name": "url",              "type": "string",
+          "description": "Website URL to analyze",
+          "required": true
+        },
+        {
+          "name": "dtcg",
+          "type": "flag",
+          "description": "Export tokens in W3C Design Tokens format",
+          "flag": "--dtcg"
+        },
+        {
+          "name": "save-output",
+          "type": "flag",
+          "description": "Save results as JSON file for audits and documentation",
+          "flag": "--save-output"
+        },
+        {
+          "name": "browser",
+          "type": "option",
+          "description": "Browser engine to use (default: chromium, use firefox for bot-protected sites)",
+          "flag": "--browser"
+        },
+        {
+          "name": "dark-mode",
+          "type": "flag",
+          "description": "Extract dark mode color tokens",
+          "flag": "--dark-mode"
+        },
+        {
+          "name": "slow",
+          "type": "flag",
+          "description": "Slow mode for reliable extraction on JS-heavy SPAs",
+          "flag": "--slow"
+        }
+      ]
+    },
+    {
+      "namespace": "dembrandt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for advanced dembrandt commands",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["dembrandt"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install Node.js + npm: https://nodejs.org/"
+      },
+      "args": []
+    }
+  ]
+}

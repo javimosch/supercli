@@ -930,8 +930,31 @@ async function main() {
       return;
     }
 
-    // Validate required args
     const uFlags = userFlags();
+
+    // Remaining positional args after namespace.resource.action
+    const remainingPositionalArgs = positional.slice(3);
+
+    // For non-passthrough commands, map remaining positional args to named args
+    // using adapterConfig.positionalArgs to determine which args are positional
+    const positionalArgNames = Array.isArray(cmd.adapterConfig?.positionalArgs)
+      ? cmd.adapterConfig.positionalArgs
+      : [];
+    if (cmd.adapterConfig && cmd.adapterConfig.passthrough !== true && remainingPositionalArgs.length > 0) {
+      let positionalIdx = 0;
+      for (const name of positionalArgNames) {
+        if (positionalIdx >= remainingPositionalArgs.length) break;
+        if (uFlags[name] !== undefined) continue; // already set via --flag
+        uFlags[name] = remainingPositionalArgs[positionalIdx++];
+      }
+      // Any remaining positional args go to __positionalArgs for adapters
+      const rest = remainingPositionalArgs.slice(positionalIdx);
+      if (rest.length > 0) {
+        uFlags.__positionalArgs = rest;
+      }
+    }
+
+    // Validate required args
     const missingArgs = (cmd.args || []).filter(
       (a) => a.required && !uFlags[a.name],
     );
@@ -948,23 +971,9 @@ async function main() {
     }
 
     // Handle passthrough positional arguments
-    const passthroughArgs = [];
     if (cmd.adapterConfig && cmd.adapterConfig.passthrough === true) {
-      // For passthrough commands, collect remaining positional args after namespace.resource.action
-      const cmdPositionalIndex = positional.findIndex((p, i) => 
-        i >= 0 && 
-        positional[i] === namespace &&
-        positional[i + 1] === resource &&
-        positional[i + 2] === action
-      );
-      if (cmdPositionalIndex >= 0) {
-        // Collect all args after namespace resource action
-        for (let i = cmdPositionalIndex + 3; i < positional.length; i++) {
-          passthroughArgs.push(positional[i]);
-        }
-      }
-      // Pass to adapter via __rawArgs
-      uFlags.__rawArgs = passthroughArgs;
+      // Pass remaining positional args to adapter via __rawArgs
+      uFlags.__rawArgs = remainingPositionalArgs;
     }
 
     const start = Date.now();
