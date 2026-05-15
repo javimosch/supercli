@@ -1,0 +1,78 @@
+{
+  "name": "posthog-cli",
+  "version": "0.1.0",
+  "description": "Query events, manage feature flags, and pull analytics data from PostHog via the terminal.",
+  "source": "https://posthog.com",
+  "checks": [
+    { "type": "binary", "name": "posthog" }
+  ],
+  "install_guidance": {
+    "plugin": "posthog-cli",
+    "binary": "posthog",
+    "check": "which posthog",
+    "install_steps": [
+      "npm i -g @posthog/cli",
+      "Verify: posthog --version",
+      "supercli plugins install ./plugins/posthog-cli --on-conflict replace --json"
+    ],
+    "note": "Requires POSTHOG_API_KEY and POSTHOG_PROJECT_ID env vars"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "posthog-cli",
+      "resource": "events",
+      "action": "query",
+      "description": "Query PostHog events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "posthog",
+        "baseArgs": ["events", "query"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install posthog: npm i -g @posthog/cli"
+      },
+      "args": [
+        {
+          "name": "event",
+          "type": "string",
+          "required": true,
+          "description": "Event name"
+        },
+        {
+          "name": "days",
+          "type": "integer",
+          "required": false,
+          "description": "Number of days"
+        }
+      ]
+    },
+    {
+      "namespace": "posthog-cli",
+      "resource": "flags",
+      "action": "list",
+      "description": "List feature flags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "posthog",
+        "baseArgs": ["feature-flags", "list"],
+        "missingDependencyHelp": "Install posthog: npm i -g @posthog/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "posthog-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to posthog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "posthog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install posthog: npm i -g @posthog/cli"
+      },
+      "args": []
+    }
+  ]
+}

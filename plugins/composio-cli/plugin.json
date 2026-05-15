@@ -1,0 +1,72 @@
+{
+  "name": "composio-cli",
+  "version": "0.1.0",
+  "description": "Search, authenticate, and execute tools across 1000+ apps from the terminal. Type-safe code generation, trigger listeners, and structured JSON output.",
+  "source": "https://github.com/composiohq/composio",
+  "checks": [
+    { "type": "binary", "name": "composio" }
+  ],
+  "install_guidance": {
+    "plugin": "composio-cli",
+    "binary": "composio",
+    "check": "which composio",
+    "install_steps": [
+      "curl -fsSL https://composio.dev/install | bash",
+      "Verify: composio --version",
+      "supercli plugins install ./plugins/composio-cli --on-conflict replace --json"
+    ],
+    "note": "Requires auth: composio login. Get API key at https://platform.composio.dev"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "composio-cli",
+      "resource": "tools",
+      "action": "search",
+      "description": "Search for tools across 1000+ apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "composio",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install composio: curl -fsSL https://composio.dev/install | bash"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Natural language search query"
+        }
+      ]
+    },
+    {
+      "namespace": "composio-cli",
+      "resource": "apps",
+      "action": "list",
+      "description": "List all available apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "composio",
+        "baseArgs": ["apps", "list"],
+        "missingDependencyHelp": "Install composio: curl -fsSL https://composio.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "composio-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to composio CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "composio",
+        "passthrough": true,
+        "missingDependencyHelp": "Install composio: curl -fsSL https://composio.dev/install | bash"
+      },
+      "args": []
+    }
+  ]
+}

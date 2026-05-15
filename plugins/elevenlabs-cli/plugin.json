@@ -1,0 +1,85 @@
+{
+  "name": "elevenlabs-cli",
+  "version": "0.1.0",
+  "description": "Voice and audio service management — text-to-speech, voice cloning, and audio generation from the terminal.",
+  "source": "https://elevenlabs.io",
+  "checks": [
+    { "type": "binary", "name": "elevenlabs" }
+  ],
+  "install_guidance": {
+    "plugin": "elevenlabs-cli",
+    "binary": "elevenlabs",
+    "check": "which elevenlabs",
+    "install_steps": [
+      "npm i -g elevenlabs-cli",
+      "Verify: elevenlabs --version",
+      "supercli plugins install ./plugins/elevenlabs-cli --on-conflict replace --json"
+    ],
+    "note": "Requires ELEVENLABS_API_KEY env var. Get key at https://elevenlabs.io"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "elevenlabs-cli",
+      "resource": "tts",
+      "action": "generate",
+      "description": "Generate speech from text",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "elevenlabs",
+        "baseArgs": ["tts"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install elevenlabs: npm i -g elevenlabs-cli"
+      },
+      "args": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": "Text to convert to speech"
+        },
+        {
+          "name": "voice",
+          "type": "string",
+          "required": false,
+          "description": "Voice ID or name"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": false,
+          "description": "Output file path"
+        }
+      ]
+    },
+    {
+      "namespace": "elevenlabs-cli",
+      "resource": "voices",
+      "action": "list",
+      "description": "List available voices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "elevenlabs",
+        "baseArgs": ["voices", "list"],
+        "missingDependencyHelp": "Install elevenlabs: npm i -g elevenlabs-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "elevenlabs-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to elevenlabs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "elevenlabs",
+        "passthrough": true,
+        "missingDependencyHelp": "Install elevenlabs: npm i -g elevenlabs-cli"
+      },
+      "args": []
+    }
+  ]
+}

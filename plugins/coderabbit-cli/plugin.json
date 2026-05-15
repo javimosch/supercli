@@ -1,0 +1,52 @@
+{
+  "name": "coderabbit-cli",
+  "version": "0.1.0",
+  "description": "AI code reviews in the terminal before commit. Review local changes, surface bugs and security issues with prompt-only mode for AI coding agents.",
+  "source": "https://github.com/coderabbitai/cli",
+  "checks": [
+    { "type": "binary", "name": "cr" }
+  ],
+  "install_guidance": {
+    "plugin": "coderabbit-cli",
+    "binary": "cr",
+    "check": "which cr",
+    "install_steps": [
+      "curl -fsSL https://cli.coderabbit.ai/install.sh | sh",
+      "Verify: cr --help",
+      "supercli plugins install ./plugins/coderabbit-cli --on-conflict replace --json"
+    ],
+    "note": "Also available via Homebrew: brew install coderabbit. Requires auth: cr auth login."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "coderabbit-cli",
+      "resource": "review",
+      "action": "run",
+      "description": "Review current repo changes with AI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cr",
+        "baseArgs": ["--prompt-only"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cr: curl -fsSL https://cli.coderabbit.ai/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "coderabbit-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cr",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cr: curl -fsSL https://cli.coderabbit.ai/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}

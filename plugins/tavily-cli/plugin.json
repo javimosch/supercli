@@ -1,0 +1,112 @@
+{
+  "name": "tavily-cli",
+  "version": "0.1.0",
+  "description": "Web search, page extraction, site crawling, and multi-source research for agents from the terminal with structured JSON output.",
+  "source": "https://tavily.com",
+  "checks": [
+    { "type": "binary", "name": "tvly" }
+  ],
+  "install_guidance": {
+    "plugin": "tavily-cli",
+    "binary": "tvly",
+    "check": "which tvly",
+    "install_steps": [
+      "curl -fsSL https://cli.tavily.com/install.sh | sh",
+      "Verify: tvly --version",
+      "supercli plugins install ./plugins/tavily-cli --on-conflict replace --json"
+    ],
+    "note": "Requires auth: tvly login. Get API key at https://tavily.com"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tavily-cli",
+      "resource": "search",
+      "action": "web",
+      "description": "Search the web with natural language queries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tvly",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tvly: curl -fsSL https://cli.tavily.com/install.sh | sh"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Natural language search query"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output"
+        }
+      ]
+    },
+    {
+      "namespace": "tavily-cli",
+      "resource": "extract",
+      "action": "url",
+      "description": "Extract structured content from a URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tvly",
+        "baseArgs": ["extract"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install tvly: curl -fsSL https://cli.tavily.com/install.sh | sh"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "URL to extract content from"
+        }
+      ]
+    },
+    {
+      "namespace": "tavily-cli",
+      "resource": "research",
+      "action": "deep",
+      "description": "Deep multi-source research on a topic",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tvly",
+        "baseArgs": ["research"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tvly: curl -fsSL https://cli.tavily.com/install.sh | sh"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Research topic"
+        }
+      ]
+    },
+    {
+      "namespace": "tavily-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tvly CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tvly",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tvly: curl -fsSL https://cli.tavily.com/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}

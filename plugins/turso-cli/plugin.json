@@ -1,0 +1,93 @@
+{
+  "name": "turso-cli",
+  "version": "0.1.0",
+  "description": "Manage libSQL/SQLite databases, replicas, and groups via Turso from the terminal.",
+  "source": "https://github.com/tursodatabase/turso-cli",
+  "checks": [
+    { "type": "binary", "name": "turso" }
+  ],
+  "install_guidance": {
+    "plugin": "turso-cli",
+    "binary": "turso",
+    "check": "which turso",
+    "install_steps": [
+      "brew install tursodatabase/tap/turso",
+      "Verify: turso --version",
+      "supercli plugins install ./plugins/turso-cli --on-conflict replace --json"
+    ],
+    "note": "Requires auth: turso auth login or TURSO_API_TOKEN env var"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "turso-cli",
+      "resource": "db",
+      "action": "list",
+      "description": "List Turso databases",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "turso",
+        "baseArgs": ["db", "list"],
+        "missingDependencyHelp": "Install turso: brew install tursodatabase/tap/turso"
+      },
+      "args": []
+    },
+    {
+      "namespace": "turso-cli",
+      "resource": "db",
+      "action": "create",
+      "description": "Create a new Turso database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "turso",
+        "baseArgs": ["db", "create"],
+        "positionalArgs": ["name"],
+        "missingDependencyHelp": "Install turso: brew install tursodatabase/tap/turso"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        }
+      ]
+    },
+    {
+      "namespace": "turso-cli",
+      "resource": "db",
+      "action": "shell",
+      "description": "Open a SQL shell to a Turso database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "turso",
+        "baseArgs": ["db", "shell"],
+        "positionalArgs": ["name"],
+        "missingDependencyHelp": "Install turso: brew install tursodatabase/tap/turso"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        }
+      ]
+    },
+    {
+      "namespace": "turso-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to turso CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "turso",
+        "passthrough": true,
+        "missingDependencyHelp": "Install turso: brew install tursodatabase/tap/turso"
+      },
+      "args": []
+    }
+  ]
+}

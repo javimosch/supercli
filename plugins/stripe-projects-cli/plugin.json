@@ -1,0 +1,53 @@
+{
+  "name": "stripe-projects-cli",
+  "version": "0.1.0",
+  "description": "Provision provider-backed services from the terminal, link existing accounts, sync credentials, and manage billing via Stripe Projects.",
+  "source": "https://docs.stripe.com/projects",
+  "checks": [
+    { "type": "binary", "name": "stripe" }
+  ],
+  "install_guidance": {
+    "plugin": "stripe-projects-cli",
+    "binary": "stripe projects",
+    "check": "stripe projects --help",
+    "install_steps": [
+      "Install stripe CLI: brew install stripe/stripe-cli/stripe",
+      "Verify: stripe projects --help",
+      "supercli plugins install ./plugins/stripe-projects-cli --on-conflict replace --json"
+    ],
+    "note": "Requires Stripe CLI. Part of the main Stripe CLI. Uses stripe projects subcommand. Public preview."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "stripe-projects-cli",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize a new Stripe project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stripe",
+        "baseArgs": ["projects", "init"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install stripe CLI: brew install stripe/stripe-cli/stripe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stripe-projects-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to stripe projects CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stripe",
+        "baseArgs": ["projects"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install stripe CLI: brew install stripe/stripe-cli/stripe"
+      },
+      "args": []
+    }
+  ]
+}

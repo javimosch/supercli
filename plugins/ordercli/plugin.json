@@ -1,0 +1,66 @@
+{
+  "name": "ordercli",
+  "version": "0.1.0",
+  "description": "CLI for Foodora and Deliveroo food delivery — view order history, track active orders, and reorder past meals.",
+  "source": "https://github.com/steipete/ordercli",
+  "checks": [
+    { "type": "binary", "name": "ordercli" }
+  ],
+  "install_guidance": {
+    "plugin": "ordercli",
+    "binary": "ordercli",
+    "check": "which ordercli",
+    "install_steps": [
+      "go install github.com/steipete/ordercli/cmd/ordercli@latest",
+      "Verify: ordercli --help",
+      "supercli plugins install ./plugins/ordercli --on-conflict replace --json"
+    ],
+    "note": "Currently supports Foodora fully and Deliveroo (WIP). Requires account credentials."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ordercli",
+      "resource": "foodora",
+      "action": "history",
+      "description": "View Foodora order history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ordercli",
+        "baseArgs": ["foodora", "history"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ordercli: go install github.com/steipete/ordercli/cmd/ordercli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ordercli",
+      "resource": "foodora",
+      "action": "orders",
+      "description": "Track active Foodora orders",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ordercli",
+        "baseArgs": ["foodora", "orders"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ordercli: go install github.com/steipete/ordercli/cmd/ordercli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ordercli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ordercli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ordercli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ordercli: go install github.com/steipete/ordercli/cmd/ordercli@latest"
+      },
+      "args": []
+    }
+  ]
+}

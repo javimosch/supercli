@@ -1,0 +1,72 @@
+{
+  "name": "gifgrep",
+  "version": "0.1.0",
+  "description": "Search GIFs from Tenor and Giphy via CLI or TUI. Download GIFs, extract stills, and generate sprite sheets.",
+  "source": "https://github.com/steipete/gifgrep",
+  "checks": [
+    { "type": "binary", "name": "gifgrep" }
+  ],
+  "install_guidance": {
+    "plugin": "gifgrep",
+    "binary": "gifgrep",
+    "check": "which gifgrep",
+    "install_steps": [
+      "brew install steipete/tap/gifgrep",
+      "Verify: gifgrep --help",
+      "supercli plugins install ./plugins/gifgrep --on-conflict replace --json"
+    ],
+    "note": "Also via Go: go install github.com/steipete/gifgrep/cmd/gifgrep@latest"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gifgrep",
+      "resource": "search",
+      "action": "find",
+      "description": "Search for GIFs by keyword",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gifgrep",
+        "baseArgs": [],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install gifgrep: brew install steipete/tap/gifgrep"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "GIF search keywords"
+        },
+        {
+          "name": "max",
+          "type": "integer",
+          "required": false,
+          "description": "Max results"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output"
+        }
+      ]
+    },
+    {
+      "namespace": "gifgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gifgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gifgrep",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gifgrep: brew install steipete/tap/gifgrep"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "planetscale-cli",
+  "version": "0.1.0",
+  "description": "Branch, deploy, and manage MySQL databases with PlanetScale. Deploy requests, branching workflows, and database shell from the terminal.",
+  "source": "https://github.com/planetscale/cli",
+  "checks": [
+    { "type": "binary", "name": "pscale" }
+  ],
+  "install_guidance": {
+    "plugin": "planetscale-cli",
+    "binary": "pscale",
+    "check": "which pscale",
+    "install_steps": [
+      "brew install planetscale/tap/pscale",
+      "Verify: pscale --version",
+      "supercli plugins install ./plugins/planetscale-cli --on-conflict replace --json"
+    ],
+    "note": "Requires auth: pscale auth login. Supports service token auth for CI/CD."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "planetscale-cli",
+      "resource": "database",
+      "action": "list",
+      "description": "List PlanetScale databases",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pscale",
+        "baseArgs": ["database", "list", "--json"],
+        "missingDependencyHelp": "Install pscale: brew install planetscale/tap/pscale"
+      },
+      "args": []
+    },
+    {
+      "namespace": "planetscale-cli",
+      "resource": "branch",
+      "action": "create",
+      "description": "Create a database branch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pscale",
+        "baseArgs": ["branch", "create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install pscale: brew install planetscale/tap/pscale"
+      },
+      "args": [
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "branch",
+          "type": "string",
+          "required": true,
+          "description": "Branch name"
+        }
+      ]
+    },
+    {
+      "namespace": "planetscale-cli",
+      "resource": "deploy",
+      "action": "request",
+      "description": "Create a deploy request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pscale",
+        "baseArgs": ["deploy-request", "create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install pscale: brew install planetscale/tap/pscale"
+      },
+      "args": [
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "branch",
+          "type": "string",
+          "required": true,
+          "description": "Branch to deploy"
+        }
+      ]
+    },
+    {
+      "namespace": "planetscale-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pscale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pscale",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pscale: brew install planetscale/tap/pscale"
+      },
+      "args": []
+    }
+  ]
+}

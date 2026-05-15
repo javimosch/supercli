@@ -1,0 +1,82 @@
+{
+  "name": "remotion-cli",
+  "version": "0.1.0",
+  "description": "Render videos, audio, and still images programmatically with React using Remotion from the terminal.",
+  "source": "https://github.com/remotion-dev/remotion",
+  "checks": [
+    { "type": "binary", "name": "npx" },
+    { "type": "binary", "name": "node" }
+  ],
+  "install_guidance": {
+    "plugin": "remotion-cli",
+    "binary": "npx remotion",
+    "check": "npx remotion --version",
+    "install_steps": [
+      "npm install remotion in your project",
+      "Verify: npx remotion --help",
+      "supercli plugins install ./plugins/remotion-cli --on-conflict replace --json"
+    ],
+    "note": "Most usage is via npx remotion inside a Remotion project. Install remotion in your project first."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "remotion-cli",
+      "resource": "compositions",
+      "action": "list",
+      "description": "List available compositions in the Remotion project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["remotion", "compositions"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install remotion: npm install remotion in your project"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotion-cli",
+      "resource": "render",
+      "action": "video",
+      "description": "Render a composition to a video file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["remotion", "render"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install remotion: npm install remotion in your project"
+      },
+      "args": [
+        {
+          "name": "composition-id",
+          "type": "string",
+          "required": true,
+          "description": "Composition ID to render"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": true,
+          "description": "Output file path"
+        }
+      ]
+    },
+    {
+      "namespace": "remotion-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to npx remotion CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "npx",
+        "baseArgs": ["remotion"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install remotion: npm install remotion in your project"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "name": "ntn",
+  "version": "0.1.0",
+  "description": "Official Notion CLI for authentication, Workers management, and Notion API access from the terminal.",
+  "source": "https://www.npmjs.com/package/ntn",
+  "checks": [
+    { "type": "binary", "name": "ntn" }
+  ],
+  "install_guidance": {
+    "plugin": "ntn",
+    "binary": "ntn",
+    "check": "which ntn",
+    "install_steps": [
+      "npm i -g ntn",
+      "Verify: ntn --help",
+      "supercli plugins install ./plugins/ntn --on-conflict replace --json"
+    ],
+    "note": "Requires NOTION_API_TOKEN env var for API access. Authenticate with: ntn login"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntn",
+      "resource": "api",
+      "action": "fetch",
+      "description": "Make Notion API requests",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntn",
+        "baseArgs": ["api"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ntn: npm i -g ntn"
+      },
+      "args": [
+        {
+          "name": "endpoint",
+          "type": "string",
+          "required": true,
+          "description": "API endpoint path"
+        }
+      ]
+    },
+    {
+      "namespace": "ntn",
+      "resource": "files",
+      "action": "upload",
+      "description": "Upload files to Notion",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntn",
+        "baseArgs": ["files", "create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ntn: npm i -g ntn"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "File path or URL"
+        }
+      ]
+    },
+    {
+      "namespace": "ntn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntn",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ntn: npm i -g ntn"
+      },
+      "args": []
+    }
+  ]
+}

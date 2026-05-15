@@ -1,0 +1,99 @@
+{
+  "name": "neon-cli",
+  "version": "0.1.0",
+  "description": "Manage Neon serverless Postgres — projects, branches, databases, roles, and connection strings from the terminal.",
+  "source": "https://neon.tech/docs/reference/neon-cli",
+  "checks": [
+    { "type": "binary", "name": "neonctl" }
+  ],
+  "install_guidance": {
+    "plugin": "neon-cli",
+    "binary": "neonctl",
+    "check": "which neonctl",
+    "install_steps": [
+      "npm i -g neonctl",
+      "Verify: neonctl --version",
+      "supercli plugins install ./plugins/neon-cli --on-conflict replace --json"
+    ],
+    "note": "Requires auth: neonctl auth or NEON_API_KEY env var"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "neon-cli",
+      "resource": "project",
+      "action": "list",
+      "description": "List Neon projects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neonctl",
+        "baseArgs": ["projects", "list", "--output", "json"],
+        "missingDependencyHelp": "Install neonctl: npm i -g neonctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "neon-cli",
+      "resource": "branch",
+      "action": "create",
+      "description": "Create a database branch",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neonctl",
+        "baseArgs": ["branches", "create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install neonctl: npm i -g neonctl"
+      },
+      "args": [
+        {
+          "name": "project-id",
+          "type": "string",
+          "required": true,
+          "description": "Neon project ID"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Branch name"
+        }
+      ]
+    },
+    {
+      "namespace": "neon-cli",
+      "resource": "connection",
+      "action": "string",
+      "description": "Get database connection string",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neonctl",
+        "baseArgs": ["connection-string"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install neonctl: npm i -g neonctl"
+      },
+      "args": [
+        {
+          "name": "project-id",
+          "type": "string",
+          "required": true,
+          "description": "Neon project ID"
+        }
+      ]
+    },
+    {
+      "namespace": "neon-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to neonctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neonctl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install neonctl: npm i -g neonctl"
+      },
+      "args": []
+    }
+  ]
+}
