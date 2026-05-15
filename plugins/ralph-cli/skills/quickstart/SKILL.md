@@ -109,4 +109,4 @@ sc ralph-cli prompt run --prd ./tasks/prd.json --story US-001
 | `sc ralph-cli story next --prd <file>` | Show next available story |
 | `sc ralph-cli prompt run --prd <file>` | Print agent prompt for next story |
 | `sc ralph-cli init run <name> --prd <file>` | Scaffold a new PRD |
-| `sc ralph-cli _ _ --help` | Passthrough to ralph CLI |
+| `sc ralph-cli _ _ --help` | Passthrough to ralph-cli CLI |
