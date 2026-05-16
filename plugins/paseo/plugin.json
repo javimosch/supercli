@@ -1,0 +1,200 @@
+{
+  "name": "paseo",
+  "version": "1.0.0",
+  "description": "Paseo — orchestrate Claude Code, Codex, and OpenCode agents from CLI, mobile, desktop (6.2k⭐). 7 agent skills indexed. First-class daemon + agent lifecycle.",
+  "source": "https://github.com/getpaseo/paseo",
+  "checks": [
+    { "type": "binary", "name": "paseo" }
+  ],
+  "install_guidance": {
+    "plugin": "paseo",
+    "binary": "paseo",
+    "check": "paseo --version 2>&1 | head -3",
+    "install_steps": [
+      "npm install -g @getpaseo/cli",
+      "Then: sc paseo daemon start  — start the Paseo daemon",
+      "Then: sc paseo agent run <prompt>  — deploy an agent"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "paseo",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Start the Paseo daemon (background agent orchestrator)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["daemon", "start"],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "--port", "type": "number", "required": false, "description": "Port to listen on (default: 6767)" },
+        { "name": "--listen", "type": "string", "required": false, "description": "Listen target (host:port, port, or unix socket)" },
+        { "name": "--home", "type": "string", "required": false, "description": "Paseo home directory (default: ~/.paseo)" },
+        { "name": "--foreground", "type": "boolean", "required": false, "description": "Run in foreground, don't daemonize" },
+        { "name": "--no-relay", "type": "boolean", "required": false, "description": "Disable relay connection" },
+        { "name": "--no-mcp", "type": "boolean", "required": false, "description": "Disable the Agent MCP HTTP endpoint" },
+        { "name": "--no-inject-mcp", "type": "boolean", "required": false, "description": "Disable auto-injecting Paseo MCP into agents" }
+      ]
+    },
+    {
+      "namespace": "paseo",
+      "resource": "daemon",
+      "action": "stop",
+      "description": "Stop the Paseo daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["daemon", "stop"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "paseo",
+      "resource": "daemon",
+      "action": "status",
+      "description": "Check Paseo daemon status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["status"],
+        "timeout_ms": 10000
+      },
+      "args": []
+    },
+    {
+      "namespace": "paseo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print Paseo CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["--version"],
+        "timeout_ms": 5000
+      },
+      "args": []
+    },
+    {
+      "namespace": "paseo",
+      "resource": "self",
+      "action": "mcp",
+      "description": "Register Paseo MCP server for agent use",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "cwd": "plugin_dir",
+        "baseArgs": ["../../scripts/register-mcp.js", "paseo", "paseo", "[\"mcp\"]", "Paseo agent orchestration MCP server"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "paseo",
+      "resource": "agent",
+      "action": "run",
+      "description": "Create and start an agent with a task prompt",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 3600000
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "The task/prompt for the agent" },
+        { "name": "-d", "type": "boolean", "required": false, "description": "Run in background (detached)" },
+        { "name": "--title", "type": "string", "required": false, "description": "Assign a title to the agent" },
+        { "name": "--provider", "type": "string", "required": false, "description": "Provider or provider/model (e.g. codex or codex/gpt-5.4)" },
+        { "name": "--model", "type": "string", "required": false, "description": "Model to use (e.g. claude-sonnet-4-20250514)" },
+        { "name": "--thinking", "type": "string", "required": false, "description": "Thinking option ID" },
+        { "name": "--mode", "type": "string", "required": false, "description": "Provider-specific mode (plan, default, bypass)" },
+        { "name": "--worktree", "type": "string", "required": false, "description": "Create agent in a new git worktree" },
+        { "name": "--image", "type": "string", "required": false, "description": "Attach image(s), can use multiple times" },
+        { "name": "--cwd", "type": "string", "required": false, "description": "Working directory (default: current)" },
+        { "name": "--label", "type": "string", "required": false, "description": "Add label(s) as key=value, can use multiple times" },
+        { "name": "--wait-timeout", "type": "string", "required": false, "description": "Max wait time (e.g. 30s, 5m, 1h)" },
+        { "name": "--output-schema", "type": "string", "required": false, "description": "JSON schema file path or inline JSON for structured output" }
+      ]
+    },
+    {
+      "namespace": "paseo",
+      "resource": "agent",
+      "action": "list",
+      "description": "List all running agents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "-a", "type": "boolean", "required": false, "description": "Include archived agents" }
+      ]
+    },
+    {
+      "namespace": "paseo",
+      "resource": "agent",
+      "action": "send",
+      "description": "Send a message to a running agent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["send"],
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 3600000
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Agent ID (or prefix)" },
+        { "name": "prompt", "type": "string", "required": false, "description": "The message to send" },
+        { "name": "--prompt", "type": "string", "required": false, "description": "Provide message inline as flag" },
+        { "name": "--prompt-file", "type": "string", "required": false, "description": "Read message from file" },
+        { "name": "--image", "type": "string", "required": false, "description": "Attach image(s)" },
+        { "name": "--no-wait", "type": "boolean", "required": false, "description": "Return immediately without waiting" }
+      ]
+    },
+    {
+      "namespace": "paseo",
+      "resource": "agent",
+      "action": "logs",
+      "description": "View logs for a running agent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "baseArgs": ["logs"],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Agent ID (or prefix)" },
+        { "name": "-f", "type": "boolean", "required": false, "description": "Follow log output (streaming)" },
+        { "name": "--tail", "type": "number", "required": false, "description": "Show last N entries" },
+        { "name": "--filter", "type": "string", "required": false, "description": "Filter by event type (tools, text, errors, permissions)" },
+        { "name": "--since", "type": "string", "required": false, "description": "Show logs since timestamp" }
+      ]
+    },
+    {
+      "namespace": "paseo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough for advanced paseo commands (attach, stop, delete, inspect, wait, archive, import, onboard, chat, terminal, loop, schedule, permit, provider, speech, worktree)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paseo",
+        "passthrough": true,
+        "parseJson": false,
+        "timeout_ms": 3600000
+      },
+      "args": []
+    }
+  ]
+}
