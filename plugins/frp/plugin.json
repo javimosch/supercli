@@ -1,0 +1,298 @@
+{
+  "name": "frp",
+  "version": "0.1.0",
+  "description": "frp — fast reverse proxy for exposing a local server behind a NAT or firewall to the internet. TCP, UDP, HTTP, HTTPS, STCP, SUDP, XTCP tunnels.",
+  "source": "https://gofrp.org/docs/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "frpc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "frp",
+    "binary": "frpc",
+    "check": "which frpc",
+    "install_steps": [
+      "brew install frp",
+      "Download from https://github.com/fatedier/frp/releases/latest",
+      "Verify: frpc --version",
+      "supercli plugins install ./plugins/frp --on-conflict replace --json"
+    ],
+    "note": "frp ships with two binaries: frpc (client) and frps (server). This plugin wraps frpc. Install via brew, GitHub releases, Docker, or go install. Config file (TOML) is required for most usage."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "frp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print frpc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install frp: brew install frp or download from GitHub releases."
+      },
+      "args": []
+    },
+    {
+      "namespace": "frp",
+      "resource": "client",
+      "action": "run",
+      "description": "Run frpc client with a config file (passthrough: frpc -c <config.toml> [flags])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (typically -c <config.toml>, --strict_config, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "client",
+      "action": "verify",
+      "description": "Validate frpc config file syntax without running (passthrough: frpc verify -c <config.toml>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["verify"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (-c <config.toml>, --strict_config, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "client",
+      "action": "reload",
+      "description": "Hot-reload frpc config via admin API (passthrough: frpc reload -c <config.toml>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["reload"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install frp: brew install frp. Requires webServer configured in frpc.toml."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (-c <config.toml>, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "client",
+      "action": "status",
+      "description": "Show frpc proxy status table via admin API (passthrough: frpc status -c <config.toml>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install frp: brew install frp. Requires webServer configured in frpc.toml."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (-c <config.toml>, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "client",
+      "action": "stop",
+      "description": "Stop running frpc via admin API (passthrough: frpc stop -c <config.toml>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["stop"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install frp: brew install frp. Requires webServer configured in frpc.toml."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (-c <config.toml>, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "client",
+      "action": "nathole",
+      "description": "Discover NAT type via STUN (passthrough: frpc nathole discover --nat_hole_stun_server <stun-url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["nathole", "discover"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (--nat_hole_stun_server, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "proxy",
+      "action": "tcp",
+      "description": "Run a single TCP proxy without a config file (passthrough: frpc tcp --localPort <port> --remotePort <port> [--serverAddr <addr>] [--token <token>])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["tcp"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (--serverAddr, --serverPort, --token, --localIp, --localPort, --remotePort, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "proxy",
+      "action": "udp",
+      "description": "Run a single UDP proxy without a config file (passthrough: frpc udp --localPort <port> --remotePort <port>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["udp"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (--serverAddr, --serverPort, --token, --localPort, --remotePort, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "proxy",
+      "action": "http",
+      "description": "Run a single HTTP proxy without a config file (passthrough: frpc http --localPort <port> --customDomains <domain>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["http"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (--serverAddr, --serverPort, --token, --localPort, --customDomains, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "proxy",
+      "action": "https",
+      "description": "Run a single HTTPS proxy without a config file (passthrough: frpc https --localPort <port> --customDomains <domain>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "baseArgs": ["https"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (--serverAddr, --serverPort, --token, --localPort, --customDomains, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "server",
+      "action": "run",
+      "description": "Run frps server with a config file (passthrough: frps -c <config.toml>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frps",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp. Requires server config file (TOML)."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (typically -c <config.toml>)"
+        }
+      ]
+    },
+    {
+      "namespace": "frp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to frpc for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frpc",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install frp: brew install frp or download from GitHub releases."
+      },
+      "args": []
+    }
+  ]
+}

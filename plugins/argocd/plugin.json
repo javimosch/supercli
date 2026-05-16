@@ -1,0 +1,326 @@
+{
+  "name": "argocd",
+  "version": "0.1.0",
+  "description": "Argo CD CLI — GitOps continuous delivery for Kubernetes. Manage applications, clusters, projects, and repositories.",
+  "source": "https://argo-cd.readthedocs.io/en/stable/user-guide/commands/argocd/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "argocd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "argocd",
+    "binary": "argocd",
+    "check": "which argocd",
+    "install_steps": [
+      "brew install argocd",
+      "Download: curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64 && chmod +x /usr/local/bin/argocd",
+      "Verify: argocd version --client --short",
+      "supercli plugins install ./plugins/argocd --on-conflict replace --json"
+    ],
+    "note": "Binary available via brew, GitHub releases, or Docker. Requires connection to an ArgoCD server for most operations."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "argocd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print argocd client version info, optionally with --client and -o json",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["version", "--client", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI: brew install argocd or download from GitHub releases."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "list",
+      "description": "List all ArgoCD applications (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "list", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "get",
+      "description": "Show details of a specific application (passthrough: argocd app get <name> [-o json])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "get"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (app name, --refresh, -o json, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "sync",
+      "description": "Sync an application (passthrough: argocd app sync <name> [--prune] [--dry-run] [--async])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "sync"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (app name, --prune, --dry-run, --async, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "diff",
+      "description": "Diff an application against target state (passthrough: argocd app diff <name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "diff"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (app name, --exit-code, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "logs",
+      "description": "Stream logs from an application (passthrough: argocd app logs <name> [--kind <kind>] [--group <group>] [--follow])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "logs"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (app name, --follow, --kind, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "history",
+      "description": "Show deployment history of an application (passthrough: argocd app history <name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "history"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (app name, --revision, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "app",
+      "action": "rollback",
+      "description": "Rollback an application to a previous deployment (passthrough: argocd app rollback <name> <deployment-id>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["app", "rollback"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (app name, deployment-id, --prune, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "cluster",
+      "action": "list",
+      "description": "List all registered clusters (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["cluster", "list", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "repo",
+      "action": "list",
+      "description": "List all configured repositories (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["repo", "list", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "proj",
+      "action": "list",
+      "description": "List all projects (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["proj", "list", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "account",
+      "action": "get-user-info",
+      "description": "Show current user account info (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["account", "get-user-info", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "login",
+      "action": "do",
+      "description": "Log in to an ArgoCD server (passthrough: argocd login <server> [--username <user>] [--password <pass>] [--sso] [--core])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["login"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install argocd CLI."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (server URL, --username, --password, --sso, --core, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "argocd",
+      "resource": "context",
+      "action": "current",
+      "description": "Show current ArgoCD context",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["context"],
+        "missingDependencyHelp": "Install argocd CLI."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "appset",
+      "action": "list",
+      "description": "List all ApplicationSets (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["appset", "list", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "cert",
+      "action": "list",
+      "description": "List repo certificates and SSH known hosts (supports -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "baseArgs": ["cert", "list", "-o", "json"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install argocd CLI and login to an ArgoCD server."
+      },
+      "args": []
+    },
+    {
+      "namespace": "argocd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to argocd CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argocd",
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argocd CLI. For most commands you also need to login to an ArgoCD server: argocd login <server>."
+      },
+      "args": []
+    }
+  ]
+}

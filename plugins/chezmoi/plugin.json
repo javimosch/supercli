@@ -1,0 +1,379 @@
+{
+  "name": "chezmoi",
+  "version": "0.1.0",
+  "description": "chezmoi — manage your dotfiles across multiple machines securely. Init, add, diff, apply, update, with template support, encryption, and JSON output.",
+  "source": "https://chezmoi.io/reference/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "chezmoi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "chezmoi",
+    "binary": "chezmoi",
+    "check": "which chezmoi",
+    "install_steps": [
+      "brew install chezmoi",
+      "Or: sh -c \"$(curl -fsLS https://get.chezmoi.io)\"",
+      "Verify: chezmoi --version",
+      "supercli plugins install ./plugins/chezmoi --on-conflict replace --json"
+    ],
+    "note": "Also available via apt, dnf, pacman, nix, scoop, and go install. See https://chezmoi.io/install/"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "chezmoi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chezmoi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi or sh -c \"$(curl -fsLS https://get.chezmoi.io)\""
+      },
+      "args": []
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "self",
+      "action": "doctor",
+      "description": "Check your system for common chezmoi problems",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["doctor"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "self",
+      "action": "upgrade",
+      "description": "Upgrade chezmoi to the latest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["upgrade"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "init",
+      "description": "Initialize chezmoi source directory from a dotfile repo (passthrough: chezmoi init <repo> [--apply] [--ssh])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (github username/repo, --apply, --ssh, --depth, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "add",
+      "description": "Add one or more files from the home directory to the source directory (passthrough: chezmoi add <path> [--template] [--encrypt] [--autotemplate])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, --template, --encrypt, --autotemplate, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "diff",
+      "description": "Show the difference between the target state and the destination state (passthrough: chezmoi diff [--format hex])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, --format hex, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "apply",
+      "description": "Update the destination directory to match the target state (passthrough: chezmoi apply [--dry-run] [--verbose])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["apply"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, --dry-run, --verbose, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "update",
+      "description": "Pull the latest state from the source repo and apply it (passthrough: chezmoi update [--apply] [--recurse-submodules])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["update"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (--apply, --recurse-submodules, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "status",
+      "description": "Show the status of managed files (passthrough: chezmoi status [path...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "forget",
+      "description": "Remove a file from the source directory without deleting the destination file (passthrough: chezmoi forget <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["forget"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "source",
+      "action": "re-add",
+      "description": "Re-add modified destination files to the source directory (passthrough: chezmoi re-add <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["re-add"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "data",
+      "action": "dump",
+      "description": "Dump the computed contents of files in the source directory as JSON (passthrough: chezmoi dump [path...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["dump", "--format", "json"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "data",
+      "action": "show",
+      "description": "Show available template data as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["data", "--format", "json"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "data",
+      "action": "list",
+      "description": "List all managed entries as JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["list", "--format", "json"],
+        "parseJson": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "data",
+      "action": "verify",
+      "description": "Verify that the destination state matches the target state (passthrough: chezmoi verify [path...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["verify"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "secret",
+      "action": "encrypt",
+      "description": "Encrypt a file with age (passthrough: chezmoi encrypt <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["encrypt"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "secret",
+      "action": "decrypt",
+      "description": "Decrypt a file encrypted with age (passthrough: chezmoi decrypt <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "baseArgs": ["decrypt"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments (paths, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "chezmoi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to chezmoi CLI for any command not covered by specific resources (cd, merge, chattr, edit, execute-template, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chezmoi",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install chezmoi: brew install chezmoi"
+      },
+      "args": []
+    }
+  ]
+}

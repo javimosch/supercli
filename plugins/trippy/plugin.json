@@ -1,0 +1,123 @@
+{
+  "name": "trippy",
+  "version": "0.1.0",
+  "description": "Trippy — network diagnostic tool combining traceroute, ping, and path analysis. Supports JSON, CSV, Markdown, pretty text, and interactive TUI output modes.",
+  "source": "https://trippy.cli.rs/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "trip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "trippy",
+    "binary": "trip",
+    "check": "which trip",
+    "install_steps": [
+      "brew install trippy",
+      "Or download from https://github.com/fujiapple852/trippy/releases",
+      "Verify: trip --version",
+      "supercli plugins install ./plugins/trippy --on-conflict replace --json"
+    ],
+    "note": "Binary is `trip`. Also available via cargo, apt, dnf, pacman, and as .deb/.rpm packages from GitHub releases. The --unprivileged flag allows running without root on supported platforms."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trippy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print trippy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trip",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install trippy: brew install trippy or download from GitHub releases."
+      },
+      "args": []
+    },
+    {
+      "namespace": "trippy",
+      "resource": "trace",
+      "action": "json",
+      "description": "Run traceroute and output JSON report (passthrough: trip <targets> -m json [-C N] [--unprivileged] [--protocol icmp|udp|tcp])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trip",
+        "baseArgs": ["-m", "json"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install trippy: brew install trippy. On Linux, may need --unprivileged or sudo."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Target hostname/IP, -C/--report-cycles N, --unprivileged, --protocol icmp|udp|tcp, -4/-6, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "trippy",
+      "resource": "trace",
+      "action": "pretty",
+      "description": "Run traceroute and output a pretty text table (passthrough: trip <targets> -m pretty [-C N] [--unprivileged])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trip",
+        "baseArgs": ["-m", "pretty"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install trippy: brew install trippy. On Linux, may need --unprivileged or sudo."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Target hostname/IP, -C/--report-cycles N, --unprivileged, --protocol, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "trippy",
+      "resource": "trace",
+      "action": "csv",
+      "description": "Run traceroute and output CSV report (passthrough: trip <targets> -m csv [-C N] [--unprivileged])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trip",
+        "baseArgs": ["-m", "csv"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install trippy: brew install trippy. On Linux, may need --unprivileged or sudo."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Target hostname/IP, -C/--report-cycles N, --unprivileged, --protocol, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "trippy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trip for any command not covered by specific resources (--mode tui, --mode stream, --mode dot, --mode markdown, --mode silent, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trip",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install trippy: brew install trippy or download from GitHub releases."
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "name": "visidata",
+  "version": "0.1.0",
+  "description": "VisiData — terminal spreadsheet and data exploration tool. Explore, clean, edit, convert, and restructure tabular data (CSV, TSV, JSON, XLSX, SQLite, Parquet, and more).",
+  "source": "https://visidata.org/docs/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "visidata",
+    "binary": "vd",
+    "check": "which vd",
+    "install_steps": [
+      "pip install visidata",
+      "Or: brew install visidata",
+      "Verify: vd --version",
+      "supercli plugins install ./plugins/visidata --on-conflict replace --json"
+    ],
+    "note": "Binary is `vd` (also available as `visidata`). Supports CSV, TSV, JSON, XLSX, SQLite, Parquet, HTML, and more. Batch mode: vd -b -o output.tsv input.csv. Accepts piped data on stdin."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "visidata",
+      "resource": "self",
+      "action": "version",
+      "description": "Print visidata version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vd",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install visidata: pip install visidata"
+      },
+      "args": []
+    },
+    {
+      "namespace": "visidata",
+      "resource": "data",
+      "action": "convert",
+      "description": "Convert tabular data between formats in batch mode (passthrough: vd -b -o <output> [input] [-f <format>])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vd",
+        "baseArgs": ["-b"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install visidata: pip install visidata"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (-o output.ext input.ext, -f format, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "visidata",
+      "resource": "data",
+      "action": "inspect",
+      "description": "Open a data file in interactive mode (passthrough: vd [input] [-f <format>])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vd",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install visidata: pip install visidata"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (input file path, -f format, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "visidata",
+      "resource": "data",
+      "action": "replay",
+      "description": "Replay a saved cmdlog in batch or interactive mode (passthrough: vd -p <cmdlog> [-b] [-o <output>])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vd",
+        "baseArgs": ["-p"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install visidata: pip install visidata"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Arguments (cmdlog path, -b for batch, -o output, -w wait, field=value, etc.)"
+        }
+      ]
+    },
+    {
+      "namespace": "visidata",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vd for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vd",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install visidata: pip install visidata"
+      },
+      "args": []
+    }
+  ]
+}
