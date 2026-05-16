@@ -41,7 +41,7 @@
       "namespace": "superbg",
       "resource": "self",
       "action": "version",
-      "description": "Print superbg help/version info",
+      "description": "Print superbg help",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
@@ -55,14 +55,15 @@
       "namespace": "superbg",
       "resource": "run",
       "action": "start",
-      "description": "Run a command in the background",
+      "description": "Run a command in the background, optionally with auto-restart and env-file",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
         "baseArgs": ["run"],
-        "cwd": "invoke_cwd",
         "positionalArgs": ["args"],
-        "timeout_ms": 30000,
+        "cwd": "invoke_cwd",
+        "flagsBeforePositionals": true,
+        "noTimeout": true,
         "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
       },
       "args": [
@@ -71,6 +72,24 @@
           "type": "string",
           "required": false,
           "description": "Command and arguments to run in background"
+        },
+        {
+          "name": "watch",
+          "type": "boolean",
+          "required": false,
+          "description": "Auto-restart the process when it exits"
+        },
+        {
+          "name": "max-restarts",
+          "type": "number",
+          "required": false,
+          "description": "Max restarts before giving up (default 10, requires --watch)"
+        },
+        {
+          "name": "env-file",
+          "type": "string",
+          "required": false,
+          "description": "Load environment variables from FILE"
         }
       ]
     },
@@ -92,13 +111,14 @@
       "namespace": "superbg",
       "resource": "process",
       "action": "stop",
-      "description": "Stop a background process (SIGTERM)",
+      "description": "Stop a process (SIGTERM then SIGKILL after timeout)",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
         "baseArgs": ["stop"],
         "positionalArgs": ["id"],
         "cwd": "invoke_cwd",
+        "flagsBeforePositionals": true,
         "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
       },
       "args": [
@@ -107,6 +127,12 @@
           "type": "string",
           "required": true,
           "description": "Process ID or PID to stop"
+        },
+        {
+          "name": "timeout",
+          "type": "number",
+          "required": false,
+          "description": "Seconds to wait before SIGKILL (default 5)"
         }
       ]
     },
@@ -114,7 +140,7 @@
       "namespace": "superbg",
       "resource": "process",
       "action": "kill",
-      "description": "Kill a background process (SIGKILL)",
+      "description": "Kill a process immediately (SIGKILL)",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
@@ -173,6 +199,18 @@
           "type": "string",
           "required": true,
           "description": "Process ID or PID"
+        },
+        {
+          "name": "follow",
+          "type": "boolean",
+          "required": false,
+          "description": "Follow log output in real-time"
+        },
+        {
+          "name": "f",
+          "type": "boolean",
+          "required": false,
+          "description": "Short flag for --follow"
         }
       ]
     },
@@ -180,7 +218,7 @@
       "namespace": "superbg",
       "resource": "logs",
       "action": "follow",
-      "description": "Follow process logs in real-time (attach)",
+      "description": "Follow process logs in real-time",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",

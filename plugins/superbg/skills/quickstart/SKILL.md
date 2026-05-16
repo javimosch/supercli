@@ -5,20 +5,20 @@ description: Use this skill when the user wants to run, manage, or monitor backg
 
 # superbg Plugin
 
-Super Background Process Manager — a zero-config CLI to run, track, and manage background processes on Linux. Works with any language (not just Node.js).
+Super Background Process Manager -- a zero-config CLI to run, track, and manage background processes on Linux. Works with any language (not just Node.js).
 
 ## Commands
 
 ### Process Management
-- `superbg run start <args>` — Run a command in the background
-- `superbg list show` — List all tracked processes
-- `superbg process stop <id>` — Stop a process (SIGTERM)
-- `superbg process kill <id>` — Kill a process (SIGKILL)
-- `superbg process status <id>` — Show detailed process info
+- `superbg run start <args>` -- Run a command in the background
+- `superbg list show` -- List all tracked processes
+- `superbg process stop <id>` -- Stop a process with graceful timeout
+- `superbg process kill <id>` -- Kill a process (SIGKILL)
+- `superbg process status <id>` -- Show detailed process info
 
 ### Logs
-- `superbg logs show <id> [--follow]` — View process logs
-- `superbg logs follow <id>` — Follow logs in real-time
+- `superbg logs show <id>` -- View process logs
+- `superbg logs follow <id>` -- Follow logs in real-time
 
 ## Usage Examples
 
@@ -26,8 +26,14 @@ Super Background Process Manager — a zero-config CLI to run, track, and manage
 # Run a process in background
 superbg run start python server.py
 
+# Run with auto-restart on crash
+superbg run start --watch --max-restarts 5 python server.py
+
+# Run with environment file
+superbg run start --env-file .env ./app
+
 # Run with arguments
-superbg run start -- node app.js --port 3000
+superbg run start node app.js --port 3000
 
 # List all processes
 superbg list show
@@ -41,8 +47,10 @@ superbg logs show 1
 # Follow logs in real-time
 superbg logs follow 1
 
-# Stop/Kill
-superbg process stop 1
+# Graceful stop with timeout (SIGTERM, then SIGKILL after 15s)
+superbg process stop --timeout 15 1
+
+# Immediate kill
 superbg process kill 1
 ```
 
@@ -53,18 +61,11 @@ go install github.com/javimosch/superbg@latest
 ```
 
 ## Key Features
-- Zero-config — no unit files, no config, no daemon
+- Zero-config -- no unit files, no config, no daemon
+- Auto-restart (--watch) with exponential backoff and --max-restarts
+- Graceful stop with configurable SIGKILL timeout (--timeout N)
+- Environment file support (--env-file FILE, supports # comments and export)
 - Works with any language (Python, Node.js, Go, shell scripts, etc.)
 - Persistent state across reboots (~/.superbg/state.json)
-- Uses `setsid` to fully detach from terminal
+- Uses setsid to fully detach from terminal
 - Captures stdout/stderr to log files (~/.superbg/logs/)
-- Commands: run, list, stop, kill, status, logs, attach
-
-## Comparison
-| Instead of... | Use superbg because... |
-|---|---|
-| `nohup cmd &` | Tracks PIDs, saves logs, lets you list/stop/status later |
-| `tmux` / `screen` | One-shot `superbg run` — no terminal multiplexer needed |
-| `systemd --user` | Zero config, no unit files |
-| `pm2` | Works with any language, not just Node.js |
-| `supervisor` / `s6` | No daemon, no config files, no learning curve |
