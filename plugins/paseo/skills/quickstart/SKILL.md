@@ -288,6 +288,44 @@ The voice mode system prompt explicitly tells the agent:
 
 But if the model doesn't follow tool-use instructions consistently, it will fall back to text responses. For the best voice experience, use a larger model (Claude Sonnet, GPT-4o, etc.) via `voiceMode.llm.model`.
 
+### 15. Proven Working Voice Mode Config
+This config is confirmed to make the agent speak back properly:
+
+```json
+{
+  "features": {
+    "voiceMode": {
+      "llm": {
+        "provider": "opencode",
+        "model": "opencode-go/deepseek-v4-flash"
+      },
+      "stt": {
+        "provider": "local",
+        "model": "parakeet-tdt-0.6b-v3-int8",
+        "language": "en"
+      },
+      "tts": {
+        "provider": "local",
+        "model": "kokoro-en-v0_19",
+        "speakerId": 0
+      }
+    }
+  },
+  "providers": {
+    "local": {
+      "modelsDir": "/root/.paseo/models/local-speech"
+    }
+  }
+}
+```
+
+Key differences from broken config:
+- `voiceMode.llm.provider` set to `opencode` (not `claude`)
+- `voiceMode.llm.model` set to `opencode-go/deepseek-v4-flash` (MCP-aware model)  
+- `providers.local.modelsDir` explicitly points to the speech models directory
+
+Claude's Haiku model does not reliably call the speak tool. OpenCode with deepseek-v4-flash does.
+
 ## Tips
 
 - Start daemon first, then run agents
