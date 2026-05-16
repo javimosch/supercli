@@ -1,0 +1,209 @@
+{
+  "name": "superbg",
+  "version": "0.1.0",
+  "description": "Super Background Process Manager",
+  "source": "https://github.com/javimosch/superbg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "superbg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "superbg",
+    "binary": "superbg",
+    "check": "which superbg",
+    "install_steps": [
+      "go install github.com/javimosch/superbg@latest",
+      "Verify: superbg help",
+      "supercli plugins install ./plugins/superbg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "superbg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print superbg help/version info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["help"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "superbg",
+      "resource": "run",
+      "action": "start",
+      "description": "Run a command in the background",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["run"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Command and arguments to run in background"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "list",
+      "action": "show",
+      "description": "List all tracked background processes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "superbg",
+      "resource": "process",
+      "action": "stop",
+      "description": "Stop a background process (SIGTERM)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["stop"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Process ID or PID to stop"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "process",
+      "action": "kill",
+      "description": "Kill a background process (SIGKILL)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["kill"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Process ID or PID to kill"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "process",
+      "action": "status",
+      "description": "Show detailed info about a process",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["status"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Process ID or PID to check"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "logs",
+      "action": "show",
+      "description": "Show process logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["logs"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Process ID or PID"
+        },
+        {
+          "name": "--follow",
+          "type": "boolean",
+          "required": false,
+          "description": "Follow log output in real-time"
+        },
+        {
+          "name": "-f",
+          "type": "boolean",
+          "required": false,
+          "description": "Short flag for --follow"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "logs",
+      "action": "follow",
+      "description": "Follow process logs in real-time (attach)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["attach"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Process ID or PID to follow"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to superbg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": []
+    }
+  ]
+}
