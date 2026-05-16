@@ -1,0 +1,222 @@
+{
+  "name": "remotecmd",
+  "version": "1.0.0",
+  "description": "Remote command execution via WebSocket relay",
+  "source": "https://github.com/javimosch/remotecmd-cli",
+  "checks": [
+    { "type": "binary", "name": "remotecmd-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "remotecmd",
+    "binary": "remotecmd-cli",
+    "check": "remotecmd-cli version",
+    "install_steps": [
+      "curl -LO https://github.com/javimosch/remotecmd-cli/releases/latest/download/remotecmd-cli-linux-amd64",
+      "chmod +x remotecmd-cli-linux-amd64",
+      "sudo mv remotecmd-cli-linux-amd64 /usr/local/bin/remotecmd-cli",
+      "Verify: remotecmd-cli --help",
+      "supercli plugins install ./plugins/remotecmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "remotecmd",
+      "resource": "exec",
+      "action": "run",
+      "description": "Execute a command on a remote target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "timeout_ms": 60000,
+        "parseJson": true,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target machine name" },
+        { "name": "cmd", "type": "string", "required": true, "description": "Command to execute" },
+        { "name": "timeout", "type": "integer", "required": false, "description": "Timeout in seconds", "default": 30 }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "speak",
+      "action": "text",
+      "description": "Speak text aloud on p22 via remotecmd",
+      "adapter": "shell",
+      "adapterConfig": {
+        "unsafe": true,
+        "script": "remotecmd-cli --target p22 --cmd 'supertonic-cli speak --text \"{{text}}\" --voice F2 --lang es --machine' --timeout 30"
+      },
+      "args": [
+        { "name": "text", "type": "string", "required": true, "description": "Text to speak" }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Start target daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["daemon", "start"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": [
+        { "name": "token", "type": "string", "required": false, "description": "Auth token (auto-generated if omitted)" },
+        { "name": "daemon", "type": "boolean", "required": false, "description": "Run in background", "default": false }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "daemon",
+      "action": "stop",
+      "description": "Stop target daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["daemon", "stop"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "daemon",
+      "action": "status",
+      "description": "Check target daemon status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["daemon", "status"],
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "relay",
+      "action": "start",
+      "description": "Start relay daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["relay", "daemon", "start"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": [
+        { "name": "port", "type": "integer", "required": false, "description": "Relay listen port", "default": 3032 },
+        { "name": "daemon", "type": "boolean", "required": false, "description": "Run in background", "default": false }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "relay",
+      "action": "stop",
+      "description": "Stop relay daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["relay", "daemon", "stop"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "relay",
+      "action": "status",
+      "description": "Check relay daemon status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["relay", "daemon", "status"],
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "target",
+      "action": "add",
+      "description": "Add a known target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["add-target"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Target name" },
+        { "name": "token", "type": "string", "required": true, "description": "Auth token" }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "target",
+      "action": "remove",
+      "description": "Remove a target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["remove-target"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "target",
+      "action": "list",
+      "description": "List configured targets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["list-targets"],
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "relay",
+      "action": "config",
+      "description": "Configure relay connection for this node",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["set-relay"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Relay URL (e.g. http://dk1:3032)" },
+        { "name": "name", "type": "string", "required": true, "description": "This node's name on the relay" }
+      ]
+    },
+    {
+      "namespace": "remotecmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print remotecmd-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install remotecmd-cli from https://github.com/javimosch/remotecmd-cli"
+      },
+      "args": []
+    }
+  ]
+}
