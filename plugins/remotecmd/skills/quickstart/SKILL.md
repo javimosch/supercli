@@ -1,6 +1,6 @@
 ---
 name: remotecmd
-description: Use this skill when the user wants to execute shell commands on a remote machine via the remotecmd WebSocket relay, or speak text aloud on p22.
+description: Use this skill when the user wants to execute shell commands on a remote machine via the remotecmd WebSocket relay.
 ---
 
 # remotecmd Plugin
@@ -23,9 +23,6 @@ Three-node topology:
 ### Execute
 - `remotecmd exec run --target <name> --cmd <command>` — Execute command on remote target
 
-### Speak (convenience)
-- `remotecmd speak text --text <text>` — Speak text aloud on p22 (Spanish, voice F2)
-
 ### Daemon Management
 - `remotecmd daemon start [--token <t>] [--daemon]` — Start target daemon
 - `remotecmd daemon stop` — Stop target daemon
@@ -47,8 +44,7 @@ Three-node topology:
 
 ## Usage Examples
 
-- "Speak something on p22: `remotecmd speak text --text \"Hola mundo\"`"
-- "Run a command on my remote PC: `remotecmd exec run --target p22 --cmd \"uptime\"`"
+- "Run a command on a remote PC: `remotecmd exec run --target p22 --cmd \"uptime\"`"
 - "Check if the target daemon is running: `remotecmd daemon status`"
 - "Start the relay hub: `remotecmd relay start --port 3032 --daemon`"
 - "Add a new target: `remotecmd target add --name p22 --token abc123`"
