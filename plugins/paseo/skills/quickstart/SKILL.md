@@ -234,6 +234,60 @@ The sherpa-onnx STT model may need GPU acceleration for real-time performance. T
 ### 10. MCP server registration
 `sc paseo self mcp` registers the Paseo MCP server in `~/.supercli/mcp.json`. The MCP server runs as a subprocess of the daemon and is accessible at `localhost:6767/mcp/agents`.
 
+### 11. Voice Mode vs Dictation Mode — Critical Difference
+Paseo has two different voice features:
+
+| Mode | STT (you→text) | TTS (agent→speech) | Speak tool |
+|------|---------------|-------------------|------------|
+| **Dictation** | ✅ Speech→text input | ❌ No audio output | ❌ Not needed |
+| **Voice Mode** | ✅ Speech→text input | ✅ Agent speaks back | ✅ Required |
+
+**Dictation mode** only transcribes your speech to text. The agent responds as text (no audio). This is useful for hands-free text input but the agent never speaks.
+
+**Voice mode** is full-duplex: you speak → STT transcribes → agent receives spoken input with instruction to use the "speak" tool → agent calls speak tool → TTS synthesizes response → audio played to you.
+
+In the desktop/web UI, the microphone icon toggles dictation, while the voice mode toggle (often labeled "Voice" or a separate icon) enables full voice mode. If you only see text responses, make sure you've activated **voice mode** specifically, not just dictation.
+
+### 12. Speak Tool Requires Agent Created AFTER Voice Mode Activation
+The "speak" MCP tool that allows the agent to output speech is ONLY registered when:
+1. Voice mode is enabled via `set_voice_mode { enabled: true }`
+2. AND a new agent is created after that point
+
+If you toggle voice mode ON but continue chatting with an already-running agent, that agent's MCP server was initialized without `enableVoiceTools: true` and the speak tool is NOT available. The agent will respond with text because it has no way to speak.
+
+**Workflow to get agent speaking:**
+1. Open the desktop app
+2. Turn voice mode ON first (not dictation)
+3. **Create a new agent / start a new conversation** (don't reuse an existing one)
+4. Speak — the new agent should have the speak tool
+
+The daemon log confirms voice mode is enabled with:
+```
+set_voice_mode enabling voice for agent → agent enable complete → Voice mode enabled for existing agent
+```
+
+But if no `audio_output` messages appear in the session metrics, the speak tool was never registered for that agent.
+
+### 13. No Config or CLI Flag for Auto-Enabling Voice Mode
+There is no config flag in `~/.paseo/config.json` to auto-enable voice mode at daemon startup. Voice mode must be activated per-session from the app UI. The `set_voice_mode` message is sent via WebSocket — there's no equivalent CLI command.
+
+The relevant source code in `session.ts`:
+```typescript
+// voice mode must be explicitly enabled per-session
+case "set_voice_mode":
+    return this.handleSetVoiceMode(msg.enabled, msg.agentId, msg.requestId);
+```
+
+### 14. Agent Must Support MCP Tool Calling
+The speak tool is an MCP tool registered by the Paseo daemon's agent MCP server. The agent (Claude Code, Codex, OpenCode) must support calling MCP tools. Some smaller models (like Claude Haiku) may not reliably invoke the speak tool even when instructed by the system prompt.
+
+The voice mode system prompt explicitly tells the agent:
+```
+"Always use the speak tool for all user-facing communication."
+```
+
+But if the model doesn't follow tool-use instructions consistently, it will fall back to text responses. For the best voice experience, use a larger model (Claude Sonnet, GPT-4o, etc.) via `voiceMode.llm.model`.
+
 ## Tips
 
 - Start daemon first, then run agents
