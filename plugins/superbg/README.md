@@ -6,60 +6,55 @@ superbg is a zero-config CLI to run, track, and manage background processes on L
 
 ## Prerequisites
 
-```bash
-superbg help
 ```
-
-If not installed:
-
-```bash
 go install github.com/javimosch/superbg@latest
+superbg help
 ```
 
 ## Commands
 
-```bash
-# Version info
-sc superbg self version
-
-# Run a command in the background
+Run processes:
+```
 sc superbg run start python server.py
-
-# Run with auto-restart on crash
-sc superbg run start --watch python server.py
-
-# Run with auto-restart, limit restarts
-sc superbg run start --watch --max-restarts 5 python server.py
-
-# Run with environment file
+sc superbg run start python server.py --watch
+sc superbg run start --max-restarts 5 python server.py
 sc superbg run start --env-file .env ./app
+sc superbg run start --name myapp python server.py
+sc superbg run start --cwd /app python server.py
+```
 
-# List all background processes
+List, status, logs:
+```
 sc superbg list show
-
-# Graceful stop with timeout (SIGTERM, then SIGKILL after N seconds)
-sc superbg process stop --timeout 15 1
-
-# Immediate kill
-sc superbg process kill 1
-
-# Check status
+sc superbg list show --json
 sc superbg process status 1
-
-# View logs
+sc superbg process status 1 --json
 sc superbg logs show 1
-
-# Follow logs in real-time
+sc superbg logs show 1 --json
 sc superbg logs follow 1
+```
 
-# Raw passthrough
-sc superbg -- run python server.py
+Process lifecycle:
+```
+sc superbg process stop --timeout 15 1
+sc superbg process kill 1
+sc superbg process rm 1
+sc superbg clean run
+```
+
+Shell completions:
+```
+sc superbg completion generate bash
+sc superbg completion generate zsh
+sc superbg completion generate fish
+```
+
+Namespace passthrough:
+```
+sc superbg -- help
 sc superbg -- list
 ```
 
 ## How it works
 
-1. superbg run spawns the command in a new session (setsid), fully detached from the terminal.
-2. Stdout/stderr are captured to ~/.superbg/logs/<id>.log.
-3. Process metadata is saved to ~/.superbg/state.json (survives reboots).
-4. With --watch, superbg stays alive as a monitor, re-spawning the child on exit with exponential backoff.
+superbg run spawns the command in a new session (setsid), fully detached from the terminal. Stdout/stderr are captured to ~/.superbg/logs/<id>.log. Process metadata is saved to ~/.superbg/state.json (survives reboots). With --watch, superbg stays alive as a monitor with crash-loop detection and exponential backoff.

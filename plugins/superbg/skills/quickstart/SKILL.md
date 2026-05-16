@@ -5,67 +5,85 @@ description: Use this skill when the user wants to run, manage, or monitor backg
 
 # superbg Plugin
 
-Super Background Process Manager -- a zero-config CLI to run, track, and manage background processes on Linux. Works with any language (not just Node.js).
+Super Background Process Manager -- a zero-config CLI to run, track, and manage background processes on Linux. Works with any language.
 
 ## Commands
 
-### Process Management
 - `superbg run start <args>` -- Run a command in the background
 - `superbg list show` -- List all tracked processes
 - `superbg process stop <id>` -- Stop a process with graceful timeout
 - `superbg process kill <id>` -- Kill a process (SIGKILL)
 - `superbg process status <id>` -- Show detailed process info
-
-### Logs
+- `superbg process rm <id>` -- Remove a process from tracking
+- `superbg clean run` -- Remove all completed processes
 - `superbg logs show <id>` -- View process logs
 - `superbg logs follow <id>` -- Follow logs in real-time
+- `superbg completion generate <shell>` -- Generate shell completion
+- `superbg self version` -- Print superbg help
 
 ## Usage Examples
 
-```bash
-# Run a process in background
+Basic run:
+```
 superbg run start python server.py
+```
 
-# Run with auto-restart on crash
-superbg run start --watch --max-restarts 5 python server.py
+Run with features (put boolean flags at end, use space for --name, --cwd):
+```
+superbg run start python server.py --watch
+superbg run start --max-restarts 5 python server.py
+superbg run start --env-file /path/to/.env python server.py
+superbg run start --name myapp python server.py
+superbg run start --cwd /app python server.py
+superbg run start --env-file .env --name webapp node app.js --watch
+```
 
-# Run with environment file
-superbg run start --env-file .env ./app
+List, status, logs with JSON:
+```
+superbg list show --json
+superbg process status 1 --json
+superbg logs show 1 --json
+```
 
-# Run with arguments
-superbg run start node app.js --port 3000
-
-# List all processes
-superbg list show
-
-# Check status
-superbg process status 1
-
-# View logs
-superbg logs show 1
-
-# Follow logs in real-time
-superbg logs follow 1
-
-# Graceful stop with timeout (SIGTERM, then SIGKILL after 15s)
+Process lifecycle:
+```
 superbg process stop --timeout 15 1
-
-# Immediate kill
 superbg process kill 1
+superbg process rm 1
+superbg clean run
+```
+
+Logs:
+```
+superbg logs show 1
+superbg logs follow 1
+```
+
+Shell completions:
+```
+superbg completion generate bash
+superbg completion generate zsh
+superbg completion generate fish
 ```
 
 ## Installation
 
-```bash
+```
 go install github.com/javimosch/superbg@latest
 ```
 
 ## Key Features
 - Zero-config -- no unit files, no config, no daemon
-- Auto-restart (--watch) with exponential backoff and --max-restarts
+- Auto-restart (--watch) with exponential backoff
 - Graceful stop with configurable SIGKILL timeout (--timeout N)
-- Environment file support (--env-file FILE, supports # comments and export)
-- Works with any language (Python, Node.js, Go, shell scripts, etc.)
-- Persistent state across reboots (~/.superbg/state.json)
+- Environment file support (--env-file FILE)
+- Custom process name (--name NAME)
+- Custom working directory (--cwd DIR)
+- JSON output for list, status, logs (--json)
+- Crash-loop detection (warns after 3 fast crashes)
+- Log rotation (auto-trims logs over 1MB / 2000 lines)
+- Clean/rm commands to remove completed processes
+- Shell completions for bash, zsh, fish
+- Works with any language
+- Persistent state across reboots
 - Uses setsid to fully detach from terminal
-- Captures stdout/stderr to log files (~/.superbg/logs/)

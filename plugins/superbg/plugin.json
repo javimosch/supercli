@@ -55,7 +55,7 @@
       "namespace": "superbg",
       "resource": "run",
       "action": "start",
-      "description": "Run a command in the background, optionally with auto-restart and env-file",
+      "description": "Run a command in the background, optionally with auto-restart, env-file, custom name, or custom working directory",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
@@ -90,6 +90,18 @@
           "type": "string",
           "required": false,
           "description": "Load environment variables from FILE"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Custom process name"
+        },
+        {
+          "name": "cwd",
+          "type": "string",
+          "required": false,
+          "description": "Working directory for the process"
         }
       ]
     },
@@ -105,7 +117,14 @@
         "cwd": "invoke_cwd",
         "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
       },
-      "args": []
+      "args": [
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "Output in JSON format"
+        }
+      ]
     },
     {
       "namespace": "superbg",
@@ -162,13 +181,14 @@
       "namespace": "superbg",
       "resource": "process",
       "action": "status",
-      "description": "Show detailed info about a process",
+      "description": "Show detailed info about a process, optionally as JSON",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
         "baseArgs": ["status"],
         "positionalArgs": ["id"],
         "cwd": "invoke_cwd",
+        "flagsBeforePositionals": true,
         "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
       },
       "args": [
@@ -177,6 +197,12 @@
           "type": "string",
           "required": true,
           "description": "Process ID or PID to check"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "Output in JSON format"
         }
       ]
     },
@@ -184,13 +210,14 @@
       "namespace": "superbg",
       "resource": "logs",
       "action": "show",
-      "description": "Show process logs",
+      "description": "Show process logs, optionally as JSON",
       "adapter": "process",
       "adapterConfig": {
         "command": "superbg",
         "baseArgs": ["logs"],
         "positionalArgs": ["id"],
         "cwd": "invoke_cwd",
+        "flagsBeforePositionals": true,
         "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
       },
       "args": [
@@ -199,6 +226,12 @@
           "type": "string",
           "required": true,
           "description": "Process ID or PID"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "Output in JSON format"
         },
         {
           "name": "follow",
@@ -233,6 +266,64 @@
           "type": "string",
           "required": true,
           "description": "Process ID or PID to follow"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "clean",
+      "action": "run",
+      "description": "Remove all completed processes from tracking",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["clean"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "superbg",
+      "resource": "process",
+      "action": "rm",
+      "description": "Remove a single process from tracking",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["rm"],
+        "positionalArgs": ["id"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Process ID or PID to remove"
+        }
+      ]
+    },
+    {
+      "namespace": "superbg",
+      "resource": "completion",
+      "action": "generate",
+      "description": "Generate shell completion script for bash, zsh, or fish",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "superbg",
+        "baseArgs": ["completion"],
+        "positionalArgs": ["shell"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install superbg: go install github.com/javimosch/superbg@latest"
+      },
+      "args": [
+        {
+          "name": "shell",
+          "type": "string",
+          "required": true,
+          "description": "Shell type: bash, zsh, or fish"
         }
       ]
     }
