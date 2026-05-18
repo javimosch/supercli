@@ -1,0 +1,849 @@
+{
+  "name": "hotify",
+  "version": "2.5.0",
+  "description": "Traefik/Cloudflare app management CLI with Docker Compose support — deploy web apps with SSL, DNS, reverse proxy, and container management",
+  "source": "https://github.com/javimosch/hotify-cli",
+  "checks": [
+    { "type": "binary", "name": "hotify-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "hotify",
+    "binary": "hotify-cli",
+    "check": "hotify-cli version",
+    "install_steps": [
+      "curl -LO https://github.com/javimosch/hotify-cli/releases/latest/download/hotify-cli-linux-amd64",
+      "chmod +x hotify-cli-linux-amd64",
+      "sudo mv hotify-cli-linux-amd64 /usr/local/bin/hotify-cli",
+      "Verify: hotify-cli --help",
+      "supercli plugins install ./plugins/hotify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hotify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hotify-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "self",
+      "action": "init",
+      "description": "Interactive one-time setup (Cloudflare token, domain, email)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["init"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "add",
+      "description": "Register a new app (strict create)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["add"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "name", "type": "string", "required": true, "description": "Display name" },
+        { "name": "domain", "type": "string", "required": true, "description": "Subdomain" },
+        { "name": "port", "type": "integer", "required": true, "description": "Internal port" },
+        { "name": "cmd", "type": "string", "required": true, "description": "Start command" },
+        { "name": "source", "type": "string", "required": false, "description": "Source path" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "setup",
+      "description": "Create or update app (upsert)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["setup"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "name", "type": "string", "required": true, "description": "Display name" },
+        { "name": "domain", "type": "string", "required": true, "description": "Subdomain" },
+        { "name": "port", "type": "integer", "required": true, "description": "Internal port" },
+        { "name": "cmd", "type": "string", "required": true, "description": "Start command" },
+        { "name": "source", "type": "string", "required": false, "description": "Source path" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "edit",
+      "description": "Modify an existing app",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["edit"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "name", "type": "string", "required": false, "description": "Display name" },
+        { "name": "domain", "type": "string", "required": false, "description": "Subdomain" },
+        { "name": "port", "type": "integer", "required": false, "description": "Internal port" },
+        { "name": "cmd", "type": "string", "required": false, "description": "Start command" },
+        { "name": "source", "type": "string", "required": false, "description": "Source path" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "remove",
+      "description": "Delete an app",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["remove"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "list",
+      "description": "List all configured apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "human", "type": "boolean", "required": false, "description": "Human-readable output", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Start hotify HTTP daemon for app management",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["start"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "port", "type": "integer", "required": false, "description": "HTTP port", "default": 8080 },
+        { "name": "daemon", "type": "boolean", "required": false, "description": "Run in background", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "daemon",
+      "action": "stop",
+      "description": "Stop hotify daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["stop"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "daemon",
+      "action": "status",
+      "description": "Check hotify daemon status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "start",
+      "description": "Start an app (local or remote)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["start"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "local", "type": "boolean", "required": false, "description": "Local mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "stop",
+      "description": "Stop an app (local or remote)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["stop"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "local", "type": "boolean", "required": false, "description": "Local mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "restart",
+      "description": "Restart an app (local or remote)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["restart"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "local", "type": "boolean", "required": false, "description": "Local mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "app",
+      "action": "app-status",
+      "description": "Check app status (local or remote)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["status"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "local", "type": "boolean", "required": false, "description": "Local mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "auth",
+      "action": "add",
+      "description": "Authenticate with a remote hotify daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["auth", "--action=add"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Remote daemon URL" },
+        { "name": "token", "type": "string", "required": true, "description": "Auth token" },
+        { "name": "name", "type": "string", "required": true, "description": "Remote name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "auth",
+      "action": "remove",
+      "description": "Remove stored remote authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["auth", "--action=remove"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Remote name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "auth",
+      "action": "list",
+      "description": "List authenticated remotes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["auth", "--action=list"],
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "auth",
+      "action": "test",
+      "description": "Test connection to a remote",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["auth", "--action=test"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": false, "description": "Remote name" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "target",
+      "action": "list",
+      "description": "List all targets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["targets", "--action=list"],
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "target",
+      "action": "use",
+      "description": "Set active target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["targets", "--action=use"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "target",
+      "action": "remove",
+      "description": "Remove a target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["targets", "--action=remove"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "target",
+      "action": "set-default",
+      "description": "Set default target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["targets", "--action=set-default"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy an app to a target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["deploy", "--action=deploy"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "source", "type": "string", "required": true, "description": "Binary or folder path" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "deploy",
+      "action": "start",
+      "description": "Start an app on a remote target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["deploy", "--action=start"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "deploy",
+      "action": "stop",
+      "description": "Stop an app on a remote target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["deploy", "--action=stop"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "deploy",
+      "action": "restart",
+      "description": "Restart an app on a remote target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["deploy", "--action=restart"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "deploy",
+      "action": "status",
+      "description": "Check app status on a remote target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["deploy", "--action=status"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "process",
+      "action": "pause",
+      "description": "Pause an app (SIGSTOP)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["pause"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "local", "type": "boolean", "required": false, "description": "Local mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "process",
+      "action": "resume",
+      "description": "Resume a paused app (SIGCONT)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["resume"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "local", "type": "boolean", "required": false, "description": "Local mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "dns",
+      "action": "setup",
+      "description": "Create/update Cloudflare DNS A record (v2.3.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["setup-dns"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "ip", "type": "string", "required": false, "description": "Server IP address" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "traefik-config",
+      "action": "setup",
+      "description": "Configure Traefik routing for an app (v2.3.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["setup-traefik"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "challenge-type", "type": "string", "required": false, "description": "ACME challenge type (http|dns)", "default": "http" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "list",
+      "description": "List all Docker containers (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "list" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "start",
+      "description": "Start a Docker container (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "start" },
+        { "name": "id", "type": "string", "required": true, "description": "Container ID or name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "stop",
+      "description": "Stop a Docker container (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "stop" },
+        { "name": "id", "type": "string", "required": true, "description": "Container ID or name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "restart",
+      "description": "Restart a Docker container (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "restart" },
+        { "name": "id", "type": "string", "required": true, "description": "Container ID or name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "status",
+      "description": "Check Docker container status (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "status" },
+        { "name": "id", "type": "string", "required": true, "description": "Container ID or name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "logs",
+      "description": "View Docker container logs (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "logs" },
+        { "name": "id", "type": "string", "required": true, "description": "Container ID or name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "enable-traefik",
+      "description": "Enable Traefik Docker provider (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "enable-traefik" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "docker",
+      "action": "disable-traefik",
+      "description": "Disable Traefik Docker provider (v2.4.0+)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["docker"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "action", "type": "string", "required": false, "description": "Docker action", "default": "disable-traefik" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "deploy",
+      "action": "deploy",
+      "description": "Deploy binary or folder to target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["deploy"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" },
+        { "name": "source", "type": "string", "required": true, "description": "Binary or folder path" },
+        { "name": "target", "type": "string", "required": false, "description": "Target name" },
+        { "name": "setup-dns", "type": "boolean", "required": false, "description": "Setup DNS after deploy", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "prune",
+      "action": "app",
+      "description": "Remove DNS/Traefik for an app",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["prune"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "App ID" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "prune",
+      "action": "all",
+      "description": "Rebuild Traefik for all apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["prune"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "all", "type": "boolean", "required": false, "description": "Prune all flag", "default": true }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "api-key",
+      "action": "add",
+      "description": "Create an API key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["api-keys", "--action=add"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Key name" },
+        { "name": "token", "type": "string", "required": false, "description": "Custom token (auto-generated if omitted)" },
+        { "name": "permissions", "type": "string", "required": false, "description": "Comma-separated permissions" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "api-key",
+      "action": "list",
+      "description": "List all API keys",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["api-keys", "--action=list"],
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify",
+      "resource": "api-key",
+      "action": "remove",
+      "description": "Delete an API key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["api-keys", "--action=remove"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Key name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "api-key",
+      "action": "regenerate",
+      "description": "Regenerate an API key token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["api-keys", "--action=regenerate"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Key name" }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "traefik",
+      "action": "install",
+      "description": "Install Traefik on a target (idempotent)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["traefik-system"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target name" },
+        { "name": "force", "type": "boolean", "required": false, "description": "Force reinstall", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "traefik",
+      "action": "status",
+      "description": "Check Traefik installation status on a target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["traefik-system"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target name" },
+        { "name": "status", "type": "boolean", "required": false, "description": "Check status flag", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "traefik",
+      "action": "remove",
+      "description": "Remove Traefik from a target",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": ["traefik-system"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target name" },
+        { "name": "remove", "type": "boolean", "required": false, "description": "Remove flag", "default": false }
+      ]
+    },
+    {
+      "namespace": "hotify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hotify-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hotify-cli from https://github.com/javimosch/hotify-cli"
+      },
+      "args": []
+    }
+  ]
+}
