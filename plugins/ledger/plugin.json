@@ -1,0 +1,254 @@
+{
+  "name": "ledger",
+  "version": "0.1.0",
+  "description": "Ledger — powerful, double-entry accounting system for the command line. Track finances with plain text files. Reports for balance, register, accounts, payees, commodities, and more.",
+  "source": "https://ledger-cli.org/doc/ledger.1.html",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ledger"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ledger",
+    "binary": "ledger",
+    "check": "which ledger",
+    "install_steps": [
+      "brew install ledger",
+      "apt install ledger",
+      "Verify: ledger --version",
+      "supercli plugins install ./plugins/ledger --on-conflict replace --json"
+    ],
+    "note": "Available via brew, apt, dnf, pacman, and from source. Requires a journal file (.ledger or .dat) — pass with -f or set $LEDGER_FILE."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ledger",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ledger version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ledger: brew install ledger or apt install ledger"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "balance",
+      "description": "Print account balances (passthrough: ledger -f <file> balance [query...] [--json] [--csv])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["balance"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, account query, --json, --csv, --flat, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "register",
+      "description": "Show transaction register (passthrough: ledger -f <file> register [query...] [--json] [--csv])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["register"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, account/query, --json, --csv, --date-format, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "accounts",
+      "description": "List all account names (passthrough: ledger -f <file> accounts [query...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["accounts"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, account query, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "payees",
+      "description": "List all payees (passthrough: ledger -f <file> payees [query...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["payees"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, payee query, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "commodities",
+      "description": "List all commodities (passthrough: ledger -f <file> commodities)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["commodities"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "print",
+      "description": "Print transactions in ledger format (passthrough: ledger -f <file> print [query...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["print"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, account/query, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "stats",
+      "description": "Show journal statistics (passthrough: ledger -f <file> stats)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["stats"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "csv",
+      "description": "Output register as CSV (passthrough: ledger -f <file> csv [query...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["csv"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, account/query, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "report",
+      "action": "xml",
+      "description": "Output transactions in XML format (passthrough: ledger -f <file> xml [query...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "baseArgs": ["xml"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install ledger and provide a journal file with -f or $LEDGER_FILE."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "-f <journal>, account/query, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "ledger",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ledger for any command not covered by specific resources (xml, equity, prices, tags, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ledger",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install ledger: brew install ledger or apt install ledger"
+      },
+      "args": []
+    }
+  ]
+}

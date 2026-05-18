@@ -1,0 +1,113 @@
+{
+  "name": "howdoi",
+  "version": "0.1.0",
+  "description": "howdoi — instant coding answers via the command line. Ask programming questions and get answers from Stack Overflow in your terminal, with --json output for machine readability.",
+  "source": "https://github.com/gleitz/howdoi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "howdoi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "howdoi",
+    "binary": "howdoi",
+    "check": "which howdoi",
+    "install_steps": [
+      "pip install howdoi",
+      "Verify: howdoi --version",
+      "supercli plugins install ./plugins/howdoi --on-conflict replace --json"
+    ],
+    "note": "Also available via brew install howdoi. Supports Google, Bing, and DuckDuckGo search engines. Cache lives in ~/.cache/howdoi."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "howdoi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print howdoi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howdoi",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install howdoi: pip install howdoi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "howdoi",
+      "resource": "query",
+      "action": "ask",
+      "description": "Ask a programming question and get answers from Stack Overflow (passthrough: howdoi [query...] [-n N] [-p POS] [-j] [-a] [-c])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howdoi",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install howdoi: pip install howdoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Search query, -n N (num answers), -p POS (position), -j (json), -a (full text), -c (color), -e engine"
+        }
+      ]
+    },
+    {
+      "namespace": "howdoi",
+      "resource": "query",
+      "action": "json",
+      "description": "Ask a question and get answers as JSON (passthrough: howdoi [query...] -j [-n N])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howdoi",
+        "baseArgs": ["-j"],
+        "passthrough": true,
+        "parseJson": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install howdoi: pip install howdoi"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Search query, -n N (num answers), -p POS (position), -e engine"
+        }
+      ]
+    },
+    {
+      "namespace": "howdoi",
+      "resource": "self",
+      "action": "clear-cache",
+      "description": "Clear the howdoi cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howdoi",
+        "baseArgs": ["--clear-cache"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install howdoi: pip install howdoi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "howdoi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to howdoi for any command not covered by specific resources (--save, --view, --remove, --empty, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "howdoi",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install howdoi: pip install howdoi"
+      },
+      "args": []
+    }
+  ]
+}
