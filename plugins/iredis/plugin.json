@@ -1,0 +1,76 @@
+{
+  "name": "iredis",
+  "version": "0.1.0",
+  "description": "iredis — interactive Redis CLI with autocomplete, syntax highlighting, and a full-featured REPL. Execute Redis commands directly from the terminal with JSON and raw output modes.",
+  "source": "https://iredis.io/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iredis"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iredis",
+    "binary": "iredis",
+    "check": "which iredis",
+    "install_steps": [
+      "pip install iredis",
+      "Verify: iredis --version",
+      "supercli plugins install ./plugins/iredis --on-conflict replace --json"
+    ],
+    "note": "Also available via brew install iredis. Supports Redis URLs, DSN aliases, TLS, SSH tunnels, and NAT maps. Use --raw for clean machine-parseable output."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iredis",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iredis version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iredis",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install iredis: pip install iredis"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iredis",
+      "resource": "query",
+      "action": "run",
+      "description": "Execute one or more Redis commands non-interactively (passthrough: iredis [CMD...] [--raw] [--url <url>] [-h <host>] [-p <port>])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iredis",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install iredis: pip install iredis. Requires a running Redis server."
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Redis command + args, --raw, --url, -h <host>, -p <port>, -a <pass>, -n <db>, --decode, etc."
+        }
+      ]
+    },
+    {
+      "namespace": "iredis",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iredis for interactive REPL or any arguments not covered",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iredis",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install iredis: pip install iredis"
+      },
+      "args": []
+    }
+  ]
+}
