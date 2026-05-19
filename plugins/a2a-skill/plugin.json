@@ -1,0 +1,317 @@
+{
+  "name": "a2a-skill",
+  "version": "1.0.1",
+  "description": "a2a-skill — peer-to-peer agent messaging over SQLite. N agents from any CLI share a local bus. No orchestrator, no central chain of command.",
+  "source": "https://github.com/javier-arancibia/a2a-skill",
+  "checks": [
+    { "type": "binary", "name": "a2a" }
+  ],
+  "install_guidance": {
+    "plugin": "a2a-skill",
+    "binary": "a2a",
+    "check": "which a2a",
+    "install_steps": [
+      "git clone https://github.com/javier-arancibia/a2a-skill.git",
+      "cd a2a-skill && chmod +x install.sh && ./install.sh",
+      "Verify: a2a init && a2a list",
+      "supercli plugins install ./plugins/a2a-skill --on-conflict replace --json",
+      "Full docs: sc skills teach a2a-skill:quickstart"
+    ],
+    "note": "Requires Python 3.9+ with sqlite3 stdlib module. The a2a wrapper auto-finds a suitable python3 on PATH. All 14 CLI commands work with zero pip dependencies. Set A2A_PROJECT env var for cross-project work."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "a2a-skill",
+      "resource": "self",
+      "action": "version",
+      "description": "Show a2a-skill help/version info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["--help"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "self",
+      "action": "learn",
+      "description": "Teach the agent the a2a-skill quickstart guide (run: sc skills teach a2a-skill:quickstart)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "echo",
+        "baseArgs": ["Run: sc skills teach a2a-skill:quickstart"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Use: sc skills teach a2a-skill:quickstart"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "project",
+      "action": "init",
+      "description": "Create a new a2a project database at ~/.a2a/{project}/database.db. Project resolves from A2A_PROJECT env or basename($PWD).",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["init"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "project",
+      "action": "info",
+      "description": "Show resolved project info (name, db path, exists). Project resolves from A2A_PROJECT env or basename($PWD).",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["project"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "agent",
+      "action": "register",
+      "description": "Register a new agent on the bus (or upsert if already registered). Set A2A_PROJECT for custom project.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["register"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Unique agent identifier (e.g. alice, bob, agent-1)" },
+        { "name": "role", "type": "string", "description": "Agent role (e.g. researcher, critic, reviewer)" },
+        { "name": "cli", "type": "string", "description": "CLI being used (claude, opencode, pi, ...)" },
+        { "name": "pid", "type": "string", "description": "Process ID for health tracking" },
+        { "name": "upsert", "type": "boolean", "description": "Update if already registered instead of failing" },
+        { "name": "prompt", "type": "string", "description": "Initial customization prompt for the agent" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "agent",
+      "action": "unregister",
+      "description": "Remove an agent from the bus",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["unregister"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Agent ID to remove" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "agent",
+      "action": "list",
+      "description": "List all registered agents with their role, CLI, status, and PID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["list", "--json"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "agent",
+      "action": "status",
+      "description": "Update an agent's status (active, idle, done, blocked)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["status"],
+        "positionalArgs": ["state"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "state", "type": "string", "required": true, "description": "New status: active, idle, done, or blocked" },
+        { "name": "as", "type": "string", "required": true, "description": "Agent ID to update" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "message",
+      "action": "send",
+      "description": "Send a message to an agent or broadcast to all ('all' = broadcast to everyone)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["send"],
+        "positionalArgs": ["to", "body"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "to", "type": "string", "required": true, "description": "Recipient agent ID, or 'all'/'*'/'broadcast' for broadcast" },
+        { "name": "body", "type": "string", "required": true, "description": "Message body (use '-' to read from stdin)" },
+        { "name": "from", "type": "string", "required": true, "description": "Sender agent ID (must be registered)" },
+        { "name": "thread", "type": "string", "description": "Thread/topic ID for grouped conversations" },
+        { "name": "ttl", "type": "string", "description": "Message expires after N seconds (default: never)" },
+        { "name": "json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "message",
+      "action": "recv",
+      "description": "Receive messages addressed to an agent (blocks with --wait)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["recv"],
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "as", "type": "string", "required": true, "description": "Agent ID to receive as (must be registered)" },
+        { "name": "wait", "type": "string", "description": "Block up to N seconds for at least one message (0 = no block)" },
+        { "name": "limit", "type": "string", "description": "Max messages to return (0 = unlimited)" },
+        { "name": "since", "type": "string", "description": "Only messages after this unix timestamp" },
+        { "name": "all", "type": "boolean", "description": "Include already-read messages" },
+        { "name": "include-self", "type": "boolean", "description": "Include messages sent by this agent" },
+        { "name": "peek", "type": "boolean", "description": "Don't mark messages as read" },
+        { "name": "json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "message",
+      "action": "peek",
+      "description": "Peek at recent messages without marking them read (observable by all)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["peek"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "limit", "type": "string", "description": "Number of recent messages to show (default: 20)" },
+        { "name": "json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "message",
+      "action": "thread",
+      "description": "Show all messages in a thread",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["thread"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Thread ID to view" },
+        { "name": "json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "message",
+      "action": "search",
+      "description": "Search messages by content (FTS5 with LIKE fallback)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query (FTS5 syntax with AND/OR/NOT, or substring)" },
+        { "name": "limit", "type": "string", "description": "Max results (default: 50)" },
+        { "name": "fts", "type": "boolean", "description": "Force FTS5 full-text search (no LIKE fallback)" },
+        { "name": "json", "type": "boolean", "description": "Output as JSON" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "message",
+      "action": "wait",
+      "description": "Block until N unread messages arrive for an agent, or timeout",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["wait"],
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "as", "type": "string", "required": true, "description": "Agent ID to wait for messages" },
+        { "name": "count", "type": "string", "description": "Number of unread messages to wait for (default: 1)" },
+        { "name": "timeout", "type": "string", "description": "Max seconds to wait (default: 60)" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "stats",
+      "action": "show",
+      "description": "Show bus statistics: message count, agent counts, top senders",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["stats", "--json"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "clear",
+      "action": "run",
+      "description": "Delete the project database (requires --yes confirmation). Set A2A_PROJECT for custom project.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "baseArgs": ["clear"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": [
+        { "name": "yes", "type": "boolean", "required": true, "description": "Confirm deletion (required)" }
+      ]
+    },
+    {
+      "namespace": "a2a-skill",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough: run any raw a2a command. Useful when you need --project flag. Example: a2a-skill _ _ list --project myapp",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install a2a: git clone https://github.com/javier-arancibia/a2a-skill.git && cd a2a-skill && ./install.sh"
+      },
+      "args": []
+    }
+  ]
+}
