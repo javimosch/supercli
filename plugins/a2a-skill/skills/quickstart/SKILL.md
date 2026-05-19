@@ -188,3 +188,88 @@ sc a2a-skill message send tester "PR #42 needs QA verification" --from reviewer 
 | `already registered` | Use `--upsert` flag when re-registering |
 | Bus is empty | Make sure agents are registered and messages were sent with correct sender IDs |
 | Concurrent writer issues | Check WAL mode: `a2a exec "PRAGMA journal_mode"` should return `wal` |
+| Agents don't see each other's messages | Likely a project mismatch. All agents must use the same `--project` or `A2A_PROJECT`. See "Common pitfalls" below. |
+| Empty log files from spawned agents | Normal — CLIs buffer stdout. Check `a2a peek` or `ps aux` instead. |
+| `--project` flag doesn't work | The Go binary expects `--project` AFTER the subcommand (`a2a peek --project X`). The Python script expects it BEFORE (`a2a.py --project X peek`). Use `A2A_PROJECT` env var for safest results. |
+
+## Common pitfalls
+
+These were discovered while smoke-testing a2a with spawned agents. Future
+agents should review this before using the CLI.
+
+### `A2A_PROJECT` must be exported, not just set
+
+When spawning background agents (Pattern 3), the spawned process inherits the
+parent's environment. Writing `A2A_PROJECT=myproject` without `export` means
+the spawned agent won't see it. It falls back to `basename($PWD)`, which may
+resolve to the wrong project.
+
+```bash
+# WRONG — not exported, spawned agents won't see it
+A2A_PROJECT=myteam
+a2a-spawn --cli claude --id alice ...
+
+# RIGHT — export before spawning
+export A2A_PROJECT=myteam
+a2a-spawn --cli claude --id alice ...
+
+# ALSO RIGHT — use --project explicitly in every a2a command
+a2a send bob "hello" --from alice --project myteam
+```
+
+### `--project` flag position: Go binary vs Python
+
+The installed `a2a` at `~/.local/bin/a2a` may be a Go binary (check with
+`file $(which a2a)`). The Go binary and the Python `a2a.py` expect `--project`
+in different positions:
+
+| Binary | Correct syntax | Wrong syntax |
+|--------|---------------|--------------|
+| **Go** (`~/.local/bin/a2a`) | `a2a peek --project X` | `a2a --project X peek` ✗ |
+| **Python** (`a2a.py`) | `python3 a2a.py --project X peek` | `python3 a2a.py peek --project X` ✗ |
+
+**Safest:** Use the `A2A_PROJECT` env var — it works identically for both.
+
+```bash
+export A2A_PROJECT=myteam
+a2a peek --limit 10    # works for Go AND Python
+```
+
+### Empty agent logs ≠ stuck agent
+
+When spawning via `a2a-spawn`, log files (`--log FILE`) may appear empty for
+minutes. CLIs like `claude` buffer stdout and flush only on exit. Don't assume
+the agent is stuck.
+
+**Check progress via the bus instead:**
+
+```bash
+ps aux | grep claude              # verify process is running
+sc a2a-skill agent list           # check agent status (active? done?)
+sc a2a-skill message peek         # see if any messages were sent
+```
+
+### Cross-project contamination is invisible
+
+If agents end up on different projects (each resolves `basename($PWD)` to a
+different name), they silently write to different databases. No error, no
+warning — they just never see each other.
+
+**Fix:** Always verify:
+
+```bash
+sc a2a-skill project info    # check which project you're on
+sc a2a-skill agent list      # verify all expected agents are visible
+```
+
+### Kit prompts must be project-aware
+
+When writing kit prompts for spawned agents, never assume `A2A_PROJECT` is
+set in the spawned environment. Either export it before spawning, or include
+`--project $PROJECT` in every `a2a` command within the kit.
+
+### Register PIDs with the right project
+
+Running `a2a register alice --pid 1234 --upsert` uses the *current* project.
+If `A2A_PROJECT` isn't set correctly, the PID is registered on the wrong bus.
+Pass `--project` or verify `A2A_PROJECT` before running.
