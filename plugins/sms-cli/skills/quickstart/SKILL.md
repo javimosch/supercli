@@ -1,6 +1,8 @@
 # sms-cli Quickstart
 
-Agent-friendly SMS sender. Non-interactive by design. Supports Twilio, Vonage, MailerSend, Clickatell.
+Agent-friendly SMS sender. Non-interactive by design. Supports Twilio, Vonage, MailerSend, Clickatell, Telnyx.
+
+**Status:** All 5 providers verified and working ✅
 
 ## Schema Discovery
 
