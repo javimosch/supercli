@@ -37,17 +37,18 @@
       "namespace": "sd",
       "resource": "replace",
       "action": "run",
-      "description": "Find and replace with regex (stdin, preview)",
+      "description": "Find and replace with regex in files",
       "adapter": "process",
       "adapterConfig": {
         "command": "sd",
-        "positionalArgs": ["find", "replace"],
-        "passthrough": true,
-        "missingDependencyHelp": "Install sd"
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["find", "replace", "files"],
+        "missingDependencyHelp": "Install sd: cargo install sd"
       },
       "args": [
         { "name": "find", "type": "string", "required": true, "description": "Pattern to find (regex)" },
-        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" },
+        { "name": "files", "type": "string", "required": false, "description": "File(s) to modify in-place (omit to read from stdin)" }
       ]
     },
     {
@@ -58,9 +59,9 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "sd",
+        "cwd": "invoke_cwd",
         "positionalArgs": ["find", "replace", "file"],
-        "passthrough": true,
-        "missingDependencyHelp": "Install sd"
+        "missingDependencyHelp": "Install sd: cargo install sd"
       },
       "args": [
         { "name": "find", "type": "string", "required": true, "description": "Pattern to find (regex)" },
@@ -72,54 +73,57 @@
       "namespace": "sd",
       "resource": "replace",
       "action": "preview",
-      "description": "Preview changes without modifying (stdin)",
+      "description": "Preview changes in a file without modifying",
       "adapter": "process",
       "adapterConfig": {
         "command": "sd",
+        "cwd": "invoke_cwd",
         "baseArgs": ["-p"],
-        "positionalArgs": ["find", "replace"],
-        "passthrough": true,
-        "missingDependencyHelp": "Install sd"
+        "positionalArgs": ["find", "replace", "file"],
+        "missingDependencyHelp": "Install sd: cargo install sd"
       },
       "args": [
         { "name": "find", "type": "string", "required": true, "description": "Pattern to find" },
-        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" },
+        { "name": "file", "type": "string", "required": true, "description": "File to preview changes in" }
       ]
     },
     {
       "namespace": "sd",
       "resource": "replace",
       "action": "fixed",
-      "description": "Find and replace with fixed strings (no regex)",
+      "description": "Find and replace with fixed strings (no regex) in a file",
       "adapter": "process",
       "adapterConfig": {
         "command": "sd",
+        "cwd": "invoke_cwd",
         "baseArgs": ["-F"],
-        "positionalArgs": ["find", "replace"],
-        "passthrough": true,
-        "missingDependencyHelp": "Install sd"
+        "positionalArgs": ["find", "replace", "file"],
+        "missingDependencyHelp": "Install sd: cargo install sd"
       },
       "args": [
-        { "name": "find", "type": "string", "required": true, "description": "String to find (literal)" },
-        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+        { "name": "find", "type": "string", "required": true, "description": "String to find (literal, no regex)" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" },
+        { "name": "file", "type": "string", "required": true, "description": "File to modify in-place" }
       ]
     },
     {
       "namespace": "sd",
       "resource": "replace",
       "action": "across",
-      "description": "Find and replace across line boundaries",
+      "description": "Find and replace across line boundaries in a file",
       "adapter": "process",
       "adapterConfig": {
         "command": "sd",
-        "baseArgs": ["-A"],
-        "positionalArgs": ["find", "replace"],
-        "passthrough": true,
-        "missingDependencyHelp": "Install sd"
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-f", "s"],
+        "positionalArgs": ["find", "replace", "file"],
+        "missingDependencyHelp": "Install sd: cargo install sd"
       },
       "args": [
-        { "name": "find", "type": "string", "required": true, "description": "Pattern to find (can include \\n)" },
-        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" }
+        { "name": "find", "type": "string", "required": true, "description": "Pattern to find (. matches newlines)" },
+        { "name": "replace", "type": "string", "required": true, "description": "Replacement string" },
+        { "name": "file", "type": "string", "required": true, "description": "File to modify in-place" }
       ]
     },
     {
