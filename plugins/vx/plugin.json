@@ -1,0 +1,170 @@
+{
+  "name": "vx",
+  "version": "0.1.0",
+  "description": "Universal development tool manager that auto-installs runtimes (Node.js, Python, Go, Rust, Java, etc.) on-demand. Zero setup, zero learning curve - just prefix commands with 'vx' and tools are automatically installed and managed.",
+  "source": "https://github.com/loonghao/vx",
+  "checks": [
+    { "type": "binary", "name": "vx" }
+  ],
+  "install_guidance": {
+    "plugin": "vx",
+    "binary": "vx",
+    "check": "vx --version",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash",
+      "Verify: vx --version",
+      "supercli plugins install ./plugins/vx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vx",
+      "resource": "tool",
+      "action": "run",
+      "description": "Execute a tool with auto-installation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": [],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Tool command to execute (e.g., node, python, go, cargo)" },
+        { "name": "args", "type": "string", "required": false, "description": "Arguments to pass to the tool" }
+      ]
+    },
+    {
+      "namespace": "vx",
+      "resource": "runtime",
+      "action": "install",
+      "description": "Install a specific runtime version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "runtime", "type": "string", "required": true, "description": "Runtime to install (e.g., node@20, python@3.12, go@1.21)" }
+      ]
+    },
+    {
+      "namespace": "vx",
+      "resource": "runtime",
+      "action": "list",
+      "description": "List all supported runtimes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["list"],
+        "passthrough": false,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vx",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize project configuration (vx.toml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["init"],
+        "passthrough": false,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vx",
+      "resource": "project",
+      "action": "setup",
+      "description": "Install all tools defined in vx.toml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["setup"],
+        "passthrough": false,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vx",
+      "resource": "project",
+      "action": "dev",
+      "description": "Enter development shell with project tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["dev"],
+        "passthrough": false,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vx",
+      "resource": "package",
+      "action": "install",
+      "description": "Install a global package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "baseArgs": ["pkg", "install"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "Package to install (e.g., :ruff, :pre-commit)" }
+      ]
+    },
+    {
+      "namespace": "vx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vx: curl -fsSL https://raw.githubusercontent.com/loonghao/vx/main/install.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}

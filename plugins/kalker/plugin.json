@@ -1,0 +1,103 @@
+{
+  "name": "kalker",
+  "version": "0.1.0",
+  "description": "Calculator program with support for user-defined variables, functions, differentiation, integration, vectors, matrices, and more. Handles mathematical expressions with syntax highlighting and special-symbol completion.",
+  "source": "https://github.com/PaddiM8/kalker",
+  "checks": [
+    { "type": "binary", "name": "kalker" }
+  ],
+  "install_guidance": {
+    "plugin": "kalker",
+    "binary": "kalker",
+    "check": "kalker --version",
+    "install_steps": [
+      "cargo install kalker",
+      "Verify: kalker --version",
+      "supercli plugins install ./plugins/kalker --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kalker",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kalker version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kalker",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install kalker: cargo install kalker"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kalker",
+      "resource": "calc",
+      "action": "eval",
+      "description": "Evaluate mathematical expression",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kalker",
+        "baseArgs": [],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install kalker: cargo install kalker"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Mathematical expression to evaluate" }
+      ]
+    },
+    {
+      "namespace": "kalker",
+      "resource": "calc",
+      "action": "interactive",
+      "description": "Start interactive calculator session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kalker",
+        "baseArgs": [],
+        "passthrough": false,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install kalker: cargo install kalker"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kalker",
+      "resource": "file",
+      "action": "load",
+      "description": "Load file with predefined functions and constants",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kalker",
+        "baseArgs": ["-i"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install kalker: cargo install kalker"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File path to load" }
+      ]
+    },
+    {
+      "namespace": "kalker",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kalker CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kalker",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kalker: cargo install kalker"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "name": "stargaze",
+  "version": "0.1.0",
+  "description": "Cache and search your GitHub stars from the terminal. Pure Rust CLI with local embedded database, keyword search, and MCP server support.",
+  "source": "https://github.com/bkataru/stargaze",
+  "checks": [
+    { "type": "binary", "name": "stargaze" }
+  ],
+  "install_guidance": {
+    "plugin": "stargaze",
+    "binary": "stargaze",
+    "check": "stargaze --version",
+    "install_steps": [
+      "cargo install stargaze",
+      "Verify: stargaze --version",
+      "supercli plugins install ./plugins/stargaze --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "stargaze",
+      "resource": "self",
+      "action": "version",
+      "description": "Print stargaze version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "stars",
+      "action": "sync",
+      "description": "Fetch all starred repos via GitHub API and upsert into local cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["sync"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": [
+        { "name": "user", "type": "string", "required": false, "description": "GitHub username to sync stars for" },
+        { "name": "with-readmes", "type": "boolean", "required": false, "description": "Also fetch each repo's README in parallel" },
+        { "name": "concurrency", "type": "integer", "required": false, "description": "Number of concurrent requests" },
+        { "name": "prune", "type": "boolean", "required": false, "description": "Remove locally cached repos that are no longer starred" }
+      ]
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "stars",
+      "action": "search",
+      "description": "Substring match across full_name, description, language, topics, and cached README text",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query string" },
+        { "name": "lang", "type": "string", "required": false, "description": "Filter by programming language" },
+        { "name": "topic", "type": "string", "required": false, "description": "Filter by GitHub topic" },
+        { "name": "limit", "type": "integer", "required": false, "description": "Maximum number of results" },
+        { "name": "semantic", "type": "boolean", "required": false, "description": "Use vector embeddings for semantic similarity" }
+      ]
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "stars",
+      "action": "show",
+      "description": "Pretty-print the full cached JSON record for a repo",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["show"],
+        "positionalArgs": ["repo"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": [
+        { "name": "repo", "type": "string", "required": true, "description": "Repository in owner/name format" }
+      ]
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "stars",
+      "action": "stats",
+      "description": "Show total cached count, last sync time, and top languages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["stats"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "stars",
+      "action": "list",
+      "description": "List all cached repos sorted by stargazer count",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": [
+        { "name": "limit", "type": "integer", "required": false, "description": "Maximum number of results" }
+      ]
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "readmes",
+      "action": "fetch",
+      "description": "Fetch READMEs for already-cached repos",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["readmes"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": [
+        { "name": "force", "type": "boolean", "required": false, "description": "Force refetch even if cached README exists" },
+        { "name": "concurrency", "type": "integer", "required": false, "description": "Number of concurrent requests" }
+      ]
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "serve",
+      "action": "mcp",
+      "description": "Run Model Context Protocol stdio server over the cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["serve"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "api",
+      "action": "serve",
+      "description": "Run HTTP JSON API over the cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "baseArgs": ["api"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": [
+        { "name": "bind", "type": "string", "required": false, "description": "Bind address (default: 127.0.0.1:7879)" },
+        { "name": "api-key", "type": "string", "required": false, "description": "Optional bearer token for API authentication" },
+        { "name": "threads", "type": "integer", "required": false, "description": "Thread pool size" }
+      ]
+    },
+    {
+      "namespace": "stargaze",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to stargaze CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stargaze",
+        "passthrough": true,
+        "missingDependencyHelp": "Install stargaze: cargo install stargaze"
+      },
+      "args": []
+    }
+  ]
+}

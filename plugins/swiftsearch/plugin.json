@@ -1,0 +1,77 @@
+{
+  "name": "swiftsearch",
+  "version": "0.1.0",
+  "description": "Blazing-fast command-line search tool built with Go. Recursively scans directories, builds inverted index, and instantly finds files matching queries in both filenames and file contents.",
+  "source": "https://github.com/Kritagya123611/SwiftSearch",
+  "checks": [
+    { "type": "binary", "name": "swiftsearch" }
+  ],
+  "install_guidance": {
+    "plugin": "swiftsearch",
+    "binary": "swiftsearch",
+    "check": "swiftsearch --help",
+    "install_steps": [
+      "git clone https://github.com/Kritagya123611/SwiftSearch.git",
+      "cd SwiftSearch",
+      "go build -o swiftsearch",
+      "sudo mv swiftsearch /usr/local/bin/ (optional)",
+      "cd .. && rm -rf SwiftSearch",
+      "supercli plugins install ./plugins/swiftsearch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "swiftsearch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print swiftsearch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "swiftsearch",
+        "baseArgs": ["--help"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install swiftsearch: git clone https://github.com/Kritagya123611/SwiftSearch.git && cd SwiftSearch && go build -o swiftsearch && sudo mv swiftsearch /usr/local/bin/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "swiftsearch",
+      "resource": "files",
+      "action": "search",
+      "description": "Search for files matching query in both filenames and contents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "swiftsearch",
+        "positionalArgs": ["directory", "query"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install swiftsearch: git clone https://github.com/Kritagya123611/SwiftSearch.git && cd SwiftSearch && go build -o swiftsearch && sudo mv swiftsearch /usr/local/bin/"
+      },
+      "args": [
+        { "name": "directory", "type": "string", "required": true, "description": "Directory to search" },
+        { "name": "query", "type": "string", "required": true, "description": "Search query string" },
+        { "name": "name-only", "type": "boolean", "required": false, "description": "Search only filenames (skip content)" },
+        { "name": "case-sensitive", "type": "boolean", "required": false, "description": "Enable case-sensitive search" },
+        { "name": "max-results", "type": "integer", "required": false, "description": "Limit number of results (default: 10)" }
+      ]
+    },
+    {
+      "namespace": "swiftsearch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to swiftsearch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "swiftsearch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install swiftsearch: git clone https://github.com/Kritagya123611/SwiftSearch.git && cd SwiftSearch && go build -o swiftsearch && sudo mv swiftsearch /usr/local/bin/"
+      },
+      "args": []
+    }
+  ]
+}

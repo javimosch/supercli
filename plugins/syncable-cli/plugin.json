@@ -1,0 +1,185 @@
+{
+  "name": "syncable-cli",
+  "version": "0.1.0",
+  "description": "DevOps toolbox for AI coding agents and developers. Analyzes codebases, scans for security issues, validates infrastructure files, and deploys to cloud providers. Detects 260+ technologies across JavaScript, Python, Go, Rust, and Java ecosystems.",
+  "source": "https://github.com/syncable-dev/syncable-cli",
+  "checks": [
+    { "type": "binary", "name": "sync-ctl" }
+  ],
+  "install_guidance": {
+    "plugin": "syncable-cli",
+    "binary": "sync-ctl",
+    "check": "sync-ctl --version",
+    "install_steps": [
+      "cargo install syncable-cli",
+      "Verify: sync-ctl --version",
+      "supercli plugins install ./plugins/syncable-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "syncable",
+      "resource": "self",
+      "action": "version",
+      "description": "Print syncable-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "syncable",
+      "resource": "analyze",
+      "action": "project",
+      "description": "Analyze codebase and detect tech stack",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["analyze"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to analyze (default: current directory)" },
+        { "name": "agent", "type": "boolean", "required": false, "description": "Output compressed JSON for agents" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "security",
+      "action": "scan",
+      "description": "Scan for security issues and secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["security"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: current directory)" },
+        { "name": "mode", "type": "string", "required": false, "description": "Scan mode: lightning, fast, balanced, thorough, paranoid" },
+        { "name": "agent", "type": "boolean", "required": false, "description": "Output compressed JSON for agents" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "vulnerabilities",
+      "action": "scan",
+      "description": "Check dependencies for known CVEs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["vulnerabilities"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: current directory)" },
+        { "name": "severity", "type": "string", "required": false, "description": "Minimum severity: low, medium, high, critical" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "validate",
+      "action": "iac",
+      "description": "Validate infrastructure files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["validate"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to validate (default: current directory)" },
+        { "name": "types", "type": "string", "required": false, "description": "File types: dockerfile, compose, k8s, helm, terraform" },
+        { "name": "fix", "type": "boolean", "required": false, "description": "Auto-fix issues where possible" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "dependencies",
+      "action": "audit",
+      "description": "Audit dependencies and licenses",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["dependencies"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to audit (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "generate",
+      "action": "ci",
+      "description": "Generate CI pipeline configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["generate", "ci"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Project path (default: current directory)" },
+        { "name": "platform", "type": "string", "required": false, "description": "Platform: github, azure, gcp, hetzner" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Preview without writing files" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "deploy",
+      "action": "preview",
+      "description": "Get deployment recommendation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "baseArgs": ["deploy", "preview"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Project path (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "syncable",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sync-ctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sync-ctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install syncable-cli: cargo install syncable-cli"
+      },
+      "args": []
+    }
+  ]
+}

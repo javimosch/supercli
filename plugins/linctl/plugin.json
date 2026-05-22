@@ -1,0 +1,289 @@
+{
+  "name": "linctl",
+  "version": "0.1.0",
+  "description": "Command-line interface for the Linear API, built with Go and Cobra. Manage issues, projects, teams, users, comments, labels, and execute raw GraphQL queries.",
+  "source": "https://github.com/dorkitude/linctl",
+  "checks": [
+    { "type": "binary", "name": "linctl" }
+  ],
+  "install_guidance": {
+    "plugin": "linctl",
+    "binary": "linctl",
+    "check": "linctl --version",
+    "install_steps": [
+      "brew tap dorkitude/linctl",
+      "brew install linctl",
+      "Verify: linctl --version",
+      "supercli plugins install ./plugins/linctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "linctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print linctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linctl",
+      "resource": "auth",
+      "action": "setup",
+      "description": "Interactive authentication with Linear API key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["auth"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linctl",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["auth", "status"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linctl",
+      "resource": "user",
+      "action": "me",
+      "description": "Show current user profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["whoami"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linctl",
+      "resource": "issue",
+      "action": "list",
+      "description": "List all issues with optional filtering",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["issue", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "assignee", "type": "string", "required": false, "description": "Filter by assignee (use 'me' for yourself)" },
+        { "name": "state", "type": "string", "required": false, "description": "Filter by workflow state" },
+        { "name": "team", "type": "string", "required": false, "description": "Filter by team key" },
+        { "name": "cycle", "type": "string", "required": false, "description": "Filter by cycle (current or cycle ID)" },
+        { "name": "project", "type": "string", "required": false, "description": "Filter by project name" },
+        { "name": "sort", "type": "string", "required": false, "description": "Sort field (updated, created, etc.)" },
+        { "name": "newer-than", "type": "string", "required": false, "description": "Time filter (2_weeks_ago, 1_month_ago, all_time)" },
+        { "name": "include-completed", "type": "boolean", "required": false, "description": "Include canceled/completed items" },
+        { "name": "include-archived", "type": "boolean", "required": false, "description": "Include archived items" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "issue",
+      "action": "search",
+      "description": "Search issues using Linear's full-text index",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["issue", "search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query string" },
+        { "name": "team", "type": "string", "required": false, "description": "Filter by team key" },
+        { "name": "include-completed", "type": "boolean", "required": false, "description": "Include canceled/completed items" },
+        { "name": "include-archived", "type": "boolean", "required": false, "description": "Include archived items" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "issue",
+      "action": "get",
+      "description": "Get detailed information about a specific issue",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["issue", "get"],
+        "positionalArgs": ["id"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Issue ID (e.g., LIN-123)" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "issue",
+      "action": "create",
+      "description": "Create a new Linear issue",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["issue", "create"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "title", "type": "string", "required": true, "description": "Issue title" },
+        { "name": "description", "type": "string", "required": false, "description": "Issue description" },
+        { "name": "team", "type": "string", "required": false, "description": "Team key" },
+        { "name": "project", "type": "string", "required": false, "description": "Project name" },
+        { "name": "project-milestone", "type": "string", "required": false, "description": "Project milestone" },
+        { "name": "state", "type": "string", "required": false, "description": "Initial workflow state" },
+        { "name": "labels", "type": "string", "required": false, "description": "Comma-separated labels" },
+        { "name": "priority", "type": "integer", "required": false, "description": "Priority (0=None, 1=Urgent, 2=High, 3=Normal, 4=Low)" },
+        { "name": "delegate", "type": "string", "required": false, "description": "Delegate to agent" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "issue",
+      "action": "update",
+      "description": "Update an existing issue",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["issue", "update"],
+        "positionalArgs": ["id"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Issue ID (e.g., LIN-123)" },
+        { "name": "title", "type": "string", "required": false, "description": "New title" },
+        { "name": "description", "type": "string", "required": false, "description": "New description" },
+        { "name": "assignee", "type": "string", "required": false, "description": "Assignee email or 'me' or 'unassigned'" },
+        { "name": "state", "type": "string", "required": false, "description": "New workflow state" },
+        { "name": "priority", "type": "integer", "required": false, "description": "New priority (0=None, 1=Urgent, 2=High, 3=Normal, 4=Low)" },
+        { "name": "due-date", "type": "string", "required": false, "description": "Due date (YYYY-MM-DD) or empty string to remove" },
+        { "name": "project", "type": "string", "required": false, "description": "Project name or 'none' to remove" },
+        { "name": "project-milestone", "type": "string", "required": false, "description": "Project milestone or 'none' to remove" },
+        { "name": "labels", "type": "string", "required": false, "description": "Comma-separated labels" },
+        { "name": "clear-labels", "type": "boolean", "required": false, "description": "Remove all labels" },
+        { "name": "delegate", "type": "string", "required": false, "description": "Delegate to agent or 'none' to remove" },
+        { "name": "parent", "type": "string", "required": false, "description": "Parent issue ID or 'none' to remove" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "project",
+      "action": "list",
+      "description": "List all projects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["project", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "state", "type": "string", "required": false, "description": "Filter by state" },
+        { "name": "newer-than", "type": "string", "required": false, "description": "Time filter (1_month_ago, all_time)" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "team",
+      "action": "list",
+      "description": "List all teams",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["team", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "user",
+      "action": "list",
+      "description": "List all users",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["user", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "active", "type": "boolean", "required": false, "description": "Show only active users" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "graphql",
+      "action": "query",
+      "description": "Execute raw GraphQL query against Linear API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "baseArgs": ["graphql"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false, "description": "GraphQL query string" },
+        { "name": "file", "type": "string", "required": false, "description": "Read query from .graphql file" },
+        { "name": "variables", "type": "string", "required": false, "description": "JSON variables string" },
+        { "name": "variables-file", "type": "string", "required": false, "description": "Read variables from JSON file" }
+      ]
+    },
+    {
+      "namespace": "linctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to linctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linctl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install linctl: brew tap dorkitude/linctl && brew install linctl"
+      },
+      "args": []
+    }
+  ]
+}

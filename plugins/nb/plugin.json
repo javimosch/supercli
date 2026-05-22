@@ -1,0 +1,201 @@
+{
+  "name": "nb",
+  "version": "0.1.0",
+  "description": "Command line and local web note-taking, bookmarking, archiving, and knowledge base application with plain text storage, encryption, Git versioning, and Pandoc conversion. Supports Markdown, Org, LaTeX, and AsciiDoc formats.",
+  "source": "https://github.com/xwmx/nb",
+  "checks": [
+    { "type": "binary", "name": "nb" }
+  ],
+  "install_guidance": {
+    "plugin": "nb",
+    "binary": "nb",
+    "check": "nb --version",
+    "install_steps": [
+      "npm install -g nb.sh",
+      "Verify: nb --version",
+      "supercli plugins install ./plugins/nb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nb",
+      "resource": "note",
+      "action": "add",
+      "description": "Add a new note",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "content", "type": "string", "required": false, "description": "Note content (if not provided, opens editor)" },
+        { "name": "title", "type": "string", "required": false, "description": "Note title" },
+        { "name": "tags", "type": "string", "required": false, "description": "Comma-separated tags" },
+        { "name": "folder", "type": "string", "required": false, "description": "Folder to add note to" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "note",
+      "action": "list",
+      "description": "List notes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": [],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "folder", "type": "string", "required": false, "description": "Folder to list" },
+        { "name": "tags", "type": "string", "required": false, "description": "Filter by tags" },
+        { "name": "search", "type": "string", "required": false, "description": "Search query" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "note",
+      "action": "show",
+      "description": "Show a note",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["show"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Note ID or identifier" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "note",
+      "action": "edit",
+      "description": "Edit a note",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["edit"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Note ID or identifier" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "note",
+      "action": "delete",
+      "description": "Delete a note",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["delete"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Note ID or identifier" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "bookmark",
+      "action": "add",
+      "description": "Add a bookmark",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["bookmark:add"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to bookmark" },
+        { "name": "title", "type": "string", "required": false, "description": "Bookmark title" },
+        { "name": "tags", "type": "string", "required": false, "description": "Comma-separated tags" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "search",
+      "action": "query",
+      "description": "Search notes and bookmarks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query" },
+        { "name": "tags", "type": "string", "required": false, "description": "Filter by tags" }
+      ]
+    },
+    {
+      "namespace": "nb",
+      "resource": "notebook",
+      "action": "list",
+      "description": "List notebooks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "baseArgs": ["notebooks:"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nb: npm install -g nb.sh"
+      },
+      "args": []
+    }
+  ]
+}

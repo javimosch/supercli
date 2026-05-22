@@ -1,0 +1,239 @@
+{
+  "name": "sloc-guard",
+  "version": "0.1.0",
+  "description": "High-performance Rust CLI that enforces SLOC limits and directory structure rules to prevent code bloat. Actively prevents architectural decay by failing builds when thresholds are exceeded.",
+  "source": "https://github.com/doraemonkeys/sloc-guard",
+  "checks": [
+    { "type": "binary", "name": "sloc-guard" }
+  ],
+  "install_guidance": {
+    "plugin": "sloc-guard",
+    "binary": "sloc-guard",
+    "check": "sloc-guard --version",
+    "install_steps": [
+      "cargo install sloc-guard",
+      "Verify: sloc-guard --version",
+      "supercli plugins install ./plugins/sloc-guard --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sloc-guard",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sloc-guard version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "config",
+      "action": "init",
+      "description": "Initialize config with project type detection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "detect", "type": "boolean", "required": false, "description": "Auto-detect project type and generate config" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "codebase",
+      "action": "check",
+      "description": "Check codebase against SLOC and structure rules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "diff", "type": "string", "required": false, "description": "Check only files changed since specified branch/commit" },
+        { "name": "staged", "type": "boolean", "required": false, "description": "Check only staged files (pre-commit hooks)" },
+        { "name": "baseline", "type": "boolean", "required": false, "description": "Use baseline to grandfather existing violations" },
+        { "name": "update-baseline", "type": "boolean", "required": false, "description": "Create baseline from current violations" },
+        { "name": "ratchet", "type": "string", "required": false, "description": "Ratchet mode: warn, auto, strict" },
+        { "name": "suggest", "type": "boolean", "required": false, "description": "Provide split suggestions for large files" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format: text, json, sarif, markdown, html" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "stats",
+      "action": "summary",
+      "description": "Show project-level summary statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["stats", "summary"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": false, "description": "Output format: text, json, html" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "stats",
+      "action": "files",
+      "description": "Show top files by code lines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["stats", "files"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "top", "type": "integer", "required": false, "description": "Number of top files to show" },
+        { "name": "sort", "type": "string", "required": false, "description": "Sort by: code, total, comments" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "stats",
+      "action": "breakdown",
+      "description": "Show language or directory breakdown",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["stats", "breakdown"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "by-dir", "type": "boolean", "required": false, "description": "Breakdown by directory instead of language" },
+        { "name": "depth", "type": "integer", "required": false, "description": "Directory depth for breakdown" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "stats",
+      "action": "trend",
+      "description": "Show trend comparison with history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["stats", "trend"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "since", "type": "string", "required": false, "description": "Time period: 7d, 30d, etc." }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "stats",
+      "action": "history",
+      "description": "View historical snapshots",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["stats", "history"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "limit", "type": "integer", "required": false, "description": "Number of historical entries to show" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "stats",
+      "action": "report",
+      "description": "Generate comprehensive report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["stats", "report"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "format", "type": "string", "required": false, "description": "Output format: text, json, html" },
+        { "name": "output", "type": "string", "required": false, "description": "Output file path" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "snapshot",
+      "action": "record",
+      "description": "Record current state to history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["snapshot"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "explain",
+      "action": "rules",
+      "description": "Debug which rules apply to a specific path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "baseArgs": ["explain"],
+        "positionalArgs": ["path"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File or directory path to explain" }
+      ]
+    },
+    {
+      "namespace": "sloc-guard",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sloc-guard CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sloc-guard",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sloc-guard: cargo install sloc-guard"
+      },
+      "args": []
+    }
+  ]
+}

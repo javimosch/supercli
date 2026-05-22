@@ -1,0 +1,95 @@
+{
+  "name": "nyx",
+  "version": "0.1.0",
+  "description": "Lightweight Rust CLI vulnerability scanner with cross-language taint analysis. Detects security vulnerabilities across 10 programming languages with AST-level pattern matching, control-flow graph analysis, and cross-file taint tracking.",
+  "source": "https://github.com/elicpeter/nyx",
+  "checks": [
+    { "type": "binary", "name": "nyx" }
+  ],
+  "install_guidance": {
+    "plugin": "nyx",
+    "binary": "nyx",
+    "check": "nyx --version",
+    "install_steps": [
+      "cargo install nyx-scanner",
+      "Verify: nyx --version",
+      "supercli plugins install ./plugins/nyx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nyx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nyx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nyx",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nyx: cargo install nyx-scanner"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nyx",
+      "resource": "scan",
+      "action": "run",
+      "description": "Run security scan on repository with taint analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nyx",
+        "baseArgs": ["scan"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install nyx: cargo install nyx-scanner"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to scan (default: current directory)" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format: sarif, json, console" },
+        { "name": "fail-on", "type": "string", "required": false, "description": "Fail on severity: LOW, MEDIUM, HIGH, CRITICAL" },
+        { "name": "mode", "type": "string", "required": false, "description": "Engine profile: ast (fastest), balanced (default), deep" },
+        { "name": "engine-profile", "type": "string", "required": false, "description": "Engine depth profile: fast, balanced, deep" },
+        { "name": "index", "type": "string", "required": false, "description": "Index setting: on, off" },
+        { "name": "symex", "type": "boolean", "required": false, "description": "Enable symbolic execution" },
+        { "name": "backwards-analysis", "type": "boolean", "required": false, "description": "Enable demand-driven backwards taint" }
+      ]
+    },
+    {
+      "namespace": "nyx",
+      "resource": "ui",
+      "action": "serve",
+      "description": "Start browser UI for interactive security analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nyx",
+        "baseArgs": ["serve"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install nyx: cargo install nyx-scanner"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": false, "description": "Server port (default: 9700)" },
+        { "name": "host", "type": "string", "required": false, "description": "Server host (default: 127.0.0.1)" },
+        { "name": "no-browser", "type": "boolean", "required": false, "description": "Don't open browser automatically" }
+      ]
+    },
+    {
+      "namespace": "nyx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nyx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nyx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nyx: cargo install nyx-scanner"
+      },
+      "args": []
+    }
+  ]
+}

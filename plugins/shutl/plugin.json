@@ -1,0 +1,90 @@
+{
+  "name": "shutl",
+  "version": "0.1.0",
+  "description": "Command-line tool for organizing, managing, and executing scripts as commands. Automatically creates CLI commands from shell scripts with metadata-driven arguments and flags.",
+  "source": "https://github.com/k15r/shutl",
+  "checks": [
+    { "type": "binary", "name": "shutl" }
+  ],
+  "install_guidance": {
+    "plugin": "shutl",
+    "binary": "shutl",
+    "check": "shutl --version",
+    "install_steps": [
+      "brew tap k15r/shutl",
+      "brew install shutl",
+      "Verify: shutl --version",
+      "supercli plugins install ./plugins/shutl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shutl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shutl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shutl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install shutl: brew tap k15r/shutl && brew install shutl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shutl",
+      "resource": "script",
+      "action": "create",
+      "description": "Create a new script with optional editor and type",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shutl",
+        "baseArgs": ["new"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install shutl: brew tap k15r/shutl && brew install shutl"
+      },
+      "args": [
+        { "name": "location", "type": "string", "required": true, "description": "Directory relative to ~/.shutl" },
+        { "name": "name", "type": "string", "required": true, "description": "Script name (without .sh extension)" },
+        { "name": "editor", "type": "string", "required": false, "description": "Editor to use (defaults to $EDITOR or vim)" },
+        { "name": "type", "type": "string", "required": false, "description": "Script type: zsh, bash (default: zsh)" },
+        { "name": "no-edit", "type": "boolean", "required": false, "description": "Don't open script in editor after creation" }
+      ]
+    },
+    {
+      "namespace": "shutl",
+      "resource": "script",
+      "action": "edit",
+      "description": "Edit an existing script",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shutl",
+        "baseArgs": ["edit"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install shutl: brew tap k15r/shutl && brew install shutl"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command path components (e.g., subdir myscript)" },
+        { "name": "editor", "type": "string", "required": false, "description": "Editor to use (defaults to $EDITOR or vim)" }
+      ]
+    },
+    {
+      "namespace": "shutl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shutl CLI (for running user-defined scripts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shutl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shutl: brew tap k15r/shutl && brew install shutl"
+      },
+      "args": []
+    }
+  ]
+}

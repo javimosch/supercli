@@ -1,0 +1,85 @@
+{
+  "name": "rink",
+  "version": "0.1.0",
+  "description": "Unit-aware calculator with dimensionality analysis for physics and engineering calculations. Supports SI, CGS, natural, international customary, US customary, UK customary, and historical measurements with arbitrary precision math and currency conversions.",
+  "source": "https://github.com/tiffany352/rink-rs",
+  "checks": [
+    { "type": "binary", "name": "rink" }
+  ],
+  "install_guidance": {
+    "plugin": "rink",
+    "binary": "rink",
+    "check": "rink --version",
+    "install_steps": [
+      "cargo install rink",
+      "Verify: rink --version",
+      "supercli plugins install ./plugins/rink --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rink",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rink version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rink",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rink: cargo install rink"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rink",
+      "resource": "calc",
+      "action": "eval",
+      "description": "Evaluate unit conversion or calculation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rink",
+        "baseArgs": [],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rink: cargo install rink"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Unit conversion or calculation expression" }
+      ]
+    },
+    {
+      "namespace": "rink",
+      "resource": "calc",
+      "action": "interactive",
+      "description": "Start interactive unit calculator session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rink",
+        "baseArgs": [],
+        "passthrough": false,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install rink: cargo install rink"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rink",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rink CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rink",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rink: cargo install rink"
+      },
+      "args": []
+    }
+  ]
+}
