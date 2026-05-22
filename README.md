@@ -1,10 +1,11 @@
 <p align="center">
   <img src="https://img.shields.io/npm/v/superacli" alt="npm">
+  <img src="https://img.shields.io/badge/release-2026--05--14-blue" alt="Latest Release">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   <img src="https://img.shields.io/github/stars/javimosch/supercli?style=social" alt="Stars">
 </p>
 
-<h1 align="center">supercli ⎯ 3,200+ CLI Tools, One Command — and growing every day</h1>
+<h1 align="center">supercli ⎯ 3,300+ CLI Tools, One Command — and growing every day</h1>
 
 <p align="center">
   <b>Zero install.</b> Run any CLI tool with <code>npx supercli</code>.<br>
@@ -25,7 +26,7 @@
 
 **The problem:** Every CLI tool has different flags, different output formats, different install methods. You waste time learning syntax instead of getting work done. AI agents can't use most tools because output is unpredictable.
 
-**supercli fixes this.** 3,200+ tools. One interface. JSON out. Zero guesswork.
+**supercli fixes this.** 3,300+ tools. One interface. JSON out. Zero guesswork.
 
 ---
 
@@ -143,7 +144,23 @@ supercli aws cfn deploy --stack my-stack --json
 
 ---
 
-## 📦 3,200+ CLI Tools — Organized
+## 🔄 Keeping Plugins Updated
+
+Plugins are added daily — new tools, updated checksums, fresh metadata. Keep your local installation in sync:
+
+```bash
+# Check what's new (dry-run, no changes)
+supercli plugins update --check
+
+# Apply the latest plugins
+supercli plugins update
+```
+
+> **Latest npm release:** v1.15.0 (2026-05-14) — published [8 days ago]. New versions ship multiple times per week.
+
+---
+
+## 📦 3,300+ CLI Tools — Organized
 
 | Category | Count | Examples |
 |----------|-------|---------|
