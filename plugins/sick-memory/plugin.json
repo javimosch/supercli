@@ -1,0 +1,206 @@
+{
+  "name": "sick-memory",
+  "version": "0.1.0",
+  "description": "File-based memory system for AI coding agents with centralized storage and git-based scoping",
+  "source": "https://github.com/javimosch/sick-memory",
+  "checks": [
+    { "type": "binary", "name": "sick-memory" }
+  ],
+  "install_guidance": {
+    "plugin": "sick-memory",
+    "binary": "sick-memory",
+    "check": "sick-memory --version",
+    "install_steps": [
+      "cd ~/ai/sick-memory && go build -o sick-memory .",
+      "cp ~/ai/sick-memory/sick-memory ~/.local/bin/",
+      "Verify: sick-memory --version",
+      "supercli plugins install ./plugins/sick-memory --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sick-memory",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sick-memory version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "memory",
+      "action": "init",
+      "description": "Initialize memory system for current project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "--memory-dir", "type": "string", "required": false, "description": "Override memory directory" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "memory",
+      "action": "remember",
+      "description": "Add a memory to the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["remember"],
+        "positionalArgs": ["content"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "content", "type": "string", "required": true, "description": "Memory content to store" },
+        { "name": "--type", "type": "string", "required": false, "description": "Memory type (user, feedback, project, reference)" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "memory",
+      "action": "recall",
+      "description": "Retrieve relevant memories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["recall"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false, "description": "Search query for memories" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "memory",
+      "action": "list",
+      "description": "List all memories in the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "memory",
+      "action": "status",
+      "description": "Show memory system status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["status"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "config",
+      "action": "show",
+      "description": "Show configuration and storage location",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["config"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "bridge",
+      "action": "generate",
+      "description": "Generate agent-specific integration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["bridge"],
+        "positionalArgs": ["agent"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "agent", "type": "string", "required": true, "description": "Agent name (claude-code, opencode, copilot)" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "edit",
+      "action": "run",
+      "description": "Edit a memory by ID with new content",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["edit"],
+        "positionalArgs": ["id", "content"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Memory ID to edit" },
+        { "name": "content", "type": "string", "required": true, "description": "New memory content" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sick-memory",
+      "resource": "delete",
+      "action": "run",
+      "description": "Delete a memory by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "baseArgs": ["delete"],
+        "positionalArgs": ["id"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Memory ID to delete" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sick-memory CLI via /sm command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sick-memory",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sick-memory: cd ~/ai/sick-memory && go build -o sick-memory . && cp sick-memory ~/.local/bin/"
+      },
+      "args": []
+    }
+  ]
+}
