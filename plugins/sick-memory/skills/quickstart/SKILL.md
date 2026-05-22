@@ -194,6 +194,50 @@ sc sick-memory bridge generate copilot
 ```
 Creates `.copilot/settings.json` with Copilot configuration.
 
+## Caveats & Pitfalls
+
+### Plan Content Before Saving
+There is **no append or patch** — edit replaces the entire content. If you save incomplete content, you must re-supply the full corrected text. Always construct the full content string before calling `remember`.
+
+### Always Use `sc sick-memory` Over Raw Binary
+The raw `sick-memory` binary may open `vim` interactively for edit commands. The supercli plugin (`sc sick-memory edit run`) handles argument passing correctly and stays non-interactive.
+
+### Edit/Delete May Not Be Available in Older Binaries
+Check the binary version (`sick-memory --version`). Edit/delete support was added later — verify with `sick-memory --help` before relying on them.
+
+### Delete May Fail Silently for Some IDs
+`sick-memory list` reports a cached index. A memory shown in the list may already be deleted from disk. If `sc sick-memory delete run <id>` returns an integration error, check the filesystem directly at `~/.sick-memory/projects/<sanitized-git-root>/memory/`.
+
+### `sc` Command Structure for Edit/Delete
+- Edit: `sc sick-memory edit run <id> "<content>"` — content is a positional arg, not a flag
+- Delete: `sc sick-memory delete run <id>` — requires the `run` action subcommand
+- Use `--json` flag for machine-readable confirmation
+
+### No Multi-Line Content from CLI
+Content must be passed as a single CLI argument. For long content, construct it in a script or use `sc sick-memory edit run` with a heredoc-style content string. Escaping special characters (quotes, newlines) is the caller's responsibility.
+
+### YAML Frontmatter Is Auto-Generated
+You cannot independently set `name`, `description`, `type`, or `created` fields. These are inferred from the content string and the `--type` option. The first line of content becomes the `description` field.
+
+### `sick-memory list` May Return Stale Index
+The list command returns cached filenames. If a file was removed from disk externally (e.g., `rm` or a crash), it may still appear in `list` output. Always cross-reference with the filesystem if unsure.
+
+### Search Bugs (Fixed in v0.1.0)
+
+The following bugs were identified and fixed in the binary (source at `~/ai/sick-memory/`):
+
+- **TF-IDF negative scores for common terms**: `DocFreq` was counting total occurrences instead of unique documents, making IDF negative when `df > DocCount`. Fixed by tracking per-document deduplication with a `seen` set.
+- **`--json` flag leaked into query**: `sick-memory recall <query> --json` included `--json` in the search string. Fixed by filtering flags from `os.Args[2:]` in `handleRecall`.
+- **Search index not cached on recall**: `loadSearchIndex` built the index from scratch every time but never saved it. Fixed by calling `saveSearchIndex` after building in `loadSearchIndex`.
+- **Multi-word queries failed for non-exact substrings**: Queries like `"UI design"` didn't match content containing `"UI/Design"`. Fixed by adding a word-overlap fallback that scores by individual keyword substring presence.
+
+### Command Structure
+- `sc sick-memory memory recall <query> --json` — via sc plugin, query as positional arg
+- `sc sick-memory memory recall --query <query> --json` — via sc plugin, query as named flag
+- `sick-memory recall <query>` — direct binary call
+- `sick-memory recall` (no query) — returns all memories, works with `--json`
+- If search index is stale, delete `search_index.json` manually to force rebuild
+
 ## Learning This Skill
 
 Agents can learn this skill by using:
