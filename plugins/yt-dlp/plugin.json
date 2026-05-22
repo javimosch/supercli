@@ -28,12 +28,37 @@
     },
     {
       "namespace": "yt-dlp",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to yt-dlp CLI",
+      "resource": "download",
+      "action": "video",
+      "description": "Download video (passthrough: yt-dlp --quiet --no-warnings <URL> [options])",
       "adapter": "process",
-      "adapterConfig": {"command": "yt-dlp", "passthrough": true, "missingDependencyHelp": "Install yt-dlp: curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && chmod +x /usr/local/bin/yt-dlp"},
-      "args": []
+      "adapterConfig": {
+        "command": "yt-dlp",
+        "baseArgs": ["--quiet", "--no-warnings"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install yt-dlp: curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && chmod +x /usr/local/bin/yt-dlp"
+      },
+      "args": [
+        {"name": "args", "type": "string", "required": false, "description": "URL and additional yt-dlp options"}
+      ]
+    },
+    {
+      "namespace": "yt-dlp",
+      "resource": "info",
+      "action": "video",
+      "description": "Get video metadata as JSON (passthrough: yt-dlp -j --no-warnings <URL>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yt-dlp",
+        "baseArgs": ["-j", "--no-warnings"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install yt-dlp: curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && chmod +x /usr/local/bin/yt-dlp"
+      },
+      "args": [
+        {"name": "args", "type": "string", "required": false, "description": "Video URL"}
+      ]
     }
   ]
 }
