@@ -410,7 +410,7 @@ async function main() {
           first_steps: [
             "supercli --help-json",
             'supercli discover --intent "<task>" --json',
-            "supercli ask \"<query>\" --json",
+            "supercli plugins explore --name <tool> --json",
             "supercli plugins learn <name> --json",
             "supercli plugins update --json",
             "supercli commands --query <keyword> --limit 50 --json",

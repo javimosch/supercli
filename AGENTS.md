@@ -1,5 +1,39 @@
 # supercli Agent Instructions
 
+## Using SuperCLI (for agents)
+
+When working with supercli, use the CLI itself for discovery. Do NOT search
+the filesystem (`plugins/`, `grep`, `glob`) — the CLI has built-in filters.
+
+```bash
+# Start here — get bootstrap guidance
+sc --json
+
+# Explore plugins by name/description (instead of grepping plugin.json files)
+sc plugins explore --name <query> --json
+
+# Filter by tags
+sc plugins explore --tags <tag1>,<tag2> --json
+
+# Learn about a plugin
+sc plugins learn <name> --json
+
+# Find plugins for a task
+sc discover --intent "<task>" --json
+
+# List all available commands
+sc commands --query <keyword> --limit 50 --json
+
+# Inspect a command's schema
+sc inspect <namespace> <resource> <action> --json
+```
+
+**Key rules:**
+- `sc plugins explore --name <query>` — never grep/glob the `plugins/` directory
+- `sc discover --intent "<task>"` — never manually search plugin.json files
+- `sc --json` first — the CLI guides itself from there
+- `--json` flag for machine-readable output in all commands
+
 ## Adding a New Bundled Plugin
 
 When adding a new bundled plugin, create files ONLY inside `plugins/<name>/`.

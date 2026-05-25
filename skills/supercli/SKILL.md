@@ -15,25 +15,26 @@ Instead of running raw commands, use:
 supercli <namespace> <resource> <action> [--flags]
 ```
 
-## Before Running Raw Commands
+## Agent Rules (CLI-first discovery)
 
-When you need to perform a task, ALWAYS check supercli first:
+Never search the filesystem (`plugins/`, `grep`, `glob`) to find plugins or
+commands. Use the CLI itself — it has built-in filters:
 
 ```bash
-# 1. Discover capabilities for a task
-supercli discover --intent "send email"
+# Start here
+supercli --json
 
-# 2. Learn about a plugin
+# Find plugins by name (instead of grepping plugin.json files)
+supercli plugins explore --name <query>
+
+# Learn about a plugin
 supercli plugins learn <plugin-name>
 
-# 3. Inspect a specific command
-supercli inspect <namespace> <resource> <action>
+# Find plugins for a task
+supercli discover --intent "<task>"
 
-# 4. Plan before executing
-supercli plan <namespace> <resource> <action> [--flags]
-
-# 5. Execute
-supercli <namespace> <resource> <action> [--flags]
+# List all commands matching a keyword
+supercli commands --query <keyword> --limit 50 --json
 ```
 
 ## Workflow
