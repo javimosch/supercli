@@ -70,8 +70,9 @@ describe("executor", () => {
       }
     }
 
-    mockAdapters.process.execute.mockResolvedValue({ data: "result1" })
-    mockAdapters.process.execute.mockResolvedValue({ data: "result2" })
+    mockAdapters.process.execute
+      .mockResolvedValueOnce({ data: "result1" })
+      .mockResolvedValueOnce({ data: "result2" })
 
     const result = await execute(workflow, { initial: "flag" }, context)
 
@@ -218,16 +219,21 @@ describe("executor", () => {
   })
 
   test("handles custom adapter loading", async () => {
+    const fs = require("fs")
     const cmd = { adapter: "custom-adapter", namespace: "test", resource: "res", action: "act" }
-    const mockCustom = { execute: jest.fn().mockResolvedValue({ ok: true }) }
     
-    // We need to mock path.resolve and require
-    // Actually, we can just mock the whole custom adapter path
-    jest.doMock(path.resolve("adapters", "custom-adapter"), () => mockCustom, { virtual: true })
+    // Create a real custom adapter file since executeCustomAdapter uses fs + vm2
+    const adapterDir = path.join(process.cwd(), ".supercli", "adapters")
+    fs.mkdirSync(adapterDir, { recursive: true })
+    const adapterPath = path.join(adapterDir, "custom-adapter.js")
+    fs.writeFileSync(adapterPath, `function execute(cmd, flags, context) { return { ok: true } }`)
     
-    const result = await execute(cmd, {}, {})
-    expect(result).toEqual({ ok: true })
-    expect(mockCustom.execute).toHaveBeenCalled()
+    try {
+      const result = await execute(cmd, {}, {})
+      expect(result).toEqual({ ok: true })
+    } finally {
+      fs.rmSync(path.join(process.cwd(), ".supercli"), { recursive: true, force: true })
+    }
   })
 
   test("fetches missing command from server during workflow", async () => {

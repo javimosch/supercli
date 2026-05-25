@@ -86,6 +86,7 @@ async function handlePluginsCommand(options) {
       .map(t => t.trim())
       .filter(Boolean)
     const name = flags.name ? String(flags.name).trim() : ""
+    const nameOnly = flags["name-only"] === true
     const hasLearnFilter = parseBooleanFlag("has-learn", flags["has-learn"])
     if (flags["has-learn"] !== undefined && hasLearnFilter === null) return true
 
@@ -103,8 +104,9 @@ async function handlePluginsCommand(options) {
       return true
     }
 
-    const limit = flags.limit === undefined ? null : Number(flags.limit)
-    if (flags.limit !== undefined && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
+    const limitExplicit = flags.limit !== undefined
+    const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50)
+    if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
       outputError({
         code: 85,
         type: "invalid_argument",
@@ -115,8 +117,9 @@ async function handlePluginsCommand(options) {
     }
 
     const installedSet = new Set(listInstalledPlugins().map(p => p.name))
+    const hadFilters = !!(name || tags.length || hasLearnFilter !== null || installedFilter !== null || sourceFilter)
 
-    let plugins = listRegistryPlugins({ name, tags }).map(p => ({
+    let plugins = listRegistryPlugins({ name, nameOnly, tags }).map(p => ({
       name: p.name,
       description: p.description,
       tags: p.tags,
@@ -139,6 +142,14 @@ async function handlePluginsCommand(options) {
     const total = plugins.length
     if (limit !== null) plugins = plugins.slice(0, limit)
 
+    const suggestions = total === 0 && hadFilters
+      ? [
+          "Try a broader search term or remove some filters",
+          'Use --tags to narrow by category instead',
+          'Try: sc commands --query <keyword> --json'
+        ]
+      : []
+
     if (humanMode) {
       console.log("\n  ⚡ Plugin Registry\n")
       outputHumanTable(plugins, [
@@ -149,6 +160,10 @@ async function handlePluginsCommand(options) {
         { key: "tags", label: "Tags" },
         { key: "description", label: "Description" }
       ])
+      if (suggestions.length > 0) {
+        console.log("  💡 No plugins matched your filters.")
+        suggestions.forEach(s => console.log("     " + s))
+      }
       console.log("")
     } else {
       output({
@@ -162,7 +177,8 @@ async function handlePluginsCommand(options) {
           installed: installedFilter,
           source: sourceFilter,
           limit: limit === null ? null : limit
-        }
+        },
+        ...(suggestions.length > 0 ? { suggestions } : {})
       })
     }
     return true
@@ -241,7 +257,39 @@ async function handlePluginsCommand(options) {
     return true
   }
 
-  outputError({ code: 85, type: "invalid_argument", message: "Unknown plugins subcommand. Use: list, explore, install, remove, show, doctor, learn, update", recoverable: false })
+  if (humanMode) {
+    console.log("\n  ⚡ Plugins — available subcommands:\n")
+    const rows = [
+      { cmd: "list", desc: "List installed plugins" },
+      { cmd: "explore", desc: "Browse plugin registry (--name, --tags, --limit)" },
+      { cmd: "install <name|path>", desc: "Install a plugin" },
+      { cmd: "install --git <repo>", desc: "Install from git repository" },
+      { cmd: "remove <name>", desc: "Remove a plugin" },
+      { cmd: "show <name>", desc: "Show plugin details" },
+      { cmd: "doctor [name]", desc: "Check plugin health" },
+      { cmd: "learn <name>", desc: "View plugin documentation" },
+      { cmd: "update", desc: "Check/apply plugin updates" },
+    ]
+    outputHumanTable(rows, [
+      { key: "cmd", label: "Command" },
+      { key: "desc", label: "Purpose" },
+    ])
+    console.log("")
+  } else {
+    output({
+      subcommands: [
+        { name: "list", description: "List installed plugins" },
+        { name: "explore", description: "Browse plugin registry (--name, --tags, --limit)" },
+        { name: "install", description: "Install a plugin (name/path or --git <repo>)" },
+        { name: "remove", description: "Remove a plugin" },
+        { name: "show", description: "Show plugin details" },
+        { name: "doctor", description: "Check plugin health" },
+        { name: "learn", description: "View plugin documentation" },
+        { name: "update", description: "Check/apply plugin updates" },
+      ],
+      usage: "sc plugins <subcommand> [--flags]"
+    })
+  }
   return true
 }
 

@@ -145,6 +145,7 @@ function mergedRegistryPlugins() {
 
 function listRegistryPlugins(filters = {}) {
   const nameQuery = (filters.name || "").toLowerCase().trim()
+  const nameOnly = filters.nameOnly === true
   const tagQueries = (filters.tags || [])
     .map(t => String(t || "").toLowerCase().trim())
     .filter(Boolean)
@@ -152,7 +153,9 @@ function listRegistryPlugins(filters = {}) {
   return mergedRegistryPlugins()
     .filter(entry => {
       if (nameQuery) {
-        const text = `${entry.name} ${entry.description}`.toLowerCase()
+        const text = nameOnly
+          ? `${entry.name}`.toLowerCase()
+          : `${entry.name} ${entry.description}`.toLowerCase()
         if (!text.includes(nameQuery)) return false
       }
 
