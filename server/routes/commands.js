@@ -77,7 +77,7 @@ async function getAllCommands() {
   const storage = getStorage()
   const keys = await storage.listKeys("command:")
   const commands = await Promise.all(keys.map(k => storage.get(k)))
-  return commands.sort((a, b) => a._id.localeCompare(b._id))
+  return commands.filter(Boolean).sort((a, b) => a._id.localeCompare(b._id))
 }
 
 // GET /api/commands

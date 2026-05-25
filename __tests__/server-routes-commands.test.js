@@ -38,6 +38,20 @@ describe("server routes - commands", () => {
     expect(res.json).toHaveBeenCalled()
   })
 
+  test("GET / filters null results from storage", async () => {
+    mockStorage.listKeys.mockResolvedValue(["command:a", "command:b", "command:c"])
+    mockStorage.get.mockImplementation(key => {
+      if (key === "command:a") return Promise.resolve({ _id: "command:a", namespace: "a" })
+      if (key === "command:b") return Promise.resolve(null)
+      if (key === "command:c") return Promise.resolve({ _id: "command:c", namespace: "c" })
+    })
+    await getHandler(commandsRouter, "get", "/")({ query: { format: "json" }, headers: {} }, res)
+    expect(res.json).toHaveBeenCalled()
+    const result = res.json.mock.calls[0][0]
+    expect(result).toHaveLength(2)
+    expect(result.map(c => c._id)).toEqual(["command:a", "command:c"])
+  })
+
   test("POST / success", async () => {
     await getHandler(commandsRouter, "post", "/")({
       body: {
