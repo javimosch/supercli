@@ -6,7 +6,7 @@ jest.mock("../server/services/pluginsService")
 
 function getHandler(router, method, path) {
   const route = router.stack.find(s => s.route && s.route.path === path && s.route.methods[method])
-  return route ? route.route.stack[0].handle : null
+  return route ? route.route.stack[route.route.stack.length - 1].handle : null
 }
 
 function multipartReq(fields, file) {
