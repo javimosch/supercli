@@ -114,4 +114,8 @@ async function start() {
   }
 }
 
-start();
+module.exports = { app, start };
+
+if (process.env.NODE_ENV !== 'test') {
+  start();
+}

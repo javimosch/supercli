@@ -11,6 +11,11 @@ jest.mock("../server/storage/adapter", () => ({
   getStorage: jest.fn(() => mockStorage)
 }))
 
+jest.mock("../server/services/pluginResourceService", () => ({
+  syncPluginResources: jest.fn().mockResolvedValue({ removedMcp: [], removedSpecs: [], errors: [] }),
+  registerAllPluginResources: jest.fn().mockResolvedValue({ plugins: {}, totalErrors: 0, registeredMcp: 0, registeredSpecs: 0 })
+}))
+
 jest.mock("express", () => {
   const mApp = {
     use: jest.fn(),
@@ -50,17 +55,19 @@ describe("server app", () => {
     jest.restoreAllMocks()
   })
 
-  test("initializes app and starts listening", () => {
-    require("../server/app")
+  test("initializes app and starts listening", async () => {
+    const { start } = require("../server/app")
+    await start()
     expect(mockApp.listen).toHaveBeenCalled()
   })
 
-  test("handles start-up error", () => {
+  test("handles start-up error", async () => {
     const { getStorage } = require("../server/storage/adapter")
     getStorage.mockImplementationOnce(() => { throw new Error("fatal") })
     const mockExit = jest.spyOn(process, "exit").mockImplementation(() => {})
     
-    require("../server/app")
+    const { start } = require("../server/app")
+    await start()
     
     expect(mockExit).toHaveBeenCalledWith(1)
     mockExit.mockRestore()
