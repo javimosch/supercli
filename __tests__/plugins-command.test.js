@@ -123,6 +123,7 @@ describe("plugins-command", () => {
 
     expect(listRegistryPlugins).toHaveBeenCalledWith({
       name: "query",
+      nameOnly: false,
       tags: ["t1", "t2"]
     })
     expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
@@ -299,13 +300,18 @@ describe("plugins-command", () => {
     expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85 }))
   })
 
-  test("unknown subcommand", async () => {
+  test("unknown subcommand shows help", async () => {
     await handlePluginsCommand({
       positional: ["plugins", "unknown"],
+      humanMode: false,
+      output: mockOutput,
+      outputHumanTable: mockOutputHumanTable,
       outputError: mockOutputError
     })
-    expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({
-      code: 85
+    expect(mockOutputError).not.toHaveBeenCalled()
+    expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+      subcommands: expect.any(Array),
+      usage: expect.any(String)
     }))
   })
 })
