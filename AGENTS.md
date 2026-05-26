@@ -147,6 +147,93 @@ No edits to any file outside `plugins/mytool/` are needed.
 - Follow existing code conventions
 - Never commit secrets or credentials
 
+## sc-zig Release Process
+
+### Manual Release (Current - Recommended)
+
+The manual release process is simple, reliable, and currently recommended:
+
+```bash
+# 1. Build all platform binaries
+cd supercli-zig-cli
+bash build-release.sh
+
+# 2. Create GitHub release with all assets
+gh release create v0.1.1-zig --title "SuperCLI Zig v0.1.1" \
+  supercli-zig-cli/zig-out/release/sc-zig-linux-amd64 \
+  supercli-zig-cli/zig-out/release/sc-zig-linux-arm64 \
+  supercli-zig-cli/zig-out/release/sc-zig-darwin-amd64 \
+  supercli-zig-cli/zig-out/release/sc-zig-darwin-arm64 \
+  supercli-zig-cli/install.sh
+
+# 3. Update install.sh version if needed (optional)
+# The install.sh VERSION variable should match the release tag
+```
+
+### Auto-Release Workflow (Future)
+
+An automated GitHub Actions workflow is configured at `.github/workflows/sc-zig-release.yml`:
+
+- **Trigger**: Tags matching `v*-zig` pattern (e.g., `v0.1.0-zig`)
+- **Builds**: 4 platforms (Linux/macOS, AMD64/ARM64)
+- **Uploads**: 5 assets (4 binaries + install.sh)
+- **Auto-updates**: install.sh version
+
+**Current Status**: Workflow is properly configured but GitHub Actions may not trigger on the first few tag pushes after a workflow is added (known GitHub behavior). Use manual releases until auto-release stabilizes.
+
+**Usage when working**:
+```bash
+# Create and push tag
+git tag v0.1.1-zig
+git push origin v0.1.1-zig
+# GitHub Actions will handle everything automatically (when stable)
+```
+
+### Release Assets
+
+| Asset | Platform | Architecture |
+|-------|----------|--------------|
+| sc-zig-linux-amd64 | Linux | x86_64 |
+| sc-zig-linux-arm64 | Linux | ARM64 |
+| sc-zig-darwin-amd64 | macOS | Intel |
+| sc-zig-darwin-arm64 | macOS | Apple Silicon |
+| install.sh | All | Installation script |
+
+### Rollback Procedure
+
+If a release has critical issues:
+
+```bash
+# 1. Delete the GitHub release
+gh release delete v0.1.1-zig
+
+# 2. Delete the git tag locally and remotely
+git tag -d v0.1.1-zig
+git push origin :refs/tags/v0.1.1-zig
+
+# 3. Fix the issue
+git add .
+git commit -m "fix: critical issue"
+
+# 4. Create fix release
+git tag v0.1.2-zig
+git push origin v0.1.2-zig
+```
+
+### Version Tagging Convention
+
+- **Format**: `vX.Y.Z-zig` (e.g., `v0.1.0-zig`, `v0.1.1-zig`)
+- **Pattern**: Semantic versioning with `-zig` suffix
+- **Purpose**: Distinguishes Zig CLI releases from main project releases
+
+### Documentation
+
+See `supercli-zig-cli/docs/auto-release-plan.md` for complete release workflow documentation, including:
+- Detailed workflow steps
+- Edge cases and error handling
+- Security considerations
+- Future enhancement plans
+
 ## Codebase Exploration
 
 When exploring or preparing context from a codebase for LLM consumption, use **yek** to serialize files efficiently.
