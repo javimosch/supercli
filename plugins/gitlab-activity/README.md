@@ -51,11 +51,7 @@ gitlab-activity-cli me --json
 
 ## Token Configuration
 
-Auto-detects tokens from `~/.gitlab/`:
-- `jar-token` → gitlab.com
-- `geored` → git.geored.fr
-
-For custom instances, specify both `-instance` and `-token`.
+Auto-detects tokens from `~/.gitlab/` directory. For custom instances, specify both `-instance` and `-token`.
 
 ## Options
 

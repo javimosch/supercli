@@ -13,56 +13,52 @@ Retrieve GitLab user activity for agent consumption with structured output and m
 
 ### Get current user's activity (last 7 days)
 ```bash
-gitlab-activity-cli me
+gitlab-activity-cli me --instance https://gitlab.com --token ~/.gitlab/token
 ```
 
 ### Get activity from specific GitLab instance
 ```bash
-gitlab-activity-cli me --instance https://git.geored.fr
+gitlab-activity-cli me --instance https://git.example.com --token ~/.gitlab/token
 ```
 
 ### Get activity for specific time range
 ```bash
-gitlab-activity-cli me --days 2
-gitlab-activity-cli me --since 2026-05-21 --until 2026-05-22
+gitlab-activity-cli me --days 2 --instance https://gitlab.com --token ~/.gitlab/token
+gitlab-activity-cli me --since 2026-05-21 --until 2026-05-22 --instance https://gitlab.com --token ~/.gitlab/token
 ```
 
 ### Filter by project
 ```bash
-gitlab-activity-cli me --project georedv3
+gitlab-activity-cli me --project myproject --instance https://gitlab.com --token ~/.gitlab/token
 ```
 
 ### Get activity for specific user
 ```bash
-gitlab-activity-cli user jarancibia --days 3
+gitlab-activity-cli user username --days 3 --instance https://gitlab.com --token ~/.gitlab/token
 ```
 
 ## Machine-Readable Output
 
 ### JSON format for parsing
 ```bash
-gitlab-activity-cli me --json
+gitlab-activity-cli me --json --instance https://gitlab.com --token ~/.gitlab/token
 ```
 
 Returns structured JSON with version field for schema stability:
 ```json
 {
   "version": "1.0",
-  "user": "jarancibia",
-  "instance": "https://git.geored.fr",
+  "user": "username",
+  "instance": "https://gitlab.com",
   "period": {"days": 7},
   "total_events": 8,
   "projects": [...]
 }
 ```
 
-## Token Auto-Detection
+## Token Configuration
 
-The CLI automatically detects GitLab instances from `~/.gitlab/`:
-- `jar-token` → gitlab.com
-- `geored` → git.geored.fr
-
-Custom instances require explicit `-instance` and `-token` flags.
+Both `--instance` and `--token` flags are required for all operations.
 
 ## Exit Codes for Automation
 - `0` - Success
@@ -75,18 +71,18 @@ Custom instances require explicit `-instance` and `-token` flags.
 
 ### Check if user has activity today
 ```bash
-gitlab-activity-cli me --days 1 --json | jq '.total_events > 0'
+gitlab-activity-cli me --days 1 --json --instance https://gitlab.com --token ~/.gitlab/token | jq '.total_events > 0'
 ```
 
 ### Get commit messages from specific project
 ```bash
-gitlab-activity-cli me --project printerbot --json | \
+gitlab-activity-cli me --project myproject --json --instance https://gitlab.com --token ~/.gitlab/token | \
   jq -r '.projects[].activity[] | select(.push_data.commit_title != "") | .push_data.commit_title'
 ```
 
 ### Monitor daily activity count
 ```bash
-gitlab-activity-cli me --days 1 --json | jq '.total_events'
+gitlab-activity-cli me --days 1 --json --instance https://gitlab.com --token ~/.gitlab/token | jq '.total_events'
 ```
 
 ## Notes
