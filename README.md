@@ -182,6 +182,25 @@ supercli plugins update
 
 ## 📦 Install
 
+### Option 1: Zig Version (Fast, Single Binary)
+
+```bash
+# Quick install (curl)
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+
+# Install and replace Node.js version
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --replace
+```
+
+**Why Zig?**
+- ✅ No Node.js startup overhead
+- ✅ Single static binary (250KB)
+- ✅ Reads same `~/.supercli/plugins/plugins.lock.json`
+- ✅ Progressive adoption: co-exists with Node.js version
+- ✅ Easy revert: `npm uninstall -g supercli && npm install -g supercli`
+
+### Option 2: Node.js Version (npx/npm)
+
 ```bash
 # Run immediately (no install)
 npx supercli uuid self generate
@@ -189,6 +208,38 @@ npx supercli uuid self generate
 # Install globally
 npm install -g superacli
 supercli uuid self generate
+```
+
+**Why Node.js?**
+- ✅ Full feature parity (MCP, server, HTTP adapter)
+- ✅ Plugin installation from registry
+- ✅ Ecosystem integration
+
+### Progressive Adoption
+
+Both versions read the same plugin storage. Try the Zig version first:
+
+```bash
+# Install Zig version as sc-zig (co-exists with Node.js sc)
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+
+# Test it
+sc-zig --version
+
+# If you like it, replace Node.js sc:
+sc-zig install-as-sc
+sudo ln -sf /usr/local/bin/sc-zig /usr/local/bin/sc
+
+# To go back to Node.js:
+npm uninstall -g supercli
+npm install -g supercli
+```
+
+**Check which version you have:**
+```bash
+sc --version
+# Zig version shows: SuperCLI (Zig) v0.1.0
+# Node.js version shows different info
 ```
 
 ---
