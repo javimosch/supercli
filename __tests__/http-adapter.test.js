@@ -115,4 +115,63 @@ describe("http adapter", () => {
     await expect(execute({ adapterConfig: { url: "u" } }, {}, {}))
       .rejects.toThrow(/HTTP request failed: 400 Bad Request/)
   })
+
+  test("throws if path placeholders remain unresolved", async () => {
+    await expect(execute({
+      adapterConfig: { url: "https://api.test/users/{id}/profile/{section}" }
+    }, { id: "123" }, {}))
+      .rejects.toThrow(/Missing required path parameters: section/)
+  })
+
+  test("injects Content-Type: application/json if body/bodyTemplate present", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => "application/json" },
+      json: () => Promise.resolve({ ok: true })
+    })
+
+    await execute({
+      adapterConfig: {
+        url: "https://api.test/users",
+        method: "POST",
+        body: { fixed: true }
+      }
+    }, {}, {})
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.test/users",
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          "Content-Type": "application/json"
+        })
+      })
+    )
+  })
+
+  test("does not overwrite user-supplied Content-Type header", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => "application/json" },
+      json: () => Promise.resolve({ ok: true })
+    })
+
+    await execute({
+      adapterConfig: {
+        url: "https://api.test/users",
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: { fixed: true }
+      }
+    }, {}, {})
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.test/users",
+      expect.objectContaining({
+        headers: expect.objectContaining({
+          "content-type": "application/x-www-form-urlencoded"
+        })
+      })
+    )
+  })
 })
+

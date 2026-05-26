@@ -304,4 +304,36 @@ describe("executor", () => {
       type: "resource_not_found"
     })
   })
+
+  test("workflow step array output does not pollute next step flags", async () => {
+    const workflow = {
+      type: "workflow",
+      steps: [
+        "ns.res.act1",
+        "ns.res.act2"
+      ]
+    }
+    
+    const context = {
+      config: {
+        commands: [
+          { namespace: "ns", resource: "res", action: "act1", adapter: "process" },
+          { namespace: "ns", resource: "res", action: "act2", adapter: "process" }
+        ]
+      }
+    }
+
+    mockAdapters.process.execute
+      .mockResolvedValueOnce(["array-val-1", "array-val-2"])
+      .mockResolvedValueOnce({ ok: true })
+
+    await execute(workflow, {}, context)
+
+    // The second step should NOT be called with numeric indices '0' or '1' as keys
+    expect(mockAdapters.process.execute).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.not.objectContaining({ "0": "array-val-1", "1": "array-val-2" }),
+      expect.anything()
+    )
+  })
 })

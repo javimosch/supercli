@@ -76,7 +76,7 @@ async function executeWorkflow(workflow, flags, context, steps) {
 
     // Merge flags + explicit step args + previous output as context
     const mergedFlags = { ...flags, ...stepArgs }
-    if (prevOutput && typeof prevOutput === "object") {
+    if (prevOutput && typeof prevOutput === "object" && !Array.isArray(prevOutput)) {
       for (const [k, v] of Object.entries(prevOutput)) {
         if (mergedFlags[k] === undefined && typeof v !== "object") {
           mergedFlags[k] = v
