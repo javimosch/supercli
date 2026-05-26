@@ -28,86 +28,81 @@
       "namespace": "agentmemory-cli",
       "resource": "memory",
       "action": "save",
-      "description": "Save a memory (usage: save --text <text> [--project <p>] [--tags <t>])",
+      "description": "Save a memory. Usage: sc agentmemory-cli memory save --text <text> [--project <p>] [--tags <a,b>] [--json]",
       "adapter": "process",
       "adapterConfig": {
         "command": "agentmemory-cli",
-        "baseArgs": [
-          "save"
-        ],
+        "baseArgs": ["save"],
         "cwd": "invoke_cwd",
         "timeout_ms": 10000,
-        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x && mv ~/.local/bin/agentmemory-cli"
+        "missingDependencyHelp": "curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x agentmemory-cli-linux-amd64 && mv agentmemory-cli-linux-amd64 ~/.local/bin/agentmemory-cli"
       },
       "args": [
         {
           "name": "text",
           "type": "string",
-          "required": false,
-          "description": "Memory text content (-text)"
+          "required": true,
+          "positional": false,
+          "description": "Memory text content (--text <text>). Named flag, not positional."
         },
         {
           "name": "project",
           "type": "string",
           "required": false,
-          "description": "Project name (--project)"
+          "description": "Project name (--project <name>)"
         },
         {
           "name": "tags",
           "type": "string",
           "required": false,
-          "description": "Tags (--tags)"
+          "description": "Comma-separated tags (--tags <a,b,c>)"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output (--json)"
         }
       ]
     },
     {
       "namespace": "agentmemory-cli",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough mode for other commands",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "agentmemory-cli",
-        "cwd": "invoke_cwd",
-        "passthrough": true,
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x && mv ~/.local/bin/agentmemory-cli"
-      },
-      "args": []
-    },
-    {
-      "namespace": "agentmemory-cli",
       "resource": "memory",
       "action": "search",
-      "description": "Search memories (usage: search --query <q> [--project <p>] [--limit <n>])",
+      "description": "Search memories by keyword. Usage: sc agentmemory-cli memory search --query <term> [--project <p>] [--json]",
       "adapter": "process",
       "adapterConfig": {
         "command": "agentmemory-cli",
-        "baseArgs": [
-          "search"
-        ],
+        "baseArgs": ["search"],
         "cwd": "invoke_cwd",
         "timeout_ms": 10000,
-        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x && mv ~/.local/bin/agentmemory-cli"
+        "missingDependencyHelp": "curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x agentmemory-cli-linux-amd64 && mv agentmemory-cli-linux-amd64 ~/.local/bin/agentmemory-cli"
       },
       "args": [
         {
           "name": "query",
           "type": "string",
-          "required": false,
-          "description": "Search query (--query)"
+          "required": true,
+          "positional": true,
+          "description": "Search query — passed as positional arg (not --query): agentmemory-cli search <term>"
         },
         {
           "name": "project",
           "type": "string",
           "required": false,
-          "description": "Filter by project (--project)"
+          "description": "Filter by project (--project <name>)"
         },
         {
           "name": "limit",
           "type": "string",
           "required": false,
-          "description": "Max results (--limit)"
+          "description": "Max results (--limit <n>)"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output (--json)"
         }
       ]
     },
@@ -115,29 +110,33 @@
       "namespace": "agentmemory-cli",
       "resource": "memory",
       "action": "list",
-      "description": "List recent memories",
+      "description": "List recent memories. Usage: sc agentmemory-cli memory list [--project <p>] [--limit <n>] [--json]",
       "adapter": "process",
       "adapterConfig": {
         "command": "agentmemory-cli",
-        "baseArgs": [
-          "list"
-        ],
+        "baseArgs": ["list"],
         "cwd": "invoke_cwd",
         "timeout_ms": 10000,
-        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x && mv ~/.local/bin/agentmemory-cli"
+        "missingDependencyHelp": "curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x agentmemory-cli-linux-amd64 && mv agentmemory-cli-linux-amd64 ~/.local/bin/agentmemory-cli"
       },
       "args": [
         {
           "name": "project",
           "type": "string",
           "required": false,
-          "description": "Filter by project (--project)"
+          "description": "Filter by project (--project <name>)"
         },
         {
           "name": "limit",
           "type": "string",
           "required": false,
-          "description": "Max results (--limit)"
+          "description": "Max results (--limit <n>)"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output (--json)"
         }
       ]
     },
@@ -145,23 +144,22 @@
       "namespace": "agentmemory-cli",
       "resource": "memory",
       "action": "forget",
-      "description": "Delete a memory by ID",
+      "description": "Delete a memory by ID. Usage: sc agentmemory-cli memory forget --id <id>",
       "adapter": "process",
       "adapterConfig": {
         "command": "agentmemory-cli",
-        "baseArgs": [
-          "forget"
-        ],
+        "baseArgs": ["forget"],
         "cwd": "invoke_cwd",
         "timeout_ms": 10000,
-        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x && mv ~/.local/bin/agentmemory-cli"
+        "missingDependencyHelp": "curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x agentmemory-cli-linux-amd64 && mv agentmemory-cli-linux-amd64 ~/.local/bin/agentmemory-cli"
       },
       "args": [
         {
           "name": "id",
           "type": "string",
-          "required": false,
-          "description": "Memory ID (--id)"
+          "required": true,
+          "positional": true,
+          "description": "Memory ID — positional arg: agentmemory-cli forget <id>"
         }
       ]
     },
@@ -169,25 +167,44 @@
       "namespace": "agentmemory-cli",
       "resource": "memory",
       "action": "stats",
-      "description": "Show memory statistics",
+      "description": "Show memory statistics. Usage: sc agentmemory-cli memory stats [--project <p>] [--json]",
       "adapter": "process",
       "adapterConfig": {
         "command": "agentmemory-cli",
-        "baseArgs": [
-          "profile"
-        ],
+        "baseArgs": ["profile"],
         "cwd": "invoke_cwd",
         "timeout_ms": 10000,
-        "missingDependencyHelp": "Install: curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x && mv ~/.local/bin/agentmemory-cli"
+        "missingDependencyHelp": "curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x agentmemory-cli-linux-amd64 && mv agentmemory-cli-linux-amd64 ~/.local/bin/agentmemory-cli"
       },
       "args": [
         {
           "name": "project",
           "type": "string",
           "required": false,
-          "description": "Filter by project (--project)"
+          "description": "Filter by project (--project <name>)"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "JSON output (--json)"
         }
       ]
+    },
+    {
+      "namespace": "agentmemory-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough: sc agentmemory-cli _ _ <subcmd> [args]",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "agentmemory-cli",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "curl -LO https://github.com/javimosch/agentmemory-cli/releases/latest/download/agentmemory-cli-linux-amd64 && chmod +x agentmemory-cli-linux-amd64 && mv agentmemory-cli-linux-amd64 ~/.local/bin/agentmemory-cli"
+      },
+      "args": []
     }
   ]
 }

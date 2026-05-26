@@ -19,6 +19,17 @@ const Args = struct {
     raw_args: [][]const u8, // everything after binary name
 };
 
+// Flags that are boolean (no value follows): if you add a --key value flag you want
+// to treat as key=value, do NOT put it here.
+const BOOL_FLAGS = [_][]const u8{ "json", "human", "compact", "replace", "check", "force", "installed" };
+
+fn isBoolFlag(name: []const u8) bool {
+    for (BOOL_FLAGS) |f| {
+        if (std.mem.eql(u8, name, f)) return true;
+    }
+    return false;
+}
+
 fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8) !Args {
     var positional: std.ArrayList([]const u8) = .empty;
     var flags = std.StringHashMap([]const u8).init(gpa);
@@ -38,12 +49,22 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8) 
         if (std.mem.startsWith(u8, arg, "--")) {
             const kv = arg[2..];
             if (std.mem.indexOf(u8, kv, "=")) |eq| {
+                // --key=value form
                 const k = kv[0..eq];
                 const v = kv[eq + 1 ..];
                 try flags.put(k, v);
                 if (std.mem.eql(u8, k, "json")) has_json = true;
                 if (std.mem.eql(u8, k, "human")) has_human = true;
+            } else if (!isBoolFlag(kv) and i + 1 < args_iter.len and !std.mem.startsWith(u8, args_iter[i + 1], "--")) {
+                // --key value form (value is next non-flag arg)
+                i += 1;
+                const v = args_iter[i];
+                try raw_args.append(gpa, v);
+                try flags.put(kv, v);
+                if (std.mem.eql(u8, kv, "json")) has_json = true;
+                if (std.mem.eql(u8, kv, "human")) has_human = true;
             } else {
+                // Boolean flag: --key
                 try flags.put(kv, "true");
                 if (std.mem.eql(u8, kv, "json")) has_json = true;
                 if (std.mem.eql(u8, kv, "human")) has_human = true;
@@ -72,13 +93,21 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8) 
     };
 }
 
-// Get the plugins directory relative to the executable
-fn pluginsDir(gpa: std.mem.Allocator, io: std.Io) ![]const u8 {
+// Get the bundled plugins catalog directory: ~/.supercli/plugins/bundled
+// Falls back to adjacent plugins/ dir for development builds.
+fn bundledPluginsDir(gpa: std.mem.Allocator, io: std.Io, home: []const u8) ![]const u8 {
+    // Primary: ~/.supercli/plugins/bundled/
+    const bundled = try std.fmt.allocPrint(gpa, "{s}/.supercli/plugins/bundled", .{home});
+    if (std.Io.Dir.cwd().openDir(io, bundled, .{})) |d| {
+        var dd = d;
+        dd.close(io);
+        return bundled;
+    } else |_| {}
+
+    // Fallback for dev: adjacent plugins/ dir
     const exe_path = try std.process.executablePathAlloc(io, gpa);
     defer gpa.free(exe_path);
     const exe_dir = std.fs.path.dirname(exe_path) orelse ".";
-    // Binary is in supercli-zig-cli/ or supercli-zig-cli/zig-out/bin/
-    // Try: exe_dir/../plugins, exe_dir/../../plugins
     const candidates = [_][]const u8{
         try std.fmt.allocPrint(gpa, "{s}/../plugins", .{exe_dir}),
         try std.fmt.allocPrint(gpa, "{s}/../../plugins", .{exe_dir}),
@@ -91,7 +120,6 @@ fn pluginsDir(gpa: std.mem.Allocator, io: std.Io) ![]const u8 {
             return c;
         } else |_| {}
     }
-    // Fallback: relative to cwd
     return try gpa.dupe(u8, "plugins");
 }
 
@@ -99,11 +127,17 @@ fn pluginsDir(gpa: std.mem.Allocator, io: std.Io) ![]const u8 {
 
 fn handleBootstrap(gpa: std.mem.Allocator, mode: output.Mode) void {
     if (mode == .human) {
-        output.writeLine("\n  SuperCLI (Zig)\n");
-        output.writeLine("  Clean-room Zig implementation of the SuperCLI core.\n");
+        output.writeLine("\n  SuperCLI (Zig) v0.1.0\n");
+        output.writeLine("  Fast single-binary implementation of the SuperCLI core.");
+        output.writeLine("  Reads ~/.supercli/plugins/plugins.lock.json\n");
         output.writeLine("  Usage: sc-zig <namespace> <resource> <action> [--flags]");
-        output.writeLine("  Flags:  --json | --human | --compact");
-        output.writeLine("  Cmds:   help | commands | inspect | plugins list | plugins update\n");
+        output.writeLine("  Flags:  --json | --human");
+        output.writeLine("  Cmds:   commands | inspect | plugins list|explore|install|update\n");
+        output.writeLine("  Quick start:");
+        output.writeLine("    sc-zig plugins explore --name memory --json   # find memory plugins");
+        output.writeLine("    sc-zig plugins install agentmemory-cli        # install via Node.js sc");
+        output.writeLine("    sc-zig commands --query memory --json         # list commands");
+        output.writeLine("    sc-zig inspect <ns> <res> <act> --json        # inspect a command\n");
         return;
     }
     var out: std.Io.Writer.Allocating = .init(gpa);
@@ -119,13 +153,35 @@ fn handleBootstrap(gpa: std.mem.Allocator, mode: output.Mode) void {
     jw.objectField("zig_version") catch return;
     jw.write(VERSION) catch return;
     jw.objectField("what_is_this") catch return;
-    jw.write("Clean-room Zig implementation of SuperCLI core. Reads ~/.supercli/plugins/plugins.lock.json.") catch return;
+    jw.write("Fast single-binary SuperCLI. Reads ~/.supercli/plugins/plugins.lock.json. Plugin install delegates to Node.js sc.") catch return;
+    jw.objectField("workflow") catch return;
+    jw.write("discover -> inspect -> execute") catch return;
     jw.objectField("first_steps") catch return;
     jw.beginArray() catch return;
-    jw.write("sc-zig commands --json") catch return;
-    jw.write("sc-zig <namespace> <resource> <action> --json") catch return;
-    jw.write("sc-zig plugins list --json") catch return;
-    jw.write("sc-zig plugins update --json") catch return;
+    jw.write("sc-zig plugins explore --name <topic> --json  # find plugins by keyword") catch return;
+    jw.write("sc-zig plugins install <name>                 # install plugin (needs Node.js sc)") catch return;
+    jw.write("sc-zig commands --query <keyword> --json      # list matching commands") catch return;
+    jw.write("sc-zig inspect <ns> <res> <act> --json        # inspect command schema") catch return;
+    jw.write("sc-zig <ns> <res> <act> --flag val --json     # execute command") catch return;
+    jw.endArray() catch return;
+    jw.objectField("memory_workflow") catch return;
+    jw.beginObject() catch return;
+    jw.objectField("step1") catch return;
+    jw.write("sc-zig plugins explore --name memory --json") catch return;
+    jw.objectField("step2") catch return;
+    jw.write("sc-zig plugins install agentmemory-cli") catch return;
+    jw.objectField("step3") catch return;
+    jw.write("sc-zig agentmemory-cli memory save --text \"my name is Javi\" --project default --json") catch return;
+    jw.objectField("step4") catch return;
+    jw.write("sc-zig agentmemory-cli memory search --query Javi --json") catch return;
+    jw.endObject() catch return;
+    jw.objectField("feature_notes") catch return;
+    jw.beginArray() catch return;
+    jw.write("plugins explore: searches ~/.supercli/plugins/bundled/ catalog (~3000 plugins)") catch return;
+    jw.write("plugins install: delegates to 'sc plugins install' (Node.js sc required)") catch return;
+    jw.write("plugins list: shows installed plugins from plugins.lock.json") catch return;
+    jw.write("positional args: schema-defined positional args are passed correctly") catch return;
+    jw.write("--key value: flags passed as separate args for broadest binary compat") catch return;
     jw.endArray() catch return;
     jw.endObject() catch return;
     output.writeRaw(out.written());
@@ -414,6 +470,9 @@ fn handleExecuteCommand(
         });
     }
 
+    // Parse arg definitions from plugin schema (to detect positional args)
+    const arg_defs = try executor.parseArgDefs(gpa, cmd.args_raw);
+
     // Build extra args from user flags (skip reserved + supercli-specific)
     var skip_keys: std.ArrayList([]const u8) = .empty;
     for (RESERVED_FLAGS) |k| try skip_keys.append(gpa, k);
@@ -423,7 +482,7 @@ fn handleExecuteCommand(
     const extra_args = if (is_passthrough or acfg.passthrough)
         passthrough_args
     else
-        try executor.buildFlagArgs(gpa, flags, skip_keys.items);
+        try executor.buildFlagArgs(gpa, flags, skip_keys.items, arg_defs);
 
     const exec_result = try executor.executeProcess(io, gpa, acfg.command, .{
         .base_args = acfg.base_args,
@@ -673,24 +732,59 @@ pub fn main(init: std.process.Init) !void {
         }
 
         if (std.mem.eql(u8, sub, "explore")) {
-            const plugins_path = try pluginsDir(gpa, io);
-            const plugins = try registry.discoverPluginsInDir(io, gpa, plugins_path);
+            const plugins_path = try bundledPluginsDir(gpa, io, home);
+            const all_plugins = try registry.discoverPluginsInDir(io, gpa, plugins_path);
 
             const name_query = parsed.flags.get("name") orelse "";
+            const tags_query = parsed.flags.get("tags") orelse "";
+            const installed_only = parsed.flags.contains("installed");
 
-            var filtered: []registry.RegistryPlugin = plugins;
-            if (name_query.len > 0) {
-                filtered = try registry.filterByName(plugins, name_query, gpa);
+            // Load installed plugin names from lock for installed/not-installed annotation
+            var lock = try config.readLock(io, home, gpa);
+            defer lock.deinit();
+            var installed_set = std.StringHashMap(bool).init(gpa);
+            defer installed_set.deinit();
+            for (lock.plugins) |p| {
+                try installed_set.put(p.name, true);
             }
+
+            var filtered: []registry.RegistryPlugin = all_plugins;
+            if (name_query.len > 0) {
+                filtered = try registry.filterByName(filtered, name_query, gpa);
+            }
+            if (tags_query.len > 0) {
+                // Support comma-separated tags
+                var tag_iter = std.mem.splitScalar(u8, tags_query, ',');
+                while (tag_iter.next()) |tag| {
+                    const t = std.mem.trim(u8, tag, " ");
+                    if (t.len > 0) {
+                        filtered = try registry.filterByTag(filtered, t, gpa);
+                    }
+                }
+            }
+            if (installed_only) {
+                var inst_list: std.ArrayList(registry.RegistryPlugin) = .empty;
+                for (filtered) |p| {
+                    if (installed_set.contains(p.name)) try inst_list.append(gpa, p);
+                }
+                filtered = try inst_list.toOwnedSlice(gpa);
+            }
+
+            const limit_str = parsed.flags.get("limit") orelse "";
+            const limit: usize = if (limit_str.len > 0) std.fmt.parseInt(usize, limit_str, 10) catch 0 else 0;
+            const returned_count = if (limit > 0) @min(limit, filtered.len) else filtered.len;
 
             if (mode == .human) {
                 output.writeLine("\n  Plugins\n");
-                for (filtered) |p| {
-                    var buf: [256]u8 = undefined;
-                    const line = std.fmt.bufPrint(&buf, "  {s}  {s}\n", .{ p.name, p.description }) catch continue;
+                for (filtered[0..returned_count]) |p| {
+                    const inst_str = if (installed_set.contains(p.name)) "[installed]" else "";
+                    var buf: [512]u8 = undefined;
+                    const line = std.fmt.bufPrint(&buf, "  {s}  {s}  {s}\n", .{ p.name, inst_str, p.description }) catch continue;
                     output.writeRaw(line);
                 }
-                output.writeLine("");
+                var buf2: [64]u8 = undefined;
+                const summary = std.fmt.bufPrint(&buf2, "  Returned: {d}/{d}\n\n", .{ returned_count, filtered.len }) catch "";
+                output.writeRaw(summary);
                 return;
             }
 
@@ -702,9 +796,11 @@ pub fn main(init: std.process.Init) !void {
             jw.write("1.0") catch return;
             jw.objectField("total") catch return;
             jw.write(filtered.len) catch return;
+            jw.objectField("returned") catch return;
+            jw.write(returned_count) catch return;
             jw.objectField("plugins") catch return;
             jw.beginArray() catch return;
-            for (filtered) |p| {
+            for (filtered[0..returned_count]) |p| {
                 jw.beginObject() catch return;
                 jw.objectField("name") catch return;
                 jw.write(p.name) catch return;
@@ -712,12 +808,71 @@ pub fn main(init: std.process.Init) !void {
                 jw.write(p.description) catch return;
                 jw.objectField("has_learn") catch return;
                 jw.write(p.has_learn) catch return;
+                jw.objectField("installed") catch return;
+                jw.write(installed_set.contains(p.name)) catch return;
                 jw.endObject() catch return;
             }
             jw.endArray() catch return;
+            jw.objectField("filters") catch return;
+            jw.beginObject() catch return;
+            jw.objectField("name") catch return;
+            jw.write(name_query) catch return;
+            jw.objectField("tags") catch return;
+            jw.write(tags_query) catch return;
+            jw.endObject() catch return;
             jw.endObject() catch return;
             output.writeRaw(out.written());
             output.writeRaw("\n");
+            return;
+        }
+
+        if (std.mem.eql(u8, sub, "install")) {
+            const plugin_name = if (pos.len > 2) pos[2] else "";
+            if (plugin_name.len == 0) {
+                output.exitWithError(gpa, mode, .{
+                    .code = 85,
+                    .err_type = "invalid_argument",
+                    .message = "Usage: sc-zig plugins install <name>",
+                    .recoverable = false,
+                    .suggestions = &.{"Run: sc-zig plugins explore --name <query> --json"},
+                });
+            }
+            // Delegate to Node.js sc for install (it handles registry/npm)
+            const sc_cmd = [_][]const u8{ "sc", "plugins", "install", plugin_name, "--json" };
+            const result = std.process.run(gpa, io, .{
+                .argv = &sc_cmd,
+                .cwd = .inherit,
+                .stdout_limit = .unlimited,
+                .stderr_limit = .unlimited,
+            }) catch {
+                output.exitWithError(gpa, mode, .{
+                    .code = 105,
+                    .err_type = "integration_error",
+                    .message = "Failed to run 'sc plugins install'. Is Node.js sc installed?",
+                    .recoverable = true,
+                    .suggestions = &.{"Install Node.js version: npm install -g superacli"},
+                });
+            };
+            const exit_code: u8 = switch (result.term) {
+                .exited => |c| c,
+                else => 1,
+            };
+            if (exit_code != 0) {
+                const msg = if (result.stderr.len > 0)
+                    try gpa.dupe(u8, std.mem.trim(u8, result.stderr, "\n\r "))
+                else
+                    try std.fmt.allocPrint(gpa, "Plugin install failed (exit {d})", .{exit_code});
+                output.exitWithError(gpa, mode, .{
+                    .code = 105,
+                    .err_type = "integration_error",
+                    .message = msg,
+                    .recoverable = true,
+                });
+            }
+            output.writeRaw(result.stdout);
+            if (result.stdout.len > 0 and result.stdout[result.stdout.len - 1] != '\n') {
+                output.writeRaw("\n");
+            }
             return;
         }
 
@@ -725,7 +880,7 @@ pub fn main(init: std.process.Init) !void {
         output.exitWithError(gpa, mode, .{
             .code = 85,
             .err_type = "invalid_argument",
-            .message = "Unknown plugins subcommand. Use: list | explore | update",
+            .message = "Unknown plugins subcommand. Use: list | explore | install | update",
             .recoverable = false,
         });
     }
