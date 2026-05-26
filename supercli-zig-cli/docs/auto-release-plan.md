@@ -141,6 +141,14 @@ To test without creating a real release:
 - **Build script**: `build-release.sh` (kept for local testing)
 - **Installer**: `install.sh` (auto-updated by workflow)
 
+## Testing
+
+To test the auto-release workflow:
+1. Push the workflow file to master
+2. Create a tag matching `v*-zig` pattern
+3. Push the tag to trigger the workflow
+4. Monitor GitHub Actions for the release workflow
+
 ## Future Enhancements
 
 - Add checksums for binary verification
