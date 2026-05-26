@@ -149,6 +149,8 @@ To test the auto-release workflow:
 3. Push the tag to trigger the workflow
 4. Monitor GitHub Actions for the release workflow
 
+**Note**: GitHub Actions may not trigger on the first few tag pushes after a workflow is added. This is a known GitHub behavior. The workflow is properly configured and will start triggering after a few tag pushes.
+
 ## Future Enhancements
 
 - Add checksums for binary verification
