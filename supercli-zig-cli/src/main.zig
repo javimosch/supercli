@@ -770,6 +770,43 @@ pub fn main(init: std.process.Init) !void {
                 filtered = try inst_list.toOwnedSlice(gpa);
             }
 
+            // If no plugins found, suggest running plugins update
+            if (filtered.len == 0) {
+                if (mode == .human) {
+                    output.writeLine("\n  No plugins found matching your criteria.");
+                    output.writeLine("  Try running: sc-zig plugins update");
+                    output.writeLine("  This will download the latest plugin catalog from GitHub.\n");
+                    return;
+                } else {
+                    var out: std.Io.Writer.Allocating = .init(gpa);
+                    defer out.deinit();
+                    var jw: std.json.Stringify = .{ .writer = &out.writer };
+                    jw.beginObject() catch return;
+                    jw.objectField("version") catch return;
+                    jw.write("1.0") catch return;
+                    jw.objectField("total") catch return;
+                    jw.write(0) catch return;
+                    jw.objectField("returned") catch return;
+                    jw.write(0) catch return;
+                    jw.objectField("plugins") catch return;
+                    jw.beginArray() catch return;
+                    jw.endArray() catch return;
+                    jw.objectField("filters") catch return;
+                    jw.beginObject() catch return;
+                    jw.objectField("name") catch return;
+                    jw.write(name_query) catch return;
+                    jw.objectField("tags") catch return;
+                    jw.write(tags_query) catch return;
+                    jw.endObject() catch return;
+                    jw.objectField("suggestion") catch return;
+                    jw.write("Run: sc-zig plugins update") catch return;
+                    jw.endObject() catch return;
+                    output.writeRaw(out.written());
+                    output.writeRaw("\n");
+                    return;
+                }
+            }
+
             const limit_str = parsed.flags.get("limit") orelse "";
             const limit: usize = if (limit_str.len > 0) std.fmt.parseInt(usize, limit_str, 10) catch 0 else 0;
             const returned_count = if (limit > 0) @min(limit, filtered.len) else filtered.len;
