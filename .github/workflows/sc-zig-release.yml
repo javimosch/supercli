@@ -4,6 +4,12 @@ on:
   push:
     tags:
       - 'v*-zig'  # Trigger on tags like v0.1.0-zig, v0.2.0-zig, etc.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v0.1.1-zig)'
+        required: true
+        default: 'v0.1.1-zig'
 
 permissions:
   contents: write
@@ -22,7 +28,12 @@ jobs:
 
       - name: Extract version from tag
         id: version
-        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "VERSION=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
 
       - name: Validate tag format
         run: |
@@ -89,10 +100,13 @@ jobs:
         with:
           tag_name: ${{ steps.version.outputs.VERSION }}
           name: SuperCLI Zig ${{ steps.version.outputs.VERSION }}
+          target_commitish: ${{ github.sha }}
           body: |
             ## SuperCLI Zig ${{ steps.version.outputs.VERSION }}
             
             Single-binary SuperCLI implementation in Zig for AI agents.
+            
+            **Test release** - This is a test of the automated release workflow.
             
             ### Installation
             
