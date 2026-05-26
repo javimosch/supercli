@@ -142,6 +142,39 @@ supercli skills get aws.cfn.deploy --json
 supercli aws cfn deploy --stack my-stack --json
 ```
 
+### ⚡ Zig Implementation (sc-zig)
+
+For maximum performance and minimal dependencies, use the Zig implementation:
+
+```bash
+# Install single binary (~260KB, no Node.js required)
+curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+
+# Or manual install
+curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/sc-zig-linux-amd64 -o ~/.local/bin/sc-zig && chmod +x ~/.local/bin/sc-zig
+
+# Agent-friendly bootstrap
+sc-zig --json
+# → {"version":"1.0","mode":"agent_bootstrap","workflow":"discover -> inspect -> execute",...}
+
+# Discover plugins
+sc-zig plugins explore --name memory --json
+# → {"total":19,"returned":19,"plugins":[...]}
+
+# Install plugins (delegates to Node.js sc when needed)
+sc-zig plugins install agentmemory-cli
+```
+
+**Why agents prefer sc-zig:**
+- ⚡ **Single binary** — No Node.js runtime, just curl + chmod
+- 🚀 **Faster** — Native performance, instant startup
+- 📦 **Self-documenting** — Bootstrap JSON includes workflow guidance
+- 🔧 **Agent guidance** — Suggests `plugins update` when catalog is empty
+- 🎯 **Fixed arg parsing** — Both `--flag value` and `--flag=value` work
+- 📍 **Positional args** — Correctly handles positional arguments
+
+See [`AGENTS.md`](AGENTS.md) for complete agent instructions.
+
 ---
 
 ## 🔄 Keeping Plugins Updated
