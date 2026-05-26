@@ -564,11 +564,16 @@ function installPlugin(ref, options = {}) {
   }
 }
 
-function removePlugin(name) {
+function removePlugin(name, force = false) {
   const lock = readPluginsLock()
   const plugin = lock.installed[name]
   if (!plugin) return false
-  runStoredHook(name, "uninstall", plugin.lifecycle_hooks && plugin.lifecycle_hooks.post_uninstall)
+  try {
+    runStoredHook(name, "uninstall", plugin.lifecycle_hooks && plugin.lifecycle_hooks.post_uninstall)
+  } catch (err) {
+    if (!force) throw err
+    console.warn(`[Uninstall Warning] Post-uninstall hook failed for '${name}':`, err.message)
+  }
   delete lock.installed[name]
   writePluginsLock(lock)
   return true

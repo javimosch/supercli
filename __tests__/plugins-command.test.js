@@ -123,6 +123,7 @@ describe("plugins-command", () => {
 
     expect(listRegistryPlugins).toHaveBeenCalledWith({
       name: "query",
+      nameOnly: false,
       tags: ["t1", "t2"]
     })
     expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({

@@ -291,30 +291,37 @@ async function syncServerPlugins(server) {
     }
 
     const pluginDir = ensurePluginDir(pluginRoot, plugin.name, plugin.version)
-    const manifest = plugin.manifest || null
-    if (!manifest || typeof manifest !== "object") {
-      throw Object.assign(new Error(`Server plugin '${plugin.name}' is missing manifest`), {
-        code: 105,
-        type: "integration_error",
-        recoverable: true,
-      })
-    }
-
-    fs.writeFileSync(path.join(pluginDir, "plugin.json"), JSON.stringify(manifest, null, 2))
-
-    if (plugin.source_type === "zip") {
-      const zipRes = await fetch(`${server}/api/plugins/${encodeURIComponent(plugin.name)}/archive`)
-      if (!zipRes.ok) {
-        throw Object.assign(new Error(`Failed to download ZIP for server plugin '${plugin.name}'`), {
+    try {
+      const manifest = plugin.manifest || null
+      if (!manifest || typeof manifest !== "object") {
+        throw Object.assign(new Error(`Server plugin '${plugin.name}' is missing manifest`), {
           code: 105,
           type: "integration_error",
           recoverable: true,
         })
       }
-      const bytes = Buffer.from(await zipRes.arrayBuffer())
-      const archivePath = path.join(pluginDir, "plugin.zip")
-      fs.writeFileSync(archivePath, bytes)
-      extractZipToDir(archivePath, pluginDir)
+
+      fs.writeFileSync(path.join(pluginDir, "plugin.json"), JSON.stringify(manifest, null, 2))
+
+      if (plugin.source_type === "zip") {
+        const zipRes = await fetch(`${server}/api/plugins/${encodeURIComponent(plugin.name)}/archive`)
+        if (!zipRes.ok) {
+          throw Object.assign(new Error(`Failed to download ZIP for server plugin '${plugin.name}'`), {
+            code: 105,
+            type: "integration_error",
+            recoverable: true,
+          })
+        }
+        const bytes = Buffer.from(await zipRes.arrayBuffer())
+        const archivePath = path.join(pluginDir, "plugin.zip")
+        fs.writeFileSync(archivePath, bytes)
+        extractZipToDir(archivePath, pluginDir)
+      }
+    } catch (err) {
+      try {
+        fs.rmSync(pluginDir, { recursive: true, force: true })
+      } catch {}
+      throw err
     }
 
     const hookPolicy = resolveHooksPolicy(plugin, settings)

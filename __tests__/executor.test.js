@@ -236,6 +236,28 @@ describe("executor", () => {
     }
   })
 
+  test("handles custom adapter loading fallback to home directory", async () => {
+    const fs = require("fs")
+    const os = require("os")
+    const cmd = { adapter: "custom-fallback", namespace: "test", resource: "res", action: "act" }
+    
+    const tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "supercli-home-"))
+    const spy = jest.spyOn(os, "homedir").mockReturnValue(tempHome)
+    
+    const adapterDir = path.join(tempHome, ".supercli", "adapters")
+    fs.mkdirSync(adapterDir, { recursive: true })
+    const adapterPath = path.join(adapterDir, "custom-fallback.js")
+    fs.writeFileSync(adapterPath, `function execute(cmd, flags, context) { return { ok: true, fallback: true } }`)
+    
+    try {
+      const result = await execute(cmd, {}, {})
+      expect(result).toEqual({ ok: true, fallback: true })
+    } finally {
+      spy.mockRestore()
+      fs.rmSync(tempHome, { recursive: true, force: true })
+    }
+  })
+
   test("fetches missing command from server during workflow", async () => {
     const workflow = {
       type: "workflow",

@@ -231,9 +231,17 @@ pub fn updatePlugins(
     // Ensure remote-bundled dir exists
     try ensureDir(io, remote_dir);
 
+    const supercli_dir = try std.fmt.allocPrint(gpa, "{s}/.supercli", .{opts.home});
+    ensureDir(io, supercli_dir) catch {};
+    const tmp_parent = try std.fmt.allocPrint(gpa, "{s}/.supercli/tmp", .{opts.home});
+    ensureDir(io, tmp_parent) catch {};
+
     // Download tarball to a temp path
-    const tmp_dir = try std.fmt.allocPrint(gpa, "/tmp/supercli-update-{d}", .{std.Io.Timestamp.now(io, .real).toMilliseconds()});
-    ensureDir(io, tmp_dir) catch {};
+    const tmp_dir = try std.fmt.allocPrint(gpa, "{s}/supercli-update-{d}", .{tmp_parent, std.Io.Timestamp.now(io, .real).toMilliseconds()});
+    try ensureDir(io, tmp_dir);
+
+    errdefer std.Io.Dir.cwd().deleteTree(io, tmp_dir) catch {};
+
     const tar_path = try std.fmt.allocPrint(gpa, "{s}/supercli-master.tar.gz", .{tmp_dir});
 
     try downloadTarball(io, gpa, tar_path);

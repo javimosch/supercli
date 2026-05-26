@@ -159,7 +159,15 @@ describe("mcp adapter", () => {
         "http://mcp.local/tool",
         expect.objectContaining({
           method: "POST",
-          body: JSON.stringify({ tool: "t1", input: { arg1: "v1" } })
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            method: "tools/call",
+            params: {
+              name: "t1",
+              arguments: { arg1: "v1" }
+            },
+            id: 1
+          })
         })
       )
       expect(result).toEqual({ data: "ok" })
