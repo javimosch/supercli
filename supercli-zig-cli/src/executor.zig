@@ -32,6 +32,9 @@ pub const ExecOptions = struct {
     timeout_ms: u64 = 15000,
     // Working directory (null = current)
     cwd: ?[]const u8 = null,
+    // Non-TTY safety options
+    requires_interactive: bool = false,
+    interactive_flags: []const []const u8 = &.{},
 };
 
 // Build CLI flag args from a parsed flags map (key -> value).
@@ -108,6 +111,9 @@ pub fn executeProcess(
     for (opts.extra_args) |a| try argv.append(gpa, a);
     const argv_slice = try argv.toOwnedSlice(gpa);
 
+    // Validate non-TTY safety before spawning
+    try validateNonTtySafety(io, gpa, opts.requires_interactive, opts.interactive_flags, argv_slice);
+
     if (opts.passthrough) {
         var child = try std.process.spawn(io, .{
             .argv = argv_slice,
@@ -116,17 +122,114 @@ pub fn executeProcess(
             .stderr = .inherit,
             .cwd = if (opts.cwd) |c| .{ .path = c } else .inherit,
         });
-        _ = try child.wait(io);
+
+        // Background thread to monitor timeout
+        const TimeoutContext = struct {
+            mutex: std.Io.Mutex = .{
+                .state = std.atomic.Value(std.Io.Mutex.State).init(.unlocked),
+            },
+            completed: bool = false,
+            child: *std.process.Child,
+            io: std.Io,
+            timeout_ms: u64,
+        };
+
+        const timeout_fn = struct {
+            fn run(ctx: *TimeoutContext) void {
+                const start_time = std.Io.Timestamp.now(ctx.io, .real).toMilliseconds();
+                const timeout_limit = @as(i64, @intCast(ctx.timeout_ms));
+                while (true) {
+                    ctx.mutex.lock(ctx.io) catch return;
+                    if (ctx.completed) {
+                        ctx.mutex.unlock(ctx.io);
+                        return;
+                    }
+                    const elapsed = std.Io.Timestamp.now(ctx.io, .real).toMilliseconds() - start_time;
+                    if (elapsed >= timeout_limit) {
+                        // Kill child process
+                        if (ctx.child.id) |pid| {
+                            std.posix.kill(pid, .KILL) catch {};
+                        }
+                        ctx.mutex.unlock(ctx.io);
+                        return;
+                    }
+                    ctx.mutex.unlock(ctx.io);
+                    // Sleep for 10ms
+                    ctx.io.sleep(std.Io.Duration.fromMilliseconds(10), .awake) catch {};
+                }
+            }
+        }.run;
+
+        var ctx = TimeoutContext{
+            .child = &child,
+            .io = io,
+            .timeout_ms = opts.timeout_ms,
+        };
+
+        const thread = try std.Thread.spawn(.{}, timeout_fn, .{&ctx});
+        
+        const term = child.wait(io) catch |err| {
+            ctx.mutex.lock(io) catch {};
+            ctx.completed = true;
+            ctx.mutex.unlock(io);
+            thread.join();
+            return err;
+        };
+
+        ctx.mutex.lock(io) catch {};
+        const timed_out = !ctx.completed and switch (term) {
+            .signal => |sig| sig == .KILL,
+            else => false,
+        };
+        ctx.completed = true;
+        ctx.mutex.unlock(io);
+        thread.join();
+
+        if (timed_out) {
+            return ExecResult{ .err = .{
+                .message = try std.fmt.allocPrint(gpa, "Process timed out after {d}ms", .{opts.timeout_ms}),
+                .exit_code = 124,
+            } };
+        }
+
+        const exit_code: u8 = switch (term) {
+            .exited => |c| c,
+            else => 1,
+        };
+
+        if (exit_code != 0) {
+            return ExecResult{ .err = .{
+                .message = try std.fmt.allocPrint(gpa, "Process exited with code {d}", .{exit_code}),
+                .exit_code = exit_code,
+            } };
+        }
+
         return ExecResult{ .passthrough = {} };
     }
 
     // Capture mode
-    const result = try std.process.run(gpa, io, .{
+    const timeout = std.Io.Timeout{
+        .duration = .{
+            .raw = std.Io.Duration.fromMilliseconds(@intCast(opts.timeout_ms)),
+            .clock = .real,
+        },
+    };
+
+    const result = std.process.run(gpa, io, .{
         .argv = argv_slice,
         .cwd = if (opts.cwd) |c| .{ .path = c } else .inherit,
         .stdout_limit = .unlimited,
         .stderr_limit = .unlimited,
-    });
+        .timeout = timeout,
+    }) catch |err| {
+        if (err == error.Timeout) {
+            return ExecResult{ .err = .{
+                .message = try std.fmt.allocPrint(gpa, "Process timed out after {d}ms", .{opts.timeout_ms}),
+                .exit_code = 124,
+            } };
+        }
+        return err;
+    };
 
     const exit_code: u8 = switch (result.term) {
         .exited => |c| c,
@@ -160,6 +263,7 @@ pub const ArgDef = struct {
     name: []const u8,
     positional: bool = false,  // true = value goes as positional after baseArgs, not --name val
     required: bool = false,
+    is_bool: bool = false,
 };
 
 // Extract adapterConfig fields needed for execution
@@ -172,6 +276,8 @@ pub const AdapterConfig = struct {
     timeout_ms: u64 = 15000,
     cwd: ?[]const u8 = null,
     missing_dep_help: []const u8 = "",
+    requires_interactive: bool = false,
+    interactive_flags: [][]const u8 = &.{},
 };
 
 // Parse the args[] array from a command definition to extract ArgDefs
@@ -198,7 +304,11 @@ pub fn parseArgDefs(gpa: std.mem.Allocator, args_raw: ?std.json.Value) ![]ArgDef
             .bool => |b| b,
             else => false,
         } else false;
-        try list.append(gpa, ArgDef{ .name = name, .positional = positional, .required = required });
+        const is_bool = if (obj.get("type")) |tv| switch (tv) {
+            .string => |s| std.mem.eql(u8, s, "boolean"),
+            else => false,
+        } else false;
+        try list.append(gpa, ArgDef{ .name = name, .positional = positional, .required = required, .is_bool = is_bool });
     }
     return list.toOwnedSlice(gpa);
 }
@@ -258,5 +368,90 @@ pub fn parseAdapterConfig(gpa: std.mem.Allocator, raw: ?std.json.Value) !Adapter
         else => {},
     };
 
+    if (obj.get("requiresInteractive")) |v| switch (v) {
+        .bool => |b| { cfg.requires_interactive = b; },
+        else => {},
+    };
+
+    if (obj.get("interactiveFlags")) |v| switch (v) {
+        .array => |arr| {
+            var flags_list: std.ArrayList([]const u8) = .empty;
+            for (arr.items) |item| switch (item) {
+                .string => |s| try flags_list.append(gpa, try gpa.dupe(u8, s)),
+                else => {},
+            };
+            cfg.interactive_flags = try flags_list.toOwnedSlice(gpa);
+        },
+        else => {},
+    };
+
     return cfg;
+}
+
+pub fn validateNonTtySafety(
+    io: std.Io,
+    gpa: std.mem.Allocator,
+    requires_interactive: bool,
+    interactive_flags: []const []const u8,
+    argv: []const []const u8,
+) !void {
+    _ = gpa;
+    const is_tty = std.Io.File.stdout().isTty(io) catch false;
+    if (!is_tty) {
+        if (requires_interactive) {
+            return error.SafetyViolation;
+        }
+        for (argv) |arg| {
+            for (interactive_flags) |iflag| {
+                if (std.mem.eql(u8, arg, iflag)) {
+                    return error.SafetyViolation;
+                }
+                if (std.mem.startsWith(u8, iflag, "-")) {
+                    if (std.mem.startsWith(u8, arg, iflag) and arg.len > iflag.len and arg[iflag.len] == '=') {
+                        return error.SafetyViolation;
+                    }
+                }
+            }
+        }
+    }
+}
+
+test "validateNonTtySafety basic tests" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    var threaded = std.Io.Threaded.init(gpa, .{});
+    defer threaded.deinit();
+    const io = threaded.io();
+
+    const acfg1 = AdapterConfig{
+        .requires_interactive = true,
+    };
+    const argv1 = &[_][]const u8{"hello"};
+    
+    const is_tty = std.Io.File.stdout().isTty(io) catch false;
+    if (!is_tty) {
+        try testing.expectError(error.SafetyViolation, validateNonTtySafety(io, gpa, acfg1.requires_interactive, acfg1.interactive_flags, argv1));
+    } else {
+        try validateNonTtySafety(io, gpa, acfg1.requires_interactive, acfg1.interactive_flags, argv1);
+    }
+
+    const acfg2 = AdapterConfig{
+        .requires_interactive = false,
+        .interactive_flags = @constCast(&[_][]const u8{ "--interactive", "-i" }),
+    };
+
+    if (!is_tty) {
+        const argv_unsafe1 = &[_][]const u8{ "--interactive" };
+        try testing.expectError(error.SafetyViolation, validateNonTtySafety(io, gpa, acfg2.requires_interactive, acfg2.interactive_flags, argv_unsafe1));
+
+        const argv_unsafe2 = &[_][]const u8{ "-i" };
+        try testing.expectError(error.SafetyViolation, validateNonTtySafety(io, gpa, acfg2.requires_interactive, acfg2.interactive_flags, argv_unsafe2));
+
+        const argv_unsafe3 = &[_][]const u8{ "--interactive=true" };
+        try testing.expectError(error.SafetyViolation, validateNonTtySafety(io, gpa, acfg2.requires_interactive, acfg2.interactive_flags, argv_unsafe3));
+
+        const argv_safe = &[_][]const u8{ "--some-other-flag" };
+        try validateNonTtySafety(io, gpa, acfg2.requires_interactive, acfg2.interactive_flags, argv_safe);
+    }
 }

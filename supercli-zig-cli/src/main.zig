@@ -17,20 +17,31 @@ const Args = struct {
     flags: std.StringHashMap([]const u8),
     mode: output.Mode,
     raw_args: [][]const u8, // everything after binary name
+    allocator: std.mem.Allocator,
+
+    pub fn deinit(self: *Args) void {
+        self.allocator.free(self.positional);
+        self.allocator.free(self.raw_args);
+        var self_flags = self.flags;
+        self_flags.deinit();
+    }
 };
 
 // Flags that are boolean (no value follows): if you add a --key value flag you want
 // to treat as key=value, do NOT put it here.
 const BOOL_FLAGS = [_][]const u8{ "json", "human", "compact", "replace", "check", "force", "installed" };
 
-fn isBoolFlag(name: []const u8) bool {
+fn isBoolFlag(name: []const u8, custom_bool_flags: ?std.StringHashMap(void)) bool {
+    if (custom_bool_flags) |cbf| {
+        if (cbf.contains(name)) return true;
+    }
     for (BOOL_FLAGS) |f| {
         if (std.mem.eql(u8, name, f)) return true;
     }
     return false;
 }
 
-fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8) !Args {
+fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8, custom_bool_flags: ?std.StringHashMap(void)) !Args {
     var positional: std.ArrayList([]const u8) = .empty;
     var flags = std.StringHashMap([]const u8).init(gpa);
     var raw_args: std.ArrayList([]const u8) = .empty;
@@ -55,7 +66,7 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8) 
                 try flags.put(k, v);
                 if (std.mem.eql(u8, k, "json")) has_json = true;
                 if (std.mem.eql(u8, k, "human")) has_human = true;
-            } else if (!isBoolFlag(kv) and i + 1 < args_iter.len and !std.mem.startsWith(u8, args_iter[i + 1], "--")) {
+            } else if (!isBoolFlag(kv, custom_bool_flags) and i + 1 < args_iter.len and !std.mem.startsWith(u8, args_iter[i + 1], "--")) {
                 // --key value form (value is next non-flag arg)
                 i += 1;
                 const v = args_iter[i];
@@ -90,6 +101,7 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8) 
         .flags = flags,
         .mode = mode,
         .raw_args = try raw_args.toOwnedSlice(gpa),
+        .allocator = gpa,
     };
 }
 
@@ -484,14 +496,26 @@ fn handleExecuteCommand(
     else
         try executor.buildFlagArgs(gpa, flags, skip_keys.items, arg_defs);
 
-    const exec_result = try executor.executeProcess(io, gpa, acfg.command, .{
+    const exec_result = executor.executeProcess(io, gpa, acfg.command, .{
         .base_args = acfg.base_args,
         .extra_args = extra_args,
         .passthrough = is_passthrough or acfg.passthrough,
         .parse_json = acfg.parse_json,
         .timeout_ms = acfg.timeout_ms,
         .cwd = acfg.cwd,
-    });
+        .requires_interactive = acfg.requires_interactive,
+        .interactive_flags = acfg.interactive_flags,
+    }) catch |err| {
+        if (err == error.SafetyViolation) {
+            output.exitWithError(gpa, mode, .{
+                .code = 91,
+                .err_type = "safety_violation",
+                .message = "Interactive command blocked in non-TTY context",
+                .recoverable = false,
+            });
+        }
+        return err;
+    };
 
     const duration = std.Io.Timestamp.now(io, .real).toMilliseconds() - start;
 
@@ -499,8 +523,8 @@ fn handleExecuteCommand(
         .passthrough => return, // stdio was inherited, nothing to emit
         .err => |e| {
             output.exitWithError(gpa, mode, .{
-                .code = 105,
-                .err_type = "integration_error",
+                .code = e.exit_code,
+                .err_type = if (e.exit_code == 124) "timeout_error" else "integration_error",
                 .message = e.message,
                 .recoverable = true,
             });
@@ -667,11 +691,12 @@ pub fn main(init: std.process.Init) !void {
         return;
     }
 
-    const parsed = try parseArgs(gpa, io, raw_argv);
+    var parsed = try parseArgs(gpa, io, raw_argv, null);
+    defer parsed.deinit();
     const mode = parsed.mode;
     const pos = parsed.positional;
 
-    const home = init.environ_map.get("HOME") orelse "/tmp";
+    const home = init.environ_map.get("HOME") orelse init.environ_map.get("USERPROFILE") orelse "/tmp";
 
     // Top-level: no args
     if (pos.len == 0) {
@@ -938,7 +963,23 @@ pub fn main(init: std.process.Init) !void {
     // Try exact namespace.resource.action match
     if (config.findCommand(&lock, ns, res, act)) |cmd| {
         const user_passthrough = std.mem.eql(u8, res, "_") and std.mem.eql(u8, act, "_");
-        try handleExecuteCommand(io, gpa, mode, cmd, parsed.flags, passthrough_args, user_passthrough);
+        const arg_defs = try executor.parseArgDefs(gpa, cmd.args_raw);
+        defer gpa.free(arg_defs);
+
+        var custom_bool_flags = std.StringHashMap(void).init(gpa);
+        defer custom_bool_flags.deinit();
+        for (arg_defs) |arg| {
+            if (arg.is_bool) {
+                try custom_bool_flags.put(arg.name, {});
+            }
+        }
+
+        var cmd_parsed = try parseArgs(gpa, io, raw_argv, custom_bool_flags);
+        defer cmd_parsed.deinit();
+
+        const cmd_passthrough_args = if (cmd_parsed.positional.len > 1) raw_argv[1..] else raw_argv[0..0];
+
+        try handleExecuteCommand(io, gpa, mode, cmd, cmd_parsed.flags, cmd_passthrough_args, user_passthrough);
         return;
     }
 
@@ -979,5 +1020,54 @@ pub fn main(init: std.process.Init) !void {
                 "Run: sc plugins install <name>",
             },
         });
+    }
+}
+
+test "parseArgs basic and custom boolean flag re-parsing" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    var threaded = std.Io.Threaded.init(gpa, .{});
+    defer threaded.deinit();
+    const io = threaded.io();
+
+    // Test 1: Basic parsing with --flag=value and empty value
+    {
+        const argv = &[_][]const u8{ "namespace", "--flag1=value1", "--flag2=" };
+        var parsed = try parseArgs(gpa, io, argv, null);
+        defer parsed.deinit();
+
+        try testing.expectEqual(@as(usize, 1), parsed.positional.len);
+        try testing.expectEqualStrings("namespace", parsed.positional[0]);
+        
+        try testing.expectEqualStrings("value1", parsed.flags.get("flag1").?);
+        try testing.expectEqualStrings("", parsed.flags.get("flag2").?);
+    }
+
+    // Test 2: Custom boolean flag re-parsing (ensuring next argument is not consumed)
+    {
+        const argv = &[_][]const u8{ "ns", "res", "act", "--custom-bool", "positional_arg" };
+        var parsed1 = try parseArgs(gpa, io, argv, null);
+        defer parsed1.deinit();
+
+        try testing.expectEqual(@as(usize, 3), parsed1.positional.len);
+        try testing.expectEqualStrings("ns", parsed1.positional[0]);
+        try testing.expectEqualStrings("res", parsed1.positional[1]);
+        try testing.expectEqualStrings("act", parsed1.positional[2]);
+        try testing.expectEqualStrings("positional_arg", parsed1.flags.get("custom-bool").?);
+
+        var custom_bool_flags = std.StringHashMap(void).init(gpa);
+        defer custom_bool_flags.deinit();
+        try custom_bool_flags.put("custom-bool", {});
+
+        var parsed2 = try parseArgs(gpa, io, argv, custom_bool_flags);
+        defer parsed2.deinit();
+
+        try testing.expectEqual(@as(usize, 4), parsed2.positional.len);
+        try testing.expectEqualStrings("ns", parsed2.positional[0]);
+        try testing.expectEqualStrings("res", parsed2.positional[1]);
+        try testing.expectEqualStrings("act", parsed2.positional[2]);
+        try testing.expectEqualStrings("positional_arg", parsed2.positional[3]);
+        try testing.expectEqualStrings("true", parsed2.flags.get("custom-bool").?);
     }
 }
