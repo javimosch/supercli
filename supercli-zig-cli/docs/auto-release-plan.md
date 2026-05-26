@@ -137,7 +137,7 @@ To test without creating a real release:
 
 ## Configuration Files
 
-- **Workflow**: `.github/workflows/release.yml`
+- **Workflow**: `.github/workflows/sc-zig-release.yml` (in main repo)
 - **Build script**: `build-release.sh` (kept for local testing)
 - **Installer**: `install.sh` (auto-updated by workflow)
 
