@@ -1,7 +1,7 @@
 {
   "name": "git-absorb",
   "version": "0.1.0",
-  "description": "git commit --fixup, but automatic — auto-absorb staged changes into relevant previous commits",
+  "description": "git commit --fixup, but automatic — auto-create fixup commits for staged changes",
   "source": "https://github.com/tummychow/git-absorb",
   "checks": [
     { "type": "binary", "name": "git-absorb" }
@@ -14,7 +14,8 @@
       "cargo install git-absorb",
       "Verify: git-absorb --version",
       "supercli plugins install ./plugins/git-absorb --on-conflict replace --json"
-    ]
+    ],
+    "note": "Requires Rust/Cargo. Also available via Homebrew: brew install git-absorb"
   },
   "learn": {
     "file": "skills/quickstart/SKILL.md"
@@ -35,20 +36,22 @@
     },
     {
       "namespace": "git-absorb",
-      "resource": "repo",
+      "resource": "commit",
       "action": "absorb",
-      "description": "Auto-absorb staged changes into the appropriate previous commits. Use --and-rebase to auto-rebase after absorption.",
+      "description": "Auto-create fixup commits for staged changes in the working copy",
       "adapter": "process",
       "adapterConfig": {
         "command": "git-absorb",
-        "passthrough": true,
         "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 30000,
         "missingDependencyHelp": "Install git-absorb: cargo install git-absorb"
       },
       "args": [
-        { "name": "--and-rebase", "type": "boolean", "description": "Automatically rebase after absorbing fixup commits" },
-        { "name": "--base", "type": "string", "description": "Use <ref> as the base commit instead of defaulting to --base upstream" },
-        { "name": "--force", "type": "boolean", "description": "Write fixup commits even if conflicts are detected" }
+        { "name": "base", "type": "string", "required": false, "description": "Base ref to absorb into (e.g., origin/main)" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Show what would be absorbed without making changes" },
+        { "name": "and-rebase", "type": "boolean", "required": false, "description": "Auto-absorb and rebase" },
+        { "name": "force", "type": "boolean", "required": false, "description": "Apply fixups even when conflicts might occur" }
       ]
     },
     {
@@ -59,8 +62,8 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "git-absorb",
-        "passthrough": true,
         "cwd": "invoke_cwd",
+        "passthrough": true,
         "missingDependencyHelp": "Install git-absorb: cargo install git-absorb"
       },
       "args": []
