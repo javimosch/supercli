@@ -1,7 +1,7 @@
 {
   "name": "d2",
   "version": "0.1.0",
-  "description": "D2 — modern diagram scripting language that turns text to SVG, PNG, or PDF",
+  "description": "d2 — declarative diagram scripting language. Compile text-based diagrams into SVG, PNG, or PDF. Supports flowcharts, sequence diagrams, class diagrams, network topologies, and more. Non-interactive, scriptable, suitable for CI/CD pipelines.",
   "source": "https://github.com/terrastruct/d2",
   "checks": [
     { "type": "binary", "name": "d2" }
@@ -12,11 +12,13 @@
     "check": "which d2",
     "install_steps": [
       "curl -fsSL https://d2lang.com/install.sh | sh -s --",
-      "Or: go install oss.terrastruct.com/d2@latest",
-      "Verify: d2 --version",
+      "Verify: d2 version",
+      "Test: d2 --help",
       "supercli plugins install ./plugins/d2 --on-conflict replace --json"
-    ],
-    "note": "Source: https://github.com/terrastruct/d2 (24k stars). Written in Go."
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
   },
   "commands": [
     {
@@ -27,8 +29,8 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "d2",
-        "baseArgs": ["--version"],
-        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install d2: https://d2lang.com/install"
       },
       "args": []
     },
@@ -36,85 +38,111 @@
       "namespace": "d2",
       "resource": "compile",
       "action": "svg",
-      "description": "Compile .d2 file to SVG diagram",
+      "description": "Compile a .d2 file to SVG",
       "adapter": "process",
       "adapterConfig": {
         "command": "d2",
-        "positionalArgs": ["input"],
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
         "timeout_ms": 60000,
-        "missingDependencyHelp": "Install d2"
+        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
       },
       "args": [
-        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
-        { "name": "output", "type": "string", "required": false, "description": "Output path (default: input.svg)" },
-        { "name": "watch", "type": "boolean", "required": false, "description": "Watch and live-reload on changes" }
+        { "name": "input", "type": "string", "required": true, "description": "Input .d2 file path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output SVG file path (default: input.svg)" },
+        { "name": "--theme", "type": "number", "required": false, "description": "Theme ID (0-6). Default: 0" },
+        { "name": "--dark-theme", "type": "number", "required": false, "description": "Dark theme ID" },
+        { "name": "--pad", "type": "number", "required": false, "description": "Padding in pixels (default: 100)" },
+        { "name": "--layout", "type": "string", "required": false, "description": "Layout engine: dagre (default), elk, tala" },
+        { "name": "--scale", "type": "number", "required": false, "description": "Canvas scale factor (default: 1)" },
+        { "name": "--bundle", "type": "boolean", "required": false, "description": "Bundle dependency icons as base64 data URIs" },
+        { "name": "--font-regular", "type": "string", "required": false, "description": "Path to .ttf regular font" },
+        { "name": "--font-italic", "type": "string", "required": false, "description": "Path to .ttf italic font" },
+        { "name": "--font-bold", "type": "string", "required": false, "description": "Path to .ttf bold font" },
+        { "name": "--font-bold-italic", "type": "string", "required": false, "description": "Path to .ttf bold-italic font" },
+        { "name": "--target", "type": "string", "required": false, "description": "Export format: svg (default), png, pdf" }
       ]
     },
     {
       "namespace": "d2",
       "resource": "compile",
       "action": "png",
-      "description": "Compile .d2 file to PNG diagram",
+      "description": "Compile a .d2 file to PNG",
       "adapter": "process",
       "adapterConfig": {
         "command": "d2",
-        "baseArgs": ["--format", "png"],
-        "positionalArgs": ["input"],
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
         "timeout_ms": 60000,
-        "missingDependencyHelp": "Install d2"
+        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
       },
       "args": [
-        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
-        { "name": "output", "type": "string", "required": false, "description": "Output path" }
+        { "name": "input", "type": "string", "required": true, "description": "Input .d2 file path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output PNG file path (default: input.png)" },
+        { "name": "--theme", "type": "number", "required": false, "description": "Theme ID (0-6)" },
+        { "name": "--dark-theme", "type": "number", "required": false, "description": "Dark theme ID" },
+        { "name": "--pad", "type": "number", "required": false, "description": "Padding in pixels (default: 100)" },
+        { "name": "--layout", "type": "string", "required": false, "description": "Layout engine: dagre (default), elk, tala" },
+        { "name": "--scale", "type": "number", "required": false, "description": "Canvas scale factor" },
+        { "name": "--bundle", "type": "boolean", "required": false, "description": "Bundle dependency icons as base64 data URIs" },
+        { "name": "--font-regular", "type": "string", "required": false, "description": "Path to .ttf regular font" },
+        { "name": "--font-italic", "type": "string", "required": false, "description": "Path to .ttf italic font" },
+        { "name": "--font-bold", "type": "string", "required": false, "description": "Path to .ttf bold font" },
+        { "name": "--font-bold-italic", "type": "string", "required": false, "description": "Path to .ttf bold-italic font" }
       ]
     },
     {
       "namespace": "d2",
       "resource": "compile",
       "action": "pdf",
-      "description": "Compile .d2 file to PDF diagram",
+      "description": "Compile a .d2 file to PDF",
       "adapter": "process",
       "adapterConfig": {
         "command": "d2",
-        "baseArgs": ["--format", "pdf"],
-        "positionalArgs": ["input"],
+        "baseArgs": [],
+        "positionalArgs": ["input", "output"],
         "timeout_ms": 60000,
-        "missingDependencyHelp": "Install d2"
+        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
       },
       "args": [
-        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
-        { "name": "output", "type": "string", "required": false, "description": "Output path" }
+        { "name": "input", "type": "string", "required": true, "description": "Input .d2 file path" },
+        { "name": "output", "type": "string", "required": false, "description": "Output PDF file path (default: input.pdf)" },
+        { "name": "--theme", "type": "number", "required": false, "description": "Theme ID (0-6)" },
+        { "name": "--dark-theme", "type": "number", "required": false, "description": "Dark theme ID" },
+        { "name": "--pad", "type": "number", "required": false, "description": "Padding in pixels" },
+        { "name": "--layout", "type": "string", "required": false, "description": "Layout engine" },
+        { "name": "--scale", "type": "number", "required": false, "description": "Canvas scale factor" }
       ]
     },
     {
       "namespace": "d2",
-      "resource": "compile",
-      "action": "theme",
-      "description": "Compile with a specific theme",
+      "resource": "watch",
+      "action": "start",
+      "description": "Watch a .d2 file and recompile on changes (hot reload)",
       "adapter": "process",
       "adapterConfig": {
         "command": "d2",
-        "baseArgs": ["--theme"],
-        "timeout_ms": 60000,
-        "missingDependencyHelp": "Install d2"
+        "baseArgs": ["--watch"],
+        "positionalArgs": ["input"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
       },
       "args": [
-        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
-        { "name": "theme", "type": "number", "required": true, "description": "Theme ID (0-300+)" },
-        { "name": "output", "type": "string", "required": false, "description": "Output path" }
+        { "name": "input", "type": "string", "required": true, "description": "Input .d2 file to watch" },
+        { "name": "--theme", "type": "number", "required": false, "description": "Theme ID" },
+        { "name": "--layout", "type": "string", "required": false, "description": "Layout engine" },
+        { "name": "--pad", "type": "number", "required": false, "description": "Padding" }
       ]
     },
     {
       "namespace": "d2",
       "resource": "_",
       "action": "_",
-      "description": "Passthrough to d2 CLI for any command not covered by specific resources",
+      "description": "Passthrough to d2 CLI for advanced options",
       "adapter": "process",
       "adapterConfig": {
         "command": "d2",
-        "cwd": "invoke_cwd",
         "passthrough": true,
-        "timeout_ms": 60000,
         "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
       },
       "args": []
