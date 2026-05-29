@@ -1,5 +1,6 @@
 const fs = require("fs")
 const os = require("os")
+const path = require("path")
 
 jest.mock("fs")
 jest.mock("os", () => ({
@@ -183,6 +184,38 @@ describe("config", () => {
       })
       const config = await syncConfig("http://server")
       expect(config.commands).toEqual([])
+    })
+
+    test("syncServerPlugins deletes the folder on sync failure", async () => {
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ version: "2" })
+      })
+      global.fetch.mockResolvedValueOnce({ ok: false })
+      global.fetch.mockResolvedValueOnce({ ok: false })
+      global.fetch.mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({
+          plugins: [
+            {
+              name: "server-p1",
+              version: "1.0.0",
+              enabled: true,
+              checksum: "new-hash",
+              manifest: null
+            }
+          ]
+        })
+      })
+
+      fs.existsSync.mockReturnValue(false)
+
+      await syncConfig("http://server")
+
+      expect(fs.rmSync).toHaveBeenCalledWith(
+        expect.stringContaining(path.join("server-p1", "1.0.0")),
+        expect.objectContaining({ recursive: true, force: true })
+      )
     })
   })
 

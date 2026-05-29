@@ -349,6 +349,51 @@ describe("plugins-manager", () => {
       const writtenLock = writePluginsLock.mock.calls[0][0]
       expect(writtenLock.installed.p1).toBeUndefined()
     })
+    test("removePlugin fails if uninstall hook fails and force is false", () => {
+      fs.mkdtempSync.mockReturnValue("/tmp/dcli-plugin-hook-123")
+      readPluginsLock.mockReturnValue({
+        installed: {
+          p1: {
+            name: "p1",
+            lifecycle_hooks: {
+              post_uninstall: {
+                runtime: "node",
+                timeout_ms: 1000,
+                script_name: "post-uninstall.js",
+                script_source: "process.exit(1)"
+              }
+            }
+          }
+        }
+      })
+      spawnSync.mockReturnValue({ status: 1, stderr: "uninstall failed" })
+      expect(() => removePlugin("p1")).toThrow(/uninstall failed/)
+    })
+    test("removePlugin succeeds if uninstall hook fails and force is true", () => {
+      fs.mkdtempSync.mockReturnValue("/tmp/dcli-plugin-hook-123")
+      readPluginsLock.mockReturnValue({
+        installed: {
+          p1: {
+            name: "p1",
+            lifecycle_hooks: {
+              post_uninstall: {
+                runtime: "node",
+                timeout_ms: 1000,
+                script_name: "post-uninstall.js",
+                script_source: "process.exit(1)"
+              }
+            }
+          }
+        }
+      })
+      spawnSync.mockReturnValue({ status: 1, stderr: "uninstall failed" })
+      const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation()
+      expect(removePlugin("p1", true)).toBe(true)
+      expect(writePluginsLock).toHaveBeenCalled()
+      const writtenLock = writePluginsLock.mock.calls[0][0]
+      expect(writtenLock.installed.p1).toBeUndefined()
+      consoleWarnSpy.mockRestore()
+    })
     test("removePlugin fail", () => {
       readPluginsLock.mockReturnValue({ installed: {} })
       expect(removePlugin("p1")).toBe(false)

@@ -1,0 +1,138 @@
+name: Release sc-zig
+
+on:
+  push:
+    tags:
+      - 'v*-zig'  # Trigger on tags like v0.1.0-zig, v0.2.0-zig, etc.
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Zig
+        uses: goto-bus/setup-zig@v2
+        with:
+          version: 0.16.0
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Validate tag format
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-zig$ ]]; then
+            echo "Error: Tag format must be vX.Y.Z-zig (e.g., v0.1.0-zig)"
+            echo "Got: $VERSION"
+            exit 1
+          fi
+          echo "✓ Tag format validated: $VERSION"
+
+      - name: Update install.sh with version
+        run: |
+          sed -i "s/VERSION=\"v[^\"]*\"/VERSION=\"${{ steps.version.outputs.VERSION }}\"/" install.sh
+          echo "✓ Updated install.sh to version ${{ steps.version.outputs.VERSION }}"
+
+      - name: Build for multiple platforms
+        id: build
+        run: |
+          mkdir -p zig-out/release
+          
+          # Linux amd64
+          echo "Building for linux-amd64..."
+          zig build -Dtarget=x86_64-linux --release=small || { echo "✗ linux-amd64 build failed"; exit 1; }
+          cp zig-out/bin/sc-zig zig-out/release/sc-zig-linux-amd64
+          
+          # Linux arm64
+          echo "Building for linux-arm64..."
+          zig build -Dtarget=aarch64-linux --release=small || { echo "✗ linux-arm64 build failed"; exit 1; }
+          cp zig-out/bin/sc-zig zig-out/release/sc-zig-linux-arm64
+          
+          # Darwin amd64
+          echo "Building for darwin-amd64..."
+          zig build -Dtarget=x86_64-macos --release=small || { echo "✗ darwin-amd64 build failed"; exit 1; }
+          cp zig-out/bin/sc-zig zig-out/release/sc-zig-darwin-amd64
+          
+          # Darwin arm64
+          echo "Building for darwin-arm64..."
+          zig build -Dtarget=aarch64-macos --release=small || { echo "✗ darwin-arm64 build failed"; exit 1; }
+          cp zig-out/bin/sc-zig zig-out/release/sc-zig-darwin-arm64
+          
+          echo "✓ All builds successful!"
+          ls -lh zig-out/release
+
+      - name: Verify binaries
+        run: |
+          for binary in zig-out/release/sc-zig-*; do
+            if [ ! -f "$binary" ]; then
+              echo "✗ Missing binary: $binary"
+              exit 1
+            fi
+            if [ ! -s "$binary" ]; then
+              echo "✗ Empty binary: $binary"
+              exit 1
+            fi
+          done
+          echo "✓ All binaries verified"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: SuperCLI Zig ${{ steps.version.outputs.VERSION }}
+          body: |
+            ## SuperCLI Zig ${{ steps.version.outputs.VERSION }}
+            
+            Single-binary SuperCLI implementation in Zig for AI agents.
+            
+            ### Installation
+            
+            ```bash
+            curl -sSL https://github.com/javimosch/supercli/releases/download/${{ steps.version.outputs.VERSION }}/install.sh | bash
+            ```
+            
+            ### Assets
+            
+            - `sc-zig-linux-amd64` - Linux x86_64
+            - `sc-zig-linux-arm64` - Linux ARM64  
+            - `sc-zig-darwin-amd64` - macOS Intel
+            - `sc-zig-darwin-arm64` - macOS Apple Silicon
+            - `install.sh` - Installation script
+            
+            ### Features
+            
+            - Single binary (~260KB)
+            - No dependencies
+            - Agent-friendly bootstrap
+            - Plugin discovery and execution
+            - JSON output for all commands
+            
+            See [README](https://github.com/javimosch/supercli/blob/master/supercli-zig-cli/README.md) for details.
+            
+            ### Rollback
+            
+            If this release has issues, delete it and create a new tag for the fix.
+          files: |
+            zig-out/release/sc-zig-linux-amd64
+            zig-out/release/sc-zig-linux-arm64
+            zig-out/release/sc-zig-darwin-amd64
+            zig-out/release/sc-zig-darwin-arm64
+            install.sh
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release summary
+        if: success()
+        run: |
+          echo "✅ Release ${{ steps.version.outputs.VERSION }} created successfully!"
+          echo "Assets: 4 binaries + install.sh"
+          echo "Tag: ${{ steps.version.outputs.VERSION }}"

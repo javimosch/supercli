@@ -314,7 +314,7 @@ async function callHttpMcpTool(config, toolName, input, streamMode = false) {
     );
   }
 
-  const contentType = tr.headers.get("content-type") || "";
+  const contentType = (tr.headers && typeof tr.headers.get === "function") ? (tr.headers.get("content-type") || "") : "";
   
   // Check if response is SSE
   if (contentType.includes("text/event-stream")) {

@@ -36,15 +36,23 @@ const rawArgs = process.argv.slice(2);
 const flags = {};
 const positional = [];
 for (let i = 0; i < rawArgs.length; i++) {
-  if (rawArgs[i].startsWith("--")) {
-    const key = rawArgs[i].slice(2);
-    if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("--")) {
-      flags[key] = rawArgs[++i];
+  const arg = rawArgs[i];
+  if (arg.startsWith("--")) {
+    const kv = arg.slice(2);
+    const eqIdx = kv.indexOf("=");
+    if (eqIdx !== -1) {
+      const key = kv.slice(0, eqIdx);
+      const val = kv.slice(eqIdx + 1);
+      flags[key] = val;
     } else {
-      flags[key] = true;
+      if (i + 1 < rawArgs.length && !rawArgs[i + 1].startsWith("--")) {
+        flags[kv] = rawArgs[++i];
+      } else {
+        flags[kv] = true;
+      }
     }
   } else {
-    positional.push(rawArgs[i]);
+    positional.push(arg);
   }
 }
 

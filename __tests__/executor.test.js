@@ -236,6 +236,28 @@ describe("executor", () => {
     }
   })
 
+  test("handles custom adapter loading fallback to home directory", async () => {
+    const fs = require("fs")
+    const os = require("os")
+    const cmd = { adapter: "custom-fallback", namespace: "test", resource: "res", action: "act" }
+    
+    const tempHome = fs.mkdtempSync(path.join(os.tmpdir(), "supercli-home-"))
+    const spy = jest.spyOn(os, "homedir").mockReturnValue(tempHome)
+    
+    const adapterDir = path.join(tempHome, ".supercli", "adapters")
+    fs.mkdirSync(adapterDir, { recursive: true })
+    const adapterPath = path.join(adapterDir, "custom-fallback.js")
+    fs.writeFileSync(adapterPath, `function execute(cmd, flags, context) { return { ok: true, fallback: true } }`)
+    
+    try {
+      const result = await execute(cmd, {}, {})
+      expect(result).toEqual({ ok: true, fallback: true })
+    } finally {
+      spy.mockRestore()
+      fs.rmSync(tempHome, { recursive: true, force: true })
+    }
+  })
+
   test("fetches missing command from server during workflow", async () => {
     const workflow = {
       type: "workflow",
@@ -303,5 +325,37 @@ describe("executor", () => {
       code: 92,
       type: "resource_not_found"
     })
+  })
+
+  test("workflow step array output does not pollute next step flags", async () => {
+    const workflow = {
+      type: "workflow",
+      steps: [
+        "ns.res.act1",
+        "ns.res.act2"
+      ]
+    }
+    
+    const context = {
+      config: {
+        commands: [
+          { namespace: "ns", resource: "res", action: "act1", adapter: "process" },
+          { namespace: "ns", resource: "res", action: "act2", adapter: "process" }
+        ]
+      }
+    }
+
+    mockAdapters.process.execute
+      .mockResolvedValueOnce(["array-val-1", "array-val-2"])
+      .mockResolvedValueOnce({ ok: true })
+
+    await execute(workflow, {}, context)
+
+    // The second step should NOT be called with numeric indices '0' or '1' as keys
+    expect(mockAdapters.process.execute).toHaveBeenLastCalledWith(
+      expect.anything(),
+      expect.not.objectContaining({ "0": "array-val-1", "1": "array-val-2" }),
+      expect.anything()
+    )
   })
 })

@@ -142,6 +142,39 @@ supercli skills get aws.cfn.deploy --json
 supercli aws cfn deploy --stack my-stack --json
 ```
 
+### ⚡ Zig Implementation (sc-zig)
+
+For maximum performance and minimal dependencies, use the Zig implementation:
+
+```bash
+# Install single binary (~260KB, no Node.js required)
+curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+
+# Or manual install
+curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/sc-zig-linux-amd64 -o ~/.local/bin/sc-zig && chmod +x ~/.local/bin/sc-zig
+
+# Agent-friendly bootstrap
+sc-zig --json
+# → {"version":"1.0","mode":"agent_bootstrap","workflow":"discover -> inspect -> execute",...}
+
+# Discover plugins
+sc-zig plugins explore --name memory --json
+# → {"total":19,"returned":19,"plugins":[...]}
+
+# Install plugins (delegates to Node.js sc when needed)
+sc-zig plugins install agentmemory-cli
+```
+
+**Why agents prefer sc-zig:**
+- ⚡ **Single binary** — No Node.js runtime, just curl + chmod
+- 🚀 **Faster** — Native performance, instant startup
+- 📦 **Self-documenting** — Bootstrap JSON includes workflow guidance
+- 🔧 **Agent guidance** — Suggests `plugins update` when catalog is empty
+- 🎯 **Fixed arg parsing** — Both `--flag value` and `--flag=value` work
+- 📍 **Positional args** — Correctly handles positional arguments
+
+See [`AGENTS.md`](AGENTS.md) for complete agent instructions.
+
 ---
 
 ## 🔄 Keeping Plugins Updated
@@ -182,6 +215,25 @@ supercli plugins update
 
 ## 📦 Install
 
+### Option 1: Zig Version (Fast, Single Binary)
+
+```bash
+# Quick install (curl)
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+
+# Install and replace Node.js version
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --replace
+```
+
+**Why Zig?**
+- ✅ No Node.js startup overhead
+- ✅ Single static binary (250KB)
+- ✅ Reads same `~/.supercli/plugins/plugins.lock.json`
+- ✅ Progressive adoption: co-exists with Node.js version
+- ✅ Easy revert: `npm uninstall -g supercli && npm install -g supercli`
+
+### Option 2: Node.js Version (npx/npm)
+
 ```bash
 # Run immediately (no install)
 npx supercli uuid self generate
@@ -189,6 +241,38 @@ npx supercli uuid self generate
 # Install globally
 npm install -g superacli
 supercli uuid self generate
+```
+
+**Why Node.js?**
+- ✅ Full feature parity (MCP, server, HTTP adapter)
+- ✅ Plugin installation from registry
+- ✅ Ecosystem integration
+
+### Progressive Adoption
+
+Both versions read the same plugin storage. Try the Zig version first:
+
+```bash
+# Install Zig version as sc-zig (co-exists with Node.js sc)
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+
+# Test it
+sc-zig --version
+
+# If you like it, replace Node.js sc:
+sc-zig install-as-sc
+sudo ln -sf /usr/local/bin/sc-zig /usr/local/bin/sc
+
+# To go back to Node.js:
+npm uninstall -g supercli
+npm install -g supercli
+```
+
+**Check which version you have:**
+```bash
+sc --version
+# Zig version shows: SuperCLI (Zig) v0.1.0
+# Node.js version shows different info
 ```
 
 ---

@@ -76,7 +76,7 @@ async function executeWorkflow(workflow, flags, context, steps) {
 
     // Merge flags + explicit step args + previous output as context
     const mergedFlags = { ...flags, ...stepArgs }
-    if (prevOutput && typeof prevOutput === "object") {
+    if (prevOutput && typeof prevOutput === "object" && !Array.isArray(prevOutput)) {
       for (const [k, v] of Object.entries(prevOutput)) {
         if (mergedFlags[k] === undefined && typeof v !== "object") {
           mergedFlags[k] = v
@@ -112,8 +112,12 @@ async function executeWorkflow(workflow, flags, context, steps) {
 }
 
 async function executeCustomAdapter(adapterName, cmd, flags, context) {
-  // Check if adapter exists in local .supercli/adapters/ directory
-  const localAdapterPath = path.join(process.cwd(), ".supercli", "adapters", `${adapterName}.js`)
+  let localAdapterPath = path.join(process.cwd(), ".supercli", "adapters", `${adapterName}.js`)
+  
+  if (!fs.existsSync(localAdapterPath)) {
+    const os = require("os")
+    localAdapterPath = path.join(os.homedir(), ".supercli", "adapters", `${adapterName}.js`)
+  }
   
   if (fs.existsSync(localAdapterPath)) {
     // Execute locally using vm2

@@ -12,7 +12,8 @@ const PID_FILE = path.join(os.homedir(), ".supercli", "mcp-daemon.pid");
 const LOG_FILE = path.join(os.homedir(), ".supercli", "mcp-daemon.log");
 
 function ensureDir() {
-  const dir = path.dirname(SOCKET_PATH);
+  const socketPath = module.exports.SOCKET_PATH || SOCKET_PATH;
+  const dir = path.dirname(socketPath);
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 }
 
@@ -306,13 +307,22 @@ function startSocketServer() {
       for (const line of lines) {
         if (!line.trim()) continue;
         let req;
-        try { req = JSON.parse(line); } catch { continue; }
+        try { 
+          req = JSON.parse(line); 
+        } catch { 
+          continue; 
+        }
+        if (!req || typeof req !== "object") {
+          socket.write(JSON.stringify({ id: null, error: { message: "Invalid Request: expected a JSON object" } }) + "\n");
+          continue;
+        }
+        const reqId = req.id !== undefined ? req.id : null;
         handleRequest(req)
           .then((result) => {
-            socket.write(JSON.stringify({ id: req.id, result }) + "\n");
+            socket.write(JSON.stringify({ id: reqId, result }) + "\n");
           })
           .catch((err) => {
-            socket.write(JSON.stringify({ id: req.id, error: { message: err.message } }) + "\n");
+            socket.write(JSON.stringify({ id: reqId, error: { message: err.message } }) + "\n");
           });
       }
     });
@@ -325,8 +335,9 @@ function startSocketServer() {
     process.exit(1);
   });
 
-  server.listen(SOCKET_PATH, () => {
-    log(`MCP daemon listening on ${SOCKET_PATH} (pid ${process.pid})`);
+  const socketPath = module.exports.SOCKET_PATH || SOCKET_PATH;
+  server.listen(socketPath, () => {
+    log(`MCP daemon listening on ${socketPath} (pid ${process.pid})`);
   });
 
   return server;
@@ -340,17 +351,36 @@ function gracefulShutdown() {
     log(`Stopped MCP server: ${name}`);
   }
   pool.clear();
-  try { fs.unlinkSync(SOCKET_PATH); } catch {}
+  const socketPath = module.exports.SOCKET_PATH || SOCKET_PATH;
+  try { fs.unlinkSync(socketPath); } catch {}
   try { fs.unlinkSync(PID_FILE); } catch {}
   process.exit(0);
 }
 
-function main() {
+function checkDaemonRunning(socketPath) {
+  return new Promise((resolve) => {
+    const client = net.connect(socketPath, () => {
+      client.end();
+      resolve(true);
+    });
+    client.on("error", () => {
+      resolve(false);
+    });
+  });
+}
+
+async function main() {
   ensureDir();
 
-  // Remove stale socket
-  if (fs.existsSync(SOCKET_PATH)) {
-    try { fs.unlinkSync(SOCKET_PATH); } catch {}
+  // Remove stale socket (only if daemon is not actively running)
+  const socketPath = module.exports.SOCKET_PATH || SOCKET_PATH;
+  if (fs.existsSync(socketPath)) {
+    const isRunning = await checkDaemonRunning(socketPath);
+    if (isRunning) {
+      log(`MCP daemon is already running at ${socketPath}. Exiting.`);
+      process.exit(0);
+    }
+    try { fs.unlinkSync(socketPath); } catch {}
   }
 
   // Write PID file
@@ -366,8 +396,11 @@ function main() {
   startSocketServer();
 }
 
-module.exports = { SOCKET_PATH, PID_FILE };
+module.exports = { SOCKET_PATH, PID_FILE, checkDaemonRunning, handleRequest, startSocketServer, gracefulShutdown };
 
 if (require.main === module) {
-  main();
+  main().catch((err) => {
+    log(`Main error: ${err.message}`);
+    process.exit(1);
+  });
 }

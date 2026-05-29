@@ -14,7 +14,17 @@ async function execute(cmd, flags, context) {
   // Replace {param} placeholders in URL with flag values
   for (const [k, v] of Object.entries(flags)) {
     if (["human", "json", "compact"].includes(k)) continue
-    url = url.replace(`{${k}}`, encodeURIComponent(v))
+    url = url.replaceAll(`{${k}}`, encodeURIComponent(v))
+  }
+
+  // Validate that no unresolved path placeholders remain
+  const remainingPlaceholders = url.match(/\{[a-zA-Z0-9_-]+\}/g)
+  if (remainingPlaceholders) {
+    throw Object.assign(new Error(`Missing required path parameters: ${remainingPlaceholders.map(p => p.slice(1, -1)).join(", ")}`), {
+      code: 85,
+      type: "invalid_argument",
+      recoverable: false
+    })
   }
 
   // Build query string from flags for GET requests
@@ -72,6 +82,10 @@ async function execute(cmd, flags, context) {
       }
       
       fetchOpts.body = JSON.stringify(bodyObj)
+      const hasContentType = Object.keys(headers).some(h => h.toLowerCase() === "content-type")
+      if (!hasContentType) {
+        headers["Content-Type"] = "application/json"
+      }
     } else {
       const bodyObj = {}
       for (const [k, v] of Object.entries(flags)) {

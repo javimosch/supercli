@@ -1,38 +1,90 @@
 # supercli Agent Instructions
 
+## Choosing the right sc binary
+
+There are two implementations of `sc`. Prefer the Zig version (`sc-zig`) when available — it is faster and a single binary. Fall back to the Node.js version for plugin installs.
+
+| Feature | `sc-zig` | `sc` (Node.js) |
+|---|---|---|
+| Plugin discover / explore | ✅ | ✅ |
+| Execute plugin commands | ✅ | ✅ |
+| Plugin install | ✅ (delegates to `sc`) | ✅ native |
+| MCP server | ❌ | ✅ |
+| HTTP adapter | ❌ | ✅ |
+
+**Agent install (no sudo required):**
+```bash
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --path ~/.local/bin
+# or manual:
+curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/sc-zig-linux-amd64 -o ~/.local/bin/sc-zig && chmod +x ~/.local/bin/sc-zig
+```
+
 ## Using SuperCLI (for agents)
 
 When working with supercli, use the CLI itself for discovery. Do NOT search
 the filesystem (`plugins/`, `grep`, `glob`) — the CLI has built-in filters.
 
 ```bash
-# Start here — get bootstrap guidance
+# Start here — get bootstrap guidance (works with both sc and sc-zig)
+sc-zig --json
+# or
 sc --json
 
 # Explore plugins by name/description (instead of grepping plugin.json files)
-sc plugins explore --name <query> --json
+sc-zig plugins explore --name <query> --json
 
 # Filter by tags
-sc plugins explore --tags <tag1>,<tag2> --json
+sc-zig plugins explore --tags <tag1>,<tag2> --json
 
-# Learn about a plugin
-sc plugins learn <name> --json
-
-# Find plugins for a task
-sc discover --intent "<task>" --json
+# Install a plugin (delegates to Node.js sc internally)
+sc-zig plugins install <name>
 
 # List all available commands
-sc commands --query <keyword> --limit 50 --json
+sc-zig commands --query <keyword> --limit 50 --json
 
-# Inspect a command's schema
-sc inspect <namespace> <resource> <action> --json
+# Inspect a command's schema (includes arg types + positional markers)
+sc-zig inspect <namespace> <resource> <action> --json
+
+# Execute a command
+sc-zig <namespace> <resource> <action> --flag value --json
 ```
 
 **Key rules:**
-- `sc plugins explore --name <query>` — never grep/glob the `plugins/` directory
-- `sc discover --intent "<task>"` — never manually search plugin.json files
-- `sc --json` first — the CLI guides itself from there
+- `sc-zig plugins explore --name <query> --json` — never grep/glob the `plugins/` directory
+- `sc-zig --json` first — the CLI guides itself from there
 - `--json` flag for machine-readable output in all commands
+- Read `inspect` output before running a command — it shows which args are positional
+
+## Agent Memory Workflow (example)
+
+```bash
+# 1. Find a memory plugin
+sc-zig plugins explore --name memory --json
+
+# 2. Install it (requires Node.js sc in PATH)
+sc-zig plugins install agentmemory-cli
+
+# 3. Save a memory
+sc-zig agentmemory-cli memory save --text "User name is Javi" --project myproject --json
+
+# 4. Search memories (query is positional — use --query flag, Zig CLI routes it correctly)
+sc-zig agentmemory-cli memory search --query Javi --json
+
+# 5. List memories
+sc-zig agentmemory-cli memory list --json
+```
+
+## Arg handling notes
+
+The Zig CLI parses `--flag value` as flag=value (not `--flag=value`). Inspect output marks positional args with `"positional": true` — those are passed as bare values before named flags when the command is executed.
+
+Node.js `sc` also accepts these patterns:
+```bash
+# Find plugins for a task
+sc discover --intent "<task>" --json
+# Learn about a plugin
+sc plugins learn <name> --json
+```
 
 ## Adding a New Bundled Plugin
 
@@ -94,6 +146,93 @@ No edits to any file outside `plugins/mytool/` are needed.
 - Use Markdown for all documentation
 - Follow existing code conventions
 - Never commit secrets or credentials
+
+## sc-zig Release Process
+
+### Manual Release (Current - Recommended)
+
+The manual release process is simple, reliable, and currently recommended:
+
+```bash
+# 1. Build all platform binaries
+cd supercli-zig-cli
+bash build-release.sh
+
+# 2. Create GitHub release with all assets
+gh release create v0.1.1-zig --title "SuperCLI Zig v0.1.1" \
+  supercli-zig-cli/zig-out/release/sc-zig-linux-amd64 \
+  supercli-zig-cli/zig-out/release/sc-zig-linux-arm64 \
+  supercli-zig-cli/zig-out/release/sc-zig-darwin-amd64 \
+  supercli-zig-cli/zig-out/release/sc-zig-darwin-arm64 \
+  supercli-zig-cli/install.sh
+
+# 3. Update install.sh version if needed (optional)
+# The install.sh VERSION variable should match the release tag
+```
+
+### Auto-Release Workflow (Future)
+
+An automated GitHub Actions workflow is configured at `.github/workflows/sc-zig-release.yml`:
+
+- **Trigger**: Tags matching `v*-zig` pattern (e.g., `v0.1.0-zig`)
+- **Builds**: 4 platforms (Linux/macOS, AMD64/ARM64)
+- **Uploads**: 5 assets (4 binaries + install.sh)
+- **Auto-updates**: install.sh version
+
+**Current Status**: Workflow is properly configured but GitHub Actions may not trigger on the first few tag pushes after a workflow is added (known GitHub behavior). Use manual releases until auto-release stabilizes.
+
+**Usage when working**:
+```bash
+# Create and push tag
+git tag v0.1.1-zig
+git push origin v0.1.1-zig
+# GitHub Actions will handle everything automatically (when stable)
+```
+
+### Release Assets
+
+| Asset | Platform | Architecture |
+|-------|----------|--------------|
+| sc-zig-linux-amd64 | Linux | x86_64 |
+| sc-zig-linux-arm64 | Linux | ARM64 |
+| sc-zig-darwin-amd64 | macOS | Intel |
+| sc-zig-darwin-arm64 | macOS | Apple Silicon |
+| install.sh | All | Installation script |
+
+### Rollback Procedure
+
+If a release has critical issues:
+
+```bash
+# 1. Delete the GitHub release
+gh release delete v0.1.1-zig
+
+# 2. Delete the git tag locally and remotely
+git tag -d v0.1.1-zig
+git push origin :refs/tags/v0.1.1-zig
+
+# 3. Fix the issue
+git add .
+git commit -m "fix: critical issue"
+
+# 4. Create fix release
+git tag v0.1.2-zig
+git push origin v0.1.2-zig
+```
+
+### Version Tagging Convention
+
+- **Format**: `vX.Y.Z-zig` (e.g., `v0.1.0-zig`, `v0.1.1-zig`)
+- **Pattern**: Semantic versioning with `-zig` suffix
+- **Purpose**: Distinguishes Zig CLI releases from main project releases
+
+### Documentation
+
+See `supercli-zig-cli/docs/auto-release-plan.md` for complete release workflow documentation, including:
+- Detailed workflow steps
+- Edge cases and error handling
+- Security considerations
+- Future enhancement plans
 
 ## Codebase Exploration
 
