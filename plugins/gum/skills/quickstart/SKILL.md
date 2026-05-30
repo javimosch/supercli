@@ -14,7 +14,7 @@ A tool for glamorous shell scripts — style, format, and interact like a charm.
 - `gum format render` — Format text using markdown, template, code, or emoji formatters
 - `gum table render` — Render a table from CSV/TSV or stdin data
 - `gum join text` — Join text vertically or horizontally
-- `gum write text` — Write text from stdin to a file with a text area
+- `gum write text` — Interactive TUI multi-line text input with syntax highlighting
 - `gum file pick` — Pick a file from the filesystem
 
 ## Usage Examples

@@ -39,6 +39,7 @@ for (let i = 0; i < rawArgs.length; i++) {
   const arg = rawArgs[i];
   if (arg.startsWith("--")) {
     const kv = arg.slice(2);
+    if (kv === "") continue; // bare --, skip (prevents flags[""] = ...)
     const eqIdx = kv.indexOf("=");
     if (eqIdx !== -1) {
       const key = kv.slice(0, eqIdx);
@@ -71,11 +72,14 @@ const RESERVED_FLAGS = [
   "schema",
   "help-json",
   "help",
+  "version",
   "no-color",
   "show-dag",
   "format",
   "on-conflict",
 ];
+
+const CLI_VERSION = "1.31.1";
 
 function compactKeys(obj) {
   if (Array.isArray(obj)) return obj.map(compactKeys);
@@ -94,6 +98,7 @@ function compactKeys(obj) {
       error: "err",
       message: "msg",
       suggestions: "sug",
+      name: "n",
     };
     const out = {};
     for (const [k, v] of Object.entries(obj)) {
@@ -176,7 +181,7 @@ function outputError(error) {
       );
     }
   } else {
-    console.log(JSON.stringify(compactMode ? compactKeys(envelope) : envelope));
+    process.stderr.write(JSON.stringify(compactMode ? compactKeys(envelope) : envelope) + "\n");
   }
   process.exit(envelope.error.code);
 }
@@ -323,6 +328,24 @@ async function main() {
       for (const [k, v] of Object.entries(stdinData)) {
         if (!flags[k] && k !== "_stdin") flags[k] = v;
       }
+    }
+
+    // Early exit for --version (align with Zig CLI behavior)
+    if (flags.version) {
+      if (humanMode) {
+        console.log(`SuperCLI v${CLI_VERSION}`);
+        console.log("Implementation: JavaScript (Node.js)");
+        console.log("Binary: supercli");
+      } else {
+        output({
+          name: "SuperCLI",
+          implementation: "JavaScript",
+          version: CLI_VERSION,
+          node_version: process.version,
+          binary_name: "supercli",
+        });
+      }
+      return;
     }
 
     // Check for namespace passthrough before handling --help
