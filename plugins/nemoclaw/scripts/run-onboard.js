@@ -14,17 +14,28 @@ function parseArgs(argv) {
 
   for (let i = 0; i < argv.length; i += 1) {
     const token = argv[i]
-    if (token === "--non-interactive") out.nonInteractive = true
-    else if (token === "--recreate") out.recreate = true
-    else if (token === "--provider") out.provider = argv[i + 1] || ""
-    else if (token === "--model") out.model = argv[i + 1] || ""
-    else if (token === "--sandbox-name") out.sandboxName = argv[i + 1] || ""
-    else if (token === "--policy-mode") out.policyMode = argv[i + 1] || ""
-    else if (token === "--policy-presets") out.policyPresets = argv[i + 1] || ""
-    else if (token === "--api-key") out.apiKey = argv[i + 1] || ""
-
-    if (["--provider", "--model", "--sandbox-name", "--policy-mode", "--policy-presets", "--api-key"].includes(token)) {
-      i += 1
+    if (token === "--non-interactive") {
+      out.nonInteractive = true
+    } else if (token === "--recreate") {
+      out.recreate = true
+    } else if (token === "--provider" && i + 1 < argv.length) {
+      out.provider = argv[i + 1]
+      i += 1 // Skip the value
+    } else if (token === "--model" && i + 1 < argv.length) {
+      out.model = argv[i + 1]
+      i += 1 // Skip the value
+    } else if (token === "--sandbox-name" && i + 1 < argv.length) {
+      out.sandboxName = argv[i + 1]
+      i += 1 // Skip the value
+    } else if (token === "--policy-mode" && i + 1 < argv.length) {
+      out.policyMode = argv[i + 1]
+      i += 1 // Skip the value
+    } else if (token === "--policy-presets" && i + 1 < argv.length) {
+      out.policyPresets = argv[i + 1]
+      i += 1 // Skip the value
+    } else if (token === "--api-key" && i + 1 < argv.length) {
+      out.apiKey = argv[i + 1]
+      i += 1 // Skip the value
     }
   }
 
@@ -32,7 +43,10 @@ function parseArgs(argv) {
 }
 
 function run() {
+  // Debug: log the arguments we received
+  console.error("DEBUG: run-onboard.js received args:", process.argv.slice(2))
   const parsed = parseArgs(process.argv.slice(2))
+  console.error("DEBUG: parsed args:", parsed)
   const env = { ...process.env }
 
   if (parsed.nonInteractive) env.NEMOCLAW_NON_INTERACTIVE = "1"

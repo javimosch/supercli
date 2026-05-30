@@ -46,6 +46,7 @@ function writeFakeXurlBinary(dir) {
   fs.writeFileSync(bin, [
     "#!/usr/bin/env node",
     "const args = process.argv.slice(2);",
+    "console.error('DEBUG: xurl called with args:', args);",
     "const emitJson = value => {",
     "  const payload = JSON.stringify(value);",
     "  if (process.env.NO_COLOR === '1') console.log(payload);",
@@ -55,14 +56,14 @@ function writeFakeXurlBinary(dir) {
     "if (args[0] === 'version') { console.log('xurl 1.0.3-test'); process.exit(0); }",
     "if (args[0] === 'auth' && args[1] === 'status') { console.log('▸ my-app  [client_id: abc123…]'); process.exit(0); }",
     "if (args[0] === 'auth' && args[1] === 'apps' && args[2] === 'list') { console.log('▸ my-app (client_id: abc123…)'); process.exit(0); }",
-    "if (args[0] === 'whoami') emitJson({ data: { id: '42', username: 'tester' } });",
-    "if (args[0] === 'user') emitJson({ data: { id: '84', username: args[1].replace(/^@/, '') } });",
-    "if (args[0] === 'read') emitJson({ data: { id: '123', text: 'hello world', ref: args[1] } });",
-    "if (args[0] === 'search') emitJson({ data: [{ id: '1', text: args[1] }] });",
-    "if (args[0] === 'timeline') emitJson({ data: [{ id: '2', text: 'timeline item' }] });",
-    "if (args[0] === 'mentions') emitJson({ data: [{ id: '3', text: 'mention item' }] });",
-    "if (args[0] === 'followers') emitJson({ data: [{ username: args.includes('--of') ? args[args.indexOf('--of') + 1] : 'alice' }] });",
-    "if (args[0] === 'following') emitJson({ data: [{ username: args.includes('--of') ? args[args.indexOf('--of') + 1] : 'bob' }] });",
+    "if (args[0] === 'whoami') emitJson({ data: { data: { id: '42', username: 'tester' } } });",
+    "if (args[0] === 'user') emitJson({ data: { data: { id: '84', username: args[1].replace(/^@/, '') } } });",
+    "if (args[0] === 'read') emitJson({ data: { data: { id: '123', text: 'hello world', ref: args[1] } } });",
+    "if (args[0] === 'search') emitJson({ data: { data: [{ id: '1', text: args[1] }] } });",
+    "if (args[0] === 'timeline') emitJson({ data: { data: [{ id: '2', text: 'timeline item' }] } });",
+    "if (args[0] === 'mentions') emitJson({ data: { data: [{ id: '3', text: 'mention item' }] } });",
+    "if (args[0] === 'followers') emitJson({ data: { data: [{ username: args.includes('--of') ? args[args.indexOf('--of') + 1] : 'alice' }] } });",
+    "if (args[0] === 'following') emitJson({ data: { data: [{ username: args.includes('--of') ? args[args.indexOf('--of') + 1] : 'bob' }] } });",
     "emitJson({ ok: true, args });"
   ].join("\n"), "utf-8")
   fs.chmodSync(bin, 0o755)
