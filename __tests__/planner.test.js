@@ -87,4 +87,48 @@ describe("planner", () => {
       description: "Execute via unknown_adapter adapter"
     })
   })
+
+  test("creates http plan with default method when no config provided", () => {
+    const cmd = {
+      namespace: "api",
+      resource: "status",
+      action: "check",
+      adapter: "http"
+      // No adapterConfig provided
+    }
+
+    const plan = createPlan(cmd, {})
+
+    expect(plan.command).toBe("api.status.check")
+    expect(plan.steps).toHaveLength(4)
+    expect(plan.steps[2]).toMatchObject({
+      type: "adapter_request",
+      adapter: "http",
+      method: "GET",
+      url: undefined,
+      description: "HTTP GET (dynamic)"
+    })
+  })
+
+  test("creates http plan with partial config using defaults", () => {
+    const cmd = {
+      namespace: "api",
+      resource: "data",
+      action: "fetch",
+      adapter: "http",
+      adapterConfig: { url: "https://api.example.com/data" }
+      // No method provided, should default to GET
+    }
+
+    const plan = createPlan(cmd, {})
+
+    expect(plan.command).toBe("api.data.fetch")
+    expect(plan.steps[2]).toMatchObject({
+      type: "adapter_request",
+      adapter: "http",
+      method: "GET",
+      url: "https://api.example.com/data",
+      description: "HTTP GET https://api.example.com/data"
+    })
+  })
 })
