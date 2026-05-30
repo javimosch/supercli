@@ -61,4 +61,71 @@ describe("supercli args parser", () => {
     expect(plan.args.foo).toBe("bar")
     expect(plan.args.baz).toBe("")
   })
+
+  test("bare -- does not create empty flag key", () => {
+    const out = execSync(`node ${CLI} plan testns testres testact -- --foo bar --json`, {
+      env,
+      encoding: "utf-8"
+    })
+    const plan = JSON.parse(out)
+    // bare -- should be ignored as a flag; --foo should still parse
+    expect(plan.args.foo).toBe("bar")
+    expect(Object.keys(plan.args)).not.toContain("")
+  })
+
+  test("--flag at end of args defaults to true", () => {
+    const out = execSync(`node ${CLI} plan testns testres testact --flag --json`, {
+      env,
+      encoding: "utf-8"
+    })
+    const plan = JSON.parse(out)
+    expect(plan.args.flag).toBe(true)
+  })
+
+  test("--flag --other does not consume --other as value", () => {
+    const out = execSync(`node ${CLI} plan testns testres testact --flag --other value --json`, {
+      env,
+      encoding: "utf-8"
+    })
+    const plan = JSON.parse(out)
+    expect(plan.args.flag).toBe(true)
+    expect(plan.args.other).toBe("value")
+  })
+
+  test("--flag= with empty string value", () => {
+    const out = execSync(`node ${CLI} plan testns testres testact --empty= --json`, {
+      env,
+      encoding: "utf-8"
+    })
+    const plan = JSON.parse(out)
+    expect(plan.args.empty).toBe("")
+  })
+})
+    const plan = JSON.parse(out)
+    expect(plan.args.foo).toBe("bar")
+    expect(plan.args.baz).toBe("")
+  })
+
+  test("error for unknown namespace goes to stderr", () => {
+    const cmd = `node ${CLI} nonexistent --json`
+    expect(() => execSync(cmd, { env, encoding: "utf-8" })).toThrow()
+  })
+
+  test("inspect with missing args errors on stderr not stdout", () => {
+    try {
+      execSync(`node ${CLI} inspect --json`, { env, stdio: ["pipe", "pipe", "pipe"] })
+    } catch (e) {
+      expect(e.stderr.toString()).toContain("Usage: supercli inspect")
+      expect(e.stdout.toString()).toBe("")
+    }
+  })
+
+  test("unknown namespace exits with non-zero code", () => {
+    try {
+      execSync(`node ${CLI} nonexistent --json`, { env, stdio: ["pipe", "pipe", "pipe"] })
+    } catch (e) {
+      expect(e.status).toBeGreaterThan(0)
+      expect(e.stderr.toString()).toContain("not found")
+    }
+  })
 })
