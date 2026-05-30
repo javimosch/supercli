@@ -17,24 +17,7 @@ async function handlePluginsCommand(options) {
   const flags = options.flags || {}
   const subcommand = positional[1]
 
-  if (subcommand && ![
-    "list",
-    "install",
-    "explore",
-    "remove",
-    "show",
-    "doctor",
-    "learn",
-    "update"
-  ].includes(subcommand)) {
-    outputError({
-      code: 85,
-      type: "invalid_argument",
-      message: `Unknown plugins subcommand: ${subcommand}`,
-      recoverable: false
-    })
-    return true
-  }
+  // If unknown subcommand, fall through to help display
 
   function parseBooleanFlag(name, value) {
     if (value === undefined) return null
