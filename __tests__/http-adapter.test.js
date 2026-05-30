@@ -173,5 +173,141 @@ describe("http adapter", () => {
       })
     )
   })
+
+  test("performs POST request with bodyTemplate placeholder interpolation", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => "application/json" },
+      json: () => Promise.resolve({ ok: true })
+    })
+
+    await execute({
+      adapterConfig: {
+        url: "https://api.test/users",
+        method: "POST",
+        bodyTemplate: {
+          name: "{{username}}",
+          age: "{{userAge}}",
+          active: true
+        }
+      }
+    }, { username: "alice", userAge: "25" }, {})
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.test/users",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          name: "alice",
+          age: 25,  // Should convert numeric string to number
+          active: true
+        })
+      })
+    )
+  })
+
+  test("bodyTemplate handles JSON string flag values", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => "application/json" },
+      json: () => Promise.resolve({ ok: true })
+    })
+
+    await execute({
+      adapterConfig: {
+        url: "https://api.test/users",
+        method: "POST",
+        bodyTemplate: {
+          tags: "{{tagsArray}}",
+          config: "{{configObj}}"
+        }
+      }
+    }, {
+      tagsArray: '["tag1", "tag2"]',
+      configObj: '{"setting": "value"}'
+    }, {})
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.test/users",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          tags: ["tag1", "tag2"],
+          config: { setting: "value" }
+        })
+      })
+    )
+  })
+
+  test("bodyTemplate removes null values for unresolved placeholders", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => "application/json" },
+      json: () => Promise.resolve({ ok: true })
+    })
+
+    await execute({
+      adapterConfig: {
+        url: "https://api.test/users",
+        method: "POST",
+        bodyTemplate: {
+          name: "{{username}}",
+          optional: "{{missing}}",
+          required: "fixed-value"
+        }
+      }
+    }, { username: "alice" }, {})
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.test/users",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          name: "alice",
+          required: "fixed-value"
+          // optional field should be removed since missing is undefined
+        })
+      })
+    )
+  })
+
+  test("bodyTemplate handles numeric conversion correctly", async () => {
+    global.fetch.mockResolvedValue({
+      ok: true,
+      headers: { get: () => "application/json" },
+      json: () => Promise.resolve({ ok: true })
+    })
+
+    await execute({
+      adapterConfig: {
+        url: "https://api.test/users",
+        method: "POST",
+        bodyTemplate: {
+          integerVal: "{{intStr}}",
+          floatVal: "{{floatStr}}",
+          stringVal: "{{textStr}}",
+          emptyStr: "{{empty}}"
+        }
+      }
+    }, {
+      intStr: "42",
+      floatStr: "3.14",
+      textStr: "not-a-number",
+      empty: ""
+    }, {})
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      "https://api.test/users",
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({
+          integerVal: 42,
+          floatVal: 3.14,
+          stringVal: "not-a-number",
+          emptyStr: ""  // Empty string should remain string
+        })
+      })
+    )
+  })
 })
 
