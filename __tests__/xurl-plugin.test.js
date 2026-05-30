@@ -62,8 +62,8 @@ function writeFakeXurlBinary(dir) {
     "if (args[0] === 'search') emitJson({ data: { data: [{ id: '1', text: args[1] }] } });",
     "if (args[0] === 'timeline') emitJson({ data: { data: [{ id: '2', text: 'timeline item' }] } });",
     "if (args[0] === 'mentions') emitJson({ data: { data: [{ id: '3', text: 'mention item' }] } });",
-    "if (args[0] === 'followers') emitJson({ data: { data: [{ username: args.includes('--of') ? args[args.indexOf('--of') + 1] : 'alice' }] } });",
-    "if (args[0] === 'following') emitJson({ data: { data: [{ username: args.includes('--of') ? args[args.indexOf('--of') + 1] : 'bob' }] } });",
+    "if (args[0] === 'followers') { const ofArg = args.find(a => a.startsWith('--of=')); const username = ofArg ? ofArg.split('=')[1] : 'alice'; emitJson({ data: { data: [{ username }] } }); }",
+    "if (args[0] === 'following') { const ofArg = args.find(a => a.startsWith('--of=')); const username = ofArg ? ofArg.split('=')[1] : 'bob'; emitJson({ data: { data: [{ username }] } }); }",
     "emitJson({ ok: true, args });"
   ].join("\n"), "utf-8")
   fs.chmodSync(bin, 0o755)
@@ -122,37 +122,37 @@ describe("xurl hybrid plugin", () => {
 
     const whoami = runNoServer("xurl account whoami --json", { env })
     expect(whoami.ok).toBe(true)
-    expect(JSON.parse(whoami.output).data.data.username).toBe("tester")
+    expect(JSON.parse(whoami.output).data.data.data.username).toBe("tester")
 
     const user = runNoServer("xurl users show --target @XDevelopers --json", { env })
     expect(user.ok).toBe(true)
-    expect(JSON.parse(user.output).data.data.username).toBe("XDevelopers")
+    expect(JSON.parse(user.output).data.data.data.username).toBe("XDevelopers")
 
     const read = runNoServer("xurl posts show --target 1234567890 --json", { env })
     expect(read.ok).toBe(true)
-    expect(JSON.parse(read.output).data.data.ref).toBe("1234567890")
+    expect(JSON.parse(read.output).data.data.data.ref).toBe("1234567890")
 
     const search = runNoServer("xurl posts search --query \"from:XDevelopers\" --max-results 10 --json", { env })
     expect(search.ok).toBe(true)
-    expect(JSON.parse(search.output).data.data[0].text).toBe("from:XDevelopers")
+    expect(JSON.parse(search.output).data.data.data[0].text).toBe("from:XDevelopers")
   })
 
   test("routes timeline mentions and social wrappers", () => {
     const timeline = runNoServer("xurl timeline list --max-results 10 --json", { env })
     expect(timeline.ok).toBe(true)
-    expect(JSON.parse(timeline.output).data.data[0].text).toBe("timeline item")
+    expect(JSON.parse(timeline.output).data.data.data[0].text).toBe("timeline item")
 
     const mentions = runNoServer("xurl mentions list --max-results 10 --json", { env })
     expect(mentions.ok).toBe(true)
-    expect(JSON.parse(mentions.output).data.data[0].text).toBe("mention item")
+    expect(JSON.parse(mentions.output).data.data.data[0].text).toBe("mention item")
 
     const followers = runNoServer("xurl social followers --of XDevelopers --max-results 20 --json", { env })
     expect(followers.ok).toBe(true)
-    expect(JSON.parse(followers.output).data.data[0].username).toBe("XDevelopers")
+    expect(JSON.parse(followers.output).data.data.data[0].username).toBe("XDevelopers")
 
     const following = runNoServer("xurl social following --of XDevelopers --max-results 20 --json", { env })
     expect(following.ok).toBe(true)
-    expect(JSON.parse(following.output).data.data[0].username).toBe("XDevelopers")
+    expect(JSON.parse(following.output).data.data.data[0].username).toBe("XDevelopers")
   })
 
   test("does not expose passthrough and reports dependencies as healthy", () => {
