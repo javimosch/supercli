@@ -131,4 +131,31 @@ describe("planner", () => {
       description: "HTTP GET https://api.example.com/data"
     })
   })
+
+  test("handles null or missing command gracefully", () => {
+    // Test edge case where cmd is missing required fields
+    const incompleteCmd = {
+      namespace: "test"
+      // Missing resource, action, adapter
+    }
+
+    const plan = createPlan(incompleteCmd, {})
+
+    expect(plan.command).toBe("test.undefined.undefined")
+    expect(plan.args).toEqual({})
+    expect(plan.steps).toHaveLength(4)
+    expect(plan.steps[2]).toMatchObject({
+      type: "adapter_request",
+      adapter: undefined,
+      description: "Execute via undefined adapter"
+    })
+  })
+
+  test("handles null command input gracefully", () => {
+    // Test extreme edge case where cmd is null
+    expect(() => createPlan(null, {})).not.toThrow()
+
+    const plan = createPlan(null, {})
+    expect(plan.command).toBe("undefined.undefined.undefined")
+  })
 })

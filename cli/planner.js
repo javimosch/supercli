@@ -5,6 +5,11 @@ function generatePlanId() {
 }
 
 function createPlan(cmd, args) {
+  // Handle null/undefined input gracefully
+  if (!cmd) {
+    cmd = {}
+  }
+
   const steps = []
 
   // Step 1: Resolve command
