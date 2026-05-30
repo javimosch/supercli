@@ -1,0 +1,87 @@
+{
+  "name": "diffoscope",
+  "version": "0.1.0",
+  "description": "In-depth comparison of files, archives, and directories. Recursively unpacks archives and transforms binary formats for human-readable comparison.",
+  "source": "https://salsa.debian.org/reproducible-builds/diffoscope",
+  "checks": [
+    { "type": "binary", "name": "diffoscope" }
+  ],
+  "install_guidance": {
+    "plugin": "diffoscope",
+    "binary": "diffoscope",
+    "check": "which diffoscope",
+    "install_steps": [
+      "pip install diffoscope",
+      "Verify: diffoscope --version",
+      "supercli plugins install ./plugins/diffoscope --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "diffoscope",
+      "resource": "self",
+      "action": "version",
+      "description": "Print diffoscope version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diffoscope",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install diffoscope: pip install diffoscope"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diffoscope",
+      "resource": "self",
+      "action": "list-tools",
+      "description": "List all external tools that diffoscope uses",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diffoscope",
+        "baseArgs": ["--list-tools"],
+        "missingDependencyHelp": "Install diffoscope: pip install diffoscope"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diffoscope",
+      "resource": "compare",
+      "action": "files",
+      "description": "Compare two files, archives, or directories in-depth",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diffoscope",
+        "baseArgs": [],
+        "positionalArgs": ["file1", "file2"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install diffoscope: pip install diffoscope"
+      },
+      "args": [
+        { "name": "file1", "type": "string", "required": true, "description": "First file/archive/directory to compare" },
+        { "name": "file2", "type": "string", "required": true, "description": "Second file/archive/directory to compare" },
+        { "name": "--html", "type": "string", "description": "Write HTML report to file" },
+        { "name": "--json", "type": "string", "description": "Write JSON report to file" },
+        { "name": "--text", "type": "string", "description": "Write text report to file" },
+        { "name": "--max-page-size", "type": "string", "description": "Maximum bytes per page for hexdump output" },
+        { "name": "--no-default-limits", "type": "boolean", "description": "Disable all limits" }
+      ]
+    },
+    {
+      "namespace": "diffoscope",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to diffoscope CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diffoscope",
+        "passthrough": true,
+        "missingDependencyHelp": "Install diffoscope: pip install diffoscope"
+      },
+      "args": []
+    }
+  ]
+}
