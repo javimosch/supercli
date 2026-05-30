@@ -53,11 +53,11 @@ describe("watchexec plugin", () => {
     fs.rmSync(tempHome, { recursive: true, force: true })
   })
 
-  test("routes cli version wrapped command", () => {
-    const r = runNoServer("watchexec cli version --json", { env })
+  test("routes self version wrapped command", () => {
+    const r = runNoServer("watchexec self version --json", { env })
     expect(r.ok).toBe(true)
     const data = JSON.parse(r.output)
-    expect(data.command).toBe("watchexec.cli.version")
+    expect(data.command).toBe("watchexec.self.version")
     expect(data.data.raw).toBe("watchexec 2.5.0-test")
   })
 
