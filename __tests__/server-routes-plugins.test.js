@@ -127,4 +127,104 @@ describe("server routes - plugins", () => {
     expect(res.status).toHaveBeenCalledWith(400)
     expect(res.json).toHaveBeenCalledWith(expect.objectContaining({ error: "bad payload" }))
   })
+
+  test("returns 404 for not found errors", async () => {
+    pluginsService.getServerPlugin.mockRejectedValue(
+      Object.assign(new Error("plugin not found"), { code: 92, type: "not_found" }),
+    )
+
+    await getHandler(pluginsRouter, "get", "/:name")({ params: { name: "missing" } }, res)
+
+    expect(res.status).toHaveBeenCalledWith(404)
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+      error: "plugin not found",
+      type: "not_found"
+    }))
+  })
+
+  test("returns 500 for generic service errors", async () => {
+    pluginsService.listServerPlugins.mockRejectedValue(
+      Object.assign(new Error("database error"), { code: 500 }),
+    )
+
+    await getHandler(pluginsRouter, "get", "/")({ query: {}, headers: {} }, res)
+
+    expect(res.status).toHaveBeenCalledWith(500)
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+      error: "database error",
+      type: "internal_error"
+    }))
+  })
+
+  test("POST /upload handles multipart parsing errors", async () => {
+    const req = {
+      headers: { "content-type": "multipart/form-data; boundary=test" },
+      on: jest.fn(),
+      body: undefined,
+    }
+
+    const handler = getHandler(pluginsRouter, "post", "/upload")
+    const promise = handler(req, res)
+
+    // Simulate data event with malformed boundary
+    const dataCallback = req.on.mock.calls.find(call => call[0] === "data")[1]
+    const endCallback = req.on.mock.calls.find(call => call[0] === "end")[1]
+
+    dataCallback(Buffer.from("invalid multipart data"))
+    endCallback()
+    await promise
+
+    expect(res.status).toHaveBeenCalledWith(400)
+  })
+
+  test("POST /upload handles missing boundary", async () => {
+    const req = {
+      headers: { "content-type": "multipart/form-data" }, // no boundary
+      on: jest.fn(),
+      body: undefined,
+    }
+
+    await getHandler(pluginsRouter, "post", "/upload")(req, res)
+
+    expect(res.status).toHaveBeenCalledWith(400)
+    expect(res.json).toHaveBeenCalledWith(expect.objectContaining({
+      error: "Multipart boundary is required"
+    }))
+  })
+
+  test("DELETE /:name removes plugin successfully", async () => {
+    pluginsService.removeServerPlugin.mockResolvedValue({ name: "demo", removed: true })
+
+    await getHandler(pluginsRouter, "delete", "/:name")({ params: { name: "demo" } }, res)
+
+    expect(pluginsService.removeServerPlugin).toHaveBeenCalledWith("demo")
+    expect(res.json).toHaveBeenCalledWith({ ok: true, removed: { name: "demo", removed: true } })
+  })
+
+  test("parseBoolean function edge cases with varied uploads", async () => {
+    // Test parseBoolean through actual usage in upload endpoint
+    pluginsService.upsertZipPlugin.mockResolvedValue({ name: "test" })
+
+    // Test case: enabled="TRUE" (uppercase)
+    const req1 = multipartReq(
+      { name: "test1", enabled: "TRUE", manifest: JSON.stringify({ name: "test1" }) },
+      Buffer.from([0x50, 0x4b])
+    )
+    const run1 = getHandler(pluginsRouter, "post", "/upload")(req1, res)
+    req1.emit("data", req1._bodyBuffer)
+    req1.emit("end")
+    await run1
+
+    // Test case: enabled="" (empty string)
+    const req2 = multipartReq(
+      { name: "test2", enabled: "", manifest: JSON.stringify({ name: "test2" }) },
+      Buffer.from([0x50, 0x4b])
+    )
+    const run2 = getHandler(pluginsRouter, "post", "/upload")(req2, res)
+    req2.emit("data", req2._bodyBuffer)
+    req2.emit("end")
+    await run2
+
+    expect(pluginsService.upsertZipPlugin).toHaveBeenCalledTimes(2)
+  })
 })
