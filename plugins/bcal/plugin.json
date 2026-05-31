@@ -1,0 +1,94 @@
+{
+  "name": "bcal",
+  "version": "0.1.0",
+  "description": "Byte CALculator for storage conversions, calculations, and HDD/SSD capacity planning",
+  "source": "https://github.com/jarun/bcal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bcal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bcal",
+    "binary": "bcal",
+    "check": "which bcal",
+    "install_steps": [
+      "apt-get install bcal",
+      "or: brew install bcal",
+      "or: sudo make strip install (from source)",
+      "Verify: bcal --help"
+    ],
+    "note": "Storage and general-purpose calculator. Minimal dependencies (libc + readline)."
+  },
+  "commands": [
+    {
+      "namespace": "bcal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bcal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bcal",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install: apt install bcal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bcal",
+      "resource": "calc",
+      "action": "evaluate",
+      "description": "Evaluate a storage expression (e.g. '(5kb+2mb)/3')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bcal",
+        "baseArgs": [],
+        "missingDependencyHelp": "Install: apt install bcal"
+      },
+      "args": [
+        {
+          "name": "expression",
+          "type": "string",
+          "description": "Storage expression to evaluate (e.g. '5kb+2mb/3' or N unit)",
+          "positional": true,
+          "required": true
+        }
+      ]
+    },
+    {
+      "namespace": "bcal",
+      "resource": "convert",
+      "action": "show",
+      "description": "Show a number in binary, decimal, and hex representations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bcal",
+        "baseArgs": ["-c"],
+        "missingDependencyHelp": "Install: apt install bcal"
+      },
+      "args": [
+        {
+          "name": "number",
+          "type": "number",
+          "description": "Positive integer to show in binary, decimal, hex",
+          "positional": true,
+          "required": true
+        }
+      ]
+    },
+    {
+      "namespace": "bcal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bcal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bcal",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: apt install bcal"
+      },
+      "args": []
+    }
+  ]
+}
