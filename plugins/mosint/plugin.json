@@ -1,0 +1,79 @@
+{
+  "name": "mosint",
+  "version": "0.1.0",
+  "description": "Automated email OSINT investigation tool with social media checking, breach detection, and data leak analysis",
+  "source": "https://github.com/alpkeskin/mosint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mosint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mosint",
+    "binary": "mosint",
+    "check": "which mosint",
+    "install_steps": [
+      "go install -v github.com/alpkeskin/mosint/v3/cmd/mosint@latest",
+      "Or download binary from https://github.com/alpkeskin/mosint/releases",
+      "Create config: touch ~/.mosint.yaml",
+      "See docs for API keys: https://github.com/alpkeskin/mosint",
+      "Verify: mosint -h"
+    ],
+    "note": "Requires API keys in ~/.mosint.yaml for full functionality. Written in Go. Source: https://github.com/alpkeskin/mosint (5.8k+ stars)."
+  },
+  "commands": [
+    {
+      "namespace": "mosint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mosint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mosint",
+        "missingDependencyHelp": "Install: go install github.com/alpkeskin/mosint/v3/cmd/mosint@latest",
+        "baseArgs": ["-h"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "mosint",
+      "resource": "email",
+      "action": "investigate",
+      "description": "Investigate an email address for social media accounts, breaches, and data leaks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mosint",
+        "missingDependencyHelp": "Install: go install github.com/alpkeskin/mosint/v3/cmd/mosint@latest"
+      },
+      "args": [
+        {
+          "name": "email",
+          "type": "string",
+          "required": true,
+          "description": "Email address to investigate",
+          "positional": true
+        },
+        {
+          "name": "config",
+          "type": "string",
+          "required": false,
+          "description": "Path to config file with API keys"
+        }
+      ]
+    },
+    {
+      "namespace": "mosint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mosint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mosint",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: go install github.com/alpkeskin/mosint/v3/cmd/mosint@latest"
+      },
+      "args": []
+    }
+  ]
+}
