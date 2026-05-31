@@ -1,0 +1,69 @@
+{
+  "name": "git-absorb",
+  "version": "0.1.0",
+  "description": "git commit --fixup, but automatic — auto-absorb staged changes into relevant previous commits",
+  "source": "https://github.com/tummychow/git-absorb",
+  "checks": [
+    { "type": "binary", "name": "git-absorb" }
+  ],
+  "install_guidance": {
+    "plugin": "git-absorb",
+    "binary": "git-absorb",
+    "check": "which git-absorb",
+    "install_steps": [
+      "cargo install git-absorb",
+      "Verify: git-absorb --version",
+      "supercli plugins install ./plugins/git-absorb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "git-absorb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-absorb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-absorb",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install git-absorb: cargo install git-absorb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-absorb",
+      "resource": "repo",
+      "action": "absorb",
+      "description": "Auto-absorb staged changes into the appropriate previous commits. Use --and-rebase to auto-rebase after absorption.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-absorb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install git-absorb: cargo install git-absorb"
+      },
+      "args": [
+        { "name": "--and-rebase", "type": "boolean", "description": "Automatically rebase after absorbing fixup commits" },
+        { "name": "--base", "type": "string", "description": "Use <ref> as the base commit instead of defaulting to --base upstream" },
+        { "name": "--force", "type": "boolean", "description": "Write fixup commits even if conflicts are detected" }
+      ]
+    },
+    {
+      "namespace": "git-absorb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-absorb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-absorb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install git-absorb: cargo install git-absorb"
+      },
+      "args": []
+    }
+  ]
+}

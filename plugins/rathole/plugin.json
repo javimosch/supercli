@@ -1,0 +1,87 @@
+{
+  "name": "rathole",
+  "version": "0.1.0",
+  "description": "A lightweight and high-performance reverse proxy for NAT traversal, written in Rust. An alternative to frp and ngrok.",
+  "source": "https://github.com/rathole-org/rathole",
+  "checks": [
+    { "type": "binary", "name": "rathole" }
+  ],
+  "install_guidance": {
+    "plugin": "rathole",
+    "binary": "rathole",
+    "check": "which rathole",
+    "install_steps": [
+      "Download from https://github.com/rathole-org/rathole/releases",
+      "Or: cargo install rathole",
+      "Verify: rathole --version",
+      "supercli plugins install ./plugins/rathole --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rathole",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rathole version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rathole",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install rathole: cargo install rathole"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rathole",
+      "resource": "server",
+      "action": "start",
+      "description": "Start rathole in server mode with a config file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rathole",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rathole: cargo install rathole"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": true, "description": "Path to server configuration file (TOML)" },
+        { "name": "--server", "type": "boolean", "description": "Explicitly run in server mode" }
+      ]
+    },
+    {
+      "namespace": "rathole",
+      "resource": "client",
+      "action": "start",
+      "description": "Start rathole in client mode with a config file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rathole",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rathole: cargo install rathole"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": true, "description": "Path to client configuration file (TOML)" },
+        { "name": "--client", "type": "boolean", "description": "Explicitly run in client mode" }
+      ]
+    },
+    {
+      "namespace": "rathole",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rathole CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rathole",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rathole: cargo install rathole"
+      },
+      "args": []
+    }
+  ]
+}

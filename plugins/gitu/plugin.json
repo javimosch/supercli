@@ -1,0 +1,67 @@
+{
+  "name": "gitu",
+  "version": "0.1.0",
+  "description": "A TUI Git client inspired by Magit — stage, commit, branch, rebase, and more from the terminal",
+  "source": "https://github.com/altsem/gitu",
+  "checks": [
+    { "type": "binary", "name": "gitu" }
+  ],
+  "install_guidance": {
+    "plugin": "gitu",
+    "binary": "gitu",
+    "check": "which gitu",
+    "install_steps": [
+      "cargo install gitu",
+      "Verify: gitu --version",
+      "supercli plugins install ./plugins/gitu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitu",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gitu: cargo install gitu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitu",
+      "resource": "repo",
+      "action": "open",
+      "description": "Open gitu TUI in the current directory (or specified path)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitu: cargo install gitu"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to git repository to open" }
+      ]
+    },
+    {
+      "namespace": "gitu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitu: cargo install gitu"
+      },
+      "args": []
+    }
+  ]
+}

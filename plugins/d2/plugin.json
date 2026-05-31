@@ -1,0 +1,123 @@
+{
+  "name": "d2",
+  "version": "0.1.0",
+  "description": "D2 — modern diagram scripting language that turns text to SVG, PNG, or PDF",
+  "source": "https://github.com/terrastruct/d2",
+  "checks": [
+    { "type": "binary", "name": "d2" }
+  ],
+  "install_guidance": {
+    "plugin": "d2",
+    "binary": "d2",
+    "check": "which d2",
+    "install_steps": [
+      "curl -fsSL https://d2lang.com/install.sh | sh -s --",
+      "Or: go install oss.terrastruct.com/d2@latest",
+      "Verify: d2 --version",
+      "supercli plugins install ./plugins/d2 --on-conflict replace --json"
+    ],
+    "note": "Source: https://github.com/terrastruct/d2 (24k stars). Written in Go."
+  },
+  "commands": [
+    {
+      "namespace": "d2",
+      "resource": "self",
+      "action": "version",
+      "description": "Print d2 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "d2",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "d2",
+      "resource": "compile",
+      "action": "svg",
+      "description": "Compile .d2 file to SVG diagram",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "d2",
+        "positionalArgs": ["input"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install d2"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
+        { "name": "output", "type": "string", "required": false, "description": "Output path (default: input.svg)" },
+        { "name": "watch", "type": "boolean", "required": false, "description": "Watch and live-reload on changes" }
+      ]
+    },
+    {
+      "namespace": "d2",
+      "resource": "compile",
+      "action": "png",
+      "description": "Compile .d2 file to PNG diagram",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "d2",
+        "baseArgs": ["--format", "png"],
+        "positionalArgs": ["input"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install d2"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
+        { "name": "output", "type": "string", "required": false, "description": "Output path" }
+      ]
+    },
+    {
+      "namespace": "d2",
+      "resource": "compile",
+      "action": "pdf",
+      "description": "Compile .d2 file to PDF diagram",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "d2",
+        "baseArgs": ["--format", "pdf"],
+        "positionalArgs": ["input"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install d2"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
+        { "name": "output", "type": "string", "required": false, "description": "Output path" }
+      ]
+    },
+    {
+      "namespace": "d2",
+      "resource": "compile",
+      "action": "theme",
+      "description": "Compile with a specific theme",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "d2",
+        "baseArgs": ["--theme"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install d2"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Path to .d2 file" },
+        { "name": "theme", "type": "number", "required": true, "description": "Theme ID (0-300+)" },
+        { "name": "output", "type": "string", "required": false, "description": "Output path" }
+      ]
+    },
+    {
+      "namespace": "d2",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to d2 CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "d2",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install d2: curl -fsSL https://d2lang.com/install.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
