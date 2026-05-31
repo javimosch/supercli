@@ -79,9 +79,17 @@ npx supercli uuid self generate
 npx supercli http check health --url https://example.com
 # → {"status":"ok","ms":142,"code":200}
 
+# Check SSL certificate details
+npx supercli cert info --domain github.com
+# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
+
 # Generate a password
 npx supercli passgen
 # → {"password":"xK9#mP2$vL7@nQ5%"}
+
+# Get weather for any city
+npx supercli weather now "Tokyo"
+# → {"temp_C":22,"condition":"Clear","humidity":65}
 
 # Convert CSV to JSON
 echo "name,age\nAlice,30\nBob,25" | npx supercli csv json convert
@@ -102,8 +110,8 @@ npx supercli plugins explore
 npx supercli plugins install commiat
 ```
 
-> 💡 No install? Correct. `npx supercli` works immediately.<br>
-> Want it global? `npm install -g superacli`<br>
+> 💡 No install needed. `npx supercli` works immediately.<br>
+> Install globally: `npm install -g superacli`<br>
 > Server mode: See docs/features/server-plugins.md
 
 ---
@@ -136,11 +144,13 @@ supercli aws cfn deploy --stack my-stack --json
 
 ## What You Get
 
-- 🔍 Find any capability instantly — no docs hunting
-- ⚡ Run tools with one consistent interface
-- 🤖 Give agents predictable, structured execution
-- 🔗 Combine multiple tools without glue code
-- 📦 Extend anything via plugins
+- 🔍 **Instant discovery** — Find any capability with `supercli skills search "database"`, no docs hunting
+- ⚡ **One interface** — Every tool runs as `supercli <ns> <res> <action> [--flags]`, zero syntax learning
+- 🤖 **Agent-native** — Every capability returns structured JSON, accepts `--json`/`--silent`, and self-describes via `inspect`
+- 🔗 **No glue code** — `supercli ask "check status and send alert"` chains tools automatically
+- 📦 **Extensible** — Plugins from the registry add any CLI, API, or MCP server as a capability
+- 📋 **Auditable** — Every call logs namespace, resource, action, inputs, outputs, duration
+- 🚨 **Predictable errors** — Standard exit codes: `82` validation, `105` integration, `110` internal
 
 ---
 
@@ -185,24 +195,25 @@ npx supercli secret scan ./src
 
 ## 🏗️ Architecture
 
-supercli routes every command through a universal capability framework:
+supercli routes every command through a universal capability framework.
 
-**The router:**
-- **Discovers** capabilities from every adapter, caches metadata for fast lookup
-- **Routes** commands to the correct harness based on namespace
-- **Executes** with unified error handling, envelopes, and output formatting
-- **Surfaces** machine-readable descriptions so agents can plan against the capability graph
+**The router** is the central brain:
+- **Discovers** capabilities from every adapter (bundled plugins, remote registry, MCP servers, HTTP APIs), caches metadata for sub-millisecond lookup
+- **Routes** commands to the correct execution harness based on `<namespace> <resource> <action>` — the same triplet for every tool
+- **Executes** with unified error handling, consistent JSON envelopes, and output formatting (`--json`, `--human`, `--compact`)
+- **Surfaces** machine-readable descriptions so agents can inspect, plan, and chain capabilities without guesswork
 
-**Adapters:**
-- **CLI tools** — Wraps 3,300+ CLI tools with JSON output, error handling, and timeout management
-- **MCP servers** — Bridges Model Context Protocol servers into the same routing graph
-- **HTTP APIs** — Turns REST endpoints into callable capabilities
-- **Workflows** — Chains multiple capabilities via `supercli ask`
+**Four adapter types** bridge external systems into the graph:
+1. **CLI tools** — Wraps 3,300+ CLI binaries with JSON output, timeout management, and structured error handling
+2. **MCP servers** — Bridges Model Context Protocol servers into the same routing graph, making MCP tools callable as `supercli <ns> <res> <action>`
+3. **HTTP APIs** — Turns REST endpoints into callable capabilities with configurable methods, headers, and body schemas
+4. **Workflows** — Chains multiple capabilities via `supercli ask "do X and Y"`, auto-resolving dependencies
 
-**Plugin system:**
-- Each plugin bundles metadata (description, tags, checksums, commands)
-- Plugins are registered in `~/.supercli/plugins/plugins.lock.json`
-- Both Node and Zig versions read the same plugin storage
+**Plugin system** keeps everything organized:
+- Each plugin bundles a manifest (`plugin.json`) with metadata, checksums, commands, and dependency requirements
+- Installed plugins register in `~/.supercli/plugins/plugins.lock.json`
+- Both the Zig binary (`sc-zig`) and the Node.js runtime (`sc`) read the same plugin storage — they co-exist and share state
+- The remote registry at `plugins/catalog.json` tracks 3,100+ community plugins with checksum-verified updates
 
 supercli replaces tool-specific syntax with a **queryable, executable capability graph**.
 
@@ -210,16 +221,12 @@ supercli replaces tool-specific syntax with a **queryable, executable capability
 
 ## 📦 Capability Sources
 
-| Source | What It Provides | Access |
-|--------|-----------------|--------|
-| **Bundled plugins** | 200+ curated tools (sys, dev, db, cloud, security) | Included, zero config |
-| **Plugin registry** | 3,100+ community tools, updated daily | `supercli plugins install <name>` |
-| **MCP servers** | Any MCP-compatible server | `supercli mcp add <name>` |
-| **HTTP APIs** | REST endpoints as capabilities | Configuration-based |
+- **Bundled plugins** — 200+ curated tools, zero config
+- **Plugin registry** — 3,100+ community tools, updated daily (`supercli plugins install <name>`)
+- **MCP servers** — Any MCP-compatible server (`supercli mcp add <name>`)
+- **HTTP APIs** — REST endpoints as capabilities
 
-> Every capability includes: description, tags, source URL, install method, binary check, and commands.
-
-> **Latest npm release:** v1.15.0 (2026-05-14) — new versions ship multiple times per week.
+> Every capability includes: description, tags, checksums, and commands. Latest npm: v1.31.1 — ships multiple times per week.
 
 ---
 
@@ -249,14 +256,15 @@ All tools accept `--json` and `--silent` flags for machine-consumable output.
 
 ## ⚙️ Operating Modes
 
-| Mode | Description | Use Case |
-|------|-------------|----------|
-| **Direct** | `<ns> <resource> <action> --flags` | Humans running specific tools |
-| **Ask** | `supercli ask "do X"` | AI-driven composition |
-| **Inspect** | `supercli inspect <command>` | Understand args before running |
-| **Server** | `supercli server` | HTTP/MCP server mode (see docs) |
+| Mode | Command | What It Does | When To Use |
+|------|---------|-------------|-------------|
+| **Direct** | `<ns> <res> <act> [--flags]` | Executes a specific capability with arguments | Running a known tool, scripting |
+| **Ask** | `supercli ask "do X and Y"` | AI-driven composition chains multiple capabilities | One-shot tasks, complex workflows |
+| **Inspect** | `supercli inspect <ns> <res> <act>` | Shows argument schema, types, descriptions, defaults | Before running an unfamiliar command |
+| **Discover** | `supercli skills search <query>` | Searches all capabilities by name, description, tags | Finding what tools are available |
+| **Server** | `supercli server` | Starts HTTP or MCP server exposing all capabilities | Remote access, IDE integration, API gateway |
 
-For agents: use `supercli --json` for self-documenting bootstrap.
+Only one rule: every mode returns JSON with `--json` flag. Agents should always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema.
 
 ---
 
@@ -289,14 +297,7 @@ Both versions co-exist and share plugin storage.
 
 ---
 
-## 💬 What People Say
-
-> *"Yooooooo, my agent nearly shit himself when I showed him this. TY! I'll keep an eye out for updates from you. This is a fantastic tool!"*
-> — **zetsi77** ([@Hadu_Ken77](https://x.com/Hadu_Ken77))
-
-<br>
-
-> ## ⭐ If supercli saved you time, [**star the repo**](https://github.com/javimosch/supercli). Takes one click, means the world to us.
+> ⭐ If supercli saved you time, [**star the repo**](https://github.com/javimosch/supercli). Takes one click, means the world to us.
 
 ---
 
