@@ -1,0 +1,161 @@
+{
+  "name": "auto-cpufreq",
+  "version": "0.1.0",
+  "description": "Automatic CPU speed and power optimizer for Linux with monitoring, live tuning, and persistent daemon mode",
+  "source": "https://github.com/AdnanHodzic/auto-cpufreq",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "auto-cpufreq"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "auto-cpufreq",
+    "binary": "auto-cpufreq",
+    "check": "which auto-cpufreq",
+    "install_steps": [
+      "git clone https://github.com/AdnanHodzic/auto-cpufreq.git",
+      "cd auto-cpufreq && sudo ./auto-cpufreq-installer",
+      "Or: sudo snap install auto-cpufreq",
+      "Verify: auto-cpufreq --version",
+      "Note: Requires Linux with Intel, AMD, or ARM CPU"
+    ],
+    "note": "Linux-only CPU optimizer. Install via auto-cpufreq-installer or Snap. Requires sudo for most operations. 7.5k+ stars."
+  },
+  "commands": [
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "monitor",
+      "action": "live",
+      "description": "Monitor CPU and system status with optimization suggestions (no changes made)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "baseArgs": ["--monitor"],
+        "timeout_ms": 30000
+      },
+      "args": []
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "optimize",
+      "action": "live",
+      "description": "Apply temporary CPU optimizations in real-time (lost on reboot)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "baseArgs": ["--live"],
+        "timeout_ms": 60000,
+        "safetyLevel": "guarded"
+      },
+      "args": []
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "stats",
+      "action": "get",
+      "description": "View live stats of CPU optimizations made by the daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "baseArgs": ["--stats"],
+        "timeout_ms": 15000
+      },
+      "args": []
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "daemon",
+      "action": "install",
+      "description": "Install auto-cpufreq as a persistent systemd service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "baseArgs": ["--install"],
+        "timeout_ms": 60000,
+        "safetyLevel": "guarded"
+      },
+      "args": []
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "daemon",
+      "action": "remove",
+      "description": "Remove the auto-cpufreq daemon and systemd service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "baseArgs": ["--remove"],
+        "timeout_ms": 30000,
+        "safetyLevel": "guarded"
+      },
+      "args": []
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "governor",
+      "action": "force",
+      "description": "Force a specific CPU governor (powersave, performance, or reset)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "timeout_ms": 15000,
+        "safetyLevel": "guarded",
+        "passthrough": true
+      },
+      "args": [
+        { "name": "force", "type": "string", "required": true, "description": "Governor value: powersave, performance, or reset" }
+      ]
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "turbo",
+      "action": "set",
+      "description": "Force CPU turbo mode (always, never, or auto)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "timeout_ms": 15000,
+        "safetyLevel": "guarded",
+        "passthrough": true
+      },
+      "args": [
+        { "name": "turbo", "type": "string", "required": true, "description": "Turbo mode: always, never, or auto" }
+      ]
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print auto-cpufreq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "auto-cpufreq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to auto-cpufreq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "auto-cpufreq",
+        "missingDependencyHelp": "Install auto-cpufreq: see https://github.com/AdnanHodzic/auto-cpufreq",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
