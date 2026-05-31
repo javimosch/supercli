@@ -1,0 +1,181 @@
+{
+  "name": "papis",
+  "version": "0.1.0",
+  "description": "Extensible document and bibliography manager with library, scraping, and export features supporting JSON/YAML/BibTeX output",
+  "source": "https://github.com/papis/papis",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "papis"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "papis",
+    "binary": "papis",
+    "check": "which papis",
+    "install_steps": [
+      "pip install papis",
+      "Or: pipx install papis",
+      "Initialize library: papis init ~/papers",
+      "Verify: papis --version",
+      "supercli plugins install ./plugins/papis --on-conflict replace --json"
+    ],
+    "note": "Available via pip/pipx. Source: https://github.com/papis/papis (1.4k+ stars). Written in Python. Requires Python >=3.8."
+  },
+  "commands": [
+    {
+      "namespace": "papis",
+      "resource": "self",
+      "action": "version",
+      "description": "Print papis version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "papis",
+      "resource": "document",
+      "action": "list",
+      "description": "List document metadata from a library",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["list"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false, "description": "Search query to filter documents" },
+        { "name": "lib", "type": "string", "required": false, "description": "Library name or path" },
+        { "name": "all", "type": "boolean", "required": false, "description": "Apply action to all matching documents" },
+        { "name": "info", "type": "boolean", "required": false, "description": "Show the info file for each document" },
+        { "name": "id", "type": "boolean", "required": false, "description": "Show the papis id for each document" },
+        { "name": "file", "type": "boolean", "required": false, "description": "Show the files for each document" },
+        { "name": "dir", "type": "boolean", "required": false, "description": "Show the folder name containing each document" },
+        { "name": "notes", "type": "boolean", "required": false, "description": "Show notes files for each document" },
+        { "name": "format", "type": "string", "required": false, "description": "Custom format pattern like '{doc[year]} {doc[title]}'" },
+        { "name": "sort", "type": "string", "required": false, "description": "Sort documents by field" },
+        { "name": "reverse", "type": "boolean", "required": false, "description": "Reverse sort order" },
+        { "name": "quiet", "type": "boolean", "required": false, "description": "Do not show descriptions for plugins" },
+        { "name": "paths", "type": "boolean", "required": false, "description": "List configuration paths used by Papis" },
+        { "name": "libraries", "type": "boolean", "required": false, "description": "List defined libraries" }
+      ]
+    },
+    {
+      "namespace": "papis",
+      "resource": "document",
+      "action": "export",
+      "description": "Export documents from a library in JSON, YAML, BibTeX, or other formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["export"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false, "description": "Search query to filter documents" },
+        { "name": "lib", "type": "string", "required": false, "description": "Library name or path" },
+        { "name": "all", "type": "boolean", "required": false, "description": "Export all matching documents" },
+        { "name": "format", "type": "string", "required": false, "description": "Export format: json, yaml, bibtex, csl, typst" },
+        { "name": "out", "type": "string", "required": false, "description": "Output file path" },
+        { "name": "folder", "type": "boolean", "required": false, "description": "Export document folder to share" },
+        { "name": "append", "type": "boolean", "required": false, "description": "Append to output path instead of overwriting" },
+        { "name": "batch", "type": "boolean", "required": false, "description": "Do not prompt when overwriting a file" },
+        { "name": "list-exporters", "type": "boolean", "required": false, "description": "List all supported exporters" },
+        { "name": "sort", "type": "string", "required": false, "description": "Sort documents by field" },
+        { "name": "reverse", "type": "boolean", "required": false, "description": "Reverse sort order" }
+      ]
+    },
+    {
+      "namespace": "papis",
+      "resource": "document",
+      "action": "add",
+      "description": "Add a document into a given library",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["add"],
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": false, "description": "Files to add to the library" },
+        { "name": "lib", "type": "string", "required": false, "description": "Library name or path" },
+        { "name": "set", "type": "string", "required": false, "description": "Set metadata key=value pairs (repeatable)" },
+        { "name": "subfolder", "type": "string", "required": false, "description": "Subfolder in the library" },
+        { "name": "from", "type": "string", "required": false, "description": "Add document from a specific importer" },
+        { "name": "list-importers", "type": "boolean", "required": false, "description": "List all supported importers" },
+        { "name": "batch", "type": "boolean", "required": false, "description": "Batch mode (do not prompt)" },
+        { "name": "confirm", "type": "boolean", "required": false, "description": "Ask to confirm before adding to collection" },
+        { "name": "open", "type": "boolean", "required": false, "description": "Open files before adding them to the document" },
+        { "name": "edit", "type": "boolean", "required": false, "description": "Edit info file before adding document" },
+        { "name": "link", "type": "boolean", "required": false, "description": "Create a link instead of copying the file" },
+        { "name": "move", "type": "boolean", "required": false, "description": "Move the file instead of copying" },
+        { "name": "git", "type": "boolean", "required": false, "description": "Git add and commit the new document" },
+        { "name": "download-files", "type": "boolean", "required": false, "description": "Download file with importer if available" }
+      ]
+    },
+    {
+      "namespace": "papis",
+      "resource": "document",
+      "action": "open",
+      "description": "Open a document from a given library",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["open"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": false, "description": "Search query to find the document" },
+        { "name": "lib", "type": "string", "required": false, "description": "Library name or path" },
+        { "name": "all", "type": "boolean", "required": false, "description": "Open all matching documents" },
+        { "name": "tool", "type": "string", "required": false, "description": "Tool for opening the file (opentool)" },
+        { "name": "dir", "type": "boolean", "required": false, "description": "Open directory instead of file" },
+        { "name": "sort", "type": "string", "required": false, "description": "Sort documents by field" },
+        { "name": "reverse", "type": "boolean", "required": false, "description": "Reverse sort order" }
+      ]
+    },
+    {
+      "namespace": "papis",
+      "resource": "config",
+      "action": "manage",
+      "description": "Print configuration values used by papis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["config"],
+        "timeout_ms": 10000
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": false, "description": "Configuration key to query" },
+        { "name": "lib", "type": "string", "required": false, "description": "Library name or path" }
+      ]
+    },
+    {
+      "namespace": "papis",
+      "resource": "server",
+      "action": "serve",
+      "description": "Start a papis REST API server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "papis",
+        "missingDependencyHelp": "Install papis: pip install papis",
+        "baseArgs": ["serve"],
+        "timeout_ms": 300000
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": false, "description": "Port to listen on (default: 8080)" },
+        { "name": "address", "type": "string", "required": false, "description": "Address to bind (default: 127.0.0.1)" },
+        { "name": "git", "type": "boolean", "required": false, "description": "Add changes made to the info file" }
+      ]
+    }
+  ]
+}
