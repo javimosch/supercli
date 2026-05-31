@@ -9,7 +9,7 @@
 // - json_support: +2 (bonus for agents)
 // - complexity: low=+2, medium=+1, high=0
 // Usage: node scripts/analyze-plugins.js
-const f=require('fs'),p=require('path'),b='/home/jarancibia/ai/supercli/plugins';
+const f=require('fs'),p=require('path'),b=p.join(__dirname,'..','plugins');
 const plugins=f.readdirSync(b).filter(x=>!x.startsWith('.'));
 const results=[];
 
