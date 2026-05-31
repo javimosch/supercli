@@ -19,6 +19,11 @@ function toCliFlags(flags) {
 }
 
 function preflightBinary(binary) {
+  const { spawnSync } = require("child_process");
+  const r = spawnSync("which", [binary], { encoding: "utf-8", timeout: 5000 });
+  if (r.error || r.status !== 0) {
+    return { ok: false, reason: `Binary '${binary}' not found in PATH` };
+  }
   return { ok: true, reason: "" };
 }
 
