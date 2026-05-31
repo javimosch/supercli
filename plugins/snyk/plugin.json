@@ -1,0 +1,149 @@
+{
+  "name": "snyk",
+  "version": "0.1.0",
+  "description": "Snyk CLI scans and monitors projects for security vulnerabilities in dependencies",
+  "source": "https://github.com/snyk/cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "snyk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "snyk",
+    "binary": "snyk",
+    "check": "which snyk",
+    "install_steps": [
+      "npm install -g snyk",
+      "or: curl -sL https://static.snyk.io/cli/latest/snyk-linux -o /usr/local/bin/snyk && chmod +x /usr/local/bin/snyk",
+      "Authenticate: snyk auth"
+    ],
+    "note": "Requires authentication. Run 'snyk auth' to authenticate with your Snyk account."
+  },
+  "commands": [
+    {
+      "namespace": "snyk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print snyk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snyk",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install: npm install -g snyk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "snyk",
+      "resource": "project",
+      "action": "test",
+      "description": "Test a project for open-source vulnerabilities and license issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snyk",
+        "baseArgs": ["test"],
+        "missingDependencyHelp": "Install: npm install -g snyk"
+      },
+      "args": [
+        {
+          "name": "json",
+          "flag": "--json",
+          "type": "boolean",
+          "description": "Output results as JSON",
+          "required": false
+        },
+        {
+          "name": "all-projects",
+          "flag": "--all-projects",
+          "type": "boolean",
+          "description": "Auto-detect all projects in the working directory",
+          "required": false
+        },
+        {
+          "name": "severity-threshold",
+          "flag": "--severity-threshold",
+          "type": "string",
+          "description": "Report only vulnerabilities at the specified level or higher (low|medium|high|critical)",
+          "required": false
+        },
+        {
+          "name": "file",
+          "flag": "--file",
+          "type": "string",
+          "description": "Specify a package file",
+          "required": false
+        },
+        {
+          "name": "org",
+          "flag": "--org",
+          "type": "string",
+          "description": "Specify the Snyk organization ID",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "snyk",
+      "resource": "project",
+      "action": "monitor",
+      "description": "Snapshot and continuously monitor a project for vulnerabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snyk",
+        "baseArgs": ["monitor"],
+        "missingDependencyHelp": "Install: npm install -g snyk"
+      },
+      "args": [
+        {
+          "name": "all-projects",
+          "flag": "--all-projects",
+          "type": "boolean",
+          "description": "Auto-detect all projects",
+          "required": false
+        },
+        {
+          "name": "org",
+          "flag": "--org",
+          "type": "string",
+          "description": "Specify the Snyk organization ID",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "snyk",
+      "resource": "auth",
+      "action": "authenticate",
+      "description": "Authenticate with Snyk account",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snyk",
+        "baseArgs": ["auth"],
+        "missingDependencyHelp": "Install: npm install -g snyk"
+      },
+      "args": [
+        {
+          "name": "token",
+          "flag": "--auth-type",
+          "type": "string",
+          "description": "Authentication type (token, oauth)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "snyk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to snyk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snyk",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: npm install -g snyk"
+      },
+      "args": []
+    }
+  ]
+}
