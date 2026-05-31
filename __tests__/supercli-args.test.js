@@ -100,10 +100,25 @@ describe("supercli args parser", () => {
     const plan = JSON.parse(out)
     expect(plan.args.empty).toBe("")
   })
-})
+
+  test("--=value does not create empty flag key", () => {
+    const out = execSync(`node ${CLI} plan testns testres testact --=value --foo bar --json`, {
+      env,
+      encoding: "utf-8"
+    })
     const plan = JSON.parse(out)
+    expect(Object.keys(plan.args)).not.toContain("")
     expect(plan.args.foo).toBe("bar")
-    expect(plan.args.baz).toBe("")
+  })
+
+  test("--=\"\" does not create empty flag key", () => {
+    const out = execSync(`node ${CLI} plan testns testres testact --="" --foo bar --json`, {
+      env,
+      encoding: "utf-8"
+    })
+    const plan = JSON.parse(out)
+    expect(Object.keys(plan.args)).not.toContain("")
+    expect(plan.args.foo).toBe("bar")
   })
 
   test("error for unknown namespace goes to stderr", () => {

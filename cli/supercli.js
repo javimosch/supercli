@@ -43,6 +43,7 @@ for (let i = 0; i < rawArgs.length; i++) {
     const eqIdx = kv.indexOf("=");
     if (eqIdx !== -1) {
       const key = kv.slice(0, eqIdx);
+      if (key === "") continue; // --=value with empty key, skip like bare --
       const val = kv.slice(eqIdx + 1);
       flags[key] = val;
     } else {

@@ -329,7 +329,7 @@ if (require.main === module) {
         console.log(JSON.stringify(getDaemonStatus(), null, 2));
         break;
       default:
-        console.log("Usage: node daemon.js {start|stop|status}");
+        console.error("Usage: node daemon.js {start|stop|status}");
         process.exit(1);
     }
   }
