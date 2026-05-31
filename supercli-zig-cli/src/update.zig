@@ -57,6 +57,115 @@ fn fetchCatalog(io: std.Io, gpa: std.mem.Allocator) ![]const u8 {
     return result.stdout;
 }
 
+test "diffCatalogs: all plugins new (no local)" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const remote_json =
+        \\{"plugins":[{"name":"uuid","checksum":"abc123"},{"name":"passgen","checksum":"def456"}]}
+    ;
+    const remote_parsed = try std.json.parseFromSliceLeaky(std.json.Value, gpa, remote_json, .{});
+
+    const diff = try diffCatalogs(gpa, null, remote_parsed);
+
+    try testing.expectEqual(@as(usize, 2), diff.added.len);
+    try testing.expectEqual(@as(usize, 0), diff.changed.len);
+    try testing.expectEqual(@as(usize, 0), diff.unchanged.len);
+    try testing.expectEqualStrings("uuid", diff.added[0]);
+    try testing.expectEqualStrings("passgen", diff.added[1]);
+}
+
+test "diffCatalogs: all plugins unchanged" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const local_json =
+        \\{"plugins":[{"name":"uuid","checksum":"abc123"},{"name":"passgen","checksum":"def456"}]}
+    ;
+    const remote_json =
+        \\{"plugins":[{"name":"uuid","checksum":"abc123"},{"name":"passgen","checksum":"def456"}]}
+    ;
+    const remote_parsed = try std.json.parseFromSliceLeaky(std.json.Value, gpa, remote_json, .{});
+
+    const diff = try diffCatalogs(gpa, local_json, remote_parsed);
+
+    try testing.expectEqual(@as(usize, 0), diff.added.len);
+    try testing.expectEqual(@as(usize, 0), diff.changed.len);
+    try testing.expectEqual(@as(usize, 2), diff.unchanged.len);
+}
+
+test "diffCatalogs: one added, one changed, one unchanged" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const local_json =
+        \\{"plugins":[{"name":"old-tool","checksum":"abc"},{"name":"changed-tool","checksum":"old"}]}
+    ;
+    const remote_json =
+        \\{"plugins":[{"name":"new-tool","checksum":"xyz"},{"name":"changed-tool","checksum":"new"},{"name":"old-tool","checksum":"abc"}]}
+    ;
+    const remote_parsed = try std.json.parseFromSliceLeaky(std.json.Value, gpa, remote_json, .{});
+
+    const diff = try diffCatalogs(gpa, local_json, remote_parsed);
+
+    try testing.expectEqual(@as(usize, 1), diff.added.len);
+    try testing.expectEqualStrings("new-tool", diff.added[0]);
+    try testing.expectEqual(@as(usize, 1), diff.changed.len);
+    try testing.expectEqualStrings("changed-tool", diff.changed[0]);
+    try testing.expectEqual(@as(usize, 1), diff.unchanged.len);
+    try testing.expectEqualStrings("old-tool", diff.unchanged[0]);
+}
+
+test "diffCatalogs: empty remote catalog" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const local_json =
+        \\{"plugins":[{"name":"uuid","checksum":"abc"}]}
+    ;
+    const remote_json = \\{"plugins":[]}
+    ;
+    const remote_parsed = try std.json.parseFromSliceLeaky(std.json.Value, gpa, remote_json, .{});
+
+    const diff = try diffCatalogs(gpa, local_json, remote_parsed);
+
+    try testing.expectEqual(@as(usize, 0), diff.added.len);
+    try testing.expectEqual(@as(usize, 0), diff.changed.len);
+    try testing.expectEqual(@as(usize, 0), diff.unchanged.len);
+}
+
+test "diffCatalogs: remote missing plugins key returns empty diff" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const remote_json = \\{"not_plugins":[]}
+    ;
+    const remote_parsed = try std.json.parseFromSliceLeaky(std.json.Value, gpa, remote_json, .{});
+
+    const diff = try diffCatalogs(gpa, null, remote_parsed);
+
+    try testing.expectEqual(@as(usize, 0), diff.added.len);
+    try testing.expectEqual(@as(usize, 0), diff.changed.len);
+    try testing.expectEqual(@as(usize, 0), diff.unchanged.len);
+}
+
+test "diffCatalogs: malformed local catalog handled gracefully" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const remote_json =
+        \\{"plugins":[{"name":"uuid","checksum":"abc"}]}
+    ;
+    const remote_parsed = try std.json.parseFromSliceLeaky(std.json.Value, gpa, remote_json, .{});
+
+    const diff = try diffCatalogs(gpa, "not valid json", remote_parsed);
+
+    try testing.expectEqual(@as(usize, 1), diff.added.len);
+    try testing.expectEqualStrings("uuid", diff.added[0]);
+    try testing.expectEqual(@as(usize, 0), diff.changed.len);
+    try testing.expectEqual(@as(usize, 0), diff.unchanged.len);
+}
+
 // Diff local catalog vs remote catalog; return (added, changed, unchanged)
 const CatalogDiff = struct {
     added: [][]const u8,
