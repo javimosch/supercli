@@ -87,85 +87,37 @@ npx supercli passgen
 echo "name,age\nAlice,30\nBob,25" | npx supercli csv json convert
 # → [{"name":"Alice","age":"30"},{"name":"Bob","age":"25"}]
 
-# AI mode — describe what you want
+# Explore capabilities
+npx supercli skills search "github" --json
+
+# Run something real
+npx supercli gh issue list --json
+
+# AI-driven execution
 npx supercli ask "generate a uuid and check if google.com is up"
-# → Combines multiple tools automatically
+
+# Manage plugins
+npx supercli plugins list
+npx supercli plugins explore
+npx supercli plugins install commiat
 ```
 
 > 💡 No install? Correct. `npx supercli` works immediately.<br>
-> Want it global? `npm install -g superacli`
+> Want it global? `npm install -g superacli`<br>
+> Server mode: See docs/features/server-plugins.md
 
 ---
 
-## 🚀 What Makes This Different
+## For Humans
 
 | Instead of... | You do... |
 |--------------|-----------|
 | Installing 50 tools separately | One command: `npx supercli` |
 | Reading man pages for flags | `supercli skills get <tool>.*` → structured metadata |
-| Parsing inconsistent output | `--json` on *every* tool |
+| Parsing inconsistent output | `--json` on every tool |
 | Gluing tools with shell scripts | `supercli ask "do X and Y"` |
-| Teaching agents tool syntax | JSON envelopes, machine-readable errors |
 
----
-
-## 🛠️ Examples
-
-```bash
-# ---- EVERYDAY TOOLS ----
-
-# Get weather for any city
-npx supercli weather now "Tokyo"
-# → {"temp_C":22,"condition":"Clear","humidity":65}
-
-# Get system info as JSON
-npx supercli sys info
-# → {"host":"my-server","cpus":8,"mem":"32GB","uptime":"14d"}
-
-# Encode/decode base64
-npx supercli base64 encode "hello world"
-npx supercli base64 decode "aGVsbG8gd29ybGQ="
-
-# Format a JSON file
-cat data.json | npx supercli json validate
-cat data.json | npx supercli json pick "users.*.name"
-
-# Check SSL certificate details
-npx supercli cert info --domain github.com
-# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
-
-# ---- AI & DATA ----
-
-# Count tokens in text (LLM context planning)
-echo "Your prompt text here" | npx supercli token count
-# → {"chars":142,"words":24,"tokens_estimate":32}
-
-# Profile a CSV file
-npx supercli data profile data.csv
-# → {"columns":5,"rows":1000,"types":{"age":"numeric","name":"string"}}
-
-# Scan for secrets in code
-npx supercli secret scan ./src
-# → [{"file":"config.js","line":42,"type":"AWS Access Key"}]
-```
-
----
-
-## 🤖 For AI Agents
-
-supercli was designed for agents from day one.
-
-```python
-# Every tool returns the same envelope
-{
-  "version": "1.0",
-  "command": "http.check.health",
-  "duration_ms": 142,
-  "data": { "status": "ok" }
-}
-```
-
-**Why agents love supercli:**
+## For AI Agents
 
 - 🔍 **Discoverable** — `supercli skills search "database"` returns machine-readable metadata
 - 📦 **Deterministic** — Every tool accepts `--json`, `--silent` (no interactive prompts)
@@ -180,38 +132,54 @@ supercli skills get aws.cfn.deploy --json
 supercli aws cfn deploy --stack my-stack --json
 ```
 
-### ⚡ Zig Implementation (sc-zig)
+---
 
-For maximum performance and minimal dependencies, use the Zig implementation:
+## What You Get
+
+- 🔍 Find any capability instantly — no docs hunting
+- ⚡ Run tools with one consistent interface
+- 🤖 Give agents predictable, structured execution
+- 🔗 Combine multiple tools without glue code
+- 📦 Extend anything via plugins
+
+---
+
+## 🛠️ CLI Usage Examples
 
 ```bash
-# Install single binary (~260KB, no Node.js required)
-curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
+# Discovery
+npx supercli skills list
+npx supercli skills search "database"
 
-# Or manual install
-curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/sc-zig-linux-amd64 -o ~/.local/bin/sc-zig && chmod +x ~/.local/bin/sc-zig
+# Inspection (important for agents)
+npx supercli inspect beads issue create
+npx supercli skills get beads.issue.create --json
 
-# Agent-friendly bootstrap
-sc-zig --json
-# → {"version":"1.0","mode":"agent_bootstrap","workflow":"discover -> inspect -> execute",...}
+# Execution
+npx supercli beads issue create --title "Fix bug"
+npx supercli beads issue list --json
+npx supercli gwc drive files list
 
-# Discover plugins
-sc-zig plugins explore --name memory --json
-# → {"total":19,"returned":19,"plugins":[...]}
+# AI
+npx supercli ask "do X and Y"
 
-# Install plugins (delegates to Node.js sc when needed)
-sc-zig plugins install agentmemory-cli
+# Plugins
+npx supercli plugins list
+npx supercli plugins install commiat
+npx supercli plugins show commiat
+
+# Get weather for any city
+npx supercli weather now "Tokyo"
+# → {"temp_C":22,"condition":"Clear","humidity":65}
+
+# Check SSL certificate details
+npx supercli cert info --domain github.com
+# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
+
+# Scan for secrets in code
+npx supercli secret scan ./src
+# → [{"file":"config.js","line":42,"type":"AWS Access Key"}]
 ```
-
-**Why agents prefer sc-zig:**
-- ⚡ **Single binary** — No Node.js runtime, just curl + chmod
-- 🚀 **Faster** — Native performance, instant startup
-- 📦 **Self-documenting** — Bootstrap JSON includes workflow guidance
-- 🔧 **Agent guidance** — Suggests `plugins update` when catalog is empty
-- 🎯 **Fixed arg parsing** — Both `--flag value` and `--flag=value` work
-- 📍 **Positional args** — Correctly handles positional arguments
-
-See [`AGENTS.md`](AGENTS.md) for complete agent instructions.
 
 ---
 
