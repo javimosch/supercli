@@ -1,0 +1,350 @@
+{
+  "name": "timetrap",
+  "version": "0.1.0",
+  "description": "Simple command-line time tracker with sheet-based organization, reporting, and CSV/JSON export",
+  "source": "https://github.com/samg/timetrap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "timetrap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "timetrap",
+    "binary": "timetrap",
+    "check": "which timetrap",
+    "install_steps": [
+      "gem install timetrap",
+      "Verify: timetrap --help"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "in",
+      "description": "Start tracking time on a sheet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["in"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "sheet",
+          "type": "string",
+          "required": true,
+          "description": "Sheet name to track time against"
+        },
+        {
+          "name": "at",
+          "type": "string",
+          "required": false,
+          "description": "Start time (e.g. '09:00', '1 hour ago')"
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "required": false,
+          "description": "Note for this entry"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "out",
+      "description": "Stop tracking time on the current sheet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["out"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "at",
+          "type": "string",
+          "required": false,
+          "description": "End time (e.g. '17:00')"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "display",
+      "description": "Display time entries for a sheet or entry ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["display"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "sheet-or-id",
+          "type": "string",
+          "required": false,
+          "description": "Sheet name or entry ID to display"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "list",
+      "description": "List time entries with IDs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "sheet-or-id",
+          "type": "string",
+          "required": false,
+          "description": "Sheet name or entry ID to list"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "edit",
+      "description": "Edit a time entry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["edit"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Entry ID to edit"
+        },
+        {
+          "name": "start",
+          "type": "string",
+          "required": false,
+          "description": "New start time"
+        },
+        {
+          "name": "end",
+          "type": "string",
+          "required": false,
+          "description": "New end time"
+        },
+        {
+          "name": "note",
+          "type": "string",
+          "required": false,
+          "description": "New note text"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "now",
+      "description": "Show the currently running entry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["now"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "kill",
+      "description": "Delete a time entry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["kill"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "description": "Entry ID to delete"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "sheet",
+      "action": "switch",
+      "description": "Switch to or list available sheets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["sheet"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Sheet name to switch to (omit to show current)"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "sheet",
+      "action": "list",
+      "description": "List all sheets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["sheets"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "sheet",
+      "action": "rename",
+      "description": "Rename a sheet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["rename"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": [
+        {
+          "name": "old-name",
+          "type": "string",
+          "required": true,
+          "description": "Current sheet name"
+        },
+        {
+          "name": "new-name",
+          "type": "string",
+          "required": true,
+          "description": "New sheet name"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "archive",
+      "description": "Archive entries on a sheet",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["archive"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": [
+        {
+          "name": "sheet",
+          "type": "string",
+          "required": false,
+          "description": "Sheet name to archive"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "entry",
+      "action": "output",
+      "description": "Output time entries in CSV or JSON format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["output"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "sheet-or-id",
+          "type": "string",
+          "required": false,
+          "description": "Sheet name or entry ID"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: csv or json"
+        }
+      ]
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "report",
+      "action": "today",
+      "description": "Show today's time entries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["today"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "report",
+      "action": "yesterday",
+      "description": "Show yesterday's time entries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["yesterday"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "report",
+      "action": "week",
+      "description": "Show this week's time entries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["week"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "timetrap",
+      "resource": "report",
+      "action": "month",
+      "description": "Show this month's time entries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "timetrap",
+        "baseArgs": ["month"],
+        "missingDependencyHelp": "Install timetrap: gem install timetrap"
+      },
+      "args": []
+    }
+  ]
+}
