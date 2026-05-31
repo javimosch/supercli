@@ -25,7 +25,12 @@ fs.mkdirSync(configDir, { recursive: true });
 let existing = { mcp_servers: [] };
 try {
   existing = JSON.parse(fs.readFileSync(mcpFile, "utf-8"));
-} catch {}
+} catch (err) {
+  // File doesn't exist or invalid JSON, start fresh
+  if (err.code !== 'ENOENT') {
+    console.warn(`Warning: Could not parse ${mcpFile}: ${err.message}. Starting fresh.`);
+  }
+}
 
 const idx = existing.mcp_servers.findIndex((s) => s.name === name);
 if (idx >= 0) {
