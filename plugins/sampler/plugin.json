@@ -1,0 +1,64 @@
+{
+  "name": "sampler",
+  "version": "0.1.0",
+  "description": "Sampler — visualization for any shell command. Execute and visualize shell commands with YAML configuration and real-time monitoring.",
+  "source": "https://github.com/sqshq/sampler",
+  "checks": [
+    { "type": "binary", "name": "sampler" }
+  ],
+  "install_guidance": {
+    "plugin": "sampler",
+    "binary": "sampler",
+    "check": "which sampler",
+    "install_steps": [
+      "brew install sampler",
+      "or: sudo wget https://github.com/sqshq/sampler/releases/download/v1.1.0/sampler-1.1.0-linux-amd64 -O /usr/local/bin/sampler && sudo chmod +x /usr/local/bin/sampler",
+      "Verify: sampler --version"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "sampler",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sampler version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sampler",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sampler: brew install sampler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sampler",
+      "resource": "config",
+      "action": "run",
+      "description": "Run sampler with a YAML configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sampler",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["config"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sampler: brew install sampler"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": true, "description": "Path to YAML configuration file" }
+      ]
+    },
+    {
+      "namespace": "sampler",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sampler CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sampler",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sampler: brew install sampler"
+      },
+      "args": []
+    }
+  ]
+}

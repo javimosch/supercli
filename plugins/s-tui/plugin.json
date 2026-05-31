@@ -1,0 +1,90 @@
+{
+  "name": "s-tui",
+  "version": "0.1.0",
+  "description": "Terminal-based CPU stress and monitoring utility with JSON output and non-interactive mode",
+  "source": "https://github.com/amanusk/s-tui",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "s-tui"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "s-tui",
+    "binary": "s-tui",
+    "check": "which s-tui",
+    "install_steps": [
+      "pip install s-tui",
+      "Or: pipx install s-tui",
+      "Verify: s-tui --version",
+      "supercli plugins install ./plugins/s-tui --on-conflict replace --json"
+    ],
+    "note": "Available via pip/pipx. Source: https://github.com/amanusk/s-tui (5k+ stars). Written in Python. Requires Python >=3.6."
+  },
+  "commands": [
+    {
+      "namespace": "stui",
+      "resource": "self",
+      "action": "version",
+      "description": "Print s-tui version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "s-tui",
+        "missingDependencyHelp": "Install s-tui: pip install s-tui",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "stui",
+      "resource": "monitor",
+      "action": "stats",
+      "description": "Display CPU frequency, temperature, utilization, and power stats in JSON format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "s-tui",
+        "missingDependencyHelp": "Install s-tui: pip install s-tui",
+        "baseArgs": ["--json", "--debug-run"],
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "refresh-rate", "type": "string", "required": false, "description": "Refresh rate in seconds (default: 2.0)" },
+        { "name": "t-thresh", "type": "string", "required": false, "description": "High temperature threshold in Celsius (default: 80)" },
+        { "name": "no-mouse", "type": "boolean", "required": false, "description": "Disable mouse for TTY systems" }
+      ]
+    },
+    {
+      "namespace": "stui",
+      "resource": "monitor",
+      "action": "terminal",
+      "description": "Display a single line of CPU stats in terminal format (non-JSON)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "s-tui",
+        "missingDependencyHelp": "Install s-tui: pip install s-tui",
+        "baseArgs": ["--terminal", "--debug-run"],
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "refresh-rate", "type": "string", "required": false, "description": "Refresh rate in seconds (default: 2.0)" }
+      ]
+    },
+    {
+      "namespace": "stui",
+      "resource": "monitor",
+      "action": "csv",
+      "description": "Save CPU stats to CSV file for analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "s-tui",
+        "missingDependencyHelp": "Install s-tui: pip install s-tui",
+        "baseArgs": ["--csv", "--debug-run"],
+        "timeout_ms": 15000
+      },
+      "args": [
+        { "name": "csv-file", "type": "string", "required": false, "description": "Custom CSV file path (default: s-tui_log_<TIME>.csv)" },
+        { "name": "refresh-rate", "type": "string", "required": false, "description": "Refresh rate in seconds (default: 2.0)" }
+      ]
+    }
+  ]
+}

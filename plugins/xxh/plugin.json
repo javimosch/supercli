@@ -1,0 +1,134 @@
+{
+  "name": "xxh",
+  "version": "0.1.0",
+  "description": "Bring your favorite shell wherever you go through SSH with seamless plugin support",
+  "source": "https://github.com/xxh/xxh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xxh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xxh",
+    "binary": "xxh",
+    "check": "which xxh",
+    "install_steps": [
+      "pip install xxh-xxh",
+      "Or: pipx install xxh-xxh",
+      "Verify: xxh --version",
+      "supercli plugins install ./plugins/xxh --on-conflict replace --json"
+    ],
+    "note": "Available via pip/pipx. Source: https://github.com/xxh/xxh (5.6k+ stars). Written in Python. Requires Python >=3.6."
+  },
+  "commands": [
+    {
+      "namespace": "xxh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xxh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xxh",
+        "missingDependencyHelp": "Install xxh: pip install xxh-xxh",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "xxh",
+      "resource": "remote",
+      "action": "connect",
+      "description": "Connect to a remote host with xxh portable shell environment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xxh",
+        "missingDependencyHelp": "Install xxh: pip install xxh-xxh",
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Destination [user@]host[:port] or host from ~/.ssh/config" },
+        { "name": "install", "type": "boolean", "required": false, "description": "Install xxh to destination host without prompting" },
+        { "name": "install-force", "type": "boolean", "required": false, "description": "Remove host xxh package and reinstall" },
+        { "name": "shell", "type": "string", "required": false, "description": "xxh shell to use on the remote host" },
+        { "name": "env", "type": "string", "required": false, "description": "Set environment variables as NAME=VAL (repeatable)" },
+        { "name": "host-execute-command", "type": "string", "required": false, "description": "Execute command on host and exit" },
+        { "name": "host-execute-file", "type": "string", "required": false, "description": "Execute script file on host and exit" },
+        { "name": "ssh-port", "type": "string", "required": false, "description": "SSH port to connect to" },
+        { "name": "ssh-login", "type": "string", "required": false, "description": "SSH login user" },
+        { "name": "ssh-private-key", "type": "string", "required": false, "description": "SSH identity file path" },
+        { "name": "ssh-jump-host", "type": "string", "required": false, "description": "SSH jump host (ProxyJump)" },
+        { "name": "ssh-option", "type": "string", "required": false, "description": "SSH option in KEY=VALUE format (repeatable)" },
+        { "name": "password", "type": "string", "required": false, "description": "SSH password" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Verbose output" },
+        { "name": "quiet", "type": "boolean", "required": false, "description": "Quiet mode" }
+      ]
+    },
+    {
+      "namespace": "xxh",
+      "resource": "local",
+      "action": "run",
+      "description": "Run xxh locally (test shell environments without SSH)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xxh",
+        "missingDependencyHelp": "Install xxh: pip install xxh-xxh",
+        "baseArgs": ["local"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "shell", "type": "string", "required": false, "description": "xxh shell to use (e.g., xonsh, fish)" },
+        { "name": "host-execute-command", "type": "string", "required": false, "description": "Execute command and exit" },
+        { "name": "env", "type": "string", "required": false, "description": "Set environment variables as NAME=VAL (repeatable)" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Verbose output" },
+        { "name": "quiet", "type": "boolean", "required": false, "description": "Quiet mode" }
+      ]
+    },
+    {
+      "namespace": "xxh",
+      "resource": "package",
+      "action": "install",
+      "description": "Install xxh packages locally",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xxh",
+        "missingDependencyHelp": "Install xxh: pip install xxh-xxh",
+        "baseArgs": ["+I"],
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "xxh package name to install" }
+      ]
+    },
+    {
+      "namespace": "xxh",
+      "resource": "package",
+      "action": "list",
+      "description": "List locally installed xxh packages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xxh",
+        "missingDependencyHelp": "Install xxh: pip install xxh-xxh",
+        "baseArgs": ["+L"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "xxh",
+      "resource": "package",
+      "action": "remove",
+      "description": "Remove locally installed xxh packages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xxh",
+        "missingDependencyHelp": "Install xxh: pip install xxh-xxh",
+        "baseArgs": ["+R"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "xxh package name to remove" }
+      ]
+    }
+  ]
+}

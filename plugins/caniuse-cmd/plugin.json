@@ -1,0 +1,76 @@
+{
+  "name": "caniuse-cmd",
+  "version": "0.1.0",
+  "description": "caniuse-cmd — query browser feature support data from caniuse.com directly from the command line.",
+  "source": "https://github.com/sgentle/caniuse-cmd",
+  "checks": [
+    { "type": "binary", "name": "caniuse" }
+  ],
+  "install_guidance": {
+    "plugin": "caniuse-cmd",
+    "binary": "caniuse",
+    "check": "which caniuse",
+    "install_steps": [
+      "npm install -g caniuse-cmd",
+      "Verify: caniuse --version"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "caniuse",
+      "resource": "feature",
+      "action": "search",
+      "description": "Search browser support for a web feature",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "caniuse",
+        "positionalArgs": ["feature"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install caniuse-cmd: npm install -g caniuse-cmd"
+      },
+      "args": [
+        { "name": "feature", "type": "string", "required": true, "description": "Feature name to search (e.g., websockets, flexbox, grid)" },
+        { "name": "--short", "type": "boolean", "description": "Short output: show browsers on one line" },
+        { "name": "--long", "type": "boolean", "description": "Long output: show more information" },
+        { "name": "--oneline", "type": "boolean", "description": "One-line output: just global percentages" },
+        { "name": "--oneline-browser", "type": "boolean", "description": "One-line output with browser info" },
+        { "name": "--abbrev", "type": "boolean", "description": "Abbreviate browser names" },
+        { "name": "--percentages", "type": "boolean", "description": "Include browser version usage percentages" },
+        { "name": "--mobile", "type": "boolean", "description": "Include mobile browsers" },
+        { "name": "--desktop", "type": "boolean", "description": "Include desktop browsers" },
+        { "name": "--browser", "type": "string", "description": "Show results for specific browsers, comma-separated" },
+        { "name": "--era", "type": "string", "description": "How many versions back to go, e0 to e-40" },
+        { "name": "--current", "type": "boolean", "description": "Don't include old browser versions" },
+        { "name": "--config", "type": "string", "description": "Path to JSON config file" },
+        { "name": "--ascii", "type": "boolean", "description": "Use ASCII symbols instead of UTF-8" }
+      ]
+    },
+    {
+      "namespace": "caniuse",
+      "resource": "self",
+      "action": "version",
+      "description": "Print caniuse version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "caniuse",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install caniuse-cmd: npm install -g caniuse-cmd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "caniuse",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to caniuse CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "caniuse",
+        "passthrough": true,
+        "missingDependencyHelp": "Install caniuse-cmd: npm install -g caniuse-cmd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "name": "interrogate",
+  "version": "0.1.0",
+  "description": "Checks Python code for docstring coverage with badge generation and reporting",
+  "source": "https://github.com/econchick/interrogate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "interrogate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "interrogate",
+    "binary": "interrogate",
+    "check": "which interrogate",
+    "install_steps": [
+      "pip install interrogate",
+      "Or: pipx install interrogate",
+      "For PNG badge generation: pip install interrogate[png]",
+      "Verify: interrogate --version",
+      "supercli plugins install ./plugins/interrogate --on-conflict replace --json"
+    ],
+    "note": "Available via pip/pipx. Source: https://github.com/econchick/interrogate (600+ stars). Written in Python. Requires Python >=3.7."
+  },
+  "commands": [
+    {
+      "namespace": "interrogate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print interrogate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "interrogate",
+        "missingDependencyHelp": "Install interrogate: pip install interrogate",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "interrogate",
+      "resource": "project",
+      "action": "coverage",
+      "description": "Measure docstring coverage of Python files in specified paths",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "interrogate",
+        "missingDependencyHelp": "Install interrogate: pip install interrogate",
+        "passthrough": true,
+        "timeout_ms": 120000
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": false, "description": "Paths to Python files/directories (default: current directory)" },
+        { "name": "fail-under", "type": "string", "required": false, "description": "Fail when coverage % is less than a given amount (default: 80.0)" },
+        { "name": "verbose", "type": "boolean", "required": false, "description": "Level of verbosity" },
+        { "name": "quiet", "type": "boolean", "required": false, "description": "Do not print output, only return exit code" },
+        { "name": "output", "type": "string", "required": false, "description": "Write output to a given FILE" },
+        { "name": "config", "type": "string", "required": false, "description": "Read configuration from pyproject.toml or setup.cfg" },
+        { "name": "exclude", "type": "string", "required": false, "description": "Exclude paths of files and/or directories" },
+        { "name": "ignore-init-method", "type": "boolean", "required": false, "description": "Ignore __init__ method of classes" },
+        { "name": "ignore-init-module", "type": "boolean", "required": false, "description": "Ignore __init__.py modules" },
+        { "name": "ignore-magic", "type": "boolean", "required": false, "description": "Ignore magic methods of classes" },
+        { "name": "ignore-module", "type": "boolean", "required": false, "description": "Ignore module-level docstrings" },
+        { "name": "ignore-private", "type": "boolean", "required": false, "description": "Ignore private classes/methods/functions" },
+        { "name": "ignore-semiprivate", "type": "boolean", "required": false, "description": "Ignore semiprivate classes/methods/functions" },
+        { "name": "ignore-nested-functions", "type": "boolean", "required": false, "description": "Ignore nested functions and methods" },
+        { "name": "ignore-nested-classes", "type": "boolean", "required": false, "description": "Ignore nested classes" },
+        { "name": "ignore-regex", "type": "string", "required": false, "description": "Regex identifying names to ignore" },
+        { "name": "whitelist-regex", "type": "string", "required": false, "description": "Regex identifying names to include" },
+        { "name": "style", "type": "string", "required": false, "description": "Style of docstrings: sphinx or google (default: sphinx)" },
+        { "name": "omit-covered-files", "type": "boolean", "required": false, "description": "Omit files with 100% coverage" },
+        { "name": "no-color", "type": "boolean", "required": false, "description": "Disable color output" }
+      ]
+    },
+    {
+      "namespace": "interrogate",
+      "resource": "badge",
+      "action": "generate",
+      "description": "Generate a shields.io status badge (SVG image) for docstring coverage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "interrogate",
+        "missingDependencyHelp": "Install interrogate: pip install interrogate",
+        "baseArgs": ["--generate-badge"],
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File or directory path for the generated badge" },
+        { "name": "paths", "type": "string", "required": false, "description": "Paths to Python files/directories to analyze" },
+        { "name": "badge-format", "type": "string", "required": false, "description": "Badge format: svg or png (default: svg)" },
+        { "name": "badge-style", "type": "string", "required": false, "description": "Badge style: flat, flat-square, for-the-badge, plastic, social" },
+        { "name": "fail-under", "type": "string", "required": false, "description": "Fail when coverage % is less than a given amount" },
+        { "name": "exclude", "type": "string", "required": false, "description": "Exclude paths of files and/or directories" }
+      ]
+    }
+  ]
+}
