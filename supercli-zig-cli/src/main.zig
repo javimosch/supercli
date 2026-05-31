@@ -221,8 +221,18 @@ fn handleCommands(
     const query_lower = try std.ascii.allocLowerString(gpa, query);
     defer gpa.free(query_lower);
 
-    const limit_str = flags.get("limit") orelse flags.get("l") orelse "";
-    const limit: usize = if (limit_str.len > 0) std.fmt.parseInt(usize, limit_str, 10) catch 0 else 0;
+    const limit: usize = blk: {
+        const limit_str = flags.get("limit") orelse flags.get("l") orelse "";
+        if (limit_str.len == 0) break :blk 0;
+        break :blk std.fmt.parseInt(usize, limit_str, 10) catch {
+            output.exitWithError(gpa, mode, .{
+                .code = 85,
+                .err_type = "invalid_argument",
+                .message = "Invalid value for --limit flag",
+                .recoverable = false,
+            });
+        };
+    };
 
     var filtered: std.ArrayList(config.Command) = .empty;
 
@@ -840,8 +850,18 @@ pub fn main(init: std.process.Init) !void {
                 }
             }
 
-            const limit_str = parsed.flags.get("limit") orelse "";
-            const limit: usize = if (limit_str.len > 0) std.fmt.parseInt(usize, limit_str, 10) catch 0 else 0;
+            const limit: usize = blk: {
+                const limit_str = parsed.flags.get("limit") orelse "";
+                if (limit_str.len == 0) break :blk 0;
+                break :blk std.fmt.parseInt(usize, limit_str, 10) catch {
+                    output.exitWithError(gpa, mode, .{
+                        .code = 85,
+                        .err_type = "invalid_argument",
+                        .message = "Invalid value for --limit flag",
+                        .recoverable = false,
+                    });
+                };
+            };
             const returned_count = if (limit > 0) @min(limit, filtered.len) else filtered.len;
 
             if (mode == .human) {
@@ -1047,7 +1067,7 @@ test "parseArgs basic and custom boolean flag re-parsing" {
 
         try testing.expectEqual(@as(usize, 1), parsed.positional.len);
         try testing.expectEqualStrings("namespace", parsed.positional[0]);
-        
+
         try testing.expectEqualStrings("value1", parsed.flags.get("flag1").?);
         try testing.expectEqualStrings("", parsed.flags.get("flag2").?);
     }
@@ -1099,5 +1119,26 @@ test "parseArgs basic and custom boolean flag re-parsing" {
         // --foo and --json should NOT be parsed as flags
         try testing.expectEqual(@as(?[]const u8, null), parsed.flags.get("foo"));
         try testing.expectEqual(@as(?[]const u8, null), parsed.flags.get("json"));
+    }
+
+    // Test 4: --limit with valid numeric value
+    {
+        const argv = &[_][]const u8{ "commands", "--limit", "10" };
+        var parsed = try parseArgs(gpa, io, argv, null);
+        defer parsed.deinit();
+
+        try testing.expectEqualStrings("10", parsed.flags.get("limit").?);
+        try testing.expectEqual(@as(usize, 1), parsed.positional.len);
+        try testing.expectEqualStrings("commands", parsed.positional[0]);
+    }
+
+    // Test 5: --limit without value (treated as boolean, not caught by parseInt)
+    {
+        const argv = &[_][]const u8{ "commands", "--limit" };
+        var parsed = try parseArgs(gpa, io, argv, null);
+        defer parsed.deinit();
+
+        try testing.expectEqualStrings("true", parsed.flags.get("limit").?);
+        try testing.expectEqual(@as(usize, 1), parsed.positional.len);
     }
 }
