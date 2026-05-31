@@ -1,0 +1,122 @@
+{
+  "name": "webhook",
+  "version": "0.1.0",
+  "description": "A lightweight incoming webhook server to run shell commands based on HTTP requests",
+  "source": "https://github.com/adnanh/webhook",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "webhook"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "webhook",
+    "binary": "webhook",
+    "check": "which webhook",
+    "install_steps": [
+      "snap install webhook",
+      "or: apt-get install webhook",
+      "or: go install github.com/adnanh/webhook@latest",
+      "Verify: webhook --help"
+    ],
+    "note": "Lightweight webhook server. Configure hooks via hooks.json or hooks.yaml files."
+  },
+  "commands": [
+    {
+      "namespace": "webhook",
+      "resource": "self",
+      "action": "help",
+      "description": "Show webhook help",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webhook",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install: snap install webhook"
+      },
+      "args": []
+    },
+    {
+      "namespace": "webhook",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the webhook server with hooks configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webhook",
+        "baseArgs": [],
+        "missingDependencyHelp": "Install: snap install webhook"
+      },
+      "args": [
+        {
+          "name": "hooks",
+          "flag": "-hooks",
+          "type": "string",
+          "description": "Path to hooks configuration file (JSON or YAML)",
+          "required": true
+        },
+        {
+          "name": "port",
+          "flag": "-port",
+          "type": "number",
+          "description": "Port to listen on (default: 9000)",
+          "required": false
+        },
+        {
+          "name": "ip",
+          "flag": "-ip",
+          "type": "string",
+          "description": "IP address to listen on (default: 0.0.0.0)",
+          "required": false
+        },
+        {
+          "name": "verbose",
+          "flag": "-verbose",
+          "type": "boolean",
+          "description": "Enable verbose output",
+          "required": false
+        },
+        {
+          "name": "secure",
+          "flag": "-secure",
+          "type": "boolean",
+          "description": "Use HTTPS",
+          "required": false
+        },
+        {
+          "name": "cert",
+          "flag": "-cert",
+          "type": "string",
+          "description": "Path to SSL certificate file",
+          "required": false
+        },
+        {
+          "name": "key",
+          "flag": "-key",
+          "type": "string",
+          "description": "Path to SSL private key file",
+          "required": false
+        },
+        {
+          "name": "hotreload",
+          "flag": "-hotreload",
+          "type": "boolean",
+          "description": "Hot-reload hooks on file changes",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "webhook",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to webhook CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webhook",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: snap install webhook"
+      },
+      "args": []
+    }
+  ]
+}
