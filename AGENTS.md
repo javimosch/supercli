@@ -140,6 +140,26 @@ plugins/mytool/
 
 No edits to any file outside `plugins/mytool/` are needed.
 
+## Plugin Description Enhancement Pipeline
+
+When improving plugin descriptions, use this workflow:
+
+1. **Refresh dump**: `bun marketing/dump-plugins.ts` — reads all `plugins/<name>/plugin.json` + `meta.json`
+2. **Generate suggestions**: `bun batch-enhance-descriptions.ts` — finds plugins with <30 char descriptions, generates scored suggestions → `description-enhancements.json`
+3. **Apply to dump**: `bun apply-description-enhancements.ts` — auto-applies high-confidence (>=85%) suggestions to `marketing/plugins-dump.json`
+4. **Apply to plugin files**: `node scripts/apply-enhancements-and-install-guidance.js` — propagates descriptions from dump to `plugins/<name>/meta.json` and `plugin.json`, and creates missing `install-guidance.json` files
+5. **Regenerate catalog**: `node scripts/generate-catalog.js` — updates `plugins/catalog.json`
+
+### Install-guidance.json convention
+
+If `install_guidance` is defined in `plugin.json` but no separate `install-guidance.json` exists, the apply script auto-creates one from the plugin.json data.
+
+## Plugin Count
+
+- Total plugins: ~3,357
+- Short descriptions (<30 chars): ~1,176 (target: 0)
+- Avg description length: 72 chars (target: 80+)
+
 ## Other Agent Instructions
 
 - Keep source files under 500 LOC
