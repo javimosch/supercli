@@ -1,0 +1,112 @@
+{
+  "name": "dockle",
+  "version": "0.1.0",
+  "description": "Container Image Linter for Security — build best-practice Docker images with CIS Benchmarks compliance checking",
+  "source": "https://github.com/goodwithtech/dockle",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dockle"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dockle",
+    "binary": "dockle",
+    "check": "which dockle",
+    "install_steps": [
+      "brew install goodwithtech/r/dockle",
+      "Or download binary from https://github.com/goodwithtech/dockle/releases",
+      "Verify: dockle --version"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "dockle",
+      "resource": "image",
+      "action": "scan",
+      "description": "Scan a Docker image for security issues and CIS benchmark violations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockle",
+        "baseArgs": [],
+        "missingDependencyHelp": "Install dockle: brew install goodwithtech/r/dockle",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "image",
+          "type": "string",
+          "required": true,
+          "description": "Docker image name and tag (e.g. alpine:latest)"
+        },
+        {
+          "name": "input",
+          "type": "string",
+          "required": false,
+          "description": "Scan a saved image tar file instead of pulling from registry"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: list, json, or sarif"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": false,
+          "description": "Save output to a file"
+        },
+        {
+          "name": "exit-code",
+          "type": "string",
+          "required": false,
+          "description": "Exit with non-zero code if issues found at specified level"
+        },
+        {
+          "name": "exit-level",
+          "type": "string",
+          "required": false,
+          "description": "Minimum alert level for exit-code: info, warn, or fatal"
+        },
+        {
+          "name": "ignore",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated list of checkpoints to ignore"
+        },
+        {
+          "name": "accept-key",
+          "type": "string",
+          "required": false,
+          "description": "Acceptable environment variable names"
+        },
+        {
+          "name": "accept-file",
+          "type": "string",
+          "required": false,
+          "description": "Acceptable file names"
+        },
+        {
+          "name": "accept-file-extension",
+          "type": "string",
+          "required": false,
+          "description": "Acceptable file extensions"
+        }
+      ]
+    },
+    {
+      "namespace": "dockle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dockle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockle",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dockle: brew install goodwithtech/r/dockle"
+      },
+      "args": []
+    }
+  ]
+}
