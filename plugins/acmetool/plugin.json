@@ -1,0 +1,128 @@
+{
+  "name": "acmetool",
+  "version": "0.1.0",
+  "description": "Automatic certificate acquisition for ACME (Let's Encrypt) with zero-downtime autorenewal",
+  "source": "https://github.com/hlandau/acmetool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "acmetool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "acmetool",
+    "binary": "acmetool",
+    "check": "which acmetool",
+    "install_steps": [
+      "Download from: https://github.com/hlandau/acmetool/releases",
+      "Ubuntu/Debian: sudo add-apt-repository ppa:hlandau/rhea && sudo apt-get update && sudo apt-get install acmetool",
+      "Arch Linux (AUR): yay -S acmetool-git",
+      "Or: go install github.com/hlandau/acmetool@latest",
+      "sudo acmetool quickstart (sets up account, cronjob, etc.)",
+      "Verify: acmetool --version",
+      "supercli plugins install ./plugins/acmetool --on-conflict replace --json"
+    ],
+    "note": "Single-file dependency-free binary. Supports Debian/Ubuntu (PPA), Arch Linux (AUR), RPM (copr), FreeBSD (ports), and manual binary download. Source: https://github.com/hlandau/acmetool (2.1k+ stars). Written in Go."
+  },
+  "commands": [
+    {
+      "namespace": "acmetool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print acmetool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "acmetool",
+        "missingDependencyHelp": "Install acmetool: see https://github.com/hlandau/acmetool#getting-started",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "acmetool",
+      "resource": "certificate",
+      "action": "want",
+      "description": "Request certificates for specified hostnames and reconcile automatically",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "acmetool",
+        "missingDependencyHelp": "Install acmetool: see https://github.com/hlandau/acmetool#getting-started",
+        "baseArgs": ["want"],
+        "timeout_ms": 120000
+      },
+      "args": [
+        { "name": "hostnames", "type": "string", "required": true, "description": "Hostnames to get certificates for (space-separated)" },
+        { "name": "batch", "type": "boolean", "required": false, "description": "Non-interactive mode" },
+        { "name": "expert", "type": "boolean", "required": false, "description": "Expert mode for ECDSA keys or RSA key size selection" }
+      ]
+    },
+    {
+      "namespace": "acmetool",
+      "resource": "certificate",
+      "action": "reconcile",
+      "description": "Ensure all desired hostnames have valid certificates (like 'make'). Renews expiring certs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "acmetool",
+        "missingDependencyHelp": "Install acmetool: see https://github.com/hlandau/acmetool#getting-started",
+        "baseArgs": ["reconcile"],
+        "timeout_ms": 120000
+      },
+      "args": [
+        { "name": "batch", "type": "boolean", "required": false, "description": "Non-interactive mode (use in cron jobs)" },
+        { "name": "expert", "type": "boolean", "required": false, "description": "Expert mode for ECDSA keys or RSA key size selection" },
+        { "name": "xlog-severity", "type": "string", "required": false, "description": "Logging severity level (debug, info, warn, error)" }
+      ]
+    },
+    {
+      "namespace": "acmetool",
+      "resource": "setup",
+      "action": "quickstart",
+      "description": "Run the quickstart wizard to set up account, cron job, and default configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "acmetool",
+        "missingDependencyHelp": "Install acmetool: see https://github.com/hlandau/acmetool#getting-started",
+        "baseArgs": ["quickstart"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "batch", "type": "boolean", "required": false, "description": "Non-interactive mode" },
+        { "name": "expert", "type": "boolean", "required": false, "description": "Expert mode for ECDSA keys or RSA key size selection" }
+      ]
+    },
+    {
+      "namespace": "acmetool",
+      "resource": "server",
+      "action": "redirector",
+      "description": "Start HTTP redirector and challenge responder daemon on port 80",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "acmetool",
+        "missingDependencyHelp": "Install acmetool: see https://github.com/hlandau/acmetool#getting-started",
+        "baseArgs": ["redirector"],
+        "timeout_ms": 300000
+      },
+      "args": [
+        { "name": "service-uid", "type": "string", "required": false, "description": "Username to drop privileges to" },
+        { "name": "service-daemon", "type": "boolean", "required": false, "description": "Run as a daemon" }
+      ]
+    },
+    {
+      "namespace": "acmetool",
+      "resource": "self",
+      "action": "import-le",
+      "description": "Import existing certificates and account keys from the official Let's Encrypt client",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "acmetool",
+        "missingDependencyHelp": "Install acmetool: see https://github.com/hlandau/acmetool#getting-started",
+        "baseArgs": ["import-le"],
+        "timeout_ms": 30000
+      },
+      "args": [
+        { "name": "batch", "type": "boolean", "required": false, "description": "Non-interactive mode" }
+      ]
+    }
+  ]
+}
