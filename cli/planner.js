@@ -57,7 +57,7 @@ function createPlan(cmd, args) {
 
   return {
     plan_id: generatePlanId(),
-    command: `${cmd.namespace}.${cmd.resource}.${cmd.action}`,
+    command: `${cmd.namespace || "unknown"}.${cmd.resource || "unknown"}.${cmd.action || "unknown"}`,
     args,
     steps,
     side_effects: isMutation,

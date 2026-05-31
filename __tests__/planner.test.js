@@ -141,7 +141,7 @@ describe("planner", () => {
 
     const plan = createPlan(incompleteCmd, {})
 
-    expect(plan.command).toBe("test.undefined.undefined")
+    expect(plan.command).toBe("test.unknown.unknown")
     expect(plan.args).toEqual({})
     expect(plan.steps).toHaveLength(4)
     expect(plan.steps[2]).toMatchObject({
@@ -156,6 +156,6 @@ describe("planner", () => {
     expect(() => createPlan(null, {})).not.toThrow()
 
     const plan = createPlan(null, {})
-    expect(plan.command).toBe("undefined.undefined.undefined")
+    expect(plan.command).toBe("unknown.unknown.unknown")
   })
 })
