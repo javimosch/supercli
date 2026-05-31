@@ -1,0 +1,43 @@
+{
+  "name": "termscp",
+  "version": "0.1.0",
+  "description": "A feature rich terminal UI file transfer and explorer with SCP/SFTP/FTP/S3/SMB support",
+  "source": "https://github.com/veeso/termscp",
+  "checks": [{ "type": "binary", "name": "termscp" }],
+  "install_guidance": {
+    "plugin": "termscp",
+    "binary": "termscp",
+    "check": "which termscp",
+    "install_steps": [
+      "cargo install termscp",
+      "Or: brew install veeso/tap/termscp",
+      "Or download from https://github.com/veeso/termscp/releases",
+      "Verify: termscp --version",
+      "supercli plugins install ./plugins/termscp --on-conflict replace --json"
+    ],
+    "note": "Available via Cargo and Homebrew. Source: https://github.com/veeso/termscp (2.9k+ stars). Written in Rust."
+  },
+  "commands": [
+    {
+      "namespace": "termscp", "resource": "self", "action": "version",
+      "description": "Print termscp version",
+      "adapter": "process",
+      "adapterConfig": { "command": "termscp", "missingDependencyHelp": "Install termscp: cargo install termscp", "baseArgs": ["--version"] },
+      "args": []
+    },
+    {
+      "namespace": "termscp", "resource": "file", "action": "upload",
+      "description": "Upload a file via SCP/SFTP",
+      "adapter": "process",
+      "adapterConfig": { "command": "termscp", "baseArgs": ["--source"], "missingDependencyHelp": "Install termscp: cargo install termscp", "passthrough": true },
+      "args": []
+    },
+    {
+      "namespace": "termscp", "resource": "_", "action": "_",
+      "description": "Passthrough to termscp CLI",
+      "adapter": "process",
+      "adapterConfig": { "command": "termscp", "missingDependencyHelp": "Install termscp: cargo install termscp", "cwd": "invoke_cwd", "passthrough": true },
+      "args": []
+    }
+  ]
+}

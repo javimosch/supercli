@@ -1,0 +1,43 @@
+{
+  "name": "cointop",
+  "version": "0.1.0",
+  "description": "A fast and lightweight interactive terminal UI for tracking cryptocurrencies",
+  "source": "https://github.com/cointop-sh/cointop",
+  "checks": [{ "type": "binary", "name": "cointop" }],
+  "install_guidance": {
+    "plugin": "cointop",
+    "binary": "cointop",
+    "check": "which cointop",
+    "install_steps": [
+      "go install github.com/cointop-sh/cointop@latest",
+      "Or: brew install cointop",
+      "Or download from https://github.com/cointop-sh/cointop/releases",
+      "Verify: cointop --version",
+      "supercli plugins install ./plugins/cointop --on-conflict replace --json"
+    ],
+    "note": "Available via Go install and Homebrew. Source: https://github.com/cointop-sh/cointop (4.3k+ stars). Written in Go."
+  },
+  "commands": [
+    {
+      "namespace": "cointop", "resource": "self", "action": "version",
+      "description": "Print cointop version",
+      "adapter": "process",
+      "adapterConfig": { "command": "cointop", "missingDependencyHelp": "Install cointop: go install github.com/cointop-sh/cointop@latest", "baseArgs": ["--version"] },
+      "args": []
+    },
+    {
+      "namespace": "cointop", "resource": "price", "action": "get",
+      "description": "Get cryptocurrency price (passthrough)",
+      "adapter": "process",
+      "adapterConfig": { "command": "cointop", "missingDependencyHelp": "Install cointop: go install github.com/cointop-sh/cointop@latest", "passthrough": true },
+      "args": []
+    },
+    {
+      "namespace": "cointop", "resource": "_", "action": "_",
+      "description": "Passthrough to cointop CLI",
+      "adapter": "process",
+      "adapterConfig": { "command": "cointop", "missingDependencyHelp": "Install cointop: go install github.com/cointop-sh/cointop@latest", "cwd": "invoke_cwd", "passthrough": true },
+      "args": []
+    }
+  ]
+}
