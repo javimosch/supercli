@@ -1,0 +1,74 @@
+{
+  "name": "python-fire",
+  "version": "0.1.0",
+  "description": "Google Python Fire — auto-generate CLIs from any Python object with --help, tab completion, and REPL mode",
+  "source": "https://github.com/google/python-fire",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fire"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "python-fire",
+    "binary": "fire",
+    "check": "which fire",
+    "install_steps": [
+      "pip install fire",
+      "Or: pipx install fire",
+      "Verify: fire --help",
+      "Use: python -m fire <module> to auto-generate a CLI from any Python module"
+    ],
+    "note": "Available via pip/pipx. 28k+ stars. Turns any Python object into a CLI. After pip install, use 'python -m fire <module>' or the 'fire' command."
+  },
+  "commands": [
+    {
+      "namespace": "python-fire",
+      "resource": "module",
+      "action": "run",
+      "description": "Auto-generate a CLI from a Python module or object and execute a command against it",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python",
+        "missingDependencyHelp": "Install python-fire: pip install fire",
+        "baseArgs": ["-m", "fire"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "module", "type": "string", "required": true, "description": "Python module/object to turn into CLI (e.g., 'os', 'json', or a file path like myscript.py)" },
+        { "name": "command", "type": "string", "required": false, "description": "Command to run on the module (e.g., 'listdir' for os module)" },
+        { "name": "args", "type": "string", "required": false, "description": "Positional arguments passed to the command" }
+      ]
+    },
+    {
+      "namespace": "python-fire",
+      "resource": "self",
+      "action": "version",
+      "description": "Print Python Fire version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python",
+        "missingDependencyHelp": "Install python-fire: pip install fire",
+        "baseArgs": ["-m", "fire", "--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "python-fire",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to python -m fire for custom module invocation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "python",
+        "missingDependencyHelp": "Install python-fire: pip install fire",
+        "baseArgs": ["-m", "fire"],
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
