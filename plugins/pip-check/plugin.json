@@ -1,0 +1,72 @@
+{
+  "name": "pip-check",
+  "version": "0.1.0",
+  "description": "Check installed Python packages for available updates with JSON output and license information",
+  "source": "https://github.com/dyve/pip-check",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pip-check"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pip-check",
+    "binary": "pip-check",
+    "check": "which pip-check",
+    "install_steps": [
+      "pip install pip-check",
+      "Or: pipx install pip-check",
+      "Verify: pip-check --version",
+      "supercli plugins install ./plugins/pip-check --on-conflict replace --json"
+    ],
+    "note": "Available via pip/pipx. Source: https://github.com/dyve/pip-check (300+ stars). Written in Python."
+  },
+  "commands": [
+    {
+      "namespace": "pip-check",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pip-check version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-check",
+        "missingDependencyHelp": "Install pip-check: pip install pip-check",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "pip-check",
+      "resource": "package",
+      "action": "check",
+      "description": "Check all installed packages for available updates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-check",
+        "missingDependencyHelp": "Install pip-check: pip install pip-check",
+        "passthrough": true,
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" },
+        { "name": "upgrade", "type": "boolean", "required": false, "description": "Show upgrade commands" },
+        { "name": "no-color", "type": "boolean", "required": false, "description": "Disable colored output" },
+        { "name": "no-extras", "type": "boolean", "required": false, "description": "Hide package extras (license info)" }
+      ]
+    },
+    {
+      "namespace": "pip-check",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pip-check CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pip-check",
+        "missingDependencyHelp": "Install pip-check: pip install pip-check",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
