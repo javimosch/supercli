@@ -1,0 +1,50 @@
+{
+  "name": "rebound",
+  "version": "0.1.0",
+  "description": "rebound — instantly fetch Stack Overflow results when compiler errors or exceptions are thrown. Supports Python, Node.js, Ruby, Golang, and Java.",
+  "source": "https://github.com/shobrook/rebound",
+  "checks": [
+    { "type": "binary", "name": "rebound" }
+  ],
+  "install_guidance": {
+    "plugin": "rebound",
+    "binary": "rebound",
+    "check": "which rebound",
+    "install_steps": [
+      "pip install rebound-cli",
+      "Verify: rebound --help"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "rebound",
+      "resource": "file",
+      "action": "run",
+      "description": "Execute a file and fetch Stack Overflow results for any errors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rebound",
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install rebound: pip install rebound-cli"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to the file to execute" }
+      ]
+    },
+    {
+      "namespace": "rebound",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rebound CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rebound",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rebound: pip install rebound-cli"
+      },
+      "args": []
+    }
+  ]
+}
