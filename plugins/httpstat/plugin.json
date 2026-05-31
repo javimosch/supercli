@@ -1,0 +1,90 @@
+{
+  "name": "httpstat",
+  "version": "0.1.0",
+  "description": "curl statistics made simple — visualize HTTP request timing breakdown (DNS, TCP, TLS, server, transfer)",
+  "source": "https://github.com/reorx/httpstat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "httpstat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "httpstat",
+    "binary": "httpstat",
+    "check": "which httpstat",
+    "install_steps": [
+      "pip install httpstat",
+      "Verify: httpstat --version",
+      "supercli plugins install ./plugins/httpstat --on-conflict replace --json"
+    ],
+    "note": "Also available via brew: brew install httpstat. Source: https://github.com/reorx/httpstat (6k+ stars). Written in Python."
+  },
+  "commands": [
+    {
+      "namespace": "httpstat",
+      "resource": "request",
+      "action": "run",
+      "description": "Visualize HTTP request timing statistics for a URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpstat",
+        "missingDependencyHelp": "Install httpstat: pip install httpstat",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "URL to request (with or without http(s):// prefix)"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: pretty, json, or jsonl"
+        },
+        {
+          "name": "slo",
+          "type": "string",
+          "required": false,
+          "description": "SLO thresholds as key=value pairs (total, connect, ttfb, dns, tls)"
+        },
+        {
+          "name": "save",
+          "type": "string",
+          "required": false,
+          "description": "Save structured output to a file path"
+        }
+      ]
+    },
+    {
+      "namespace": "httpstat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print httpstat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpstat",
+        "missingDependencyHelp": "Install httpstat: pip install httpstat",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "httpstat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to httpstat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpstat",
+        "missingDependencyHelp": "Install httpstat: pip install httpstat",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,335 @@
+{
+  "name": "shiori",
+  "version": "0.1.0",
+  "description": "Simple command-line bookmark manager built with Go — add, list, search, open, and archive bookmarks",
+  "source": "https://github.com/go-shiori/shiori",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shiori"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shiori",
+    "binary": "shiori",
+    "check": "which shiori",
+    "install_steps": [
+      "go install github.com/go-shiori/shiori/cmd/shiori@latest",
+      "Or download from https://github.com/go-shiori/shiori/releases",
+      "Verify: shiori version",
+      "supercli plugins install ./plugins/shiori --on-conflict replace --json"
+    ],
+    "note": "Available via Go install and direct binary download. Source: https://github.com/go-shiori/shiori (11k+ stars). Written in Go."
+  },
+  "commands": [
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "add",
+      "description": "Bookmark the specified URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["add"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "URL to bookmark"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Custom title for this bookmark"
+        },
+        {
+          "name": "excerpt",
+          "type": "string",
+          "required": false,
+          "description": "Custom excerpt for this bookmark"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated tags"
+        },
+        {
+          "name": "offline",
+          "type": "boolean",
+          "required": false,
+          "description": "Save without fetching data from internet"
+        },
+        {
+          "name": "no-archival",
+          "type": "boolean",
+          "required": false,
+          "description": "Save without creating offline archive"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "list",
+      "description": "List saved bookmarks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["print"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "indices",
+          "type": "string",
+          "required": false,
+          "description": "Space-separated indices or hyphenated ranges (e.g. 1-3 7 9)"
+        },
+        {
+          "name": "json",
+          "type": "boolean",
+          "required": false,
+          "description": "Output data in JSON format"
+        },
+        {
+          "name": "search",
+          "type": "string",
+          "required": false,
+          "description": "Search with keyword"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "required": false,
+          "description": "Filter by tags"
+        },
+        {
+          "name": "exclude-tags",
+          "type": "string",
+          "required": false,
+          "description": "Exclude by tags"
+        },
+        {
+          "name": "latest",
+          "type": "boolean",
+          "required": false,
+          "description": "Sort by latest"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "update",
+      "description": "Update saved bookmarks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["update"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "indices",
+          "type": "string",
+          "required": false,
+          "description": "Space-separated indices or ranges"
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "required": false,
+          "description": "New URL for this bookmark"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "New title"
+        },
+        {
+          "name": "tags",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated tags (prefix with - to remove)"
+        },
+        {
+          "name": "yes",
+          "type": "boolean",
+          "required": false,
+          "description": "Skip confirmation prompt and update ALL"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "delete",
+      "description": "Delete saved bookmarks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["delete"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "indices",
+          "type": "string",
+          "required": false,
+          "description": "Space-separated indices or ranges"
+        },
+        {
+          "name": "yes",
+          "type": "boolean",
+          "required": false,
+          "description": "Skip confirmation and delete ALL"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "open",
+      "description": "Open saved bookmarks in browser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["open"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "indices",
+          "type": "string",
+          "required": false,
+          "description": "Space-separated indices or ranges"
+        },
+        {
+          "name": "archive",
+          "type": "boolean",
+          "required": false,
+          "description": "Open archived content"
+        },
+        {
+          "name": "text-cache",
+          "type": "boolean",
+          "required": false,
+          "description": "Open text cache in terminal"
+        },
+        {
+          "name": "yes",
+          "type": "boolean",
+          "required": false,
+          "description": "Skip confirmation and open ALL"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "check",
+      "description": "Find bookmarked sites that no longer exist",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["check"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "yes",
+          "type": "boolean",
+          "required": false,
+          "description": "Skip confirmation and check ALL"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "import",
+      "description": "Import bookmarks from HTML file (Netscape format)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["import"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "source-file",
+          "type": "string",
+          "required": true,
+          "description": "Path to HTML file"
+        },
+        {
+          "name": "generate-tag",
+          "type": "boolean",
+          "required": false,
+          "description": "Auto-generate tags from bookmark category"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "bookmark",
+      "action": "export",
+      "description": "Export bookmarks to HTML file (Netscape format)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "baseArgs": ["export"],
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "target-file",
+          "type": "string",
+          "required": true,
+          "description": "Path to output HTML file"
+        }
+      ]
+    },
+    {
+      "namespace": "shiori",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shiori version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "baseArgs": ["version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "shiori",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shiori CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shiori",
+        "missingDependencyHelp": "Install shiori: go install github.com/go-shiori/shiori/cmd/shiori@latest",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
