@@ -26,7 +26,7 @@ describe("daemon CLI error output", () => {
     } catch (e) {
       expect(e.stderr.toString()).toContain("Usage: node daemon.js")
       expect(e.stdout.toString()).toBe("")
-      expect(e.status).toBe(1)
+      expect(e.status).toBe(85)
     }
   })
 })
