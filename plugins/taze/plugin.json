@@ -1,0 +1,198 @@
+{
+  "name": "taze",
+  "version": "0.1.0",
+  "description": "A modern CLI tool that keeps your npm dependencies fresh with interactive and non-interactive modes",
+  "source": "https://github.com/antfu-collective/taze",
+  "checks": [
+    { "type": "binary", "name": "taze" }
+  ],
+  "install_guidance": {
+    "plugin": "taze",
+    "binary": "taze",
+    "check": "which taze",
+    "install_steps": [
+      "npm install -g taze",
+      "Or: pnpm add -g taze",
+      "Or: yarn global add taze",
+      "Verify: taze --version",
+      "supercli plugins install ./plugins/taze --on-conflict replace --json"
+    ],
+    "note": "Source: https://github.com/antfu-collective/taze (4k+ stars). Written in TypeScript."
+  },
+  "commands": [
+    {
+      "namespace": "taze",
+      "resource": "deps",
+      "action": "check",
+      "description": "Check npm dependencies for available updates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "taze",
+        "missingDependencyHelp": "Install taze: npm install -g taze",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "mode",
+          "type": "string",
+          "required": false,
+          "description": "Update mode: default (respect ranges), major, minor, patch, latest, newest, stable, next"
+        },
+        {
+          "name": "write",
+          "type": "boolean",
+          "required": false,
+          "description": "Write updates to package.json"
+        },
+        {
+          "name": "fail-on-outdated",
+          "type": "boolean",
+          "required": false,
+          "description": "Exit with code 1 if outdated deps found (for CI)"
+        },
+        {
+          "name": "recursive",
+          "type": "boolean",
+          "required": false,
+          "description": "Recursively search package.json in subdirectories (monorepo)"
+        },
+        {
+          "name": "force",
+          "type": "boolean",
+          "required": false,
+          "description": "Bypass cache, fetch from registry"
+        },
+        {
+          "name": "install",
+          "type": "boolean",
+          "required": false,
+          "description": "Run npm/pnpm/yarn install after bumping"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Show all packages including up-to-date"
+        },
+        {
+          "name": "include",
+          "type": "string",
+          "required": false,
+          "description": "Only check these deps (comma-separated, supports /regex/)"
+        },
+        {
+          "name": "exclude",
+          "type": "string",
+          "required": false,
+          "description": "Exclude deps (comma-separated, supports /regex/)"
+        },
+        {
+          "name": "include-locked",
+          "type": "boolean",
+          "required": false,
+          "description": "Include locked (fixed version) deps"
+        },
+        {
+          "name": "global",
+          "type": "boolean",
+          "required": false,
+          "description": "Check/update global packages"
+        },
+        {
+          "name": "peer",
+          "type": "boolean",
+          "required": false,
+          "description": "Include peerDependencies"
+        },
+        {
+          "name": "silent",
+          "type": "boolean",
+          "required": false,
+          "description": "Complete silent output"
+        },
+        {
+          "name": "cwd",
+          "type": "string",
+          "required": false,
+          "description": "Current working directory"
+        },
+        {
+          "name": "timediff",
+          "type": "boolean",
+          "required": false,
+          "description": "Show time diff between current and target version"
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "required": false,
+          "description": "Sort order: time-asc, time-desc, diff-asc, diff-desc, name-asc, name-desc"
+        }
+      ]
+    },
+    {
+      "namespace": "taze",
+      "resource": "deps",
+      "action": "update",
+      "description": "Check and write dependency updates to package.json",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "taze",
+        "missingDependencyHelp": "Install taze: npm install -g taze",
+        "baseArgs": ["--write"]
+      },
+      "args": [
+        {
+          "name": "mode",
+          "type": "string",
+          "required": false,
+          "description": "Update mode: default, major, minor, patch, latest, newest, stable, next"
+        },
+        {
+          "name": "recursive",
+          "type": "boolean",
+          "required": false,
+          "description": "Recursively process monorepo subdirectories"
+        },
+        {
+          "name": "install",
+          "type": "boolean",
+          "required": false,
+          "description": "Run install after bumping"
+        },
+        {
+          "name": "force",
+          "type": "boolean",
+          "required": false,
+          "description": "Bypass cache"
+        }
+      ]
+    },
+    {
+      "namespace": "taze",
+      "resource": "self",
+      "action": "version",
+      "description": "Print taze version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "taze",
+        "missingDependencyHelp": "Install taze: npm install -g taze",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "taze",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to taze CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "taze",
+        "missingDependencyHelp": "Install taze: npm install -g taze",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
