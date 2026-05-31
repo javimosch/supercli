@@ -35,11 +35,12 @@ const rawArgs = process.argv.slice(2);
 
 const flags = {};
 const positional = [];
+let endOfOptions = false;
 for (let i = 0; i < rawArgs.length; i++) {
   const arg = rawArgs[i];
-  if (arg.startsWith("--")) {
+  if (arg.startsWith("--") && !endOfOptions) {
     const kv = arg.slice(2);
-    if (kv === "") continue; // bare --, skip (prevents flags[""] = ...)
+    if (kv === "") { endOfOptions = true; continue; } // bare --, end-of-options marker
     const eqIdx = kv.indexOf("=");
     if (eqIdx !== -1) {
       const key = kv.slice(0, eqIdx);

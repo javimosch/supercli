@@ -62,14 +62,15 @@ describe("supercli args parser", () => {
     expect(plan.args.baz).toBe("")
   })
 
-  test("bare -- does not create empty flag key", () => {
+  test("bare -- acts as end-of-options marker (POSIX convention)", () => {
     const out = execSync(`node ${CLI} plan testns testres testact -- --foo bar --json`, {
       env,
       encoding: "utf-8"
     })
     const plan = JSON.parse(out)
-    // bare -- should be ignored as a flag; --foo should still parse
-    expect(plan.args.foo).toBe("bar")
+    // bare -- marks end of options; everything after it is positional, not flags
+    expect(plan.args.foo).toBeUndefined()
+    expect(plan.args.json).toBeUndefined()
     expect(Object.keys(plan.args)).not.toContain("")
   })
 
