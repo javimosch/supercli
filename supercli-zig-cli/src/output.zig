@@ -74,7 +74,7 @@ pub const ErrorInfo = struct {
     suggestions: []const []const u8 = &.{},
 };
 
-// Write error envelope to stdout + exit
+// Write error envelope to stderr + exit
 pub fn exitWithError(gpa: std.mem.Allocator, mode: Mode, info: ErrorInfo) noreturn {
     if (mode == .human) {
         writeRawErr(info.err_type);
@@ -107,10 +107,58 @@ pub fn exitWithError(gpa: std.mem.Allocator, mode: Mode, info: ErrorInfo) noretu
         jw.endArray() catch {};
         jw.endObject() catch {};
         jw.endObject() catch {};
-        writeRaw(out.written());
-        writeRaw("\n");
+        writeRawErr(out.written());
+        writeRawErr("\n");
     }
     std.process.exit(@intCast(@max(0, @min(info.code, 255))));
+}
+
+test "ErrorInfo JSON format matches expected envelope" {
+    const testing = std.testing;
+    const gpa = testing.allocator;
+
+    const info = ErrorInfo{
+        .code = 85,
+        .err_type = "invalid_argument",
+        .message = "test message",
+        .recoverable = false,
+        .suggestions = &.{"try --help"},
+    };
+
+    var out: std.Io.Writer.Allocating = .init(gpa);
+    defer out.deinit();
+    var jw: std.json.Stringify = .{ .writer = &out.writer };
+    try jw.beginObject();
+    try jw.objectField("error");
+    try jw.beginObject();
+    try jw.objectField("code");
+    try jw.write(info.code);
+    try jw.objectField("type");
+    try jw.write(info.err_type);
+    try jw.objectField("message");
+    try jw.write(info.message);
+    try jw.objectField("recoverable");
+    try jw.write(info.recoverable);
+    try jw.objectField("suggestions");
+    try jw.beginArray();
+    for (info.suggestions) |s| try jw.write(s);
+    try jw.endArray();
+    try jw.endObject();
+    try jw.endObject();
+
+    const json_str = out.written();
+    const parsed = try std.json.parseFromSlice(std.json.Value, gpa, json_str, .{});
+    defer parsed.deinit();
+
+    const root = parsed.value;
+    const err_obj = root.object.get("error").?;
+    try testing.expectEqual(@as(i64, 85), err_obj.object.get("code").?.integer);
+    try testing.expectEqualStrings("invalid_argument", err_obj.object.get("type").?.string);
+    try testing.expectEqualStrings("test message", err_obj.object.get("message").?.string);
+    try testing.expectEqual(false, err_obj.object.get("recoverable").?.bool);
+    const suggestions = err_obj.object.get("suggestions").?.array;
+    try testing.expectEqual(@as(usize, 1), suggestions.items.len);
+    try testing.expectEqualStrings("try --help", suggestions.items[0].string);
 }
 
 // Compact key map — match Node.js compactKeys()
