@@ -1,0 +1,97 @@
+{
+  "name": "qalculate",
+  "version": "0.1.0",
+  "description": "Powerful multi-purpose command-line calculator with unit conversion, currency exchange, and symbolic computation",
+  "source": "https://github.com/Qalculate/libqalculate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qalc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qalculate",
+    "binary": "qalc",
+    "check": "which qalc",
+    "install_steps": [
+      "apt-get install qalc",
+      "or: brew install qalc",
+      "or: sudo dnf install qalculate (Fedora)",
+      "or: sudo pacman -S qalculate (Arch Linux)",
+      "Verify: qalc --version"
+    ],
+    "note": "Part of the Qalculate! project. Available via most package managers. Source: https://github.com/Qalculate/libqalculate (4k+ stars). Written in C/C++."
+  },
+  "commands": [
+    {
+      "namespace": "qalculate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qalc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "missingDependencyHelp": "Install: apt install qalc",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "qalculate",
+      "resource": "calc",
+      "action": "evaluate",
+      "description": "Evaluate a mathematical expression with unit and currency support",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "missingDependencyHelp": "Install: apt install qalc"
+      },
+      "args": [
+        {
+          "name": "expression",
+          "type": "string",
+          "required": true,
+          "description": "Mathematical expression to evaluate (e.g. '2+2', '100 USD to EUR', 'sin(pi/4)')",
+          "positional": true
+        },
+        {
+          "name": "terse",
+          "type": "boolean",
+          "required": false,
+          "description": "Terse output without explanation text"
+        },
+        {
+          "name": "precision",
+          "type": "number",
+          "required": false,
+          "description": "Number of significant figures or decimal places"
+        },
+        {
+          "name": "exact",
+          "type": "boolean",
+          "required": false,
+          "description": "Exact (rational) result when possible"
+        },
+        {
+          "name": "unambiguous",
+          "type": "boolean",
+          "required": false,
+          "description": "Show unambiguous unit names"
+        }
+      ]
+    },
+    {
+      "namespace": "qalculate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qalc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qalc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: apt install qalc"
+      },
+      "args": []
+    }
+  ]
+}

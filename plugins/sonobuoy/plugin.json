@@ -1,0 +1,161 @@
+{
+  "name": "sonobuoy",
+  "version": "0.1.0",
+  "description": "Kubernetes conformance testing and diagnostic tool with plugin architecture and JSON output",
+  "source": "https://github.com/vmware-tanzu/sonobuoy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sonobuoy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sonobuoy",
+    "binary": "sonobuoy",
+    "check": "which sonobuoy",
+    "install_steps": [
+      "Download binary from https://github.com/vmware-tanzu/sonobuoy/releases",
+      "brew install sonobuoy (macOS)",
+      "go install github.com/vmware-tanzu/sonobuoy@latest",
+      "Verify: sonobuoy version",
+      "Requires: kubeconfig with cluster admin access"
+    ],
+    "note": "Go binary. Supports Kubernetes v1.17+. Requires kubectl and a kubeconfig. Download from GitHub releases or install via brew/go."
+  },
+  "commands": [
+    {
+      "namespace": "sonobuoy",
+      "resource": "run",
+      "action": "conformance",
+      "description": "Run Kubernetes conformance tests or custom plugins on a cluster",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["run"],
+        "timeout_ms": 3600000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "wait", "type": "boolean", "required": false, "description": "Wait for run to complete before returning" },
+        { "name": "mode", "type": "string", "required": false, "description": "Test mode: quick, certified-conformance, non-disruptive-conformance" },
+        { "name": "plugin", "type": "string", "required": false, "description": "Plugin to run (default: e2e)" },
+        { "name": "sonobuoy-image", "type": "string", "required": false, "description": "Override Sonobuoy image" },
+        { "name": "namespace", "type": "string", "required": false, "description": "Namespace to run in (default: sonobuoy)" },
+        { "name": "skip-preflight", "type": "boolean", "required": false, "description": "Skip preflight checks" },
+        { "name": "e2e-repo-config", "type": "string", "required": false, "description": "Path to e2e registry config YAML" }
+      ]
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "status",
+      "action": "get",
+      "description": "Check the status of a Sonobuoy run",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["status"],
+        "parseJson": true
+      },
+      "args": [
+        { "name": "namespace", "type": "string", "required": false, "description": "Namespace (default: sonobuoy)" },
+        { "name": "json", "type": "boolean", "required": false, "description": "Output in JSON format" }
+      ]
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "results",
+      "action": "retrieve",
+      "description": "Retrieve Sonobuoy run results as a tarball",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["retrieve"],
+        "timeout_ms": 300000
+      },
+      "args": [
+        { "name": "namespace", "type": "string", "required": false, "description": "Namespace (default: sonobuoy)" }
+      ]
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "results",
+      "action": "inspect",
+      "description": "Inspect results tarball for test failures and summary",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["results"],
+        "timeout_ms": 60000
+      },
+      "args": [
+        { "name": "tarball", "type": "string", "required": true, "description": "Results tarball path" },
+        { "name": "mode", "type": "string", "required": false, "description": "Output mode: report, detailed, dump" },
+        { "name": "plugin", "type": "string", "required": false, "description": "Specific plugin results" }
+      ]
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "run",
+      "action": "delete",
+      "description": "Clean up Sonobuoy resources and namespace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["delete"]
+      },
+      "args": [
+        { "name": "wait", "type": "boolean", "required": false, "description": "Wait for namespace deletion" },
+        { "name": "all", "type": "boolean", "required": false, "description": "Delete all e2e namespaces too" },
+        { "name": "namespace", "type": "string", "required": false, "description": "Namespace (default: sonobuoy)" }
+      ]
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "log",
+      "action": "get",
+      "description": "Inspect Sonobuoy logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["logs"]
+      },
+      "args": [
+        { "name": "namespace", "type": "string", "required": false, "description": "Namespace (default: sonobuoy)" },
+        { "name": "follow", "type": "boolean", "required": false, "description": "Follow log output" }
+      ]
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "version",
+      "action": "get",
+      "description": "Print Sonobuoy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "baseArgs": ["version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "sonobuoy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sonobuoy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sonobuoy",
+        "missingDependencyHelp": "Install sonobuoy: see https://github.com/vmware-tanzu/sonobuoy/releases",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
