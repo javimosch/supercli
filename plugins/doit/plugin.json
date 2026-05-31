@@ -1,0 +1,297 @@
+{
+  "name": "doit",
+  "version": "0.1.0",
+  "description": "CLI task management and automation tool with dependency tracking, parallel execution, and JSON reporter",
+  "source": "https://github.com/pydoit/doit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "doit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "doit",
+    "binary": "doit",
+    "check": "which doit",
+    "install_steps": [
+      "pip install doit",
+      "Verify: doit --version",
+      "supercli plugins install ./plugins/doit --on-conflict replace --json"
+    ],
+    "note": "Available via pip. Source: https://github.com/pydoit/doit (2k+ stars). Written in Python."
+  },
+  "commands": [
+    {
+      "namespace": "doit",
+      "resource": "task",
+      "action": "run",
+      "description": "Run tasks (default command)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": false,
+          "description": "Task names to run (space-separated)"
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Dodo file to use (default: dodo.py)"
+        },
+        {
+          "name": "dir",
+          "type": "string",
+          "required": false,
+          "description": "Working directory"
+        },
+        {
+          "name": "verbosity",
+          "type": "number",
+          "required": false,
+          "description": "0=capture all, 1=capture stdout, 2=capture nothing"
+        },
+        {
+          "name": "always-execute",
+          "type": "boolean",
+          "required": false,
+          "description": "Execute even if up-to-date"
+        },
+        {
+          "name": "continue",
+          "type": "boolean",
+          "required": false,
+          "description": "Continue after failure"
+        },
+        {
+          "name": "single",
+          "type": "boolean",
+          "required": false,
+          "description": "Execute without task dependencies"
+        },
+        {
+          "name": "process",
+          "type": "number",
+          "required": false,
+          "description": "Number of parallel processes (0=sequential)"
+        },
+        {
+          "name": "reporter",
+          "type": "string",
+          "required": false,
+          "description": "console, executed-only, json, zero, error-only"
+        },
+        {
+          "name": "output-file",
+          "type": "string",
+          "required": false,
+          "description": "Write output to file"
+        }
+      ]
+    },
+    {
+      "namespace": "doit",
+      "resource": "task",
+      "action": "list",
+      "description": "List tasks from dodo file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": false,
+          "description": "Filter by task name"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Include subtasks"
+        },
+        {
+          "name": "status",
+          "type": "boolean",
+          "required": false,
+          "description": "Show task status (R=run, U=up-to-date, I=ignored)"
+        },
+        {
+          "name": "quiet",
+          "type": "boolean",
+          "required": false,
+          "description": "Print just task name"
+        },
+        {
+          "name": "private",
+          "type": "boolean",
+          "required": false,
+          "description": "Show private tasks (start with _)"
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Dodo file to use"
+        }
+      ]
+    },
+    {
+      "namespace": "doit",
+      "resource": "task",
+      "action": "info",
+      "description": "Show info about a task",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "baseArgs": ["info"],
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": true,
+          "description": "Task name"
+        },
+        {
+          "name": "no-status",
+          "type": "boolean",
+          "required": false,
+          "description": "Hide reasons why task would execute"
+        }
+      ]
+    },
+    {
+      "namespace": "doit",
+      "resource": "task",
+      "action": "clean",
+      "description": "Clean actions / remove targets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "baseArgs": ["clean"],
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": false,
+          "description": "Tasks to clean"
+        },
+        {
+          "name": "dry-run",
+          "type": "boolean",
+          "required": false,
+          "description": "Print actions without executing"
+        },
+        {
+          "name": "clean-dep",
+          "type": "boolean",
+          "required": false,
+          "description": "Clean dependencies too"
+        },
+        {
+          "name": "clean-all",
+          "type": "boolean",
+          "required": false,
+          "description": "Clean all tasks"
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Dodo file to use"
+        }
+      ]
+    },
+    {
+      "namespace": "doit",
+      "resource": "task",
+      "action": "forget",
+      "description": "Clear successful run status from internal DB",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "baseArgs": ["forget"],
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": false,
+          "description": "Tasks to forget"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Forget all tasks"
+        }
+      ]
+    },
+    {
+      "namespace": "doit",
+      "resource": "db",
+      "action": "dump",
+      "description": "Dump dependency DB content",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "baseArgs": ["dumpdb"],
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "db-file",
+          "type": "string",
+          "required": false,
+          "description": "Dependency file name"
+        }
+      ]
+    },
+    {
+      "namespace": "doit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print doit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "doit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to doit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doit",
+        "missingDependencyHelp": "Install doit: pip install doit",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
