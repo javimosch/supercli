@@ -112,35 +112,53 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 
 ## 6. Immediate Actionable Items
 
-## 7. Session Plan: am-0e131c-tfxai0 (Current)
+## 7. Session Plan: am-0e131c-tfxda0 (Current)
 
 ### Context
-- Candidates file at `/root/candidates.json` contains 53 tools to add as bundled plugins
-- 39 already created (gum, bottom, television, httpstat, python-fire, taze, sampler, shiori, readme-ai, doit, auto-cpufreq, autojump, fasd, viu, khal, vdirsyncer, timetrap, tflint, tfenv, snyk, decktape, caniuse-cmd, rebound, bcal, is-up-cli, doctoc, mdlt, qalculate, papis, oh-my-posh, xxh, acmetool, prospector, pip-check, interrogate, watchtower, webhook, atlantis, certimate, mosint, goaccess, s-tui, dockle, sonobuoy, cloudfox)
-- 14 still missing: gitui, helix, termscp, mangal, http-prompt, weechat, mdv, carbonyl, tmate, patator, cointop, rtop, pg_activity, pacu
+- **Latest commit**: `bf9b2ffd` (chore: regenerate plugins/catalog.json)
+- **Total plugins**: 3,371 (53/53 candidates from `/root/candidates.json` added ✅)
+- **Short descriptions**: 1,176 plugins with <30 char descriptions remain (per QUALITY_REPORT.md)
+- **README**: Restructured to new format, currently **306 LOC** (plan target: 430-600)
+- **Working tree**: Clean — all previous session work committed
+- **CI workflows**: test.yml ✅, catalog.yml ⚠️, sc-zig-release.yml ✅
+- **Tools available**: bun 1.3.14, Node.js v24.15.0, Python 3
+
+### State Assessment
+| Metric | Current | Target | Gap |
+|--------|---------|--------|-----|
+| Plugins from candidates.json | 53/53 | 53 | ✅ |
+| Short descriptions (<30 chars) | ~1,176 | 0 | 1,176 |
+| README LOC | 306 | 430-600 | +124-294 |
+| Avg description length | ~72 chars | 80+ chars | +8 chars |
+| Working tree dirtiness | Clean | — | ✅ |
 
 ### Work Allocation
 
-#### Dev
-1. **Add 14 missing bundled plugins** following isolated directory convention
-2. **Run description enhancement pipeline** for 1,174 short-description plugins:
-   - `bun batch-enhance-descriptions.ts` → generate suggestions
-   - `bun apply-description-enhancements.ts` → apply high-confidence
-   - `node scripts/apply-enhancements-and-install-guidance.js` → propagate to files
-3. **Regenerate catalog.json**: `node scripts/generate-catalog.js`
-4. **README restructure** per `plan.txt` (306 LOC → 430-600 LOC)
+#### Dev (3 commits, highest impact first)
+1. **Commit 1: Run description enhancement pipeline** for ~1,176 short-description plugins:
+   - `bun batch-enhance-descriptions.ts` → generate scored suggestions
+   - `bun apply-description-enhancements.ts` → auto-apply high-confidence (>=85%)
+   - `node scripts/apply-enhancements-and-install-guidance.js` → propagate to plugin files
+2. **Commit 2: Expand README** from 306 → 430-600 LOC per `plan.txt`:
+   - Expand 'For Humans / For Agents' compressed benefits table (~40 LOC)
+   - Lengthen CLI Usage Examples section (~55 LOC, add inspection category)
+   - Keep Architecture text-only (~55 LOC, no diagram)
+   - Add Tech Stack + Social + Contributors section (~40 LOC)
+3. **Commit 3: Regenerate catalog + verify CI**
+   - `node scripts/generate-catalog.js`
+   - `npm test` to verify test.yml green
+   - `git add + git commit -m "chore: regenerate plugins/catalog.json"`
 
-#### QA
-1. **Review plugin.json** for each new plugin before finalization
-2. **Audit description quality** after enhancement pipeline
-3. **Verify catalog.json** regenerates correctly
-4. **Confirm test.yml and catalog.yml** are green
+#### QA (in order as dev completes commits)
+1. **After Commit 1**: Audit description quality — verify ≥30 chars, spot-check 5-10 descriptions, confirm install-guidance.json coverage
+2. **After Commit 2**: Validate README matches plan.txt checklist — LOC target, npx consistency, no ASCII diagrams
+3. **After Commit 3**: Verify catalog.json regenerated, run `npm test`, confirm all green
 
 #### Architect (This Session)
-- Produce this plan and hand off to dev
+- Analyze repo state, produce this plan, communicate to dev/qa, mark done
 
 ### For Future Sessions:
 1. Zig CLI: Add `--help-json` bootstrap command matching Node.js behavior
 2. Zig CLI: Formalize `sc-zig` release process (auto-release via GitHub Actions)
-3. Server testing: Add Jest coverage for server routes
+3. Server testing: Add Jest coverage for server routes (currently 93 tests)
 4. Plugin scoring: Implement community voting mechanism
