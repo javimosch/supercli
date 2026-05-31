@@ -183,39 +183,80 @@ npx supercli secret scan ./src
 
 ---
 
-## 🔄 Keeping Plugins Updated
+## 🏗️ Architecture
 
-Plugins are added daily — new tools, updated checksums, fresh metadata. Keep your local installation in sync:
+supercli routes every command through a universal capability framework:
 
-```bash
-# Check what's new (dry-run, no changes)
-supercli plugins update --check
+**The router:**
+- **Discovers** capabilities from every adapter, caches metadata for fast lookup
+- **Routes** commands to the correct harness based on namespace
+- **Executes** with unified error handling, envelopes, and output formatting
+- **Surfaces** machine-readable descriptions so agents can plan against the capability graph
 
-# Apply the latest plugins
-supercli plugins update
-```
+**Adapters:**
+- **CLI tools** — Wraps 3,300+ CLI tools with JSON output, error handling, and timeout management
+- **MCP servers** — Bridges Model Context Protocol servers into the same routing graph
+- **HTTP APIs** — Turns REST endpoints into callable capabilities
+- **Workflows** — Chains multiple capabilities via `supercli ask`
 
-> **Latest npm release:** v1.15.0 (2026-05-14) — published [8 days ago]. New versions ship multiple times per week.
+**Plugin system:**
+- Each plugin bundles metadata (description, tags, checksums, commands)
+- Plugins are registered in `~/.supercli/plugins/plugins.lock.json`
+- Both Node and Zig versions read the same plugin storage
+
+supercli replaces tool-specific syntax with a **queryable, executable capability graph**.
 
 ---
 
-## 📦 3,300+ CLI Tools — Organized
+## 📦 Capability Sources
 
-| Category | Count | Examples |
-|----------|-------|---------|
-| **System** | 450+ | `curl`, `jq`, `git`, `tmux`, `htop`, `rsync` |
-| **Development** | 380+ | `cargo`, `npm`, `go`, `rustc`, `gcc`, `make` |
-| **Databases** | 120+ | `mysql`, `postgres`, `redis`, `mongodb`, `sqlite`, `cockroach` |
-| **Cloud** | 160+ | `aws`, `gcloud`, `azure`, `kubectl`, `terraform`, `pulumi` |
-| **Security** | 200+ | `nmap`, `gitleaks`, `trufflehog`, `openssl`, `git-crypt` |
-| **Network** | 180+ | `ncat`, `tshark`, `mtr`, `socat`, `chisel`, `doggo` |
-| **Data** | 150+ | `csvkit`, `xsv`, `miller`, `qsv`, `datamash` |
-| **Media** | 100+ | `ffmpeg`, `sox`, `imagemagick`, `exiftool`, `gstreamer` |
-| **Testing** | 90+ | `k6`, `vegeta`, `fortio`, `hey`, `siege`, `wrk2` |
-| **Blockchain** | 30+ | `foundry`, `cast`, `hardhat`, `truffle`, `solana` |
-| **Serverless** | 40+ | `fission`, `openfaas`, `kn`, `serverless`, `chalice` |
-| **Web** | 80+ | `wrangler`, `netlify`, `vercel`, `surge`, `heroku` |
-> Every tool includes: description, tags, source URL, install method, binary check, and commands.
+| Source | What It Provides | Access |
+|--------|-----------------|--------|
+| **Bundled plugins** | 200+ curated tools (sys, dev, db, cloud, security) | Included, zero config |
+| **Plugin registry** | 3,100+ community tools, updated daily | `supercli plugins install <name>` |
+| **MCP servers** | Any MCP-compatible server | `supercli mcp add <name>` |
+| **HTTP APIs** | REST endpoints as capabilities | Configuration-based |
+
+> Every capability includes: description, tags, source URL, install method, binary check, and commands.
+
+> **Latest npm release:** v1.15.0 (2026-05-14) — new versions ship multiple times per week.
+
+---
+
+## 📤 Output Envelope + Exit Codes
+
+Every command returns a consistent JSON envelope:
+
+```json
+{
+  "version": "1.0",
+  "command": "http.check.health",
+  "duration_ms": 142,
+  "data": { "status": "ok" }
+}
+```
+
+| Exit Code | Meaning |
+|-----------|---------|
+| `0` | Success |
+| `82` | Validation error |
+| `105` | Integration error |
+| `110` | Internal error |
+
+All tools accept `--json` and `--silent` flags for machine-consumable output.
+
+---
+
+## ⚙️ Operating Modes
+
+| Mode | Description | Use Case |
+|------|-------------|----------|
+| **Direct** | `<ns> <resource> <action> --flags` | Humans running specific tools |
+| **Ask** | `supercli ask "do X"` | AI-driven composition |
+| **Inspect** | `supercli inspect <command>` | Understand args before running |
+| **Server** | `supercli server` | HTTP/MCP server mode (see docs) |
+
+For agents: use `supercli --json` for self-documenting bootstrap.
 
 ---
 
@@ -224,62 +265,27 @@ supercli plugins update
 ### Option 1: Zig Version (Fast, Single Binary)
 
 ```bash
-# Quick install (curl)
 curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
-
-# Install and replace Node.js version
-curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --replace
 ```
 
-**Why Zig?**
-- ✅ No Node.js startup overhead
-- ✅ Single static binary (250KB)
+- ✅ Single static binary (~250KB), no Node.js required
+- ✅ Faster startup, native performance
 - ✅ Reads same `~/.supercli/plugins/plugins.lock.json`
-- ✅ Progressive adoption: co-exists with Node.js version
-- ✅ Easy revert: `npm uninstall -g supercli && npm install -g supercli`
 
 ### Option 2: Node.js Version (npx/npm)
 
 ```bash
-# Run immediately (no install)
+# Run immediately
 npx supercli uuid self generate
 
 # Install globally
 npm install -g superacli
-supercli uuid self generate
 ```
 
-**Why Node.js?**
 - ✅ Full feature parity (MCP, server, HTTP adapter)
 - ✅ Plugin installation from registry
-- ✅ Ecosystem integration
 
-### Progressive Adoption
-
-Both versions read the same plugin storage. Try the Zig version first:
-
-```bash
-# Install Zig version as sc-zig (co-exists with Node.js sc)
-curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
-
-# Test it
-sc-zig --version
-
-# If you like it, replace Node.js sc:
-sc-zig install-as-sc
-sudo ln -sf /usr/local/bin/sc-zig /usr/local/bin/sc
-
-# To go back to Node.js:
-npm uninstall -g supercli
-npm install -g supercli
-```
-
-**Check which version you have:**
-```bash
-sc --version
-# Zig version shows: SuperCLI (Zig) v0.1.0
-# Node.js version shows different info
-```
+Both versions co-exist and share plugin storage.
 
 ---
 
