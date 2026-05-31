@@ -330,7 +330,7 @@ if (require.main === module) {
         break;
       default:
         console.error("Usage: node daemon.js {start|stop|status}");
-        process.exit(1);
+        process.exit(85);
     }
   }
 }
