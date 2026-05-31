@@ -9,7 +9,7 @@ INSTALL="$4"
 URL="$5"
 TAGS="$6"
 
-DIR="/home/jarancibia/ai/supercli/plugins/$NAME"
+DIR="$(dirname "$0")/../plugins/$NAME"
 mkdir -p "$DIR/skills/quickstart"
 
 # plugin.json
