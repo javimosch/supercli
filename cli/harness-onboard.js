@@ -190,8 +190,8 @@ async function handleHarnessOnboard({ positional, flags, humanMode, output, outp
     }
 
     if (errors.length > 0) {
-      console.log("\n  Errors:");
-      errors.forEach((r) => console.log(`    ✗ ${r.harness}: ${r.reason}`));
+      process.stderr.write("\n  Errors:\n");
+      errors.forEach((r) => process.stderr.write(`    ✗ ${r.harness}: ${r.reason}\n`));
     }
 
     if (dryRun) {
@@ -277,8 +277,8 @@ async function handleHarnessOffboard({ positional, flags, humanMode, output, out
     }
 
     if (errors.length > 0) {
-      console.log("\n  Errors:");
-      errors.forEach((r) => console.log(`    ✗ ${r.harness}: ${r.reason}`));
+      process.stderr.write("\n  Errors:\n");
+      errors.forEach((r) => process.stderr.write(`    ✗ ${r.harness}: ${r.reason}\n`));
     }
 
     if (dryRun) {
