@@ -12,21 +12,59 @@
   Works for humans. Works for AI agents. Everything returns JSON.
 </p>
 
-<p align="center">
-  <a href="#-quick-start"><b>Quick Start →</b></a>
-  &nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="#-examples"><b>Examples →</b></a>
-  &nbsp;&nbsp;|&nbsp;&nbsp;
-  <a href="#-for-ai-agents"><b>For AI Agents →</b></a>
-</p>
+> Think: "Stripe API for CLIs and tools"
 
-<br>
+## ⚡ TL;DR
 
----
+> Turn any CLI, API, or workflow into a discoverable, executable capability
+> — with consistent inputs, outputs, and zero glue code.
 
-**The problem:** Every CLI tool has different flags, different output formats, different install methods. You waste time learning syntax instead of getting work done. AI agents can't use most tools because output is unpredictable.
+```bash
+# Discover what exists
+npx supercli skills search "deploy" --json
 
-**supercli fixes this.** 3,300+ tools. One interface. JSON out. Zero guesswork.
+# Understand exactly how to use it
+npx supercli skills get aws.cfn.deploy --json
+
+# Execute with predictable output
+npx supercli aws cfn deploy --stack-name my-stack --json
+```
+
+👉 Works the same across CLI tools, APIs, MCP servers, and workflows
+👉 No glue code, no parsing, no guesswork
+
+## ⚡ Example
+
+```bash
+npx supercli ask "list my tasks and recent commits"
+```
+
+```json
+{
+  "tasks": [...],
+  "commits": [...]
+}
+```
+
+→ Combines multiple tools into one structured response.
+
+## The Problem
+
+Every tool speaks a different language:
+- CLIs → flags & inconsistent output
+- APIs → schemas & auth
+- MCP/tools → custom protocols
+- Workflows → glue code everywhere
+
+Humans waste time learning syntax. Agents fail because nothing is predictable.
+
+## The Solution
+
+supercli turns everything into capabilities:
+- Same structure → `supercli <namespace> <resource> <action>`
+- Same output → deterministic JSON envelopes
+- Same discovery → searchable skill graph
+- Same execution → no custom integrations
 
 ---
 
