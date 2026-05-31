@@ -52,13 +52,21 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8, 
     // Detect if stdout is a TTY
     const is_tty = std.Io.File.stdout().isTty(io) catch false;
 
+    var end_of_options = false;
+
     var i: usize = 0;
     while (i < args_iter.len) : (i += 1) {
         const arg = args_iter[i];
         try raw_args.append(gpa, arg);
 
-        if (std.mem.startsWith(u8, arg, "--")) {
+        if (std.mem.startsWith(u8, arg, "--") and !end_of_options) {
             const kv = arg[2..];
+
+            // bare -- marks end of options (POSIX convention)
+            if (kv.len == 0) {
+                end_of_options = true;
+                continue;
+            }
             if (std.mem.indexOf(u8, kv, "=")) |eq| {
                 // --key=value form
                 const k = kv[0..eq];
@@ -1069,5 +1077,27 @@ test "parseArgs basic and custom boolean flag re-parsing" {
         try testing.expectEqualStrings("act", parsed2.positional[2]);
         try testing.expectEqualStrings("positional_arg", parsed2.positional[3]);
         try testing.expectEqualStrings("true", parsed2.flags.get("custom-bool").?);
+    }
+
+    // Test 3: bare -- acts as end-of-options marker (POSIX convention)
+    {
+        const argv = &[_][]const u8{ "ns", "res", "act", "--", "--foo", "bar", "--json" };
+        var parsed = try parseArgs(gpa, io, argv, null);
+        defer parsed.deinit();
+
+        // Everything after bare -- is positional, not flags
+        try testing.expectEqual(@as(usize, 6), parsed.positional.len);
+        try testing.expectEqualStrings("ns", parsed.positional[0]);
+        try testing.expectEqualStrings("res", parsed.positional[1]);
+        try testing.expectEqualStrings("act", parsed.positional[2]);
+        try testing.expectEqualStrings("--foo", parsed.positional[3]);
+        try testing.expectEqualStrings("bar", parsed.positional[4]);
+        try testing.expectEqualStrings("--json", parsed.positional[5]);
+
+        // No empty key from bare --
+        try testing.expectEqual(@as(?[]const u8, null), parsed.flags.get(""));
+        // --foo and --json should NOT be parsed as flags
+        try testing.expectEqual(@as(?[]const u8, null), parsed.flags.get("foo"));
+        try testing.expectEqual(@as(?[]const u8, null), parsed.flags.get("json"));
     }
 }
