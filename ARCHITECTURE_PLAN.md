@@ -18,7 +18,7 @@ A config-driven, universal CLI capability router that wraps 3,300+ CLI tools, AP
 | OpenAPI adapter | ❌ | ✅ |
 
 ### Repository Stats
-- 3,359 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
+- 3,357 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
 - 5,553+ commands exposed through plugins
 - 93 Jest tests covering CLI, adapters, plugins, server
 - 36 smoke test scripts in `tests/`
@@ -28,12 +28,13 @@ A config-driven, universal CLI capability router that wraps 3,300+ CLI tools, AP
 
 ### Quality Metrics
 - Plugin quality score: 92.1% (up from 91.2%)
-- 105 plugins still have short descriptions (< 30 chars)
+- 1,174 plugins still have short descriptions (< 30 chars)
 - 31 source URLs already fixed (generic → specific repos)
 - 13 tags added for improved discoverability
 
 ### Last 10 Commits Pattern
 - Recent work has focused on: CI fixes (continue-on-error, npm test chaining), Zig unit tests (registry.zig: filterByName/filterByTag, update.zig: diffCatalogs), README restructure, and automaintainer bulk plugin additions from `/root/candidates.json`.
+- 53 candidates evaluated: 39 already created, 14 remaining to add
 - QA verified CI issues are now resolved.
 
 ## 2. Key Architecture Decisions
@@ -111,11 +112,32 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 
 ## 6. Immediate Actionable Items
 
-### For Dev (this session):
-1. **Fix 105 plugin descriptions** — Run batch enhancement script or manual review
-2. **Verify CI pipeline** — Confirm test.yml, catalog.yml all green
-3. **Add missing install-guidance.json** — For recently added bundled plugins
-4. **Update AGENTS.md** — Reflect any changes made
+## 7. Session Plan: am-0e131c-tfxai0 (Current)
+
+### Context
+- Candidates file at `/root/candidates.json` contains 53 tools to add as bundled plugins
+- 39 already created (gum, bottom, television, httpstat, python-fire, taze, sampler, shiori, readme-ai, doit, auto-cpufreq, autojump, fasd, viu, khal, vdirsyncer, timetrap, tflint, tfenv, snyk, decktape, caniuse-cmd, rebound, bcal, is-up-cli, doctoc, mdlt, qalculate, papis, oh-my-posh, xxh, acmetool, prospector, pip-check, interrogate, watchtower, webhook, atlantis, certimate, mosint, goaccess, s-tui, dockle, sonobuoy, cloudfox)
+- 14 still missing: gitui, helix, termscp, mangal, http-prompt, weechat, mdv, carbonyl, tmate, patator, cointop, rtop, pg_activity, pacu
+
+### Work Allocation
+
+#### Dev
+1. **Add 14 missing bundled plugins** following isolated directory convention
+2. **Run description enhancement pipeline** for 1,174 short-description plugins:
+   - `bun batch-enhance-descriptions.ts` → generate suggestions
+   - `bun apply-description-enhancements.ts` → apply high-confidence
+   - `node scripts/apply-enhancements-and-install-guidance.js` → propagate to files
+3. **Regenerate catalog.json**: `node scripts/generate-catalog.js`
+4. **README restructure** per `plan.txt` (306 LOC → 430-600 LOC)
+
+#### QA
+1. **Review plugin.json** for each new plugin before finalization
+2. **Audit description quality** after enhancement pipeline
+3. **Verify catalog.json** regenerates correctly
+4. **Confirm test.yml and catalog.yml** are green
+
+#### Architect (This Session)
+- Produce this plan and hand off to dev
 
 ### For Future Sessions:
 1. Zig CLI: Add `--help-json` bootstrap command matching Node.js behavior

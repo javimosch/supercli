@@ -1,0 +1,36 @@
+{
+  "name": "rtop",
+  "version": "0.1.0",
+  "description": "Interactive remote system monitoring tool based on SSH with no agent required",
+  "source": "https://github.com/rapidloop/rtop",
+  "checks": [{ "type": "binary", "name": "rtop" }],
+  "install_guidance": {
+    "plugin": "rtop",
+    "binary": "rtop",
+    "check": "which rtop",
+    "install_steps": [
+      "go install github.com/rapidloop/rtop@latest",
+      "Or: brew install rtop",
+      "Or download from https://github.com/rapidloop/rtop/releases",
+      "Verify: rtop --version",
+      "supercli plugins install ./plugins/rtop --on-conflict replace --json"
+    ],
+    "note": "Available via Go install and Homebrew. Source: https://github.com/rapidloop/rtop (2.1k+ stars). Written in Go."
+  },
+  "commands": [
+    {
+      "namespace": "rtop", "resource": "self", "action": "version",
+      "description": "Print rtop version",
+      "adapter": "process",
+      "adapterConfig": { "command": "rtop", "missingDependencyHelp": "Install rtop: go install github.com/rapidloop/rtop@latest", "baseArgs": ["--version"] },
+      "args": []
+    },
+    {
+      "namespace": "rtop", "resource": "_", "action": "_",
+      "description": "Passthrough to rtop CLI",
+      "adapter": "process",
+      "adapterConfig": { "command": "rtop", "missingDependencyHelp": "Install rtop: go install github.com/rapidloop/rtop@latest", "cwd": "invoke_cwd", "passthrough": true },
+      "args": []
+    }
+  ]
+}
