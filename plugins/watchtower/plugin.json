@@ -1,0 +1,116 @@
+{
+  "name": "watchtower",
+  "version": "0.1.0",
+  "description": "Automated Docker container base image updates with notification and rollback support",
+  "source": "https://github.com/containrrr/watchtower",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "watchtower"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "watchtower",
+    "binary": "watchtower",
+    "check": "which watchtower",
+    "install_steps": [
+      "docker pull containrrr/watchtower",
+      "go install github.com/containrrr/watchtower@latest",
+      "brew install watchtower (macOS)",
+      "Verify: watchtower --version"
+    ],
+    "note": "Watchtower runs as a Docker container or standalone binary. It monitors running containers and automatically updates their images when new versions are released. Supports Slack/email/webhook notifications, manual one-shot mode, and per-container opt-out via labels."
+  },
+  "commands": [
+    {
+      "namespace": "watchtower",
+      "resource": "container",
+      "action": "run-once",
+      "description": "Run a one-time update check for all or specified containers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchtower",
+        "missingDependencyHelp": "Install: docker pull containrrr/watchtower",
+        "baseArgs": ["--run-once"]
+      },
+      "args": [
+        {
+          "name": "interval",
+          "type": "number",
+          "required": false,
+          "description": "Poll interval in seconds (default: 86400)"
+        },
+        {
+          "name": "cleanup",
+          "type": "boolean",
+          "required": false,
+          "description": "Remove old images after updating"
+        },
+        {
+          "name": "rolling-restart",
+          "type": "boolean",
+          "required": false,
+          "description": "Restart containers one at a time instead of all at once"
+        }
+      ]
+    },
+    {
+      "namespace": "watchtower",
+      "resource": "container",
+      "action": "monitor",
+      "description": "Start watchtower in daemon mode to continuously monitor and update containers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchtower",
+        "missingDependencyHelp": "Install: docker pull containrrr/watchtower",
+        "timeout_ms": 300000
+      },
+      "args": [
+        {
+          "name": "interval",
+          "type": "number",
+          "required": false,
+          "description": "Poll interval in seconds (default: 86400)"
+        },
+        {
+          "name": "cleanup",
+          "type": "boolean",
+          "required": false,
+          "description": "Remove old images after updating"
+        },
+        {
+          "name": "notifications",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable notifications (requires environment config)"
+        }
+      ]
+    },
+    {
+      "namespace": "watchtower",
+      "resource": "self",
+      "action": "version",
+      "description": "Print watchtower version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchtower",
+        "missingDependencyHelp": "Install: docker pull containrrr/watchtower",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "watchtower",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to watchtower CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchtower",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: docker pull containrrr/watchtower"
+      },
+      "args": []
+    }
+  ]
+}

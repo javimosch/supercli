@@ -1,0 +1,168 @@
+{
+  "name": "cloudfox",
+  "version": "0.1.0",
+  "description": "Automated situational awareness and security auditing for cloud penetration testing across AWS",
+  "source": "https://github.com/BishopFox/cloudfox",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cloudfox"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cloudfox",
+    "binary": "cloudfox",
+    "check": "which cloudfox",
+    "install_steps": [
+      "Download binary from https://github.com/BishopFox/cloudfox/releases",
+      "brew install cloudfox (macOS)",
+      "go install github.com/BishopFox/cloudfox@latest",
+      "Verify: cloudfox --version"
+    ],
+    "note": "CloudFox performs AWS environment enumeration and security auditing. Requires AWS credentials configured via environment variables, AWS config file, or IAM role. Supports multiple output formats including JSON for machine consumption. Covers IAM, S3, EC2, Lambda, EKS, RDS, and more."
+  },
+  "commands": [
+    {
+      "namespace": "cloudfox",
+      "resource": "enum",
+      "action": "run",
+      "description": "Enumerate AWS resources and find potential security issues across multiple services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudfox",
+        "missingDependencyHelp": "Install: https://github.com/BishopFox/cloudfox/releases",
+        "baseArgs": ["enum"]
+      },
+      "args": [
+        {
+          "name": "services",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated list of services to enumerate (default: all)"
+        },
+        {
+          "name": "output-dir",
+          "type": "string",
+          "required": false,
+          "description": "Output directory for reports (default: ./cloudfox-output)"
+        },
+        {
+          "name": "profile",
+          "type": "string",
+          "required": false,
+          "description": "AWS profile to use"
+        },
+        {
+          "name": "regions",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated list of AWS regions"
+        }
+      ]
+    },
+    {
+      "namespace": "cloudfox",
+      "resource": "enum",
+      "action": "iam",
+      "description": "Enumerate IAM users, roles, policies, and identify privilege escalation paths",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudfox",
+        "missingDependencyHelp": "Install: https://github.com/BishopFox/cloudfox/releases",
+        "baseArgs": ["enum", "--services", "iam"]
+      },
+      "args": [
+        {
+          "name": "output-dir",
+          "type": "string",
+          "required": false,
+          "description": "Output directory for reports"
+        },
+        {
+          "name": "profile",
+          "type": "string",
+          "required": false,
+          "description": "AWS profile to use"
+        }
+      ]
+    },
+    {
+      "namespace": "cloudfox",
+      "resource": "enum",
+      "action": "s3",
+      "description": "Enumerate S3 buckets and identify public access and misconfigurations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudfox",
+        "missingDependencyHelp": "Install: https://github.com/BishopFox/cloudfox/releases",
+        "baseArgs": ["enum", "--services", "s3"]
+      },
+      "args": [
+        {
+          "name": "output-dir",
+          "type": "string",
+          "required": false,
+          "description": "Output directory for reports"
+        },
+        {
+          "name": "profile",
+          "type": "string",
+          "required": false,
+          "description": "AWS profile to use"
+        }
+      ]
+    },
+    {
+      "namespace": "cloudfox",
+      "resource": "enum",
+      "action": "ec2",
+      "description": "Enumerate EC2 instances, security groups, and networking configurations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudfox",
+        "missingDependencyHelp": "Install: https://github.com/BishopFox/cloudfox/releases",
+        "baseArgs": ["enum", "--services", "ec2"]
+      },
+      "args": [
+        {
+          "name": "output-dir",
+          "type": "string",
+          "required": false,
+          "description": "Output directory for reports"
+        },
+        {
+          "name": "profile",
+          "type": "string",
+          "required": false,
+          "description": "AWS profile to use"
+        }
+      ]
+    },
+    {
+      "namespace": "cloudfox",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cloudfox version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudfox",
+        "missingDependencyHelp": "Install: https://github.com/BishopFox/cloudfox/releases",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudfox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cloudfox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudfox",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: https://github.com/BishopFox/cloudfox/releases"
+      },
+      "args": []
+    }
+  ]
+}

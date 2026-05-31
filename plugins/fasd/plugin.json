@@ -1,0 +1,116 @@
+{
+  "name": "fasd",
+  "version": "0.1.0",
+  "description": "Command-line productivity booster offering quick access to files and directories with frecency tracking",
+  "source": "https://github.com/clvv/fasd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fasd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fasd",
+    "binary": "fasd",
+    "check": "which fasd",
+    "install_steps": [
+      "brew install fasd (macOS)",
+      "apt-get install fasd (Debian/Ubuntu)",
+      "sudo dnf install fasd (Fedora)",
+      "sudo pacman -S fasd (Arch Linux)",
+      "Verify: fasd --version"
+    ],
+    "note": "fasd is a shell integration tool. After installation, add 'eval \"$(fasd --init auto)\"' to your shell config (.bashrc, .zshrc, etc.) to enable the 'z' and 'f' aliases. Benchmark: 10x faster than cd for deep directory trees."
+  },
+  "commands": [
+    {
+      "namespace": "fasd",
+      "resource": "dir",
+      "action": "jump",
+      "description": "Jump to a frequently accessed directory by matching a query fragment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fasd",
+        "missingDependencyHelp": "Install: brew install fasd or apt-get install fasd",
+        "baseArgs": ["-d"]
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Directory name fragment to match against frecency database",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "fasd",
+      "resource": "file",
+      "action": "search",
+      "description": "Search for frequently accessed files by matching a query fragment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fasd",
+        "missingDependencyHelp": "Install: brew install fasd or apt-get install fasd",
+        "baseArgs": ["-f"]
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "File name fragment to match against frecency database",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "fasd",
+      "resource": "self",
+      "action": "list",
+      "description": "List recently accessed files and directories sorted by frecency",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fasd",
+        "missingDependencyHelp": "Install: brew install fasd or apt-get install fasd",
+        "baseArgs": ["-l"]
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": false,
+          "description": "Optional filter to narrow results",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "fasd",
+      "resource": "self",
+      "action": "score",
+      "description": "Show frecency scores for all files and directories in the database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fasd",
+        "missingDependencyHelp": "Install: brew install fasd or apt-get install fasd",
+        "baseArgs": ["-s"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "fasd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fasd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fasd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: brew install fasd or apt-get install fasd"
+      },
+      "args": []
+    }
+  ]
+}
