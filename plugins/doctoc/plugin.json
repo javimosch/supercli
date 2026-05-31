@@ -1,0 +1,106 @@
+{
+  "name": "doctoc",
+  "version": "0.1.0",
+  "description": "Generates table of contents for markdown files with heading support",
+  "source": "https://github.com/thlorenz/doctoc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "doctoc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "doctoc",
+    "binary": "doctoc",
+    "check": "which doctoc",
+    "install_steps": [
+      "npm install -g doctoc",
+      "Verify: doctoc --help"
+    ],
+    "note": "Generates and updates table of contents in markdown files. Supports GitHub, GitLab, Bitbucket, and other platforms."
+  },
+  "commands": [
+    {
+      "namespace": "doctoc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print doctoc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doctoc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install: npm install -g doctoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "doctoc",
+      "resource": "toc",
+      "action": "generate",
+      "description": "Generate table of contents for markdown files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doctoc",
+        "baseArgs": [],
+        "missingDependencyHelp": "Install: npm install -g doctoc"
+      },
+      "args": [
+        {
+          "name": "target",
+          "type": "string",
+          "description": "File or directory to generate TOC for",
+          "positional": true,
+          "required": true
+        },
+        {
+          "name": "gitlab",
+          "flag": "--gitlab",
+          "type": "boolean",
+          "description": "Use GitLab-compatible TOC links",
+          "required": false
+        },
+        {
+          "name": "bitbucket",
+          "flag": "--bitbucket",
+          "type": "boolean",
+          "description": "Use Bitbucket-compatible TOC links",
+          "required": false
+        },
+        {
+          "name": "maxlevel",
+          "flag": "--maxlevel",
+          "type": "number",
+          "description": "Maximum heading level to include in TOC",
+          "required": false
+        },
+        {
+          "name": "notitle",
+          "flag": "--notitle",
+          "type": "boolean",
+          "description": "Do not include the TOC title",
+          "required": false
+        },
+        {
+          "name": "dryrun",
+          "flag": "--dryrun",
+          "type": "boolean",
+          "description": "Dry run without writing changes (exit 1 if files would change)",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "doctoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to doctoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doctoc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: npm install -g doctoc"
+      },
+      "args": []
+    }
+  ]
+}
