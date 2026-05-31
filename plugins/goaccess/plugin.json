@@ -1,0 +1,166 @@
+{
+  "name": "goaccess",
+  "version": "0.1.0",
+  "description": "Real-time web log analyzer and interactive viewer with JSON/CSV/HTML output for Nginx, Apache, CloudFront, Caddy, and more",
+  "source": "https://github.com/allinurl/goaccess",
+  "checks": [
+    { "type": "binary", "name": "goaccess" }
+  ],
+  "install_guidance": {
+    "plugin": "goaccess",
+    "binary": "goaccess",
+    "check": "which goaccess",
+    "install_steps": [
+      "apt install goaccess  # Debian/Ubuntu",
+      "Or: brew install goaccess",
+      "Or: dnf install goaccess  # Fedora",
+      "Verify: goaccess --version",
+      "supercli plugins install ./plugins/goaccess --on-conflict replace --json"
+    ],
+    "note": "Also available via Docker: docker run --rm -it allinurl/goaccess. Source: https://github.com/allinurl/goaccess (20k+ stars). Written in C."
+  },
+  "commands": [
+    {
+      "namespace": "goaccess",
+      "resource": "log",
+      "action": "analyze",
+      "description": "Analyze web server log files and generate reports",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goaccess",
+        "missingDependencyHelp": "Install goaccess: apt install goaccess",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "log-file",
+          "type": "string",
+          "required": false,
+          "description": "Input log file path (or pipe via stdin)"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": false,
+          "description": "Output file (e.g. report.html, report.json, or format name like json, html, csv)"
+        },
+        {
+          "name": "log-format",
+          "type": "string",
+          "required": false,
+          "description": "Log format: COMBINED, VCOMBINED, COMMON, VCOMMON, W3C, SQUID, CLOUDFRONT, CLOUDSTORAGE, AWSELB, AWSS3, AWSALB, CADDY, TRAEFIKCLF, or custom format string"
+        },
+        {
+          "name": "date-format",
+          "type": "string",
+          "required": false,
+          "description": "Date strftime format (e.g. %d/%b/%Y)"
+        },
+        {
+          "name": "time-format",
+          "type": "string",
+          "required": false,
+          "description": "Time strftime format (e.g. %T)"
+        },
+        {
+          "name": "agent-list",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable user-agent list by host"
+        },
+        {
+          "name": "with-output-resolver",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable IP resolver in HTML/JSON output"
+        },
+        {
+          "name": "json-pretty-print",
+          "type": "boolean",
+          "required": false,
+          "description": "Pretty-print JSON output"
+        },
+        {
+          "name": "no-query-string",
+          "type": "boolean",
+          "required": false,
+          "description": "Ignore query strings from requests"
+        },
+        {
+          "name": "keep-last",
+          "type": "number",
+          "required": false,
+          "description": "Keep only last N days of data"
+        },
+        {
+          "name": "max-items",
+          "type": "number",
+          "required": false,
+          "description": "Maximum items per panel (default 366)"
+        },
+        {
+          "name": "ignore-crawlers",
+          "type": "boolean",
+          "required": false,
+          "description": "Ignore crawlers and bots"
+        },
+        {
+          "name": "exclude-ip",
+          "type": "string",
+          "required": false,
+          "description": "Exclude IP or IP range"
+        },
+        {
+          "name": "jobs",
+          "type": "number",
+          "required": false,
+          "description": "Parallel threads (1-6)"
+        },
+        {
+          "name": "real-os",
+          "type": "boolean",
+          "required": false,
+          "description": "Display real OS names"
+        },
+        {
+          "name": "no-progress",
+          "type": "boolean",
+          "required": false,
+          "description": "Disable progress metrics"
+        },
+        {
+          "name": "anonymize-ip",
+          "type": "boolean",
+          "required": false,
+          "description": "Anonymize client IPs"
+        }
+      ]
+    },
+    {
+      "namespace": "goaccess",
+      "resource": "self",
+      "action": "version",
+      "description": "Print goaccess version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goaccess",
+        "missingDependencyHelp": "Install goaccess: apt install goaccess",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "goaccess",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to goaccess CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goaccess",
+        "missingDependencyHelp": "Install goaccess: apt install goaccess",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}

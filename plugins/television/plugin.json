@@ -1,0 +1,121 @@
+{
+  "name": "television",
+  "version": "0.1.0",
+  "description": "A very fast, portable and hackable fuzzy finder for the terminal with channel-based data sources",
+  "source": "https://github.com/alexpasmantier/television",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "television",
+    "binary": "tv",
+    "check": "which tv",
+    "install_steps": [
+      "curl -fsSL https://alexpasmantier.github.io/television/install.sh | bash",
+      "Or: cargo install television",
+      "Or: brew install television",
+      "Or: sudo pacman -S television (Arch Linux)",
+      "Verify: tv --version",
+      "supercli plugins install ./plugins/television --on-conflict replace --json"
+    ],
+    "note": "Available via curl install script, Cargo, Homebrew, and Arch Linux. Source: https://github.com/alexpasmantier/television (5k+ stars). Written in Rust."
+  },
+  "commands": [
+    {
+      "namespace": "television",
+      "resource": "self",
+      "action": "version",
+      "description": "Print television version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tv",
+        "missingDependencyHelp": "Install television: cargo install television",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "television",
+      "resource": "file",
+      "action": "search",
+      "description": "Search files (default channel)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tv",
+        "missingDependencyHelp": "Install television: cargo install television",
+        "passthrough": true
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to search (default: current directory)" },
+        { "name": "preview", "type": "boolean", "required": false, "description": "Show file preview" },
+        { "name": "hidden", "type": "boolean", "required": false, "description": "Show hidden files" }
+      ]
+    },
+    {
+      "namespace": "television",
+      "resource": "content",
+      "action": "search",
+      "description": "Search file contents (text channel)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tv",
+        "baseArgs": ["text"],
+        "missingDependencyHelp": "Install television: cargo install television",
+        "passthrough": true
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to search (default: current directory)" },
+        { "name": "preview", "type": "boolean", "required": false, "description": "Show content preview" }
+      ]
+    },
+    {
+      "namespace": "television",
+      "resource": "git",
+      "action": "repos",
+      "description": "Find and fuzzy-search git repositories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tv",
+        "baseArgs": ["git-repos"],
+        "missingDependencyHelp": "Install television: cargo install television",
+        "passthrough": true
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to search (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "television",
+      "resource": "channel",
+      "action": "run",
+      "description": "List available channels or run a custom channel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tv",
+        "missingDependencyHelp": "Install television: cargo install television",
+        "passthrough": true
+      },
+      "args": [
+        { "name": "channel", "type": "string", "required": false, "description": "Channel name (e.g. env, docker, processes)" },
+        { "name": "list-channels", "type": "boolean", "required": false, "description": "List all available channels" }
+      ]
+    },
+    {
+      "namespace": "television",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tv",
+        "missingDependencyHelp": "Install television: cargo install television",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}

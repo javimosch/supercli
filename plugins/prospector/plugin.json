@@ -1,0 +1,94 @@
+{
+  "name": "prospector",
+  "version": "0.1.0",
+  "description": "A complete Python static analysis tool combining pylint, pycodestyle, mccabe, mypy, and more with JSON output",
+  "source": "https://github.com/PyCQA/prospector",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prospector"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prospector",
+    "binary": "prospector",
+    "check": "which prospector",
+    "install_steps": [
+      "pip install prospector",
+      "Or: pipx install prospector",
+      "For extra tools: pip install prospector[with_everything]",
+      "Verify: prospector --version",
+      "supercli plugins install ./plugins/prospector --on-conflict replace --json"
+    ],
+    "note": "Available via pip/pipx. Source: https://github.com/PyCQA/prospector (2k+ stars). Written in Python. Requires Python >=3.9."
+  },
+  "commands": [
+    {
+      "namespace": "prospector",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prospector version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prospector",
+        "missingDependencyHelp": "Install prospector: pip install prospector",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "prospector",
+      "resource": "project",
+      "action": "analyze",
+      "description": "Analyze a Python project for errors, potential problems, convention violations and complexity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prospector",
+        "missingDependencyHelp": "Install prospector: pip install prospector",
+        "passthrough": true,
+        "timeout_ms": 120000
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to project or module (default: current directory)" },
+        { "name": "output-format", "type": "string", "required": false, "description": "Output format: json, yaml, xunit, grouped, text (default: text)" },
+        { "name": "strictness", "type": "string", "required": false, "description": "Strictness level: verylow, low, medium, high, veryhigh" },
+        { "name": "profile", "type": "string", "required": false, "description": "Profile name to use (e.g. strict, no_doc_warnings)" },
+        { "name": "summary-only", "type": "boolean", "required": false, "description": "Only show summary counts" },
+        { "name": "messages-only", "type": "boolean", "required": false, "description": "Only show messages, not metadata" },
+        { "name": "absolute-paths", "type": "boolean", "required": false, "description": "Use absolute paths in output" },
+        { "name": "doc-warnings", "type": "boolean", "required": false, "description": "Include documentation warnings" },
+        { "name": "no-autodetect", "type": "boolean", "required": false, "description": "Disable automatic library detection" },
+        { "name": "zero-exit", "type": "boolean", "required": false, "description": "Return exit code 0 even if issues found" },
+        { "name": "with-tool", "type": "string", "required": false, "description": "Run a specific tool (e.g. mypy, bandit, pyright)" },
+        { "name": "uses", "type": "string", "required": false, "description": "Library adaptors to enable (e.g. django, flask, celery)" }
+      ]
+    },
+    {
+      "namespace": "prospector",
+      "resource": "profile",
+      "action": "list",
+      "description": "List available profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prospector",
+        "baseArgs": ["--show-profiles"],
+        "missingDependencyHelp": "Install prospector: pip install prospector"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prospector",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prospector CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prospector",
+        "missingDependencyHelp": "Install prospector: pip install prospector",
+        "cwd": "invoke_cwd",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}

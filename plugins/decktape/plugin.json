@@ -1,0 +1,136 @@
+{
+  "name": "decktape",
+  "version": "0.1.0",
+  "description": "PDF exporter for HTML presentations — converts reveal.js, impress.js, remark, and other slide decks to PDF",
+  "source": "https://github.com/astefanutti/decktape",
+  "checks": [
+    { "type": "binary", "name": "decktape" },
+    { "type": "binary", "name": "npx" }
+  ],
+  "install_guidance": {
+    "plugin": "decktape",
+    "binary": "decktape",
+    "check": "which decktape || npx decktape --version",
+    "install_steps": [
+      "npm install -g decktape",
+      "Or use via npx: npx decktape ...",
+      "Verify: decktape --version",
+      "supercli plugins install ./plugins/decktape --on-conflict replace --json"
+    ],
+    "note": "Also available via Docker: ghcr.io/astefanutti/decktape. Source: https://github.com/astefanutti/decktape (3k+ stars). Written in TypeScript."
+  },
+  "commands": [
+    {
+      "namespace": "decktape",
+      "resource": "presentation",
+      "action": "export",
+      "description": "Export an HTML presentation to PDF",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "decktape",
+        "missingDependencyHelp": "Install decktape: npm install -g decktape",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "URL or file path of the HTML presentation"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": true,
+          "description": "Output PDF filename"
+        },
+        {
+          "name": "command",
+          "type": "string",
+          "required": false,
+          "description": "Presentation framework: automatic (default), reveal, bespoke, deck, dzslides, flowtime, impress, inspire, nue, remark, rise, shower, slidy, webslides, generic"
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "required": false,
+          "description": "Viewport size (e.g. 1280x720)"
+        },
+        {
+          "name": "slides",
+          "type": "string",
+          "required": false,
+          "description": "Slide range (e.g. 1-3,5,8)"
+        },
+        {
+          "name": "pause",
+          "type": "number",
+          "required": false,
+          "description": "Pause in ms before each slide export (default 1000)"
+        },
+        {
+          "name": "load-pause",
+          "type": "number",
+          "required": false,
+          "description": "Pause in ms after page load before starting export (default 0)"
+        },
+        {
+          "name": "screenshots",
+          "type": "boolean",
+          "required": false,
+          "description": "Capture each slide as image"
+        },
+        {
+          "name": "screenshots-directory",
+          "type": "string",
+          "required": false,
+          "description": "Screenshots output directory"
+        },
+        {
+          "name": "pdf-author",
+          "type": "string",
+          "required": false,
+          "description": "PDF author metadata"
+        },
+        {
+          "name": "pdf-title",
+          "type": "string",
+          "required": false,
+          "description": "PDF title metadata"
+        },
+        {
+          "name": "chrome-path",
+          "type": "string",
+          "required": false,
+          "description": "Custom Chrome/Chromium executable path"
+        }
+      ]
+    },
+    {
+      "namespace": "decktape",
+      "resource": "self",
+      "action": "version",
+      "description": "Print decktape version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "decktape",
+        "missingDependencyHelp": "Install decktape: npm install -g decktape",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "decktape",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to decktape CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "decktape",
+        "missingDependencyHelp": "Install decktape: npm install -g decktape",
+        "passthrough": true
+      },
+      "args": []
+    }
+  ]
+}
