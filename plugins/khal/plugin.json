@@ -1,0 +1,168 @@
+{
+  "name": "khal",
+  "version": "0.1.0",
+  "description": "Standards-based CLI calendar program with CalDAV synchronization — view, add, and manage events and calendars",
+  "source": "https://github.com/pimutils/khal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "khal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "khal",
+    "binary": "khal",
+    "check": "which khal",
+    "install_steps": [
+      "pip install khal",
+      "Or: apt install khal",
+      "Or: brew install khal",
+      "Verify: khal --version"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "khal",
+      "resource": "event",
+      "action": "list",
+      "description": "List events and appointments",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "khal",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install khal: pip install khal",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "calendars",
+          "type": "string",
+          "required": false,
+          "description": "Calendars to show events from (space-separated)"
+        },
+        {
+          "name": "days",
+          "type": "string",
+          "required": false,
+          "description": "Number of days to show"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: table or csv"
+        }
+      ]
+    },
+    {
+      "namespace": "khal",
+      "resource": "event",
+      "action": "agenda",
+      "description": "Display agenda for a specific date or date range",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "khal",
+        "baseArgs": ["agenda"],
+        "missingDependencyHelp": "Install khal: pip install khal",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "date-or-range",
+          "type": "string",
+          "required": false,
+          "description": "Date or date range (e.g. 'tomorrow', '2026-06-01', '2026-06-01..2026-06-07')"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: table or csv"
+        }
+      ]
+    },
+    {
+      "namespace": "khal",
+      "resource": "event",
+      "action": "new",
+      "description": "Create a new event",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "khal",
+        "baseArgs": ["new"],
+        "missingDependencyHelp": "Install khal: pip install khal",
+        "passthrough": true
+      },
+      "args": [
+        {
+          "name": "calendar",
+          "type": "string",
+          "required": false,
+          "description": "Calendar to add the event to"
+        },
+        {
+          "name": "start-date",
+          "type": "string",
+          "required": true,
+          "description": "Start date and time (e.g. '2026-06-01 14:00')"
+        },
+        {
+          "name": "end-date",
+          "type": "string",
+          "required": false,
+          "description": "End date and time"
+        },
+        {
+          "name": "summary",
+          "type": "string",
+          "required": true,
+          "description": "Event title/summary"
+        },
+        {
+          "name": "location",
+          "type": "string",
+          "required": false,
+          "description": "Event location"
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "required": false,
+          "description": "Event description"
+        },
+        {
+          "name": "alarm",
+          "type": "string",
+          "required": false,
+          "description": "Alarm time in minutes before event"
+        }
+      ]
+    },
+    {
+      "namespace": "khal",
+      "resource": "calendar",
+      "action": "list",
+      "description": "List available calendars",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "khal",
+        "baseArgs": ["printcalendars"],
+        "missingDependencyHelp": "Install khal: pip install khal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "khal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print khal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "khal",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install khal: pip install khal"
+      },
+      "args": []
+    }
+  ]
+}
