@@ -24,13 +24,11 @@ async function handlePluginsCommand(options) {
     const raw = String(value).trim().toLowerCase()
     if (raw === "true") return true
     if (raw === "false") return false
-    outputError({
+    throw Object.assign(new Error(`Invalid --${name}. Use true or false`), {
       code: 85,
       type: "invalid_argument",
-      message: `Invalid --${name}. Use true or false`,
       recoverable: false
     })
-    return null
   }
 
   if (subcommand === "list") {
@@ -84,6 +82,7 @@ async function handlePluginsCommand(options) {
   }
 
   if (subcommand === "explore") {
+    try {
     const tags = String(flags.tags || "")
       .split(",")
       .map(t => t.trim())
@@ -91,10 +90,8 @@ async function handlePluginsCommand(options) {
     const name = flags.name ? String(flags.name).trim() : ""
     const nameOnly = flags["name-only"] === true
     const hasLearnFilter = parseBooleanFlag("has-learn", flags["has-learn"])
-    if (flags["has-learn"] !== undefined && hasLearnFilter === null) return true
 
     const installedFilter = parseBooleanFlag("installed", flags.installed)
-    if (flags.installed !== undefined && installedFilter === null) return true
 
     const sourceFilter = flags.source ? String(flags.source).trim().toLowerCase() : null
     if (sourceFilter && !["bundled", "git"].includes(sourceFilter)) {
@@ -185,6 +182,16 @@ async function handlePluginsCommand(options) {
       })
     }
     return true
+    } catch (err) {
+      outputError({
+        code: err.code || 110,
+        type: err.type || "internal_error",
+        message: err.message,
+        recoverable: !!err.recoverable,
+        suggestions: err.suggestions || [],
+      })
+      return true
+    }
   }
 
   if (subcommand === "remove") {
