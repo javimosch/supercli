@@ -339,8 +339,8 @@ function listCatalogSkills(options = {}) {
 
 function searchCatalog(query, options = {}) {
   const q = String(query || "").trim().toLowerCase()
-  if (!q) return []
   const items = listCatalogSkills(options)
+  if (!q) return items
   return items.filter(s =>
     s.id.toLowerCase().includes(q) ||
     s.name.toLowerCase().includes(q) ||
