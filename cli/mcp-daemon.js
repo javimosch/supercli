@@ -19,7 +19,7 @@ function ensureDir() {
 
 function log(msg) {
   const line = `[${new Date().toISOString()}] ${msg}\n`;
-  process.stdout.write(line);
+  process.stderr.write(line);
   try {
     fs.appendFileSync(LOG_FILE, line);
   } catch {}
@@ -396,7 +396,7 @@ async function main() {
   startSocketServer();
 }
 
-module.exports = { SOCKET_PATH, PID_FILE, checkDaemonRunning, handleRequest, startSocketServer, gracefulShutdown };
+module.exports = { SOCKET_PATH, PID_FILE, checkDaemonRunning, handleRequest, startSocketServer, gracefulShutdown, log };
 
 if (require.main === module) {
   main().catch((err) => {

@@ -282,7 +282,7 @@ function pruneLogs(config) {
 // Daemon main loop
 async function daemonMain() {
   const config = loadConfig();
-  console.log("Daemon started, syncing every", config.sync_interval_seconds, "seconds");
+  console.error("Daemon started, syncing every", config.sync_interval_seconds, "seconds");
 
   while (true) {
     try {
@@ -291,7 +291,7 @@ async function daemonMain() {
       const pruneResult = pruneLogs(config);
 
       if (syncResult.synced > 0 || pruneResult.pruned > 0) {
-        console.log(`Synced ${syncResult.synced} logs, pruned ${pruneResult.pruned} logs`);
+        console.error(`Synced ${syncResult.synced} logs, pruned ${pruneResult.pruned} logs`);
       }
     } catch (err) {
       console.error("Daemon error:", err);

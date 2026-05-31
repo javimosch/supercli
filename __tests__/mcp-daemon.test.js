@@ -6,7 +6,8 @@ const {
   SOCKET_PATH, 
   checkDaemonRunning, 
   startSocketServer, 
-  gracefulShutdown 
+  gracefulShutdown, 
+  log 
 } = require("../cli/mcp-daemon");
 
 describe("mcp-daemon", () => {
@@ -93,5 +94,28 @@ describe("mcp-daemon", () => {
         await new Promise((resolve) => server.close(resolve));
       }
     }
+  });
+
+  describe("log() output stream", () => {
+    let stdoutWriteSpy;
+    let stderrWriteSpy;
+
+    beforeEach(() => {
+      stdoutWriteSpy = jest.spyOn(process.stdout, "write").mockImplementation(() => true);
+      stderrWriteSpy = jest.spyOn(process.stderr, "write").mockImplementation(() => true);
+    });
+
+    afterEach(() => {
+      stdoutWriteSpy.mockRestore();
+      stderrWriteSpy.mockRestore();
+    });
+
+    test("writes log messages to stderr, not stdout", () => {
+      log("test message");
+      expect(stderrWriteSpy).toHaveBeenCalled();
+      expect(stdoutWriteSpy).not.toHaveBeenCalled();
+      const lastCall = stderrWriteSpy.mock.calls[stderrWriteSpy.mock.calls.length - 1][0];
+      expect(lastCall.toString()).toContain("test message");
+    });
   });
 });
