@@ -1,0 +1,143 @@
+{
+  "name": "atlantis",
+  "version": "0.1.0",
+  "description": "Terraform Pull Request Automation with automated plan and apply workflow management",
+  "source": "https://github.com/runatlantis/atlantis",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "atlantis"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "atlantis",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the Atlantis server for Terraform PR automation with Git provider webhooks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlantis",
+        "missingDependencyHelp": "Install: https://github.com/runatlantis/atlantis/releases",
+        "baseArgs": ["server"],
+        "timeout_ms": 3600000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        {
+          "name": "atlantis-url",
+          "type": "string",
+          "required": false,
+          "description": "Publicly accessible URL of Atlantis server"
+        },
+        {
+          "name": "gh-user",
+          "type": "string",
+          "required": false,
+          "description": "GitHub username (use GH_TOKEN or env var)"
+        },
+        {
+          "name": "gh-token",
+          "type": "string",
+          "required": false,
+          "description": "GitHub token (set via env var ATLANTIS_GH_TOKEN)"
+        },
+        {
+          "name": "repo-allowlist",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated list of repos to allow (e.g., github.com/myorg/*)"
+        }
+      ]
+    },
+    {
+      "namespace": "atlantis",
+      "resource": "plan",
+      "action": "run",
+      "description": "Run terraform plan for a specific project or workspace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlantis",
+        "missingDependencyHelp": "Install: https://github.com/runatlantis/atlantis/releases",
+        "baseArgs": ["plan"],
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "dir",
+          "type": "string",
+          "required": false,
+          "description": "Directory containing Terraform files",
+          "positional": true
+        },
+        {
+          "name": "workspace",
+          "type": "string",
+          "required": false,
+          "description": "Terraform workspace to use"
+        },
+        {
+          "name": "project",
+          "type": "string",
+          "required": false,
+          "description": "Project name from atlantis.yaml"
+        }
+      ]
+    },
+    {
+      "namespace": "atlantis",
+      "resource": "apply",
+      "action": "run",
+      "description": "Apply a terraform plan for a specific project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlantis",
+        "missingDependencyHelp": "Install: https://github.com/runatlantis/atlantis/releases",
+        "baseArgs": ["apply"],
+        "cwd": "invoke_cwd",
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        {
+          "name": "dir",
+          "type": "string",
+          "required": false,
+          "description": "Directory containing Terraform files",
+          "positional": true
+        },
+        {
+          "name": "workspace",
+          "type": "string",
+          "required": false,
+          "description": "Terraform workspace to use"
+        }
+      ]
+    },
+    {
+      "namespace": "atlantis",
+      "resource": "self",
+      "action": "version",
+      "description": "Print Atlantis version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlantis",
+        "missingDependencyHelp": "Install: https://github.com/runatlantis/atlantis/releases",
+        "baseArgs": ["version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "atlantis",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to atlantis CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atlantis",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: https://github.com/runatlantis/atlantis/releases"
+      },
+      "args": []
+    }
+  ]
+}

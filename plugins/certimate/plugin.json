@@ -1,0 +1,154 @@
+{
+  "name": "certimate",
+  "version": "0.1.0",
+  "description": "Self-hosted SSL certificate management tool with ACME automation and deployment support",
+  "source": "https://github.com/usual2970/certimate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "certimate"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "certimate",
+      "resource": "cert",
+      "action": "issue",
+      "description": "Issue a new SSL certificate for a domain via ACME provider",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases",
+        "baseArgs": ["issue"]
+      },
+      "args": [
+        {
+          "name": "domain",
+          "type": "string",
+          "required": true,
+          "description": "Domain name to issue certificate for",
+          "positional": true
+        },
+        {
+          "name": "email",
+          "type": "string",
+          "required": false,
+          "description": "Email for ACME registration"
+        },
+        {
+          "name": "provider",
+          "type": "string",
+          "required": false,
+          "description": "ACME provider: letsencrypt, zerossl (default: letsencrypt)"
+        }
+      ]
+    },
+    {
+      "namespace": "certimate",
+      "resource": "cert",
+      "action": "renew",
+      "description": "Renew an existing SSL certificate before expiry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases",
+        "baseArgs": ["renew"]
+      },
+      "args": [
+        {
+          "name": "domain",
+          "type": "string",
+          "required": true,
+          "description": "Domain name whose certificate to renew",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "certimate",
+      "resource": "cert",
+      "action": "list",
+      "description": "List all managed certificates and their expiry status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases",
+        "baseArgs": ["list"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "certimate",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy a certificate to a target service (nginx, caddy, docker, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases",
+        "baseArgs": ["deploy"]
+      },
+      "args": [
+        {
+          "name": "domain",
+          "type": "string",
+          "required": true,
+          "description": "Domain name to deploy certificate for",
+          "positional": true
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "required": true,
+          "description": "Deployment target: nginx, caddy, docker, local, ssh"
+        }
+      ]
+    },
+    {
+      "namespace": "certimate",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the Certimate web dashboard server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases",
+        "baseArgs": ["server"]
+      },
+      "args": [
+        {
+          "name": "port",
+          "type": "number",
+          "required": false,
+          "description": "Server port (default: 8080)"
+        }
+      ]
+    },
+    {
+      "namespace": "certimate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print certimate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "certimate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to certimate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certimate",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: https://github.com/usual2970/certimate/releases"
+      },
+      "args": []
+    }
+  ]
+}
