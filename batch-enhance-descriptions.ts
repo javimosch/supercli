@@ -16,6 +16,115 @@ interface Enhancement {
   confidence: number;
 }
 
+// Tag category templates for common tag words
+const TAG_TEMPLATES: Record<string, string> = {
+  "utility": "command-line utility",
+  "utilities": "utility toolset",
+  "system": "system administration tool",
+  "network": "networking and connectivity tool",
+  "networking": "networking tool",
+  "testing": "testing and analysis tool",
+  "tests": "testing tool",
+  "test": "testing utility",
+  "x11": "X11 graphical utility",
+  "email": "email client and utility",
+  "editor": "text editor",
+  "language": "programming language tool",
+  "dev": "software development tool",
+  "development": "development tool",
+  "python": "Python programming utility",
+  "node": "Node.js development tool",
+  "javascript": "JavaScript development tool",
+  "cli": "command-line interface tool",
+  "media": "media processing tool",
+  "kubernetes": "Kubernetes container orchestration tool",
+  "k8s": "Kubernetes tool",
+  "security": "security and auditing tool",
+  "database": "database management tool",
+  "db": "database tool",
+  "monitoring": "system monitoring tool",
+  "encoding": "encoding and decoding utility",
+  "encryption": "encryption and security utility",
+  "productivity": "productivity tool",
+  "golang": "Go language utility",
+  "go": "Go programming tool",
+  "android": "Android development tool",
+  "java": "Java development tool",
+  "rust": "Rust programming tool",
+  "music": "music and audio tool",
+  "audio": "audio processing tool",
+  "video": "video processing tool",
+  "git": "Git version control tool",
+  "docker": "Docker container tool",
+  "aws": "Amazon Web Services tool",
+  "cloud": "cloud computing tool",
+  "compression": "compression and archiving utility",
+  "archive": "archiving utility",
+  "backup": "backup and restore tool",
+  "terminal": "terminal emulator",
+  "font": "font management tool",
+  "theme": "theme management tool",
+  "image": "image processing tool",
+  "images": "image processing tool",
+  "ascii": "ASCII art and text utility",
+  "documents": "document processing tool",
+  "documentation": "documentation tool",
+  "pdf": "PDF processing tool",
+  "markdown": "Markdown processing tool",
+  "json": "JSON processing tool",
+  "xml": "XML processing tool",
+  "css": "CSS and styling tool",
+  "html": "HTML processing tool",
+  "browser": "web browser tool",
+  "web": "web development tool",
+  "api": "API development tool",
+  "server": "server management tool",
+  "proxy": "proxy and tunneling tool",
+  "vpn": "VPN and networking tool",
+  "dns": "DNS management tool",
+  "ssh": "SSH and remote access tool",
+  "automation": "automation tool",
+  "build": "build and compilation tool",
+  "package": "package management tool",
+  "packages": "package manager",
+  "plugin": "plugin management tool",
+  "config": "configuration management tool",
+  "logging": "logging and observability tool",
+  "analytics": "analytics and data tool",
+  "ai": "AI and machine learning tool",
+  "ml": "machine learning tool",
+  "data": "data processing tool",
+  "scraping": "web scraping tool",
+  "search": "search and indexing tool",
+  "linting": "code linting and quality tool",
+  "linter": "code linting tool",
+  "formatter": "code formatting tool",
+  "debug": "debugging tool",
+  "profiling": "profiling and performance tool",
+  "benchmark": "benchmarking tool",
+  "converter": "file format conversion tool",
+  "convert": "file conversion utility",
+  "generator": "code and file generation tool",
+  "template": "templating engine",
+  "render": "rendering engine",
+  "game": "game development tool",
+  "gamedev": "game development tool",
+  "blockchain": "blockchain and Web3 tool",
+  "crypto": "cryptocurrency tool",
+  "hardware": "hardware tool",
+  "embedded": "embedded systems tool",
+  "iot": "IoT development tool",
+  "science": "scientific computing tool",
+  "math": "mathematical tool",
+  "geo": "geospatial tool",
+  "maps": "mapping and GIS tool",
+  "font-utils": "font utility",
+  "input": "input method utility",
+  "display": "display management tool",
+  "window": "window management tool",
+  "wm": "window manager tool",
+};
+
 // Comprehensive description knowledge base
 const DESCRIPTIONS: Record<string, string> = {
   // Shells
@@ -120,6 +229,19 @@ const DESCRIPTIONS: Record<string, string> = {
   "graphify-out": "Graphify output — knowledge graph utilities",
 };
 
+function isUrlTag(tag: string): boolean {
+  return tag.startsWith("//") || tag.startsWith("https://") || tag.startsWith("http://");
+}
+
+function cleanTags(tags: string[], name: string): string[] {
+  return tags.filter((t) => !isUrlTag(t) && t.toLowerCase() !== name.toLowerCase());
+}
+
+function getTagTemplate(tag: string): string | undefined {
+  const lower = tag.toLowerCase();
+  return TAG_TEMPLATES[lower] || TAG_TEMPLATES[tag];
+}
+
 function enhanceDescription(plugin: Plugin): Enhancement {
   const { name, description, tags } = plugin;
 
@@ -146,8 +268,11 @@ function enhanceDescription(plugin: Plugin): Enhancement {
     }
   }
 
-  // Try partial match in tags
-  for (const tag of tags) {
+  // Clean tags: remove URL-like tags and self-referential tags
+  const clean = cleanTags(tags, name);
+
+  // Try partially matching a cleaned tag against DESCRIPTIONS
+  for (const tag of clean) {
     if (DESCRIPTIONS[tag]) {
       const suggestion = `${name} — ${tag} tool`;
       return {
@@ -159,15 +284,56 @@ function enhanceDescription(plugin: Plugin): Enhancement {
     }
   }
 
-  // Fallback: construct from tags
-  if (tags.length >= 2) {
-    const suggestion = `${name} — ${tags[0]} tool for ${tags[1]}`;
+  // Try tag template match on cleaned tags
+  for (const tag of clean) {
+    const template = getTagTemplate(tag);
+    if (template) {
+      const suggestion = `${name} — ${template}`;
+      return {
+        name,
+        current: description,
+        suggested: suggestion,
+        confidence: 55,
+      };
+    }
+  }
+
+  // Enrich existing description if it's meaningful but short
+  const desc = description || "";
+  if (desc.length > 5 && desc !== name && !desc.toLowerCase().includes(name.toLowerCase())) {
+    const enriched = `${desc.charAt(0).toUpperCase() + desc.slice(1)} — command-line tool`;
+    if (enriched.length > desc.length) {
+      return {
+        name,
+        current: description,
+        suggested: enriched,
+        confidence: 50,
+      };
+    }
+  }
+
+  // Fallback: construct from cleaned tags
+  if (clean.length >= 2) {
+    const s1 = getTagTemplate(clean[0]) || `${clean[0]} tool`;
+    const suggestion = `${name} — ${s1}`;
     return {
       name,
       current: description,
       suggested: suggestion,
-      confidence: 40,
+      confidence: 45,
     };
+  }
+
+  if (clean.length === 1) {
+    const template = getTagTemplate(clean[0]);
+    if (template) {
+      return {
+        name,
+        current: description,
+        suggested: `${name} — ${template}`,
+        confidence: 45,
+      };
+    }
   }
 
   return {
