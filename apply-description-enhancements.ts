@@ -54,7 +54,7 @@ async function main() {
   }
 
   // Save updated plugins
-  writeFileSync("marketing/plugins-dump.json", JSON.stringify(pluginMap.get(...pluginMap.keys()) ? plugins : plugins, null, 2));
+  writeFileSync("marketing/plugins-dump.json", JSON.stringify(plugins, null, 2));
 
   // Re-check quality
   const afterShort = plugins.filter((p) => (p.description || "").length < 30);
