@@ -87,60 +87,29 @@ With supercli:
 ## ⚡ Quick Start
 
 ```bash
-# Run without installing anything
-npx supercli uuid self generate
-# → {"uuid":"550e8400-e29b-41d4-a716-446655440000"}
-
-# Check if a website is up
-npx supercli http check health --url https://example.com
-# → {"status":"ok","ms":142,"code":200}
-
-# Check SSL certificate details
-npx supercli cert info --domain github.com
-# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
-
-# Generate a password
-npx supercli passgen
-# → {"password":"xK9#mP2$vL7@nQ5%"}
-
-# Get weather for any city
-npx supercli weather now "Tokyo"
-# → {"temp_C":22,"condition":"Clear","humidity":65}
-
-# Convert CSV to JSON
-echo "name,age\nAlice,30\nBob,25" | npx supercli csv json convert
-# → [{"name":"Alice","age":"30"},{"name":"Bob","age":"25"}]
-
 # Explore capabilities
-npx supercli skills search "github" --json
+npx supercli help
+npx supercli skills search "github"
 
 # Run something real
+npx supercli beads issue list --json
 npx supercli gh issue list --json
 
 # AI-driven execution
-npx supercli ask "generate a uuid and check if google.com is up"
+npx supercli ask "show my tasks and recent commits"
 
 # Manage plugins
 npx supercli plugins list
 npx supercli plugins explore
 npx supercli plugins install commiat
-npx supercli plugins uninstall commiat
 
 # Inspect a capability before using it
 npx supercli inspect http check health
 # → Shows: args, types, defaults, required/optional, description
 ```
 
-> 💡 No install needed. `npx supercli` works immediately.<br>
-> Install globally: `npm install -g superacli`<br>
+> 💡 Install globally: `npm install -g superacli` for repeated use.<br>
 > Server mode: See docs/features/server-plugins.md
-
-### What to try next
-
-1. **Explore**: `supercli skills search "encode" --json` — see what's available
-2. **Run**: `supercli uuid self generate` — generates a UUID instantly
-3. **Combine**: `supercli ask "generate a password and check if it's been pwned"` — multi-step AI workflow
-4. **Install**: `supercli plugins install commiat` — add a community plugin
 
 ---
 
@@ -182,13 +151,15 @@ For agent developers: always start with `supercli --json` for self-documenting b
 
 ## What You Get
 
-- 🔍 **Instant discovery** — Find any capability with `supercli skills search "database"`, no docs hunting
-- ⚡ **One interface** — Every tool runs as `supercli <ns> <res> <action> [--flags]`, zero syntax learning
-- 🤖 **Agent-native** — Every capability returns structured JSON, accepts `--json`/`--silent`, and self-describes via `inspect`
-- 🔗 **No glue code** — `supercli ask "check status and send alert"` chains tools automatically
-- 📦 **Extensible** — Plugins from the registry add any CLI, API, or MCP server as a capability
-- 📋 **Auditable** — Every call logs namespace, resource, action, inputs, outputs, duration
-- 🚨 **Predictable errors** — Standard exit codes: `82` validation, `105` integration, `110` internal
+supercli turns any tool into a first-class capability with a consistent interface:
+
+- 🔍 **Discover without docs** — `supercli skills search "database"` returns every matching capability with descriptions, tags, and argument schemas. No man pages, no README hunting.
+- ⚡ **One command pattern** — Every tool follows `supercli <ns> <res> <action> [--flags]`. Learn one pattern, access 3,300+ tools.
+- 🤖 **Built for agents** — Every capability returns structured JSON, accepts `--json`/`--silent`, and self-describes via `inspect`. No parsing, no guesswork.
+- 🔗 **Chain without glue** — `supercli ask "check status and send alert"` composes multiple capabilities automatically. No shell scripts, no middleware.
+- 📦 **Extend anything** — Add CLIs, APIs, or MCP servers as capabilities with one command via the plugin registry.
+- 📋 **Full audit trail** — Every call logs namespace, resource, action, inputs, outputs, and duration. Know exactly what ran and how long it took.
+- 🚨 **Predictable errors** — Standard exit codes (`82` validation, `105` integration, `110` internal) let scripts and agents handle failures deterministically.
 
 ---
 
@@ -215,71 +186,66 @@ npx supercli ask "do X and Y"
 npx supercli plugins list
 npx supercli plugins install commiat
 npx supercli plugins show commiat
-
-# Get weather for any city
-npx supercli weather now "Tokyo"
-# → {"temp_C":22,"condition":"Clear","humidity":65}
-
-# Check SSL certificate details
-npx supercli cert info --domain github.com
-# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
-
-# Scan for secrets in code
-npx supercli secret scan ./src
-# → [{"file":"config.js","line":42,"type":"AWS Access Key"}]
-
-# Server mode — expose as API
-npx supercli server --port 3000
-
-# MCP adapter — connect MCP tools
-npx supercli mcp add my-server --command "node mcp-server.js"
-
-# Workflow — chain capabilities
-npx supercli ask "check the weather in Tokyo, then send me an email if it's raining"
 ```
 
 ---
 
 ## 🏗️ Architecture
 
-supercli routes every command through a universal capability framework.
+### Capability Graph
 
-**The router** is the central brain:
+supercli models every tool, API, and workflow as a **capability** — a named, typed, executable unit with a consistent interface. Capabilities form a graph where each node represents a tool function and edges represent composition possibilities.
+
+The capability graph is the core abstraction. Instead of learning N different tool interfaces, you interact with one graph that routes to the right underlying system. All 3,300+ tools are nodes in this graph, addressable by the same triple pattern.
+
+### The Router
+
+The router is the central brain that connects user commands to capabilities:
+
 - **Discovers** capabilities from every adapter (bundled plugins, remote registry, MCP servers, HTTP APIs), caches metadata for sub-millisecond lookup
 - **Routes** commands to the correct execution harness based on `<namespace> <resource> <action>` — the same triplet for every tool
 - **Executes** with unified error handling, consistent JSON envelopes, and output formatting (`--json`, `--human`, `--compact`)
 - **Surfaces** machine-readable descriptions so agents can inspect, plan, and chain capabilities without guesswork
 
-The router processes every command in four phases: (1) parse `<namespace> <resource> <action>` and extract flags, (2) look up the capability in the metadata cache, (3) route to the correct adapter (CLI, MCP, HTTP, or workflow), (4) execute with unified error handling and return a JSON envelope. The entire cycle takes <1ms for cached capabilities.
+The routing pipeline processes every command in four phases:
 
-**Four adapter types** bridge external systems into the graph:
-1. **CLI tools** — Wraps 3,300+ CLI binaries with JSON output, timeout management, and structured error handling
-2. **MCP servers** — Bridges Model Context Protocol servers into the same routing graph, making MCP tools callable as `supercli <ns> <res> <action>`
-3. **HTTP APIs** — Turns REST endpoints into callable capabilities with configurable methods, headers, and body schemas
-4. **Workflows** — Chains multiple capabilities via `supercli ask "do X and Y"`, auto-resolving dependencies
+1. **Parse** — Extracts `<namespace> <resource> <action>` and separates flags from positional arguments. The same parser handles every command, regardless of the underlying tool.
+2. **Resolve** — Looks up the capability in the metadata cache. For cached capabilities this takes <1ms. New capabilities are discovered from the appropriate adapter and cached for subsequent calls.
+3. **Route** — Dispatches to the correct execution harness based on capability type: CLI wrapper, MCP bridge, HTTP adapter, or workflow engine. Each harness handles transport-specific concerns like timeouts, retries, and protocol negotiation.
+4. **Execute** — Runs the underlying tool with unified error handling, timeout management, and structured output formatting. Returns a deterministic JSON envelope every time.
 
-**Plugin system** keeps everything organized:
+### Adapter Layer
+
+**Four adapter types** bridge external systems into the capability graph:
+
+| Adapter | What It Wraps | When To Use |
+|---------|--------------|-------------|
+| **CLI** | 3,300+ CLI binaries | Running shell commands with JSON output, timeout management, structured error handling |
+| **MCP** | Model Context Protocol servers | Connecting MCP-compatible tools into the same routing graph |
+| **HTTP** | REST endpoints | Turning any API into a callable capability with configurable methods, headers, and body schemas |
+| **Workflow** | Multi-capability chains | Composing multiple tools via `supercli ask "do X and Y"`, auto-resolving dependencies |
+
+Each adapter normalizes its target into the same internal representation: a capability record with name, description, argument schema, and execution handler. Every tool — whether a CLI binary, an MCP server, or a REST API — looks identical to the router.
+
+### Plugin System
+
+The plugin system keeps capabilities organized and discoverable:
+
 - Each plugin bundles a manifest (`plugin.json`) with metadata, checksums, commands, and dependency requirements
 - Installed plugins register in `~/.supercli/plugins/plugins.lock.json`
 - Both the Zig binary (`sc-zig`) and the Node.js runtime (`sc`) read the same plugin storage — they co-exist and share state
 - The remote registry at `plugins/catalog.json` tracks 3,100+ community plugins with checksum-verified updates
+- Every capability includes description, tags, argument schemas, and install guidance
 
-supercli replaces tool-specific syntax with a **queryable, executable capability graph**.
+### Summary
+
+supercli replaces tool-specific syntax with a **queryable, executable capability graph** — one interface for every tool, discoverable by humans and agents alike.
 
 ---
 
 ## 📦 Capability Sources
 
-| Source | Count | How To Access |
-|--------|-------|--------------|
-| **Bundled plugins** | 200+ curated tools | Available immediately, zero config |
-| **Plugin registry** | 3,100+ community tools | `supercli plugins install <name>` |
-| **MCP servers** | Any MCP-compatible server | `supercli mcp add <name>` |
-| **HTTP APIs** | REST endpoints | `supercli api add <name> --url <url>` |
-
-Every capability includes: description, tags, checksums, commands, argument schemas, and install guidance. The registry at `plugins/catalog.json` is checksum-verified and updated daily.
-
-> Latest npm: v1.31.1 — ships multiple times per week.
+supercli draws capabilities from **bundled plugins** (200+, immediate), **plugin registry** (3,100+, `plugins install <name>`), **MCP servers** (`mcp add <name>`), and **HTTP APIs** (`api add <name>`). Every capability includes description, tags, argument schemas, and checksum-verified metadata.
 
 ---
 
@@ -317,21 +283,7 @@ All tools accept `--json` and `--silent` flags for machine-consumable output.
 | **Discover** | `supercli skills search <query>` | Searches all capabilities by name, description, tags | Finding what tools are available |
 | **Server** | `supercli server` | Starts HTTP or MCP server exposing all capabilities | Remote access, IDE integration, API gateway |
 
-All five modes accept `--json` for structured output and `--human` for readable display. The `--compact` flag minimizes output for bandwidth-constrained environments.
-
-### Mode Details
-
-**Direct** is the workhorse — use it when you know the exact capability you need. Examples: `supercli uuid self generate`, `supercli http check health --url example.com`, `supercli weather now Tokyo`.
-
-**Ask** is for multi-step tasks — describe what you want in natural language, and the AI engine composes the capability chain. Good for: "check if my site is down and email me", "find large files in this directory and compress them".
-
-**Inspect** is essential before calling an unfamiliar command — it returns the full argument schema including types, defaults, descriptions, and whether each arg is required or optional. Always inspect before you execute.
-
-**Discover** searches the entire capability graph by name, description, or tags. Results include confidence scores and source attribution. Useful for exploring what's available in a domain.
-
-**Server** starts an HTTP or MCP server that exposes every capability as a REST endpoint or MCP tool. Use for remote access, IDE integration (VS Code, JetBrains), or connecting supercli to other platforms.
-
-Agents should always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema.
+All five modes accept `--json` for structured output and `--human` for readable display. Agents should always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema.
 
 ---
 
