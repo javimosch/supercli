@@ -9,7 +9,7 @@
 
 <p align="center">
   <b>Zero install.</b> Run any CLI tool with <code>npx supercli</code>.<br>
-  Works for humans. Works for AI agents. Everything returns JSON.
+  <b>JSON-first by default.</b> Use <code>--human</code> for readable output.
 </p>
 
 > Think: "Stripe API for CLIs and tools"
@@ -20,14 +20,17 @@
 > — with consistent inputs, outputs, and zero glue code.
 
 ```bash
-# Discover what exists
-npx supercli skills search "deploy" --json
+# Discover what exists (JSON by default)
+npx supercli skills search "deploy"
 
 # Understand exactly how to use it
-npx supercli skills get aws.cfn.deploy --json
+npx supercli skills get aws.cfn.deploy
 
-# Execute with predictable output
-npx supercli aws cfn deploy --stack-name my-stack --json
+# Execute with predictable output (JSON by default)
+npx supercli aws cfn deploy --stack-name my-stack
+
+# For human-readable output, add --human
+npx supercli aws cfn deploy --stack-name my-stack --human
 ```
 
 👉 Works the same across CLI tools, APIs, MCP servers, and workflows
@@ -87,13 +90,16 @@ With supercli:
 ## ⚡ Quick Start
 
 ```bash
-# Explore capabilities
+# Explore capabilities (JSON by default)
 npx supercli help
 npx supercli skills search "github"
 
-# Run something real
-npx supercli beads issue list --json
-npx supercli gh issue list --json
+# Run something real (JSON by default)
+npx supercli beads issue list
+npx supercli gh issue list
+
+# For human-readable output, add --human
+npx supercli beads issue list --human
 
 # AI-driven execution
 npx supercli ask "show my tasks and recent commits"
@@ -119,19 +125,21 @@ npx supercli inspect http check health
 |--------------|-----------|
 | Installing 50 tools separately | One command: `npx supercli` |
 | Reading man pages for flags | `supercli skills get <tool>.*` → structured metadata |
-| Parsing inconsistent output | `--json` on every tool |
+| Parsing inconsistent output | JSON by default, `--human` for readable output |
 | Gluing tools with shell scripts | `supercli ask "do X and Y"` |
 
 What this means day-to-day:
 - **No install friction** — `npx supercli <tool>` works immediately, no `apt-get`, `brew`, or `npm i -g`
 - **No syntax learning** — Every tool uses the same three-word command pattern, just change the namespace
-- **No output parsing** — `--json` on everything, pipe directly into `jq`, scripts, or other tools
+- **No output parsing** — JSON by default for scripts/pipes, `--human` for terminal display
 - **No context switching** — One terminal, one interface, 3,300+ tools available
+
+> 💡 **Important**: supercli is JSON-first by default. Add `--human` for human-readable output in your terminal.
 
 ## For AI Agents
 
-- 🔍 **Discoverable** — `supercli skills search "database"` returns machine-readable metadata
-- 📦 **Deterministic** — Every tool accepts `--json`, `--silent` (no interactive prompts)
+- 🔍 **Discoverable** — `supercli skills search "database"` returns machine-readable metadata (JSON by default)
+- 📦 **Deterministic** — Every tool returns JSON by default, accepts `--human` for readable output, `--silent` (no interactive prompts)
 - 🚨 **Predictable errors** — Standard error codes: `82` (validation), `105` (integration), `110` (internal)
 - 🔗 **Composable** — `supercli ask "check status and send alert"` chains tools automatically
 - 📋 **Auditable** — Every call logs namespace, resource, action, inputs, outputs, duration
@@ -139,13 +147,13 @@ What this means day-to-day:
 - ♻️ **Idempotent** — Same inputs always produce same output shape, enabling retry and reconciliation
 
 ```bash
-# Agent workflow: discover → inspect → execute — all machine-readable
-supercli skills search "deploy" --json
-supercli skills get aws.cfn.deploy --json
-supercli aws cfn deploy --stack my-stack --json
+# Agent workflow: discover → inspect → execute — all machine-readable (JSON by default)
+supercli skills search "deploy"
+supercli skills get aws.cfn.deploy
+supercli aws cfn deploy --stack my-stack
 ```
 
-For agent developers: always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema. Then use `supercli skills search <query> --json` to narrow down, and `supercli inspect <ns> <res> <act> --json` before calling any command to validate argument expectations.
+For agent developers: always start with `supercli` for self-documenting bootstrap — it returns the full capability graph schema (JSON by default). Then use `supercli skills search <query>` to narrow down, and `supercli inspect <ns> <res> <act>` before calling any command to validate argument expectations.
 
 ---
 
@@ -155,7 +163,7 @@ supercli turns any tool into a first-class capability with a consistent interfac
 
 - 🔍 **Discover without docs** — `supercli skills search "database"` returns every matching capability with descriptions, tags, and argument schemas. No man pages, no README hunting.
 - ⚡ **One command pattern** — Every tool follows `supercli <ns> <res> <action> [--flags]`. Learn one pattern, access 3,300+ tools.
-- 🤖 **Built for agents** — Every capability returns structured JSON, accepts `--json`/`--silent`, and self-describes via `inspect`. No parsing, no guesswork.
+- 🤖 **Built for agents** — Every capability returns structured JSON by default, accepts `--human` for readable output, and self-describes via `inspect`. No parsing, no guesswork.
 - 🔗 **Chain without glue** — `supercli ask "check status and send alert"` composes multiple capabilities automatically. No shell scripts, no middleware.
 - 📦 **Extend anything** — Add CLIs, APIs, or MCP servers as capabilities with one command via the plugin registry.
 - 📋 **Full audit trail** — Every call logs namespace, resource, action, inputs, outputs, and duration. Know exactly what ran and how long it took.
@@ -166,18 +174,21 @@ supercli turns any tool into a first-class capability with a consistent interfac
 ## 🛠️ CLI Usage Examples
 
 ```bash
-# Discovery
+# Discovery (JSON by default)
 npx supercli skills list
 npx supercli skills search "database"
 
 # Inspection (important for agents)
 npx supercli inspect beads issue create
-npx supercli skills get beads.issue.create --json
+npx supercli skills get beads.issue.create
 
-# Execution
+# Execution (JSON by default)
 npx supercli beads issue create --title "Fix bug"
-npx supercli beads issue list --json
+npx supercli beads issue list
 npx supercli gwc drive files list
+
+# For human-readable output, add --human
+npx supercli beads issue list --human
 
 # AI
 npx supercli ask "do X and Y"
@@ -269,7 +280,7 @@ Every command returns a consistent JSON envelope:
 | `105` | Integration error |
 | `110` | Internal error |
 
-All tools accept `--json` and `--silent` flags for machine-consumable output.
+All tools return JSON by default. Add `--human` for readable output, `--silent` for machine-consumable output without prompts.
 
 ---
 
@@ -283,7 +294,7 @@ All tools accept `--json` and `--silent` flags for machine-consumable output.
 | **Discover** | `supercli skills search <query>` | Searches all capabilities by name, description, tags | Finding what tools are available |
 | **Server** | `supercli server` | Starts HTTP or MCP server exposing all capabilities | Remote access, IDE integration, API gateway |
 
-All five modes accept `--json` for structured output and `--human` for readable display. Agents should always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema.
+All five modes return JSON by default. Add `--human` for readable display. Agents should always start with `supercli` for self-documenting bootstrap — it returns the full capability graph schema (JSON by default).
 
 ---
 
@@ -322,18 +333,18 @@ Both versions co-exist and share plugin storage at `~/.supercli/plugins/plugins.
 |---------|-------------|-----|
 | `command not found: supercli` | Not installed | Run `npx supercli` (no install needed) or `npm install -g superacli` |
 | Plugin not found | Not in registry | Run `supercli plugins explore --name <query>` to find it |
-| `--json` returns empty | Tool not installed | Install the tool first, or check `supercli skills get <tool>.* --json` for requirements |
+| Output is not JSON | Add `--json` flag | JSON is default, but if you need to force it, add `--json` |
 | MCP server not connecting | Server not running | Ensure the MCP server process is active and accessible |
 | Zig binary not found | Wrong platform binary | Use `npx supercli` (Node.js) as fallback — both share plugin state |
 
-For detailed debugging: `supercli --json` returns the full schema. Use `supercli inspect <ns> <res> <act> --json` to validate arguments before execution.
+For detailed debugging: `supercli` returns the full schema (JSON by default). Use `supercli inspect <ns> <res> <act>` to validate arguments before execution.
 
 ### Getting Help
 
 - `supercli help` — list all commands
 - `supercli help <namespace>` — commands in a namespace
-- `supercli --json` — full capability graph schema
-- `supercli plugins show <name> --json` — plugin details including version, source, tags
+- `supercli` — full capability graph schema (JSON by default)
+- `supercli plugins show <name>` — plugin details including version, source, tags
 - File an issue at [github.com/javimosch/supercli/issues](https://github.com/javimosch/supercli/issues)
 
 ---
