@@ -22,7 +22,8 @@ const {
 const {
   readPluginsLock,
   writePluginsLock,
-  listInstalledPlugins: mockListInstalledPlugins
+  listInstalledPlugins: mockListInstalledPlugins,
+  getPlugin: mockGetPlugin
 } = require("../cli/plugins-store")
 
 const { getRegistryPlugin } = require("../cli/plugins-registry")
@@ -211,8 +212,9 @@ describe("plugins-manager", () => {
     })
 
     test("doctorAll aggregates", () => {
-      mockListInstalledPlugins.mockReturnValue([{ name: "p1" }])
-      readPluginsLock.mockReturnValue({ installed: { p1: { name: "p1", commands: [] } } })
+      const p1 = { name: "p1", commands: [] }
+      readPluginsLock.mockReturnValue({ installed: { p1 } })
+      mockListInstalledPlugins.mockReturnValue([p1])
       const report = doctorAllPlugins()
       expect(report.total_plugins).toBe(1)
     })

@@ -64,8 +64,13 @@ function writeServerPluginsLock(lock) {
 }
 
 function listInstalledPlugins() {
-  const lock = readPluginsLock()
-  return Object.values(lock.installed)
+  const lock = readPluginsLock();
+  return Object.values(lock.installed);
+}
+
+function getPlugin(name) {
+  const lock = readPluginsLock();
+  return lock.installed[name] || null;
 }
 
 function listServerInstalledPlugins() {
@@ -115,7 +120,8 @@ module.exports = {
   writeServerPluginsLock,
   listInstalledPlugins,
   listServerInstalledPlugins,
+  getPlugin,
   getInstalledPluginCommands,
   getServerPluginCommands,
   getEffectivePluginCommands,
-}
+};
