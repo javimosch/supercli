@@ -343,7 +343,7 @@ function startSocketServer() {
   return server;
 }
 
-function gracefulShutdown() {
+function gracefulShutdown(exitCode) {
   log("Shutting down MCP daemon...");
   for (const [name, entry] of pool.entries()) {
     entry.state = "stopped";
@@ -354,7 +354,7 @@ function gracefulShutdown() {
   const socketPath = module.exports.SOCKET_PATH || SOCKET_PATH;
   try { fs.unlinkSync(socketPath); } catch {}
   try { fs.unlinkSync(PID_FILE); } catch {}
-  process.exit(0);
+  process.exit(exitCode === undefined ? 0 : exitCode);
 }
 
 function checkDaemonRunning(socketPath) {
@@ -390,7 +390,7 @@ async function main() {
   process.on("SIGINT", gracefulShutdown);
   process.on("uncaughtException", (err) => {
     log(`Uncaught exception: ${err.message}`);
-    gracefulShutdown();
+    gracefulShutdown(110);
   });
 
   startSocketServer();
