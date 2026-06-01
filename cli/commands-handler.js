@@ -1,29 +1,35 @@
 "use strict";
 
 function handleCommandsQuery(config, flags, { humanMode, output, outputError, outputHumanTable }) {
-  const namespaceFilter = flags.namespace ? String(flags.namespace).toLowerCase().trim() : "";
-  const resourceFilter  = flags.resource  ? String(flags.resource).toLowerCase().trim()  : "";
-  const actionFilter    = flags.action    ? String(flags.action).toLowerCase().trim()    : "";
-  const queryFilter     = flags.query     ? String(flags.query).toLowerCase().trim()     : "";
-  const limit = flags.limit === undefined ? null : Number(flags.limit);
+  try {
+    const namespaceFilter = flags.namespace && typeof flags.namespace === 'string' ? flags.namespace.toLowerCase().trim() : "";
+    const resourceFilter  = flags.resource  && typeof flags.resource  === 'string' ? flags.resource.toLowerCase().trim()  : "";
+    const actionFilter    = flags.action    && typeof flags.action    === 'string' ? flags.action.toLowerCase().trim()    : "";
+    const queryFilter     = flags.query     && typeof flags.query     === 'string' ? flags.query.toLowerCase().trim()     : "";
+    const limit = flags.limit === undefined ? null : Number(flags.limit);
+
+    if (!config || !config.commands) {
+      outputError({ code: 110, type: "internal_error", message: "Invalid config: missing commands", recoverable: false });
+      return;
+    }
   if (flags.limit !== undefined && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
     outputError({ code: 85, type: "invalid_argument", message: "Invalid --limit. Use a positive integer", recoverable: false });
     return;
   }
 
   let rows = config.commands.map((c) => ({
-    command: `${c.namespace} ${c.resource} ${c.action}`,
+    command: `${c.namespace || '?'} ${c.resource || '?'} ${c.action || '?'}`,
     namespace: c.namespace, resource: c.resource, action: c.action,
     description: c.description || "", adapter: c.adapter,
     args: (c.args || []).map((a) => `--${a.name}${a.required ? "*" : ""}`).join(" "),
   }));
 
   rows = rows.filter((row) => {
-    if (namespaceFilter && row.namespace.toLowerCase() !== namespaceFilter) return false;
-    if (resourceFilter  && row.resource.toLowerCase()  !== resourceFilter)  return false;
-    if (actionFilter    && row.action.toLowerCase()    !== actionFilter)    return false;
+    if (namespaceFilter && (row.namespace || '').toLowerCase() !== namespaceFilter) return false;
+    if (resourceFilter  && (row.resource || '').toLowerCase()  !== resourceFilter)  return false;
+    if (actionFilter    && (row.action || '').toLowerCase()    !== actionFilter)    return false;
     if (queryFilter) {
-      const haystack = `${row.command} ${row.description} ${row.adapter} ${row.args}`.toLowerCase();
+      const haystack = `${row.command} ${row.description || ''} ${row.adapter || ''} ${row.args || ''}`.toLowerCase();
       if (!haystack.includes(queryFilter)) return false;
     }
     return true;
@@ -49,6 +55,9 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
       },
       commands: rows,
     });
+  }
+  } catch (err) {
+    outputError({ code: 110, type: "internal_error", message: `handleCommandsQuery: ${err.message}`, recoverable: false });
   }
 }
 
