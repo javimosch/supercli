@@ -1,0 +1,141 @@
+{
+  "name": "scute",
+  "version": "0.1.0",
+  "description": "Code quality guardrails: complexity, duplication, commit messages, dependency freshness",
+  "source": "https://github.com/scute-sh/scute",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "scute"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "scute",
+    "binary": "scute",
+    "check": "which scute",
+    "install_steps": [
+      "cargo install scute",
+      "Verify: scute --version",
+      "supercli plugins install ./plugins/scute --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "scute",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scute version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scute",
+        "missingDependencyHelp": "Install scute: cargo install scute",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "scute",
+      "resource": "code",
+      "action": "complexity",
+      "description": "Check code complexity fitness",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scute",
+        "baseArgs": ["check", "code-complexity"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install scute: cargo install scute"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Path to source directory or file"
+        }
+      ]
+    },
+    {
+      "namespace": "scute",
+      "resource": "code",
+      "action": "similarity",
+      "description": "Check code similarity / duplication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scute",
+        "baseArgs": ["check", "code-similarity"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install scute: cargo install scute"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Path to source directory"
+        }
+      ]
+    },
+    {
+      "namespace": "scute",
+      "resource": "commit",
+      "action": "lint",
+      "description": "Lint commit messages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scute",
+        "baseArgs": ["check", "commit-message"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install scute: cargo install scute"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Commit message or range arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "scute",
+      "resource": "dependencies",
+      "action": "freshness",
+      "description": "Check dependency freshness",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scute",
+        "baseArgs": ["check", "dependency-freshness"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install scute: cargo install scute"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Path to project directory"
+        }
+      ]
+    },
+    {
+      "namespace": "scute",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scute CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scute",
+        "passthrough": true,
+        "missingDependencyHelp": "Install scute: cargo install scute"
+      },
+      "args": []
+    }
+  ]
+}
