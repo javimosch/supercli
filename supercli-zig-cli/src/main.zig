@@ -41,16 +41,12 @@ fn isBoolFlag(name: []const u8, custom_bool_flags: ?std.StringHashMap(void)) boo
     return false;
 }
 
-fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8, custom_bool_flags: ?std.StringHashMap(void)) !Args {
+fn parseArgs(gpa: std.mem.Allocator, args_iter: []const []const u8, custom_bool_flags: ?std.StringHashMap(void)) !Args {
     var positional: std.ArrayList([]const u8) = .empty;
     var flags = std.StringHashMap([]const u8).init(gpa);
     var raw_args: std.ArrayList([]const u8) = .empty;
-    var mode = output.Mode.human; // default: human if TTY
-    var has_json = false;
+    var mode = output.Mode.json; // default: JSON
     var has_human = false;
-
-    // Detect if stdout is a TTY
-    const is_tty = std.Io.File.stdout().isTty(io) catch false;
 
     var end_of_options = false;
 
@@ -72,7 +68,6 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8, 
                 const k = kv[0..eq];
                 const v = kv[eq + 1 ..];
                 try flags.put(k, v);
-                if (std.mem.eql(u8, k, "json")) has_json = true;
                 if (std.mem.eql(u8, k, "human")) has_human = true;
             } else if (!isBoolFlag(kv, custom_bool_flags) and i + 1 < args_iter.len and !std.mem.startsWith(u8, args_iter[i + 1], "--")) {
                 // --key value form (value is next non-flag arg)
@@ -80,12 +75,10 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8, 
                 const v = args_iter[i];
                 try raw_args.append(gpa, v);
                 try flags.put(kv, v);
-                if (std.mem.eql(u8, kv, "json")) has_json = true;
                 if (std.mem.eql(u8, kv, "human")) has_human = true;
             } else {
                 // Boolean flag: --key
                 try flags.put(kv, "true");
-                if (std.mem.eql(u8, kv, "json")) has_json = true;
                 if (std.mem.eql(u8, kv, "human")) has_human = true;
             }
         } else {
@@ -95,10 +88,6 @@ fn parseArgs(gpa: std.mem.Allocator, io: std.Io, args_iter: []const []const u8, 
 
     // Determine output mode
     if (has_human) {
-        mode = .human;
-    } else if (has_json) {
-        mode = .json;
-    } else if (is_tty) {
         mode = .human;
     } else {
         mode = .json;
@@ -709,7 +698,7 @@ pub fn main(init: std.process.Init) !void {
         return;
     }
 
-    var parsed = try parseArgs(gpa, io, raw_argv, null);
+    var parsed = try parseArgs(gpa, raw_argv, null);
     defer parsed.deinit();
     const mode = parsed.mode;
     const pos = parsed.positional;
@@ -1002,7 +991,7 @@ pub fn main(init: std.process.Init) !void {
             }
         }
 
-        var cmd_parsed = try parseArgs(gpa, io, raw_argv, custom_bool_flags);
+        var cmd_parsed = try parseArgs(gpa, raw_argv, custom_bool_flags);
         defer cmd_parsed.deinit();
 
         const cmd_passthrough_args = if (cmd_parsed.positional.len > 1) raw_argv[1..] else raw_argv[0..0];

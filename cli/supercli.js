@@ -30,7 +30,6 @@ const { startDaemon, stopDaemon, getDaemonStatus, writeLog } = require("./daemon
 
 const SERVER = process.env.SUPERCLI_SERVER;
 const hasServer = !!SERVER;
-const isTTY = process.stdout.isTTY;
 const rawArgs = process.argv.slice(2);
 
 const flags = {};
@@ -59,13 +58,7 @@ for (let i = 0; i < rawArgs.length; i++) {
   }
 }
 
-const humanMode =
-  flags.human ||
-  (isTTY &&
-    !flags.json &&
-    !flags.compact &&
-    !flags.schema &&
-    !flags["help-json"]);
+const humanMode = !!flags.human;
 const compactMode = !!flags.compact;
 const RESERVED_FLAGS = [
   "human",
@@ -361,7 +354,7 @@ async function main() {
           passthrough.command,
           {
             __rawArgs: passthrough.passthroughArgs,
-            __passthroughInteractive: humanMode && isTTY,
+            __passthroughInteractive: humanMode && process.stdout.isTTY,
           },
           {
             server: SERVER || "",
