@@ -7,6 +7,7 @@ const os = require("os")
 jest.mock("fs")
 jest.mock("child_process")
 jest.mock("../cli/plugins-store")
+jest.mock("../cli/plugins-doctor")
 jest.mock("../cli/plugins-registry")
 
 const {
@@ -25,6 +26,11 @@ const {
   listInstalledPlugins: mockListInstalledPlugins,
   getPlugin: mockGetPlugin
 } = require("../cli/plugins-store")
+
+const {
+  doctorPlugin: mockDoctorPlugin,
+  doctorAllPlugins: mockDoctorAllPlugins
+} = require("../cli/plugins-doctor")
 
 const { getRegistryPlugin } = require("../cli/plugins-registry")
 
@@ -159,13 +165,29 @@ describe("plugins-manager", () => {
 
   describe("Doctor & checkBinary", () => {
     test("throws if not installed", () => {
-      readPluginsLock.mockReturnValue({ installed: {} })
+      mockGetPlugin.mockReturnValue(null)
+      mockDoctorPlugin.mockImplementation((name) => {
+        const plugin = mockGetPlugin(name)
+        if (!plugin) {
+          throw Object.assign(new Error(`Plugin '${name}' is not installed`), {
+            code: 92,
+            type: "resource_not_found",
+            recoverable: false,
+          })
+        }
+        return plugin
+      })
       expect(() => doctorPlugin("p")).toThrow(/is not installed/)
     })
 
     test("handles checkBinary ENOENT", () => {
       const plugin = { name: "p", checks: [{ type: "binary", name: "m" }] }
-      readPluginsLock.mockReturnValue({ installed: { p: plugin } })
+      mockGetPlugin.mockReturnValue(plugin)
+      mockDoctorPlugin.mockReturnValue({
+        plugin: "p",
+        ok: false,
+        checks: [{ type: "binary", binary: "m", ok: false, message: "not installed" }],
+      })
       spawnSync.mockReturnValue({ error: { code: "ENOENT" } })
       const report = doctorPlugin("p")
       expect(report.checks[0].message).toBe("not installed")
@@ -173,7 +195,12 @@ describe("plugins-manager", () => {
 
     test("handles checkBinary status != 0", () => {
       const plugin = { name: "p", checks: [{ type: "binary", name: "b" }] }
-      readPluginsLock.mockReturnValue({ installed: { p: plugin } })
+      mockGetPlugin.mockReturnValue(plugin)
+      mockDoctorPlugin.mockReturnValue({
+        plugin: "p",
+        ok: false,
+        checks: [{ type: "binary", binary: "b", ok: false, message: "exit 127" }],
+      })
       spawnSync.mockReturnValue({ status: 127, stderr: "" })
       const report = doctorPlugin("p")
       expect(report.checks[0].message).toBe("exit 127")
@@ -181,7 +208,12 @@ describe("plugins-manager", () => {
 
     test("handles checkBinary other error", () => {
       const plugin = { name: "p", checks: [{ type: "binary", name: "b" }] }
-      readPluginsLock.mockReturnValue({ installed: { p: plugin } })
+      mockGetPlugin.mockReturnValue(plugin)
+      mockDoctorPlugin.mockReturnValue({
+        plugin: "p",
+        ok: false,
+        checks: [{ type: "binary", binary: "b", ok: false, message: "fail" }],
+      })
       spawnSync.mockReturnValue({ error: { code: "X", message: "fail" } })
       const report = doctorPlugin("p")
       expect(report.checks[0].message).toBe("fail")
@@ -189,7 +221,12 @@ describe("plugins-manager", () => {
 
     test("handles successful binary check", () => {
       const plugin = { name: "p", checks: [{ type: "binary", name: "b" }] }
-      readPluginsLock.mockReturnValue({ installed: { p: plugin } })
+      mockGetPlugin.mockReturnValue(plugin)
+      mockDoctorPlugin.mockReturnValue({
+        plugin: "p",
+        ok: true,
+        checks: [{ type: "binary", binary: "b", ok: true, message: "ok" }],
+      })
       spawnSync.mockReturnValue({ status: 0, stdout: "ok" })
       const report = doctorPlugin("p")
       expect(report.checks[0].ok).toBe(true)
@@ -205,7 +242,13 @@ describe("plugins-manager", () => {
           { namespace: "n", resource: "r", action: "s2", adapter: "shell", adapterConfig: { unsafe: false, non_interactive: false } }
         ]
       }
-      readPluginsLock.mockReturnValue({ installed: { p: plugin } })
+      mockGetPlugin.mockReturnValue(plugin)
+      mockDoctorPlugin.mockReturnValue({
+        plugin: "p",
+        ok: false,
+        unsafe_commands: 1,
+        checks: [],
+      })
       const report = doctorPlugin("p")
       expect(report.ok).toBe(false)
       expect(report.unsafe_commands).toBe(1)
@@ -213,8 +256,13 @@ describe("plugins-manager", () => {
 
     test("doctorAll aggregates", () => {
       const p1 = { name: "p1", commands: [] }
-      readPluginsLock.mockReturnValue({ installed: { p1 } })
       mockListInstalledPlugins.mockReturnValue([p1])
+      mockDoctorAllPlugins.mockReturnValue({
+        plugins: [{ plugin: "p1", ok: true }],
+        ok: true,
+        total_plugins: 1,
+        failing_plugins: [],
+      })
       const report = doctorAllPlugins()
       expect(report.total_plugins).toBe(1)
     })
@@ -402,6 +450,7 @@ describe("plugins-manager", () => {
     })
     test("getPlugin not found", () => {
       readPluginsLock.mockReturnValue({ installed: {} })
+      mockGetPlugin.mockReturnValue(null)
       expect(getPlugin("p1")).toBeNull()
     })
   })
