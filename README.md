@@ -151,13 +151,15 @@ For agent developers: always start with `supercli --json` for self-documenting b
 
 ## What You Get
 
-- 🔍 **Instant discovery** — Find any capability with `supercli skills search "database"`, no docs hunting
-- ⚡ **One interface** — Every tool runs as `supercli <ns> <res> <action> [--flags]`, zero syntax learning
-- 🤖 **Agent-native** — Every capability returns structured JSON, accepts `--json`/`--silent`, and self-describes via `inspect`
-- 🔗 **No glue code** — `supercli ask "check status and send alert"` chains tools automatically
-- 📦 **Extensible** — Plugins from the registry add any CLI, API, or MCP server as a capability
-- 📋 **Auditable** — Every call logs namespace, resource, action, inputs, outputs, duration
-- 🚨 **Predictable errors** — Standard exit codes: `82` validation, `105` integration, `110` internal
+supercli turns any tool into a first-class capability with a consistent interface:
+
+- 🔍 **Discover without docs** — `supercli skills search "database"` returns every matching capability with descriptions, tags, and argument schemas. No man pages, no README hunting.
+- ⚡ **One command pattern** — Every tool follows `supercli <ns> <res> <action> [--flags]`. Learn one pattern, access 3,300+ tools.
+- 🤖 **Built for agents** — Every capability returns structured JSON, accepts `--json`/`--silent`, and self-describes via `inspect`. No parsing, no guesswork.
+- 🔗 **Chain without glue** — `supercli ask "check status and send alert"` composes multiple capabilities automatically. No shell scripts, no middleware.
+- 📦 **Extend anything** — Add CLIs, APIs, or MCP servers as capabilities with one command via the plugin registry.
+- 📋 **Full audit trail** — Every call logs namespace, resource, action, inputs, outputs, and duration. Know exactly what ran and how long it took.
+- 🚨 **Predictable errors** — Standard exit codes (`82` validation, `105` integration, `110` internal) let scripts and agents handle failures deterministically.
 
 ---
 
@@ -190,29 +192,54 @@ npx supercli plugins show commiat
 
 ## 🏗️ Architecture
 
-supercli routes every command through a universal capability framework.
+### Capability Graph
 
-**The router** is the central brain:
+supercli models every tool, API, and workflow as a **capability** — a named, typed, executable unit with a consistent interface. Capabilities form a graph where each node represents a tool function and edges represent composition possibilities.
+
+The capability graph is the core abstraction. Instead of learning N different tool interfaces, you interact with one graph that routes to the right underlying system. All 3,300+ tools are nodes in this graph, addressable by the same triple pattern.
+
+### The Router
+
+The router is the central brain that connects user commands to capabilities:
+
 - **Discovers** capabilities from every adapter (bundled plugins, remote registry, MCP servers, HTTP APIs), caches metadata for sub-millisecond lookup
 - **Routes** commands to the correct execution harness based on `<namespace> <resource> <action>` — the same triplet for every tool
 - **Executes** with unified error handling, consistent JSON envelopes, and output formatting (`--json`, `--human`, `--compact`)
 - **Surfaces** machine-readable descriptions so agents can inspect, plan, and chain capabilities without guesswork
 
-The router processes every command in four phases: (1) parse `<namespace> <resource> <action>` and extract flags, (2) look up the capability in the metadata cache, (3) route to the correct adapter (CLI, MCP, HTTP, or workflow), (4) execute with unified error handling and return a JSON envelope. The entire cycle takes <1ms for cached capabilities.
+The routing pipeline processes every command in four phases:
 
-**Four adapter types** bridge external systems into the graph:
-1. **CLI tools** — Wraps 3,300+ CLI binaries with JSON output, timeout management, and structured error handling
-2. **MCP servers** — Bridges Model Context Protocol servers into the same routing graph, making MCP tools callable as `supercli <ns> <res> <action>`
-3. **HTTP APIs** — Turns REST endpoints into callable capabilities with configurable methods, headers, and body schemas
-4. **Workflows** — Chains multiple capabilities via `supercli ask "do X and Y"`, auto-resolving dependencies
+1. **Parse** — Extracts `<namespace> <resource> <action>` and separates flags from positional arguments. The same parser handles every command, regardless of the underlying tool.
+2. **Resolve** — Looks up the capability in the metadata cache. For cached capabilities this takes <1ms. New capabilities are discovered from the appropriate adapter and cached for subsequent calls.
+3. **Route** — Dispatches to the correct execution harness based on capability type: CLI wrapper, MCP bridge, HTTP adapter, or workflow engine. Each harness handles transport-specific concerns like timeouts, retries, and protocol negotiation.
+4. **Execute** — Runs the underlying tool with unified error handling, timeout management, and structured output formatting. Returns a deterministic JSON envelope every time.
 
-**Plugin system** keeps everything organized:
+### Adapter Layer
+
+**Four adapter types** bridge external systems into the capability graph:
+
+| Adapter | What It Wraps | When To Use |
+|---------|--------------|-------------|
+| **CLI** | 3,300+ CLI binaries | Running shell commands with JSON output, timeout management, structured error handling |
+| **MCP** | Model Context Protocol servers | Connecting MCP-compatible tools into the same routing graph |
+| **HTTP** | REST endpoints | Turning any API into a callable capability with configurable methods, headers, and body schemas |
+| **Workflow** | Multi-capability chains | Composing multiple tools via `supercli ask "do X and Y"`, auto-resolving dependencies |
+
+Each adapter normalizes its target into the same internal representation: a capability record with name, description, argument schema, and execution handler. Every tool — whether a CLI binary, an MCP server, or a REST API — looks identical to the router.
+
+### Plugin System
+
+The plugin system keeps capabilities organized and discoverable:
+
 - Each plugin bundles a manifest (`plugin.json`) with metadata, checksums, commands, and dependency requirements
 - Installed plugins register in `~/.supercli/plugins/plugins.lock.json`
 - Both the Zig binary (`sc-zig`) and the Node.js runtime (`sc`) read the same plugin storage — they co-exist and share state
 - The remote registry at `plugins/catalog.json` tracks 3,100+ community plugins with checksum-verified updates
+- Every capability includes description, tags, argument schemas, and install guidance
 
-supercli replaces tool-specific syntax with a **queryable, executable capability graph**.
+### Summary
+
+supercli replaces tool-specific syntax with a **queryable, executable capability graph** — one interface for every tool, discoverable by humans and agents alike.
 
 ---
 
