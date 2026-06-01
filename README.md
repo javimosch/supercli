@@ -218,16 +218,7 @@ supercli replaces tool-specific syntax with a **queryable, executable capability
 
 ## 📦 Capability Sources
 
-| Source | Count | How To Access |
-|--------|-------|--------------|
-| **Bundled plugins** | 200+ curated tools | Available immediately, zero config |
-| **Plugin registry** | 3,100+ community tools | `supercli plugins install <name>` |
-| **MCP servers** | Any MCP-compatible server | `supercli mcp add <name>` |
-| **HTTP APIs** | REST endpoints | `supercli api add <name> --url <url>` |
-
-Every capability includes: description, tags, checksums, commands, argument schemas, and install guidance. The registry at `plugins/catalog.json` is checksum-verified and updated daily.
-
-> Latest npm: v1.31.1 — ships multiple times per week.
+supercli draws capabilities from **bundled plugins** (200+, immediate), **plugin registry** (3,100+, `plugins install <name>`), **MCP servers** (`mcp add <name>`), and **HTTP APIs** (`api add <name>`). Every capability includes description, tags, argument schemas, and checksum-verified metadata.
 
 ---
 
@@ -265,21 +256,7 @@ All tools accept `--json` and `--silent` flags for machine-consumable output.
 | **Discover** | `supercli skills search <query>` | Searches all capabilities by name, description, tags | Finding what tools are available |
 | **Server** | `supercli server` | Starts HTTP or MCP server exposing all capabilities | Remote access, IDE integration, API gateway |
 
-All five modes accept `--json` for structured output and `--human` for readable display. The `--compact` flag minimizes output for bandwidth-constrained environments.
-
-### Mode Details
-
-**Direct** is the workhorse — use it when you know the exact capability you need. Examples: `supercli uuid self generate`, `supercli http check health --url example.com`, `supercli weather now Tokyo`.
-
-**Ask** is for multi-step tasks — describe what you want in natural language, and the AI engine composes the capability chain. Good for: "check if my site is down and email me", "find large files in this directory and compress them".
-
-**Inspect** is essential before calling an unfamiliar command — it returns the full argument schema including types, defaults, descriptions, and whether each arg is required or optional. Always inspect before you execute.
-
-**Discover** searches the entire capability graph by name, description, or tags. Results include confidence scores and source attribution. Useful for exploring what's available in a domain.
-
-**Server** starts an HTTP or MCP server that exposes every capability as a REST endpoint or MCP tool. Use for remote access, IDE integration (VS Code, JetBrains), or connecting supercli to other platforms.
-
-Agents should always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema.
+All five modes accept `--json` for structured output and `--human` for readable display. Agents should always start with `supercli --json` for self-documenting bootstrap — it returns the full capability graph schema.
 
 ---
 
