@@ -112,13 +112,18 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 
 ## 6. Immediate Actionable Items
 
-## 7. Session Plan: am-0e131c-tfxda0 (Current)
+1. **Improve description enhancement pipeline** — Current `batch-enhance-descriptions.ts` generates 1,176 suggestions but 1,175 are confidence 60 (low) and often produce worse descriptions than originals. Needs better tool-name→purpose mappings.
+2. **Install-guidance.json for remaining plugins** — Many bundled plugins still lack install steps.
+3. **Regenerate catalog** — `node scripts/generate-catalog.js` after any plugin changes.
+
+## 7. Session Plan: am-0e131c-tfxg20 (Current)
 
 ### Context
-- **Latest commit**: `bf9b2ffd` (chore: regenerate plugins/catalog.json)
-- **Total plugins**: 3,371 (53/53 candidates from `/root/candidates.json` added ✅)
-- **Short descriptions**: 1,176 plugins with <30 char descriptions remain (per QUALITY_REPORT.md)
-- **README**: Restructured to new format, currently **306 LOC** (plan target: 430-600)
+- **Latest commit**: `7fd96d22` (chore: regenerate plugins/catalog.json)
+- **Total plugins**: 3,371 (all 53/53 candidates added ✅)
+- **Short descriptions**: 1,176 plugins with <30 char descriptions remain (as per QUALITY_REPORT.md)
+- **Description pipeline state**: 1,176 suggestions exist in `description-enhancements.json`, but 1,175 are confidence=60 (low quality). The 54 high-confidence suggestions from the previous session were already applied.
+- **README**: Restructured to new format, currently **430 LOC** (target: 430-600 ✅)
 - **Working tree**: Clean — all previous session work committed
 - **CI workflows**: test.yml ✅, catalog.yml ⚠️, sc-zig-release.yml ✅
 - **Tools available**: bun 1.3.14, Node.js v24.15.0, Python 3
@@ -126,33 +131,28 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ### State Assessment
 | Metric | Current | Target | Gap |
 |--------|---------|--------|-----|
-| Plugins from candidates.json | 53/53 | 53 | ✅ |
-| Short descriptions (<30 chars) | ~1,176 | 0 | 1,176 |
-| README LOC | 306 | 430-600 | +124-294 |
+| Plugin count | 3,371 | — | Stable |
+| Short descriptions (<30 chars) | 1,176 | 0 | 1,176 |
+| README LOC | 430 | 430-600 | ✅ |
 | Avg description length | ~72 chars | 80+ chars | +8 chars |
-| Working tree dirtiness | Clean | — | ✅ |
+| High-confidence suggestions (>=85%) | 0 applicable | — | Need better mappings |
+| Working tree | Clean | Clean | ✅ |
 
 ### Work Allocation
 
-#### Dev (3 commits, highest impact first)
-1. **Commit 1: Run description enhancement pipeline** for ~1,176 short-description plugins:
-   - `bun batch-enhance-descriptions.ts` → generate scored suggestions
-   - `bun apply-description-enhancements.ts` → auto-apply high-confidence (>=85%)
-   - `node scripts/apply-enhancements-and-install-guidance.js` → propagate to plugin files
-2. **Commit 2: Expand README** from 306 → 430-600 LOC per `plan.txt`:
-   - Expand 'For Humans / For Agents' compressed benefits table (~40 LOC)
-   - Lengthen CLI Usage Examples section (~55 LOC, add inspection category)
-   - Keep Architecture text-only (~55 LOC, no diagram)
-   - Add Tech Stack + Social + Contributors section (~40 LOC)
-3. **Commit 3: Regenerate catalog + verify CI**
+#### Dev (2 commits, highest impact first)
+1. **Commit 1: Improve description enhancement pipeline and re-run**:
+   - Update `batch-enhance-descriptions.ts` with better tool-name→purpose mappings for 1,176 remaining short-description plugins
+   - Run `bun batch-enhance-descriptions.ts` → generate improved scored suggestions
+   - Run `bun apply-description-enhancements.ts` → auto-apply high-confidence (>=85%)
+   - Run `node scripts/apply-enhancements-and-install-guidance.js` → propagate to plugin files
+2. **Commit 2: Regenerate catalog**
    - `node scripts/generate-catalog.js`
    - `npm test` to verify test.yml green
-   - `git add + git commit -m "chore: regenerate plugins/catalog.json"`
 
 #### QA (in order as dev completes commits)
-1. **After Commit 1**: Audit description quality — verify ≥30 chars, spot-check 5-10 descriptions, confirm install-guidance.json coverage
-2. **After Commit 2**: Validate README matches plan.txt checklist — LOC target, npx consistency, no ASCII diagrams
-3. **After Commit 3**: Verify catalog.json regenerated, run `npm test`, confirm all green
+1. **After Commit 1**: Audit description quality — verify ≥30 chars, spot-check 10-20 enhanced descriptions for accuracy/relevance, confirm install-guidance.json coverage
+2. **After Commit 2**: Verify catalog.json regenerated, run `npm test`, confirm all green
 
 #### Architect (This Session)
 - Analyze repo state, produce this plan, communicate to dev/qa, mark done
@@ -162,3 +162,4 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 2. Zig CLI: Formalize `sc-zig` release process (auto-release via GitHub Actions)
 3. Server testing: Add Jest coverage for server routes (currently 93 tests)
 4. Plugin scoring: Implement community voting mechanism
+5. **Description enhancement pipeline v2** — Need to overhaul `batch-enhance-descriptions.ts` with LLM-based or web-scraped descriptions instead of heuristic tool-name mappings. Current heuristics only produce confidence 60 for most plugins.
