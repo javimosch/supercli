@@ -1,0 +1,309 @@
+{
+  "name": "jj",
+  "version": "0.1.0",
+  "description": "jj — a Git-compatible VCS that is both simple and powerful. Works with Git repos natively, offers undo, auto-squash, conflict resolution, and more.",
+  "source": "https://github.com/jj-vcs/jj",
+  "checks": [
+    { "type": "binary", "name": "jj" }
+  ],
+  "install_guidance": {
+    "plugin": ["jj"],
+    "binary": "jj",
+    "check": "which jj",
+    "install_steps": [
+      "cargo install jj-cli",
+      "Or: brew install jj-cli",
+      "Or download binary from https://github.com/jj-vcs/jj/releases",
+      "Verify: jj --version",
+      "supercli plugins install ./plugins/jj --on-conflict replace --json"
+    ],
+    "note": "Source: https://github.com/jj-vcs/jj (29k stars). Written in Rust. Git-compatible — works with existing Git repos. Also available on many package managers."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jj",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jj version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jj",
+      "resource": "log",
+      "action": "show",
+      "description": "Show commit log (passthrough: jj log [options])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["log"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "revisions",
+          "type": "string",
+          "required": false,
+          "description": "Revisions to show (e.g. '::' for all, '@' for current)"
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Limit number of entries"
+        },
+        {
+          "name": "no-graph",
+          "type": "boolean",
+          "required": false,
+          "description": "Don't show the revision graph"
+        },
+        {
+          "name": "reversed",
+          "type": "boolean",
+          "required": false,
+          "description": "Show revisions in reverse order"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "status",
+      "action": "show",
+      "description": "Show working copy status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jj",
+      "resource": "new",
+      "action": "create",
+      "description": "Create a new empty change (passthrough: jj new [target])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["new"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "target",
+          "type": "string",
+          "required": false,
+          "description": "Target revision to create the new change on top of"
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": false,
+          "description": "Description for the new change"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "describe",
+      "action": "edit",
+      "description": "Edit the description of a change (passthrough: jj describe [revision])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["describe"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "revision",
+          "type": "string",
+          "required": false,
+          "description": "Revision to edit description of"
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "required": false,
+          "description": "New description text"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "diff",
+      "action": "show",
+      "description": "Show diff of a change (passthrough: jj diff [revision])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "revision",
+          "type": "string",
+          "required": false,
+          "description": "Revision to show diff of"
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "required": false,
+          "description": "Show changes from this revision"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "required": false,
+          "description": "Show changes to this revision"
+        },
+        {
+          "name": "git",
+          "type": "boolean",
+          "required": false,
+          "description": "Use git diff format"
+        },
+        {
+          "name": "stat",
+          "type": "boolean",
+          "required": false,
+          "description": "Show diff statistics only"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "commit",
+      "action": "create",
+      "description": "Finalize the current change with a description (passthrough: jj commit -m 'msg')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["commit"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": false,
+          "description": "Commit message"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "git",
+      "action": "push",
+      "description": "Push changes to a remote Git repository (passthrough: jj git push)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["git", "push"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "remote",
+          "type": "string",
+          "required": false,
+          "description": "Remote name (default: origin)"
+        },
+        {
+          "name": "branch",
+          "type": "string",
+          "required": false,
+          "description": "Branch to push"
+        },
+        {
+          "name": "change",
+          "type": "string",
+          "required": false,
+          "description": "Change to push"
+        },
+        {
+          "name": "dry-run",
+          "type": "boolean",
+          "required": false,
+          "description": "Dry run without pushing"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "git",
+      "action": "fetch",
+      "description": "Fetch from a Git remote (passthrough: jj git fetch)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["git", "fetch"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": [
+        {
+          "name": "remote",
+          "type": "string",
+          "required": false,
+          "description": "Remote to fetch from"
+        }
+      ]
+    },
+    {
+      "namespace": "jj",
+      "resource": "workspace",
+      "action": "list",
+      "description": "List workspaces",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["workspace", "list"],
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jj",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jj CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jj",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install jj: cargo install jj-cli"
+      },
+      "args": []
+    }
+  ]
+}

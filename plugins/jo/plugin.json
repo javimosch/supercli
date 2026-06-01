@@ -1,0 +1,88 @@
+{
+  "name": "jo",
+  "version": "0.1.0",
+  "description": "jo — JSON output from a shell. Create JSON objects, arrays, and nested structures from key=value pairs on the command line.",
+  "source": "https://github.com/jpmens/jo",
+  "checks": [
+    { "type": "binary", "name": "jo" }
+  ],
+  "install_guidance": {
+    "plugin": ["jo"],
+    "binary": "jo",
+    "check": "which jo",
+    "install_steps": [
+      "brew install jo",
+      "Or: apt install jo",
+      "Or: cargo install jo",
+      "Or download binary from https://github.com/jpmens/jo/releases",
+      "Verify: jo --version",
+      "supercli plugins install ./plugins/jo --on-conflict replace --json"
+    ],
+    "note": "Source: https://github.com/jpmens/jo (4.8k stars). Written in C. Also available via Homebrew, apt, and cargo."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jo",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install jo: brew install jo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jo",
+      "resource": "json",
+      "action": "create",
+      "description": "Create JSON from key=value pairs (passthrough: jo key=val key2=val2 ...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jo: brew install jo"
+      },
+      "args": [
+        {
+          "name": "pairs",
+          "type": "string",
+          "required": true,
+          "description": "Key=value pairs (e.g. name=John age=30)"
+        },
+        {
+          "name": "pretty",
+          "type": "boolean",
+          "required": false,
+          "description": "Pretty-print output"
+        },
+        {
+          "name": "array",
+          "type": "boolean",
+          "required": false,
+          "description": "Force array output"
+        }
+      ]
+    },
+    {
+      "namespace": "jo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jo CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jo",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install jo: brew install jo"
+      },
+      "args": []
+    }
+  ]
+}
