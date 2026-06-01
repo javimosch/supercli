@@ -161,8 +161,8 @@ async function handlePluginsCommand(options) {
         { key: "description", label: "Description" }
       ])
       if (suggestions.length > 0) {
-        console.log("  💡 No plugins matched your filters.")
-        suggestions.forEach(s => console.log("     " + s))
+        process.stderr.write("  \u{1f4a1} No plugins matched your filters.\n")
+        suggestions.forEach(s => process.stderr.write("     " + s + "\n"))
       }
       console.log("")
     } else {

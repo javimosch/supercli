@@ -118,4 +118,26 @@ describe("mcp-daemon", () => {
       expect(lastCall.toString()).toContain("test message");
     });
   });
+
+  describe("gracefulShutdown exit codes", () => {
+    let exitSpy;
+
+    beforeEach(() => {
+      exitSpy = jest.spyOn(process, "exit").mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+      exitSpy.mockRestore();
+    });
+
+    test("exits with code 0 by default", () => {
+      gracefulShutdown();
+      expect(exitSpy).toHaveBeenCalledWith(0);
+    });
+
+    test("exits with given code when passed as argument", () => {
+      gracefulShutdown(110);
+      expect(exitSpy).toHaveBeenCalledWith(110);
+    });
+  });
 });

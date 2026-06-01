@@ -200,6 +200,23 @@ describe("plugins-command", () => {
     expect(mockOutputHumanTable).toHaveBeenCalled()
   })
 
+  test("explore with no match sends suggestions to stderr not stdout", async () => {
+    const stderrSpy = jest.spyOn(process.stderr, "write").mockImplementation()
+    listRegistryPlugins.mockReturnValue([])
+    listInstalledPlugins.mockReturnValue([])
+
+    await handlePluginsCommand({
+      positional: ["plugins", "explore"],
+      flags: { name: "nonexistent" },
+      humanMode: true,
+      outputHumanTable: mockOutputHumanTable
+    })
+
+    expect(stderrSpy).toHaveBeenCalledWith(expect.stringContaining("No plugins matched"))
+    expect(stderrSpy).toHaveBeenCalledWith(expect.stringContaining("Try a broader search"))
+    stderrSpy.mockRestore()
+  })
+
   test("remove subcommand success", async () => {
     removePlugin.mockReturnValue(true)
     await handlePluginsCommand({
