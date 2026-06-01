@@ -9,11 +9,13 @@ Automated quality improvements applied to SuperCLI plugin collection across mult
 - **Tags added:** 13 additional tags across multiple plugins
 
 ### Phase 2: Description Enhancement (Current)
-- **High-confidence descriptions applied:** 54 plugins
-- **Description quality:** Avg 72 chars (up from ~35 chars)
-- **Short descriptions remaining:** 1,176 (down from 1,262)
+- **High-confidence descriptions applied:** 54 plugins (session am-0e131c-tfxiu0)
+- **Pipeline-ready high-confidence (>=85):** 254 suggestions — pending apply
+- **Description quality:** Avg ~72 chars
+- **Short descriptions remaining:** 923 (down from 1,262)
+- **DESCRIPTIONS map entries:** 416 tools (need ~400+ more)
 - **Install-guidance.json created:** 22 plugins
-- **Plugins scanned:** 3,357 (up from 1,179)
+- **Plugins scanned:** 3,373 (up from 3,357)
 
 ### Before vs After (Cumulative)
 
@@ -33,14 +35,19 @@ Automated quality improvements applied to SuperCLI plugin collection across mult
 4. **Install guidance** - 22 missing `install-guidance.json` files created from existing `plugin.json` data
 5. **Catalog refresh** - Regenerated `plugins/catalog.json` via catalog generation script
 
-### Next Phase
+### Next Phase (Session am-0e131c-tfxlm0)
 
-**Continuous Description Enhancement:**
-- Expand tool-name mappings in `batch-enhance-descriptions.ts` to cover more of the 1,176 remaining short descriptions
-- Add medium-confidence (70-84%) suggestions after manual review
-- Automate quality validation in CI/CD
+**Apply 254 high-confidence descriptions:**
+- Pipeline-ready: 254 suggestions at >=85% confidence from exact DESCRIPTIONS map matches
+- Run `bun batch-enhance-descriptions.ts` → `bun apply-description-enhancements.ts` → `node scripts/apply-enhancements-and-install-guidance.js`
+- Expected: short descriptions drop from 923 to ~669
 
-**Automation Setup:**
+**Expand DESCRIPTIONS map:**
+- Current: 416 tool entries. Target: 800+
+- Add new tool→description mappings from the remaining 922 low-confidence suggestions
+- Add "expand short but good" strategy for descriptions >10 chars that just need minimal touch-up
+
+**Automation:**
 - CI/CD validation for new plugins
 - Enforce minimum quality standards
 - Community contribution guidelines
