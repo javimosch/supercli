@@ -18,9 +18,9 @@ A config-driven, universal CLI capability router that wraps 3,300+ CLI tools, AP
 | OpenAPI adapter | ❌ | ✅ |
 
 ### Repository Stats
-- 3,357 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
-- 5,553+ commands exposed through plugins
-- 93 Jest tests covering CLI, adapters, plugins, server
+- 3,381 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
+- 8,888 commands exposed through plugins
+- 90 Jest test files covering CLI, adapters, plugins, server
 - 36 smoke test scripts in `tests/`
 - 15 skill directories in `skills/`
 - Express.js management server in `server/` (13 routes, 4 services, 3 storage adapters)
@@ -116,70 +116,65 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 2. **Install-guidance.json for remaining plugins** — Many bundled plugins still lack install steps.
 3. **Regenerate catalog** — `node scripts/generate-catalog.js` after any plugin changes.
 
-## 7. Session Plan: am-0e131c-tfxr60 (Current)
+## 7. Plugin Count Report (am-ef0ef5-tfz6oc)
+
+### Summary
+| Metric | Value |
+|--------|-------|
+| Total plugin directories | 3,381 |
+| With plugin.json | 3,381 (100%) |
+| With meta.json | 3,381 (100%) |
+| With install-guidance.json | 3,380 (99.97%) |
+| With skills/quickstart/SKILL.md | 3,142 (92.9%) |
+| With README.md | 75 (2.2%) |
+| Total commands exposed | 8,888 |
+| Unique tags used | 5,193 |
+
+### Quality Metrics
+| Description source | Mean length | Median | <30 chars | 30-59 | 60-89 | 90+ |
+|-------------------|-------------|--------|-----------|-------|-------|-----|
+| meta.json | 77.5 | 55 | 535 | 1,322 | 494 | 1,030 |
+| plugin.json | 59.6 | 48 | 632 | 1,459 | 622 | 668 |
+
+### Distribution by First Letter (top 10)
+| Letter | Count |
+|--------|-------|
+| C | 321 |
+| S | 299 |
+| G | 250 |
+| P | 247 |
+| T | 193 |
+| D | 192 |
+| M | 191 |
+| B | 117 |
+| H | 116 |
+| F | 122 |
+
+### Top 10 Tags
+| Tag | Count |
+|-----|-------|
+| utility | 692 |
+| cli | 462 |
+| go | 264 |
+| rust | 206 |
+| tool | 148 |
+| security | 122 |
+| python | 83 |
+| system | 78 |
+| network | 77 |
+| git | 77 |
+
+### Gaps & Action Items
+1. **Missing install-guidance.json**: 1 plugin (`jar-skills`)
+2. **Missing skills/quickstart/SKILL.md**: 239 plugins (7.1%)
+3. **Short descriptions**: 535 meta.json, 632 plugin.json below 30 chars
+4. **README.md adoption**: Only 75 plugins (2.2%) have README.md
 
 ### Context
-- **Latest commit**: `e2b4adbf` (fix mcp-daemon exit codes + plugins-command stderr)
-- **Total plugins**: 3,371
-- **Short descriptions in meta.json**: 535 plugins with <30 char descriptions remain (avg length ~77 chars)
-- **Short descriptions in plugin.json**: 632 plugins with <30 char descriptions remain (avg length ~59 chars)
-- **Test status**: 5 pre-existing test failures (cline-skill, xurl, azd, docker, supercli-version)
-- **Description pipeline state**: `description-enhancements.json` has 3,212 scored entries; DESCRIPTIONS map has ~750 known tools
+- **Latest commit**: `646ef30c` (chore: regenerate plugins/catalog.json)
 - **Working tree**: Clean
-- **CI workflows**: test.yml ✅ (despite 5 pre-existing failures), catalog.yml ⚠️, sc-zig-release.yml ✅
-- **Tools available**: bun 1.3.14, Node.js v24.15.0, Python 3
+- **CI workflows**: 90 Jest test files, 36 smoke test scripts
 
-### State Assessment
-| Metric | Current | Target | Gap |
-|--------|---------|--------|-----|
-| Plugin count | 3,371 | — | Stable |
-| Short descriptions (meta.json, <30 chars) | 535 | 0 | 535 |
-| Short descriptions (plugin.json, <30 chars) | 632 | 0 | 632 |
-| Avg description length (meta.json) | ~77 chars | 80+ chars | +3 chars |
-| Avg description length (plugin.json) | ~59 chars | 80+ chars | +21 chars |
-| Pre-existing test failures | 5 | 0 | 5 |
-| Working tree | Clean | Clean | ✅ |
-
-### Key Insight
-Two sources of descriptions exist (meta.json and plugin.json) with different quality. The previous session plan's description enhancement work was not fully applied — the pipeline output (description-enhancements.json) exists but hasn't been propagated to plugin files. Focus should be on: (1) fixing the 5 test failures which are blocking CI green, (2) propagating the description pipeline to plugin files, and (3) expanding the DESCRIPTIONS map.
-
-### Priority Assessment
-1. **TEST FIXES (blocking CI)** — 5 tests fail, need diagnosis and fix before other work can be reliably verified
-2. **Description pipeline propagation** — Apply high-confidence enhancements from description-enhancements.json to plugin files
-3. **DESCRIPTIONS map expansion** — Add more tool→description mappings to increase suggestion confidence
-
-### Work Allocation
-
-#### Dev (in priority order)
-
-1. **Commit 1: Fix 5 pre-existing test failures**
-   - Diagnose failures in: cline-skill, xurl, azd, docker, supercli-version tests
-   - Likely candidates: binary path assumptions, missing test binaries, env var configuration
-   - **Expected impact**: CI goes fully green (597/601 → 601/601)
-
-2. **Commit 2: Apply high-confidence description enhancements from pipeline**
-   - Run: `bun batch-enhance-descriptions.ts` → `bun apply-description-enhancements.ts` → `node scripts/apply-enhancements-and-install-guidance.js`
-   - Apply >=85% confidence suggestions to plugin files
-   - Auto-create missing `install-guidance.json` files
-   - **Expected impact**: Short descriptions in meta.json drop further toward 0
-
-3. **Commit 3: Expand DESCRIPTIONS map + regenerate catalog**
-   - Add new tool→description mappings to `batch-enhance-descriptions.ts`
-   - Re-run pipeline to boost suggestion confidence scores
-   - `node scripts/generate-catalog.js` — regenerates `plugins/catalog.json`
-   - Update ARCHITECTURE_PLAN.md metrics
-
-#### QA (in order as dev completes commits)
-1. **After Commit 1**: Confirm all 601 tests pass, report any flaky tests, verify fix robustness
-2. **After Commit 2**: Audit 20-30 applied descriptions for accuracy (PLUGIN_STANDARDS.md format), verify install-guidance.json creation, run `npm test`
-3. **After Commit 3**: Verify catalog.json regenerated correctly, confirm all green, check ARCHITECTURE_PLAN.md numbers match reality
-
-#### Architect (This Session)
-- Analyze repo state, produced session plan at `ARCHITECTURE_PLAN.md:119`, communicated plan to dev/qa via a2a bus, committed updates
-
-### For Future Sessions:
-1. Zig CLI: Add `--help-json` bootstrap command matching Node.js behavior
-2. Zig CLI: Formalize `sc-zig` release process (auto-release via GitHub Actions)
-3. Server testing: Add Jest coverage for server routes (currently 93 tests)
-4. Plugin scoring: Implement community voting mechanism
-5. **Description enhancement pipeline v2** — Overhaul with LLM-based or web-scraped descriptions instead of heuristic tool-name mappings
+### Notes
+- Total plugin dirs decreased from 3,383 to 3,381 between catalog regen and count (likely duplicates removed)
+- install-guidance.json coverage near-perfect at 99.97%
