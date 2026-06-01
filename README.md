@@ -87,60 +87,29 @@ With supercli:
 ## ⚡ Quick Start
 
 ```bash
-# Run without installing anything
-npx supercli uuid self generate
-# → {"uuid":"550e8400-e29b-41d4-a716-446655440000"}
-
-# Check if a website is up
-npx supercli http check health --url https://example.com
-# → {"status":"ok","ms":142,"code":200}
-
-# Check SSL certificate details
-npx supercli cert info --domain github.com
-# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
-
-# Generate a password
-npx supercli passgen
-# → {"password":"xK9#mP2$vL7@nQ5%"}
-
-# Get weather for any city
-npx supercli weather now "Tokyo"
-# → {"temp_C":22,"condition":"Clear","humidity":65}
-
-# Convert CSV to JSON
-echo "name,age\nAlice,30\nBob,25" | npx supercli csv json convert
-# → [{"name":"Alice","age":"30"},{"name":"Bob","age":"25"}]
-
 # Explore capabilities
-npx supercli skills search "github" --json
+npx supercli help
+npx supercli skills search "github"
 
 # Run something real
+npx supercli beads issue list --json
 npx supercli gh issue list --json
 
 # AI-driven execution
-npx supercli ask "generate a uuid and check if google.com is up"
+npx supercli ask "show my tasks and recent commits"
 
 # Manage plugins
 npx supercli plugins list
 npx supercli plugins explore
 npx supercli plugins install commiat
-npx supercli plugins uninstall commiat
 
 # Inspect a capability before using it
 npx supercli inspect http check health
 # → Shows: args, types, defaults, required/optional, description
 ```
 
-> 💡 No install needed. `npx supercli` works immediately.<br>
-> Install globally: `npm install -g superacli`<br>
+> 💡 Install globally: `npm install -g superacli` for repeated use.<br>
 > Server mode: See docs/features/server-plugins.md
-
-### What to try next
-
-1. **Explore**: `supercli skills search "encode" --json` — see what's available
-2. **Run**: `supercli uuid self generate` — generates a UUID instantly
-3. **Combine**: `supercli ask "generate a password and check if it's been pwned"` — multi-step AI workflow
-4. **Install**: `supercli plugins install commiat` — add a community plugin
 
 ---
 
@@ -215,27 +184,6 @@ npx supercli ask "do X and Y"
 npx supercli plugins list
 npx supercli plugins install commiat
 npx supercli plugins show commiat
-
-# Get weather for any city
-npx supercli weather now "Tokyo"
-# → {"temp_C":22,"condition":"Clear","humidity":65}
-
-# Check SSL certificate details
-npx supercli cert info --domain github.com
-# → {"issuer":"GTS","expires":"2026-07-22","days_left":74}
-
-# Scan for secrets in code
-npx supercli secret scan ./src
-# → [{"file":"config.js","line":42,"type":"AWS Access Key"}]
-
-# Server mode — expose as API
-npx supercli server --port 3000
-
-# MCP adapter — connect MCP tools
-npx supercli mcp add my-server --command "node mcp-server.js"
-
-# Workflow — chain capabilities
-npx supercli ask "check the weather in Tokyo, then send me an email if it's raining"
 ```
 
 ---
