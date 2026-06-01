@@ -1,30 +1,28 @@
 ---
 name: git-absorb
-description: Use this skill when the user wants to auto-absorb staged changes into relevant previous commits, apply code review feedback efficiently, or avoid manual fixup commit creation.
+description: Use this skill when the user wants to auto-create fixup! commits for staged Git changes, clean up a messy commit history before rebasing, or absorb staged diffs into the correct existing commits.
 ---
 
 # git-absorb Plugin
 
-Automatically fold staged changes into the appropriate previous commits. Eliminates manual fixup commit creation during code review feedback cycles.
+Auto-create fixup! commits for staged Git changes. Scans your working copy, identifies which existing commits each staged diff belongs to, and writes fixup! commits so you can rebase cleanly.
 
 ## Commands
 
-### Version
-- `git-absorb self version` — Print git-absorb version
-
 ### Absorb
-- `git-absorb repo absorb` — Run git-absorb on current repo
-- `git-absorb repo absorb --and-rebase` — Absorb and auto-rebase
-- `git-absorb repo absorb --base master` — Use master as base ref
-- `git-absorb repo absorb --force` — Write fixup commits even if conflicts detected
+- `git-absorb commit absorb` — Auto-create fixup commits for all staged changes
 
-### Utility
-- `git-absorb _ _` — Passthrough to git-absorb CLI
+### Options
+- `--base <ref>` — Absorb only against commits reachable from `<ref>` (e.g., `origin/main`)
+- `--dry-run` — Show what would be absorbed without making changes
+- `--and-rebase` — Auto-absorb and then rebase with `GIT_SEQUENCE_EDITOR=true git rebase -i`
+- `--force` — Apply fixups even when conflicts might occur
 
 ## Usage Examples
 - "Absorb my staged changes into the right commits"
-- "Apply review feedback with git-absorb"
-- "Run git absorb with --and-rebase"
+- "Clean up my working copy before rebasing"
+- "Fixup all staged changes onto origin/main"
+- "Show what would be absorbed without making changes"
 
 ## Installation
 
@@ -32,36 +30,29 @@ Automatically fold staged changes into the appropriate previous commits. Elimina
 cargo install git-absorb
 ```
 
-Or via Homebrew:
-```bash
-brew install git-absorb
-```
-
 ## Examples
 
 ```bash
-# Stage changes and absorb into relevant previous commits
-git-absorb repo absorb
+# Stage changes, then absorb into existing commits
+git add -p
+git-absorb
 
-# Absorb and auto-rebase in one step
-git-absorb repo absorb --and-rebase
+# Dry run to preview
+git-absorb --dry-run
 
-# Specify a base ref
-git-absorb repo absorb --base master
+# Absorb against a specific base
+git-absorb --base origin/main
 
-# Force absorption even if conflicts are detected
-git-absorb repo absorb --force
+# Absorb and rebase automatically
+git-absorb --and-rebase
+
+# Use as git subcommand (if configured)
+git absorb
 ```
 
 ## Key Features
-- **Automatic** — Finds the right commit for each staged hunk automatically
-- **Smart** — Uses commutation checking to determine which changes belong where
-- **Safe** — Creates fixup commits you can inspect before rebasing
-- **Review-friendly** — Speed up code review feedback application
-- **Git-native** — Works as a git subcommand (git absorb)
-
-## Notes
-- Only staged changes (git index) are considered
-- Use `git rebase -i --autosquash` after `git absorb` to apply fixups (unless using `--and-rebase`)
-- Default stack size is 10 commits; override with `--base` or config
-- Works with any git workflow where you have a stack of draft commits
+- Zero config — just stage and run
+- Smart commit matching via hunk analysis
+- Dry-run mode for safety
+- Works with any Git repository
+- Integrates with standard `git rebase -i` workflow

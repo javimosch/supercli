@@ -1,90 +1,59 @@
 ---
 name: mcfly
-description: Use this skill when the user wants to search shell history intelligently, analyze command patterns, or replace their default ctrl-r history search with AI-powered prioritization.
+description: Use this skill when the user wants to search shell history, find a command they ran before, or explore their terminal history with smart ranking.
 ---
 
-# McFly Plugin
+# mcfly Plugin
 
-Intelligent shell history search with neural network prioritization. McFly learns from your usage patterns to suggest the most relevant commands first.
+Smart shell history search. Replaces Ctrl+R with neural ranking that learns from context, frequency, and recency.
 
 ## Commands
 
-### History Management
-- `mcfly history dump` — Export complete history as JSON
-- `mcfly history dump-since` — Export history from a specific date
-- `mcfly history dump-csv` — Export history as CSV format
-- `mcfly history search` — Search history with regex patterns
+### Search
+- `mcfly history search <query>` — Search shell history with neural ranking
 
-### Version
-- `mcfly self version` — Show McFly version
+### Manage
+- `mcfly history dump` — Dump all shell history entries
+- `mcfly history train` — Train mcfly model on current history
 
 ## Usage Examples
-- "Export my shell history as JSON"
-- "Find all git commands I ran last week" 
-- "Search for cargo commands in history"
-- "Show my command history since yesterday"
+- "Find that docker command I ran yesterday"
+- "Search my history for git rebase commands"
+- "Dump my entire shell history"
+- "Train mcfly on my history"
 
 ## Installation
 
 ```bash
-# Install via Cargo
 cargo install mcfly
+```
 
-# Or via Homebrew
-brew install mcfly
+For shell integration, add to your `.bashrc`:
 
-# Setup shell integration (required for ctrl-r replacement)
-echo 'eval "$(mcfly init bash)"' >> ~/.bashrc
-# or for zsh:
-echo 'eval "$(mcfly init zsh)"' >> ~/.zshrc
-# or for fish:
-echo 'mcfly init fish | source' >> ~/.config/fish/config.fish
+```bash
+eval "$(mcfly init bash)"
 ```
 
 ## Examples
 
 ```bash
-# Export all history as JSON
+# Search history for a command
+mcfly search docker compose
+
+# Dump all history (json lines)
 mcfly dump
 
-# Export history from specific date
-mcfly dump --since '2023-01-01'
+# Train on history
+mcfly train --train-all
 
-# Export with date range
-mcfly dump --since '2023-01-01' --before '2023-12-31'
-
-# Search for specific commands
-mcfly dump --regex '^git'
-
-# Export as CSV
-mcfly dump --format csv
-
-# Combine filters
-mcfly dump --regex '^cargo run' --since '2023-09-12 09:15:30'
+# Shell integration (in .bashrc)
+eval "$(mcfly init bash)"
 ```
 
-## Features
-
-- **Neural network prioritization** — Learns from your patterns
-- **Context-aware** — Considers current directory and recent commands
-- **Smart ranking** — Factors in frequency, recency, and success rate
-- **Unicode support** — Works with international characters
-- **Shell integration** — Replaces ctrl-r with intelligent search
-- **History preservation** — Maintains your original history files
-
-## Configuration
-
-McFly can be configured via environment variables:
-
-- `MCFLY_LIGHT=TRUE` — Enable light mode color scheme
-- `MCFLY_FUZZY=2` — Enable fuzzy search (0=off, higher=fuzzier)
-- `MCFLY_RESULTS=50` — Maximum results to show (default: 30)
-- `MCFLY_KEY_SCHEME=vim` — Use vim key bindings (default: emacs)
-- `MCFLY_INTERFACE_VIEW=BOTTOM` — Show interface at bottom
-
-## Database Location
-
-- **macOS**: `~/Library/Application Support/McFly/history.db`
-- **Linux**: `~/.local/share/mcfly/history.db` 
-- **Windows**: `%LOCALAPPDATA%\McFly\data\history.db`
-- **Legacy**: `~/.mcfly/` (if it exists)
+## Key Features
+- Neural network ranking for relevant results
+- Works with bash, zsh, and fish
+- Time-based and frequency-based ranking
+- Fuzzy matching
+- Lightweight and fast (Rust)
+- Session-aware history context

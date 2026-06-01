@@ -1,0 +1,107 @@
+{
+  "name": "b3sum",
+  "version": "0.1.0",
+  "description": "b3sum — compute BLAKE3 cryptographic hashes from the command line. Fast, secure hashing for files and streams. Supports multi-threaded hashing, checked mode, and raw output. Non-interactive, scriptable, suitable for CI/CD pipelines.",
+  "source": "https://github.com/BLAKE3-team/BLAKE3",
+  "checks": [
+    { "type": "binary", "name": "b3sum" }
+  ],
+  "install_guidance": {
+    "plugin": "b3sum",
+    "binary": "b3sum",
+    "check": "which b3sum",
+    "install_steps": [
+      "cargo install b3sum",
+      "Verify: b3sum --version",
+      "Test: b3sum /etc/hostname",
+      "supercli plugins install ./plugins/b3sum --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "b3sum",
+      "resource": "self",
+      "action": "version",
+      "description": "Print b3sum version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install b3sum: cargo install b3sum"
+      },
+      "args": []
+    },
+    {
+      "namespace": "b3sum",
+      "resource": "hash",
+      "action": "file",
+      "description": "Compute BLAKE3 hash of one or more files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "baseArgs": [],
+        "positionalArgs": ["files"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install b3sum: cargo install b3sum"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "File paths to hash (space-separated, can use glob patterns)" },
+        { "name": "--no-mmap", "type": "boolean", "required": false, "description": "Disable memory-mapped files" },
+        { "name": "--num-threads", "type": "number", "required": false, "description": "Number of threads to use (default: number of CPUs)" },
+        { "name": "--raw", "type": "boolean", "required": false, "description": "Output raw hash bytes instead of hex" }
+      ]
+    },
+    {
+      "namespace": "b3sum",
+      "resource": "hash",
+      "action": "stdin",
+      "description": "Compute BLAKE3 hash of data piped to stdin",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "baseArgs": ["--no-names"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install b3sum: cargo install b3sum"
+      },
+      "args": [
+        { "name": "--raw", "type": "boolean", "required": false, "description": "Output raw hash bytes to stdout" },
+        { "name": "--num-threads", "type": "number", "required": false, "description": "Number of threads to use" }
+      ]
+    },
+    {
+      "namespace": "b3sum",
+      "resource": "hash",
+      "action": "check",
+      "description": "Check BLAKE3 hashes against a hash list file (similar to sha256sum --check)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "baseArgs": ["--check"],
+        "positionalArgs": ["hashfile"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install b3sum: cargo install b3sum"
+      },
+      "args": [
+        { "name": "hashfile", "type": "string", "required": true, "description": "Path to file containing hashes to check (format: <hash>  <filename>)" },
+        { "name": "--no-mmap", "type": "boolean", "required": false, "description": "Disable memory-mapped files" },
+        { "name": "--num-threads", "type": "number", "required": false, "description": "Number of threads to use" }
+      ]
+    },
+    {
+      "namespace": "b3sum",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to b3sum CLI for advanced options",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "passthrough": true,
+        "missingDependencyHelp": "Install b3sum: cargo install b3sum"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "name": "mcfly",
   "version": "0.1.0",
-  "description": "McFly — intelligent shell history search with neural network prioritization",
+  "description": "Fly through your shell history. Great Scott! — smart shell history search with neural ranking",
   "source": "https://github.com/cantino/mcfly",
   "checks": [
     { "type": "binary", "name": "mcfly" }
@@ -13,9 +13,9 @@
     "install_steps": [
       "cargo install mcfly",
       "Verify: mcfly --version",
-      "Setup: eval \"$(mcfly init bash)\" # or zsh/fish",
       "supercli plugins install ./plugins/mcfly --on-conflict replace --json"
-    ]
+    ],
+    "note": "Requires Rust/Cargo. Also available via Homebrew: brew install mcfly"
   },
   "learn": {
     "file": "skills/quickstart/SKILL.md"
@@ -25,57 +25,12 @@
       "namespace": "mcfly",
       "resource": "self",
       "action": "version",
-      "description": "Print McFly version",
+      "description": "Print mcfly version",
       "adapter": "process",
       "adapterConfig": {
         "command": "mcfly",
         "baseArgs": ["--version"],
-        "missingDependencyHelp": "Install McFly: cargo install mcfly"
-      },
-      "args": []
-    },
-    {
-      "namespace": "mcfly",
-      "resource": "history",
-      "action": "dump",
-      "description": "Dump command history as JSON",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "mcfly",
-        "baseArgs": ["dump", "--format", "json"],
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install McFly: cargo install mcfly"
-      },
-      "args": []
-    },
-    {
-      "namespace": "mcfly",
-      "resource": "history",
-      "action": "dump-since",
-      "description": "Dump history since a specific date",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "mcfly",
-        "baseArgs": ["dump", "--format", "json", "--since"],
-        "positionalArgs": ["since"],
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install McFly: cargo install mcfly"
-      },
-      "args": [
-        { "name": "since", "type": "string", "required": true, "description": "Start date (e.g., '2023-01-01', '2023-09-12 09:15:30')" }
-      ]
-    },
-    {
-      "namespace": "mcfly",
-      "resource": "history",
-      "action": "dump-csv",
-      "description": "Dump command history as CSV",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "mcfly",
-        "baseArgs": ["dump", "--format", "csv"],
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install McFly: cargo install mcfly"
+        "missingDependencyHelp": "Install mcfly: cargo install mcfly"
       },
       "args": []
     },
@@ -83,18 +38,46 @@
       "namespace": "mcfly",
       "resource": "history",
       "action": "search",
-      "description": "Search history with regex pattern",
+      "description": "Search shell history with neural ranking",
       "adapter": "process",
       "adapterConfig": {
         "command": "mcfly",
-        "baseArgs": ["dump", "--format", "json", "--regex"],
-        "positionalArgs": ["pattern"],
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install McFly: cargo install mcfly"
+        "baseArgs": ["search"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "positionalArgs": ["query"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install mcfly: cargo install mcfly"
       },
       "args": [
-        { "name": "pattern", "type": "string", "required": true, "description": "Regex pattern to search for (e.g., '^cargo run')" }
+        { "name": "query", "type": "string", "required": true, "description": "Search query for shell history" }
       ]
+    },
+    {
+      "namespace": "mcfly",
+      "resource": "history",
+      "action": "dump",
+      "description": "Dump all shell history entries",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcfly",
+        "baseArgs": ["dump"],
+        "missingDependencyHelp": "Install mcfly: cargo install mcfly"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcfly",
+      "resource": "history",
+      "action": "train",
+      "description": "Train mcfly on the current shell history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcfly",
+        "baseArgs": ["train", "--train-all"],
+        "missingDependencyHelp": "Install mcfly: cargo install mcfly"
+      },
+      "args": []
     },
     {
       "namespace": "mcfly",
@@ -104,8 +87,9 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "mcfly",
+        "cwd": "invoke_cwd",
         "passthrough": true,
-        "missingDependencyHelp": "Install McFly: cargo install mcfly"
+        "missingDependencyHelp": "Install mcfly: cargo install mcfly"
       },
       "args": []
     }
