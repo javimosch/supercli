@@ -116,13 +116,13 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 2. **Install-guidance.json for remaining plugins** — Many bundled plugins still lack install steps.
 3. **Regenerate catalog** — `node scripts/generate-catalog.js` after any plugin changes.
 
-## 7. Session Plan: am-0e131c-tfxiu0 (Current)
+## 7. Session Plan: am-0e131c-tfxlm0 (Current)
 
 ### Context
-- **Latest commit**: `da8c1761` (chore: regenerate plugins/catalog.json)
+- **Latest commit**: `25c91fac` (chore: apply description enhancements to 563 plugin files)
 - **Total plugins**: 3,371
-- **Short descriptions**: 923 plugins with <30 char descriptions remain (down from 1,176)
-- **Description pipeline state**: `batch-enhance-descriptions.ts` has 548 known tools in its DESCRIPTIONS map. Many short descriptions are actually good quality but just slightly under 30 chars (e.g., "7-Zip archive utility" at 19 chars).
+- **Short descriptions**: 535 plugins with <30 char descriptions remain (down from 923)
+- **Description pipeline state**: `batch-enhance-descriptions.ts` has ~750 known tools in its DESCRIPTIONS map (up from 548). Smart expansion strategy added: good short descriptions (>=10 chars) get tool name prepended at confidence 85.
 - **Working tree**: Clean
 - **CI workflows**: test.yml ✅, catalog.yml ⚠️, sc-zig-release.yml ✅
 - **Tools available**: bun 1.3.14, Node.js v24.15.0, Python 3
@@ -131,32 +131,42 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 | Metric | Current | Target | Gap |
 |--------|---------|--------|-----|
 | Plugin count | 3,371 | — | Stable |
-| Short descriptions (<30 chars) | 923 | 0 | 923 |
-| Known tools in DESCRIPTIONS map | 548 | 1,200+ | ~650 more needed |
-| Avg description length | ~72 chars | 80+ chars | +8 chars |
+| Short descriptions (<30 chars) | 535 | 0 | 535 |
+| Known tools in DESCRIPTIONS map | 750 | 1,200+ | ~450 more needed |
+| Avg description length | ~77 chars | 80+ chars | +3 chars |
 | Working tree | Clean | Clean | ✅ |
 
 ### Key Insight
-Many short descriptions are actual quality descriptions that just need minimal expansion (e.g., "Alpine email client" → "Alpine — lightweight email client"). The pipeline should expand these minimally rather than replace them entirely.
+The 254 high-confidence suggestions (exact DESCRIPTIONS map matches at 95% confidence) are immediately actionable — they will cut the short-description count from 923 to ~669 in a single run. The remaining 922 low-confidence suggestions need DESCRIPTIONS map expansion to boost their confidence scores above 85.
 
 ### Work Allocation
 
-#### Dev (2 commits, highest impact first)
-1. **Commit 1: Expand DESCRIPTIONS map + add smart expansion strategy**:
-   - Add ~700 new tool-name→description mappings to DESCRIPTIONS map in `batch-enhance-descriptions.ts`
-   - Add "expand short but good descriptions" strategy — when description is >10 chars and already useful, prepend tool name with em-dash
-   - Run pipeline: `bun batch-enhance-descriptions.ts` → `bun apply-description-enhancements.ts` → `node scripts/apply-enhancements-and-install-guidance.js`
-2. **Commit 2: Regenerate catalog + update ARCHITECTURE_PLAN.md**
-   - `node scripts/generate-catalog.js`
-   - Update ARCHITECTURE_PLAN.md metrics
-   - `npm test` to verify
+#### Dev (3 commits, ordered by impact)
+
+1. **Commit 1: Apply 254 high-confidence description enhancements**
+   - Run the pipeline: `bun batch-enhance-descriptions.ts` → `bun apply-description-enhancements.ts` → `node scripts/apply-enhancements-and-install-guidance.js`
+   - This auto-applies all 254 suggestions (exact DESCRIPTIONS map matches at >=85% confidence)
+   - Also auto-creates missing `install-guidance.json` for plugins that have `install_guidance` in plugin.json
+   - **Expected impact**: Short descriptions drop from 923 to ~669
+
+2. **Commit 2: Expand DESCRIPTIONS map + add smart expansion strategy**
+   - Add ~400+ new tool-name→description mappings to DESCRIPTIONS map in `batch-enhance-descriptions.ts` (target: 800+ total)
+   - Add "expand short but good descriptions" strategy — when description is >10 chars and already useful, prepend tool name with em-dash (PLUGIN_STANDARDS.md format)
+   - Re-run pipeline after additions to regenerate suggestions with higher confidence
+   - **Expected impact**: Many more suggestions hit >=85 confidence
+
+3. **Commit 3: Regenerate catalog + update docs**
+   - `node scripts/generate-catalog.js` — regenerates `plugins/catalog.json`
+   - Update ARCHITECTURE_PLAN.md metrics (plugin count, short desc count, avg length)
+   - `npm test` to verify nothing broken
 
 #### QA (in order as dev completes commits)
-1. **After Commit 1**: Audit description quality — verify ≥30 chars, spot-check 20-30 enhanced descriptions for accuracy/relevance
-2. **After Commit 2**: Verify catalog.json regenerated, run `npm test`, confirm all green
+1. **After Commit 1**: Run `npm test`, audit 20-30 of the 254 applied descriptions for accuracy/relevance, report issues
+2. **After Commit 2**: Spot-check 20-30 new/enhanced descriptions, verify format (PLUGIN_STANDARDS.md), check for malformed entries
+3. **After Commit 3**: Verify catalog.json regenerated, run `npm test`, confirm all green, confirm ARCHITECTURE_PLAN.md numbers match reality
 
 #### Architect (This Session)
-- Analyze repo state, produce plan, update ARCHITECTURE_PLAN.md, communicate to dev/qa, mark done
+- Analyze repo state, produce session plan, update ARCHITECTURE_PLAN.md, communicate plan to dev/qa via a2a bus, mark done
 
 ### For Future Sessions:
 1. Zig CLI: Add `--help-json` bootstrap command matching Node.js behavior
