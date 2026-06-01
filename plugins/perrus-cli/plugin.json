@@ -1,0 +1,136 @@
+{
+  "name": "perrus-cli",
+  "version": "1.0.0",
+  "description": "perrus-cli — developer health dashboard monitoring HTTP, TCP, and DNS endpoints with configurable conditions",
+  "source": "https://github.com/TwiN/gatus",
+  "checks": [
+    { "type": "binary", "name": "perrus-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "perrus-cli",
+    "binary": "perrus-cli",
+    "check": "which perrus-cli",
+    "install_steps": [
+      "git clone <repo-url> /tmp/perrus-cli-src",
+      "cd /tmp/perrus-cli-src && go build -o perrus-cli .",
+      "sudo mv /tmp/perrus-cli-src/perrus-cli /usr/local/bin/perrus-cli"
+    ],
+    "note": "Build from source requires Go 1.21+. Clean-room reimplementation of https://github.com/TwiN/gatus."
+  },
+  "learn": { "file": "skills/quickstart/SKILL.md" },
+  "commands": [
+    {
+      "namespace": "perrus",
+      "resource": "config",
+      "action": "init",
+      "description": "Write an example config.yaml for perrus-cli",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["config-init"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": [
+        { "name": "out", "flag": "-out", "type": "string", "description": "Output path (default config.yaml)" }
+      ]
+    },
+    {
+      "namespace": "perrus",
+      "resource": "config",
+      "action": "validate",
+      "description": "Validate a perrus-cli config file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["config-validate"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": [
+        { "name": "config", "flag": "-config", "type": "string", "description": "Config file path (default config.yaml)" }
+      ]
+    },
+    {
+      "namespace": "perrus",
+      "resource": "endpoint",
+      "action": "check",
+      "description": "Run a one-shot health check on a named endpoint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["check"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": [
+        { "name": "config", "flag": "-config", "type": "string", "description": "Config file path" },
+        { "name": "json",   "flag": "-json",   "type": "bool",   "description": "Output as JSON" },
+        { "name": "name",   "positional": true, "type": "string", "description": "Endpoint name" }
+      ]
+    },
+    {
+      "namespace": "perrus",
+      "resource": "endpoints",
+      "action": "results",
+      "description": "Run all endpoint checks and print results",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["results"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": [
+        { "name": "config", "flag": "-config", "type": "string", "description": "Config file path" },
+        { "name": "format", "flag": "-format", "type": "string", "description": "Output format: table|json" }
+      ]
+    },
+    {
+      "namespace": "perrus",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the perrus-cli monitoring server and web dashboard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["start"],
+        "timeout_ms": 0,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": [
+        { "name": "port",   "flag": "-port",   "type": "int",    "description": "HTTP port (default 8080)" },
+        { "name": "config", "flag": "-config", "type": "string", "description": "Config file path" },
+        { "name": "daemon", "flag": "-daemon", "type": "bool",   "description": "Run as background daemon" }
+      ]
+    },
+    {
+      "namespace": "perrus",
+      "resource": "server",
+      "action": "stop",
+      "description": "Stop the perrus-cli background daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["stop"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": []
+    },
+    {
+      "namespace": "perrus",
+      "resource": "server",
+      "action": "status",
+      "description": "Show perrus-cli daemon status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perrus-cli",
+        "args": ["status"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Build perrus-cli: go build -o perrus-cli ."
+      },
+      "args": []
+    }
+  ]
+}
