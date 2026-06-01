@@ -119,14 +119,10 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ## 7. Session Plan: am-0e131c-tfxlm0 (Current)
 
 ### Context
-- **Latest commit**: `17e650b3` (automaintainer: #38)
-- **Total plugins**: 3,373
-- **Short descriptions**: 923 plugins with <30 char descriptions remain
-- **Description pipeline state**: `description-enhancements.json` has 1,176 suggestions:
-  - **254 high-confidence (>=85)** — ready to apply via pipeline (exact DESCRIPTIONS map matches)
-  - **922 low-confidence (<70)** — need more tool-name→purpose mappings in DESCRIPTIONS map
-- **DESCRIPTIONS map size**: 416 known tool entries (lines 128-548 in batch-enhance-descriptions.ts)
-- **Median confidence**: Low — majority are tag-template fallbacks at confidence 55-60
+- **Latest commit**: `25c91fac` (chore: apply description enhancements to 563 plugin files)
+- **Total plugins**: 3,371
+- **Short descriptions**: 535 plugins with <30 char descriptions remain (down from 923)
+- **Description pipeline state**: `batch-enhance-descriptions.ts` has ~750 known tools in its DESCRIPTIONS map (up from 548). Smart expansion strategy added: good short descriptions (>=10 chars) get tool name prepended at confidence 85.
 - **Working tree**: Clean
 - **CI workflows**: test.yml ✅, catalog.yml ⚠️, sc-zig-release.yml ✅
 - **Tools available**: bun 1.3.14, Node.js v24.15.0, Python 3
@@ -134,11 +130,10 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ### State Assessment
 | Metric | Current | Target | Gap |
 |--------|---------|--------|-----|
-| Plugin count | 3,373 | — | Stable |
-| Short descriptions (<30 chars) | 923 | 0 | 923 |
-| Known tools in DESCRIPTIONS map | 416 | 800+ | ~400 more needed |
-| High-confidence suggestions (>=85) | 254 | Apply now | 0 after pipeline |
-| Avg description length | ~72 chars | 80+ chars | +8 chars |
+| Plugin count | 3,371 | — | Stable |
+| Short descriptions (<30 chars) | 535 | 0 | 535 |
+| Known tools in DESCRIPTIONS map | 750 | 1,200+ | ~450 more needed |
+| Avg description length | ~77 chars | 80+ chars | +3 chars |
 | Working tree | Clean | Clean | ✅ |
 
 ### Key Insight
