@@ -1,0 +1,71 @@
+{
+  "name": "czg",
+  "version": "0.1.0",
+  "description": "Interactive commit message generator for standardized Git commits. Part of the cz-git ecosystem, supports Conventional Commits with customizable prompts and emoji support.",
+  "source": "https://github.com/Zhengqbbb/cz-git/tree/main/packages/czg",
+  "checks": [
+    { "type": "binary", "name": "czg" }
+  ],
+  "install_guidance": {
+    "plugin": "czg",
+    "binary": "czg",
+    "check": "which czg",
+    "install_steps": [
+      "npm install -g czg",
+      "Or: brew install czg",
+      "Or: cargo install czg",
+      "Verify: czg --version",
+      "supercli plugins install ./plugins/czg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "czg",
+      "resource": "commit",
+      "action": "create",
+      "description": "Create an interactive commit with Conventional Commits format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "czg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install czg: npm install -g czg"
+      },
+      "args": [
+        { "name": "--hook", "type": "boolean", "description": "Run as commit-msg hook" },
+        { "name": "--retry", "type": "boolean", "description": "Retry last commit with same options" },
+        { "name": "--config", "type": "string", "description": "Path to config file" },
+        { "name": "--mode", "type": "string", "description": "Mode: vi, android, classic" }
+      ]
+    },
+    {
+      "namespace": "czg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print czg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "czg",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install czg: npm install -g czg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "czg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to czg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "czg",
+        "passthrough": true,
+        "missingDependencyHelp": "Install czg: npm install -g czg"
+      },
+      "args": []
+    }
+  ]
+}
