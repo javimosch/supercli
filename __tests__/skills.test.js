@@ -192,7 +192,8 @@ describe("skills", () => {
       expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
         skills: [{ name: "cat-skill" }],
         total: 1,
-        returned: 1
+        returned: 1,
+        offset: 0
       }))
     })
 
@@ -211,7 +212,28 @@ describe("skills", () => {
       expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
         skills: [{ name: "s1" }, { name: "s2" }],
         total: 3,
-        returned: 2
+        returned: 2,
+        offset: 0
+      }))
+    })
+
+    test("list --catalog --limit <n> --offset <n>", () => {
+      catalog.listCatalogSkills.mockReturnValue([{ name: "s1" }, { name: "s2" }, { name: "s3" }, { name: "s4" }, { name: "s5" }])
+      catalog.readIndex.mockReturnValue({ updated_at: "now" })
+      
+      const result = handleSkillsCommand({
+        positional: ["skills", "list"],
+        flags: { catalog: true, limit: 2, offset: 2 },
+        config: {},
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        skills: [{ name: "s3" }, { name: "s4" }],
+        total: 5,
+        returned: 2,
+        offset: 2
       }))
     })
 
@@ -392,7 +414,8 @@ describe("skills", () => {
       expect(mockOutput).toHaveBeenCalledWith({
         skills: [{ name: "found" }],
         total: 1,
-        returned: 1
+        returned: 1,
+        offset: 0
       })
     })
 
@@ -410,7 +433,27 @@ describe("skills", () => {
       expect(mockOutput).toHaveBeenCalledWith({
         skills: manySkills.slice(0, 5),
         total: 20,
-        returned: 5
+        returned: 5,
+        offset: 0
+      })
+    })
+
+    test("search subcommand --limit --offset", () => {
+      const manySkills = Array.from({ length: 20 }, (_, i) => ({ name: `found-${i}` }))
+      catalog.searchCatalog.mockReturnValue(manySkills)
+      
+      const result = handleSkillsCommand({
+        positional: ["skills", "search", "query"],
+        flags: { limit: 5, offset: 10 },
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutput).toHaveBeenCalledWith({
+        skills: manySkills.slice(10, 15),
+        total: 20,
+        returned: 5,
+        offset: 10
       })
     })
 
@@ -445,6 +488,28 @@ describe("skills", () => {
 
       expect(result).toBe(true)
       expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85, message: "Invalid --limit. Use a positive integer" }))
+    })
+
+    test("search subcommand invalid offset", () => {
+      const result = handleSkillsCommand({
+        positional: ["skills", "search", "query"],
+        flags: { offset: -1 },
+        outputError: mockOutputError
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85, message: "Invalid --offset. Use a non-negative integer" }))
+    })
+
+    test("list --catalog invalid offset", () => {
+      const result = handleSkillsCommand({
+        positional: ["skills", "list"],
+        flags: { catalog: true, offset: "xyz" },
+        outputError: mockOutputError
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85, message: "Invalid --offset. Use a non-negative integer" }))
     })
 
     describe("providers subcommand", () => {
