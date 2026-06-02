@@ -2,45 +2,54 @@
 
 ## Overview
 
-easyredmine-cli lets you interact with EasyRedmine (Simpliciti's Redmine instance) directly from supercli. Read issues, post comments, and edit descriptions.
+easyredmine-cli interacts with EasyRedmine (Simpliciti) via the Redmine API. JSON output by default. No interactive prompts. Auth via config file or `EASYREDMINE_API_KEY` env var.
 
 ## Commands
 
 ### `sc easyredmine issue show <id>`
-Read an issue's full details including description and comments.
+Read issue details (JSON output by default).
 
 ```bash
+# JSON (default) — agent-friendly
 sc easyredmine issue show 61809
-sc easyredmine issue show 61809 --json     # machine-readable envelope
+
+# Human-readable
+sc easyredmine issue show 61809 --human
 ```
 
 ### `sc easyredmine issue comment <id> --text "<text>"`
-Add a comment to an issue.
+Add a comment. JSON response by default.
 
 ```bash
-sc easyredmine issue comment 61809 --text "Comment from CLI"
+sc easyredmine issue comment 61809 --text "Comment from agent"
 ```
 
 ### `sc easyredmine issue edit <id> --description "<text>"`
-Edit an issue's description.
+Edit description. JSON response by default.
 
 ```bash
-sc easyredmine issue edit 61809 --description "<p>Updated description</p>"
+sc easyredmine issue edit 61809 --description "<p>Updated</p>"
 ```
 
-## First-time setup
+## Auth
+
+Three ways, highest precedence first:
+
+1. `EASYREDMINE_API_KEY` env var (best for agents — no config file needed)
+2. `EASYREDMINE_BASE_URL` env var overrides base URL
+3. Config file at `~/.config/easyredmine-cli/config.json`
 
 ```bash
-# Build the binary
-cd ~/ai/easyredmine-cli
-go build -ldflags="-s -w" -o easyredmine-cli main.go
-cp easyredmine-cli ~/.local/bin/
+# Config file approach
+easyredmine-cli config set --api-key <key>
 
-# Install the plugin via supercli
-sc plugins install easyredmine-cli
-
-# Configure API token
-easyredmine-cli config set
+# Env var approach (no file needed)
+EASYREDMINE_API_KEY=<key> sc easyredmine issue show 61809
 ```
 
-Token stored in `~/.config/easyredmine-cli/config.json`.
+## Semantic exit codes
+
+Errors on stderr as structured JSON. Agents use exit code to decide next action:
+- `85` → fix input/args
+- `92` → resource not found, try different ID
+- `105` → transient API error, retry with backoff
