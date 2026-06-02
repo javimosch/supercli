@@ -1,0 +1,71 @@
+{
+  "name": "rga",
+  "version": "0.1.0",
+  "description": "ripgrep-all — ripgrep wrapper that searches PDFs, DOCX, E-Books, and other binary files with no extra config",
+  "source": "https://github.com/phiresky/ripgrep-all",
+  "checks": [
+    { "type": "binary", "name": "rga" }
+  ],
+  "install_guidance": {
+    "plugin": "rga",
+    "binary": "rga",
+    "check": "which rga",
+    "install_steps": [
+      "brew install ripgrep-all",
+      "Verify: rga --version",
+      "supercli plugins install ./plugins/rga --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rga",
+      "resource": "files",
+      "action": "search",
+      "description": "Search files including PDFs, DOCX, and other documents",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rga",
+        "positionalArgs": ["pattern"],
+        "missingDependencyHelp": "Install ripgrep-all: brew install ripgrep-all"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "positional": true, "description": "Search pattern (regex)" },
+        { "name": "paths", "type": "string", "description": "Paths to search" },
+        { "name": "--max-count", "type": "integer", "description": "Max matches per file" },
+        { "name": "--context", "type": "integer", "description": "Show surrounding context lines" },
+        { "name": "--ignore-case", "type": "boolean", "description": "Case-insensitive search" },
+        { "name": "--rga-no-cache", "type": "boolean", "description": "Disable caching of extracted text" },
+        { "name": "--rga-adapters", "type": "string", "description": "Adapters to use (comma-separated: pdf,docx,odt, epub,mobi,pandoc)" }
+      ]
+    },
+    {
+      "namespace": "rga",
+      "resource": "adapters",
+      "action": "list",
+      "description": "List available adapters and supported file types",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rga",
+        "baseArgs": ["--rga-list-adapters"],
+        "missingDependencyHelp": "Install ripgrep-all: brew install ripgrep-all"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rga",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rga CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rga",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ripgrep-all: brew install ripgrep-all"
+      },
+      "args": []
+    }
+  ]
+}
