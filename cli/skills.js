@@ -420,6 +420,7 @@ function handleSkillsCommand(options) {
     }
     const limitExplicit = flags.limit !== undefined
     const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50)
+    const limitAuto = !limitExplicit && !humanMode
     if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
       outputError({ code: 85, type: "invalid_argument", message: "Invalid --limit. Use a positive integer", recoverable: false })
       return true
@@ -436,7 +437,9 @@ function handleSkillsCommand(options) {
     const end = limit !== null ? Math.min(start + limit, total) : total
     const returned = end - start
     const skills = allSkills.slice(start, end)
-    output({ skills, total, returned, offset })
+    const result = { skills, total, returned, offset }
+    if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination."
+    output(result)
     return true
   }
 
@@ -459,6 +462,7 @@ function handleSkillsCommand(options) {
 
     const limitExplicit = flags.limit !== undefined
     const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50)
+    const limitAuto = !limitExplicit && !humanMode
     if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
       outputError({ code: 85, type: "invalid_argument", message: "Invalid --limit. Use a positive integer", recoverable: false })
       return true
@@ -486,7 +490,9 @@ function handleSkillsCommand(options) {
       console.log(`  Returned: ${returned}/${total}  (offset: ${offset})\n`)
     } else {
       const index = readIndex() || {}
-      output({ skills, total, returned, offset, index: { updated_at: index.updated_at || null } })
+      const result = { skills, total, returned, offset, index: { updated_at: index.updated_at || null } }
+      if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination."
+      output(result)
     }
     return true
   }

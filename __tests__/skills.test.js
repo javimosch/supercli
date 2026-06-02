@@ -237,6 +237,39 @@ describe("skills", () => {
       }))
     })
 
+    test("list --catalog _warning when limit auto-applied", () => {
+      const manySkills = Array.from({ length: 55 }, (_, i) => ({ name: `s${i}` }))
+      catalog.listCatalogSkills.mockReturnValue(manySkills)
+      catalog.readIndex.mockReturnValue({ updated_at: "now" })
+
+      const result = handleSkillsCommand({
+        positional: ["skills", "list"],
+        flags: { catalog: true },
+        config: {},
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      const call = mockOutput.mock.calls[0][0]
+      expect(call._warning).toContain("--limit 50 applied")
+    })
+
+    test("list --catalog no _warning when --limit explicit", () => {
+      catalog.listCatalogSkills.mockReturnValue([{ name: "s1" }])
+      catalog.readIndex.mockReturnValue({ updated_at: "now" })
+
+      const result = handleSkillsCommand({
+        positional: ["skills", "list"],
+        flags: { catalog: true, limit: 1 },
+        config: {},
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      const call = mockOutput.mock.calls[0][0]
+      expect(call._warning).toBeUndefined()
+    })
+
     test("teach subcommand", () => {
       const consoleSpy = jest.spyOn(console, "log").mockImplementation()
       const result = handleSkillsCommand({
@@ -411,12 +444,12 @@ describe("skills", () => {
 
       expect(result).toBe(true)
       expect(catalog.searchCatalog).toHaveBeenCalledWith("query", expect.anything())
-      expect(mockOutput).toHaveBeenCalledWith({
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
         skills: [{ name: "found" }],
         total: 1,
         returned: 1,
         offset: 0
-      })
+      }))
     })
 
     test("search subcommand --limit", () => {
@@ -430,12 +463,12 @@ describe("skills", () => {
       })
 
       expect(result).toBe(true)
-      expect(mockOutput).toHaveBeenCalledWith({
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
         skills: manySkills.slice(0, 5),
         total: 20,
         returned: 5,
         offset: 0
-      })
+      }))
     })
 
     test("search subcommand --limit --offset", () => {
@@ -449,12 +482,12 @@ describe("skills", () => {
       })
 
       expect(result).toBe(true)
-      expect(mockOutput).toHaveBeenCalledWith({
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
         skills: manySkills.slice(10, 15),
         total: 20,
         returned: 5,
         offset: 10
-      })
+      }))
     })
 
     test("search subcommand validation error", () => {
