@@ -1,0 +1,82 @@
+{
+  "name": "carapace",
+  "version": "0.1.0",
+  "description": "carapace — multi-shell completion generator with 3,000+ completions for CLI commands",
+  "source": "https://github.com/carapace-sh/carapace",
+  "checks": [
+    { "type": "binary", "name": "carapace" }
+  ],
+  "install_guidance": {
+    "plugin": "carapace",
+    "binary": "carapace",
+    "check": "which carapace",
+    "install_steps": [
+      "brew install carapace",
+      "echo 'source <(carapace _carapace)' >> ~/.zshrc",
+      "carapace --version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "carapace",
+      "resource": "completion",
+      "action": "list",
+      "description": "List available completions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "carapace",
+        "baseArgs": ["--list"],
+        "missingDependencyHelp": "Install carapace: brew install carapace"
+      },
+      "args": [
+        { "name": "--filter", "type": "string", "description": "Filter completions by name" }
+      ]
+    },
+    {
+      "namespace": "carapace",
+      "resource": "self",
+      "action": "install",
+      "description": "Install carapace completion for a shell",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "carapace",
+        "baseArgs": ["_carapace", "init"],
+        "missingDependencyHelp": "Install carapace: brew install carapace"
+      },
+      "args": [
+        { "name": "shell", "type": "string", "required": true, "positional": true, "description": "Shell name (bash, zsh, fish, powershell, elvish, nushell, xonsh)" }
+      ]
+    },
+    {
+      "namespace": "carapace",
+      "resource": "binary",
+      "action": "complete",
+      "description": "Generate completions for a binary",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "carapace",
+        "missingDependencyHelp": "Install carapace: brew install carapace"
+      },
+      "args": [
+        { "name": "binary", "type": "string", "required": true, "positional": true, "description": "Binary to generate completions for" },
+        { "name": "--bridge", "type": "string", "description": "Use a bridge completer (e.g. --bridge=fish)" }
+      ]
+    },
+    {
+      "namespace": "carapace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to carapace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "carapace",
+        "passthrough": true,
+        "missingDependencyHelp": "Install carapace: brew install carapace"
+      },
+      "args": []
+    }
+  ]
+}
