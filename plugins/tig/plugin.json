@@ -1,0 +1,141 @@
+{
+  "name": "tig",
+  "version": "0.1.0",
+  "description": "Text-mode interface for Git. Browse commits, branches, staging, blame, stash, and refs in an interactive TUI. An essential git companion for daily development.",
+  "source": "https://github.com/jonas/tig",
+  "checks": [
+    { "type": "binary", "name": "tig" }
+  ],
+  "install_guidance": {
+    "plugin": "tig",
+    "binary": "tig",
+    "check": "which tig",
+    "install_steps": [
+      "brew install tig",
+      "Verify: tig --version",
+      "supercli plugins install ./plugins/tig --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "tig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tig",
+      "resource": "log",
+      "action": "browse",
+      "description": "Browse git log in interactive TUI or with optional ref range",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["log"],
+        "positionalArgs": ["args"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": [
+        { "name": "args", "type": "string", "required": false, "description": "Git log arguments (e.g. --oneline, --author, ref range)" }
+      ]
+    },
+    {
+      "namespace": "tig",
+      "resource": "show",
+      "action": "commit",
+      "description": "Show a specific commit in the TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["show"],
+        "positionalArgs": ["commit"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": [
+        { "name": "commit", "type": "string", "required": true, "description": "Commit reference to show" }
+      ]
+    },
+    {
+      "namespace": "tig",
+      "resource": "blame",
+      "action": "file",
+      "description": "Show blame annotation for a file in the TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["blame"],
+        "positionalArgs": ["file"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to annotate" }
+      ]
+    },
+    {
+      "namespace": "tig",
+      "resource": "status",
+      "action": "browse",
+      "description": "Browse working tree status in interactive TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["status"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tig",
+      "resource": "stash",
+      "action": "browse",
+      "description": "Browse stash list in interactive TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["stash"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tig",
+      "resource": "refs",
+      "action": "browse",
+      "description": "Browse refs (branches, tags) in interactive TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "baseArgs": ["refs"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tig: brew install tig"
+      },
+      "args": []
+    }
+  ]
+}
