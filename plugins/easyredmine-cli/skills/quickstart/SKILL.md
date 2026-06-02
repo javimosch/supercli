@@ -47,9 +47,12 @@ sc easyredmine issue search "correction statut" --limit 5 --human
 | `--limit` | 20 | Max results |
 | `--offset` | 0 | Result offset |
 | `--status` | `open` | Status filter (`open`, `*`, or numeric ID) |
+| `--current-month` | false | Only issues updated this month (API-side filter, **~3s**) |
+| `--current-year` | false | Only issues updated this year (API-side filter, **~15s**) |
+| `--after` | — | Only issues updated after YYYY-MM-DD (API-side filter) |
 | `--min-matches` | 1 | Minimum word matches to include |
 
-**Note**: Fetches all open issues (parallel page requests). Can take ~30s for 3000+ issues. Progress events on stderr.
+**Performance tip**: Use `--current-month` when possible. It fetches ~100 issues (1 page) instead of 3,630 (37 pages) — 30x faster. Progress events on stderr.
 
 ## Auth
 
