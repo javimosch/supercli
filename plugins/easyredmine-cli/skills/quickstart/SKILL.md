@@ -31,6 +31,26 @@ Edit description. JSON response by default.
 sc easyredmine issue edit 61809 --description "<p>Updated</p>"
 ```
 
+### `sc easyredmine issue search "<phrase>"`
+Smart search across all open issues. Breaks phrase into words, matches each word against issue subjects, deduplicates, and ranks by number of word matches.
+
+```bash
+# JSON (default)
+sc easyredmine issue search "correction statut message"
+
+# Human-readable with custom limit
+sc easyredmine issue search "correction statut" --limit 5 --human
+```
+
+| Flag | Default | Purpose |
+|------|---------|---------|
+| `--limit` | 20 | Max results |
+| `--offset` | 0 | Result offset |
+| `--status` | `open` | Status filter (`open`, `*`, or numeric ID) |
+| `--min-matches` | 1 | Minimum word matches to include |
+
+**Note**: Fetches all open issues (parallel page requests). Can take ~30s for 3000+ issues. Progress events on stderr.
+
 ## Auth
 
 Three ways, highest precedence first:
