@@ -1,0 +1,75 @@
+{
+  "name": "jp",
+  "version": "0.1.0",
+  "description": "A command-line JSON processor using JMESPath. Query, filter, and transform JSON data with a powerful expression language.",
+  "source": "https://github.com/jmespath/jp",
+  "checks": [
+    { "type": "binary", "name": "jp" }
+  ],
+  "install_guidance": {
+    "plugin": "jp",
+    "binary": "jp",
+    "check": "which jp",
+    "install_steps": [
+      "go install github.com/jmespath/jp@latest",
+      "Or: brew install jp",
+      "Or: pip install jmespath-terminal",
+      "Verify: jp --version",
+      "supercli plugins install ./plugins/jp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jp",
+      "resource": "data",
+      "action": "query",
+      "description": "Query JSON data using JMESPath expression",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jp",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jp: go install github.com/jmespath/jp@latest"
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "JMESPath expression to evaluate" },
+        { "name": "filename", "type": "string", "description": "JSON file to read (reads stdin if omitted)" },
+        { "name": "--color", "type": "boolean", "description": "Colorize output" },
+        { "name": "--monochrome", "type": "boolean", "description": "Disable colorized output" },
+        { "name": "--pretty", "type": "boolean", "description": "Pretty print output" },
+        { "name": "--raw", "type": "boolean", "description": "Output raw strings instead of JSON" },
+        { "name": "--sort", "type": "boolean", "description": "Sort object keys" },
+        { "name": "--expr", "type": "string", "description": "JMESPath expression (alternative to positional argument)" }
+      ]
+    },
+    {
+      "namespace": "jp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jp",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jp: go install github.com/jmespath/jp@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jp",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jp: go install github.com/jmespath/jp@latest"
+      },
+      "args": []
+    }
+  ]
+}
