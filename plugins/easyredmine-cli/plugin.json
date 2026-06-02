@@ -1,0 +1,75 @@
+{
+  "name": "easyredmine-cli",
+  "version": "1.0.0",
+  "description": "easyredmine-cli — Redmine API client for EasyRedmine. Read issues, post comments, edit descriptions.",
+  "source": "https://github.com/javimosch/easyredmine-cli",
+  "checks": [
+    { "type": "binary", "name": "easyredmine-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "easyredmine-cli",
+    "binary": "easyredmine-cli",
+    "check": "which easyredmine-cli",
+    "install_steps": [
+      "cd ~/ai/easyredmine-cli && go build -ldflags=\"-s -w\" -o easyredmine-cli main.go",
+      "cp easyredmine-cli ~/.local/bin/"
+    ],
+    "note": "Go binary. Build from source at ~/ai/easyredmine-cli."
+  },
+  "learn": { "file": "skills/quickstart/SKILL.md" },
+  "commands": [
+    {
+      "namespace": "easyredmine",
+      "resource": "issue",
+      "action": "show",
+      "description": "Show issue details by ID. Supports --json.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "easyredmine-cli",
+        "baseArgs": ["issue", "show"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Build easyredmine-cli from ~/ai/easyredmine-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Issue ID" }
+      ]
+    },
+    {
+      "namespace": "easyredmine",
+      "resource": "issue",
+      "action": "comment",
+      "description": "Add a comment to an issue. Use --text for the comment body.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "easyredmine-cli",
+        "baseArgs": ["issue", "comment"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Build easyredmine-cli from ~/ai/easyredmine-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Issue ID" },
+        { "name": "text", "type": "string", "required": true, "description": "Comment text" }
+      ]
+    },
+    {
+      "namespace": "easyredmine",
+      "resource": "issue",
+      "action": "edit",
+      "description": "Edit issue description. Use --description.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "easyredmine-cli",
+        "baseArgs": ["issue", "edit"],
+        "positionalArgs": ["id"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Build easyredmine-cli from ~/ai/easyredmine-cli"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": true, "description": "Issue ID" },
+        { "name": "description", "type": "string", "required": true, "description": "New description text" }
+      ]
+    }
+  ]
+}
