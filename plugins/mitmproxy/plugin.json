@@ -1,0 +1,108 @@
+{
+  "name": "mitmproxy",
+  "version": "0.1.0",
+  "description": "mitmproxy — interactive HTTPS proxy for debugging and inspecting HTTP/HTTPS traffic",
+  "source": "https://github.com/mitmproxy/mitmproxy",
+  "checks": [
+    { "type": "binary", "name": "mitmproxy" },
+    { "type": "binary", "name": "mitmdump" },
+    { "type": "binary", "name": "mitmweb" }
+  ],
+  "install_guidance": {
+    "plugin": "mitmproxy",
+    "binary": "mitmproxy",
+    "check": "which mitmproxy",
+    "install_steps": [
+      "pip install mitmproxy",
+      "brew install mitmproxy",
+      "Verify: mitmproxy --version",
+      "supercli plugins install ./plugins/mitmproxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mitmproxy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mitmproxy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmproxy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mitmproxy: pip install mitmproxy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mitmproxy",
+      "resource": "proxy",
+      "action": "start",
+      "description": "Start interactive mitmproxy console proxy on default port 8080",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmproxy",
+        "baseArgs": ["--listen-port", "8080"],
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install mitmproxy"
+      },
+      "args": [
+        { "name": "listen-port", "type": "integer", "required": false, "description": "Port to listen on (default: 8080)" },
+        { "name": "mode", "type": "string", "required": false, "description": "Proxy mode (regular, transparent, socks5, reverse)" }
+      ]
+    },
+    {
+      "namespace": "mitmproxy",
+      "resource": "dump",
+      "action": "capture",
+      "description": "Capture HTTP traffic to a file using mitmdump",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmdump",
+        "positionalArgs": ["filter"],
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install mitmproxy"
+      },
+      "args": [
+        { "name": "filter", "type": "string", "required": false, "description": "Filter expression (e.g. '~u google')" },
+        { "name": "listen-port", "type": "integer", "required": false, "description": "Port to listen on" },
+        { "name": "mode", "type": "string", "required": false, "description": "Proxy mode" },
+        { "name": "save-stream-file", "type": "string", "required": false, "description": "Stream capture to file" },
+        { "name": "flow-detail", "type": "integer", "required": false, "description": "Detail level for output" }
+      ]
+    },
+    {
+      "namespace": "mitmproxy",
+      "resource": "web",
+      "action": "start",
+      "description": "Start mitmweb web-based interface for MITM proxy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmweb",
+        "baseArgs": ["--listen-port", "8080"],
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install mitmproxy"
+      },
+      "args": [
+        { "name": "listen-port", "type": "integer", "required": false, "description": "Proxy port (default: 8080)" },
+        { "name": "web-port", "type": "integer", "required": false, "description": "Web interface port (default: 8081)" },
+        { "name": "mode", "type": "string", "required": false, "description": "Proxy mode" }
+      ]
+    },
+    {
+      "namespace": "mitmproxy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mitmproxy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmproxy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mitmproxy"
+      },
+      "args": []
+    }
+  ]
+}

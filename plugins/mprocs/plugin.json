@@ -1,0 +1,110 @@
+{
+  "name": "mprocs",
+  "version": "0.1.0",
+  "description": "mprocs — run multiple commands in a terminal multiplexer with TUI process management",
+  "source": "https://github.com/pvolok/mprocs",
+  "checks": [
+    { "type": "binary", "name": "mprocs" }
+  ],
+  "install_guidance": {
+    "plugin": "mprocs",
+    "binary": "mprocs",
+    "check": "which mprocs",
+    "install_steps": [
+      "cargo install mprocs",
+      "brew install mprocs",
+      "npm install -g mprocs",
+      "Verify: mprocs --version",
+      "supercli plugins install ./plugins/mprocs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mprocs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mprocs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mprocs",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mprocs: cargo install mprocs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mprocs",
+      "resource": "run",
+      "action": "commands",
+      "description": "Run multiple commands in parallel with mprocs TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mprocs",
+        "positionalArgs": ["commands"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install mprocs"
+      },
+      "args": [
+        { "name": "commands", "type": "string", "required": true, "description": "Space-separated list of commands to run" }
+      ]
+    },
+    {
+      "namespace": "mprocs",
+      "resource": "run",
+      "action": "config",
+      "description": "Run mprocs from mprocs.yaml config in current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mprocs",
+        "missingDependencyHelp": "Install mprocs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mprocs",
+      "resource": "run",
+      "action": "npm",
+      "description": "Run npm scripts from package.json in mprocs TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mprocs",
+        "baseArgs": ["--npm"],
+        "missingDependencyHelp": "Install mprocs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mprocs",
+      "resource": "run",
+      "action": "procfile",
+      "description": "Run processes from a Procfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mprocs",
+        "baseArgs": ["--procfile"],
+        "positionalArgs": ["path"],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install mprocs"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to Procfile (default: Procfile in current dir)" }
+      ]
+    },
+    {
+      "namespace": "mprocs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mprocs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mprocs",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mprocs"
+      },
+      "args": []
+    }
+  ]
+}
