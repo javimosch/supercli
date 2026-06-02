@@ -1,0 +1,98 @@
+{
+  "name": "btm",
+  "version": "0.1.0",
+  "description": "A cross-platform graphical process/system monitor — a customizable TUI alternative to htop/top with support for mouse interaction, theming, process management, disk/network/cpu/memory visualization, and GPU monitoring.",
+  "source": "https://github.com/ClementTsang/bottom",
+  "checks": [
+    { "type": "binary", "name": "btm" }
+  ],
+  "install_guidance": {
+    "plugin": "btm",
+    "binary": "btm",
+    "check": "which btm",
+    "install_steps": [
+      "brew install bottom",
+      "Verify: btm --version",
+      "supercli plugins install ./plugins/btm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "btm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print btm (bottom) version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bottom: brew install bottom"
+      },
+      "args": []
+    },
+    {
+      "namespace": "btm",
+      "resource": "system",
+      "action": "monitor",
+      "description": "Launch the bottom system monitor TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bottom: brew install bottom"
+      },
+      "args": [
+        { "name": "--color", "type": "string", "required": false, "description": "Color scheme: default, nord, gruvbox, dracula, catppuccin" },
+        { "name": "--theme", "type": "string", "required": false, "description": "Set theme file" },
+        { "name": "--mem_as_value", "type": "boolean", "required": false, "description": "Show memory as value instead of percentage" },
+        { "name": "--tree", "type": "boolean", "required": false, "description": "Show process tree" },
+        { "name": "--process_command", "type": "boolean", "required": false, "description": "Show process command" },
+        { "name": "--show_table_scroll_position", "type": "boolean", "required": false, "description": "Show scroll position in tables" },
+        { "name": "--rate", "type": "string", "required": false, "description": "Refresh rate in ms (default: 1000)" },
+        { "name": "--default_time_value", "type": "string", "required": false, "description": "Default time value in ms (default: 60000)" }
+      ]
+    },
+    {
+      "namespace": "btm",
+      "resource": "system",
+      "action": "basic",
+      "description": "Launch bottom with basic mode (CPU, memory, disk, network only)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btm",
+        "baseArgs": ["--basic"],
+        "missingDependencyHelp": "Install bottom: brew install bottom"
+      },
+      "args": []
+    },
+    {
+      "namespace": "btm",
+      "resource": "system",
+      "action": "battery",
+      "description": "Launch bottom showing battery widget",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btm",
+        "baseArgs": ["--battery"],
+        "missingDependencyHelp": "Install bottom: brew install bottom"
+      },
+      "args": []
+    },
+    {
+      "namespace": "btm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to btm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "btm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bottom: brew install bottom"
+      },
+      "args": []
+    }
+  ]
+}

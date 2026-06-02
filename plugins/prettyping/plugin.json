@@ -1,0 +1,73 @@
+{
+  "name": "prettyping",
+  "version": "0.1.0",
+  "description": "A ping wrapper that adds colorful, informative output with live latency visualization, statistics, and a cleaner display — making network diagnostics easier to read at a glance.",
+  "source": "https://github.com/denilsonsa/prettyping",
+  "checks": [
+    { "type": "binary", "name": "prettyping" }
+  ],
+  "install_guidance": {
+    "plugin": "prettyping",
+    "binary": "prettyping",
+    "check": "which prettyping",
+    "install_steps": [
+      "curl -sL https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping -o /usr/local/bin/prettyping",
+      "chmod +x /usr/local/bin/prettyping",
+      "Verify: prettyping --version",
+      "supercli plugins install ./plugins/prettyping --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prettyping",
+      "resource": "host",
+      "action": "ping",
+      "description": "Pretty-ping a host with colorful live output and statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettyping",
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install prettyping: curl -sL https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | sh"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Hostname or IP address to ping" },
+        { "name": "--count", "type": "string", "required": false, "description": "Number of pings to send" },
+        { "name": "--interval", "type": "string", "required": false, "description": "Interval between pings in seconds" },
+        { "name": "--last", "type": "string", "required": false, "description": "Show only the last N lines of output" },
+        { "name": "--nocolor", "type": "boolean", "required": false, "description": "Disable colored output" },
+        { "name": "--nomultiline", "type": "boolean", "required": false, "description": "Disable multiline output" },
+        { "name": "--nounicode", "type": "boolean", "required": false, "description": "Disable unicode output" }
+      ]
+    },
+    {
+      "namespace": "prettyping",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prettyping version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettyping",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install prettyping: curl -sL https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prettyping",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prettyping CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prettyping",
+        "passthrough": true,
+        "missingDependencyHelp": "Install prettyping: curl -sL https://raw.githubusercontent.com/denilsonsa/prettyping/master/prettyping | sh"
+      },
+      "args": []
+    }
+  ]
+}
