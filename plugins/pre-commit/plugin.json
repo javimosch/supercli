@@ -1,0 +1,205 @@
+{
+  "name": "pre-commit",
+  "version": "0.1.0",
+  "description": "A framework for managing and maintaining multi-language pre-commit hooks. Automate code quality checks (linting, formatting, secrets) before every commit across your team.",
+  "source": "https://github.com/pre-commit/pre-commit",
+  "checks": [
+    { "type": "binary", "name": "pre-commit" }
+  ],
+  "install_guidance": {
+    "plugin": "pre-commit",
+    "binary": "pre-commit",
+    "check": "which pre-commit",
+    "install_steps": [
+      "pip install pre-commit",
+      "Verify: pre-commit --version",
+      "supercli plugins install ./plugins/pre-commit --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "pre-commit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pre-commit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "hooks",
+      "action": "run",
+      "description": "Run pre-commit hooks on staged files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["run"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "--all-files", "type": "boolean", "required": false, "description": "Run on all files, not just staged" },
+        { "name": "--files", "type": "string", "required": false, "description": "Specific files to run hooks on" },
+        { "name": "--hook-stage", "type": "string", "required": false, "description": "Stage to run (commit, push, etc.)" },
+        { "name": "--color", "type": "string", "required": false, "description": "Color output: always, never, auto" },
+        { "name": "--verbose", "type": "boolean", "required": false, "description": "Verbose output" },
+        { "name": "hook", "type": "string", "required": false, "description": "Specific hook id to run" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "hooks",
+      "action": "install",
+      "description": "Install pre-commit hooks into the git repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["install"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "--hook-type", "type": "string", "required": false, "description": "Hook type to install (pre-commit, pre-push, etc.)" },
+        { "name": "--overwrite", "type": "boolean", "required": false, "description": "Overwrite existing hooks" },
+        { "name": "--install-hooks", "type": "boolean", "required": false, "description": "Also install hook environments" },
+        { "name": "--allow-missing-config", "type": "boolean", "required": false, "description": "Allow missing config file" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "hooks",
+      "action": "uninstall",
+      "description": "Uninstall pre-commit hooks from the git repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["uninstall"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "--hook-type", "type": "string", "required": false, "description": "Hook type to uninstall" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "hooks",
+      "action": "autoupdate",
+      "description": "Auto-update pre-commit hook versions to latest tags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["autoupdate"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "--dry-run", "type": "boolean", "required": false, "description": "Show what would be updated without changing files" },
+        { "name": "--repo", "type": "string", "required": false, "description": "Only update hooks from specific repo" },
+        { "name": "--freeze", "type": "boolean", "required": false, "description": "Pin hook versions to exact tags instead of moving tags" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "cache",
+      "action": "clean",
+      "description": "Clean pre-commit cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["clean"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "--color", "type": "string", "required": false, "description": "Color output: always, never, auto" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "config",
+      "action": "validate",
+      "description": "Validate pre-commit config file (.pre-commit-config.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["validate-config"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": false, "description": "Path to config file (default .pre-commit-config.yaml)" },
+        { "name": "--color", "type": "string", "required": false, "description": "Color output: always, never, auto" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "manifest",
+      "action": "validate",
+      "description": "Validate pre-commit manifest file (.pre-commit-hooks.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["validate-manifest"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "manifest", "type": "string", "required": false, "description": "Path to manifest file (default .pre-commit-hooks.yaml)" },
+        { "name": "--color", "type": "string", "required": false, "description": "Color output: always, never, auto" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "hooks",
+      "action": "migrate",
+      "description": "Migrate config to the canonical format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["migrate-config"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": [
+        { "name": "--color", "type": "string", "required": false, "description": "Color output: always, never, auto" }
+      ]
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "sample",
+      "action": "generate",
+      "description": "Generate a sample .pre-commit-config.yaml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["sample-config"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "help",
+      "action": "list",
+      "description": "List available hook IDs from installed repos",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "baseArgs": ["list-hooks"],
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pre-commit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pre-commit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pre-commit",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pre-commit: pip install pre-commit"
+      },
+      "args": []
+    }
+  ]
+}

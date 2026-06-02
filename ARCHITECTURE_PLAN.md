@@ -120,7 +120,7 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 
 ### Context
 - **Latest commit**: `e2b4adbf` (fix mcp-daemon exit codes + plugins-command stderr)
-- **Total plugins**: 3,371
+- **Total plugins**: 3,392
 - **Short descriptions in meta.json**: 535 plugins with <30 char descriptions remain (avg length ~77 chars)
 - **Short descriptions in plugin.json**: 632 plugins with <30 char descriptions remain (avg length ~59 chars)
 - **Test status**: 5 pre-existing test failures (cline-skill, xurl, azd, docker, supercli-version)
@@ -132,7 +132,7 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ### State Assessment
 | Metric | Current | Target | Gap |
 |--------|---------|--------|-----|
-| Plugin count | 3,371 | — | Stable |
+| Plugin count | 3,392 | — | Stable (+21) |
 | Short descriptions (meta.json, <30 chars) | 535 | 0 | 535 |
 | Short descriptions (plugin.json, <30 chars) | 632 | 0 | 632 |
 | Avg description length (meta.json) | ~77 chars | 80+ chars | +3 chars |
