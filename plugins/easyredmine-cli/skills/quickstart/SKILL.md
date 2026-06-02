@@ -1,3 +1,8 @@
+---
+name: easyredmine-cli Quickstart
+description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, and smart-search across all open issues.
+---
+
 # easyredmine-cli Quickstart
 
 ## Overview

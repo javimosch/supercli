@@ -108,6 +108,10 @@ async function main() {
             "supercli plugins learn <name> --json",
             "supercli commands --query <keyword> --limit 50 --json",
             "supercli inspect <namespace> <resource> <action> --json",
+            "supercli skills sync --json                         # sync & index skill documents",
+            "supercli skills list --catalog --limit 10 --json    # browse available skills",
+            "supercli skills search --query <topic> --json       # find a skill by topic",
+            "supercli skills teach <name>                        # load skill into context",
           ],
           token_optimization: {
             context_mode: "Use supercli MCP context-mode for large command outputs.",
