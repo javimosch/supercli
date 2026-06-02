@@ -437,9 +437,8 @@ function handleSkillsCommand(options) {
     const end = limit !== null ? Math.min(start + limit, total) : total
     const returned = end - start
     const skills = allSkills.slice(start, end)
-    const result = { skills, total, returned, offset }
-    if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination."
-    output(result)
+    if (limitAuto && returned < total) console.error("--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination.")
+    output({ skills, total, returned, offset })
     return true
   }
 
@@ -490,9 +489,8 @@ function handleSkillsCommand(options) {
       console.log(`  Returned: ${returned}/${total}  (offset: ${offset})\n`)
     } else {
       const index = readIndex() || {}
-      const result = { skills, total, returned, offset, index: { updated_at: index.updated_at || null } }
-      if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination."
-      output(result)
+      if (limitAuto && returned < total) console.error("--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination.")
+      output({ skills, total, returned, offset, index: { updated_at: index.updated_at || null } })
     }
     return true
   }

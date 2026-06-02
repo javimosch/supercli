@@ -237,7 +237,8 @@ describe("skills", () => {
       }))
     })
 
-    test("list --catalog _warning when limit auto-applied", () => {
+    test("list --catalog warns on stderr when limit auto-applied", () => {
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation()
       const manySkills = Array.from({ length: 55 }, (_, i) => ({ name: `s${i}` }))
       catalog.listCatalogSkills.mockReturnValue(manySkills)
       catalog.readIndex.mockReturnValue({ updated_at: "now" })
@@ -250,11 +251,12 @@ describe("skills", () => {
       })
 
       expect(result).toBe(true)
-      const call = mockOutput.mock.calls[0][0]
-      expect(call._warning).toContain("--limit 50 applied")
+      expect(consoleSpy).toHaveBeenCalledWith("--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for full pagination.")
+      consoleSpy.mockRestore()
     })
 
-    test("list --catalog no _warning when --limit explicit", () => {
+    test("list --catalog no stderr warning when --limit explicit", () => {
+      const consoleSpy = jest.spyOn(console, "error").mockImplementation()
       catalog.listCatalogSkills.mockReturnValue([{ name: "s1" }])
       catalog.readIndex.mockReturnValue({ updated_at: "now" })
 
@@ -266,8 +268,8 @@ describe("skills", () => {
       })
 
       expect(result).toBe(true)
-      const call = mockOutput.mock.calls[0][0]
-      expect(call._warning).toBeUndefined()
+      expect(consoleSpy).not.toHaveBeenCalled()
+      consoleSpy.mockRestore()
     })
 
     test("teach subcommand", () => {
