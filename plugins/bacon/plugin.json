@@ -1,0 +1,108 @@
+{
+  "name": "bacon",
+  "version": "0.1.0",
+  "description": "A background Rust code checker. Watches your Rust project and runs clippy, rustc, or custom commands on file changes, showing results in a clean TUI.",
+  "source": "https://github.com/Canop/bacon",
+  "checks": [
+    { "type": "binary", "name": "bacon" }
+  ],
+  "install_guidance": {
+    "plugin": "bacon",
+    "binary": "bacon",
+    "check": "which bacon",
+    "install_steps": [
+      "cargo install bacon --locked",
+      "Or: brew install bacon",
+      "Verify: bacon --version",
+      "supercli plugins install ./plugins/bacon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bacon",
+      "resource": "project",
+      "action": "check",
+      "description": "Run bacon in background check mode (default)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bacon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bacon: cargo install bacon --locked"
+      },
+      "args": [
+        { "name": "job", "type": "string", "description": "Job to run (e.g. clippy, test, check)" },
+        { "name": "--path", "type": "string", "description": "Path to the Rust project" },
+        { "name": "--init", "type": "boolean", "description": "Create a default bacon.toml config" },
+        { "name": "--no-default-features", "type": "boolean", "description": "Disable default features" },
+        { "name": "--all-features", "type": "boolean", "description": "Enable all features" },
+        { "name": "--all-targets", "type": "boolean", "description": "Check all targets" },
+        { "name": "--release", "type": "boolean", "description": "Build in release mode" },
+        { "name": "--features", "type": "string", "description": "Comma-separated features list" },
+        { "name": "--color", "type": "string", "description": "Color mode (auto, always, never)" }
+      ]
+    },
+    {
+      "namespace": "bacon",
+      "resource": "project",
+      "action": "cli",
+      "description": "Run bacon with a specific job command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bacon",
+        "baseArgs": ["--job"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install bacon: cargo install bacon --locked"
+      },
+      "args": [
+        { "name": "job", "type": "string", "description": "Job name or command to run" },
+        { "name": "--path", "type": "string", "description": "Path to the Rust project" }
+      ]
+    },
+    {
+      "namespace": "bacon",
+      "resource": "config",
+      "action": "init",
+      "description": "Create a default bacon.toml configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bacon",
+        "baseArgs": ["--init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install bacon: cargo install bacon --locked"
+      },
+      "args": [
+        { "name": "--path", "type": "string", "description": "Path to the Rust project" }
+      ]
+    },
+    {
+      "namespace": "bacon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bacon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bacon",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install bacon: cargo install bacon --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bacon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bacon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bacon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bacon: cargo install bacon --locked"
+      },
+      "args": []
+    }
+  ]
+}
