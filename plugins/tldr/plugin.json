@@ -1,0 +1,103 @@
+{
+  "name": "tldr",
+  "version": "0.1.0",
+  "description": "A community-driven collection of simplified and community-driven man pages. Quick examples for common CLI tools.",
+  "source": "https://github.com/tldr-pages/tldr",
+  "checks": [
+    { "type": "binary", "name": "tldr" }
+  ],
+  "install_guidance": {
+    "plugin": "tldr",
+    "binary": "tldr",
+    "check": "which tldr",
+    "install_steps": [
+      "npm install -g tldr",
+      "Or: brew install tldr",
+      "Or: cargo install tealdeer",
+      "Verify: tldr --version",
+      "supercli plugins install ./plugins/tldr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tldr",
+      "resource": "command",
+      "action": "show",
+      "description": "Show tldr page for a command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "positionalArgs": ["command"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tldr: npm install -g tldr"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command to look up" },
+        { "name": "--platform", "type": "string", "required": false, "description": "Platform filter (linux, osx, windows, common)" },
+        { "name": "--language", "type": "string", "required": false, "description": "Language code for the page" },
+        { "name": "--list", "type": "boolean", "required": false, "description": "List all available commands" },
+        { "name": "--update", "type": "boolean", "required": false, "description": "Update local cache" },
+        { "name": "--render", "type": "string", "required": false, "description": "Render mode (terminal, markdown)" }
+      ]
+    },
+    {
+      "namespace": "tldr",
+      "resource": "cache",
+      "action": "update",
+      "description": "Update the tldr pages cache",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--update"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tldr: npm install -g tldr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tldr",
+      "resource": "cache",
+      "action": "list",
+      "description": "List all available tldr commands",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tldr: npm install -g tldr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tldr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tldr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tldr: npm install -g tldr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tldr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tldr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tldr: npm install -g tldr"
+      },
+      "args": []
+    }
+  ]
+}
