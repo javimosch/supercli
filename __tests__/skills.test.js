@@ -190,7 +190,28 @@ describe("skills", () => {
       expect(result).toBe(true)
       expect(catalog.listCatalogSkills).toHaveBeenCalled()
       expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
-        skills: [{ name: "cat-skill" }]
+        skills: [{ name: "cat-skill" }],
+        total: 1,
+        returned: 1
+      }))
+    })
+
+    test("list --catalog --limit <n>", () => {
+      catalog.listCatalogSkills.mockReturnValue([{ name: "s1" }, { name: "s2" }, { name: "s3" }])
+      catalog.readIndex.mockReturnValue({ updated_at: "now" })
+      
+      const result = handleSkillsCommand({
+        positional: ["skills", "list"],
+        flags: { catalog: true, limit: 2 },
+        config: {},
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutput).toHaveBeenCalledWith(expect.objectContaining({
+        skills: [{ name: "s1" }, { name: "s2" }],
+        total: 3,
+        returned: 2
       }))
     })
 
@@ -368,7 +389,29 @@ describe("skills", () => {
 
       expect(result).toBe(true)
       expect(catalog.searchCatalog).toHaveBeenCalledWith("query", expect.anything())
-      expect(mockOutput).toHaveBeenCalledWith({ skills: [{ name: "found" }] })
+      expect(mockOutput).toHaveBeenCalledWith({
+        skills: [{ name: "found" }],
+        total: 1,
+        returned: 1
+      })
+    })
+
+    test("search subcommand --limit", () => {
+      const manySkills = Array.from({ length: 20 }, (_, i) => ({ name: `found-${i}` }))
+      catalog.searchCatalog.mockReturnValue(manySkills)
+      
+      const result = handleSkillsCommand({
+        positional: ["skills", "search", "query"],
+        flags: { limit: 5 },
+        output: mockOutput
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutput).toHaveBeenCalledWith({
+        skills: manySkills.slice(0, 5),
+        total: 20,
+        returned: 5
+      })
     })
 
     test("search subcommand validation error", () => {
@@ -380,6 +423,28 @@ describe("skills", () => {
 
       expect(result).toBe(true)
       expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85 }))
+    })
+
+    test("search subcommand invalid limit", () => {
+      const result = handleSkillsCommand({
+        positional: ["skills", "search", "query"],
+        flags: { limit: -1 },
+        outputError: mockOutputError
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85, message: "Invalid --limit. Use a positive integer" }))
+    })
+
+    test("list --catalog invalid limit", () => {
+      const result = handleSkillsCommand({
+        positional: ["skills", "list"],
+        flags: { catalog: true, limit: "abc" },
+        outputError: mockOutputError
+      })
+
+      expect(result).toBe(true)
+      expect(mockOutputError).toHaveBeenCalledWith(expect.objectContaining({ code: 85, message: "Invalid --limit. Use a positive integer" }))
     })
 
     describe("providers subcommand", () => {

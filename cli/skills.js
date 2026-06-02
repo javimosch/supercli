@@ -415,11 +415,20 @@ function handleSkillsCommand(options) {
   if (subcommand === "search") {
     const query = flags.query || positional.slice(2).join(" ")
     if (!query) {
-      outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills search --query <text> [--provider <provider>]", recoverable: false })
+      outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills search --query <text> [--provider <provider>] [--limit <n>]", recoverable: false })
       return true
     }
-    const skills = searchCatalog(query, { provider: flags.provider })
-    output({ skills })
+    const limitExplicit = flags.limit !== undefined
+    const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50)
+    if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
+      outputError({ code: 85, type: "invalid_argument", message: "Invalid --limit. Use a positive integer", recoverable: false })
+      return true
+    }
+    const allSkills = searchCatalog(query, { provider: flags.provider })
+    const total = allSkills.length
+    const returned = limit !== null ? Math.min(limit, total) : total
+    const skills = allSkills.slice(0, returned)
+    output({ skills, total, returned })
     return true
   }
 
@@ -440,17 +449,28 @@ function handleSkillsCommand(options) {
       return true
     }
 
-    const skills = listCatalogSkills({ provider: flags.provider })
+    const limitExplicit = flags.limit !== undefined
+    const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50)
+    if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
+      outputError({ code: 85, type: "invalid_argument", message: "Invalid --limit. Use a positive integer", recoverable: false })
+      return true
+    }
+
+    const allSkills = listCatalogSkills({ provider: flags.provider })
+    const total = allSkills.length
+    const returned = limit !== null ? Math.min(limit, total) : total
+    const skills = allSkills.slice(0, returned)
+
     if (humanMode && !flags.json) {
       console.log("\n  ⚡ Skills\n")
       outputHumanTable(skills, [
         { key: "name", label: "Name" },
         { key: "description", label: "Description" }
       ])
-      console.log("")
+      console.log(`  Returned: ${returned}/${total}\n`)
     } else {
       const index = readIndex() || {}
-      output({ skills, index: { updated_at: index.updated_at || null } })
+      output({ skills, total, returned, index: { updated_at: index.updated_at || null } })
     }
     return true
   }
@@ -520,17 +540,17 @@ function handleSkillsCommand(options) {
       console.log("\n  ⚡ SuperCLI Skills\n");
       console.log("  Skill documents provide agent-facing guidance in SKILL.md format.\n");
       console.log("  Subcommands:");
-      console.log("    list           List available skills");
+      console.log("    list           List available skills (--catalog, --limit)");
       console.log("    get <id>       Get skill documentation");
       console.log("    teach          Get the skills usage guide");
       console.log("    sync           Sync skills catalog");
-      console.log("    search         Search skills catalog");
+      console.log("    search         Search skills catalog (--limit)");
       console.log("    providers      Manage skill providers\n");
       console.log("  Usage:");
-      console.log("    supercli skills list");
+      console.log("    supercli skills list [--catalog] [--limit <n>]");
       console.log("    supercli skills get <namespace.resource.action>");
       console.log("    supercli skills teach");
-      console.log("    supercli skills search --query <text>");
+      console.log("    supercli skills search --query <text> [--limit <n>]");
       console.log("    supercli skills sync");
       console.log("    supercli skills providers list\n");
     } else {
@@ -541,8 +561,8 @@ function handleSkillsCommand(options) {
         subcommands: {
           list: {
             description: "List available skills (command-level + catalog)",
-            usage: "supercli skills list [--catalog] [--provider <name>]",
-            examples: ["supercli skills list --json", "supercli skills list --catalog --json"]
+            usage: "supercli skills list [--catalog] [--provider <name>] [--limit <n>]",
+            examples: ["supercli skills list --json", "supercli skills list --catalog --json", "supercli skills list --catalog --limit 10 --json"]
           },
           get: {
             description: "Get skill documentation for a specific capability",
@@ -561,8 +581,8 @@ function handleSkillsCommand(options) {
           },
           search: {
             description: "Search skills catalog for matching skills",
-            usage: "supercli skills search --query <text> [--provider <name>]",
-            examples: ["supercli skills search --query email --json"]
+            usage: "supercli skills search --query <text> [--provider <name>] [--limit <n>]",
+            examples: ["supercli skills search --query email --json", "supercli skills search --query email --limit 10 --json"]
           },
           providers: {
             description: "Manage skill providers (list, add, remove, show)",
