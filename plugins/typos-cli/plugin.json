@@ -1,0 +1,55 @@
+{
+  "name": "typos-cli",
+  "version": "0.1.0",
+  "description": "typos-cli — source code spell checker that finds and fixes typos with minimal false positives",
+  "source": "https://github.com/crate-ci/typos",
+  "checks": [
+    { "type": "binary", "name": "typos" }
+  ],
+  "install_guidance": {
+    "plugin": "typos-cli",
+    "binary": "typos",
+    "check": "which typos",
+    "install_steps": [
+      "brew install typos-cli",
+      "Verify: typos --version",
+      "supercli plugins install ./plugins/typos-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "typos",
+      "resource": "files",
+      "action": "check",
+      "description": "Check files for typos",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "typos",
+        "missingDependencyHelp": "Install typos-cli: brew install typos-cli"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "description": "Files or directories to check" },
+        { "name": "--format", "type": "string", "description": "Output format (silent, brief, long, json)" },
+        { "name": "--config", "type": "string", "description": "Path to config file" },
+        { "name": "--write-changes", "type": "boolean", "description": "Write corrections" },
+        { "name": "--diff", "type": "boolean", "description": "Show diff" }
+      ]
+    },
+    {
+      "namespace": "typos",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to typos CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "typos",
+        "passthrough": true,
+        "missingDependencyHelp": "Install typos-cli: brew install typos-cli"
+      },
+      "args": []
+    }
+  ]
+}

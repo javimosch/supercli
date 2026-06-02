@@ -1,0 +1,55 @@
+{
+  "name": "viddy",
+  "version": "0.1.0",
+  "description": "viddy — a modern watch command with diff highlighting, output history, and customizable display",
+  "source": "https://github.com/sachaos/viddy",
+  "checks": [
+    { "type": "binary", "name": "viddy" }
+  ],
+  "install_guidance": {
+    "plugin": "viddy",
+    "binary": "viddy",
+    "check": "which viddy",
+    "install_steps": [
+      "brew install viddy",
+      "Verify: viddy --version",
+      "supercli plugins install ./plugins/viddy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "viddy",
+      "resource": "command",
+      "action": "watch",
+      "description": "Watch a command with diff highlighting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viddy",
+        "missingDependencyHelp": "Install viddy: brew install viddy"
+      },
+      "args": [
+        { "name": "--interval", "type": "string", "description": "Update interval in seconds (default: 2)" },
+        { "name": "--differences", "type": "boolean", "description": "Highlight differences between updates" },
+        { "name": "--no-title", "type": "boolean", "description": "Hide title header" },
+        { "name": "--shell", "type": "string", "description": "Shell to use (default: bash)" },
+        { "name": "command", "type": "string", "required": true, "positional": true, "description": "Command to watch" }
+      ]
+    },
+    {
+      "namespace": "viddy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to viddy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viddy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install viddy: brew install viddy"
+      },
+      "args": []
+    }
+  ]
+}
