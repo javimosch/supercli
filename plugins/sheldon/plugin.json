@@ -1,0 +1,134 @@
+{
+  "name": "sheldon",
+  "version": "0.1.0",
+  "description": "Fast, configurable shell plugin manager for zsh and bash with TOML config, Git sources, and template-based loading.",
+  "source": "https://github.com/rossmacarthur/sheldon",
+  "checks": [
+    { "type": "binary", "name": "sheldon" }
+  ],
+  "install_guidance": {
+    "plugin": "sheldon",
+    "binary": "sheldon",
+    "check": "which sheldon",
+    "install_steps": [
+      "brew install sheldon",
+      "cargo install sheldon",
+      "curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh | bash -s -- --repo rossmacarthur/sheldon --to ~/.local/bin",
+      "Verify: sheldon --version",
+      "supercli plugins install ./plugins/sheldon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sheldon",
+      "resource": "config",
+      "action": "init",
+      "description": "Initialize a new sheldon config file (plugins.toml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": [
+        { "name": "--shell", "type": "string", "required": true, "description": "Shell type (bash or zsh)" }
+      ]
+    },
+    {
+      "namespace": "sheldon",
+      "resource": "plugin",
+      "action": "add",
+      "description": "Add a new plugin to the sheldon config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "positional": true, "description": "Unique name for the plugin" },
+        { "name": "--github", "type": "string", "description": "GitHub repository (user/repo)" },
+        { "name": "--git", "type": "string", "description": "Git URL to clone" },
+        { "name": "--remote", "type": "string", "description": "Remote file URL" },
+        { "name": "--local", "type": "string", "description": "Local directory path" },
+        { "name": "--use", "type": "string", "description": "Glob patterns for files to use" },
+        { "name": "--tag", "type": "string", "description": "Git tag to checkout" },
+        { "name": "--branch", "type": "string", "description": "Git branch to checkout" }
+      ]
+    },
+    {
+      "namespace": "sheldon",
+      "resource": "plugin",
+      "action": "remove",
+      "description": "Remove a plugin from the sheldon config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "baseArgs": ["remove"],
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "positional": true, "description": "Name of the plugin to remove" }
+      ]
+    },
+    {
+      "namespace": "sheldon",
+      "resource": "config",
+      "action": "edit",
+      "description": "Open the sheldon config file in the default editor",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "baseArgs": ["edit"],
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sheldon",
+      "resource": "plugin",
+      "action": "lock",
+      "description": "Install plugin sources and generate the lock file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "baseArgs": ["lock"],
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": [
+        { "name": "--update", "type": "boolean", "description": "Update all plugin sources" },
+        { "name": "--reinstall", "type": "boolean", "description": "Force reinstall of all plugin sources" }
+      ]
+    },
+    {
+      "namespace": "sheldon",
+      "resource": "plugin",
+      "action": "source",
+      "description": "Generate and output the shell source script for all plugins",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "baseArgs": ["source"],
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sheldon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sheldon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sheldon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install sheldon: brew install sheldon"
+      },
+      "args": []
+    }
+  ]
+}
