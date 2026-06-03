@@ -388,6 +388,14 @@ Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelin
 
 ---
 
+## Support
+
+If supercli saved you time, consider supporting the project:
+
+[![Support me on Ko-fi](https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_badge_beige.png)](https://ko-fi.com/javimosch)
+
+---
+
 ## License
 
 MIT — <a href="https://www.linkedin.com/in/arancibiajav/" target="_blank">Javier Leandro Arancibia</a>
