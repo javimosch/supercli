@@ -256,7 +256,24 @@ supercli replaces tool-specific syntax with a **queryable, executable capability
 
 ## 📦 Capability Sources
 
-supercli draws capabilities from **bundled plugins** (200+, immediate), **plugin registry** (3,100+, `plugins install <name>`), **MCP servers** (`mcp add <name>`), and **HTTP APIs** (`api add <name>`). Every capability includes description, tags, argument schemas, and checksum-verified metadata.
+supercli discovers capabilities through four distinct channels, each adding new tools to the command graph:
+
+| Source | Count | How To Access |
+|--------|-------|--------------|
+| **Bundled plugins** | 4,022 | Immediate — included in every install |
+| **Plugin registry** | 3,100+ | `supercli plugins install <name>` |
+| **MCP servers** | Any | `supercli mcp add <name>` |
+| **HTTP APIs** | Any | `supercli api add <name>` |
+
+Every capability — whether from a bundled plugin, remote registry, MCP server, or REST API — is normalized to the same format: a named unit with description, tags, typed argument schemas, and checksum-verified metadata. The router treats all four sources identically; they differ only in how they're added.
+
+**Bundled plugins** are maintained in `plugins/<name>/` within the repository. Each ships a `plugin.json` manifest with command definitions, version metadata, and dependency checks. New plugins can be added by creating a directory with the required files — no edits to shared config files needed.
+
+**The plugin registry** (`plugins/catalog.json`) is a checksum-verified index of all community plugins. The registry is auto-generated from git-tracked plugin directories and compared by checksum so plugins are only re-indexed when their content changes.
+
+**MCP servers** connect via the Model Context Protocol, exposing their tool list as capabilities. **HTTP APIs** are configured inline with method, URL, headers, and body schema — no separate server process needed.
+
+Both the Zig binary (`sc-zig`) and the Node.js runtime (`sc`) share the same plugin storage at `~/.supercli/plugins/plugins.lock.json`, ensuring seamless coexistence.
 
 ---
 
