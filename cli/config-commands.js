@@ -4,6 +4,7 @@ const {
   readCache,
   writeCache,
   emptyConfig,
+  cacheFilePath,
 } = require("./config-core");
 const {
   listInstalledPlugins,
@@ -47,6 +48,7 @@ async function showConfig() {
     server_plugins: Object.keys((readServerPluginsLock().installed || {})).length,
     mcp_servers: cache.mcp_servers ? cache.mcp_servers.length : 0,
     specs: cache.specs ? cache.specs.length : 0,
+    cacheFile: cacheFilePath(),
   };
 }
 

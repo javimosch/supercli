@@ -111,6 +111,10 @@ async function loadConfig() {
   return merged;
 }
 
+function cacheFilePath() {
+  return CACHE_FILE;
+}
+
 module.exports = {
   getClientId,
   ensureCacheDir,
@@ -122,4 +126,5 @@ module.exports = {
   writeCache,
   fetchRemoteConfig,
   loadConfig,
+  cacheFilePath,
 };

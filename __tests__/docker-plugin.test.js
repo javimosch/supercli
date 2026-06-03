@@ -79,7 +79,7 @@ describe("docker plugin", () => {
     const r = runNoServer("docker container run --image nginx:latest --interactive --json", { env })
     expect(r.ok).toBe(false)
     expect(r.code).toBe(91)
-    const payload = JSON.parse(r.output)
+    const payload = JSON.parse(r.stderr)
     expect(payload.error.type).toBe("safety_violation")
   })
 
