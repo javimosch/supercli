@@ -1,0 +1,63 @@
+{
+  "name": "dia",
+  "version": "0.1.0",
+  "description": "TTS model for ultra-realistic dialogue generation",
+  "source": "https://github.com/nickelc/dia",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dia"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dia",
+    "binary": "dia",
+    "check": "which dia",
+    "install_steps": [
+      "pip install dia",
+      "Verify: dia --version",
+      "supercli plugins install ./plugins/dia --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dia",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dia version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dia",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dia: pip install dia"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dia",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dia",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dia",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dia: pip install dia"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
