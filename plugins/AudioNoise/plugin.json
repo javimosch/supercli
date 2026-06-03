@@ -1,0 +1,63 @@
+{
+  "name": "AudioNoise",
+  "version": "0.1.0",
+  "description": "Random digital audio effects generator",
+  "source": "https://github.com/nickelc/AudioNoise",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "audionoise"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "AudioNoise",
+    "binary": "audionoise",
+    "check": "which audionoise",
+    "install_steps": [
+      "cargo install audionoise",
+      "Verify: audionoise --version",
+      "supercli plugins install ./plugins/AudioNoise --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "AudioNoise",
+      "resource": "self",
+      "action": "version",
+      "description": "Print AudioNoise version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "audionoise",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install AudioNoise: cargo install audionoise"
+      },
+      "args": []
+    },
+    {
+      "namespace": "AudioNoise",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to audionoise",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "audionoise",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install AudioNoise: cargo install audionoise"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

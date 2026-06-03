@@ -1,0 +1,63 @@
+{
+  "name": "MasterPassword",
+  "version": "0.1.0",
+  "description": "Stateless password management",
+  "source": "https://github.com/nickelc/MasterPassword",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpw"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "MasterPassword",
+    "binary": "mpw",
+    "check": "which mpw",
+    "install_steps": [
+      "brew install masterpassword",
+      "Verify: mpw --version",
+      "supercli plugins install ./plugins/MasterPassword --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "MasterPassword",
+      "resource": "self",
+      "action": "version",
+      "description": "Print MasterPassword version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpw",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install MasterPassword: brew install masterpassword"
+      },
+      "args": []
+    },
+    {
+      "namespace": "MasterPassword",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpw",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpw",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install MasterPassword: brew install masterpassword"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
