@@ -47,20 +47,24 @@ function scorePlugin(plugin, tokens, phrase, installedSet) {
   const name = String(plugin.name || "")
   const tags = Array.isArray(plugin.tags) ? plugin.tags.map(t => String(t)) : []
   const description = String(plugin.description || "")
+  const keywords = String(plugin.discover_keywords || "")
 
   const nameHits = countTokenHits(name, tokens)
   const tagHits = tags.flatMap(tag => countTokenHits(tag, tokens))
   const descHits = countTokenHits(description, tokens)
+  const keywordHits = keywords ? countTokenHits(keywords, tokens) : []
 
   const uniqueTagHits = [...new Set(tagHits)]
   const uniqueDescHits = [...new Set(descHits)]
-  const baseScore = nameHits.length * 6 + uniqueTagHits.length * 5 + uniqueDescHits.length * 2
+  const uniqueKeywordHits = [...new Set(keywordHits)]
+  const baseScore = nameHits.length * 6 + uniqueTagHits.length * 5 + uniqueDescHits.length * 2 + uniqueKeywordHits.length * 4
   let score = baseScore
 
+  const allText = `${name} ${description} ${keywords}`.toLowerCase()
   const phraseNormalized = String(phrase || "").trim().toLowerCase()
   const phraseHit =
     phraseNormalized.length > 2 &&
-    (`${name} ${description}`.toLowerCase().includes(phraseNormalized))
+    allText.includes(phraseNormalized)
 
   if (phraseHit) score += 4
   if (installedSet.has(name)) score += 1
@@ -75,6 +79,7 @@ function scorePlugin(plugin, tokens, phrase, installedSet) {
       name: nameHits,
       tags: uniqueTagHits,
       description: uniqueDescHits,
+      keywords: uniqueKeywordHits,
       phrase: phraseHit,
     }
   }
