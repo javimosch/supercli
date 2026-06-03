@@ -1,0 +1,55 @@
+{
+  "name": "notation",
+  "version": "0.1.0",
+  "description": "Sign and verify container images and software artifacts",
+  "source": "https://github.com/notaryproject/notation",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "notation"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "notation",
+    "binary": "notation",
+    "check": "which notation",
+    "install_steps": [
+      "go install github.com/notaryproject/notation/cmd/notation@latest",
+      "Verify: notation --version",
+      "supercli plugins install ./plugins/notation --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "notation",
+      "resource": "self",
+      "action": "version",
+      "description": "Print notation version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notation",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install notation: go install github.com/notaryproject/notation/cmd/notation@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "notation",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to notation CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notation",
+        "passthrough": true,
+        "missingDependencyHelp": "Install notation: go install github.com/notaryproject/notation/cmd/notation@latest"
+      },
+      "args": []
+    }
+  ]
+}
