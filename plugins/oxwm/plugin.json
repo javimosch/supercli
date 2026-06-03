@@ -1,0 +1,63 @@
+{
+  "name": "oxwm",
+  "version": "0.1.0",
+  "description": "Minimalist window manager",
+  "source": "https://github.com/nickelc/oxwm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "oxwm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "oxwm",
+    "binary": "oxwm",
+    "check": "which oxwm",
+    "install_steps": [
+      "cargo install oxwm",
+      "Verify: oxwm --version",
+      "supercli plugins install ./plugins/oxwm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oxwm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oxwm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oxwm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install oxwm: cargo install oxwm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oxwm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oxwm",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oxwm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oxwm: cargo install oxwm"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

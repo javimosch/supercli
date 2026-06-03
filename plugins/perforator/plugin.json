@@ -1,0 +1,63 @@
+{
+  "name": "perforator",
+  "version": "0.1.0",
+  "description": "Cluster-wide continuous profiling tool",
+  "source": "https://github.com/nickelc/perforator",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "perforator"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "perforator",
+    "binary": "perforator",
+    "check": "which perforator",
+    "install_steps": [
+      "cargo install perforator",
+      "Verify: perforator --version",
+      "supercli plugins install ./plugins/perforator --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "perforator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print perforator version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perforator",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install perforator: cargo install perforator"
+      },
+      "args": []
+    },
+    {
+      "namespace": "perforator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to perforator",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perforator",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install perforator: cargo install perforator"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

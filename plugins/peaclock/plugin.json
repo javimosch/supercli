@@ -1,0 +1,63 @@
+{
+  "name": "peaclock",
+  "version": "0.1.0",
+  "description": "Responsive customizable clock timer and stopwatch",
+  "source": "https://github.com/nickelc/peaclock",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "peaclock"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "peaclock",
+    "binary": "peaclock",
+    "check": "which peaclock",
+    "install_steps": [
+      "cargo install peaclock",
+      "Verify: peaclock --version",
+      "supercli plugins install ./plugins/peaclock --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "peaclock",
+      "resource": "self",
+      "action": "version",
+      "description": "Print peaclock version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peaclock",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install peaclock: cargo install peaclock"
+      },
+      "args": []
+    },
+    {
+      "namespace": "peaclock",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to peaclock",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peaclock",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install peaclock: cargo install peaclock"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
