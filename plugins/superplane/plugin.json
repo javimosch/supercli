@@ -1,0 +1,68 @@
+{
+  "name": "superplane",
+  "version": "0.1.0",
+  "description": "The open source control plane for platform engineering",
+  "source": "https://github.com/superplanehq/superplane",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "superplane"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "superplane",
+    "binary": "superplane",
+    "check": "which superplane",
+    "install_steps": [
+      "go install github.com/superplanehq/superplane@latest",
+      "Verify: superplane --version",
+      "supercli plugins install ./plugins/superplane --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+  {
+    "namespace": "superplane",
+    "resource": "self",
+    "action": "version",
+    "description": "Print superplane version",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "superplane",
+      "baseArgs": [
+        "--version"
+      ],
+      "missingDependencyHelp": "Install superplane: go install github.com/superplanehq/superplane@latest"
+    },
+    "args": []
+  },
+  {
+    "namespace": "superplane",
+    "resource": "server",
+    "action": "start",
+    "description": "Start the SuperPlane server",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "superplane",
+      "passthrough": true,
+      "missingDependencyHelp": "Install superplane: go install github.com/superplanehq/superplane@latest"
+    },
+    "args": []
+  },
+  {
+    "namespace": "superplane",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to superplane CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "superplane",
+      "passthrough": true,
+      "missingDependencyHelp": "Install superplane"
+    },
+    "args": []
+  }
+]
+}

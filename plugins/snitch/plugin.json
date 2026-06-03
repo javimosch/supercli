@@ -1,0 +1,55 @@
+{
+  "name": "snitch",
+  "version": "0.1.0",
+  "description": "Inspect active network connections and processes",
+  "source": "https://github.com/nicholasgasior/snitch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "snitch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "snitch",
+    "binary": "snitch",
+    "check": "which snitch",
+    "install_steps": [
+      "go install github.com/nicholasgasior/snitch@latest",
+      "Verify: snitch --version",
+      "supercli plugins install ./plugins/snitch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "snitch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print snitch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snitch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install snitch: go install github.com/nicholasgasior/snitch@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "snitch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to snitch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snitch",
+        "passthrough": true,
+        "missingDependencyHelp": "Install snitch: go install github.com/nicholasgasior/snitch@latest"
+      },
+      "args": []
+    }
+  ]
+}
