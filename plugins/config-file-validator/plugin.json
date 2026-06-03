@@ -1,0 +1,67 @@
+{
+  "name": "config-file-validator",
+  "version": "0.1.0",
+  "description": "config-file-validator \u2014 cross-platform CLI tool to validate configuration files.",
+  "source": "https://github.com/Boeing/config-file-validator",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "config-file-validator"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "config-file-validator",
+    "binary": "config-file-validator",
+    "check": "which config-file-validator",
+    "install_steps": [
+      "go install github.com/Boeing/config-file-validator@latest",
+      "supercli plugins install ./plugins/config-file-validator --on-conflict replace --json"
+    ],
+    "note": "Go. Config file validation."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "config-file-validator",
+      "resource": "config",
+      "action": "validate",
+      "description": "Validate configuration files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "config-file-validator",
+        "missingDependencyHelp": "Install config-file-validator",
+        "positionalArgs": [
+          "files"
+        ],
+        "passthrough": true,
+        "timeout_ms": 30000
+      },
+      "args": [
+        {
+          "name": "files",
+          "type": "string",
+          "required": true,
+          "description": "files path"
+        }
+      ]
+    },
+    {
+      "namespace": "config-file-validator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "config-file-validator",
+        "missingDependencyHelp": "Install config-file-validator",
+        "baseArgs": [
+          "--version"
+        ],
+        "timeout_ms": 30000
+      },
+      "args": []
+    }
+  ]
+}
