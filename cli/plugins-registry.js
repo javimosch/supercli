@@ -38,6 +38,7 @@ function normalizePlugin(entry) {
     name: entry.name,
     description: entry.description || "",
     tags: Array.isArray(entry.tags) ? entry.tags.map(t => String(t)) : [],
+    discover_keywords: entry.discover_keywords || "",
     source,
     has_learn: entry.has_learn === true,
     install_guidance: entry.install_guidance && typeof entry.install_guidance === "object"
@@ -92,6 +93,7 @@ function discoverPluginsInDir(dir, sourceType) {
       name: manifest.name,
       description: meta && typeof meta.description === "string" ? meta.description : (manifest.description || ""),
       tags: meta && Array.isArray(meta.tags) ? meta.tags : (Array.isArray(manifest.tags) ? manifest.tags : []),
+      discover_keywords: meta && typeof meta.discover_keywords === "string" ? meta.discover_keywords : "",
       source: {
         type: sourceType,
         manifest_path: path.relative(path.resolve(__dirname, ".."), manifestPath).replace(/\\/g, "/")
