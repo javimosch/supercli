@@ -1,0 +1,100 @@
+{
+  "name": "pyrefly",
+  "version": "0.1.0",
+  "description": "Lightning-fast Python type checker from Meta, 15x faster than Mypy/Pyright",
+  "source": "https://github.com/facebook/pyrefly",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pyrefly"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pyrefly",
+    "binary": "pyrefly",
+    "check": "which pyrefly",
+    "install_steps": [
+      "pip install pyrefly",
+      "Verify: pyrefly --version",
+      "supercli plugins install ./plugins/pyrefly --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pyrefly",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pyrefly version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyrefly",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pyrefly: pip install pyrefly"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pyrefly",
+      "resource": "project",
+      "action": "check",
+      "description": "Type-check a Python project or file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyrefly",
+        "baseArgs": [
+          "check"
+        ],
+        "positionalArgs": [
+          "path"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pyrefly: pip install pyrefly"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Path to Python file or directory (default: current directory)"
+        }
+      ]
+    },
+    {
+      "namespace": "pyrefly",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize pyrefly configuration for a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyrefly",
+        "baseArgs": [
+          "init"
+        ],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pyrefly: pip install pyrefly"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pyrefly",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pyrefly CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyrefly",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pyrefly: pip install pyrefly"
+      },
+      "args": []
+    }
+  ]
+}

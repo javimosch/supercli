@@ -1,0 +1,88 @@
+{
+  "name": "liteparse",
+  "version": "0.1.0",
+  "description": "Fast, standalone PDF/document parser with spatial text extraction and OCR",
+  "source": "https://github.com/run-llama/liteparse",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "liteparse",
+    "binary": "lit",
+    "check": "which lit",
+    "install_steps": [
+      "cargo install liteparse",
+      "Verify: lit --version",
+      "supercli plugins install ./plugins/liteparse --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "liteparse",
+      "resource": "self",
+      "action": "version",
+      "description": "Print liteparse version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install liteparse: cargo install liteparse"
+      },
+      "args": []
+    },
+    {
+      "namespace": "liteparse",
+      "resource": "doc",
+      "action": "parse",
+      "description": "Parse a PDF/document to structured text with bounding boxes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lit",
+        "baseArgs": [
+          "parse"
+        ],
+        "positionalArgs": [
+          "input"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install liteparse: cargo install liteparse"
+      },
+      "args": [
+        {
+          "name": "input",
+          "type": "string",
+          "required": true,
+          "description": "Path to PDF or document file"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: json or text"
+        }
+      ]
+    },
+    {
+      "namespace": "liteparse",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lit",
+        "passthrough": true,
+        "missingDependencyHelp": "Install liteparse: cargo install liteparse"
+      },
+      "args": []
+    }
+  ]
+}
