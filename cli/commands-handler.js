@@ -76,6 +76,9 @@ function handleInspect(config, positional, { humanMode, output, outputError }) {
   const spec = {
     version: "1.0",
     command: `${cmd.namespace}.${cmd.resource}.${cmd.action}`,
+    namespace: cmd.namespace,
+    resource: cmd.resource,
+    action: cmd.action,
     description: cmd.description, adapter: cmd.adapter,
     adapterConfig: cmd.adapterConfig, args: cmd.args,
     input_schema: {
