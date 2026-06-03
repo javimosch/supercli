@@ -1,0 +1,63 @@
+{
+  "name": "programmer-calculator",
+  "version": "0.1.0",
+  "description": "Terminal calculator for programmers",
+  "source": "https://github.com/AsamK/programmer-calculator",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pcalc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "programmer-calculator",
+    "binary": "pcalc",
+    "check": "which pcalc",
+    "install_steps": [
+      "cargo install programmer-calculator",
+      "Verify: pcalc --version",
+      "supercli plugins install ./plugins/programmer-calculator --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "programmer-calculator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print programmer-calculator version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcalc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install programmer-calculator: cargo install programmer-calculator"
+      },
+      "args": []
+    },
+    {
+      "namespace": "programmer-calculator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pcalc",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcalc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install programmer-calculator: cargo install programmer-calculator"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
