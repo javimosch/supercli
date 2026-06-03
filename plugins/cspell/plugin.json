@@ -1,0 +1,122 @@
+{
+  "name": "cspell",
+  "version": "0.1.0",
+  "description": "cspell — spell checker for code with support for camelCase, identifiers, and 40+ file types",
+  "source": "https://github.com/streetsidesoftware/cspell",
+  "checks": [
+    { "type": "binary", "name": "cspell" }
+  ],
+  "install_guidance": {
+    "plugin": "cspell",
+    "binary": "cspell",
+    "check": "which cspell",
+    "install_steps": [
+      "npm install -g cspell",
+      "Verify: cspell --version",
+      "supercli plugins install ./plugins/cspell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cspell",
+      "resource": "file",
+      "action": "check",
+      "description": "Check files for spelling errors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cspell",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cspell: npm install -g cspell"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "File(s) or glob pattern to check" },
+        { "name": "--language", "type": "string", "description": "Language to use for spell checking" },
+        { "name": "--config", "type": "string", "description": "Path to cspell configuration file" },
+        { "name": "--no-color", "type": "boolean", "description": "Disable color output" },
+        { "name": "--no-progress", "type": "boolean", "description": "Disable progress display" },
+        { "name": "--words-only", "type": "boolean", "description": "Output only misspelled words" },
+        { "name": "--unique", "type": "boolean", "description": "Only output unique misspelled words" },
+        { "name": "--quiet", "type": "boolean", "description": "Only output errors" },
+        { "name": "--no-summary", "type": "boolean", "description": "Suppress summary at end" },
+        { "name": "--no-issues", "type": "boolean", "description": "Do not show issues, only summary" },
+        { "name": "--show-context", "type": "boolean", "description": "Show surrounding text for each issue" },
+        { "name": "--show-suggestions", "type": "boolean", "description": "Show spelling suggestions" },
+        { "name": "--dot", "type": "boolean", "description": "Include dot files" },
+        { "name": "--gitignore", "type": "boolean", "description": "Ignore files matched in .gitignore" },
+        { "name": "--cache", "type": "boolean", "description": "Use cache to speed up repeated checks" },
+        { "name": "--cache-location", "type": "string", "description": "Path to cache file" },
+        { "name": "--cache-strategy", "type": "string", "description": "Cache strategy: content or metadata" }
+      ]
+    },
+    {
+      "namespace": "cspell",
+      "resource": "file",
+      "action": "lint",
+      "description": "Lint files and output spelling issues (alias for check)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cspell",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cspell: npm install -g cspell"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "File(s) or glob pattern to lint" },
+        { "name": "--language", "type": "string", "description": "Language to use for spell checking" },
+        { "name": "--config", "type": "string", "description": "Path to cspell configuration file" },
+        { "name": "--quiet", "type": "boolean", "description": "Only output errors" },
+        { "name": "--unique", "type": "boolean", "description": "Only output unique misspelled words" },
+        { "name": "--show-suggestions", "type": "boolean", "description": "Show spelling suggestions" }
+      ]
+    },
+    {
+      "namespace": "cspell",
+      "resource": "config",
+      "action": "init",
+      "description": "Initialize a cspell configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cspell",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cspell: npm install -g cspell"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "description": "Output config file path" },
+        { "name": "--overwrite", "type": "boolean", "description": "Overwrite existing config" }
+      ]
+    },
+    {
+      "namespace": "cspell",
+      "resource": "words",
+      "action": "add",
+      "description": "Add words to project dictionary",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cspell",
+        "baseArgs": ["add"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cspell: npm install -g cspell"
+      },
+      "args": [
+        { "name": "words", "type": "string", "required": true, "description": "Word(s) to add to dictionary" },
+        { "name": "--config", "type": "string", "description": "Path to cspell configuration file" }
+      ]
+    },
+    {
+      "namespace": "cspell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cspell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cspell",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cspell: npm install -g cspell"
+      },
+      "args": []
+    }
+  ]
+}
