@@ -45,13 +45,16 @@ sc <ns> <res> <act> --json
 | Code | Meaning | Agent action |
 |---|---|---|
 | 0 | Success | Proceed |
-| 80-89 | Input/validation errors | Fix input, don't retry |
-| 85 | Invalid argument | Fix the args |
-| 90-99 | Resource/state errors | Try alternate resource |
+| 82 | Validation error | Fix input arguments |
+| 85 | Invalid argument | Fix the args, don't retry |
+| 91 | Safety violation | Non-TTY interactive command blocked |
 | 92 | Resource not found | Use different ID/name |
-| 100-109 | Integration/external errors | Retry with backoff |
-| 105 | API/integration error | Retry after delay |
-| 110-119 | Internal errors | Report bug, don't retry |
+| 105 | Integration / API error | Retry with backoff (transient) |
+| 110 | Internal error | Report bug, don't retry |
+
+> Range convention (Square-style): 80-89 input errors, 90-99 resource errors,
+> 100-109 integration errors, 110-119 internal errors. Currently implemented
+> codes listed above; unused slots reserved for future granularity.
 
 ## Agent Workflow
 
@@ -82,7 +85,7 @@ sc skills get <name> --json
 
 ```
 sc inspect <namespace> <resource> <action> --json
-# → { namespace, resource, action, args: [{name, type, required}], adapterConfig }
+# → { namespace, resource, action, args: [{name, type, required, positional}], adapterConfig }
 ```
 
 Inspect tells you:
