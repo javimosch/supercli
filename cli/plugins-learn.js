@@ -186,6 +186,7 @@ function getPluginLearn(pluginName) {
   const meta = readMetaFile(metaPath)
   const markdown = resolveLearnMarkdown(loaded.manifest, loaded.manifestPath, meta)
   return {
+    name: loaded.manifest.name || pluginName,
     plugin: loaded.manifest.name || pluginName,
     installed: !!installed,
     source: loaded.source,
