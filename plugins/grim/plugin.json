@@ -1,0 +1,63 @@
+{
+  "name": "grim",
+  "version": "0.1.0",
+  "description": "Grab images from Wayland compositor in C",
+  "source": "https://github.com/nicedoc/grim",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grim"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grim",
+    "binary": "grim",
+    "check": "which grim",
+    "install_steps": [
+      "brew install grim",
+      "Verify: grim --version",
+      "supercli plugins install ./plugins/grim --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grim",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grim version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grim",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grim: brew install grim"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grim CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grim",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grim: brew install grim"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

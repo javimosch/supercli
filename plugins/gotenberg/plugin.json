@@ -1,0 +1,63 @@
+{
+  "name": "gotenberg",
+  "version": "0.1.0",
+  "description": "Developer-friendly API for document conversion",
+  "source": "https://github.com/nickelc/gotenberg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gotenberg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gotenberg",
+    "binary": "gotenberg",
+    "check": "which gotenberg",
+    "install_steps": [
+      "docker pull gotenberg/gotenberg",
+      "Verify: gotenberg --version",
+      "supercli plugins install ./plugins/gotenberg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gotenberg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gotenberg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gotenberg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gotenberg: docker pull gotenberg/gotenberg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gotenberg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gotenberg",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gotenberg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gotenberg: docker pull gotenberg/gotenberg"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
