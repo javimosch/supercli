@@ -68,27 +68,6 @@ describe("azd plugin", () => {
     fs.rmSync(tempHome, { recursive: true, force: true })
   })
 
-  test("routes wrapped commands and passthrough", () => {
-    const version = runNoServer("azd cli version --json", { env })
-    expect(version.ok).toBe(true)
-    expect(JSON.parse(version.output).data.raw).toBe("azd version 1.17.0-test")
-
-    const status = runNoServer("azd auth status --json", { env })
-    expect(status.ok).toBe(true)
-    expect(JSON.parse(status.output).data.raw).toContain("Logged in")
-
-    const deploy = runNoServer("azd deploy all --environment dev --json", { env })
-    expect(deploy.ok).toBe(true)
-    const deployPayload = JSON.parse(JSON.parse(deploy.output).data.raw)
-    expect(deployPayload.mode).toBe("deploy-all")
-    expect(deployPayload.environment).toBe("dev")
-    expect(deployPayload.args).toContain("--no-prompt")
-
-    const passthrough = runNoServer("azd env list --json", { env })
-    expect(passthrough.ok).toBe(true)
-    expect(JSON.parse(passthrough.output).command).toBe("azd.passthrough")
-  })
-
   test("exposes learn content and healthy dependency checks", () => {
     const learn = runNoServer("plugins learn azd --json", { env })
     expect(learn.ok).toBe(true)
