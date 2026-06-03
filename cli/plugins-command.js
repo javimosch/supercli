@@ -106,6 +106,9 @@ async function handlePluginsCommand(options) {
 
     const limitExplicit = flags.limit !== undefined
     const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50)
+    const limitAuto = !limitExplicit && !humanMode
+    const offsetExplicit = flags.offset !== undefined
+    const offset = offsetExplicit ? Number(flags.offset) : 0
     if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
       outputError({
         code: 85,
@@ -113,6 +116,11 @@ async function handlePluginsCommand(options) {
         message: "Invalid --limit. Use a positive integer",
         recoverable: false
       })
+      return true
+    }
+
+    if (offsetExplicit && (!Number.isFinite(offset) || offset < 0 || !Number.isInteger(offset))) {
+      outputError({ code: 85, type: "invalid_argument", message: "Invalid --offset. Use a non-negative integer", recoverable: false })
       return true
     }
 
@@ -140,7 +148,10 @@ async function handlePluginsCommand(options) {
     }
 
     const total = plugins.length
-    if (limit !== null) plugins = plugins.slice(0, limit)
+    const start = Math.min(offset, total)
+    const end = limit !== null ? Math.min(start + limit, total) : total
+    const returned = end - start
+    if (limit !== null) plugins = plugins.slice(start, end)
 
     const suggestions = total === 0 && hadFilters
       ? [
@@ -166,20 +177,23 @@ async function handlePluginsCommand(options) {
       }
       console.log("")
     } else {
-      output({
+      const result = {
         plugins,
         total,
-        returned: plugins.length,
+        returned,
+        offset: start,
         filters: {
           name: name || null,
           tags,
           has_learn: hasLearnFilter,
           installed: installedFilter,
           source: sourceFilter,
-          limit: limit === null ? null : limit
-        },
-        ...(suggestions.length > 0 ? { suggestions } : {})
-      })
+          limit: limitAuto ? 50 : (limit === null ? null : limit)
+        }
+      }
+      if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for pagination."
+      if (suggestions.length > 0) result.suggestions = suggestions
+      output(result)
     }
     return true
     } catch (err) {
