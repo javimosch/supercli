@@ -1,0 +1,109 @@
+{
+  "name": "comby",
+  "version": "0.1.0",
+  "description": "comby — structural code search and replace that understands code structure, not just text",
+  "source": "https://github.com/comby-tools/comby",
+  "checks": [
+    { "type": "binary", "name": "comby" }
+  ],
+  "install_guidance": {
+    "plugin": "comby",
+    "binary": "comby",
+    "check": "which comby",
+    "install_steps": [
+      "bash <(curl -sL https://comby.dev/install.sh)",
+      "Verify: comby --version",
+      "supercli plugins install ./plugins/comby --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "comby",
+      "resource": "code",
+      "action": "search",
+      "description": "Search code using structural patterns with hole syntax",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comby",
+        "baseArgs": [],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install comby: bash <(curl -sL https://comby.dev/install.sh)"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Search pattern with :[holes] for wildcards" },
+        { "name": "--directory", "type": "string", "description": "Directory to search in" },
+        { "name": "--extensions", "type": "string", "description": "Comma-separated file extensions" },
+        { "name": "--json", "type": "boolean", "description": "Output results as JSON" },
+        { "name": "--json-only", "type": "boolean", "description": "Output only JSON, no summary" },
+        { "name": "--match-only", "type": "boolean", "description": "Only show matched text (no context)" },
+        { "name": "--max-matches", "type": "number", "description": "Maximum number of matches" },
+        { "name": "--timeout", "type": "number", "description": "Timeout in seconds per file" },
+        { "name": "--stats", "type": "boolean", "description": "Show match statistics" },
+        { "name": "--no-color", "type": "boolean", "description": "Disable color output" },
+        { "name": "--no-input", "type": "boolean", "description": "Skip interactive input preview" }
+      ]
+    },
+    {
+      "namespace": "comby",
+      "resource": "code",
+      "action": "replace",
+      "description": "Replace code matching structural patterns using hole syntax",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comby",
+        "baseArgs": [],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install comby: bash <(curl -sL https://comby.dev/install.sh)"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Search pattern with :[holes] for wildcards" },
+        { "name": "replacement", "type": "string", "required": true, "description": "Replacement pattern with :[hole] references" },
+        { "name": "--directory", "type": "string", "description": "Directory to process" },
+        { "name": "--extensions", "type": "string", "description": "Comma-separated file extensions" },
+        { "name": "--json", "type": "boolean", "description": "Output results as JSON" },
+        { "name": "--dry-run", "type": "boolean", "description": "Preview changes without applying" },
+        { "name": "--no-color", "type": "boolean", "description": "Disable color output" },
+        { "name": "--in-place", "type": "boolean", "description": "Apply replacements in-place" },
+        { "name": "--interactive", "type": "boolean", "description": "Interactive mode for confirmation" },
+        { "name": "--max-matches", "type": "number", "description": "Maximum number of matches to replace" },
+        { "name": "--timeout", "type": "number", "description": "Timeout in seconds per file" },
+        { "name": "--no-input", "type": "boolean", "description": "Skip interactive input preview" }
+      ]
+    },
+    {
+      "namespace": "comby",
+      "resource": "code",
+      "action": "rewrite",
+      "description": "Rewrite entire file using a structural template",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comby",
+        "baseArgs": ["-rewrite"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install comby: bash <(curl -sL https://comby.dev/install.sh)"
+      },
+      "args": [
+        { "name": "template", "type": "string", "required": true, "description": "Rewrite template with :[holes]" },
+        { "name": "--directory", "type": "string", "description": "Directory to process" },
+        { "name": "--extensions", "type": "string", "description": "Comma-separated file extensions" },
+        { "name": "--dry-run", "type": "boolean", "description": "Preview changes without applying" }
+      ]
+    },
+    {
+      "namespace": "comby",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to comby CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comby",
+        "passthrough": true,
+        "missingDependencyHelp": "Install comby: bash <(curl -sL https://comby.dev/install.sh)"
+      },
+      "args": []
+    }
+  ]
+}
