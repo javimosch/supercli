@@ -1,0 +1,52 @@
+{
+  "name": "parallel",
+  "version": "0.1.0",
+  "description": "GNU parallel — build and execute shell commands in parallel across multiple CPU cores or multiple machines.",
+  "source": "https://www.gnu.org/software/parallel/",
+  "checks": [
+    { "type": "binary", "name": "parallel" }
+  ],
+  "install_guidance": {
+    "plugin": "parallel",
+    "binary": "parallel",
+    "check": "which parallel && parallel --version",
+    "install_steps": [
+      "brew install parallel",
+      "Or: apt-get install parallel (Debian/Ubuntu)",
+      "Or: dnf install parallel (Fedora)",
+      "Verify: parallel --version",
+      "supercli plugins install ./plugins/parallel --on-conflict replace --json"
+    ],
+    "note": "GNU parallel is a shell tool for executing jobs in parallel. Source: https://www.gnu.org/software/parallel/."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parallel",
+      "resource": "_",
+      "action": "_",
+      "description": "Execute commands in parallel using GNU parallel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parallel",
+        "passthrough": true,
+        "missingDependencyHelp": "Install GNU parallel: brew install parallel"
+      },
+      "args": [
+        { "name": "--jobs", "type": "number", "description": "Number of jobs to run in parallel" },
+        { "name": "--delay", "type": "string", "description": "Delay between starting jobs" },
+        { "name": "--timeout", "type": "string", "description": "Timeout for each job" },
+        { "name": "--progress", "type": "boolean", "description": "Show progress indicator" },
+        { "name": "--verbose", "type": "boolean", "description": "Print commands being run" },
+        { "name": "--dry-run", "type": "boolean", "description": "Print commands without executing" },
+        { "name": "--keep-order", "type": "boolean", "description": "Keep output in order" },
+        { "name": "--xargs", "type": "boolean", "description": "Treat input as xargs-style arguments" },
+        { "name": "--pipe", "type": "boolean", "description": "Use input as stdin (pipe mode)" },
+        { "name": "--sshlogin", "type": "string", "description": "Distribute jobs to remote machines" },
+        { "name": "command", "type": "string", "required": false, "description": "Command template to run" }
+      ]
+    }
+  ]
+}

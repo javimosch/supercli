@@ -1,0 +1,59 @@
+{
+  "name": "progress",
+  "version": "0.1.0",
+  "description": "progress (coreutils progress viewer) — display progress of running coreutils cp, mv, dd, tar, cat, and other file operations.",
+  "source": "https://github.com/Xfennec/progress",
+  "checks": [
+    { "type": "binary", "name": "progress" }
+  ],
+  "install_guidance": {
+    "plugin": "progress",
+    "binary": "progress",
+    "check": "which progress",
+    "install_steps": [
+      "brew install progress",
+      "Or: apt-get install progress (Debian/Ubuntu)",
+      "Or: cargo install progress",
+      "Verify: progress --version",
+      "supercli plugins install ./plugins/progress --on-conflict replace --json"
+    ],
+    "note": "A simple tool to show progress of running coreutils commands. Previously known as 'cv'. Source: https://github.com/Xfennec/progress."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "progress",
+      "resource": "monitor",
+      "action": "show",
+      "description": "Show progress of running coreutils commands (cp, mv, dd, tar, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "progress",
+        "baseArgs": [],
+        "passthrough": true,
+        "missingDependencyHelp": "Install progress: brew install progress"
+      },
+      "args": [
+        { "name": "--monitor", "type": "boolean", "description": "Continuously monitor progress (like top)" },
+        { "name": "--wait", "type": "boolean", "description": "Wait for running processes and monitor them" },
+        { "name": "--quiet", "type": "boolean", "description": "No output until finished" },
+        { "name": "--ignore-cgroup", "type": "boolean", "description": "Do not read cgroup information" }
+      ]
+    },
+    {
+      "namespace": "progress",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to progress CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "progress",
+        "passthrough": true,
+        "missingDependencyHelp": "Install progress: brew install progress"
+      },
+      "args": []
+    }
+  ]
+}
