@@ -38,7 +38,8 @@ function defaultProviders() {
     { name: "codex", type: "local_fs", roots: [path.join(home, ".config", "codex", "skills")], enabled: true },
     { name: "windsurf", type: "local_fs", roots: [path.join(home, ".config", "windsurf", "skills")], enabled: true },
     { name: "cursor", type: "local_fs", roots: [path.join(home, ".config", "cursor", "skills")], enabled: true },
-    { name: "repo", type: "repo_fs", roots: [path.join(cwd, ".agents", "skills"), path.join(cwd, "docs", "skills")], enabled: true }
+    { name: "repo", type: "repo_fs", roots: [path.join(cwd, ".agents", "skills"), path.join(cwd, "docs", "skills")], enabled: true },
+    { name: "supercli", type: "local_fs", roots: [path.join(__dirname, "..", ".agents", "skills")], enabled: true }
   ]
 }
 
@@ -107,20 +108,26 @@ function writeJson(file, value) {
 }
 
 function listProviders() {
-  const manualProviders = readJson(providersFile(), defaultProviders())
-  const manual = Array.isArray(manualProviders) ? manualProviders : defaultProviders()
+  const manualProviders = readJson(providersFile(), null)
+  const fileProviders = Array.isArray(manualProviders) ? manualProviders : []
   const discoveredPlugins = discoverInstalledPluginProviders()
   
   const merged = new Map()
   
-  for (const p of manual) {
+  // Start with defaults (code always wins for new defaults)
+  for (const p of defaultProviders()) {
     merged.set(p.name, p)
   }
   
+  // File providers override defaults
+  for (const p of fileProviders) {
+    merged.set(p.name, p)
+  }
+  
+  // Plugin providers fill gaps
   for (const p of discoveredPlugins) {
     if (!merged.has(p.name)) {
-      merged.set(p.name, p)
-    }
+      merged.set(p.name, p)}
   }
   
   return Array.from(merged.values())

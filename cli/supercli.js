@@ -113,7 +113,7 @@ async function main() {
             { command: "supercli skills sync --json", purpose: "Index skill documents from all providers" },
             { command: "supercli skills list --catalog --limit 10 --json", purpose: "Browse available skill documents" },
             { command: "supercli skills search --query <topic> --json", purpose: "Find a skill document by topic" },
-            { command: "supercli skills get jar-scripts:supercli-mastery", purpose: "Read the supercli mastery skill — full agent workflow, exit codes, navigation" },
+            { command: "supercli skills get supercli:supercli-mastery", purpose: "Read the supercli mastery skill — full agent workflow, exit codes, navigation" },
             { command: "supercli skills get easyredmine-cli:quickstart", purpose: "Example: load a plugin's skill document" },
             { command: "supercli skills get context-mode:quickstart", purpose: "Learn context-mode for large codebase analysis" },
             { command: "supercli skills get chainlink:quickstart", purpose: "Learn chainlink for task tracking across sessions" },
