@@ -1,0 +1,14 @@
+{
+  "plugin": "cri-tools",
+  "binary": "crictl",
+  "check": "which crictl",
+  "install_steps": [
+    "VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest | grep tag_name | cut -d '\"' -f 4)",
+    "wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz",
+    "sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin",
+    "rm -f crictl-$VERSION-linux-amd64.tar.gz",
+    "Verify: crictl --version",
+    "supercli plugins install ./plugins/cri-tools --on-conflict replace --json"
+  ],
+  "note": "cri-tools provides crictl (CLI) and critest (validation). The plugin wraps crictl for debugging Kubernetes node container runtimes. Available for linux/amd64, linux/arm64, and darwin (amd64/arm64). Always use the version matching your Kubernetes cluster version."
+}

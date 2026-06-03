@@ -1,0 +1,212 @@
+{
+  "name": "cri-tools",
+  "version": "0.1.0",
+  "description": "CLI and validation tools for Kubelet Container Runtime Interface (CRI) — crictl for debugging Kubernetes nodes",
+  "source": "https://github.com/kubernetes-sigs/cri-tools",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "crictl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cri-tools",
+    "binary": "crictl",
+    "check": "which crictl",
+    "install_steps": [
+      "VERSION=$(curl -s https://api.github.com/repos/kubernetes-sigs/cri-tools/releases/latest | grep tag_name | cut -d '\"' -f 4)",
+      "wget https://github.com/kubernetes-sigs/cri-tools/releases/download/$VERSION/crictl-$VERSION-linux-amd64.tar.gz",
+      "sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin",
+      "rm -f crictl-$VERSION-linux-amd64.tar.gz",
+      "Verify: crictl --version",
+      "supercli plugins install ./plugins/cri-tools --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cri-tools",
+      "resource": "self",
+      "action": "version",
+      "description": "Print crictl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "pods",
+      "action": "list",
+      "description": "List running pods via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["pods"],
+        "timeout_ms": 15000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "--namespace", "type": "string", "required": false, "description": "Filter by pod namespace" },
+        { "name": "--name", "type": "string", "required": false, "description": "Filter by pod name" },
+        { "name": "--label", "type": "string", "required": false, "description": "Filter by label (key=value)" },
+        { "name": "--state", "type": "string", "required": false, "description": "Filter by pod state (Ready/NotReady)" },
+        { "name": "--verbose", "type": "boolean", "required": false, "description": "Show verbose info" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "containers",
+      "action": "list",
+      "description": "List running containers via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["ps"],
+        "timeout_ms": 15000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "--all", "type": "boolean", "required": false, "description": "Show all containers (not just running)" },
+        { "name": "--id", "type": "string", "required": false, "description": "Filter by container id" },
+        { "name": "--name", "type": "string", "required": false, "description": "Filter by container name" },
+        { "name": "--pod", "type": "string", "required": false, "description": "Filter by pod id" },
+        { "name": "--image", "type": "string", "required": false, "description": "Filter by image" },
+        { "name": "--state", "type": "string", "required": false, "description": "Filter by state (Running/Exited/Unknown)" },
+        { "name": "--verbose", "type": "boolean", "required": false, "description": "Show verbose info" },
+        { "name": "--quiet", "type": "boolean", "required": false, "description": "Show only container IDs" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "images",
+      "action": "list",
+      "description": "List container images via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["images"],
+        "timeout_ms": 15000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "--verbose", "type": "boolean", "required": false, "description": "Show verbose image info" },
+        { "name": "--quiet", "type": "boolean", "required": false, "description": "Show only image IDs" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "containers",
+      "action": "logs",
+      "description": "Fetch container logs via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["logs"],
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "container-id", "type": "string", "required": true, "description": "Container ID" },
+        { "name": "--tail", "type": "string", "required": false, "description": "Number of recent lines to show" },
+        { "name": "--follow", "type": "boolean", "required": false, "description": "Follow log output" },
+        { "name": "--timestamps", "type": "boolean", "required": false, "description": "Show timestamps" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "containers",
+      "action": "exec",
+      "description": "Execute command in a running container via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["exec"],
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "container-id", "type": "string", "required": true, "description": "Container ID" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to execute" },
+        { "name": "--interactive", "type": "boolean", "required": false, "description": "Run interactively" },
+        { "name": "--tty", "type": "boolean", "required": false, "description": "Allocate a TTY" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "images",
+      "action": "pull",
+      "description": "Pull a container image via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["pull"],
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "image", "type": "string", "required": true, "description": "Image name to pull" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "info",
+      "action": "get",
+      "description": "Get runtime info and stats via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["info"],
+        "timeout_ms": 15000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "--output", "type": "string", "required": false, "description": "Output format (json/yaml)" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "stats",
+      "action": "get",
+      "description": "List container resource usage statistics via CRI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "baseArgs": ["stats"],
+        "timeout_ms": 15000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "--id", "type": "string", "required": false, "description": "Filter by container id" },
+        { "name": "--output", "type": "string", "required": false, "description": "Output format (json/yaml)" }
+      ]
+    },
+    {
+      "namespace": "cri-tools",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to crictl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crictl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install crictl: see https://github.com/kubernetes-sigs/cri-tools/releases",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}
