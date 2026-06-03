@@ -1,0 +1,38 @@
+{
+  "name": "weather",
+  "version": "0.1.0",
+  "description": "Weather via command line in Go",
+  "source": "https://github.com/schachmat/wego",
+  "checks": [{"type": "binary", "name": "weather"}],
+  "install_guidance": {
+    "plugin": "weather",
+    "binary": "weather",
+    "check": "which weather",
+    "install_steps": [
+      "go install github.com/schachmat/wego@latest",
+      "Verify: weather --version",
+      "supercli plugins install ./weather --on-conflict replace --json"
+    ]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "weather",
+      "resource": "self",
+      "action": "version",
+      "description": "Print weather version",
+      "adapter": "process",
+      "adapterConfig": {"command": "weather", "baseArgs": ["--version"], "missingDependencyHelp": "Install weather: go install github.com/schachmat/wego@latest"},
+      "args": []
+    },
+    {
+      "namespace": "weather",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to weather CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "weather", "passthrough": true, "missingDependencyHelp": "Install weather: go install github.com/schachmat/wego@latest"},
+      "args": []
+    }
+  ]
+}
