@@ -6,7 +6,9 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
     const resourceFilter  = flags.resource  && typeof flags.resource  === 'string' ? flags.resource.toLowerCase().trim()  : "";
     const actionFilter    = flags.action    && typeof flags.action    === 'string' ? flags.action.toLowerCase().trim()    : "";
     const queryFilter     = flags.query     && typeof flags.query     === 'string' ? flags.query.toLowerCase().trim()     : "";
-    const limit = flags.limit === undefined ? null : Number(flags.limit);
+    const limitExplicit = flags.limit !== undefined;
+    const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50);
+    const limitAuto = !limitExplicit && !humanMode;
 
     if (!config || !config.commands) {
       outputError({ code: 110, type: "internal_error", message: "Invalid config: missing commands", recoverable: false });
@@ -46,15 +48,17 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
     ]);
     console.log(`  Returned: ${rows.length}/${total}\n`);
   } else {
-    output({
+    const result = {
       version: "1.0", total, returned: rows.length,
       filters: {
         namespace: namespaceFilter || null, resource: resourceFilter || null,
         action: actionFilter || null, query: queryFilter || null,
-        limit: limit === null ? null : limit,
+        limit: limitAuto ? 50 : (limit === null ? null : limit),
       },
       commands: rows,
-    });
+    };
+    if (limitAuto && rows.length < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset for pagination.";
+    output(result);
   }
   } catch (err) {
     outputError({ code: 110, type: "internal_error", message: `handleCommandsQuery: ${err.message}`, recoverable: false });
