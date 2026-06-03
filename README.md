@@ -393,6 +393,7 @@ Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelin
 If supercli saved you time, consider supporting the project:
 
 <a href="https://ko-fi.com/javimosch"><img src="https://storage.ko-fi.com/cdn/brandasset/v2/support_me_on_kofi_badge_beige.png" alt="Support me on Ko-fi" height="30"></a>
+<a href="https://www.patreon.com/cw/javi_to"><img src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white" alt="Support me on Patreon" height="30"></a>
 
 ---
 
