@@ -1,0 +1,79 @@
+{
+  "name": "chart-testing",
+  "version": "0.1.0",
+  "description": "Lint and test Helm charts in CI/CD pipelines",
+  "source": "https://github.com/chart-testing/chart-testing",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ct"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "chart-testing",
+    "binary": "ct",
+    "check": "which ct",
+    "install_steps": [
+      "go install github.com/chart-testing/chart-testing/cmd/ct@latest",
+      "Verify: ct --version",
+      "supercli plugins install ./plugins/chart-testing --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "chart-testing",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chart-testing version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ct",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install chart-testing: go install github.com/chart-testing/chart-testing/cmd/ct@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chart-testing",
+      "resource": "chart",
+      "action": "lint",
+      "description": "Lint Helm charts for errors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ct",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install chart-testing: go install github.com/chart-testing/chart-testing/cmd/ct@latest"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": false,
+          "description": "Path to Helm chart directory"
+        }
+      ]
+    },
+    {
+      "namespace": "chart-testing",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ct CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ct",
+        "passthrough": true,
+        "missingDependencyHelp": "Install chart-testing: go install github.com/chart-testing/chart-testing/cmd/ct@latest"
+      },
+      "args": []
+    }
+  ]
+}
