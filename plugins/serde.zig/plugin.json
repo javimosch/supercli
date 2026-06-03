@@ -1,0 +1,63 @@
+{
+  "name": "serde.zig",
+  "version": "0.1.0",
+  "description": "Universal serialization for Zig",
+  "source": "https://github.com/nickelc/serde.zig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "serde"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "serde.zig",
+    "binary": "serde",
+    "check": "which serde",
+    "install_steps": [
+      "cargo install serde-zig",
+      "Verify: serde --version",
+      "supercli plugins install ./plugins/serde.zig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "serde.zig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print serde.zig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serde",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install serde.zig: cargo install serde-zig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "serde.zig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to serde",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serde",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install serde.zig: cargo install serde-zig"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
