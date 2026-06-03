@@ -11,6 +11,7 @@ Display progress of running coreutils commands (cp, mv, dd, tar, cat, etc.).
 
 ### Monitoring
 - `progress monitor show` — Show progress of running coreutils commands
+- `progress status monitor` — Continuously monitor progress (like top)
 - `progress _ _` — Passthrough to progress CLI
 
 ## Usage Examples
@@ -28,7 +29,6 @@ brew install progress
 Or via package manager:
 ```bash
 apt-get install progress   # Debian/Ubuntu
-dnf install progress       # Fedora
 ```
 
 Or via Cargo:
@@ -43,7 +43,7 @@ cargo install progress
 progress monitor show
 
 # Continuous monitoring (like top)
-progress monitor show --monitor
+progress status monitor
 
 # Wait for processes to start then monitor
 progress monitor show --wait

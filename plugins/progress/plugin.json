@@ -30,8 +30,8 @@
       "description": "Show progress of running coreutils commands (cp, mv, dd, tar, etc.)",
       "adapter": "process",
       "adapterConfig": {
-        "command": "progress",
-        "baseArgs": [],
+        "command": "node",
+        "baseArgs": ["plugins/progress/index.js", "show"],
         "passthrough": true,
         "missingDependencyHelp": "Install progress: brew install progress"
       },
@@ -44,12 +44,31 @@
     },
     {
       "namespace": "progress",
+      "resource": "status",
+      "action": "monitor",
+      "description": "Continuously monitor progress of running coreutils commands (like top)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "node",
+        "baseArgs": ["plugins/progress/index.js", "monitor"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install progress: brew install progress"
+      },
+      "args": [
+        { "name": "--wait", "type": "boolean", "description": "Wait for running processes and monitor them" },
+        { "name": "--quiet", "type": "boolean", "description": "No output until finished" },
+        { "name": "--ignore-cgroup", "type": "boolean", "description": "Do not read cgroup information" }
+      ]
+    },
+    {
+      "namespace": "progress",
       "resource": "_",
       "action": "_",
       "description": "Passthrough to progress CLI",
       "adapter": "process",
       "adapterConfig": {
-        "command": "progress",
+        "command": "node",
+        "baseArgs": ["plugins/progress/index.js"],
         "passthrough": true,
         "missingDependencyHelp": "Install progress: brew install progress"
       },

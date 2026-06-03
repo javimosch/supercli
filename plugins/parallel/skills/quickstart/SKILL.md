@@ -10,7 +10,8 @@ Build and execute shell commands in parallel across multiple CPU cores or multip
 ## Commands
 
 ### Execution
-- `parallel _ _` — Execute commands in parallel using GNU parallel
+- `parallel jobs run` — Execute commands in parallel using GNU parallel
+- `parallel _ _` — Passthrough to GNU parallel CLI
 
 ## Usage Examples
 - "Run commands in parallel"
@@ -34,22 +35,22 @@ dnf install parallel       # Fedora
 
 ```bash
 # Basic: run commands in parallel
-parallel _ _ echo ::: A B C D
+parallel jobs run echo ::: A B C D
 
 # Process files in parallel (4 jobs at a time)
-parallel _ _ --jobs 4 gzip ::: *.log
+parallel jobs run --jobs 4 gzip ::: *.log
 
 # With progress indicator
-parallel _ _ --progress wc -l ::: *.txt
+parallel jobs run --progress wc -l ::: *.txt
 
 # Remote execution
-parallel _ _ --sshlogin server1,server2 uptime ::: host1 host2
+parallel jobs run --sshlogin server1,server2 uptime ::: host1 host2
 
 # Pipe mode: process stdin in parallel
-cat urls.txt | parallel _ _ --pipe curl -s
+cat urls.txt | parallel jobs run --pipe curl -s
 
 # Dry run to preview
-parallel _ _ --dry-run convert {} {.}.png ::: *.jpg
+parallel jobs run --dry-run convert {} {.}.png ::: *.jpg
 ```
 
 ## Key Features
