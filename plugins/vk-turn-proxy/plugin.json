@@ -1,0 +1,68 @@
+{
+  "name": "vk-turn-proxy",
+  "version": "0.1.0",
+  "description": "WireGuard tunnel through VK TURN relay servers for VPN proxying",
+  "source": "https://github.com/cacggghp/vk-turn-proxy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vk-turn-proxy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vk-turn-proxy",
+    "binary": "vk-turn-proxy",
+    "check": "which vk-turn-proxy",
+    "install_steps": [
+      "go install github.com/cacggghp/vk-turn-proxy@latest",
+      "Verify: vk-turn-proxy --version",
+      "supercli plugins install ./plugins/vk-turn-proxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+  {
+    "namespace": "vk-turn-proxy",
+    "resource": "self",
+    "action": "version",
+    "description": "Print vk-turn-proxy version",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "vk-turn-proxy",
+      "baseArgs": [
+        "--version"
+      ],
+      "missingDependencyHelp": "Install vk-turn-proxy: go install github.com/cacggghp/vk-turn-proxy@latest"
+    },
+    "args": []
+  },
+  {
+    "namespace": "vk-turn-proxy",
+    "resource": "proxy",
+    "action": "start",
+    "description": "Start the VK TURN proxy",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "vk-turn-proxy",
+      "passthrough": true,
+      "missingDependencyHelp": "Install vk-turn-proxy: go install github.com/cacggghp/vk-turn-proxy@latest"
+    },
+    "args": []
+  },
+  {
+    "namespace": "vk-turn-proxy",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to vk-turn-proxy CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "vk-turn-proxy",
+      "passthrough": true,
+      "missingDependencyHelp": "Install vk-turn-proxy"
+    },
+    "args": []
+  }
+]
+}
