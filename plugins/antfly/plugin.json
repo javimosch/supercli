@@ -1,0 +1,63 @@
+{
+  "name": "antfly",
+  "version": "0.1.0",
+  "description": "Terminal file manager",
+  "source": "https://github.com/nickelc/antfly",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "antfly"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "antfly",
+    "binary": "antfly",
+    "check": "which antfly",
+    "install_steps": [
+      "cargo install antfly",
+      "Verify: antfly --version",
+      "supercli plugins install ./plugins/antfly --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "antfly",
+      "resource": "self",
+      "action": "version",
+      "description": "Print antfly version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "antfly",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install antfly: cargo install antfly"
+      },
+      "args": []
+    },
+    {
+      "namespace": "antfly",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to antfly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "antfly",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install antfly: cargo install antfly"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
