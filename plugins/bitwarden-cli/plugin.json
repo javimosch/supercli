@@ -1,0 +1,321 @@
+{
+  "name": "bitwarden-cli",
+  "version": "0.1.0",
+  "description": "Bitwarden CLI (bw) — official command-line password manager. Securely store, generate, and manage credentials, notes, cards, and identities with encrypted vault sync.",
+  "source": "https://github.com/bitwarden/cli",
+  "checks": [
+    { "type": "binary", "name": "bw" }
+  ],
+  "install_guidance": {
+    "plugin": "bitwarden-cli",
+    "binary": "bw",
+    "check": "which bw",
+    "install_steps": [
+      "npm install -g @bitwarden/cli",
+      "Verify: bw --version",
+      "supercli plugins install ./plugins/bitwarden-cli --on-conflict replace --json"
+    ],
+    "note": "Also available via: brew install bitwarden-cli, or direct download from https://bitwarden.com/download/ (CLI section). The binary is named 'bw'."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bitwarden",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install bw: npm install -g @bitwarden/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "vault",
+      "action": "login",
+      "description": "Log into a Bitwarden account with API key or credentials",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["login"],
+        "positionalArgs": ["email", "password"],
+        "missingDependencyHelp": "Install bw: npm install -g @bitwarden/cli"
+      },
+      "args": [
+        { "name": "email", "type": "string", "description": "Account email address" },
+        { "name": "password", "type": "string", "description": "Master password (omit for prompt)" },
+        { "name": "--apikey", "type": "boolean", "description": "Use API key login" },
+        { "name": "--sso", "type": "boolean", "description": "Use SSO login" },
+        { "name": "--method", "type": "string", "description": "Two-step login method (0=Authenticator, 1=Email, 2=YubiKey)" },
+        { "name": "--code", "type": "string", "description": "Two-step login code" },
+        { "name": "--env", "type": "boolean", "description": "Use environment variables (BW_CLIENTID, BW_CLIENTSECRET)" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "vault",
+      "action": "unlock",
+      "description": "Unlock the vault with a master password (returns session key)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["unlock"],
+        "positionalArgs": ["password"],
+        "missingDependencyHelp": "First login: bw login"
+      },
+      "args": [
+        { "name": "password", "type": "string", "description": "Master password (omit for prompt)" },
+        { "name": "--check", "type": "boolean", "description": "Check if vault is unlocked" },
+        { "name": "--passwordenv", "type": "string", "description": "Read password from env var" },
+        { "name": "--raw", "type": "boolean", "description": "Output only session key (for scripting)" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "vault",
+      "action": "status",
+      "description": "Get vault status (unlocked, locked, unauthenticated)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "First login: bw login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "vault",
+      "action": "sync",
+      "description": "Sync the vault with the Bitwarden server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["sync"],
+        "missingDependencyHelp": "First login: bw login"
+      },
+      "args": [
+        { "name": "--force", "type": "boolean", "description": "Force a full sync" },
+        { "name": "--last", "type": "boolean", "description": "Show last sync date" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "vault",
+      "action": "lock",
+      "description": "Lock the vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["lock"],
+        "missingDependencyHelp": "First login: bw login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "vault",
+      "action": "logout",
+      "description": "Log out of the current Bitwarden session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["logout"],
+        "missingDependencyHelp": "First login: bw login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "item",
+      "action": "list",
+      "description": "List vault items (passwords, notes, cards, identities)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["list"],
+        "positionalArgs": ["object"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "object", "type": "string", "required": true, "description": "Object type: items, folders, collections, organizations, org-collections, send, templates" },
+        { "name": "--search", "type": "string", "description": "Search term" },
+        { "name": "--folderid", "type": "string", "description": "Filter by folder ID" },
+        { "name": "--collectionid", "type": "string", "description": "Filter by collection ID" },
+        { "name": "--organizationid", "type": "string", "description": "Filter by organization ID" },
+        { "name": "--url", "type": "string", "description": "Filter by URL" },
+        { "name": "--trash", "type": "boolean", "description": "Show deleted items" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "item",
+      "action": "get",
+      "description": "Get item details by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["get"],
+        "positionalArgs": ["object", "id"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "object", "type": "string", "required": true, "description": "Object type: item, username, password, uri, totp, notes, folder, collection, organization, send, template" },
+        { "name": "id", "type": "string", "required": true, "description": "Object ID" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "item",
+      "action": "create",
+      "description": "Create a new vault item from JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["create"],
+        "positionalArgs": ["object"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "object", "type": "string", "required": true, "description": "Object type: item, folder, collection, send" },
+        { "name": "json", "type": "string", "description": "JSON string (omit to read from stdin)" },
+        { "name": "--file", "type": "string", "description": "File path for send" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "item",
+      "action": "edit",
+      "description": "Edit an existing vault item",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["edit"],
+        "positionalArgs": ["object", "id"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "object", "type": "string", "required": true, "description": "Object type: item, folder, collection" },
+        { "name": "id", "type": "string", "required": true, "description": "Item ID" },
+        { "name": "json", "type": "string", "description": "Updated JSON (omit to read from stdin)" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "item",
+      "action": "delete",
+      "description": "Delete a vault item",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["delete"],
+        "positionalArgs": ["object", "id"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "object", "type": "string", "required": true, "description": "Object type: item, folder, collection, send" },
+        { "name": "id", "type": "string", "required": true, "description": "Item ID" },
+        { "name": "--permanent", "type": "boolean", "description": "Permanently delete" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "generate",
+      "action": "password",
+      "description": "Generate a strong password",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["generate"],
+        "missingDependencyHelp": "Install bw: npm install -g @bitwarden/cli"
+      },
+      "args": [
+        { "name": "--length", "type": "string", "description": "Password length (default: 14)" },
+        { "name": "--uppercase", "type": "boolean", "description": "Include uppercase" },
+        { "name": "--lowercase", "type": "boolean", "description": "Include lowercase" },
+        { "name": "--number", "type": "boolean", "description": "Include numbers" },
+        { "name": "--special", "type": "boolean", "description": "Include special characters" },
+        { "name": "--passphrase", "type": "boolean", "description": "Generate passphrase" },
+        { "name": "--words", "type": "string", "description": "Number of words for passphrase (default: 3)" },
+        { "name": "--separator", "type": "string", "description": "Word separator for passphrase" },
+        { "name": "--capitalize", "type": "boolean", "description": "Capitalize passphrase words" },
+        { "name": "--includeNumber", "type": "boolean", "description": "Include number in passphrase" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "send",
+      "action": "create",
+      "description": "Create a Bitwarden Send (text or file)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["send"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "description": "Send name" },
+        { "name": "--text", "type": "string", "description": "Text content to send" },
+        { "name": "--file", "type": "string", "description": "File path to send" },
+        { "name": "--deleteAfterDate", "type": "string", "description": "Auto-delete date" },
+        { "name": "--maxAccessCount", "type": "string", "description": "Max access count" },
+        { "name": "--password", "type": "string", "description": "Password protection" },
+        { "name": "--notes", "type": "string", "description": "Private notes" },
+        { "name": "--hideEmail", "type": "boolean", "description": "Hide email from recipients" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "config",
+      "action": "set",
+      "description": "Set a config value (server, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["config"],
+        "positionalArgs": ["key", "value"],
+        "missingDependencyHelp": "Install bw: npm install -g @bitwarden/cli"
+      },
+      "args": [
+        { "name": "key", "type": "string", "required": true, "description": "Config key (e.g. server, cli)" },
+        { "name": "value", "type": "string", "required": true, "description": "Config value" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "export",
+      "action": "vault",
+      "description": "Export vault data to CSV or JSON",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "baseArgs": ["export"],
+        "missingDependencyHelp": "First unlock: bw unlock"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "description": "Export format: csv, json, encrypted_json (default: csv)" },
+        { "name": "--output", "type": "string", "description": "Output file path" },
+        { "name": "--organizationid", "type": "string", "description": "Export organization vault" },
+        { "name": "--password", "type": "string", "description": "Password for encrypted export" }
+      ]
+    },
+    {
+      "namespace": "bitwarden",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bw CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bw",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bw: npm install -g @bitwarden/cli"
+      },
+      "args": []
+    }
+  ]
+}

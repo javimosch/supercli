@@ -1,0 +1,56 @@
+{
+  "name": "kubent",
+  "version": "0.1.0",
+  "description": "kubent (Kubernetes Errors Notifier) — detects deprecated Kubernetes API versions and warns about migration paths.",
+  "source": "https://github.com/doitintl/kube-no-trouble",
+  "checks": [
+    { "type": "binary", "name": "kubent" }
+  ],
+  "install_guidance": {
+    "plugin": "kubent",
+    "binary": "kubent",
+    "check": "which kubent",
+    "install_steps": [
+      "brew install kubent",
+      "sh -c \"$(curl -sSL https://git.io/install-kubent)\""
+    ],
+    "note": "Scans Kubernetes clusters for deprecated API versions. Supports config file via KUBENT_CONFIG env var."
+  },
+  "commands": [
+    {
+      "namespace": "kubent",
+      "resource": "check",
+      "action": "run",
+      "description": "Check Kubernetes cluster for deprecated API versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubent",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kubent: brew install kubent"
+      },
+      "args": [
+        { "name": "--kubeconfig", "type": "string", "description": "Path to kubeconfig file" },
+        { "name": "--context", "type": "string", "description": "Kubernetes context to use" },
+        { "name": "--target-version", "type": "string", "description": "Target Kubernetes version" },
+        { "name": "--exit-code", "type": "boolean", "description": "Enable exit code" },
+        { "name": "--compact", "type": "boolean", "description": "Compact output" },
+        { "name": "--json", "type": "boolean", "description": "JSON output format" },
+        { "name": "--in-cluster", "type": "boolean", "description": "Use in-cluster config" },
+        { "name": "--config", "type": "string", "description": "Path to config file" }
+      ]
+    },
+    {
+      "namespace": "kubent",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kubent CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubent",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kubent: brew install kubent"
+      },
+      "args": []
+    }
+  ]
+}

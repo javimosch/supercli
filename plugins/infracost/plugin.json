@@ -1,0 +1,77 @@
+{
+  "name": "infracost",
+  "version": "0.1.0",
+  "description": "Infracost — cloud cost estimation for Terraform. Shows cost breakdowns and diffs for infrastructure-as-code.",
+  "source": "https://github.com/infracost/infracost",
+  "checks": [
+    { "type": "binary", "name": "infracost" }
+  ],
+  "install_guidance": {
+    "plugin": "infracost",
+    "binary": "infracost",
+    "check": "which infracost",
+    "install_steps": [
+      "brew install infracost",
+      "curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh",
+      "infracost register"
+    ],
+    "note": "Requires free API key via 'infracost register'. Supports Terraform, Terragrunt, and OpenTofu."
+  },
+  "commands": [
+    {
+      "namespace": "infracost",
+      "resource": "breakdown",
+      "action": "run",
+      "description": "Show full cost breakdown for Terraform/OpenTofu projects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infracost",
+        "baseArgs": ["breakdown"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install infracost: brew install infracost"
+      },
+      "args": [
+        { "name": "--path", "type": "string", "description": "Path to Terraform directory or plan JSON" },
+        { "name": "--terraform-var-file", "type": "string", "description": "Terraform variable file" },
+        { "name": "--terraform-vars", "type": "string", "description": "Terraform variables in JSON format" },
+        { "name": "--format", "type": "string", "description": "Output format: table, json, html, diff" },
+        { "name": "--out-file", "type": "string", "description": "Save output to file" },
+        { "name": "--show-skipped", "type": "boolean", "description": "Show skipped resources" },
+        { "name": "--sync-usage-file", "type": "boolean", "description": "Sync usage file with actual" }
+      ]
+    },
+    {
+      "namespace": "infracost",
+      "resource": "diff",
+      "action": "run",
+      "description": "Show cost diff between two Terraform/OpenTofu projects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infracost",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install infracost: brew install infracost"
+      },
+      "args": [
+        { "name": "--path", "type": "string", "description": "Path to Terraform directory or plan JSON" },
+        { "name": "--compare-to", "type": "string", "description": "Path to compare against" },
+        { "name": "--format", "type": "string", "description": "Output format: table, json, html, diff" },
+        { "name": "--out-file", "type": "string", "description": "Save output to file" },
+        { "name": "--terraform-var-file", "type": "string", "description": "Terraform variable file" }
+      ]
+    },
+    {
+      "namespace": "infracost",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to infracost CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infracost",
+        "passthrough": true,
+        "missingDependencyHelp": "Install infracost: brew install infracost"
+      },
+      "args": []
+    }
+  ]
+}
