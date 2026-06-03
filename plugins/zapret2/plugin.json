@@ -1,0 +1,63 @@
+{
+  "name": "zapret2",
+  "version": "0.1.0",
+  "description": "Anti-DPI software for bypassing deep packet inspection",
+  "source": "https://github.com/nickelc/zapret2",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zapret2"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zapret2",
+    "binary": "zapret2",
+    "check": "which zapret2",
+    "install_steps": [
+      "cargo install zapret2",
+      "Verify: zapret2 --version",
+      "supercli plugins install ./plugins/zapret2 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zapret2",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zapret2 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zapret2",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zapret2: cargo install zapret2"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zapret2",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zapret2",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zapret2",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zapret2: cargo install zapret2"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
