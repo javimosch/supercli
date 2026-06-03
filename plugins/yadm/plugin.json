@@ -1,0 +1,150 @@
+{
+  "name": "yadm",
+  "version": "0.1.0",
+  "description": "Yet Another Dotfiles Manager — manage dotfiles with Git, encryption, templates, and alt files.",
+  "source": "https://github.com/yadm-dev/yadm",
+  "checks": [
+    { "type": "binary", "name": "yadm" }
+  ],
+  "install_guidance": {
+    "plugin": "yadm",
+    "binary": "yadm",
+    "check": "which yadm",
+    "install_steps": [
+      "brew install yadm",
+      "Verify: yadm version",
+      "supercli plugins install ./plugins/yadm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yadm",
+      "resource": "repo",
+      "action": "init",
+      "description": "Initialize a new dotfiles repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": [
+        { "name": "--bare", "type": "boolean", "description": "Initialize a bare repository" },
+        { "name": "directory", "type": "string", "description": "Directory for the repository" }
+      ]
+    },
+    {
+      "namespace": "yadm",
+      "resource": "repo",
+      "action": "clone",
+      "description": "Clone an existing dotfiles repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["clone"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Git repository URL" },
+        { "name": "--bootstrap", "type": "boolean", "description": "Run bootstrap after clone" }
+      ]
+    },
+    {
+      "namespace": "yadm",
+      "resource": "file",
+      "action": "add",
+      "description": "Add files to the dotfiles repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["add"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": true, "description": "Files to add" }
+      ]
+    },
+    {
+      "namespace": "yadm",
+      "resource": "file",
+      "action": "list",
+      "description": "List tracked files in the dotfiles repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yadm",
+      "resource": "crypto",
+      "action": "encrypt",
+      "description": "Encrypt private files (per ~/.config/yadm/encrypt)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["encrypt"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yadm",
+      "resource": "crypto",
+      "action": "decrypt",
+      "description": "Decrypt private files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["decrypt"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yadm",
+      "resource": "config",
+      "action": "bootstrap",
+      "description": "Run the bootstrap script",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["bootstrap"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yadm",
+      "resource": "alt",
+      "action": "create",
+      "description": "Create symlinks for alternative files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "baseArgs": ["alt"],
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yadm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yadm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yadm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install yadm: brew install yadm"
+      },
+      "args": []
+    }
+  ]
+}
