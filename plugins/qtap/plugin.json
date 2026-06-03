@@ -1,0 +1,55 @@
+{
+  "name": "qtap",
+  "version": "0.1.0",
+  "description": "Qtap: An eBPF agent that captures pre-encrypted network traffic, providing rich context about egress",
+  "source": "https://github.com/qtap/qtap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qtap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qtap",
+    "binary": "qtap",
+    "check": "which qtap",
+    "install_steps": [
+      "pip install qtap",
+      "Verify: qtap --version",
+      "supercli plugins install ./plugins/qtap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qtap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qtap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qtap: pip install qtap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qtap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qtap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtap",
+        "passthrough": true,
+        "missingDependencyHelp": "Install qtap: pip install qtap"
+      },
+      "args": []
+    }
+  ]
+}
