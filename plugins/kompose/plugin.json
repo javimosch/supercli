@@ -1,0 +1,136 @@
+{
+  "name": "kompose",
+  "version": "0.1.0",
+  "description": "Kompose — Docker Compose to Kubernetes resource converter. Translate docker-compose.yml files into Kubernetes manifests (Deployments, Services, ConfigMaps, etc.) for easy migration.",
+  "source": "https://github.com/kubernetes/kompose",
+  "checks": [
+    { "type": "binary", "name": "kompose" }
+  ],
+  "install_guidance": {
+    "plugin": "kompose",
+    "binary": "kompose",
+    "check": "which kompose",
+    "install_steps": [
+      "curl -L https://github.com/kubernetes/kompose/releases/latest/download/kompose-linux-amd64 -o /usr/local/bin/kompose",
+      "chmod +x /usr/local/bin/kompose",
+      "Verify: kompose version",
+      "supercli plugins install ./plugins/kompose --on-conflict replace --json"
+    ],
+    "note": "Also available via: brew install kompose, or 'go install github.com/kubernetes/kompose@latest'. Supports docker-compose v1/v2/v3, and can output to stdout or files."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kompose",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kompose version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kompose",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install kompose: see install steps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kompose",
+      "resource": "convert",
+      "action": "to-kubernetes",
+      "description": "Convert docker-compose.yaml to Kubernetes manifests (Deployments, Services, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kompose",
+        "baseArgs": ["convert"],
+        "missingDependencyHelp": "Install kompose: curl -L https://github.com/kubernetes/kompose/releases/latest/download/kompose-linux-amd64 -o /usr/local/bin/kompose"
+      },
+      "args": [
+        { "name": "-f", "type": "string", "description": "Docker compose file (default: docker-compose.yaml)" },
+        { "name": "-o", "type": "string", "description": "Output directory (default: current directory)" },
+        { "name": "--chart", "type": "boolean", "description": "Create a Helm chart" },
+        { "name": "--daemon-set", "type": "boolean", "description": "Generate DaemonSet instead of Deployment" },
+        { "name": "--deployment", "type": "string", "description": "Deployment strategy: none, rolling (default), recreate" },
+        { "name": "--empty-vols", "type": "boolean", "description": "Use empty volumes" },
+        { "name": "--replicas", "type": "string", "description": "Number of replicas (default: 1)" },
+        { "name": "--volumes", "type": "string", "description": "Volume type: persistentVolumeClaim (default), emptyDir, hostPath, configMap" },
+        { "name": "--with-kinds", "type": "boolean", "description": "Deploy resources with their kinds as filename prefix" },
+        { "name": "--stdout", "type": "boolean", "description": "Output to stdout instead of files" },
+        { "name": "--json", "type": "boolean", "description": "Output as JSON" },
+        { "name": "--yaml", "type": "boolean", "description": "Output as YAML (default)" },
+        { "name": "--controller", "type": "string", "description": "Controller type: deployment (default), daemonSet, replicationController, deploymentConfig" },
+        { "name": "--namespace", "type": "string", "description": "Set namespace" }
+      ]
+    },
+    {
+      "namespace": "kompose",
+      "resource": "convert",
+      "action": "to-helm",
+      "description": "Convert docker-compose.yaml to a Helm chart",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kompose",
+        "baseArgs": ["convert", "--chart"],
+        "missingDependencyHelp": "Install kompose: see install steps"
+      },
+      "args": [
+        { "name": "-f", "type": "string", "description": "Docker compose file (default: docker-compose.yaml)" },
+        { "name": "-o", "type": "string", "description": "Output directory (default: ./Chart/)" },
+        { "name": "--namespace", "type": "string", "description": "Set namespace" },
+        { "name": "--replicas", "type": "string", "description": "Number of replicas" },
+        { "name": "--volumes", "type": "string", "description": "Volume type: persistentVolumeClaim, emptyDir, hostPath, configMap" }
+      ]
+    },
+    {
+      "namespace": "kompose",
+      "resource": "deploy",
+      "action": "up",
+      "description": "Deploy docker-compose application to a Kubernetes cluster directly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kompose",
+        "baseArgs": ["up"],
+        "missingDependencyHelp": "Install kompose: see install steps. Ensure kubectl is configured for a Kubernetes cluster."
+      },
+      "args": [
+        { "name": "-f", "type": "string", "description": "Docker compose file (default: docker-compose.yaml)" },
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" },
+        { "name": "--replicas", "type": "string", "description": "Number of replicas" },
+        { "name": "--volumes", "type": "string", "description": "Volume type" },
+        { "name": "--empty-vols", "type": "boolean", "description": "Use empty volumes" },
+        { "name": "--daemon-set", "type": "boolean", "description": "Use DaemonSet" },
+        { "name": "--stdout", "type": "boolean", "description": "Print to stdout" }
+      ]
+    },
+    {
+      "namespace": "kompose",
+      "resource": "deploy",
+      "action": "down",
+      "description": "Remove deployed Kubernetes resources previously created by kompose up",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kompose",
+        "baseArgs": ["down"],
+        "missingDependencyHelp": "Install kompose: see install steps"
+      },
+      "args": [
+        { "name": "-f", "type": "string", "description": "Docker compose file (default: docker-compose.yaml)" },
+        { "name": "--namespace", "type": "string", "description": "Kubernetes namespace" }
+      ]
+    },
+    {
+      "namespace": "kompose",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kompose CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kompose",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kompose: see install steps"
+      },
+      "args": []
+    }
+  ]
+}
