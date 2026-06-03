@@ -1,0 +1,74 @@
+{
+  "name": "cookiecutter",
+  "version": "0.1.0",
+  "description": "Cookiecutter — CLI tool for creating projects from project templates",
+  "source": "https://github.com/cookiecutter/cookiecutter",
+  "checks": [
+    { "type": "binary", "name": "cookiecutter" }
+  ],
+  "install_guidance": {
+    "plugin": "cookiecutter",
+    "binary": "cookiecutter",
+    "check": "which cookiecutter",
+    "install_steps": [
+      "brew install cookiecutter",
+      "Verify: cookiecutter --version",
+      "supercli plugins install ./plugins/cookiecutter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cookiecutter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cookiecutter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cookiecutter",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cookiecutter: brew install cookiecutter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cookiecutter",
+      "resource": "project",
+      "action": "scaffold",
+      "description": "Create a new project from a template",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cookiecutter",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["template"],
+        "missingDependencyHelp": "Install cookiecutter: brew install cookiecutter"
+      },
+      "args": [
+        { "name": "template", "type": "string", "required": true, "description": "Template source (GitHub repo, local path, or zip URL)" },
+        { "name": "--directory", "type": "string", "required": false, "description": "Directory within the repo that contains the template" },
+        { "name": "--output-dir", "type": "string", "required": false, "description": "Where to output the generated project" },
+        { "name": "--no-input", "type": "boolean", "required": false, "description": "Do not prompt for parameters and only use cookiecutter.json file content" },
+        { "name": "--replay", "type": "boolean", "required": false, "description": "Replay the last run for debugging" },
+        { "name": "--overwrite-if-exists", "type": "boolean", "required": false, "description": "Overwrite the contents of the output directory if it already exists" },
+        { "name": "--config-file", "type": "string", "required": false, "description": "Path to a user config file" },
+        { "name": "--default-config", "type": "boolean", "required": false, "description": "Use default values without prompting" },
+        { "name": "--debug", "type": "boolean", "required": false, "description": "Enable debug mode" }
+      ]
+    },
+    {
+      "namespace": "cookiecutter",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cookiecutter CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cookiecutter",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cookiecutter"
+      },
+      "args": []
+    }
+  ]
+}

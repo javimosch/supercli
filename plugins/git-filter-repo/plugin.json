@@ -1,0 +1,153 @@
+{
+  "name": "git-filter-repo",
+  "version": "0.1.0",
+  "description": "A versatile tool for rewriting Git repository history — fast, Python-based replacement for git filter-branch",
+  "source": "https://github.com/newren/git-filter-repo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "git-filter-repo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "git-filter-repo",
+    "binary": "git-filter-repo",
+    "check": "which git-filter-repo",
+    "install_steps": [
+      "pip3 install --user git-filter-repo",
+      "Verify: git-filter-repo --version",
+      "Or: brew install git-filter-repo",
+      "supercli plugins install ./plugins/git-filter-repo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "git-filter-repo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print git-filter-repo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "baseArgs": ["--version"]
+      },
+      "args": []
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "analyze",
+      "action": "run",
+      "description": "Analyze repository history to prepare for filtering",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "baseArgs": ["--analyze"],
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "--source", "type": "string", "required": false, "description": "Source git directory" }
+      ]
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "path",
+      "action": "remove",
+      "description": "Remove files/folders from Git history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "baseArgs": ["--invert-paths"],
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": true, "description": "File/folder paths to remove from history" },
+        { "name": "--use-base-name", "type": "boolean", "required": false, "description": "Match basename instead of full path" },
+        { "name": "--path-match", "type": "string", "required": false, "description": "Only work on paths matching regex" }
+      ]
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "path",
+      "action": "keep",
+      "description": "Keep only specified files/folders in Git history (strip everything else)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "paths", "type": "string", "required": true, "description": "File/folder paths to keep in history" },
+        { "name": "--use-base-name", "type": "boolean", "required": false, "description": "Match basename instead of full path" }
+      ]
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "email",
+      "action": "replace",
+      "description": "Replace email addresses in Git history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "baseArgs": ["--email-callback"],
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "callback", "type": "string", "required": true, "description": "Python email callback expression" }
+      ]
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "commit",
+      "action": "strip-blobs",
+      "description": "Strip blobs bigger than a given size from Git history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "baseArgs": ["--strip-blobs-bigger-than"],
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "size", "type": "string", "required": true, "description": "Max blob size (e.g. 10M)" }
+      ]
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "message",
+      "action": "replace",
+      "description": "Replace text in commit messages across Git history",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "baseArgs": ["--message-callback"],
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        { "name": "callback", "type": "string", "required": true, "description": "Python message callback expression" }
+      ]
+    },
+    {
+      "namespace": "git-filter-repo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to git-filter-repo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git-filter-repo",
+        "passthrough": true,
+        "missingDependencyHelp": "Install git-filter-repo: pip3 install --user git-filter-repo",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

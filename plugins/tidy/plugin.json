@@ -1,0 +1,184 @@
+{
+  "name": "tidy",
+  "version": "0.1.0",
+  "description": "HTML Tidy — Corrects and cleans up HTML and XML documents by fixing markup errors, improving layout, and enforcing consistent style.",
+  "source": "https://www.html-tidy.org/",
+  "checks": [
+    { "type": "binary", "name": "tidy" }
+  ],
+  "install_guidance": {
+    "plugin": "tidy",
+    "binary": "tidy",
+    "check": "which tidy",
+    "install_steps": [
+      "brew install tidy-html5",
+      "Verify: tidy --version",
+      "supercli plugins install ./plugins/tidy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tidy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tidy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tidy",
+      "resource": "check",
+      "action": "lint",
+      "description": "Check HTML file for errors and warnings (no modifications)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-e"],
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTML file to check" }
+      ]
+    },
+    {
+      "namespace": "tidy",
+      "resource": "check",
+      "action": "errors",
+      "description": "Show only errors (no warnings) for an HTML file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-e", "--show-warnings", "no"],
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTML file to check for errors" }
+      ]
+    },
+    {
+      "namespace": "tidy",
+      "resource": "fix",
+      "action": "run",
+      "description": "Clean and repair HTML file, output to stdout (does not modify in-place)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "cwd": "invoke_cwd",
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTML file to clean and repair" },
+        { "name": "--indent", "type": "boolean", "required": false, "description": "Indent output HTML" },
+        { "name": "--wrap", "type": "number", "required": false, "description": "Wrap text at specified column width" },
+        { "name": "--uppercase", "type": "boolean", "required": false, "description": "Use uppercase tag names" },
+        { "name": "--numeric-entities", "type": "boolean", "required": false, "description": "Output numeric entities instead of named" },
+        { "name": "--clean", "type": "boolean", "required": false, "description": "Remove presentational clutter from HTML" },
+        { "name": "--drop-empty-elements", "type": "boolean", "required": false, "description": "Remove empty elements" },
+        { "name": "--merge-divs", "type": "string", "required": false, "description": "Control merging of nested divs (auto|yes|no)" }
+      ]
+    },
+    {
+      "namespace": "tidy",
+      "resource": "fix",
+      "action": "inplace",
+      "description": "Clean and repair HTML file in-place (modifies the file)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-m"],
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTML file to clean and modify in-place" }
+      ]
+    },
+    {
+      "namespace": "tidy",
+      "resource": "config",
+      "action": "show",
+      "description": "Show current tidy configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "baseArgs": ["-show-config"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tidy",
+      "resource": "help",
+      "action": "options",
+      "description": "Show all available tidy options",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "baseArgs": ["-help-config"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tidy",
+      "resource": "convert",
+      "action": "to-xhtml",
+      "description": "Convert HTML to XHTML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-asxhtml"],
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTML file to convert to XHTML" }
+      ]
+    },
+    {
+      "namespace": "tidy",
+      "resource": "convert",
+      "action": "to-html5",
+      "description": "Convert HTML to HTML5",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "cwd": "invoke_cwd",
+        "baseArgs": ["-ashtml"],
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "Install tidy: brew install tidy-html5"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "HTML file to convert to HTML5" }
+      ]
+    },
+    {
+      "namespace": "tidy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tidy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tidy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tidy"
+      },
+      "args": []
+    }
+  ]
+}
