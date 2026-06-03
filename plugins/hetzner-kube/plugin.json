@@ -1,0 +1,67 @@
+{
+  "name": "hetzner-kube",
+  "version": "0.1.0",
+  "description": "Hetzner Cloud Kubernetes cluster provisioning and management",
+  "source": "https://github.com/nicm/hetzner-kube",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hetzner-kube"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hetzner-kube",
+    "binary": "hetzner-kube",
+    "check": "which hetzner-kube",
+    "install_steps": [
+      "go install github.com/nicm/hetzner-kube@latest",
+      "Verify: hetzner-kube --version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hetzner-kube",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hetzner-kube version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hetzner-kube",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hetzner-kube: go install github.com/nicm/hetzner-kube@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hetzner-kube",
+      "resource": "cluster",
+      "action": "create",
+      "description": "Create a Kubernetes cluster on Hetzner Cloud",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hetzner-kube",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install hetzner-kube: go install github.com/nicm/hetzner-kube@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hetzner-kube",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hetzner-kube CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hetzner-kube",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hetzner-kube: go install github.com/nicm/hetzner-kube@latest"
+      },
+      "args": []
+    }
+  ]
+}
