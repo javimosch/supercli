@@ -1,0 +1,63 @@
+{
+  "name": "todo.txt-cli",
+  "version": "0.1.0",
+  "description": "Simple extensible shell script for todo.txt",
+  "source": "https://github.com/nickelc/todo.txt-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "todo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "todo.txt-cli",
+    "binary": "todo",
+    "check": "which todo",
+    "install_steps": [
+      "brew install todo-txt",
+      "Verify: todo --version",
+      "supercli plugins install ./plugins/todo.txt-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "todo.txt-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print todo.txt-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "todo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install todo.txt-cli: brew install todo-txt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "todo.txt-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to todo",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "todo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install todo.txt-cli: brew install todo-txt"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
