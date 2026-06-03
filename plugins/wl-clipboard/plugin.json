@@ -1,0 +1,63 @@
+{
+  "name": "wl-clipboard",
+  "version": "0.1.0",
+  "description": "Command-line copy/paste for Wayland in C",
+  "source": "https://github.com/nicedoc/wl-clipboard",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wl-copy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wl-clipboard",
+    "binary": "wl-copy",
+    "check": "which wl-copy",
+    "install_steps": [
+      "brew install wl-clipboard",
+      "Verify: wl-copy --version",
+      "supercli plugins install ./plugins/wl-clipboard --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wl-clipboard",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wl-clipboard version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wl-copy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wl-clipboard: brew install wl-clipboard"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wl-clipboard",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wl-clipboard CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wl-copy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wl-clipboard: brew install wl-clipboard"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}

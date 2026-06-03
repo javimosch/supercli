@@ -1,0 +1,63 @@
+{
+  "name": "whipper",
+  "version": "0.1.0",
+  "description": "CD-DA ripper preferring accuracy in Python",
+  "source": "https://github.com/nicedoc/whipper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "whipper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "whipper",
+    "binary": "whipper",
+    "check": "which whipper",
+    "install_steps": [
+      "pip install whipper",
+      "Verify: whipper --version",
+      "supercli plugins install ./plugins/whipper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "whipper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print whipper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "whipper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install whipper: pip install whipper"
+      },
+      "args": []
+    },
+    {
+      "namespace": "whipper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to whipper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "whipper",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install whipper: pip install whipper"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    }
+  ]
+}
