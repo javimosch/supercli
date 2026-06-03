@@ -390,4 +390,4 @@ Contributions are welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelin
 
 ## License
 
-MIT — [Javier Leandro Arancibia](https://github.com/javimosch)
+MIT — <a href="https://www.linkedin.com/in/arancibiajav/" target="_blank">Javier Leandro Arancibia</a>
