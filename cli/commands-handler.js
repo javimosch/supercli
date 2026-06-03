@@ -6,16 +6,23 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
     const resourceFilter  = flags.resource  && typeof flags.resource  === 'string' ? flags.resource.toLowerCase().trim()  : "";
     const actionFilter    = flags.action    && typeof flags.action    === 'string' ? flags.action.toLowerCase().trim()    : "";
     const queryFilter     = flags.query     && typeof flags.query     === 'string' ? flags.query.toLowerCase().trim()     : "";
+
     const limitExplicit = flags.limit !== undefined;
     const limit = limitExplicit ? Number(flags.limit) : (humanMode ? null : 50);
     const limitAuto = !limitExplicit && !humanMode;
+    const offsetExplicit = flags.offset !== undefined;
+    const offset = offsetExplicit ? Number(flags.offset) : 0;
 
     if (!config || !config.commands) {
       outputError({ code: 110, type: "internal_error", message: "Invalid config: missing commands", recoverable: false });
       return;
     }
-  if (flags.limit !== undefined && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
+  if (limitExplicit && (!Number.isFinite(limit) || limit <= 0 || !Number.isInteger(limit))) {
     outputError({ code: 85, type: "invalid_argument", message: "Invalid --limit. Use a positive integer", recoverable: false });
+    return;
+  }
+  if (offsetExplicit && (!Number.isFinite(offset) || offset < 0 || !Number.isInteger(offset))) {
+    outputError({ code: 85, type: "invalid_argument", message: "Invalid --offset. Use a non-negative integer", recoverable: false });
     return;
   }
 
@@ -38,7 +45,10 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
   });
 
   const total = rows.length;
-  if (limit !== null) rows = rows.slice(0, limit);
+  const start = Math.min(offset, total);
+  const end = limit !== null ? Math.min(start + limit, total) : total;
+  const returned = end - start;
+  if (limit !== null) rows = rows.slice(start, end);
 
   if (humanMode) {
     console.log("\n  ⚡ Commands\n");
@@ -46,10 +56,10 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
       { key: "command", label: "Command" }, { key: "adapter", label: "Adapter" },
       { key: "args", label: "Args" },       { key: "description", label: "Description" },
     ]);
-    console.log(`  Returned: ${rows.length}/${total}\n`);
+    console.log(`  Returned: ${returned}/${total}  (offset: ${start})\n`);
   } else {
     const result = {
-      version: "1.0", total, returned: rows.length,
+      version: "1.0", total, returned, offset: start,
       filters: {
         namespace: namespaceFilter || null, resource: resourceFilter || null,
         action: actionFilter || null, query: queryFilter || null,
@@ -57,7 +67,7 @@ function handleCommandsQuery(config, flags, { humanMode, output, outputError, ou
       },
       commands: rows,
     };
-    if (limitAuto && rows.length < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset for pagination.";
+    if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for pagination.";
     output(result);
   }
   } catch (err) {
