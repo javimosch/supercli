@@ -29,7 +29,7 @@ describe("supercli --version", () => {
     })
     const data = JSON.parse(out)
     expect(data.name).toBe("SuperCLI")
-    expect(data.version).toBe("1.31.1")
+    expect(data.version).toBe("1.31.4")
   })
 
   test("--version --compact returns compact version envelope", () => {
@@ -38,6 +38,6 @@ describe("supercli --version", () => {
     })
     const data = JSON.parse(out)
     expect(data.n).toBe("SuperCLI")
-    expect(data.v).toBe("1.31.1")
+    expect(data.v).toBe("1.31.4")
   })
 })
