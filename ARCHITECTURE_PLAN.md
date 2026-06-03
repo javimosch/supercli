@@ -3,7 +3,7 @@
 ## 1. Current State Assessment
 
 ### What SuperCLI Is
-A config-driven, universal CLI capability router that wraps 3,300+ CLI tools, APIs, MCP servers, and workflows behind a uniform `namespace resource action` command interface. Lives on npm as `superacli` v1.31.1.
+A config-driven, universal CLI capability router that wraps 4,000+ CLI tools, APIs, MCP servers, and workflows behind a uniform `namespace resource action` command interface. Lives on npm as `superacli` v1.31.1.
 
 ### Dual-Implementation Architecture
 | Feature | sc-zig (Zig 0.16.0) | sc (Node.js) |
@@ -18,7 +18,7 @@ A config-driven, universal CLI capability router that wraps 3,300+ CLI tools, AP
 | OpenAPI adapter | ❌ | ✅ |
 
 ### Repository Stats
-- 3,381 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
+- 4,022 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
 - 8,888 commands exposed through plugins
 - 90 Jest test files covering CLI, adapters, plugins, server
 - 36 smoke test scripts in `tests/`
@@ -121,11 +121,11 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ### Summary
 | Metric | Value |
 |--------|-------|
-| Total plugin directories | 3,381 |
-| With plugin.json | 3,381 (100%) |
-| With meta.json | 3,381 (100%) |
-| With install-guidance.json | 3,380 (99.97%) |
-| With skills/quickstart/SKILL.md | 3,142 (92.9%) |
+| Total plugin directories | 4,022 |
+| With plugin.json | 4,022 (100%) |
+| With meta.json | 4,022 (100%) |
+| With install-guidance.json | 4,021 (99.97%) |
+| With skills/quickstart/SKILL.md | 3,142 (78.1%) |
 | With README.md | 75 (2.2%) |
 | Total commands exposed | 8,888 |
 | Unique tags used | 5,193 |
@@ -176,5 +176,5 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 - **CI workflows**: 90 Jest test files, 36 smoke test scripts
 
 ### Notes
-- Total plugin dirs decreased from 3,383 to 3,381 between catalog regen and count (likely duplicates removed)
+- Total plugin dirs: 4,022
 - install-guidance.json coverage near-perfect at 99.97%

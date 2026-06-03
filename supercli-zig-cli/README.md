@@ -91,7 +91,7 @@ npm install -g supercli
 - `sc-zig commands [--query=<q>] [--limit=<n>] [--json]` — list all installed commands
 - `sc-zig inspect <ns> <res> <act> [--json]` — inspect a command's schema
 - `sc-zig plugins list [--json]` — list installed plugins (from lockfile)
-- `sc-zig plugins explore [--name=<q>] [--json]` — browse bundled plugins directory (3300+ plugins)
+- `sc-zig plugins explore [--name=<q>] [--json]` — browse bundled plugins directory (4000+ plugins)
 - `sc-zig plugins update [--check] [--force] [--json]` — update bundled plugins via curl + tar
 - `sc-zig <ns> [res] [act] [--flags]` — dispatch a process-adapter command
 
@@ -144,7 +144,7 @@ sc plugins update --json
 
 Both Node.js and Zig implementations read from:
 - `~/.supercli/plugins/plugins.lock.json` — installed plugin registry
-- `{root}/plugins/` — bundled plugins directory (3300+ plugins)
+- `{root}/plugins/` — bundled plugins directory (4000+ plugins)
 
 ## Architecture
 
