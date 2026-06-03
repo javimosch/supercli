@@ -120,7 +120,7 @@ async function main() {
           ],
           token_optimization: {
             context_mode: "Use supercli MCP context-mode for large command outputs.",
-            quick_start: "sc mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '{\"commands\":[{\"label\":\"Commands\",\"command\":\"supercli commands --json\"}],\"queries\":[\"<terms>\"]}' --json",
+            quick_start: "supercli mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '{\"commands\":[{\"label\":\"Commands\",\"command\":\"supercli commands --json\"}],\"queries\":[\"<terms>\"]}' --json",
           },
         });
         return;
