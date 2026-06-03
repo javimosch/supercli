@@ -140,6 +140,34 @@ plugins/mytool/
 
 No edits to any file outside `plugins/mytool/` are needed.
 
+### catalog.json is auto-generated
+
+**Do NOT manually edit `plugins/catalog.json`** — it's a build artifact that is automatically regenerated.
+
+**What it does:**
+- Scans all `plugins/<name>/` directories
+- Creates checksums from `plugin.json` + `meta.json` content
+- Lists all available plugins with their checksums
+- Used by the CLI to detect plugin updates (by comparing checksums)
+
+**How it's generated:**
+- Automatically by `scripts/generate-catalog.js`
+- Uses `git ls-files` to only include git-tracked plugins (skips gitignored dirs)
+- Generates SHA256 checksums from plugin manifests
+- Outputs to `plugins/catalog.json`
+
+**Auto-regeneration:**
+- GitHub Actions (`.github/workflows/catalog.yml`) auto-regenerates it when:
+  - Any file in `plugins/` changes
+  - The `generate-catalog.js` script changes
+
+**For local testing:**
+```bash
+node scripts/generate-catalog.js
+```
+
+When adding a new plugin, simply commit the plugin files — GitHub Actions will handle catalog regeneration automatically.
+
 ## Plugin Description Enhancement Pipeline
 
 When improving plugin descriptions, use this workflow:
