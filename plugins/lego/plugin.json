@@ -1,0 +1,123 @@
+{
+  "name": "lego",
+  "version": "0.1.0",
+  "description": "Let's Encrypt/ACME client for obtaining and renewing TLS certificates from any ACME CA.",
+  "source": "https://github.com/go-acme/lego",
+  "checks": [
+    { "type": "binary", "name": "lego" }
+  ],
+  "install_guidance": {
+    "plugin": "lego",
+    "binary": "lego",
+    "check": "which lego",
+    "install_steps": [
+      "curl -sSfL https://github.com/go-acme/lego/releases/latest/download/lego_linux_amd64.tar.gz | tar xz -C /usr/local/bin lego",
+      "Verify: lego --version",
+      "supercli plugins install ./plugins/lego --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lego",
+      "resource": "cert",
+      "action": "obtain",
+      "description": "Obtain a new TLS certificate from ACME CA",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lego",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install lego: see https://go-acme.github.io/lego/install/"
+      },
+      "args": [
+        { "name": "--domains", "type": "string", "required": true, "description": "Domain names to certify" },
+        { "name": "--email", "type": "string", "required": true, "description": "Email address for ACME registration" },
+        { "name": "--http", "type": "boolean", "description": "Use HTTP-01 challenge (default)" },
+        { "name": "--dns", "type": "string", "description": "DNS provider for DNS-01 challenge" },
+        { "name": "--tls", "type": "boolean", "description": "Use TLS-ALPN-01 challenge" },
+        { "name": "--path", "type": "string", "description": "Directory to store certificates" },
+        { "name": "--server", "type": "string", "description": "ACME CA server URL" },
+        { "name": "--accept-tos", "type": "boolean", "description": "Accept ACME Terms of Service" },
+        { "name": "--key-type", "type": "string", "description": "Key type (rsa4096, ecdsa256, ecdsa384)" }
+      ]
+    },
+    {
+      "namespace": "lego",
+      "resource": "cert",
+      "action": "renew",
+      "description": "Renew an existing TLS certificate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lego",
+        "baseArgs": ["renew"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install lego: see https://go-acme.github.io/lego/install/"
+      },
+      "args": [
+        { "name": "--domains", "type": "string", "required": true, "description": "Domain names to renew" },
+        { "name": "--days", "type": "number", "description": "Renew if certificate expires within this many days" },
+        { "name": "--reuse-key", "type": "boolean", "description": "Reuse the private key" }
+      ]
+    },
+    {
+      "namespace": "lego",
+      "resource": "cert",
+      "action": "revoke",
+      "description": "Revoke a TLS certificate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lego",
+        "baseArgs": ["revoke"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install lego: see https://go-acme.github.io/lego/install/"
+      },
+      "args": [
+        { "name": "--domains", "type": "string", "required": true, "description": "Domain names to revoke" },
+        { "name": "--reason", "type": "string", "description": "Revocation reason" }
+      ]
+    },
+    {
+      "namespace": "lego",
+      "resource": "cert",
+      "action": "list",
+      "description": "List known TLS certificates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lego",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install lego: see https://go-acme.github.io/lego/install/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lego",
+      "resource": "dns",
+      "action": "providers",
+      "description": "List available DNS providers for ACME challenges",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lego",
+        "baseArgs": ["dns", "providers"],
+        "missingDependencyHelp": "Install lego: see https://go-acme.github.io/lego/install/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lego",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lego CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lego",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lego: see https://go-acme.github.io/lego/install/"
+      },
+      "args": []
+    }
+  ]
+}
