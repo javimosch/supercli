@@ -1,0 +1,63 @@
+{
+  "name": "pstree",
+  "version": "0.1.0",
+  "description": "pstree — display a tree of running processes on the system",
+  "source": "https://gitlab.com/psmisc/psmisc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pstree"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pstree",
+    "binary": "pstree",
+    "check": "which pstree",
+    "install_steps": [
+      "apt install psmisc",
+      "Verify: pstree --version",
+      "supercli plugins install ./plugins/pstree --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pstree",
+      "resource": "process",
+      "action": "tree",
+      "description": "Display process tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pstree",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pstree: apt install psmisc"
+      },
+      "args": [
+        { "name": "--pid", "type": "boolean", "description": "Show PIDs" },
+        { "name": "--arguments", "type": "boolean", "description": "Show command line arguments" },
+        { "name": "--numeric-sort", "type": "boolean", "description": "Sort by PID" },
+        { "name": "--show-parents", "type": "boolean", "description": "Show parent processes" },
+        { "name": "--uid-show", "type": "boolean", "description": "Show UID transitions" },
+        { "name": "--highlight-changes", "type": "boolean", "description": "Highlight differences" },
+        { "name": "--color", "type": "string", "description": "Color output (auto, always, none)" },
+        { "name": "--selinux", "type": "boolean", "description": "Show SELinux contexts" },
+        { "name": "pid", "type": "number", "description": "Show tree for specific PID" }
+      ]
+    },
+    {
+      "namespace": "pstree",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pstree CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pstree",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pstree: apt install psmisc"
+      },
+      "args": []
+    }
+  ]
+}
