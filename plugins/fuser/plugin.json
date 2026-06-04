@@ -1,0 +1,91 @@
+{
+  "name": "fuser",
+  "version": "0.1.0",
+  "description": "fuser — identify processes using files, sockets, or filesystems",
+  "source": "https://github.com/util-linux/util-linux",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fuser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fuser",
+    "binary": "fuser",
+    "check": "which fuser",
+    "install_steps": [
+      "Pre-installed on most Linux systems (util-linux package)",
+      "apt-get install util-linux",
+      "Verify: fuser --version",
+      "supercli plugins install ./plugins/fuser --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fuser",
+      "resource": "self",
+      "action": "version",
+      "description": "Show fuser version info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuser",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "fuser is part of util-linux: apt install util-linux"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fuser",
+      "resource": "file",
+      "action": "check",
+      "description": "Identify processes using a file or socket",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuser",
+        "missingDependencyHelp": "fuser is part of util-linux: apt install util-linux"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File, socket, or filesystem path to check" },
+        { "name": "--verbose", "type": "boolean", "description": "Verbose output with process details" },
+        { "name": "--kill", "type": "boolean", "description": "Kill processes accessing the file" },
+        { "name": "--signal", "type": "string", "description": "Signal to send when killing (e.g. SIGKILL)" },
+        { "name": "--mount", "type": "boolean", "description": "Show processes using the filesystem" },
+        { "name": "--namespace", "type": "boolean", "description": "Check PID namespaces" },
+        { "name": "--ipc", "type": "boolean", "description": "Check IPC resources" }
+      ]
+    },
+    {
+      "namespace": "fuser",
+      "resource": "tcp",
+      "action": "port",
+      "description": "Find processes using a TCP port",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuser",
+        "baseArgs": ["-v"],
+        "missingDependencyHelp": "fuser is part of util-linux: apt install util-linux"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": true, "description": "TCP port number (e.g. 8080)" },
+        { "name": "--kill", "type": "boolean", "description": "Kill processes on the port" },
+        { "name": "--signal", "type": "string", "description": "Signal to send (default: SIGKILL)" }
+      ]
+    },
+    {
+      "namespace": "fuser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fuser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fuser",
+        "passthrough": true,
+        "missingDependencyHelp": "fuser is part of util-linux: apt install util-linux"
+      },
+      "args": []
+    }
+  ]
+}
