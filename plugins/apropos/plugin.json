@@ -1,0 +1,74 @@
+{
+  "name": "apropos",
+  "version": "0.1.0",
+  "description": "apropos — search the manual page names and descriptions for keywords",
+  "source": "https://man-db.gitlab.io/man-db/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "apropos"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "apropos",
+    "binary": "apropos",
+    "check": "which apropos",
+    "install_steps": [
+      "Pre-installed on most Linux systems (man-db package)",
+      "apt-get install man-db",
+      "Verify: apropos --version",
+      "supercli plugins install ./plugins/apropos --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "apropos",
+      "resource": "self",
+      "action": "version",
+      "description": "Show apropos version info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "apropos is part of man-db: apt install man-db"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apropos",
+      "resource": "search",
+      "action": "keyword",
+      "description": "Search man page names and descriptions for a keyword",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "missingDependencyHelp": "apropos is part of man-db: apt install man-db"
+      },
+      "args": [
+        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search for in man page names and descriptions" },
+        { "name": "--exact", "type": "boolean", "description": "Search each keyword for exact match only" },
+        { "name": "--regex", "type": "boolean", "description": "Interpret each keyword as a regular expression" },
+        { "name": "--wildcard", "type": "boolean", "description": "The keyword(s) contain shell wildcards" },
+        { "name": "--and", "type": "boolean", "description": "Require all keywords to match" },
+        { "name": "--long", "type": "boolean", "description": "Do not trim output to terminal width" },
+        { "name": "--section", "type": "string", "description": "Search only these manual sections (colon-separated, e.g. '1:8')" }
+      ]
+    },
+    {
+      "namespace": "apropos",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to apropos CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "passthrough": true,
+        "missingDependencyHelp": "apropos is part of man-db: apt install man-db"
+      },
+      "args": []
+    }
+  ]
+}
