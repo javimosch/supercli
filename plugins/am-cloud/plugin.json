@@ -1,0 +1,182 @@
+{
+  "name": "am-cloud",
+  "version": "0.1.0",
+  "description": "am-cloud — Automaintainer SaaS panel CLI for managing worker nodes and platform repos",
+  "source": "https://github.com/anomalyco/automaintainer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "am-cloud"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "am-cloud",
+    "binary": "am-cloud",
+    "check": "which am-cloud",
+    "install_steps": [
+      "Download from https://github.com/anomalyco/automaintainer/releases",
+      "Verify: am-cloud version",
+      "supercli plugins install ./plugins/am-cloud --on-conflict replace --json"
+    ],
+    "note": "Infrastructure tool for automaintainer SaaS workers."
+  },
+  "commands": [
+    {
+      "namespace": "am-cloud",
+      "resource": "self",
+      "action": "version",
+      "description": "Show am-cloud version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "worker",
+      "action": "start",
+      "description": "Connect to SaaS panel as a worker node",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["start"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": [
+        {"name": "panel", "description": "WebSocket panel URL", "required": true},
+        {"name": "token", "description": "Authentication token", "required": true}
+      ]
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "worker",
+      "action": "install",
+      "description": "Install am-cloud as a systemd service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["worker", "install"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": [
+        {"name": "panel", "description": "WebSocket panel URL", "required": true},
+        {"name": "token", "description": "Authentication token", "required": true}
+      ]
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "worker",
+      "action": "uninstall",
+      "description": "Remove am-cloud systemd service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["worker", "uninstall"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "worker",
+      "action": "status",
+      "description": "Show am-cloud systemd service status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["worker", "status"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "platform",
+      "action": "status",
+      "description": "Show account and worker platform status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["platform", "status"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "repo",
+      "action": "list",
+      "description": "List repos on the automaintainer platform",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["platform", "repo", "list"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "repo",
+      "action": "add",
+      "description": "Add a repo to the automaintainer platform",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["platform", "repo", "add"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": [
+        {"name": "url", "description": "Repository URL", "required": true},
+        {"name": "focus", "description": "Repo focus description", "required": false}
+      ]
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "repo",
+      "action": "run",
+      "description": "Trigger an automaintainer run on a repo",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["platform", "repo", "run"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": [
+        {"name": "id", "description": "Repository ID", "required": true},
+        {"name": "wait", "description": "Wait for run to complete", "required": false}
+      ]
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "repo",
+      "action": "remove",
+      "description": "Remove a repo from the automaintainer platform",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": ["platform", "repo", "remove"],
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": [
+        {"name": "id", "description": "Repository ID", "required": true}
+      ]
+    },
+    {
+      "namespace": "am-cloud",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to am-cloud CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "passthrough": true,
+        "missingDependencyHelp": "Install am-cloud from https://github.com/anomalyco/automaintainer"
+      },
+      "args": []
+    }
+  ]
+}
