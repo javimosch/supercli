@@ -1,0 +1,198 @@
+{
+  "name": "systemd-analyze",
+  "version": "0.1.0",
+  "description": "Analyze systemd boot performance, service dependencies, and unit timing — visualize blame, critical chain, and generate SVG plots of the boot sequence.",
+  "source": "https://www.freedesktop.org/software/systemd/man/latest/systemd-analyze.html",
+  "checks": [
+    { "type": "binary", "name": "systemd-analyze" }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-analyze",
+    "binary": "systemd-analyze",
+    "check": "which systemd-analyze",
+    "install_steps": [
+      "Pre-installed on all systemd-based Linux distributions (Fedora, Debian, Ubuntu, Arch, etc.)",
+      "Verify: systemd-analyze --version"
+    ],
+    "note": "Part of the systemd package. Available on any modern Linux distribution using systemd as init system."
+  },
+  "commands": [
+    {
+      "namespace": "systemd",
+      "resource": "boot",
+      "action": "time",
+      "description": "Show total boot time breakdown (kernel, initrd, userspace)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["time"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd",
+      "resource": "boot",
+      "action": "blame",
+      "description": "Show boot time per unit, sorted by time (slowest first)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["blame"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd",
+      "resource": "boot",
+      "action": "critical-chain",
+      "description": "Show the critical boot chain with timestamps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["critical-chain"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "unit", "type": "string", "required": false, "description": "Start from this unit instead of the default target" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "boot",
+      "action": "plot",
+      "description": "Generate an SVG plot of the boot sequence",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["plot"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd",
+      "resource": "unit",
+      "action": "dependency",
+      "description": "Show unit dependency graph (dot format)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["dot"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "unit", "type": "string", "required": false, "description": "Specific unit to analyze dependencies for" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "security",
+      "action": "audit",
+      "description": "Audit unit security settings",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["security"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "unit", "type": "string", "required": false, "description": "Unit to audit" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "service",
+      "action": "condition",
+      "description": "Verify condition/assert expressions in unit files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["condition"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "condition", "type": "string", "required": true, "description": "Condition or assert expression to verify" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "unit",
+      "action": "verify",
+      "description": "Verify unit file correctness",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["verify"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Unit files to verify" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "boot",
+      "action": "calendar",
+      "description": "Parse and explain calendar event expressions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["calendar"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Calendar event expression (e.g., '*-*-* *:0/15:00')" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "boot",
+      "action": "timestamp",
+      "description": "Parse and explain timestamp expressions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "baseArgs": ["timestamp"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": [
+        { "name": "expression", "type": "string", "required": true, "description": "Timestamp expression (e.g., '12h', 'now')" }
+      ]
+    },
+    {
+      "namespace": "systemd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-analyze CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-analyze",
+        "passthrough": true,
+        "missingDependencyHelp": "systemd-analyze is part of systemd; install systemd package."
+      },
+      "args": []
+    }
+  ]
+}
