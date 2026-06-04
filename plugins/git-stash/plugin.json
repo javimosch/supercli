@@ -1,0 +1,125 @@
+{
+  "name": "git-stash",
+  "version": "0.1.0",
+  "description": "Git stash management — list, push, pop, apply, drop, show, and clear stashes via git CLI",
+  "source": "https://git-scm.com/docs/git-stash",
+  "checks": [
+    { "type": "binary", "name": "git" }
+  ],
+  "commands": [
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "list",
+      "description": "List all stashes in the repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "list"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "push",
+      "description": "Create a new stash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "push"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": [
+        { "name": "--message", "type": "string", "description": "Stash description message" },
+        { "name": "--include-untracked", "type": "boolean", "description": "Include untracked files" },
+        { "name": "--all", "type": "boolean", "description": "Include all files (including ignored)" },
+        { "name": "--keep-index", "type": "boolean", "description": "Keep staged files intact" },
+        { "name": "--staged", "type": "boolean", "description": "Stash only staged changes" },
+        { "name": "--pathspec", "type": "string", "description": "Paths to stash (space-separated)" }
+      ]
+    },
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "pop",
+      "description": "Apply the latest stash and remove it from the stack",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "pop"],
+        "positionalArgs": ["stash"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": [
+        { "name": "stash", "type": "string", "description": "Stash reference (e.g. stash@{0})" },
+        { "name": "--index", "type": "boolean", "description": "Re-apply staged changes" }
+      ]
+    },
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "apply",
+      "description": "Apply a stash without removing it from the stack",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "apply"],
+        "positionalArgs": ["stash"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": [
+        { "name": "stash", "type": "string", "description": "Stash reference (e.g. stash@{0})" },
+        { "name": "--index", "type": "boolean", "description": "Re-apply staged changes" }
+      ]
+    },
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "drop",
+      "description": "Remove a stash from the stack",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "drop"],
+        "positionalArgs": ["stash"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": [
+        { "name": "stash", "type": "string", "description": "Stash reference (e.g. stash@{0})" }
+      ]
+    },
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "show",
+      "description": "Show the changes recorded in a stash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "show", "-p"],
+        "positionalArgs": ["stash"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": [
+        { "name": "stash", "type": "string", "description": "Stash reference (e.g. stash@{0})" },
+        { "name": "--stat", "type": "boolean", "description": "Show diffstat instead of full diff" },
+        { "name": "--name-only", "type": "boolean", "description": "Show only file names" }
+      ]
+    },
+    {
+      "namespace": "git",
+      "resource": "stash",
+      "action": "clear",
+      "description": "Remove all stashes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "git",
+        "baseArgs": ["stash", "clear"],
+        "missingDependencyHelp": "Install git: https://git-scm.com"
+      },
+      "args": []
+    }
+  ]
+}
