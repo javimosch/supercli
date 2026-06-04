@@ -1,0 +1,116 @@
+{
+  "name": "pi",
+  "version": "0.1.0",
+  "description": "Pi Coding Agent — AI coding assistant with read, bash, edit, write, and grep tools. Supports multiple AI providers and extensible via plugins.",
+  "source": "https://github.com/pi-coding/pi-cli",
+  "checks": [
+    { "type": "binary", "name": "pi" }
+  ],
+  "install_guidance": {
+    "plugin": "pi",
+    "binary": "pi",
+    "check": "which pi",
+    "install_steps": [
+      "npm install -g @earendil-works/pi-coding-agent",
+      "Verify: pi --version"
+    ],
+    "note": "Also installable via: brew install pi, cargo install pi-cli. Requires a provider API key (e.g., OPENAI_API_KEY, ANTHROPIC_API_KEY)."
+  },
+  "commands": [
+    {
+      "namespace": "pi",
+      "resource": "version",
+      "action": "get",
+      "description": "Show pi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pi",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install pi: npm install -g @earendil-works/pi-coding-agent"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pi",
+      "resource": "extension",
+      "action": "list",
+      "description": "List installed extensions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pi",
+        "baseArgs": ["list"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install pi: npm install -g @earendil-works/pi-coding-agent"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pi",
+      "resource": "extension",
+      "action": "install",
+      "description": "Install a pi extension from source",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pi",
+        "baseArgs": ["install"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pi: npm install -g @earendil-works/pi-coding-agent"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Extension source path or URL" },
+        { "name": "--local", "type": "boolean", "description": "Install from local path" }
+      ]
+    },
+    {
+      "namespace": "pi",
+      "resource": "extension",
+      "action": "remove",
+      "description": "Remove a pi extension",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pi",
+        "baseArgs": ["remove"],
+        "parseJson": false,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install pi: npm install -g @earendil-works/pi-coding-agent"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Extension source to remove" }
+      ]
+    },
+    {
+      "namespace": "pi",
+      "resource": "self",
+      "action": "update",
+      "description": "Update pi or its extensions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pi",
+        "baseArgs": ["update"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install pi: npm install -g @earendil-works/pi-coding-agent"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": false, "description": "Target to update (source, self, or pi)" }
+      ]
+    },
+    {
+      "namespace": "pi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pi",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pi: npm install -g @earendil-works/pi-coding-agent"
+      },
+      "args": []
+    }
+  ]
+}
