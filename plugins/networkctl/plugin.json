@@ -1,0 +1,273 @@
+{
+  "name": "networkctl",
+  "version": "0.1.0",
+  "description": "networkctl — query and control the systemd networking subsystem. List links, show status, manage network interfaces on systemd-based systems.",
+  "source": "https://www.freedesktop.org/software/systemd/man/latest/networkctl.html",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "networkctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "networkctl",
+    "binary": "networkctl",
+    "check": "which networkctl",
+    "install_steps": [
+      "Pre-installed on most Linux systems with systemd (systemd-networkd package)",
+      "Debian/Ubuntu: apt-get install systemd-networkd",
+      "Verify: networkctl --version",
+      "supercli plugins install ./plugins/networkctl --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "list",
+      "description": "List all network links",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["list", "--no-legend", "--no-pager"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": false,
+          "description": "Optional pattern to filter links by name"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "status",
+      "description": "Show detailed status of network links",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["status", "--no-pager"],
+        "positionalArgs": ["pattern"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": false,
+          "description": "Link name or pattern (e.g. 'eth0', 'en*')"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "up",
+      "description": "Bring network links up",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["up"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Device name(s) to bring up (space separated)"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "down",
+      "description": "Bring network links down",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["down"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Device name(s) to bring down (space separated)"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "renew",
+      "description": "Renew dynamic configurations (DHCP) for interfaces",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["renew"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Device name(s) to renew DHCP leases"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "reconfigure",
+      "description": "Reconfigure network interfaces (reloads .network files)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["reconfigure"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Device name(s) to reconfigure"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "link",
+      "action": "delete",
+      "description": "Delete virtual network devices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["delete"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Virtual device name(s) to delete"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "lldp",
+      "action": "list",
+      "description": "Show LLDP neighbors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["lldp", "--no-pager"],
+        "positionalArgs": ["pattern"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": false,
+          "description": "Optional link name pattern to filter"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "config",
+      "action": "reload",
+      "description": "Reload .network and .netdev configuration files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["reload"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "config",
+      "action": "show",
+      "description": "Show network configuration files for a device",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["cat"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Device name to show config for"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "config",
+      "action": "edit",
+      "description": "Edit network configuration files for a device",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["edit"],
+        "positionalArgs": ["device"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": [
+        {
+          "name": "device",
+          "type": "string",
+          "required": true,
+          "description": "Device name to edit config for"
+        }
+      ]
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Show networkctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "networkctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to networkctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "networkctl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install networkctl: apt-get install systemd-networkd"
+      },
+      "args": []
+    }
+  ]
+}
