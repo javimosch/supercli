@@ -1,0 +1,171 @@
+{
+  "name": "gh-pr",
+  "version": "0.1.0",
+  "description": "GitHub Pull Request management via gh CLI — list, view, create, review, merge, and manage PRs",
+  "source": "https://cli.github.com/manual/gh_pr",
+  "checks": [
+    { "type": "binary", "name": "gh" }
+  ],
+  "commands": [
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "list",
+      "description": "List pull requests with filters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "list", "--json", "number,title,state,author,headRefName,baseRefName,createdAt,labels,url"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "--state", "type": "string", "description": "Filter by state: open, closed, merged, all" },
+        { "name": "--head", "type": "string", "description": "Filter by head branch name" },
+        { "name": "--base", "type": "string", "description": "Filter by base branch name" },
+        { "name": "--label", "type": "string", "description": "Filter by labels (comma-separated)" },
+        { "name": "--author", "type": "string", "description": "Filter by author login" },
+        { "name": "--assignee", "type": "string", "description": "Filter by assignee login" },
+        { "name": "--search", "type": "string", "description": "Search query string" },
+        { "name": "--limit", "type": "string", "description": "Maximum number of PRs to fetch (default 30)" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "view",
+      "description": "View pull request details",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "view", "--json", "number,title,body,state,author,headRefName,baseRefName,createdAt,mergedAt,closedAt,mergeable,reviews,additions,deletions,files,comments,labels,url"],
+        "parseJson": true,
+        "positionalArgs": ["number"],
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "number", "type": "string", "required": true, "description": "PR number or URL" },
+        { "name": "--comments", "type": "boolean", "description": "Show PR comments" },
+        { "name": "--web", "type": "boolean", "description": "Open PR in browser" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "create",
+      "description": "Create a pull request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "create", "--json", "number,title,url"],
+        "parseJson": true,
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "--title", "type": "string", "required": true, "description": "PR title" },
+        { "name": "--body", "type": "string", "description": "PR body text" },
+        { "name": "--base", "type": "string", "description": "Base branch to merge into" },
+        { "name": "--head", "type": "string", "description": "Head branch to merge from" },
+        { "name": "--label", "type": "string", "description": "Labels (comma-separated)" },
+        { "name": "--assignee", "type": "string", "description": "Assignees (comma-separated)" },
+        { "name": "--reviewer", "type": "string", "description": "Reviewers (comma-separated)" },
+        { "name": "--draft", "type": "boolean", "description": "Create as draft PR" },
+        { "name": "--fill", "type": "boolean", "description": "Use commit info for title and body" },
+        { "name": "--web", "type": "boolean", "description": "Open browser to create PR" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "checkout",
+      "description": "Checkout a pull request locally",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "checkout"],
+        "positionalArgs": ["number"],
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "number", "type": "string", "required": true, "description": "PR number" },
+        { "name": "--branch", "type": "string", "description": "Local branch name to create" },
+        { "name": "--detach", "type": "boolean", "description": "Checkout in detached HEAD" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "review",
+      "description": "Review a pull request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "review"],
+        "positionalArgs": ["number"],
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "number", "type": "string", "required": true, "description": "PR number" },
+        { "name": "--approve", "type": "boolean", "description": "Approve the PR" },
+        { "name": "--request-changes", "type": "boolean", "description": "Request changes" },
+        { "name": "--comment", "type": "boolean", "description": "Leave a comment review" },
+        { "name": "--body", "type": "string", "description": "Review body text" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "merge",
+      "description": "Merge a pull request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "merge"],
+        "positionalArgs": ["number"],
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "number", "type": "string", "required": true, "description": "PR number" },
+        { "name": "--merge", "type": "boolean", "description": "Merge with a merge commit" },
+        { "name": "--squash", "type": "boolean", "description": "Squash and merge" },
+        { "name": "--rebase", "type": "boolean", "description": "Rebase and merge" },
+        { "name": "--subject", "type": "string", "description": "Merge commit subject" },
+        { "name": "--body", "type": "string", "description": "Merge commit body" },
+        { "name": "--delete-branch", "type": "boolean", "description": "Delete head branch after merge" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "close",
+      "description": "Close a pull request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "close"],
+        "positionalArgs": ["number"],
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "number", "type": "string", "required": true, "description": "PR number" },
+        { "name": "--comment", "type": "string", "description": "Leave a closing comment" }
+      ]
+    },
+    {
+      "namespace": "gh",
+      "resource": "pr",
+      "action": "reopen",
+      "description": "Reopen a closed pull request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gh",
+        "baseArgs": ["pr", "reopen"],
+        "positionalArgs": ["number"],
+        "missingDependencyHelp": "Install GitHub CLI: https://cli.github.com"
+      },
+      "args": [
+        { "name": "number", "type": "string", "required": true, "description": "PR number" }
+      ]
+    }
+  ]
+}
