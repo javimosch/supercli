@@ -1,0 +1,117 @@
+{
+  "name": "apropos",
+  "version": "0.1.0",
+  "description": "apropos — search the manual page names and descriptions for a keyword",
+  "source": "https://man7.org/linux/man-pages/man1/apropos.1.html",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "apropos"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "apropos",
+    "binary": "apropos",
+    "check": "which apropos",
+    "install_steps": [
+      "base system (man-db)",
+      "Verify: apropos --version"
+    ],
+    "note": "Standard Unix utility from man-db. Pre-installed on most Linux distributions."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "apropos",
+      "resource": "self",
+      "action": "version",
+      "description": "Print apropos version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "apropos is part of man-db (base system)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apropos",
+      "resource": "keyword",
+      "action": "search",
+      "description": "Search man pages for a keyword",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "positionalArgs": ["keyword"],
+        "missingDependencyHelp": "apropos is part of man-db (base system)"
+      },
+      "args": [
+        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search in man page descriptions" }
+      ]
+    },
+    {
+      "namespace": "apropos",
+      "resource": "keyword",
+      "action": "search-all",
+      "description": "Search man pages for a keyword with full output (no pager)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "baseArgs": ["-l"],
+        "positionalArgs": ["keyword"],
+        "missingDependencyHelp": "apropos is part of man-db (base system)"
+      },
+      "args": [
+        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search" }
+      ]
+    },
+    {
+      "namespace": "apropos",
+      "resource": "keyword",
+      "action": "search-exact",
+      "description": "Search man pages for exact keyword match only",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "baseArgs": ["-e"],
+        "positionalArgs": ["keyword"],
+        "missingDependencyHelp": "apropos is part of man-db (base system)"
+      },
+      "args": [
+        { "name": "keyword", "type": "string", "required": true, "description": "Exact keyword to match" }
+      ]
+    },
+    {
+      "namespace": "apropos",
+      "resource": "keyword",
+      "action": "search-section",
+      "description": "Search man pages in a specific section",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "baseArgs": ["-s"],
+        "positionalArgs": ["section", "keyword"],
+        "missingDependencyHelp": "apropos is part of man-db (base system)"
+      },
+      "args": [
+        { "name": "section", "type": "string", "required": true, "description": "Man page section number (e.g. 1, 2, 3, 5, 7, 8)" },
+        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search" }
+      ]
+    },
+    {
+      "namespace": "apropos",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to apropos CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apropos",
+        "passthrough": true,
+        "missingDependencyHelp": "apropos is part of man-db (base system)"
+      },
+      "args": []
+    }
+  ]
+}
