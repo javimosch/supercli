@@ -1,0 +1,131 @@
+{
+  "name": "sysctl",
+  "version": "0.1.0",
+  "description": "sysctl — Linux kernel parameter management at runtime",
+  "source": "https",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sysctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sysctl",
+    "binary": "sysctl",
+    "check": "which sysctl",
+    "install_steps": [
+      "base system (procps-ng / util-linux)",
+      "Verify: sysctl --version",
+      "supercli plugins install ./plugins/sysctl --on-conflict replace --json"
+    ],
+    "note": "Standard Linux system utility from procps-ng."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sysctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sysctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sysctl",
+      "resource": "all",
+      "action": "list",
+      "description": "List all kernel parameters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "baseArgs": ["-a"],
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sysctl",
+      "resource": "param",
+      "action": "get",
+      "description": "Get value of a kernel parameter",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "baseArgs": ["-n"],
+        "positionalArgs": ["name"],
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Kernel parameter name (e.g. kernel.hostname)" }
+      ]
+    },
+    {
+      "namespace": "sysctl",
+      "resource": "param",
+      "action": "set",
+      "description": "Set a kernel parameter value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "baseArgs": ["-w"],
+        "positionalArgs": ["assignment"],
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": [
+        { "name": "assignment", "type": "string", "required": true, "description": "Parameter=value (e.g. kernel.hostname=myhost)" }
+      ]
+    },
+    {
+      "namespace": "sysctl",
+      "resource": "file",
+      "action": "load",
+      "description": "Load sysctl settings from a file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "baseArgs": ["-p"],
+        "positionalArgs": ["file"],
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "Path to sysctl config file (default: /etc/sysctl.conf)" }
+      ]
+    },
+    {
+      "namespace": "sysctl",
+      "resource": "param",
+      "action": "search",
+      "description": "Search kernel parameters matching a pattern",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "baseArgs": ["-a", "--pattern"],
+        "positionalArgs": ["pattern"],
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Regex pattern to match parameter names" }
+      ]
+    },
+    {
+      "namespace": "sysctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sysctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sysctl",
+        "passthrough": true,
+        "missingDependencyHelp": "sysctl is part of procps-ng (base system)"
+      },
+      "args": []
+    }
+  ]
+}
