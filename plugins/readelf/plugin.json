@@ -1,0 +1,212 @@
+{
+  "name": "readelf",
+  "version": "0.1.0",
+  "description": "readelf — display information about ELF format files (headers, sections, symbols, relocations)",
+  "source": "https://github.com/bminor/binutils-gdb",
+  "checks": [
+    { "type": "binary", "name": "readelf" }
+  ],
+  "install_guidance": {
+    "plugin": "readelf",
+    "binary": "readelf",
+    "check": "which readelf",
+    "install_steps": [
+      "apt install binutils (Debian/Ubuntu)",
+      "yum install binutils (RHEL/Fedora)",
+      "Pre-installed on most Linux distributions",
+      "supercli plugins install ./plugins/readelf --on-conflict replace --json"
+    ],
+    "note": "Part of GNU Binutils, pre-installed on most Linux systems. Essential for examining ELF binaries, shared libraries, and object files."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "readelf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print readelf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": []
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "header",
+      "description": "Display ELF file header",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-h"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or object file to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "sections",
+      "description": "Display ELF section headers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-S"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or object file to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "symbols",
+      "description": "Display ELF symbol table",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-s"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or object file to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "relocations",
+      "description": "Display ELF relocations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-r"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or object file to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "dynamic",
+      "description": "Display ELF dynamic section",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-d"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or shared library to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "segments",
+      "description": "Display ELF program headers (segments)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-l"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or object file to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "notes",
+      "description": "Display ELF notes section",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-n"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "version-info",
+      "description": "Display ELF version sections",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-V"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary or shared library to examine" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "demangle",
+      "description": "Display ELF symbol table with demangled C++/Rust names",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-s", "--demangle"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary to examine with demangled symbols" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "file",
+      "action": "all",
+      "description": "Display all ELF information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "baseArgs": ["-a"],
+        "positionalArgs": ["elf-file"],
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": [
+        { "name": "elf-file", "type": "string", "required": true, "description": "ELF binary to show all info for" }
+      ]
+    },
+    {
+      "namespace": "readelf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to readelf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "readelf",
+        "passthrough": true,
+        "missingDependencyHelp": "readelf is part of binutils: apt install binutils"
+      },
+      "args": []
+    }
+  ]
+}
