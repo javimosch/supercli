@@ -1,0 +1,94 @@
+{
+  "name": "journalctl",
+  "version": "0.1.0",
+  "description": "journalctl — query and view systemd journal logs with filtering by service, time, priority, and more",
+  "source": "https://www.freedesktop.org/software/systemd/man/latest/journalctl.html",
+  "checks": [
+    { "type": "binary", "name": "journalctl" }
+  ],
+  "commands": [
+    {
+      "namespace": "journalctl",
+      "resource": "log",
+      "action": "view",
+      "description": "View system journal logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journalctl",
+        "passthrough": true,
+        "missingDependencyHelp": "journalctl is included with systemd — ensure systemd is installed"
+      },
+      "args": [
+        { "name": "-u", "type": "string", "description": "Show logs for a specific systemd unit" },
+        { "name": "--since", "type": "string", "description": "Show logs since a specified time (e.g. '1 hour ago', '2024-01-01')" },
+        { "name": "--until", "type": "string", "description": "Show logs until a specified time" },
+        { "name": "-p", "type": "string", "description": "Filter by priority (emerg, alert, crit, err, warning, notice, info, debug)" },
+        { "name": "-n", "type": "number", "description": "Show only the most recent N lines" },
+        { "name": "--no-pager", "type": "boolean", "description": "Output directly without pager" },
+        { "name": "--output", "type": "string", "description": "Output format (short, short-iso, verbose, json, json-pretty, cat)" },
+        { "name": "--boot", "type": "string", "description": "Show logs from a specific boot (-1 for previous boot, 0 for current)" },
+        { "name": "_SYSTEMD_UNIT", "type": "string", "description": "Filter by systemd unit name" }
+      ]
+    },
+    {
+      "namespace": "journalctl",
+      "resource": "log",
+      "action": "follow",
+      "description": "Follow journal logs in real time",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journalctl",
+        "baseArgs": ["-f"],
+        "missingDependencyHelp": "journalctl is included with systemd"
+      },
+      "args": [
+        { "name": "-u", "type": "string", "description": "Follow logs for a specific systemd unit" },
+        { "name": "-n", "type": "number", "description": "Show N most recent lines before following" }
+      ]
+    },
+    {
+      "namespace": "journalctl",
+      "resource": "log",
+      "action": "priority",
+      "description": "View logs filtered by priority level",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journalctl",
+        "passthrough": true,
+        "missingDependencyHelp": "journalctl is included with systemd"
+      },
+      "args": [
+        { "name": "-p", "type": "string", "required": true, "description": "Priority level (emerg, alert, crit, err, warning, notice, info, debug)" },
+        { "name": "-u", "type": "string", "description": "Filter by systemd unit" },
+        { "name": "--since", "type": "string", "description": "Show logs since a specified time" },
+        { "name": "-n", "type": "number", "description": "Show only the most recent N lines" }
+      ]
+    },
+    {
+      "namespace": "journalctl",
+      "resource": "log",
+      "action": "disk-usage",
+      "description": "Show current disk usage of journal logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journalctl",
+        "baseArgs": ["--disk-usage"],
+        "missingDependencyHelp": "journalctl is included with systemd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "journalctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to journalctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "journalctl",
+        "passthrough": true,
+        "missingDependencyHelp": "journalctl is included with systemd"
+      },
+      "args": []
+    }
+  ]
+}
