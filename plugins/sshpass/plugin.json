@@ -1,0 +1,91 @@
+{
+  "name": "sshpass",
+  "version": "0.1.0",
+  "description": "sshpass — non-interactive SSH password authentication utility",
+  "source": "https",
+  "checks": [{"type": "binary", "name": "sshpass"}],
+  "install_guidance": {
+    "plugin": "sshpass",
+    "binary": "sshpass",
+    "check": "which sshpass",
+    "install_steps": [
+      "apt-get install sshpass",
+      "Verify: sshpass -h",
+      "supercli plugins install ./plugins/sshpass --on-conflict replace --json"
+    ]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "sshpass",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sshpass version",
+      "adapter": "process",
+      "adapterConfig": {"command": "sshpass", "baseArgs": ["-h"], "missingDependencyHelp": "Install sshpass: apt-get install sshpass"},
+      "args": []
+    },
+    {
+      "namespace": "sshpass",
+      "resource": "ssh",
+      "action": "exec",
+      "description": "Run SSH command with password authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sshpass",
+        "baseArgs": ["-e"],
+        "positionalArgs": ["command", "args"],
+        "missingDependencyHelp": "Install sshpass: apt-get install sshpass",
+        "timeout_ms": 30000
+      },
+      "args": [
+        {"name": "password", "type": "string", "required": false, "description": "Password (use -p flag; prefer SSHKEYPASS env var for security)"},
+        {"name": "command", "type": "string", "required": true, "description": "SSH command to execute (e.g. ssh user@host)"},
+        {"name": "--args", "type": "string", "required": false, "description": "Additional arguments to the command"}
+      ]
+    },
+    {
+      "namespace": "sshpass",
+      "resource": "scp",
+      "action": "copy",
+      "description": "Run SCP with password authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sshpass",
+        "baseArgs": ["-e"],
+        "positionalArgs": ["command", "args"],
+        "missingDependencyHelp": "Install sshpass: apt-get install sshpass",
+        "timeout_ms": 60000
+      },
+      "args": [
+        {"name": "--scp-args", "type": "string", "required": true, "description": "SCP arguments (e.g. file user@host:/path/)"}
+      ]
+    },
+    {
+      "namespace": "sshpass",
+      "resource": "rsync",
+      "action": "sync",
+      "description": "Run rsync over SSH with password authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sshpass",
+        "baseArgs": ["-e"],
+        "positionalArgs": ["command", "args"],
+        "missingDependencyHelp": "Install sshpass: apt-get install sshpass",
+        "timeout_ms": 120000
+      },
+      "args": [
+        {"name": "--rsync-args", "type": "string", "required": true, "description": "Rsync arguments (e.g. -avz /src/ user@host:/dst/)"}
+      ]
+    },
+    {
+      "namespace": "sshpass",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sshpass CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "sshpass", "passthrough": true, "missingDependencyHelp": "Install sshpass: apt-get install sshpass"},
+      "args": []
+    }
+  ]
+}
