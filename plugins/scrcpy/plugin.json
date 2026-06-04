@@ -1,0 +1,119 @@
+{
+  "name": "scrcpy",
+  "version": "0.1.0",
+  "description": "Display and control Android devices from your desktop via USB or TCP/IP",
+  "source": "https://github.com/Genymobile/scrcpy",
+  "checks": [
+    { "type": "binary", "name": "scrcpy" }
+  ],
+  "install_guidance": {
+    "plugin": "scrcpy",
+    "binary": "scrcpy",
+    "check": "which scrcpy",
+    "install_steps": [
+      "brew install scrcpy",
+      "sudo apt install scrcpy",
+      "Verify: scrcpy --version",
+      "supercli plugins install ./plugins/scrcpy --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "scrcpy",
+      "resource": "device",
+      "action": "mirror",
+      "description": "Mirror and control an Android device",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scrcpy",
+        "missingDependencyHelp": "Install scrcpy: brew install scrcpy"
+      },
+      "args": [
+        { "name": "--max-size", "type": "string", "description": "Limit screen size (e.g. 1024)" },
+        { "name": "--max-fps", "type": "string", "description": "Limit frame rate (e.g. 30)" },
+        { "name": "--bit-rate", "type": "string", "description": "Encode bit-rate (e.g. 2M)" },
+        { "name": "--serial", "type": "string", "description": "Device serial number" },
+        { "name": "--record", "type": "string", "description": "Record to file (e.g. recording.mp4)" },
+        { "name": "--no-window", "type": "boolean", "description": "Disable window display" },
+        { "name": "--turn-screen-off", "type": "boolean", "description": "Turn screen off on mirror start" },
+        { "name": "--no-control", "type": "boolean", "description": "Disable device control (view only)" },
+        { "name": "--stay-awake", "type": "boolean", "description": "Keep device awake" },
+        { "name": "--power-off-on-close", "type": "boolean", "description": "Power off device on close" },
+        { "name": "--display", "type": "string", "description": "Display ID to mirror" },
+        { "name": "--crop", "type": "string", "description": "Crop rectangle (e.g. 1920:1080:0:0)" }
+      ]
+    },
+    {
+      "namespace": "scrcpy",
+      "resource": "device",
+      "action": "record",
+      "description": "Record Android device screen to file (no display)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scrcpy",
+        "baseArgs": ["--no-window", "--record"],
+        "missingDependencyHelp": "Install scrcpy: brew install scrcpy"
+      },
+      "args": [
+        { "name": "file", "type": "string", "positional": true, "required": true, "description": "Output file path" },
+        { "name": "--max-size", "type": "string", "description": "Limit screen size" },
+        { "name": "--max-fps", "type": "string", "description": "Limit frame rate" },
+        { "name": "--bit-rate", "type": "string", "description": "Encode bit-rate" },
+        { "name": "--serial", "type": "string", "description": "Device serial number" },
+        { "name": "--no-audio", "type": "boolean", "description": "Disable audio recording" }
+      ]
+    },
+    {
+      "namespace": "scrcpy",
+      "resource": "device",
+      "action": "list",
+      "description": "List connected Android devices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scrcpy",
+        "baseArgs": ["--list-devices"],
+        "missingDependencyHelp": "Install scrcpy: brew install scrcpy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scrcpy",
+      "resource": "device",
+      "action": "info",
+      "description": "Show device info and scrcpy capabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scrcpy",
+        "baseArgs": ["--print-fps"],
+        "missingDependencyHelp": "Install scrcpy: brew install scrcpy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scrcpy",
+      "resource": "system",
+      "action": "version",
+      "description": "Show scrcpy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scrcpy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install scrcpy: brew install scrcpy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scrcpy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scrcpy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scrcpy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install scrcpy: brew install scrcpy"
+      },
+      "args": []
+    }
+  ]
+}
