@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CLI-UI Boilerplates - supercli</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif']
+            },
+            colors: {
+              brand: {
+                100: '#E0F2FE',
+                200: '#BAE6FD',
+                400: '#38BDF8',
+                500: '#0891B2'
+              }
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+      
+      body {
+        font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #FBFBFA;
+        color: #111111;
+        line-height: 1.6;
+      }
+      .sidebar-link {
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .editorial-heading {
+        font-family: 'Newsreader', serif;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+      .mono-text {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .bento-card {
+        border: 1px solid #EAEAEA;
+        border-radius: 12px;
+        background: #FFFFFF;
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .bento-card:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      }
+      .code-block {
+        background: #111111;
+        color: #E8E8E8;
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.875rem;
+        overflow-x: auto;
+      }
+      .copy-btn {
+        transition: all 0.15s ease;
+      }
+      .copy-btn:hover {
+        background: #EAEAEA;
+      }
+      .tag {
+        background: #EDF3EC;
+        color: #346538;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+      .scroll-top-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 3rem;
+        height: 3rem;
+        background: #111111;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.2s ease;
+        z-index: 50;
+      }
+      .scroll-top-btn.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <div class="flex">
+      <!-- Sidebar -->
+      <aside id="sidebar" class="hidden lg:block w-64 border-r border-[#EAEAEA] bg-white h-screen sticky top-0 overflow-y-auto">
+        <div class="p-6">
+          <a href="index.html" class="font-display text-xl font-semibold tracking-tight">supercli</a>
+          <p class="text-xs text-[#787774] mt-1">CLI Framework</p>
+        </div>
+        <nav class="px-4 pb-6">
+          <div class="text-xs font-medium text-[#787774] uppercase tracking-wider px-3 mb-2">Getting Started</div>
+          <a href="index.html" class="sidebar-link block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Overview</a>
+          <a href="plugins.html" class="sidebar-link block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Plugins Directory</a>
+          <a href="boilerplates.html" class="sidebar-link block px-3 py-2 text-sm text-[#111111] bg-[#F7F6F3] font-medium rounded-lg">CLI-UI Boilerplates</a>
+          <a href="create-plugin.html" class="sidebar-link block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Create a Plugin</a>
+          
+          <div class="text-xs font-medium text-[#787774] uppercase tracking-wider px-3 mb-2 mt-6">Reference</div>
+          <a href="plugins-how-to.md" class="sidebar-link block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Plugin Development</a>
+          <a href="AGENTS_FRIENDLY_TOOLS.md" class="sidebar-link block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Agent-Friendly Design</a>
+          <a href="server.md" class="sidebar-link block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Server Mode</a>
+        </nav>
+      </aside>
+
+      <!-- Mobile Drawer -->
+      <div id="mobileDrawer" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 lg:hidden">
+        <div class="w-64 bg-white h-full p-4">
+          <div class="flex justify-between items-center mb-4">
+            <span class="font-display text-lg font-semibold">supercli</span>
+            <button id="drawerClose" class="p-2 hover:bg-[#F7F6F3] rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
+          <nav>
+            <a href="index.html" class="block px-3 py-2 text-sm text-[#55544F] hover:bg-[#F7F6F3] rounded-lg">Overview</a>
+            <a href="plugins.html" class="block px-3 py-2 text-sm text-[#55544F] hover:bg-[#F7F6F3] rounded-lg">Plugins Directory</a>
+            <a href="boilerplates.html" class="block px-3 py-2 text-sm text-[#111111] bg-[#F7F6F3] font-medium rounded-lg">CLI-UI Boilerplates</a>
+            <a href="create-plugin.html" class="block px-3 py-2 text-sm text-[#55544F] hover:bg-[#F7F6F3] rounded-lg">Create a Plugin</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0">
+        <!-- Header -->
+        <header class="border-b border-[#EAEAEA] bg-white sticky top-0 z-40">
+          <div class="flex items-center justify-between px-6 py-4">
+            <button id="mobileToggle" class="lg:hidden p-2 hover:bg-[#F7F6F3] rounded-lg">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+            </button>
+            <div class="flex items-center gap-4">
+              <span class="text-sm text-[#787774]">Docs</span>
+              <a href="https://github.com/javimosch/supercli" class="text-sm text-[#55544F] hover:text-[#111111] flex items-center gap-1">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                GitHub
+              </a>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <div class="max-w-4xl mx-auto px-6 py-12">
+          <!-- Hero -->
+          <div class="mb-12">
+            <h1 class="editorial-heading text-4xl font-semibold mb-4">CLI-UI Boilerplates</h1>
+            <p class="text-lg text-[#55544F] max-w-2xl">
+              Quick-start templates for building CLI tools with embedded web UIs. 
+              Single binary, no runtime dependencies. Part of the SuperCLI ecosystem.
+            </p>
+          </div>
+
+          <!-- Boilerplate Table -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-semibold mb-6">Available Boilerplates</h2>
+            
+            <div class="bento-card overflow-hidden">
+              <table class="w-full text-sm">
+                <thead class="bg-[#F7F6F3] border-b border-[#EAEAEA]">
+                  <tr>
+                    <th class="text-left px-4 py-3 font-medium text-[#55544F]">Language</th>
+                    <th class="text-left px-4 py-3 font-medium text-[#55544F]">Frontend</th>
+                    <th class="text-left px-4 py-3 font-medium text-[#55544F]">Binary Size</th>
+                    <th class="text-left px-4 py-3 font-medium text-[#55544F]">Best For</th>
+                    <th class="text-left px-4 py-3 font-medium text-[#55544F]">Repo</th>
+                  </tr>
+                </thead>
+                <tbody id="boilerplateTable" class="divide-y divide-[#EAEAEA]">
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Quick Start -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-semibold mb-6">Quick Start</h2>
+            
+            <div class="space-y-4">
+              <div class="bento-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="tag">Recommended</span>
+                    <span class="font-medium">Go + Vue 3</span>
+                    <span class="text-xs text-[#787774]">~5MB binary</span>
+                  </div>
+                  <button class="copy-btn p-2 rounded-lg" onclick="copyCmd('git clone https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue.git && cd boilerplate-cli-ui-go-v2-vue && go run . start')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="code-block text-xs">
+git clone https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue.git
+cd boilerplate-cli-ui-go-v2-vue
+go run . start</div>
+              </div>
+
+              <div class="bento-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="tag" style="background: #E0F2FE; color: #1F6C9F;">Smallest</span>
+                    <span class="font-medium">Rust + Vue 3</span>
+                    <span class="text-xs text-[#787774]">~1.1MB binary</span>
+                  </div>
+                  <button class="copy-btn p-2 rounded-lg" onclick="copyCmd('git clone https://github.com/javimosch/boilerplate-cli-ui-rust.git && cd boilerplate-cli-ui-rust && cargo run -- start')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="code-block text-xs">
+git clone https://github.com/javimosch/boilerplate-cli-ui-rust.git
+cd boilerplate-cli-ui-rust
+cargo run -- start</div>
+              </div>
+
+              <div class="bento-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <div class="flex items-center gap-2">
+                    <span class="tag" style="background: #FEF3C7; color: #92400E;">Tiny</span>
+                    <span class="font-medium">C++ + Vue 3</span>
+                    <span class="text-xs text-[#787774]">~493KB binary</span>
+                  </div>
+                  <button class="copy-btn p-2 rounded-lg" onclick="copyCmd('git clone https://github.com/javimosch/boilerplate-cli-ui-cpp.git && cd boilerplate-cli-ui-cpp && ./build.sh && ./build/boilerplate-cli-ui-cpp start')">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                    </svg>
+                  </button>
+                </div>
+                <div class="code-block text-xs">
+git clone https://github.com/javimosch/boilerplate-cli-ui-cpp.git
+cd boilerplate-cli-ui-cpp
+./build.sh
+./build/boilerplate-cli-ui-cpp start</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Architecture -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-semibold mb-6">Architecture</h2>
+            
+            <div class="bento-card p-6">
+              <p class="text-[#55544F] mb-4">All boilerplates share the same architecture:</p>
+              
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-[#F7F6F3] rounded-lg p-4">
+                  <h4 class="font-medium mb-2">Frontend (Embedded)</h4>
+                  <ul class="text-sm text-[#55544F] space-y-1">
+                    <li>• Vue 3 or React (CDN)</li>
+                    <li>• Tailwind CSS</li>
+                    <li>• Lucide Icons</li>
+                    <li>• Hashbang routing</li>
+                  </ul>
+                </div>
+                <div class="bg-[#F7F6F3] rounded-lg p-4">
+                  <h4 class="font-medium mb-2">Backend (Single Binary)</h4>
+                  <ul class="text-sm text-[#55544F] space-y-1">
+                    <li>• HTTP server</li>
+                    <li>• JSON API endpoints</li>
+                    <li>• Embedded UI files</li>
+                    <li>• CLI commands</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="code-block text-xs mb-4">
+project/
+├── src/           # Backend (Go/Rust/C++/etc.)
+│   └── main.go    # HTTP server + CLI
+├── ui/            # Frontend (embedded at compile time)
+│   ├── index.html
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── components/
+│   │   └── views/
+│   └── css/
+│       └── styles.css
+└── README.md</div>
+
+              <h4 class="font-medium mb-2">API Endpoints</h4>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-sm">
+                <div class="bg-[#F7F6F3] rounded px-3 py-2">
+                  <code class="text-xs text-[#1F6C9F]">GET /</code>
+                  <span class="text-[#787774] ml-2">Web UI</span>
+                </div>
+                <div class="bg-[#F7F6F3] rounded px-3 py-2">
+                  <code class="text-xs text-[#1F6C9F]">GET /api/status</code>
+                  <span class="text-[#787774] ml-2">Status</span>
+                </div>
+                <div class="bg-[#F7F6F3] rounded px-3 py-2">
+                  <code class="text-xs text-[#1F6C9F]">GET /api/health</code>
+                  <span class="text-[#787774] ml-2">Health</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- When to Use -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-semibold mb-6">When to Use Which</h2>
+            
+            <div class="bento-card p-6">
+              <div class="space-y-4">
+                <div class="border-l-4 border-[#346538] pl-4">
+                  <h4 class="font-medium">Go + Vue 3</h4>
+                  <p class="text-sm text-[#55544F]">Best for most projects. Fast development, small binaries, great ecosystem.</p>
+                </div>
+                <div class="border-l-4 border-[#1F6C9F] pl-4">
+                  <h4 class="font-medium">Rust + Vue 3</h4>
+                  <p class="text-sm text-[#55544F]">When you need minimal binaries (~1MB). Steeper learning curve.</p>
+                </div>
+                <div class="border-l-4 border-[#92400E] pl-4">
+                  <h4 class="font-medium">C++ + Vue 3</h4>
+                  <p class="text-sm text-[#55544F]">Ultra-minimal binaries (~500KB). Painful setup, manual file management.</p>
+                </div>
+                <div class="border-l-4 border-[#55544F] pl-4">
+                  <h4 class="font-medium">Go + React 18</h4>
+                  <p class="text-sm text-[#55544F]">When your team prefers React. Same Go backend as Vue version.</p>
+                </div>
+                <div class="border-l-4 border-[#787774] pl-4">
+                  <h4 class="font-medium">.NET 8 + Vue 3</h4>
+                  <p class="text-sm text-[#55544F]">Enterprise environments, Windows-first. Larger binaries (~89MB).</p>
+                </div>
+                <div class="border-l-4 border-[#787774] pl-4">
+                  <h4 class="font-medium">Python + React</h4>
+                  <p class="text-sm text-[#55544F]">Python ecosystem. Good for data tools, ML dashboards.</p>
+                </div>
+                <div class="border-l-4 border-[#787774] pl-4">
+                  <h4 class="font-medium">Node.js + Vanilla JS</h4>
+                  <p class="text-sm text-[#55544F]">TypeScript ecosystem. Largest binaries (~123MB).</p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Turn into Plugin -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-semibold mb-6">Turn Into a SuperCLI Plugin</h2>
+            
+            <div class="bento-card p-6">
+              <p class="text-[#55544F] mb-4">
+                Any boilerplate can become a SuperCLI plugin. 
+                <a href="create-plugin.html" class="text-[#1F6C9F] hover:underline">Read the step-by-step guide →</a>
+              </p>
+              
+              <div class="bg-[#F7F6F3] rounded-lg p-4">
+                <h4 class="font-medium mb-2">Quick Overview</h4>
+                <ol class="text-sm text-[#55544F] space-y-2">
+                  <li>1. Clone a boilerplate</li>
+                  <li>2. Customize the API and UI for your tool</li>
+                  <li>3. Add <code class="bg-white px-1 rounded">plugin.json</code> and <code class="bg-white px-1 rounded">meta.json</code></li>
+                  <li>4. Add <code class="bg-white px-1 rounded">skills/quickstart/SKILL.md</code></li>
+                  <li>5. Test with <code class="bg-white px-1 rounded">supercli plugins install ./my-plugin</code></li>
+                </ol>
+              </div>
+            </div>
+          </section>
+
+          <!-- All Repos -->
+          <section class="mb-16">
+            <h2 class="font-display text-2xl font-semibold mb-6">All Repositories</h2>
+            
+            <div class="bento-card p-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3" id="repoLinks">
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scroll to top -->
+    <button id="scrollTopBtn" class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+      </svg>
+    </button>
+
+    <script>
+      const boilerplates = [
+        { lang: 'Go', frontend: 'Vue 3', size: '~5MB', best: 'General purpose, fast dev', repo: 'boilerplate-cli-ui-go-v2-vue', recommended: true },
+        { lang: 'Go', frontend: 'React 18', size: '~5MB', best: 'React ecosystem', repo: 'boilerplate-cli-ui-go-v2-react' },
+        { lang: 'Rust', frontend: 'Vue 3', size: '~1.1MB', best: 'Minimal binaries', repo: 'boilerplate-cli-ui-rust' },
+        { lang: 'C++', frontend: 'Vue 3', size: '~493KB', best: 'Ultra-minimal binaries', repo: 'boilerplate-cli-ui-cpp' },
+        { lang: '.NET 8', frontend: 'Vue 3', size: '~89MB', best: 'Enterprise, Windows', repo: 'boilerplate-cli-ui-dotnet' },
+        { lang: 'Node.js', frontend: 'Vanilla JS', size: '~123MB', best: 'TypeScript ecosystem', repo: 'boilerplate-cli-ui-node' },
+        { lang: 'Python', frontend: 'React', size: '~10MB', best: 'Python ecosystem', repo: 'boilerplate-cli-ui-python' },
+        { lang: 'Go (v1)', frontend: 'Inline HTML', size: '~5MB', best: 'Legacy reference', repo: 'boilerplate-cli-ui-go' }
+      ];
+
+      function renderTable() {
+        const tbody = document.getElementById('boilerplateTable');
+        tbody.innerHTML = boilerplates.map(p => `
+          <tr class="hover:bg-[#F7F6F3]">
+            <td class="px-4 py-3">
+              <span class="font-medium">${p.lang}</span>
+              ${p.recommended ? '<span class="ml-2 tag text-[10px]">Recommended</span>' : ''}
+            </td>
+            <td class="px-4 py-3 text-[#55544F]">${p.frontend}</td>
+            <td class="px-4 py-3">
+              <code class="text-xs mono-text text-[#1F6C9F]">${p.size}</code>
+            </td>
+            <td class="px-4 py-3 text-[#55544F] text-sm">${p.best}</td>
+            <td class="px-4 py-3">
+              <a href="https://github.com/javimosch/${p.repo}" 
+                 class="text-xs text-[#1F6C9F] hover:underline flex items-center gap-1"
+                 target="_blank">
+                <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                View
+              </a>
+            </td>
+          </tr>
+        `).join('');
+      }
+
+      function renderRepoLinks() {
+        const container = document.getElementById('repoLinks');
+        container.innerHTML = boilerplates.map(p => `
+          <a href="https://github.com/javimosch/${p.repo}" 
+             class="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F7F6F3] transition-colors"
+             target="_blank">
+            <svg class="w-5 h-5 text-[#787774]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            <div>
+              <div class="font-medium text-sm">${p.repo}</div>
+              <div class="text-xs text-[#787774]">${p.lang} + ${p.frontend} • ${p.size}</div>
+            </div>
+          </a>
+        `).join('');
+      }
+
+      async function copyCmd(cmd) {
+        try {
+          await navigator.clipboard.writeText(cmd);
+          // Show feedback
+        } catch (err) {
+          console.error('Copy failed');
+        }
+      }
+
+      // Scroll to top
+      window.addEventListener('scroll', () => {
+        const btn = document.getElementById('scrollTopBtn');
+        if (window.scrollY > 300) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      });
+
+      // Mobile drawer
+      document.getElementById('mobileToggle')?.addEventListener('click', () => {
+        document.getElementById('mobileDrawer').classList.remove('hidden');
+      });
+      document.getElementById('drawerClose')?.addEventListener('click', () => {
+        document.getElementById('mobileDrawer').classList.add('hidden');
+      });
+      document.getElementById('mobileDrawer')?.addEventListener('click', (e) => {
+        if (e.target.id === 'mobileDrawer') {
+          document.getElementById('mobileDrawer').classList.add('hidden');
+        }
+      });
+
+      // Init
+      renderTable();
+      renderRepoLinks();
+    </script>
+  </body>
+</html>

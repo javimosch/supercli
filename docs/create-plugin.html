@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create a Plugin from Boilerplate - supercli</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif']
+            }
+          }
+        }
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+      
+      body {
+        font-family: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background-color: #FBFBFA;
+        color: #111111;
+        line-height: 1.6;
+      }
+      .editorial-heading {
+        font-family: 'Newsreader', serif;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+      .mono-text {
+        font-family: 'JetBrains Mono', monospace;
+      }
+      .bento-card {
+        border: 1px solid #EAEAEA;
+        border-radius: 12px;
+        background: #FFFFFF;
+      }
+      .code-block {
+        background: #111111;
+        color: #E8E8E8;
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.875rem;
+        overflow-x: auto;
+      }
+      .copy-btn {
+        transition: all 0.15s ease;
+      }
+      .copy-btn:hover {
+        background: #EAEAEA;
+      }
+      .step-number {
+        width: 2rem;
+        height: 2rem;
+        background: #111111;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.875rem;
+        flex-shrink: 0;
+      }
+      .scroll-top-btn {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        width: 3rem;
+        height: 3rem;
+        background: #111111;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(10px);
+        transition: all 0.2s ease;
+        z-index: 50;
+      }
+      .scroll-top-btn.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen">
+    <div class="flex">
+      <!-- Sidebar -->
+      <aside class="hidden lg:block w-64 border-r border-[#EAEAEA] bg-white h-screen sticky top-0 overflow-y-auto">
+        <div class="p-6">
+          <a href="index.html" class="font-display text-xl font-semibold tracking-tight">supercli</a>
+          <p class="text-xs text-[#787774] mt-1">CLI Framework</p>
+        </div>
+        <nav class="px-4 pb-6">
+          <div class="text-xs font-medium text-[#787774] uppercase tracking-wider px-3 mb-2">Getting Started</div>
+          <a href="index.html" class="block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Overview</a>
+          <a href="plugins.html" class="block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Plugins Directory</a>
+          <a href="boilerplates.html" class="block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">CLI-UI Boilerplates</a>
+          <a href="create-plugin.html" class="block px-3 py-2 text-sm text-[#111111] bg-[#F7F6F3] font-medium rounded-lg">Create a Plugin</a>
+          
+          <div class="text-xs font-medium text-[#787774] uppercase tracking-wider px-3 mb-2 mt-6">Reference</div>
+          <a href="plugins-how-to.md" class="block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Plugin Development</a>
+          <a href="AGENTS_FRIENDLY_TOOLS.md" class="block px-3 py-2 text-sm text-[#55544F] hover:text-[#111111] hover:bg-[#F7F6F3] rounded-lg">Agent-Friendly Design</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0">
+        <!-- Header -->
+        <header class="border-b border-[#EAEAEA] bg-white sticky top-0 z-40">
+          <div class="flex items-center justify-between px-6 py-4">
+            <div class="flex items-center gap-4">
+              <a href="boilerplates.html" class="text-sm text-[#787774] hover:text-[#111111]">← Back to Boilerplates</a>
+            </div>
+          </div>
+        </header>
+
+        <!-- Content -->
+        <div class="max-w-4xl mx-auto px-6 py-12">
+          <!-- Hero -->
+          <div class="mb-12">
+            <h1 class="editorial-heading text-4xl font-semibold mb-4">Create a Plugin from Boilerplate</h1>
+            <p class="text-lg text-[#55544F] max-w-2xl">
+              Turn any CLI-UI boilerplate into a SuperCLI plugin in 6 steps.
+            </p>
+          </div>
+
+          <!-- Step 1 -->
+          <section class="mb-12">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="step-number">1</div>
+              <div>
+                <h2 class="font-display text-2xl font-semibold mb-2">Choose Your Boilerplate</h2>
+                <p class="text-[#55544F]">Pick the language and framework that fits your project.</p>
+              </div>
+            </div>
+            
+            <div class="bento-card p-6">
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                <a href="https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue" class="p-3 rounded-lg border border-[#EAEAEA] hover:border-[#111111] transition-colors">
+                  <div class="font-medium">Go + Vue</div>
+                  <div class="text-xs text-[#787774]">~5MB • Recommended</div>
+                </a>
+                <a href="https://github.com/javimosch/boilerplate-cli-ui-rust" class="p-3 rounded-lg border border-[#EAEAEA] hover:border-[#111111] transition-colors">
+                  <div class="font-medium">Rust + Vue</div>
+                  <div class="text-xs text-[#787774]">~1.1MB • Smallest</div>
+                </a>
+                <a href="https://github.com/javimosch/boilerplate-cli-ui-cpp" class="p-3 rounded-lg border border-[#EAEAEA] hover:border-[#111111] transition-colors">
+                  <div class="font-medium">C++ + Vue</div>
+                  <div class="text-xs text-[#787774]">~493KB • Tiny</div>
+                </a>
+                <a href="https://github.com/javimosch/boilerplate-cli-ui-go-v2-react" class="p-3 rounded-lg border border-[#EAEAEA] hover:border-[#111111] transition-colors">
+                  <div class="font-medium">Go + React</div>
+                  <div class="text-xs text-[#787774]">~5MB • React fans</div>
+                </a>
+              </div>
+              
+              <div class="code-block text-xs mt-4">
+# Example: Clone Go + Vue
+git clone https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue.git my-plugin
+cd my-plugin
+go run . start  # Test it works</div>
+            </div>
+          </section>
+
+          <!-- Step 2 -->
+          <section class="mb-12">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="step-number">2</div>
+              <div>
+                <h2 class="font-display text-2xl font-semibold mb-2">Customize the API</h2>
+                <p class="text-[#55544F]">Add endpoints for your tool's functionality.</p>
+              </div>
+            </div>
+            
+            <div class="bento-card p-6">
+              <h4 class="font-medium mb-3">Add your own endpoints (Go example)</h4>
+              <div class="code-block text-xs mb-4">
+// In server.go, add new endpoints:
+app.MapGet("/api/my-tool/status", func() Results {
+    return Results.Json(new {
+        status = "running",
+        version = "2.0.0",
+        data = GetToolStatus(),
+    })
+})
+
+app.MapPost("/api/my-tool/run", func(ctx HttpContext) Results {
+    var input RunInput
+    if err := ctx.Bind(&input); err != nil {
+        return Results.BadRequest(new { error = err.Error() })
+    }
+    
+    result := RunTool(input)
+    return Results.Json(result)
+})</div>
+              
+              <h4 class="font-medium mb-3">For Rust (main.rs)</h4>
+              <div class="code-block text-xs">
+async fn my_tool_status() -> Json&lt;MyStatus&gt; {
+    Json(MyStatus {
+        status: "running".to_string(),
+        version: "2.0.0".to_string(),
+    })
+}
+
+// Add to router:
+.route("/api/my-tool/status", get(my_tool_status))</div>
+            </div>
+          </section>
+
+          <!-- Step 3 -->
+          <section class="mb-12">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="step-number">3</div>
+              <div>
+                <h2 class="font-display text-2xl font-semibold mb-2">Customize the UI</h2>
+                <p class="text-[#55544F]">Update the dashboard to show your tool's data.</p>
+              </div>
+            </div>
+            
+            <div class="bento-card p-6">
+              <h4 class="font-medium mb-3">Edit the Dashboard view</h4>
+              <div class="code-block text-xs mb-4">
+// In ui/js/views/Dashboard.js
+const DashboardView = {
+    template: `
+        &lt;div&gt;
+            &lt;h2 class="text-2xl font-bold mb-6"&gt;My Tool Dashboard&lt;/h2&gt;
+            
+            &lt;!-- Your custom status cards --&gt;
+            &lt;div class="grid grid-cols-4 gap-4 mb-8"&gt;
+                &lt;status-card title="Status" :value="status?.status" icon="activity" /&gt;
+                &lt;status-card title="Version" :value="status?.version" icon="tag" /&gt;
+                &lt;!-- Add more cards --&gt;
+            &lt;/div&gt;
+            
+            &lt;!-- Your custom UI --&gt;
+            &lt;div class="bg-white rounded-xl border p-6"&gt;
+                &lt;h3 class="font-semibold mb-4"&gt;My Tool Controls&lt;/h3&gt;
+                &lt;button @click="runTool" class="btn btn-primary"&gt;Run Tool&lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    `,
+    setup() {
+        const status = Vue.inject('status');
+        const runTool = async () => {
+            await fetch('/api/my-tool/run', { method: 'POST' });
+        };
+        return { status, runTool };
+    }
+};</div>
+              
+              <p class="text-sm text-[#55544F]">
+                <strong>Tip:</strong> Status cards, sidebar, and layout are reusable components in 
+                <code class="bg-[#F7F6F3] px-1 rounded">ui/js/components/</code>.
+              </p>
+            </div>
+          </section>
+
+          <!-- Step 4 -->
+          <section class="mb-12">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="step-number">4</div>
+              <div>
+                <h2 class="font-display text-2xl font-semibold mb-2">Create plugin.json</h2>
+                <p class="text-[#55544F]">Define how SuperCLI discovers and runs your plugin.</p>
+              </div>
+            </div>
+            
+            <div class="bento-card p-6">
+              <div class="code-block text-xs mb-4">
+{
+    "name": "my-tool",
+    "version": "1.0.0",
+    "description": "My custom CLI tool with web UI",
+    "source": "https://github.com/myuser/my-tool",
+    "checks": [
+        {
+            "type": "binary",
+            "name": "my-tool"
+        }
+    ],
+    "install_guidance": {
+        "plugin": "my-tool",
+        "binary": "my-tool",
+        "check": "my-tool --version",
+        "install_steps": [
+            "go install github.com/myuser/my-tool@latest"
+        ]
+    },
+    "commands": [
+        {
+            "namespace": "my-tool",
+            "resource": "_",
+            "action": "_",
+            "description": "Start my-tool web UI",
+            "adapter": "process",
+            "adapterConfig": {
+                "command": "my-tool start",
+                "missingDependencyHelp": "Install: go install github.com/myuser/my-tool@latest"
+            }
+        }
+    ]
+}</div>
+              
+              <div class="bg-[#F7F6F3] rounded-lg p-4 text-sm">
+                <strong>Key fields:</strong>
+                <ul class="mt-2 space-y-1 text-[#55544F]">
+                  <li>• <code>commands[0].adapterConfig.command</code> - How to run your tool</li>
+                  <li>• <code>checks</code> - How to verify the tool is installed</li>
+                  <li>• <code>install_guidance</code> - Help users install your tool</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 5 -->
+          <section class="mb-12">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="step-number">5</div>
+              <div>
+                <h2 class="font-display text-2xl font-semibold mb-2">Add Agent Learning</h2>
+                <p class="text-[#55544F]">Create SKILL.md so AI agents can use your tool.</p>
+              </div>
+            </div>
+            
+            <div class="bento-card p-6">
+              <div class="code-block text-xs mb-4">
+# my-tool/ skills/quickstart/SKILL.md
+
+# My Tool Skill
+
+## Overview
+
+My tool does X, Y, Z. Use it when the user asks about [purpose].
+
+## Usage
+
+my-tool start           # Start web UI
+my-tool start -p 3000   # Start on custom port
+my-tool version         # Show version
+
+## API Endpoints
+
+GET /api/status    # Server status (JSON)
+GET /api/health    # Health check (JSON)
+POST /api/run      # Run the tool
+
+## Examples
+
+### Check status
+curl http://localhost:8080/api/status | jq
+
+### Run tool
+curl -X POST http://localhost:8080/api/run \\
+     -H "Content-Type: application/json" \\
+     -d '{"param": "value"}'</div>
+              
+              <div class="bg-[#F7F6F3] rounded-lg p-4 text-sm">
+                <strong>Why this matters:</strong> AI agents read SKILL.md to understand how to use your tool. 
+                Include examples, common patterns, and error handling.
+              </div>
+            </div>
+          </section>
+
+          <!-- Step 6 -->
+          <section class="mb-12">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="step-number">6</div>
+              <div>
+                <h2 class="font-display text-2xl font-semibold mb-2">Test Your Plugin</h2>
+                <p class="text-[#55544F]">Install locally and verify everything works.</p>
+              </div>
+            </div>
+            
+            <div class="bento-card p-6">
+              <div class="code-block text-xs mb-4">
+# Build your tool first
+go build -o my-tool .
+
+# Install as SuperCLI plugin
+supercli plugins install ./my-plugin
+
+# Verify discovery
+supercli plugins explore --name my-tool
+
+# Check health
+supercli plugins doctor my-tool
+
+# Test it
+supercli my-tool start</div>
+              
+              <div class="bg-[#F7F6F3] rounded-lg p-4 text-sm">
+                <strong>Checklist:</strong>
+                <ul class="mt-2 space-y-1 text-[#55544F]">
+                  <li>□ Tool builds without errors</li>
+                  <li>□ <code>plugin.json</code> is valid JSON</li>
+                  <li>□ <code>supercli plugins explore</code> finds your plugin</li>
+                  <li>□ <code>supercli plugins doctor</code> passes</li>
+                  <li>□ Web UI loads at <code>http://localhost:8080</code></li>
+                  <li>□ API endpoints return JSON</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <!-- Complete Example -->
+          <section class="mb-12">
+            <h2 class="font-display text-2xl font-semibold mb-6">Complete Example</h2>
+            
+            <div class="bento-card p-6">
+              <h4 class="font-medium mb-3">Directory Structure</h4>
+              <div class="code-block text-xs mb-4">
+my-plugin/
+├── plugin.json              # Plugin manifest
+├── meta.json                # Registry metadata
+├── main.go                  # Backend (customized)
+├── server.go                # HTTP server (customized)
+├── go.mod
+├── ui/
+│   ├── index.html
+│   ├── js/
+│   │   ├── app.js
+│   │   ├── components/
+│   │   └── views/
+│   └── css/
+│       └── styles.css
+└── skills/
+    └── quickstart/
+        └── SKILL.md         # Agent learning</div>
+              
+              <h4 class="font-medium mb-3">meta.json</h4>
+              <div class="code-block text-xs mb-4">
+{
+    "description": "My custom tool with web dashboard",
+    "tags": ["mytool", "web-ui", "dashboard"],
+    "has_learn": true,
+    "install_guidance": {
+        "plugin": "my-tool",
+        "binary": "my-tool",
+        "check": "my-tool --version",
+        "install_steps": [
+            "git clone https://github.com/myuser/my-tool",
+            "cd my-tool && go build -o my-tool ."
+        ]
+    }
+}</div>
+              
+              <h4 class="font-medium mb-3">Quick Commands</h4>
+              <div class="code-block text-xs">
+# Full workflow
+git clone https://github.com/javimosch/boilerplate-cli-ui-go-v2-vue.git my-plugin
+cd my-plugin
+
+# Edit files...
+# Add plugin.json, meta.json, skills/quickstart/SKILL.md
+
+# Build and test
+go build -o my-tool .
+supercli plugins install .
+supercli my-tool start</div>
+            </div>
+          </section>
+
+          <!-- Next Steps -->
+          <section class="mb-12">
+            <h2 class="font-display text-2xl font-semibold mb-6">Next Steps</h2>
+            
+            <div class="bento-card p-6">
+              <ul class="space-y-3 text-[#55544F]">
+                <li>
+                  <a href="plugins-how-to.md" class="text-[#1F6C9F] hover:underline">
+                    Read the full Plugin Development Guide →
+                  </a>
+                </li>
+                <li>
+                  <a href="AGENTS_FRIENDLY_TOOLS.md" class="text-[#1F6C9F] hover:underline">
+                    Learn about Agent-Friendly Design →
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/javimosch/supercli/tree/main/plugins" class="text-[#1F6C9F] hover:underline">
+                    Browse existing plugins for inspiration →
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <!-- Scroll to top -->
+    <button id="scrollTopBtn" class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+      </svg>
+    </button>
+
+    <script>
+      window.addEventListener('scroll', () => {
+        const btn = document.getElementById('scrollTopBtn');
+        if (window.scrollY > 300) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+        }
+      });
+    </script>
+  </body>
+</html>
