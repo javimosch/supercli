@@ -1,0 +1,38 @@
+{
+  "name": "scp",
+  "version": "0.1.0",
+  "description": "scp — secure copy for transferring files over SSH",
+  "source": "https",
+  "checks": [{"type": "binary", "name": "scp"}],
+  "install_guidance": {
+    "plugin": "scp",
+    "binary": "scp",
+    "check": "which scp",
+    "install_steps": [
+      "apt-get install openssh-client",
+      "Verify: scp -h",
+      "supercli plugins install ./plugins/scp --on-conflict replace --json"
+    ]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "scp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scp version",
+      "adapter": "process",
+      "adapterConfig": {"command": "scp", "baseArgs": ["--version"], "missingDependencyHelp": "Install scp: apt-get install openssh-client"},
+      "args": []
+    },
+    {
+      "namespace": "scp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scp CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "scp", "passthrough": true, "missingDependencyHelp": "Install scp: apt-get install openssh-client"},
+      "args": []
+    }
+  ]
+}
