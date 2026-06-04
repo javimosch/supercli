@@ -1,0 +1,95 @@
+{
+  "name": "last",
+  "version": "0.1.0",
+  "description": "last — show listing of last logged in users and system reboots",
+  "source": "https://github.com/util-linux/util-linux",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "last"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "last",
+    "binary": "last",
+    "check": "which last",
+    "install_steps": [
+      "Pre-installed on most Linux systems (util-linux package)",
+      "apt-get install util-linux",
+      "Verify: last --version",
+      "supercli plugins install ./plugins/last --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "last",
+      "resource": "self",
+      "action": "version",
+      "description": "Show last version info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "last",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "last is part of util-linux: apt install util-linux"
+      },
+      "args": []
+    },
+    {
+      "namespace": "last",
+      "resource": "login",
+      "action": "show",
+      "description": "Show last logged in users with optional filters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "last",
+        "missingDependencyHelp": "last is part of util-linux: apt install util-linux"
+      },
+      "args": [
+        { "name": "--limit", "type": "string", "description": "How many lines to show (e.g. 10)" },
+        { "name": "--fulltimes", "type": "boolean", "description": "Print full login and logout times and dates" },
+        { "name": "--ip", "type": "boolean", "description": "Display IP numbers in numbers-and-dots notation" },
+        { "name": "--dns", "type": "boolean", "description": "Translate IP number back into a hostname" },
+        { "name": "--hostlast", "type": "boolean", "description": "Display hostnames in the last column" },
+        { "name": "--system", "type": "boolean", "description": "Display system shutdown entries and run level changes" },
+        { "name": "--fullnames", "type": "boolean", "description": "Display full user and domain names" },
+        { "name": "--since", "type": "string", "description": "Display the lines since the specified time" },
+        { "name": "--until", "type": "string", "description": "Display the lines until the specified time" },
+        { "name": "--present", "type": "string", "description": "Display who were present at the specified time" },
+        { "name": "--nohostname", "type": "boolean", "description": "Don't display the hostname field" }
+      ]
+    },
+    {
+      "namespace": "last",
+      "resource": "user",
+      "action": "sessions",
+      "description": "Show login sessions for a specific user",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "last",
+        "missingDependencyHelp": "last is part of util-linux: apt install util-linux"
+      },
+      "args": [
+        { "name": "username", "type": "string", "required": true, "description": "Username to filter sessions for" },
+        { "name": "--limit", "type": "string", "description": "How many lines to show" },
+        { "name": "--fulltimes", "type": "boolean", "description": "Print full times and dates" },
+        { "name": "--ip", "type": "boolean", "description": "Display IP numbers" }
+      ]
+    },
+    {
+      "namespace": "last",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to last CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "last",
+        "passthrough": true,
+        "missingDependencyHelp": "last is part of util-linux: apt install util-linux"
+      },
+      "args": []
+    }
+  ]
+}
