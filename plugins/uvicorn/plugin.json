@@ -1,0 +1,63 @@
+{
+  "name": "uvicorn",
+  "version": "0.1.0",
+  "description": "uvicorn — lightning-fast ASGI server for Python async web frameworks like FastAPI",
+  "source": "https://github.com/encode/uvicorn",
+  "checks": [
+    { "type": "binary", "name": "uvicorn" }
+  ],
+  "install_guidance": {
+    "plugin": "uvicorn",
+    "binary": "uvicorn",
+    "check": "which uvicorn",
+    "install_steps": [
+      "pip install uvicorn",
+      "Verify: uvicorn --version",
+      "supercli plugins install ./plugins/uvicorn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uvicorn",
+      "resource": "server",
+      "action": "start",
+      "description": "Start an ASGI server for a Python app",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uvicorn",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install uvicorn: pip install uvicorn"
+      },
+      "args": [
+        { "name": "app", "type": "string", "required": true, "positional": true, "description": "ASGI app in module:app format (e.g. main:app)" },
+        { "name": "--host", "type": "string", "description": "Bind socket to this host (default: 127.0.0.1)" },
+        { "name": "--port", "type": "integer", "description": "Bind socket to this port (default: 8000)" },
+        { "name": "--reload", "type": "boolean", "description": "Enable auto-reload on file changes" },
+        { "name": "--reload-dir", "type": "string", "description": "Set reload directories explicitly" },
+        { "name": "--workers", "type": "integer", "description": "Number of worker processes" },
+        { "name": "--uds", "type": "string", "description": "Bind to a UNIX domain socket" },
+        { "name": "--log-level", "type": "string", "description": "Log level (debug, info, warning, error, critical)" },
+        { "name": "--proxy-headers", "type": "boolean", "description": "Enable X-Forwarded-For proxy headers" },
+        { "name": "--forwarded-allow-ips", "type": "string", "description": "Comma-separated IPs to trust for forwarded headers" },
+        { "name": "--timeout-keep-alive", "type": "integer", "description": "Keep-Alive timeout (default: 5)" }
+      ]
+    },
+    {
+      "namespace": "uvicorn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uvicorn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uvicorn",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install uvicorn: pip install uvicorn"
+      },
+      "args": []
+    }
+  ]
+}
