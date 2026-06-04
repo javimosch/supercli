@@ -355,7 +355,7 @@ For detailed debugging: `supercli` returns the full schema (JSON by default). Us
 |-------|-----------|
 | Runtime | Node.js (sc), Zig (sc-zig) — co-exist, share plugin state |
 | Router | Custom capability graph with sub-millisecond cache |
-| Plugins | 5002 bundled — each `plugin.json` + `meta.json` |
+| Plugins | 4,999 bundled — each `plugin.json` + `meta.json` |
 | MCP | Built-in MCP server adapter (`supercli mcp add <name>`) |
 | HTTP | HTTP adapter for REST endpoints as capabilities |
 | Registry | `plugins/catalog.json` — checksum-verified updates |

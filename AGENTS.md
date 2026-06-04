@@ -184,7 +184,7 @@ If `install_guidance` is defined in `plugin.json` but no separate `install-guida
 
 ## Plugin Count
 
-- Total plugins: ~5002
+- Total plugins: ~4,999
 - Short descriptions (<30 chars): ~1,176 (target: 0)
 - Avg description length: 72 chars (target: 80+)
 
