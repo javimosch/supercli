@@ -1,0 +1,145 @@
+{
+  "name": "cloudflared",
+  "version": "0.1.0",
+  "description": "Expose localhost to the internet via Cloudflare Tunnel (no auth required for quick tunnels)",
+  "source": "https://github.com/cloudflare/cloudflared",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cloudflared"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cloudflared",
+    "binary": "cloudflared",
+    "check": "which cloudflared",
+    "install_steps": [
+      "curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared",
+      "Verify: cloudflared --version",
+      "supercli plugins install ./plugins/cloudflared --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cloudflared",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cloudflared version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "tunnel",
+      "action": "quick",
+      "description": "Start a quick tunnel (no auth required) to expose a local port",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["tunnel", "--url"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Local URL to expose (e.g. http://localhost:8080)" }
+      ]
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "tunnel",
+      "action": "create",
+      "description": "Create a named tunnel (requires cloudflared login)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["tunnel", "create"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Name for the new tunnel" }
+      ]
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "tunnel",
+      "action": "run",
+      "description": "Run a named tunnel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["tunnel", "run"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": [
+        { "name": "tunnel", "type": "string", "required": true, "description": "Name or ID of the tunnel to run" }
+      ]
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "tunnel",
+      "action": "list",
+      "description": "List all tunnels",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["tunnel", "list"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "tunnel",
+      "action": "delete",
+      "description": "Delete a named tunnel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["tunnel", "delete"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": [
+        { "name": "tunnel", "type": "string", "required": true, "description": "Name or ID of the tunnel to delete" }
+      ]
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "tunnel",
+      "action": "login",
+      "description": "Authenticate with Cloudflare (creates credentials file)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "baseArgs": ["tunnel", "login"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudflared",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cloudflared CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudflared",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cloudflared: curl -fsSL https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o /usr/local/bin/cloudflared && chmod +x /usr/local/bin/cloudflared"
+      },
+      "args": []
+    }
+  ]
+}
