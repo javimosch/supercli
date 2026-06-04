@@ -1,0 +1,162 @@
+{
+  "name": "udevadm",
+  "version": "0.1.0",
+  "description": "udevadm — Linux device manager control and query tool",
+  "source": "https",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "udevadm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "udevadm",
+    "binary": "udevadm",
+    "check": "which udevadm",
+    "install_steps": [
+      "base system (systemd / udev)",
+      "Verify: udevadm --version",
+      "supercli plugins install ./plugins/udevadm --on-conflict replace --json"
+    ],
+    "note": "Standard Linux system utility from systemd/udev."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "udevadm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print udevadm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "device",
+      "action": "info",
+      "description": "Query sysfs or the udev database for device info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["info", "--query", "all"],
+        "positionalArgs": ["device"],
+        "parseJson": false,
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": [
+        { "name": "device", "type": "string", "required": true, "description": "Device path (e.g. /dev/sda) or sysfs path" },
+        { "name": "--query", "type": "string", "description": "Query type: name, symlink, path, property, all" },
+        { "name": "--json", "type": "boolean", "description": "Output in JSON format" },
+        { "name": "--attribute-walk", "type": "boolean", "description": "Walk up the device chain" },
+        { "name": "--export-db", "type": "boolean", "description": "Export the udev database" }
+      ]
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "device",
+      "action": "tree",
+      "description": "Show device tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["info", "--tree"],
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "event",
+      "action": "trigger",
+      "description": "Trigger uevents from the kernel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["trigger"],
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": [
+        { "name": "--type", "type": "string", "description": "Type: devices (default), subsystems, all" },
+        { "name": "--action", "type": "string", "description": "Event action: add, remove, change, move, online, offline, bind, unbind" },
+        { "name": "--subsystem-match", "type": "string", "description": "Only trigger devices from this subsystem" },
+        { "name": "--attr-match", "type": "string", "description": "Only trigger devices with matching attribute" },
+        { "name": "--property-match", "type": "string", "description": "Only trigger devices with matching property" },
+        { "name": "--tag-match", "type": "string", "description": "Only trigger devices with matching tag" },
+        { "name": "--verbose", "type": "boolean", "description": "Print list of devices" },
+        { "name": "--dry-run", "type": "boolean", "description": "Do not actually trigger events" }
+      ]
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "event",
+      "action": "settle",
+      "description": "Wait for pending udev events to complete",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["settle"],
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": [
+        { "name": "--timeout", "type": "number", "description": "Maximum time to wait (seconds)" },
+        { "name": "--exit-if-exists", "type": "string", "description": "Stop waiting when device file appears" },
+        { "name": "--quiet", "type": "boolean", "description": "Suppress output" }
+      ]
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "event",
+      "action": "monitor",
+      "description": "Listen to kernel and udev events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["monitor"],
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": [
+        { "name": "--kernel", "type": "boolean", "description": "Print kernel uevents" },
+        { "name": "--udev", "type": "boolean", "description": "Print udev events" },
+        { "name": "--property", "type": "boolean", "description": "Print event properties" },
+        { "name": "--subsystem-match", "type": "string", "description": "Filter by subsystem" },
+        { "name": "--tag-match", "type": "string", "description": "Filter by tag" }
+      ]
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "rules",
+      "action": "verify",
+      "description": "Verify udev rules files for syntax errors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "baseArgs": ["verify"],
+        "positionalArgs": ["files"],
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": [
+        { "name": "files", "type": "string", "required": true, "description": "Path to rules files (space-separated or glob)" }
+      ]
+    },
+    {
+      "namespace": "udevadm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to udevadm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udevadm",
+        "passthrough": true,
+        "missingDependencyHelp": "udevadm is part of systemd (base system)"
+      },
+      "args": []
+    }
+  ]
+}
