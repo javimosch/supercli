@@ -19,23 +19,27 @@ As an AI agent, use sick-memory to maintain context across sessions and remember
 - **Context Switching**: Quickly recall project context when returning to work
 
 ### Core Workflow
-1. **At session start**: `sc sick-memory recall "project context" --json`
-2. **During work**: `sc sick-memory remember "Key finding: X requires Y approach" --type project`
-3. **When stuck**: `sc sick-memory recall "previous solutions" --json`
-4. **Before completion**: `sc sick-memory remember "Implementation completed: feature X" --type project`
+1. **At session start**: `sc sick-memory memory recall "project context" --json`
+2. **During work**: `sc sick-memory memory remember "Key finding: X requires Y approach" --type project`
+3. **When stuck**: `sc sick-memory memory recall "previous solutions" --json`
+4. **Before completion**: `sc sick-memory memory remember "Implementation completed: feature X" --type project`
 
 ## Commands
 
 ### SuperCLI Plugin Commands (Recommended)
 - `sc sick-memory init` — Initialize memory system for current project
-- `sc sick-memory remember "<content>"` — Add a memory to the project
-- `sc sick-memory recall [query]` — Retrieve relevant memories
-- `sc sick-memory list` — List all memories in the project
-- `sc sick-memory status` — Show memory system status
+- `sc sick-memory memory remember "<content>"` — Add a memory to the project (CORRECT SYNTAX)
+- `sc sick-memory memory recall [query]` — Retrieve relevant memories
+- `sc sick-memory memory list` — List all memories in the project
+- `sc sick-memory memory status` — Show memory system status
 - `sc sick-memory config show` — Show configuration and storage location
 - `sc sick-memory bridge generate <agent>` — Generate agent-specific integration (claude-code, opencode, copilot)
 - `sc sick-memory edit run <id> <content>` — Edit a memory by ID (non-interactive)
 - `sc sick-memory delete run <id>` — Delete a memory by ID
+
+**CRITICAL**: The correct command structure is `sc <namespace> <resource> <action>`, not `sc <namespace> <action>`. For example:
+- **Correct**: `sc sick-memory memory remember "content"`
+- **Incorrect**: `sc sick-memory remember "content"`
 
 ### Quick Access via /sm Shorthand
 - `/sm init` — Initialize memory system
@@ -67,28 +71,28 @@ Add `--json` flag to any command for structured output:
 
 ### Agent-Focused Examples
 - "Initialize memory for this project" → `sc sick-memory init`
-- "Remember that we use real database instances in tests" → `sc sick-memory remember "Use real database instances in tests, not mocks" --type project`
-- "Recall memories about database testing" → `sc sick-memory recall "database testing" --json`
-- "List all project memories" → `sc sick-memory list --json`
+- "Remember that we use real database instances in tests" → `sc sick-memory memory remember "Use real database instances in tests, not mocks" --type project`
+- "Recall memories about database testing" → `sc sick-memory memory recall "database testing" --json`
+- "List all project memories" → `sc sick-memory memory list --json`
 - "Show configuration and storage location" → `sc sick-memory config show`
 - "Generate Claude Code bridge for this project" → `sc sick-memory bridge generate claude-code`
-- "Check memory system status" → `sc sick-memory status --json`
+- "Check memory system status" → `sc sick-memory memory status --json`
 - "Update memory 1779456013 with new content" → `sc sick-memory edit run 1779456013 "Updated content here" --json`
 - "Delete memory 1779456013" → `sc sick-memory delete run 1779456013 --json`
 
 ### Quick Examples
 ```bash
 # Session start - recall context
-sc sick-memory recall "project context" --json
+sc sick-memory memory recall "project context" --json
 
 # Remember important finding
-sc sick-memory remember "Authentication uses JWT tokens with 24h expiration" --type project
+sc sick-memory memory remember "Authentication uses JWT tokens with 24h expiration" --type project
 
 # Get system status
-sc sick-memory status --json
+sc sick-memory memory status --json
 
 # List all memories
-sc sick-memory list --json
+sc sick-memory memory list --json
 
 # Update existing memory (non-interactive)
 sc sick-memory edit run 1779456013 "Updated content here" --json
@@ -136,19 +140,19 @@ sc sick-memory config show
 sc sick-memory init
 
 # Add a memory
-sc sick-memory remember "Use real database instances in tests, not mocks"
+sc sick-memory memory remember "Use real database instances in tests, not mocks"
 
 # Using shorthand
 /sm remember "Integration tests must hit real DB"
 
 # Recall memories
-sc sick-memory recall "database" --json
+sc sick-memory memory recall "database" --json
 
 # List all memories
-sc sick-memory list --json
+sc sick-memory memory list --json
 
 # Check status
-sc sick-memory status --json
+sc sick-memory memory status --json
 
 # Generate Claude Code integration
 sc sick-memory bridge generate claude-code
@@ -213,6 +217,15 @@ Check the binary version (`sick-memory --version`). Edit/delete support was adde
 - Delete: `sc sick-memory delete run <id>` — requires the `run` action subcommand
 - Use `--json` flag for machine-readable confirmation
 
+### Correct SuperCLI Command Structure
+The supercli plugin follows the pattern `sc <namespace> <resource> <action>`:
+- **Remember**: `sc sick-memory memory remember "content"` (NOT `sc sick-memory remember "content"`)
+- **Recall**: `sc sick-memory memory recall "query"` (NOT `sc sick-memory recall "query"`)
+- **List**: `sc sick-memory memory list` (NOT `sc sick-memory list`)
+- **Status**: `sc sick-memory memory status` (NOT `sc sick-memory status`)
+
+This is because the plugin.json defines namespace=`sick-memory`, resource=`memory`, action=`remember/recall/list/status`.
+
 ### No Multi-Line Content from CLI
 Content must be passed as a single CLI argument. For long content, construct it in a script or use `sc sick-memory edit run` with a heredoc-style content string. Escaping special characters (quotes, newlines) is the caller's responsibility.
 
@@ -232,11 +245,13 @@ The following bugs were identified and fixed in the binary (source at `~/ai/sick
 - **Multi-word queries failed for non-exact substrings**: Queries like `"UI design"` didn't match content containing `"UI/Design"`. Fixed by adding a word-overlap fallback that scores by individual keyword substring presence.
 
 ### Command Structure
-- `sc sick-memory memory recall <query> --json` — via sc plugin, query as positional arg
-- `sc sick-memory memory recall --query <query> --json` — via sc plugin, query as named flag
+- `sc sick-memory memory recall <query> --json` — via sc plugin, query as positional arg (CORRECT)
+- `sc sick-memory memory recall --query <query> --json` — via sc plugin, query as named flag (CORRECT)
 - `sick-memory recall <query>` — direct binary call
 - `sick-memory recall` (no query) — returns all memories, works with `--json`
 - If search index is stale, delete `search_index.json` manually to force rebuild
+
+**IMPORTANT**: The correct supercli pattern is `sc <namespace> <resource> <action>`, not `sc <namespace> <action>`. Always include the `memory` resource when using memory commands.
 
 ## Learning This Skill
 
