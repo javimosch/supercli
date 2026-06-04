@@ -1,28 +1,58 @@
 ---
 name: apropos
-description: apropos — search the manual page names and descriptions for a keyword
+description: Use this skill when the user needs to search manual page names and descriptions for keywords.
 ---
 
 # apropos Plugin
 
-Search the manual page names and descriptions for keywords.
+Search the manual page names and descriptions for keywords. Essential for finding the right command when you can't remember its name.
 
 ## Commands
 
-- `apropos self version` — Print apropos version
-- `apropos keyword search <keyword>` — Search man pages for a keyword
-- `apropos keyword search-all <keyword>` — Search with full output (no pager)
-- `apropos keyword search-exact <keyword>` — Exact keyword match only
-- `apropos keyword search-section <section> <keyword>` — Search within a specific section
-- `apropos _ _ [args]` — Passthrough to apropos
+### Search
+- `apropos search keyword <keyword>` — Search man pages for a keyword
+- `apropos self version` — Show apropos version info
+- `apropos _ _ <args>` — Passthrough to apropos CLI
 
 ## Usage Examples
-
-- Find all commands related to a topic: `apropos keyword search compress`
-- Search in section 3 (C functions): `apropos keyword search-section 3 printf`
-- Exact search for a specific command: `apropos keyword search-exact ls`
-- Full description output: `apropos keyword search-all network`
+- "Find all commands related to compression"
+- "Search for commands that deal with encryption"
+- "List all commands in section 8 (system administration)"
 
 ## Installation
 
-Part of man-db, pre-installed on most Linux systems.
+```bash
+# Pre-installed on most Linux systems
+# If missing:
+apt-get install man-db
+supercli plugins install ./plugins/apropos --on-conflict replace --json
+```
+
+## Examples
+
+```bash
+# Basic keyword search
+apropos compression
+
+# Exact match
+apropos --exact compression
+
+# Regex search
+apropos --regex "^git.*"
+
+# Search only section 1 (user commands)
+apropos --section 1 compression
+
+# Search with shell wildcards
+apropos --wildcard "git-*"
+
+# Show full output without trimming
+apropos --long compression
+```
+
+## Key Features
+- Search man page names and descriptions by keyword
+- Regex and wildcard support for flexible matching
+- Filter by manual section
+- Exact match mode for precise lookups
+- Long output mode to see full descriptions
