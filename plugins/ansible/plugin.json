@@ -1,0 +1,212 @@
+{
+  "name": "ansible",
+  "version": "0.1.0",
+  "description": "Ansible — IT automation tool for configuration management, application deployment, and task automation",
+  "source": "https://docs.ansible.com/ansible/latest/cli/ansible.html",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ansible"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ansible",
+    "binary": "ansible",
+    "check": "which ansible",
+    "install_steps": [
+      "pip install ansible",
+      "Verify: ansible --version",
+      "supercli plugins install ./plugins/ansible --on-conflict replace --json"
+    ],
+    "note": "Also available via: brew install ansible, apt install ansible, or dnf install ansible"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ansible",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ansible version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ansible",
+      "resource": "inventory",
+      "action": "list",
+      "description": "List hosts in inventory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible-inventory",
+        "baseArgs": ["--list"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": [
+        {
+          "name": "inventory",
+          "type": "string",
+          "description": "Path to inventory file",
+          "flag": "-i"
+        }
+      ]
+    },
+    {
+      "namespace": "ansible",
+      "resource": "playbook",
+      "action": "run",
+      "description": "Run an Ansible playbook",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible-playbook",
+        "baseArgs": [],
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": [
+        {
+          "name": "playbook",
+          "type": "string",
+          "description": "Path to playbook file",
+          "positional": true
+        },
+        {
+          "name": "inventory",
+          "type": "string",
+          "description": "Path to inventory file",
+          "flag": "-i"
+        },
+        {
+          "name": "check",
+          "type": "boolean",
+          "description": "Dry run mode",
+          "flag": "--check"
+        },
+        {
+          "name": "diff",
+          "type": "boolean",
+          "description": "Show differences",
+          "flag": "--diff"
+        },
+        {
+          "name": "verbose",
+          "type": "boolean",
+          "description": "Verbose output",
+          "flag": "-v"
+        }
+      ]
+    },
+    {
+      "namespace": "ansible",
+      "resource": "galaxy",
+      "action": "install",
+      "description": "Install a role or collection from Ansible Galaxy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible-galaxy",
+        "baseArgs": ["install"],
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": [
+        {
+          "name": "name",
+          "type": "string",
+          "description": "Role or collection name",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "ansible",
+      "resource": "galaxy",
+      "action": "search",
+      "description": "Search Ansible Galaxy for roles and collections",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible-galaxy",
+        "baseArgs": ["search"],
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "description": "Search term",
+          "positional": true
+        },
+        {
+          "name": "platforms",
+          "type": "string",
+          "description": "Filter by platform",
+          "flag": "--platforms"
+        }
+      ]
+    },
+    {
+      "namespace": "ansible",
+      "resource": "vault",
+      "action": "encrypt",
+      "description": "Encrypt a file with Ansible Vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible-vault",
+        "baseArgs": ["encrypt"],
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "Path to file to encrypt",
+          "positional": true
+        },
+        {
+          "name": "ask-vault-pass",
+          "type": "boolean",
+          "description": "Ask for vault password",
+          "flag": "--ask-vault-pass"
+        }
+      ]
+    },
+    {
+      "namespace": "ansible",
+      "resource": "vault",
+      "action": "decrypt",
+      "description": "Decrypt a file with Ansible Vault",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible-vault",
+        "baseArgs": ["decrypt"],
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "Path to file to decrypt",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "ansible",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ansible CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ansible",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ansible: pip install ansible"
+      },
+      "args": []
+    }
+  ]
+}
