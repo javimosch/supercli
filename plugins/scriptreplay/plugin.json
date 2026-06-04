@@ -1,0 +1,138 @@
+{
+  "name": "scriptreplay",
+  "version": "0.1.0",
+  "description": "scriptreplay — replay terminal typescripts recorded by script(1)",
+  "source": "https://github.com/util-linux/util-linux",
+  "checks": [
+    { "type": "binary", "name": "scriptreplay" }
+  ],
+  "install_guidance": {
+    "plugin": "scriptreplay",
+    "binary": "scriptreplay",
+    "check": "which scriptreplay",
+    "install_steps": [
+      "apt install util-linux (Debian/Ubuntu)",
+      "yum install util-linux (RHEL/Fedora)",
+      "Pre-installed on most Linux distributions",
+      "supercli plugins install ./plugins/scriptreplay --on-conflict replace --json"
+    ],
+    "note": "Part of util-linux, pre-installed on most Linux systems. macOS has a BSD version of scriptreplay."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "scriptreplay",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scriptreplay version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scriptreplay",
+      "resource": "session",
+      "action": "replay",
+      "description": "Replay a recorded terminal session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "positionalArgs": ["timingfile", "typescript"],
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": [
+        { "name": "timingfile", "type": "string", "required": true, "description": "Timing file produced by script --timing" },
+        { "name": "typescript", "type": "string", "required": false, "description": "Typescript file to replay (default: typescript)" }
+      ]
+    },
+    {
+      "namespace": "scriptreplay",
+      "resource": "session",
+      "action": "replay-timing",
+      "description": "Replay a recorded session with explicit timing file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "baseArgs": ["-t"],
+        "positionalArgs": ["timingfile", "typescript"],
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": [
+        { "name": "timingfile", "type": "string", "required": true, "description": "Timing file produced by script --timing" },
+        { "name": "typescript", "type": "string", "required": false, "description": "Typescript file (default: typescript)" }
+      ]
+    },
+    {
+      "namespace": "scriptreplay",
+      "resource": "session",
+      "action": "replay-speed",
+      "description": "Replay a recorded session at a specific speed divisor",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "baseArgs": ["-d"],
+        "positionalArgs": ["divisor", "timingfile", "typescript"],
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": [
+        { "name": "divisor", "type": "string", "required": true, "description": "Speed divisor (2 = 2x faster, 0.5 = half speed)" },
+        { "name": "timingfile", "type": "string", "required": true, "description": "Timing file" },
+        { "name": "typescript", "type": "string", "required": false, "description": "Typescript file (default: typescript)" }
+      ]
+    },
+    {
+      "namespace": "scriptreplay",
+      "resource": "session",
+      "action": "summary",
+      "description": "Display overview of a recorded session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "baseArgs": ["--summary", "-t"],
+        "positionalArgs": ["timingfile", "typescript"],
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": [
+        { "name": "timingfile", "type": "string", "required": true, "description": "Timing file" },
+        { "name": "typescript", "type": "string", "required": false, "description": "Typescript file (default: typescript)" }
+      ]
+    },
+    {
+      "namespace": "scriptreplay",
+      "resource": "session",
+      "action": "replay-maxdelay",
+      "description": "Replay with maximum delay between updates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "baseArgs": ["-m"],
+        "positionalArgs": ["maxdelay", "timingfile", "typescript"],
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": [
+        { "name": "maxdelay", "type": "string", "required": true, "description": "Maximum seconds between updates" },
+        { "name": "timingfile", "type": "string", "required": true, "description": "Timing file" },
+        { "name": "typescript", "type": "string", "required": false, "description": "Typescript file (default: typescript)" }
+      ]
+    },
+    {
+      "namespace": "scriptreplay",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scriptreplay CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptreplay",
+        "passthrough": true,
+        "missingDependencyHelp": "scriptreplay is part of util-linux (base system)"
+      },
+      "args": []
+    }
+  ]
+}
