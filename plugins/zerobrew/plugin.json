@@ -1,0 +1,167 @@
+{
+  "name": "zerobrew",
+  "version": "0.1.0",
+  "description": "5-20x faster Homebrew alternative with uv-style architecture",
+  "source": "https://github.com/lucasgelfond/zerobrew",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zerobrew",
+    "binary": "zb",
+    "check": "which zb",
+    "install_steps": [
+      "curl -fsSL https://zerobrew.rs/install | bash",
+      "Verify: zb --version",
+      "supercli plugins install ./plugins/zerobrew --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zerobrew",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zerobrew version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zerobrew: curl -fsSL https://zerobrew.rs/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zerobrew",
+      "resource": "package",
+      "action": "install",
+      "description": "Install a package via zerobrew",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zb",
+        "baseArgs": [
+          "install"
+        ],
+        "positionalArgs": [
+          "package"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install zerobrew: curl -fsSL https://zerobrew.rs/install | bash"
+      },
+      "args": [
+        {
+          "name": "package",
+          "type": "string",
+          "required": true,
+          "description": "Package name(s) to install"
+        }
+      ]
+    },
+    {
+      "namespace": "zerobrew",
+      "resource": "package",
+      "action": "uninstall",
+      "description": "Uninstall a package via zerobrew",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zb",
+        "baseArgs": [
+          "uninstall"
+        ],
+        "positionalArgs": [
+          "package"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install zerobrew: curl -fsSL https://zerobrew.rs/install | bash"
+      },
+      "args": [
+        {
+          "name": "package",
+          "type": "string",
+          "required": true,
+          "description": "Package name to uninstall"
+        }
+      ]
+    },
+    {
+      "namespace": "zerobrew",
+      "resource": "bundle",
+      "action": "install",
+      "description": "Install packages from a Brewfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zb",
+        "baseArgs": [
+          "bundle",
+          "install"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install zerobrew: curl -fsSL https://zerobrew.rs/install | bash"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Path to Brewfile (default: Brewfile)"
+        }
+      ]
+    },
+    {
+      "namespace": "zerobrew",
+      "resource": "bundle",
+      "action": "dump",
+      "description": "Export installed packages to a Brewfile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zb",
+        "baseArgs": [
+          "bundle",
+          "dump"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install zerobrew: curl -fsSL https://zerobrew.rs/install | bash"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Output file path"
+        },
+        {
+          "name": "force",
+          "type": "boolean",
+          "required": false,
+          "description": "Overwrite existing file"
+        }
+      ]
+    },
+    {
+      "namespace": "zerobrew",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zb",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zerobrew: curl -fsSL https://zerobrew.rs/install | bash"
+      },
+      "args": []
+    }
+  ]
+}

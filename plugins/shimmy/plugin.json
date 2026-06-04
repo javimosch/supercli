@@ -1,0 +1,91 @@
+{
+  "name": "shimmy",
+  "version": "0.1.0",
+  "description": "Lightweight OpenAI-compatible local inference server for GGUF models, single binary",
+  "source": "https://github.com/Michael-A-Kuykendall/shimmy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shimmy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shimmy",
+    "binary": "shimmy",
+    "check": "which shimmy",
+    "install_steps": [
+      "cargo install shimmy",
+      "Verify: shimmy --version",
+      "supercli plugins install ./plugins/shimmy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shimmy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shimmy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shimmy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shimmy: cargo install shimmy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shimmy",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the OpenAI-compatible inference server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shimmy",
+        "baseArgs": [
+          "serve"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install shimmy: cargo install shimmy"
+      },
+      "args": [
+        {
+          "name": "model",
+          "type": "string",
+          "required": false,
+          "description": "Path to GGUF model file (set via SHIMMY_BASE_GGUF env)"
+        },
+        {
+          "name": "port",
+          "type": "integer",
+          "required": false,
+          "description": "Port to listen on (default: 8080)"
+        },
+        {
+          "name": "kv-quant",
+          "type": "string",
+          "required": false,
+          "description": "KV cache quantization: f32 or int4"
+        }
+      ]
+    },
+    {
+      "namespace": "shimmy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shimmy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shimmy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shimmy: cargo install shimmy"
+      },
+      "args": []
+    }
+  ]
+}

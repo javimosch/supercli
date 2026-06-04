@@ -1,0 +1,67 @@
+{
+  "name": "gwvault",
+  "version": "0.1.0",
+  "description": "Ansible vault encrypt/decrypt tool written in Go",
+  "source": "https://github.com/nicm/gwvault",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gwvault"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gwvault",
+    "binary": "gwvault",
+    "check": "which gwvault",
+    "install_steps": [
+      "go install github.com/nicm/gwvault@latest",
+      "Verify: gwvault --version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gwvault",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gwvault version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gwvault",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gwvault: go install github.com/nicm/gwvault@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gwvault",
+      "resource": "vault",
+      "action": "encrypt",
+      "description": "Encrypt files using Ansible vault format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gwvault",
+        "baseArgs": ["--cwd", "invoke_cwd"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install gwvault: go install github.com/nicm/gwvault@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gwvault",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gwvault CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gwvault",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gwvault: go install github.com/nicm/gwvault@latest"
+      },
+      "args": []
+    }
+  ]
+}

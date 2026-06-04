@@ -1,0 +1,67 @@
+{
+  "name": "ecs-deploy",
+  "version": "0.1.0",
+  "description": "Amazon ECS deployment CLI for zero-downtime deployments",
+  "source": "https://github.com/nicm/ecs-deploy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ecs-deploy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ecs-deploy",
+    "binary": "ecs-deploy",
+    "check": "which ecs-deploy",
+    "install_steps": [
+      "pip install ecs-deploy",
+      "Verify: ecs-deploy --version"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ecs-deploy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ecs-deploy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ecs-deploy",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ecs-deploy: pip install ecs-deploy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ecs-deploy",
+      "resource": "service",
+      "action": "deploy",
+      "description": "Deploy new task definition to an ECS service",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ecs-deploy",
+        "baseArgs": [],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install ecs-deploy: pip install ecs-deploy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ecs-deploy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ecs-deploy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ecs-deploy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ecs-deploy: pip install ecs-deploy"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "name": "k8tz",
+  "version": "0.1.0",
+  "description": "Kubernetes timezone injection for pods and deployments",
+  "source": "https://github.com/nicholasgasior/k8tz",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "k8tz"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "k8tz",
+    "binary": "k8tz",
+    "check": "which k8tz",
+    "install_steps": [
+      "go install github.com/nicholasgasior/k8tz@latest",
+      "Verify: k8tz --version",
+      "supercli plugins install ./plugins/k8tz --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "k8tz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print k8tz version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k8tz",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install k8tz: go install github.com/nicholasgasior/k8tz@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k8tz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to k8tz CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k8tz",
+        "passthrough": true,
+        "missingDependencyHelp": "Install k8tz: go install github.com/nicholasgasior/k8tz@latest"
+      },
+      "args": []
+    }
+  ]
+}
