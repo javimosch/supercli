@@ -1,0 +1,84 @@
+{
+  "name": "tqdm",
+  "version": "0.1.0",
+  "description": "tqdm — fast, extensible progress bar for Python with CLI pipe support",
+  "source": "https://github.com/tqdm/tqdm",
+  "checks": [
+    { "type": "binary", "name": "tqdm" }
+  ],
+  "install_guidance": {
+    "plugin": "tqdm",
+    "binary": "tqdm",
+    "check": "which tqdm",
+    "install_steps": [
+      "pip install tqdm",
+      "Verify: tqdm --version",
+      "supercli plugins install ./plugins/tqdm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tqdm",
+      "resource": "pipe",
+      "action": "progress",
+      "description": "Pipe stdin through a progress bar with total count",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tqdm",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tqdm: pip install tqdm"
+      },
+      "args": [
+        { "name": "--total", "type": "integer", "description": "Expected iteration count for progress estimation" },
+        { "name": "--desc", "type": "string", "description": "Prefix text for the progress bar" },
+        { "name": "--unit", "type": "string", "description": "Unit name for iterations (default: it)" },
+        { "name": "--ncols", "type": "integer", "description": "Fixed width for the progress bar" },
+        { "name": "--mininterval", "type": "number", "description": "Minimum update interval in seconds (default: 0.1)" },
+        { "name": "--ascii", "type": "boolean", "description": "Use ASCII characters instead of Unicode" },
+        { "name": "--bytes", "type": "boolean", "description": "Count bytes, scale to binary units" },
+        { "name": "--leave", "type": "boolean", "description": "Leave progress bar after completion (default: true)" },
+        { "name": "--smoothing", "type": "number", "description": "Exponential moving average smoothing (0-1)" },
+        { "name": "--delay", "type": "number", "description": "Delay display by N seconds (default: 0)" },
+        { "name": "--colour", "type": "string", "description": "Bar colour (e.g. 'green', '#00ff00')" },
+        { "name": "--bar-format", "type": "string", "description": "Custom bar format string" },
+        { "name": "--postfix", "type": "string", "description": "Additional stats to display at the bar end" }
+      ]
+    },
+    {
+      "namespace": "tqdm",
+      "resource": "pipe",
+      "action": "bytes",
+      "description": "Pipe data counting bytes with binary unit scaling",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tqdm",
+        "baseArgs": ["--bytes"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tqdm: pip install tqdm"
+      },
+      "args": [
+        { "name": "--desc", "type": "string", "description": "Prefix text for the progress bar" },
+        { "name": "--ncols", "type": "integer", "description": "Fixed width for the progress bar" },
+        { "name": "--leave", "type": "boolean", "description": "Leave progress bar after completion" },
+        { "name": "--colour", "type": "string", "description": "Bar colour" }
+      ]
+    },
+    {
+      "namespace": "tqdm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tqdm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tqdm",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install tqdm: pip install tqdm"
+      },
+      "args": []
+    }
+  ]
+}
