@@ -1,0 +1,54 @@
+{
+  "name": "ps",
+  "version": "0.1.0",
+  "description": "ps — Report a snapshot of current processes",
+  "source": "https",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ps",
+    "binary": "ps",
+    "check": "which ps",
+    "install_steps": [
+      "base system",
+      "Verify: ps --version 2>/dev/null || ps -V",
+      "supercli plugins install ./plugins/ps --on-conflict replace --json"
+    ],
+    "note": "Standard system utility (procps-ng)."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ps: base system"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ps: base system"
+      },
+      "args": []
+    }
+  ]
+}
