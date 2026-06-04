@@ -1,0 +1,61 @@
+{
+  "name": "xidel",
+  "version": "0.1.0",
+  "description": "Command-line HTML/XML/JSON data extraction tool supporting CSS selectors, XPath 3.0, XQuery 3.0, JSONiq, and pattern matching",
+  "source": "https://github.com/benibela/xidel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xidel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xidel",
+    "binary": "xidel",
+    "check": "which xidel",
+    "install_steps": [
+      "Download from http://www.videlibri.de/xidel.html",
+      "chmod +x xidel",
+      "sudo mv xidel /usr/local/bin/",
+      "supercli plugins install ./plugins/xidel --on-conflict replace --json"
+    ],
+    "note": "Pre-built binaries available at http://www.videlibri.de/xidel.html for Windows, Linux, and macOS. No dependencies required."
+  },
+  "commands": [
+    {
+      "namespace": "xidel",
+      "resource": "query",
+      "action": "extract",
+      "description": "Extract data from HTML/XML/JSON using XPath, CSS, or XQuery",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xidel",
+        "passthrough": true,
+        "missingDependencyHelp": "Download xidel from http://www.videlibri.de/xidel.html"
+      },
+      "args": [
+        { "name": "url", "type": "string", "description": "URL or file path to extract data from" },
+        { "name": "--extract", "type": "string", "description": "XPath/XQuery expression to extract" },
+        { "name": "--css", "type": "string", "description": "CSS selector expression" },
+        { "name": "--xpath", "type": "string", "description": "XPath expression" },
+        { "name": "--xquery", "type": "string", "description": "XQuery expression" },
+        { "name": "--follow", "type": "string", "description": "Follow links matching expression" },
+        { "name": "--output-format", "type": "string", "description": "Output format (xml/html/json/wikipedia)" },
+        { "name": "--output-encoding", "type": "string", "description": "Output encoding" }
+      ]
+    },
+    {
+      "namespace": "xidel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xidel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xidel",
+        "passthrough": true,
+        "missingDependencyHelp": "Download xidel from http://www.videlibri.de/xidel.html"
+      },
+      "args": []
+    }
+  ]
+}
