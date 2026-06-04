@@ -1,0 +1,126 @@
+{
+  "name": "mods",
+  "version": "0.1.0",
+  "description": "mods — AI for the command line. Pipe command output to AI models (OpenAI, Anthropic, Ollama) for explanations, transformations, code reviews, and more. Supports stdin, interactive chat, file context, and custom prompts.",
+  "source": "https://github.com/charmbracelet/mods",
+  "checks": [
+    { "type": "binary", "name": "mods" }
+  ],
+  "install_guidance": {
+    "plugin": "mods",
+    "binary": "mods",
+    "check": "which mods",
+    "install_steps": [
+      "go install github.com/charmbracelet/mods@latest",
+      "Or: brew install mods",
+      "Or: scoop install mods",
+      "Or download binary from https://github.com/charmbracelet/mods/releases",
+      "Verify: mods --version",
+      "supercli plugins install ./plugins/mods --on-conflict replace --json"
+    ],
+    "note": "Written in Go by Charmbracelet. Requires an AI API key (OpenAI, Anthropic, or Ollama). Install via: go install, brew, or binary download."
+  },
+  "commands": [
+    {
+      "namespace": "mods",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mods version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mods",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mods: go install github.com/charmbracelet/mods@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mods",
+      "resource": "query",
+      "action": "ask",
+      "description": "Ask a question to AI directly",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mods",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mods: go install github.com/charmbracelet/mods@latest"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "positional": true,
+          "description": "Question or prompt for the AI"
+        },
+        {
+          "name": "--model",
+          "type": "string",
+          "required": false,
+          "description": "AI model to use (e.g. gpt-4, claude-3-opus)"
+        },
+        {
+          "name": "--max-tokens",
+          "type": "string",
+          "required": false,
+          "description": "Maximum tokens in response"
+        },
+        {
+          "name": "--temperature",
+          "type": "string",
+          "required": false,
+          "description": "Temperature for response generation"
+        }
+      ]
+    },
+    {
+      "namespace": "mods",
+      "resource": "pipe",
+      "action": "transform",
+      "description": "Pipe stdin to AI for transformation (e.g. explain errors, format code, translate)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mods",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mods: go install github.com/charmbracelet/mods@latest"
+      },
+      "args": [
+        {
+          "name": "prompt",
+          "type": "string",
+          "required": true,
+          "positional": true,
+          "description": "Instruction for transforming stdin input"
+        },
+        {
+          "name": "--model",
+          "type": "string",
+          "required": false,
+          "description": "AI model to use"
+        },
+        {
+          "name": "--format",
+          "type": "boolean",
+          "required": false,
+          "description": "Format stdin as markdown before sending"
+        }
+      ]
+    },
+    {
+      "namespace": "mods",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mods CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mods",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mods: go install github.com/charmbracelet/mods@latest"
+      },
+      "args": []
+    }
+  ]
+}

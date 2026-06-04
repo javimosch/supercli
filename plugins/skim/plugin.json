@@ -1,0 +1,91 @@
+{
+  "name": "skim",
+  "version": "0.1.0",
+  "description": "skim (sk) — A Rust-based fuzzy finder. Interactive Unix filter for files, processes, git commits, command history, and more. Faster than fzf with native UTF-8 support, Vim integration, and customizable key bindings.",
+  "source": "https://github.com/lotabout/skim",
+  "checks": [
+    { "type": "binary", "name": "sk" }
+  ],
+  "install_guidance": {
+    "plugin": "skim",
+    "binary": "sk",
+    "check": "which sk",
+    "install_steps": [
+      "cargo install skim",
+      "Or: brew install skim",
+      "Or: scoop install skim",
+      "Or download binary from https://github.com/lotabout/skim/releases",
+      "Verify: sk --version",
+      "supercli plugins install ./plugins/skim --on-conflict replace --json"
+    ],
+    "note": "Written in Rust. Binary name is 'sk'. Also available via: dnf install skim, pacman -S skim, or download prebuilt binary from GitHub releases."
+  },
+  "commands": [
+    {
+      "namespace": "skim",
+      "resource": "self",
+      "action": "version",
+      "description": "Print skim version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sk",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skim: cargo install skim"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skim",
+      "resource": "files",
+      "action": "select",
+      "description": "Interactive file selection using skim",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sk",
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skim: cargo install skim"
+      },
+      "args": [
+        { "name": "--height", "type": "string", "required": false, "description": "Height of skim window (e.g. 40%)" },
+        { "name": "--multi", "type": "boolean", "required": false, "description": "Enable multi-select" },
+        { "name": "--preview", "type": "string", "required": false, "description": "Preview command for selected line" },
+        { "name": "--query", "type": "string", "required": false, "description": "Initial query string" },
+        { "name": "--bind", "type": "string", "required": false, "description": "Custom key bindings" },
+        { "name": "--ansi", "type": "boolean", "required": false, "description": "Enable ANSI color support" }
+      ]
+    },
+    {
+      "namespace": "skim",
+      "resource": "cmdline",
+      "action": "history",
+      "description": "Search command history interactively",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sk",
+        "baseArgs": ["--history"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skim: cargo install skim"
+      },
+      "args": [
+        { "name": "--query", "type": "string", "required": false, "description": "Initial search query" },
+        { "name": "--height", "type": "string", "required": false, "description": "Height of skim window" }
+      ]
+    },
+    {
+      "namespace": "skim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to skim CLI for any command not covered by specific resources",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sk",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install skim: cargo install skim"
+      },
+      "args": []
+    }
+  ]
+}
