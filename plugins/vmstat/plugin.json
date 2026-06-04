@@ -1,0 +1,100 @@
+{
+  "name": "vmstat",
+  "version": "0.1.0",
+  "description": "vmstat — report virtual memory, processes, CPU, I/O, and system statistics",
+  "source": "https",
+  "checks": [{"type": "binary", "name": "vmstat"}],
+  "install_guidance": {
+    "plugin": "vmstat",
+    "binary": "vmstat",
+    "check": "which vmstat",
+    "install_steps": [
+      "apt-get install procps",
+      "Verify: vmstat --version",
+      "supercli plugins install ./plugins/vmstat --on-conflict replace --json"
+    ]
+  },
+  "learn": {"file": "skills/quickstart/SKILL.md"},
+  "commands": [
+    {
+      "namespace": "vmstat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vmstat version",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "baseArgs": ["--version"], "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": []
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "stats",
+      "action": "report",
+      "description": "Report virtual memory statistics (default one-shot)",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": [
+        {"name": "delay", "type": "string", "required": false, "description": "Delay in seconds between updates"},
+        {"name": "count", "type": "string", "required": false, "description": "Number of updates"}
+      ]
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "stats",
+      "action": "active",
+      "description": "Report active/inactive memory",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "baseArgs": ["-a"], "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": [
+        {"name": "delay", "type": "string", "required": false, "description": "Delay in seconds between updates"},
+        {"name": "count", "type": "string", "required": false, "description": "Number of updates"}
+      ]
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "disk",
+      "action": "report",
+      "description": "Report disk statistics",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "baseArgs": ["-d"], "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": []
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "disk",
+      "action": "summary",
+      "description": "Report disk summary statistics",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "baseArgs": ["-D"], "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": []
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "disk",
+      "action": "partition",
+      "description": "Report partition read/write statistics",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "baseArgs": ["-p"], "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": [
+        {"name": "device", "type": "string", "required": true, "description": "Partition device name (e.g. sda1)"}
+      ]
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "slab",
+      "action": "report",
+      "description": "Report slab allocator statistics",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "baseArgs": ["-s"], "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": []
+    },
+    {
+      "namespace": "vmstat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vmstat CLI",
+      "adapter": "process",
+      "adapterConfig": {"command": "vmstat", "passthrough": true, "missingDependencyHelp": "Install vmstat: apt-get install procps"},
+      "args": []
+    }
+  ]
+}
