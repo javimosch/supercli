@@ -1,0 +1,347 @@
+{
+  "name": "loginctl",
+  "version": "0.1.0",
+  "description": "loginctl — control the systemd login manager. List/manage user sessions, seats, and users on systemd-based systems.",
+  "source": "https://www.freedesktop.org/software/systemd/man/latest/loginctl.html",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "loginctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "loginctl",
+    "binary": "loginctl",
+    "check": "which loginctl",
+    "install_steps": [
+      "Pre-installed on most Linux systems with systemd (systemd-container package)",
+      "Debian/Ubuntu: apt-get install systemd-container",
+      "Verify: loginctl --version",
+      "supercli plugins install ./plugins/loginctl --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "list",
+      "description": "List all current sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["list-sessions", "--no-legend", "--no-pager"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "status",
+      "description": "Show session status for one or more session IDs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["session-status", "--no-pager"],
+        "positionalArgs": ["session_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "required": true,
+          "description": "Session ID (e.g. '1' or 'c1')"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "show",
+      "description": "Show properties of one or more sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["show-session", "--no-pager"],
+        "positionalArgs": ["session_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "required": true,
+          "description": "Session ID (e.g. '1' or 'c1')"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "lock",
+      "description": "Screen lock one or more sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["lock-session"],
+        "positionalArgs": ["session_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "required": true,
+          "description": "Session ID to lock"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "unlock",
+      "description": "Screen unlock one or more sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["unlock-session"],
+        "positionalArgs": ["session_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "required": true,
+          "description": "Session ID to unlock"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "terminate",
+      "description": "Terminate one or more sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["terminate-session"],
+        "positionalArgs": ["session_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "session_id",
+          "type": "string",
+          "required": true,
+          "description": "Session ID to terminate"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "user",
+      "action": "list",
+      "description": "List all currently logged in users",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["list-users", "--no-legend", "--no-pager"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "user",
+      "action": "status",
+      "description": "Show user status for one or more users",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["user-status", "--no-pager"],
+        "positionalArgs": ["user_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "required": true,
+          "description": "Username or UID"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "user",
+      "action": "show",
+      "description": "Show properties of one or more users",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["show-user", "--no-pager"],
+        "positionalArgs": ["user_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "required": true,
+          "description": "Username or UID"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "user",
+      "action": "enable-linger",
+      "description": "Enable linger state for one or more users (allows user processes to survive logout)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["enable-linger"],
+        "positionalArgs": ["user_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "required": true,
+          "description": "Username or UID"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "user",
+      "action": "disable-linger",
+      "description": "Disable linger state for one or more users",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["disable-linger"],
+        "positionalArgs": ["user_id"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "user_id",
+          "type": "string",
+          "required": true,
+          "description": "Username or UID"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "seat",
+      "action": "list",
+      "description": "List all available seats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["list-seats", "--no-legend", "--no-pager"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "seat",
+      "action": "status",
+      "description": "Show seat status for one or more seats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["seat-status", "--no-pager"],
+        "positionalArgs": ["seat_name"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "seat_name",
+          "type": "string",
+          "required": true,
+          "description": "Seat name (e.g. 'seat0')"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "seat",
+      "action": "show",
+      "description": "Show properties of one or more seats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["show-seat", "--no-pager"],
+        "positionalArgs": ["seat_name"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": [
+        {
+          "name": "seat_name",
+          "type": "string",
+          "required": true,
+          "description": "Seat name (e.g. 'seat0')"
+        }
+      ]
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Show loginctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "lock-all",
+      "description": "Screen lock all current sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["lock-sessions"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "session",
+      "action": "unlock-all",
+      "description": "Screen unlock all current sessions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "baseArgs": ["unlock-sessions"],
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loginctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to loginctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loginctl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install loginctl: apt-get install systemd-container"
+      },
+      "args": []
+    }
+  ]
+}
