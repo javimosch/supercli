@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/github/stars/javimosch/supercli?style=social" alt="Stars">
 </p>
 
-<h1 align="center">supercli ⎯ 4,000+ CLI Tools, One Command — and growing every day</h1>
+<h1 align="center">supercli ⎯ 5,000+ CLI Tools, One Command — and growing every day</h1>
 
 <p align="center">
   <b>Zero install.</b> Run any CLI tool with <code>npx supercli</code>.<br>
@@ -132,7 +132,7 @@ What this means day-to-day:
 - **No install friction** — `npx supercli <tool>` works immediately, no `apt-get`, `brew`, or `npm i -g`
 - **No syntax learning** — Every tool uses the same three-word command pattern, just change the namespace
 - **No output parsing** — JSON by default for scripts/pipes, `--human` for terminal display
-- **No context switching** — One terminal, one interface, 4,000+ tools available
+- **No context switching** — One terminal, one interface, 5,000+ tools available
 
 > 💡 **Important**: supercli is JSON-first by default. Add `--human` for human-readable output in your terminal.
 
@@ -162,7 +162,7 @@ For agent developers: always start with `supercli` for self-documenting bootstra
 supercli turns any tool into a first-class capability with a consistent interface:
 
 - 🔍 **Discover without docs** — `supercli skills search "database"` returns every matching capability with descriptions, tags, and argument schemas. No man pages, no README hunting.
-- ⚡ **One command pattern** — Every tool follows `supercli <ns> <res> <action> [--flags]`. Learn one pattern, access 4,000+ tools.
+- ⚡ **One command pattern** — Every tool follows `supercli <ns> <res> <action> [--flags]`. Learn one pattern, access 5,000+ tools.
 - 🤖 **Built for agents** — Every capability returns structured JSON by default, accepts `--human` for readable output, and self-describes via `inspect`. No parsing, no guesswork.
 - 🔗 **Chain without glue** — `supercli ask "check status and send alert"` composes multiple capabilities automatically. No shell scripts, no middleware.
 - 📦 **Extend anything** — Add CLIs, APIs, or MCP servers as capabilities with one command via the plugin registry.
@@ -207,7 +207,7 @@ npx supercli plugins show commiat
 
 supercli models every tool, API, and workflow as a **capability** — a named, typed, executable unit with a consistent interface. Capabilities form a graph where each node represents a tool function and edges represent composition possibilities.
 
-The capability graph is the core abstraction. Instead of learning N different tool interfaces, you interact with one graph that routes to the right underlying system. All 4,000+ tools are nodes in this graph, addressable by the same triple pattern.
+The capability graph is the core abstraction. Instead of learning N different tool interfaces, you interact with one graph that routes to the right underlying system. All 5,000+ tools are nodes in this graph, addressable by the same triple pattern.
 
 ### The Router
 
@@ -231,7 +231,7 @@ The routing pipeline processes every command in four phases:
 
 | Adapter | What It Wraps | When To Use |
 |---------|--------------|-------------|
-| **CLI** | 4,000+ CLI binaries | Running shell commands with JSON output, timeout management, structured error handling |
+| **CLI** | 5,000+ CLI binaries | Running shell commands with JSON output, timeout management, structured error handling |
 | **MCP** | Model Context Protocol servers | Connecting MCP-compatible tools into the same routing graph |
 | **HTTP** | REST endpoints | Turning any API into a callable capability with configurable methods, headers, and body schemas |
 | **Workflow** | Multi-capability chains | Composing multiple tools via `supercli ask "do X and Y"`, auto-resolving dependencies |
@@ -245,7 +245,7 @@ The plugin system keeps capabilities organized and discoverable:
 - Each plugin bundles a manifest (`plugin.json`) with metadata, checksums, commands, and dependency requirements
 - Installed plugins register in `~/.supercli/plugins/plugins.lock.json`
 - Both the Zig binary (`sc-zig`) and the Node.js runtime (`sc`) read the same plugin storage — they co-exist and share state
-- The remote registry at `plugins/catalog.json` tracks 4,000+ community plugins with checksum-verified updates
+- The remote registry at `plugins/catalog.json` tracks 5,000+ community plugins with checksum-verified updates
 - Every capability includes description, tags, argument schemas, and install guidance
 
 ### Summary
