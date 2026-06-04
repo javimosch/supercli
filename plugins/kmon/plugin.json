@@ -1,0 +1,52 @@
+{
+  "name": "kmon",
+  "version": "0.1.0",
+  "description": "Linux Kernel Manager and Activity Monitor — TUI for managing kernel modules and monitoring kernel activities in real-time",
+  "source": "https://github.com/orhun/kmon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kmon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kmon",
+    "binary": "kmon",
+    "check": "which kmon",
+    "install_steps": [
+      "cargo install kmon",
+      "Verify: kmon --version",
+      "supercli plugins install ./plugins/kmon --on-conflict replace --json"
+    ],
+    "note": "kmon is a Linux-specific tool. Install via package manager (pacman -S kmon, apk add kmon) or build from source."
+  },
+  "commands": [
+    {
+      "namespace": "kmon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kmon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kmon",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kmon: cargo install kmon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kmon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kmon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kmon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kmon: cargo install kmon"
+      },
+      "args": []
+    }
+  ]
+}
