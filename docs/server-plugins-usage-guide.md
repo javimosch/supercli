@@ -177,6 +177,26 @@ sc sync --json | jq
 
 ## Troubleshooting
 
-- If ZIP upload fails with size errors, check `max_zip_mb` in `/api/plugins/settings`.
-- If ZIP sync fails on client extraction, ensure `unzip` is installed.
-- If commands do not appear after server updates, run `sc sync` again and inspect `server_plugins` diagnostics.
+### ZIP Upload Issues
+
+- **Size limit exceeded**: Check `max_zip_mb` in `/api/plugins/settings`. Default is 10MB.
+- **Invalid ZIP signature**: Ensure the file is a valid ZIP archive, not corrupted during transfer.
+- **Unsafe path detected**: ZIP entries must not contain `../`, absolute paths, or drive roots.
+- **Manifest mismatch**: The `manifest` field in the upload must include `name` and `version` matching the form fields.
+
+### Sync Issues
+
+- **ZIP extraction fails**: Ensure `unzip` is installed on the client machine.
+- **Commands not appearing after server updates**: Run `sc sync --json` again and inspect the `server_plugins` diagnostics output for errors.
+- **Server plugin shadowed by local**: If a local plugin has the same name as a server plugin, the local one takes precedence. Check `sc sync --json | jq '.server_plugins.shadowed_by_local'` to verify.
+
+### Execution Issues
+
+- **Command not found after sync**: Verify the plugin is enabled on the server (`GET /api/plugins`), then re-sync.
+- **Permission denied**: Check that the server has network access to the client, and the client can reach the server URL.
+- **Timeout errors**: Increase `timeout_ms` in the command's `adapterConfig` if the underlying tool is slow.
+
+### Server API Issues
+
+- **404 on plugin endpoints**: Ensure the server is running and `SUPERCLI_SERVER` is set correctly.
+- **JSON parse errors**: Verify the server returns valid JSON by testing with `curl -s "$SUPERCLI_SERVER/api/plugins?format=json" | jq .`
