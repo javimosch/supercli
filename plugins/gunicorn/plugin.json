@@ -1,0 +1,94 @@
+{
+  "name": "gunicorn",
+  "version": "0.1.0",
+  "description": "Gunicorn — Python WSGI HTTP server for production web application deployment",
+  "source": "https://github.com/benoitc/gunicorn",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gunicorn"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gunicorn",
+    "binary": "gunicorn",
+    "check": "which gunicorn",
+    "install_steps": [
+      "pip3 install gunicorn",
+      "Verify: gunicorn --version",
+      "supercli plugins install ./plugins/gunicorn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gunicorn",
+      "resource": "server",
+      "action": "run",
+      "description": "Start Gunicorn WSGI server with application module",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gunicorn",
+        "missingDependencyHelp": "Install gunicorn: pip3 install gunicorn"
+      },
+      "args": [
+        { "name": "app", "type": "string", "required": true, "description": "Application module in module:variable format (e.g. myapp:app)" },
+        { "name": "-w", "type": "string", "description": "Number of worker processes" },
+        { "name": "-b", "type": "string", "description": "Bind address (e.g. 0.0.0.0:8000)" },
+        { "name": "--workers", "type": "string", "description": "Number of worker processes" },
+        { "name": "--bind", "type": "string", "description": "Bind address" },
+        { "name": "--timeout", "type": "string", "description": "Workers silent timeout in seconds" },
+        { "name": "--reload", "type": "boolean", "description": "Restart workers on code changes (development)" },
+        { "name": "--log-level", "type": "string", "description": "Log level (debug, info, warning, error)" },
+        { "name": "--access-logfile", "type": "string", "description": "Access log file path" },
+        { "name": "--error-logfile", "type": "string", "description": "Error log file path" },
+        { "name": "--daemon", "type": "boolean", "description": "Daemonize the process" },
+        { "name": "--pid", "type": "string", "description": "PID file path" },
+        { "name": "--worker-class", "type": "string", "description": "Worker type (sync, eventlet, gevent, uvicorn)" }
+      ]
+    },
+    {
+      "namespace": "gunicorn",
+      "resource": "self",
+      "action": "version",
+      "description": "Show gunicorn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gunicorn",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gunicorn: pip3 install gunicorn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gunicorn",
+      "resource": "config",
+      "action": "check",
+      "description": "Check gunicorn configuration for validity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gunicorn",
+        "baseArgs": ["--check-config"],
+        "missingDependencyHelp": "Install gunicorn: pip3 install gunicorn"
+      },
+      "args": [
+        { "name": "-c", "type": "string", "description": "Configuration file path" }
+      ]
+    },
+    {
+      "namespace": "gunicorn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gunicorn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gunicorn",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gunicorn: pip3 install gunicorn"
+      },
+      "args": []
+    }
+  ]
+}
