@@ -5,7 +5,7 @@ subtitle: "From OSS Swiss Army Knife → Cloud AI Layer → French Unicorn"
 
 # SuperCLI Roadmap 2026–2028
 
-**Current state (mid-2026):** 1 269 plugins, 5 553 commands, 130k+ LOC. A config-driven, AI-friendly dynamic CLI — the largest open-source CLI ecosystem in the world.
+**Current state (mid-2026):** 5,000+ plugins, 8,000+ commands, 130k+ LOC. A config-driven, AI-friendly dynamic CLI — the largest open-source CLI ecosystem in the world.
 
 SuperCLI has already won the *distribution* game. Every tool an agent needs is one `sc <namespace>` away. The roadmap below turns that distribution monopoly into a platform, a network, and eventually a generational company.
 
@@ -20,7 +20,7 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 | Initiative | Why | Expected Impact |
 |---|---|---|
 | **SuperCLI Agent SDK** — Node/Python/Rust SDK to call any plugin programmatically | Agents embed `sc` calls natively instead of shelling out | 10× agent adoption |
-| **Plugin scoring & curation** — Community-voted "verified" plugins | Quality signal for 1.3K+ plugins | Better discovery |
+| **Plugin scoring & curation** — Community-voted "verified" plugins | Quality signal for 5,000+ plugins | Better discovery |
 | **`sc diagnose`** — Built-in health check + debugger for agent workflows | Reduce agent frustration with broken commands | Lower churn |
 | **Plugin bundles** — Curated groups (security-bundle, cloud-bundle, etc.) | One-command install for vertical use-cases | Faster onboarding |
 | **Otel-native logging** — Every command emits structured traces | Agents can audit their own execution | Debuggability |
@@ -33,7 +33,7 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 |---|---|---|
 | **`sc plan` / `sc act` / `sc review`** — High-level agentic workflows built on top of plugin chains | Agents don't call individual tools — they declare intent | 100× productivity leap |
 | **Plugin dependency graphs** — Resolve toolchains automatically (e.g., `sc deploy` → triggers build + test + push + notify) | Eliminate multi-step agent loops | Fewer context window overflows |
-| **MCP-native runtime** — SuperCLI as an MCP server itself (not just consuming MCP) | Any MCP client gets all 1.3K+ tools for free | Network effects |
+| **MCP-native runtime** — SuperCLI as an MCP server itself (not just consuming MCP) | Any MCP client gets all 5,000+ tools for free | Network effects |
 | **`sc store`** — Community plugin marketplace (like VS Code extensions but for CLI) | Third-party authors publish without PRs | Scale beyond core team |
 | **Local LLM integration** — `sc explain`, `sc suggest` powered by local models | Agents get inline help without phoning home | Offline-first credibility |
 
@@ -174,6 +174,6 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 |------|------------|
 | AI agents become "good enough" without plugins | SuperCLI as the universal execution layer — agents use tools, not guess |
 | OpenAI/Anthropic build their own tool registries | Plugin portability + MCP-native runtime = no lock-in |
-| Open-source clone emerges | Network effects (1.3K+ plugins, 5.5K+ commands), cloud layer, team features |
+| Open-source clone emerges | Network effects (5,000+ plugins, 8,000+ commands), cloud layer, team features |
 | Enterprise sales cycle too long | Self-serve freemium → land & expand → enterprise |
 | European scaling slower than US | Lean team + remote-first until Series A |

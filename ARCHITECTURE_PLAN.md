@@ -3,7 +3,7 @@
 ## 1. Current State Assessment
 
 ### What SuperCLI Is
-A config-driven, universal CLI capability router that wraps 4,000+ CLI tools, APIs, MCP servers, and workflows behind a uniform `namespace resource action` command interface. Lives on npm as `superacli` v1.31.1.
+A config-driven, universal CLI capability router that wraps 5,000+ CLI tools, APIs, MCP servers, and workflows behind a uniform `namespace resource action` command interface. Lives on npm as `superacli` v1.31.1.
 
 ### Dual-Implementation Architecture
 | Feature | sc-zig (Zig 0.16.0) | sc (Node.js) |
@@ -18,7 +18,7 @@ A config-driven, universal CLI capability router that wraps 4,000+ CLI tools, AP
 | OpenAPI adapter | ❌ | ✅ |
 
 ### Repository Stats
-- 5,047 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
+- 5,046 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
 - 8,888 commands exposed through plugins
 - 90 Jest test files covering CLI, adapters, plugins, server
 - 36 smoke test scripts in `tests/`
@@ -28,7 +28,7 @@ A config-driven, universal CLI capability router that wraps 4,000+ CLI tools, AP
 
 ### Quality Metrics
 - Plugin quality score: 92.1% (up from 91.2%)
-- 1,174 plugins still have short descriptions (< 30 chars)
+- 807 plugins still have short descriptions (< 30 chars)
 - 31 source URLs already fixed (generic → specific repos)
 - 13 tags added for improved discoverability
 
@@ -121,9 +121,9 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ### Summary
 | Metric | Value |
 |--------|-------|
-| Total plugin directories | 5,047 |
-| With plugin.json | 5,047 (100%) |
-| With meta.json | 5,047 (100%) |
+| Total plugin directories | 5,046 |
+| With plugin.json | 5,046 (100%) |
+| With meta.json | 5,046 (100%) |
 | With install-guidance.json | 4,021 (99.97%) |
 | With skills/quickstart/SKILL.md | 3,142 (78.1%) |
 | With README.md | 75 (2.2%) |
@@ -176,5 +176,5 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 - **CI workflows**: 90 Jest test files, 36 smoke test scripts
 
 ### Notes
-- Total plugin dirs: 5,047
+- Total plugin dirs: 5,046
 - install-guidance.json coverage near-perfect at 99.97%

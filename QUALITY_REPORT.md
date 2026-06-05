@@ -15,7 +15,7 @@ Automated quality improvements applied to SuperCLI plugin collection across mult
 - **Short descriptions remaining:** 923 (down from 1,262)
 - **DESCRIPTIONS map entries:** 416 tools (need ~400+ more)
 - **Install-guidance.json created:** 22 plugins
-- **Plugins scanned:** 5,047
+- **Plugins scanned:** 5,046
 
 ### Before vs After (Cumulative)
 
@@ -29,7 +29,7 @@ Automated quality improvements applied to SuperCLI plugin collection across mult
 
 ### Process Used
 
-1. **Analysis** - Scanned all 5,047 plugins for short descriptions (< 30 chars)
+1. **Analysis** - Scanned all 5,046 plugins for short descriptions (< 30 chars)
 2. **Generation** - `batch-enhance-descriptions.ts` mapped 1,262 short-description plugins to suggestions
 3. **Auto-apply** - 54 high-confidence (>=85%) suggestions applied to plugin files
 4. **Install guidance** - 22 missing `install-guidance.json` files created from existing `plugin.json` data
