@@ -1,6 +1,6 @@
 ---
 name: easyredmine-cli Quickstart
-description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, change status, assign users, and smart-search across all open issues.
+description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, change status, assign users, search project members, and smart-search across all open issues.
 ---
 
 # easyredmine-cli Quickstart
@@ -48,6 +48,27 @@ Assign issue to a user. JSON response by default.
 
 ```bash
 sc easyredmine issue assign 61809 --assigned-to-id 199
+```
+
+### `sc easyredmine user search "<query>" --project-id <id>`
+Search users, groups, and roles within a project. JSON response by default.
+
+```bash
+# Search for QA team
+sc easyredmine user search "QA" --project-id 1111
+
+# Search for developers
+sc easyredmine user search "ENVIRONNEMENT" --project-id 1111
+```
+
+**Agent workflow**: When asked to "Assign to QA", search first to get the ID, then assign:
+```bash
+# 1. Find QA team ID
+sc easyredmine user search "QA" --project-id 1111
+# → {"results":[{"id":46,"fullname":"Equipe QA Env (Group)"},...]}
+
+# 2. Assign using the ID
+sc easyredmine issue assign 62507 --assigned-to-id 46
 ```
 
 ### `sc easyredmine issue search "<phrase>"`

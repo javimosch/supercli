@@ -1,7 +1,7 @@
 {
   "name": "easyredmine-cli",
   "version": "1.0.0",
-  "description": "easyredmine-cli — Redmine API client for EasyRedmine. Read issues, post comments, edit descriptions, change status, assign users.",
+  "description": "easyredmine-cli — Redmine API client for EasyRedmine. Read issues, post comments, edit descriptions, change status, assign users, search project members.",
   "source": "https://github.com/javimosch/easyredmine-cli",
   "checks": [
     { "type": "binary", "name": "easyredmine-cli" }
@@ -122,6 +122,24 @@
       "args": [
         { "name": "id", "type": "string", "required": true, "description": "Issue ID" },
         { "name": "assigned-to-id", "type": "number", "required": true, "description": "Assigned user ID" }
+      ]
+    },
+    {
+      "namespace": "easyredmine",
+      "resource": "user",
+      "action": "search",
+      "description": "Search users/groups/roles in a project. Use --project-id.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "easyredmine-cli",
+        "baseArgs": ["user", "search"],
+        "positionalArgs": ["query"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Build easyredmine-cli from ~/ai/easyredmine-cli"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query (name, group, or role)" },
+        { "name": "project-id", "type": "number", "required": true, "description": "Project ID" }
       ]
     }
   ]
