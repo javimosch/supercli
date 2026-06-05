@@ -255,6 +255,34 @@ Before submitting a plugin for inclusion:
 - [ ] No hardcoded credentials or secrets
 - [ ] **No edits to `plugins/plugins.json` or `cli/plugin-install-guidance.js`**
 
+### Plugin Quality Standards
+
+Follow these standards for plugin metadata (see [PLUGIN_STANDARDS.md](PLUGIN_STANDARDS.md)):
+
+**Description requirements:**
+- Length: 30-150 characters
+- Format: `[Tool Name] — [one sentence purpose/key feature]`
+- Must start with the exact tool name
+
+**Tag requirements:**
+- Minimum: 3 tags, Maximum: 8 tags
+- Use controlled vocabulary from [TAG_VOCABULARY.md](TAG_VOCABULARY.md)
+- Include language tag if applicable (e.g., `rust`, `python`)
+- Include domain tag if applicable (e.g., `devops`, `security`)
+
+**Source URL requirements:**
+- Must be specific GitHub repository: `https://github.com/[owner]/[repo]`
+- URL must be accessible and canonical
+
+**Example metadata:**
+```json
+{
+  "description": "ripgrep-all — search documents with ripgrep backend",
+  "tags": ["search", "rust", "cli", "file-search"],
+  "source": "https://github.com/phiresky/ripgrep-all"
+}
+```
+
 ### Publishing Plugins
 
 Once your plugin is ready:
