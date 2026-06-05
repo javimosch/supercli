@@ -17,6 +17,7 @@ Detailed documentation for supercli's core features and capabilities.
 | [Config Sync](config-sync.md) | Configuration synchronization between client and server | [Read →](config-sync.md) |
 | [Execution Plans](execution-plans.md) | Planning and execution of command sequences | [Read →](execution-plans.md) |
 | [Azure DevOps & UiPath Plugins](azd-uipath-plugins.md) | Azure Developer CLI and UiPath automation harnesses | [Read →](azd-uipath-plugins.md) |
+| [Server Plugins Usage Guide](../server-plugins-usage-guide.md) | Manual testing of server plugins including JSON and ZIP flows | [Read →](../server-plugins-usage-guide.md) |
 
 ## Quick Navigation
 
