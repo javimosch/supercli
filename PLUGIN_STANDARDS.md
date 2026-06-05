@@ -1,7 +1,7 @@
 # SuperCLI Plugin Standards
 
 ## Overview
-This document defines quality standards for plugins in the SuperCLI collection. These standards ensure consistency, discoverability, and usability across 1,179+ plugins.
+This document defines quality standards for plugins in the SuperCLI collection. These standards ensure consistency, discoverability, and usability across 5,000+ plugins.
 
 ## Description Quality
 
