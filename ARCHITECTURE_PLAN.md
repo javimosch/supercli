@@ -18,7 +18,7 @@ A config-driven, universal CLI capability router that wraps 4,000+ CLI tools, AP
 | OpenAPI adapter | ❌ | ✅ |
 
 ### Repository Stats
-- 4,999 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
+- 5,047 bundled plugins in `plugins/<name>/` dirs (each with `plugin.json` + `meta.json`)
 - 8,888 commands exposed through plugins
 - 90 Jest test files covering CLI, adapters, plugins, server
 - 36 smoke test scripts in `tests/`
@@ -121,9 +121,9 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 ### Summary
 | Metric | Value |
 |--------|-------|
-| Total plugin directories | 4,999 |
-| With plugin.json | 4,999 (100%) |
-| With meta.json | 4,999 (100%) |
+| Total plugin directories | 5,047 |
+| With plugin.json | 5,047 (100%) |
+| With meta.json | 5,047 (100%) |
 | With install-guidance.json | 4,021 (99.97%) |
 | With skills/quickstart/SKILL.md | 3,142 (78.1%) |
 | With README.md | 75 (2.2%) |
@@ -176,5 +176,5 @@ Both implementations share `~/.supercli/plugins/plugins.lock.json`. The Zig CLI 
 - **CI workflows**: 90 Jest test files, 36 smoke test scripts
 
 ### Notes
-- Total plugin dirs: 4,999
+- Total plugin dirs: 5,047
 - install-guidance.json coverage near-perfect at 99.97%
