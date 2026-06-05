@@ -20,7 +20,7 @@ The shell adapter executes bash scripts with argument interpolation. Use `{{vari
 
 Arguments defined in the command schema are interpolated before execution. For example, with an argument named `name`:
 
-- Command: `sc system test foo --name Pedro`
+- Command: `supercli system test foo --name Pedro`
 - Interpolated script: `echo 'Hello Pedro'`
 
 **Important:** Shell adapter requires `adapterConfig.unsafe=true` for security policy reasons.
