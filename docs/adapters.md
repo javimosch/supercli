@@ -23,7 +23,7 @@ Custom adapters support two execution contexts:
 - Ideal for adapters that need server resources or centralized execution
 
 ### CLI Context
-- Adapter code syncs to local CLI via `sc sync`
+- Adapter code syncs to local CLI via `supercli sync`
 - Executes locally on the CLI machine using vm2 sandbox
 - Stored in `.supercli/adapters/` directory
 - Ideal for adapters that need local machine access (e.g., local databases, filesystem)
@@ -121,11 +121,11 @@ Server-context adapters can be tested directly from the UI:
 
 ## CLI Sync
 
-CLI-context adapters are synced to the local CLI via `sc sync`:
+CLI-context adapters are synced to the local CLI via `supercli sync`:
 
 ```bash
 export SUPERCLI_SERVER=http://localhost:3000
-sc sync
+supercli sync
 ```
 
 During sync:
