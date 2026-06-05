@@ -207,7 +207,7 @@ docs(readme): update installation instructions
 
 - `/docs/` - Main documentation directory
 - `/docs/plugins-how-to.md` - Plugin development guide
-- `/docs/skills/` - Skill system documentation
+- `/docs/skills-catalog.md` - Skill document catalog and provider management
 - `/README.md` - Project overview and quick start
 - Plugin-specific docs in `/plugins/*/README.md`
 

@@ -290,7 +290,7 @@ For detailed instructions, see [plugins-how-to.md](plugins-how-to.md).
 
 ## Request a Harness
 
-Missing a CLI you'd like to use with supercli? [Open an issue](https://github.com/anomalyco/supercli/issues) with:
+Missing a CLI you'd like to use with supercli? [Open an issue](https://github.com/javimosch/supercli/issues) with:
 - CLI name and link
 - Use cases in your workflow
 - Relevant commands/operations
