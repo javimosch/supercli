@@ -1,6 +1,6 @@
 ---
 name: easyredmine-cli Quickstart
-description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, change status, assign users, search project members, and smart-search across all open issues.
+description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, change status, assign users, search project members, self-update, and smart-search across all open issues.
 ---
 
 # easyredmine-cli Quickstart
@@ -70,6 +70,19 @@ sc easyredmine user search "QA" --project-id 1111
 # 2. Assign using the ID
 sc easyredmine issue assign 62507 --assigned-to-id 46
 ```
+
+### `sc easyredmine update [--check-only]`
+Check for updates from GitHub releases and optionally auto-update the global installation.
+
+```bash
+# Check for updates only
+sc easyredmine update --check-only
+
+# Check and install if update available
+sc easyredmine update
+```
+
+**Note**: If no GitHub releases exist yet (new repository), the command provides manual update instructions.
 
 ### `sc easyredmine issue search "<phrase>"`
 Smart search across all open issues. Breaks phrase into words, matches each word against issue subjects, deduplicates, and ranks by number of word matches.
