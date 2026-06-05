@@ -1,6 +1,6 @@
 ---
 name: easyredmine-cli Quickstart
-description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, change status, and smart-search across all open issues.
+description: Interact with EasyRedmine (Simpliciti) via the Redmine API — read issues, post comments, edit descriptions, change status, assign users, and smart-search across all open issues.
 ---
 
 # easyredmine-cli Quickstart
@@ -41,6 +41,13 @@ Change issue status. JSON response by default.
 
 ```bash
 sc easyredmine issue status 61809 --status-id 51
+```
+
+### `sc easyredmine issue assign <id> --assigned-to-id <user_id>`
+Assign issue to a user. JSON response by default.
+
+```bash
+sc easyredmine issue assign 61809 --assigned-to-id 199
 ```
 
 ### `sc easyredmine issue search "<phrase>"`
