@@ -1,0 +1,112 @@
+{
+  "name": "localstack",
+  "version": "0.1.0",
+  "description": "LocalStack — a fully functional local AWS cloud stack for offline development and testing",
+  "source": "https://github.com/localstack/localstack",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "localstack"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "localstack",
+    "binary": "localstack",
+    "check": "which localstack",
+    "install_steps": [
+      "pip3 install localstack",
+      "Verify: localstack --version",
+      "supercli plugins install ./plugins/localstack --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "localstack",
+      "resource": "server",
+      "action": "start",
+      "description": "Start LocalStack container with local AWS services",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localstack",
+        "baseArgs": ["start"],
+        "missingDependencyHelp": "Install localstack: pip3 install localstack"
+      },
+      "args": [
+        { "name": "-d", "type": "boolean", "description": "Detached mode (run in background)" },
+        { "name": "--docker", "type": "boolean", "description": "Run inside Docker container" },
+        { "name": "--host", "type": "string", "description": "Host to bind to" },
+        { "name": "--port", "type": "string", "description": "Edge port to bind to" }
+      ]
+    },
+    {
+      "namespace": "localstack",
+      "resource": "server",
+      "action": "stop",
+      "description": "Stop LocalStack running instance",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localstack",
+        "baseArgs": ["stop"],
+        "missingDependencyHelp": "Install localstack: pip3 install localstack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "localstack",
+      "resource": "server",
+      "action": "status",
+      "description": "Show LocalStack service status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localstack",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "Install localstack: pip3 install localstack"
+      },
+      "args": [
+        { "name": "services", "type": "boolean", "description": "Show status of individual services" }
+      ]
+    },
+    {
+      "namespace": "localstack",
+      "resource": "config",
+      "action": "list",
+      "description": "Display active LocalStack configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localstack",
+        "baseArgs": ["config", "show"],
+        "missingDependencyHelp": "Install localstack: pip3 install localstack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "localstack",
+      "resource": "aws",
+      "action": "list-s3-buckets",
+      "description": "List S3 buckets via local AWS endpoint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localstack",
+        "baseArgs": ["aws", "s3api", "list-buckets"],
+        "missingDependencyHelp": "Install localstack: pip3 install localstack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "localstack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to localstack CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localstack",
+        "passthrough": true,
+        "missingDependencyHelp": "Install localstack: pip3 install localstack"
+      },
+      "args": []
+    }
+  ]
+}
