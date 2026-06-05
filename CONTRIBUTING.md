@@ -21,6 +21,7 @@ Before contributing, ensure you have:
 - [Node.js](https://nodejs.org/) (LTS version recommended)
 - [npm](https://www.npmjs.com/) or [pnpm](https://pnpm.io/)
 - Git for version control
+- [bun](https://bun.sh/) (optional, only needed for description enhancement pipeline scripts)
 - Any CLI tools you want to create plugins for
 
 ### Setting Up Your Development Environment
@@ -232,7 +233,16 @@ When creating or updating plugins:
 
 ### Want to Create a New Plugin?
 
-New bundled plugins use an **isolated file convention** — no shared file edits needed.
+New bundled plugins use an **isolated file convention** — create files ONLY inside `plugins/<name>/`. Never edit `plugins/plugins.json` or `cli/plugin-install-guidance.js` for new plugins.
+
+```
+plugins/my-plugin/
+├── plugin.json              # Required: manifest with commands
+├── meta.json                # Required: description, tags, has_learn
+├── install-guidance.json    # Optional: install steps
+├── skills/quickstart/SKILL.md  # Optional: agent guide
+└── README.md                # Optional: human docs
+```
 
 See our detailed [Plugin Harness Development Guide](docs/plugins-how-to.md) for:
 
