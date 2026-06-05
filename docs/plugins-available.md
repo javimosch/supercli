@@ -162,15 +162,15 @@ supercli <namespace> <tool> <action>                  # Execute tool
 
 ---
 
-## Popular Community Harnesses (In Development)
+## Popular Community Harnesses
 
-These harnesses are in active development and will be available as plugins. Status shows expected availability.
+These harnesses are available as plugins. Install them with `supercli plugins install <name>`.
 
 ### GitHub Ecosystem
 
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
-| **gh** | gh (GitHub CLI) | Planned | Repository management, issues, PRs, actions |
+| **gh** | gh (GitHub CLI) | Available via plugin | Repository management, issues, PRs, actions |
 | **ghe** | GitHub Enterprise CLI | Planned | Enterprise GitHub deployment |
 
 ---
@@ -179,9 +179,9 @@ These harnesses are in active development and will be available as plugins. Stat
 
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
-| **aws** | aws (AWS CLI v2) | Planned | EC2, S3, Lambda, RDS, and 200+ services |
-| **gcloud** | gcloud (Google Cloud CLI) | Planned | GCP services, Compute Engine, Storage, etc. |
-| **az** | az (Azure CLI) | Planned | Azure services, VMs, databases, etc. |
+| **aws** | aws (AWS CLI v2) | Available via plugin | EC2, S3, Lambda, RDS, and 200+ services |
+| **gcloud** | gcloud (Google Cloud CLI) | Available via plugin | GCP services, Compute Engine, Storage, etc. |
+| **az** | az (Azure CLI) | Available via plugin | Azure services, VMs, databases, etc. |
 | **do** | doctl (DigitalOcean) | Planned | Droplets, databases, app platform |
 
 ---
@@ -190,9 +190,9 @@ These harnesses are in active development and will be available as plugins. Stat
 
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
-| **docker** | docker | Planned | Container management, images, volumes |
+| **docker** | docker | Available via plugin | Container management, images, volumes |
 | **docker-compose** | docker-compose | Planned | Multi-container orchestration |
-| **kubectl** | kubectl | Planned | Kubernetes cluster management |
+| **kubectl** | kubectl | Available via plugin | Kubernetes cluster management |
 | **helm** | helm | Planned | Kubernetes package management |
 | **k3s** | k3s | Planned | Lightweight Kubernetes |
 
@@ -202,9 +202,9 @@ These harnesses are in active development and will be available as plugins. Stat
 
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
-| **terraform** | terraform | Planned | Infrastructure as Code provisioning |
-| **ansible** | ansible | Planned | Configuration management |
-| **pulumi** | pulumi | Planned | Infrastructure as Code (Python/Go/TS) |
+| **terraform** | terraform | Available via plugin | Infrastructure as Code provisioning |
+| **ansible** | ansible | Available via plugin | Configuration management |
+| **pulumi** | pulumi | Available via plugin | Infrastructure as Code (Python/Go/TS) |
 | **nomad** | nomad | Planned | Workload orchestration |
 
 ---
@@ -233,8 +233,8 @@ These harnesses are in active development and will be available as plugins. Stat
 
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
-| **git** | git | Planned | Git repository operations |
-| **git-cliff** | git-cliff | Planned | Changelog generation |
+| **git** | git | Available via plugin | Git repository operations |
+| **git-cliff** | git-cliff | Available via plugin | Changelog generation |
 | **commitizen** | cz | Planned | Conventional commits |
 | **conventional-changelog** | conventional-changelog | Planned | Changelog automation |
 
@@ -244,13 +244,13 @@ These harnesses are in active development and will be available as plugins. Stat
 
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
-| **npm** | npm | Planned | Node.js package management |
-| **pnpm** | pnpm | Planned | Fast Node.js package manager |
-| **yarn** | yarn | Planned | JavaScript dependency management |
-| **pip** | pip | Planned | Python package management |
+| **npm** | npm | Available via plugin | Node.js package management |
+| **pnpm** | pnpm | Available via plugin | Fast Node.js package manager |
+| **yarn** | yarn | Available via plugin | JavaScript dependency management |
+| **pip** | pip | Available via plugin | Python package management |
 | **pipenv** | pipenv | Planned | Python environment management |
 | **poetry** | poetry | Planned | Python dependency management |
-| **cargo** | cargo | Planned | Rust package management |
+| **cargo** | cargo | Available via plugin | Rust package management |
 
 ---
 
@@ -261,7 +261,7 @@ These harnesses are in active development and will be available as plugins. Stat
 | **cocoindex-code** | cocoindex-code | Available via plugin | Semantic code search via local MCP with bound `cocoindex.code.search` capability |
 | **huggingface** | huggingface-cli | Planned | Hugging Face model management |
 | **langchain** | langchain CLI | Planned | LangChain utilities |
-| **ollama** | ollama | Planned | Local LLM management |
+| **ollama** | ollama | Available via plugin | Local LLM management |
 | **modal** | modal | Planned | ML cloud computing |
 
 ---
@@ -271,8 +271,8 @@ These harnesses are in active development and will be available as plugins. Stat
 | Harness | CLI | Status | Purpose |
 |---------|-----|--------|---------|
 | **datadog** | datadog-cli | Planned | Datadog monitoring |
-| **prometheus** | prometheus | Planned | Metrics and alerting |
-| **grafana** | grafana CLI | Planned | Visualization and dashboards |
+| **prometheus** | prometheus | Available via plugin | Metrics and alerting |
+| **grafana** | grafana CLI | Available via plugin | Visualization and dashboards |
 | **newrelic** | newrelic-cli | Planned | Application monitoring |
 
 ---

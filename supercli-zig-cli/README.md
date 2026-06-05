@@ -51,7 +51,7 @@ The Zig CLI is designed for progressive adoption:
 
 1. **Co-existence**: Default install as `sc-zig` doesn't conflict with Node.js `sc`
 2. **Optional replacement**: Use `--replace` flag to replace Node.js `sc` when ready
-3. **Easy revert**: `npm uninstall -g supercli && npm install -g supercli` to go back to Node.js
+3. **Easy revert**: `npm uninstall -g superacli && npm install -g superacli` to go back to Node.js
 
 ### Check which version you're using
 
@@ -79,8 +79,8 @@ sudo ln -sf /usr/local/bin/sc-zig /usr/local/bin/sc
 ### Revert to Node.js version
 
 ```bash
-npm uninstall -g supercli
-npm install -g supercli
+npm uninstall -g superacli
+npm install -g superacli
 ```
 
 ## Features
@@ -91,7 +91,7 @@ npm install -g supercli
 - `sc-zig commands [--query=<q>] [--limit=<n>] [--json]` — list all installed commands
 - `sc-zig inspect <ns> <res> <act> [--json]` — inspect a command's schema
 - `sc-zig plugins list [--json]` — list installed plugins (from lockfile)
-- `sc-zig plugins explore [--name=<q>] [--json]` — browse bundled plugins directory (4000+ plugins)
+- `sc-zig plugins explore [--name=<q>] [--json]` — browse bundled plugins directory (5,000+ plugins)
 - `sc-zig plugins update [--check] [--force] [--json]` — update bundled plugins via curl + tar
 - `sc-zig <ns> [res] [act] [--flags]` — dispatch a process-adapter command
 
@@ -107,7 +107,7 @@ sc --version
 # List installed plugins (from lockfile)
 sc plugins list --json
 
-# List bundled plugins (3300+ plugins)
+# List bundled plugins (5,000+ plugins)
 sc plugins explore --json
 
 # List all commands
@@ -144,7 +144,7 @@ sc plugins update --json
 
 Both Node.js and Zig implementations read from:
 - `~/.supercli/plugins/plugins.lock.json` — installed plugin registry
-- `{root}/plugins/` — bundled plugins directory (4000+ plugins)
+- `{root}/plugins/` — bundled plugins directory (5,000+ plugins)
 
 ## Architecture
 
