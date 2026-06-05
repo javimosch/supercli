@@ -1,0 +1,121 @@
+{
+  "name": "at",
+  "version": "0.1.0",
+  "description": "at — schedule one-time jobs for later execution",
+  "source": "https://www.gnu.org/software/coreutils/at",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "at"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "at",
+      "resource": "job",
+      "action": "schedule",
+      "description": "Schedule a job at a specified time",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "at",
+        "baseArgs": [],
+        "parseJson": false,
+        "missingDependencyHelp": "Install at: brew install at | apt-get install at"
+      },
+      "args": [
+        {
+          "name": "timespec",
+          "type": "string",
+          "description": "Time specification (e.g., 'now + 5 minutes', '12:30', 'teatime tomorrow')",
+          "required": true,
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "at",
+      "resource": "job",
+      "action": "list",
+      "description": "List queued jobs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atq",
+        "baseArgs": [],
+        "parseJson": false,
+        "missingDependencyHelp": "Install at: brew install at | apt-get install at"
+      },
+      "args": []
+    },
+    {
+      "namespace": "at",
+      "resource": "job",
+      "action": "remove",
+      "description": "Remove a queued job by job number",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "atrm",
+        "baseArgs": [],
+        "parseJson": false,
+        "missingDependencyHelp": "Install at: brew install at | apt-get install at"
+      },
+      "args": [
+        {
+          "name": "job",
+          "type": "string",
+          "description": "Job number(s) to remove",
+          "required": true,
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "at",
+      "resource": "job",
+      "action": "show",
+      "description": "Display the scheduled command for a job (-c)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "at",
+        "baseArgs": ["-c"],
+        "parseJson": false,
+        "missingDependencyHelp": "Install at: brew install at | apt-get install at"
+      },
+      "args": [
+        {
+          "name": "job",
+          "type": "string",
+          "description": "Job number to inspect",
+          "required": true,
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "at",
+      "resource": "job",
+      "action": "batch",
+      "description": "Schedule a job when system load permits (batch)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "batch",
+        "baseArgs": [],
+        "parseJson": false,
+        "missingDependencyHelp": "Install at: brew install at | apt-get install at"
+      },
+      "args": []
+    },
+    {
+      "namespace": "at",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to at CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "at",
+        "passthrough": true,
+        "missingDependencyHelp": "Install at: brew install at | apt-get install at"
+      },
+      "args": []
+    }
+  ]
+}

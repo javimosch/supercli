@@ -1,0 +1,151 @@
+{
+  "name": "crontab",
+  "version": "0.1.0",
+  "description": "crontab — maintain crontab files for scheduled task execution",
+  "source": "https://github.com/vixie/cron",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "crontab"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "crontab",
+      "resource": "job",
+      "action": "list",
+      "description": "List the current crontab entries (-l)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crontab",
+        "baseArgs": ["-l"],
+        "parseJson": false,
+        "missingDependencyHelp": "crontab is part of cron, install: apt-get install cron | brew install cron"
+      },
+      "args": [
+        {
+          "name": "user",
+          "type": "string",
+          "description": "Specify user whose crontab to list",
+          "required": false,
+          "flag": "-u"
+        }
+      ]
+    },
+    {
+      "namespace": "crontab",
+      "resource": "job",
+      "action": "edit",
+      "description": "Edit the current crontab (-e)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crontab",
+        "baseArgs": ["-e"],
+        "parseJson": false,
+        "missingDependencyHelp": "crontab is part of cron, install: apt-get install cron | brew install cron"
+      },
+      "args": [
+        {
+          "name": "user",
+          "type": "string",
+          "description": "Specify user whose crontab to edit",
+          "required": false,
+          "flag": "-u"
+        }
+      ]
+    },
+    {
+      "namespace": "crontab",
+      "resource": "job",
+      "action": "remove",
+      "description": "Remove the current crontab (-r)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crontab",
+        "baseArgs": ["-r"],
+        "parseJson": false,
+        "missingDependencyHelp": "crontab is part of cron, install: apt-get install cron | brew install cron"
+      },
+      "args": [
+        {
+          "name": "user",
+          "type": "string",
+          "description": "Specify user whose crontab to remove",
+          "required": false,
+          "flag": "-u"
+        },
+        {
+          "name": "interactive",
+          "type": "boolean",
+          "description": "Prompt before removal (-i)",
+          "required": false,
+          "flag": "-i"
+        }
+      ]
+    },
+    {
+      "namespace": "crontab",
+      "resource": "job",
+      "action": "install",
+      "description": "Install a crontab from a file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crontab",
+        "baseArgs": [],
+        "parseJson": false,
+        "missingDependencyHelp": "crontab is part of cron, install: apt-get install cron | brew install cron"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "File containing crontab entries",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "description": "Specify user whose crontab to replace",
+          "required": false,
+          "flag": "-u"
+        }
+      ]
+    },
+    {
+      "namespace": "crontab",
+      "resource": "job",
+      "action": "check",
+      "description": "Dry-run: validate a crontab file without installing (-n)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crontab",
+        "baseArgs": ["-n"],
+        "parseJson": false,
+        "missingDependencyHelp": "crontab is part of cron, install: apt-get install cron | brew install cron"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "description": "File containing crontab entries to validate",
+          "required": false,
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "crontab",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to crontab CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crontab",
+        "passthrough": true,
+        "missingDependencyHelp": "crontab is part of cron, install: apt-get install cron | brew install cron"
+      },
+      "args": []
+    }
+  ]
+}
