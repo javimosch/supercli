@@ -39,7 +39,24 @@ cp .env.example .env
 
 # Run tests to verify setup
 npm test
+
+# Run linter to check code style
+npm run lint
+
+# Run type checking (if applicable)
+npm run typecheck
 ```
+
+### Quick Development Commands
+
+| Task | Command |
+|------|---------|
+| Run all tests | `npm test` |
+| Run specific test file | `npx jest path/to/test.js` |
+| Run linter | `npm run lint` |
+| Fix lint issues | `npm run lint -- --fix` |
+| Build Zig binary | `cd supercli-zig-cli && zig build` |
+| Generate plugin catalog | `node scripts/generate-catalog.js` |
 
 ### Finding Things to Work On
 
@@ -167,11 +184,22 @@ docs(readme): update installation instructions
 - Test the changes locally when possible
 - Provide constructive, actionable feedback
 - Focus on the code, not the person
+- Aim to review PRs within 2 business days
 
 **For contributors:**
-- Keep PRs focused and reasonably sized
+- Keep PRs focused and reasonably sized (under 500 lines preferred)
 - Respond to feedback promptly
 - Ask for clarification if feedback is unclear
+- Mark conversations as resolved once addressed
+- Re-request review after making changes
+
+### Testing Requirements
+
+- All new features must include tests
+- Bug fixes must include a regression test
+- Run `npm test` locally before pushing
+- CI must pass before merging
+- Maintain or improve code coverage
 
 ## Documentation Contributions
 

@@ -93,13 +93,13 @@ supercli plugins doctor my-plugin
 
 ---
 
-Learn how to create plugin harnesses that turn any CLI into a dcli harness.
+Learn how to create plugin harnesses that turn any CLI into a supercli harness.
 
 ## What is a Plugin Harness?
 
-A **plugin harness** bridges dcli to an external CLI tool. It allows dcli to:
+A **plugin harness** bridges supercli to an external CLI tool. It allows supercli to:
 - Discover and route commands to the external CLI
-- Expose the CLI's functionality through dcli's unified interface
+- Expose the CLI's functionality through supercli's unified interface
 - Provide consistent output formatting and error handling
 - Integrate AI-driven capability discovery across all harnesses
 
@@ -134,7 +134,7 @@ The `plugin.json` file is the core of your harness. It describes:
 {
   "name": "my-cli-harness",
   "version": "0.1.0",
-  "description": "Wrap my-cli with dcli integration",
+  "description": "Wrap my-cli with supercli integration",
   "source": "https://github.com/user/my-cli",
   "checks": [
     { "type": "binary", "name": "my-cli" }
@@ -180,7 +180,7 @@ The `plugin.json` file is the core of your harness. It describes:
 
 ## Command Definitions
 
-Each command maps dcli routing to CLI execution.
+Each command maps supercli routing to CLI execution.
 
 ### Wrapped Commands (Selective Routing)
 
@@ -196,7 +196,7 @@ Use for CLIs where you want to expose specific commands:
   "adapterConfig": {
     "command": "br",            // Binary to execute
     "baseArgs": ["create"],     // Base command arguments
-    "positionalArgs": ["title"],// Map dcli args to CLI positional args
+    "positionalArgs": ["title"],// Map supercli args to CLI positional args
     "jsonFlag": "--json",       // Flag for JSON output
     "parseJson": true,          // Parse CLI output as JSON
     "timeout_ms": 5000,         // Execution timeout
@@ -253,8 +253,8 @@ The most common adapter. Executes an external CLI binary.
 |-----|------|-------------|
 | `command` | string | Binary name to execute (must be in PATH) |
 | `baseArgs` | string[] | Default arguments (e.g., `["create"]`) |
-| `positionalArgs` | string[] | Map dcli args to CLI positional args |
-| `optionalArgs` | object | Map dcli flag args to CLI flags |
+| `positionalArgs` | string[] | Map supercli args to CLI positional args |
+| `optionalArgs` | object | Map supercli flag args to CLI flags |
 | `jsonFlag` | string | Flag for JSON output (e.g., `--json`) |
 | `parseJson` | boolean | Parse CLI output as JSON (default: false) |
 | `passthrough` | boolean | Pass all args directly to CLI (default: false) |
@@ -287,8 +287,8 @@ Maps to: `my-cli cmd myname myemail@example.com`
   "command": "my-cli",
   "baseArgs": ["cmd"],
   "optionalArgs": {
-    "priority": "--priority",   // dcli --priority maps to --priority
-    "json": "--json"            // dcli --json maps to --json
+    "priority": "--priority",   // supercli --priority maps to --priority
+    "json": "--json"            // supercli --json maps to --json
   }
 }
 ```
@@ -468,7 +468,7 @@ Once your plugin is tested and working:
 
 - **Prefer JSON output**: Use `jsonFlag` and `parseJson: true` for structured data
 - **Document output schema**: Help users understand the response format
-- **Handle errors gracefully**: Map CLI exit codes to dcli exit codes
+- **Handle errors gracefully**: Map CLI exit codes to supercli exit codes
 - **Provide helpful error messages**: Use `missingDependencyHelp` to guide installation
 
 ### Argument Design
@@ -546,11 +546,11 @@ Consider migrating to the isolated method by:
 
 ---
 
-## Contributing to dcli
+## Contributing to supercli
 
 Have a plugin you'd like to share? Consider:
 1. Creating a quality, well-documented plugin
-2. Opening a discussion in the dcli community
+2. Opening a discussion in the supercli community
 3. Submitting your plugin for inclusion in the built-in registry
 
 See [CONTRIBUTING.md](../CONTRIBUTING.md) for details.

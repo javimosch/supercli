@@ -36,6 +36,22 @@ npx supercli aws cfn deploy --stack-name my-stack --human
 👉 Works the same across CLI tools, APIs, MCP servers, and workflows
 👉 No glue code, no parsing, no guesswork
 
+## Table of Contents
+
+- [Quick Start](#-quick-start)
+- [For Humans](#for-humans)
+- [For AI Agents](#for-ai-agents)
+- [What You Get](#what-you-get)
+- [CLI Usage Examples](#️-cli-usage-examples)
+- [Architecture](#️-architecture)
+- [Capability Sources](#-capability-sources)
+- [Output Envelope + Exit Codes](#-output-envelope--exit-codes)
+- [Operating Modes](#️-operating-modes)
+- [Install](#-install)
+- [Troubleshooting](#️-troubleshooting)
+- [Tech Stack](#️-tech-stack)
+- [Community & Social](#️-community--social)
+
 ## ⚡ Example
 
 ```bash
