@@ -1,0 +1,131 @@
+{
+  "name": "watchman",
+  "version": "0.1.0",
+  "description": "Watchman -- a file watching service by Facebook for tracking changes and triggering actions when files change.",
+  "source": "https://github.com/facebook/watchman",
+  "checks": [
+    { "type": "binary", "name": "watchman" }
+  ],
+  "install_guidance": {
+    "plugin": "watchman",
+    "binary": "watchman",
+    "check": "which watchman",
+    "install_steps": [
+      "brew install watchman",
+      "Or: apt-get install watchman (Linux)",
+      "Verify: watchman --version",
+      "supercli plugins install ./plugins/watchman --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "watchman",
+      "resource": "self",
+      "action": "version",
+      "description": "Print watchman version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": []
+    },
+    {
+      "namespace": "watchman",
+      "resource": "watch",
+      "action": "start",
+      "description": "Start watching a directory for changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "baseArgs": ["watch"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory path to watch" }
+      ]
+    },
+    {
+      "namespace": "watchman",
+      "resource": "watch",
+      "action": "list",
+      "description": "List all watched directories",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "baseArgs": ["watch-list"],
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": []
+    },
+    {
+      "namespace": "watchman",
+      "resource": "changes",
+      "action": "since",
+      "description": "Query changes since a given timestamp or subscription",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "baseArgs": ["since"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": [
+        { "name": "root", "type": "string", "required": true, "description": "Root directory to query" },
+        { "name": "timestamp", "type": "string", "required": true, "description": "Timestamp or subscription name" }
+      ]
+    },
+    {
+      "namespace": "watchman",
+      "resource": "trigger",
+      "action": "add",
+      "description": "Set up a trigger to run a command on file changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "baseArgs": ["trigger"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": [
+        { "name": "root", "type": "string", "required": true, "description": "Root directory to watch" },
+        { "name": "name", "type": "string", "required": true, "description": "Trigger name" },
+        { "name": "command", "type": "string", "required": true, "description": "Command to execute on changes" }
+      ]
+    },
+    {
+      "namespace": "watchman",
+      "resource": "trigger",
+      "action": "list",
+      "description": "List triggers for a watched directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "baseArgs": ["trigger", "--list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": [
+        { "name": "root", "type": "string", "required": true, "description": "Root directory to list triggers for" }
+      ]
+    },
+    {
+      "namespace": "watchman",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to watchman CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchman",
+        "passthrough": true,
+        "missingDependencyHelp": "Install watchman: brew install watchman"
+      },
+      "args": []
+    }
+  ]
+}
