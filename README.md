@@ -329,8 +329,8 @@ curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/ins
 ### Option 2: Node.js Version (npx/npm)
 
 ```bash
-# Run immediately
-npx supercli uuid self generate
+# Run immediately — no install needed
+npx supercli skills list
 
 # Install globally
 npm install -g superacli
