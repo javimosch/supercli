@@ -4,7 +4,7 @@ This guide covers manual testing of server plugins in supercli, including JSON a
 
 ## Prerequisites
 
-- A running server instance (example: `PORT=3001 sc --server`)
+- A running server instance (example: `PORT=3001 supercli --server`)
 - CLI shell with:
 
 ```bash
@@ -60,9 +60,9 @@ curl -s -X POST "$SUPERCLI_SERVER/api/plugins" \
 ## 3) Sync and Execute JSON Plugin Command
 
 ```bash
-sc sync --json | jq
-sc commands --namespace demo --json | jq
-sc demo fs list --json | jq
+supercli sync --json | jq
+supercli commands --namespace demo --json | jq
+supercli demo fs list --json | jq
 ```
 
 Expected:
@@ -84,8 +84,8 @@ curl -s -X PATCH "$SUPERCLI_SERVER/api/plugins/server-demo-json" \
 Re-sync and verify command removal:
 
 ```bash
-sc sync --json | jq
-sc commands --namespace demo --json | jq
+supercli sync --json | jq
+supercli commands --namespace demo --json | jq
 ```
 
 Re-enable:
@@ -94,7 +94,7 @@ Re-enable:
 curl -s -X PATCH "$SUPERCLI_SERVER/api/plugins/server-demo-json" \
   -H 'Content-Type: application/json' \
   -d '{"enabled": true}' | jq
-sc sync --json | jq
+supercli sync --json | jq
 ```
 
 ## 5) Upload a ZIP Server Plugin (multipart)
@@ -144,17 +144,17 @@ curl -s -X POST "$SUPERCLI_SERVER/api/plugins/upload" \
 Then sync and verify:
 
 ```bash
-sc sync --json | jq
-sc commands --namespace zipdemo --json | jq
+supercli sync --json | jq
+supercli commands --namespace zipdemo --json | jq
 ```
 
 ## 6) Validate Local-Over-Server Precedence
 
 Install/create a local plugin with the same plugin name as a server plugin.
-After `sc sync`, verify server plugin is shadowed:
+After `supercli sync`, verify server plugin is shadowed:
 
 ```bash
-sc sync --json | jq '.server_plugins.shadowed_by_local'
+supercli sync --json | jq '.server_plugins.shadowed_by_local'
 ```
 
 Expected: plugin name appears in `shadowed_by_local`, and local plugin commands remain active.
@@ -172,7 +172,7 @@ curl -s -X PUT "$SUPERCLI_SERVER/api/plugins/settings" \
 ```bash
 curl -s -X DELETE "$SUPERCLI_SERVER/api/plugins/server-demo-json" | jq
 curl -s -X DELETE "$SUPERCLI_SERVER/api/plugins/server-demo-zip" | jq
-sc sync --json | jq
+supercli sync --json | jq
 ```
 
 ## Troubleshooting
@@ -187,8 +187,8 @@ sc sync --json | jq
 ### Sync Issues
 
 - **ZIP extraction fails**: Ensure `unzip` is installed on the client machine.
-- **Commands not appearing after server updates**: Run `sc sync --json` again and inspect the `server_plugins` diagnostics output for errors.
-- **Server plugin shadowed by local**: If a local plugin has the same name as a server plugin, the local one takes precedence. Check `sc sync --json | jq '.server_plugins.shadowed_by_local'` to verify.
+- **Commands not appearing after server updates**: Run `supercli sync --json` again and inspect the `server_plugins` diagnostics output for errors.
+- **Server plugin shadowed by local**: If a local plugin has the same name as a server plugin, the local one takes precedence. Check `supercli sync --json | jq '.server_plugins.shadowed_by_local'` to verify.
 
 ### Execution Issues
 

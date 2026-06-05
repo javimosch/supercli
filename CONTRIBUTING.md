@@ -117,7 +117,7 @@ For new features:
 
 ### Branching Strategy
 
-- `main` - Stable release branch
+- `master` - Stable release branch
 - `feature/*` - New features
 - `fix/*` - Bug fixes
 - `docs/*` - Documentation improvements

@@ -4,7 +4,7 @@ The supercli server provides a web UI for managing custom commands, OpenAPI spec
 
 ## Commands
 
-Create and manage custom commands through the server UI at `/commands`. Commands are indexed as `namespace.resource.action` and sync to the CLI via `sc sync`.
+Create and manage custom commands through the server UI at `/commands`. Commands are indexed as `namespace.resource.action` and sync to the CLI via `supercli sync`.
 
 ### Shell Adapter
 
