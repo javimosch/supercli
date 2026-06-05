@@ -134,8 +134,8 @@ The beads plugin demonstrates selective command wrapping. It exposes key beads_r
 ```bash
 supercli beads issue create --title "Fix authentication bug" --priority 0
 supercli beads issue list --status open
-supercli beads issue update dcli-15q --status in_progress
-supercli beads issue close dcli-15q --reason "completed"
+supercli beads issue update issue-1 --status in_progress
+supercli beads issue close issue-1 --reason "completed"
 ```
 
 ---
