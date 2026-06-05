@@ -281,12 +281,12 @@ These harnesses are in active development and will be available as plugins. Stat
 
 Want to create a plugin for your favorite CLI? Follow these steps:
 
-1. **Review the Plugin Guide**: See [plugin-harness-guide.md](plugin-harness-guide.md)
+1. **Review the Plugin Guide**: See [plugins-how-to.md](plugins-how-to.md)
 2. **Create a Manifest**: Define your `plugin.json`
 3. **Test Locally**: Use `supercli plugins install ./your-plugin`
 4. **Publish**: Submit to the plugin registry via `supercli plugins publish`
 
-For detailed instructions, see [plugin-harness-guide.md](plugin-harness-guide.md).
+For detailed instructions, see [plugins-how-to.md](plugins-how-to.md).
 
 ## Request a Harness
 

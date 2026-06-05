@@ -38,8 +38,8 @@ function displayJsonHelp() {
     ],
     documentation: [
       "Full README: https://github.com/javimosch/supercli#readme",
-      "Supported Harnesses: docs/supported-harnesses.md",
-      "Plugin Creation Guide: docs/plugin-harness-guide.md",
+      "Supported Harnesses: docs/plugins-available.md",
+      "Plugin Creation Guide: docs/plugins-how-to.md",
     ],
     output_modes: [
       "(default)   JSON output",
@@ -90,8 +90,8 @@ function displayComprehensiveHelp() {
   console.log("    supercli offboard              # Remove installed skill\n");
   console.log("  📖 DOCUMENTATION & RESOURCES:");
   console.log("    Full README: https://github.com/javimosch/supercli#readme");
-  console.log("    Supported Harnesses: docs/supported-harnesses.md");
-  console.log("    Plugin Creation Guide: docs/plugin-harness-guide.md\n");
+  console.log("    Supported Harnesses: docs/plugins-available.md");
+  console.log("    Plugin Creation Guide: docs/plugins-how-to.md\n");
   console.log("  🏷️  OUTPUT MODES:");
   console.log("    (default)   JSON output");
   console.log("    --json      Structured JSON envelope");

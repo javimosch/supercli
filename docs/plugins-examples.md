@@ -4,7 +4,7 @@ Real-world examples of plugin harnesses you can use as reference for creating yo
 
 ## Example 1: beads - Wrapped Commands
 
-The beads plugin demonstrates selective command wrapping. It exposes key beads_rust commands through dcli's interface.
+The beads plugin demonstrates selective command wrapping. It exposes key beads_rust commands through supercli's interface.
 
 ```json
 {
@@ -260,7 +260,7 @@ A template for creating your own wrapped command plugin:
 {
   "name": "my-cli",
   "version": "0.1.0",
-  "description": "Wrap my-cli with dcli integration",
+  "description": "Wrap my-cli with supercli integration",
   "source": "https://github.com/user/my-cli",
   "tags": ["category", "keyword"],
   "author": "Your Name",
@@ -394,4 +394,4 @@ supercli plugins doctor my-cli
 4. **Iterate**: Refine based on usage feedback
 5. **Publish**: Share with the community via GitHub
 
-See [plugin-harness-guide.md](plugin-harness-guide.md) for detailed documentation.
+See [plugins-how-to.md](plugins-how-to.md) for detailed documentation.
