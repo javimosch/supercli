@@ -272,7 +272,7 @@ supercli replaces tool-specific syntax with a **queryable, executable capability
 
 ## 📦 Capability Sources
 
-supercli draws capabilities from **bundled plugins** (200+, immediate), **plugin registry** (3,100+, `plugins install <name>`), **MCP servers** (`mcp add <name>`), and **HTTP APIs** (`api add <name>`). Every capability includes description, tags, argument schemas, and checksum-verified metadata.
+supercli draws capabilities from **bundled plugins** (5,000+, auto-discovered), **MCP servers** (`mcp add <name>`), and **HTTP APIs** (`api add <name>`). Every capability includes description, tags, argument schemas, and checksum-verified metadata.
 
 ---
 
@@ -371,7 +371,7 @@ For detailed debugging: `supercli` returns the full schema (JSON by default). Us
 |-------|-----------|
 | Runtime | Node.js (sc), Zig (sc-zig) — co-exist, share plugin state |
 | Router | Custom capability graph with sub-millisecond cache |
-| Plugins | 4,999 bundled — each `plugin.json` + `meta.json` |
+| Plugins | 5,000+ bundled — each `plugin.json` + `meta.json` |
 | MCP | Built-in MCP server adapter (`supercli mcp add <name>`) |
 | HTTP | HTTP adapter for REST endpoints as capabilities |
 | Registry | `plugins/catalog.json` — checksum-verified updates |
