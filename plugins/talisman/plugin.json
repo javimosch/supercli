@@ -1,0 +1,74 @@
+{
+  "name": "talisman",
+  "version": "0.1.0",
+  "description": "Talisman — tool that installs a hook to your repository to check the push for potential secrets",
+  "source": "https://github.com/thoughtworks/talisman",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "talisman"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "talisman",
+    "binary": "talisman",
+    "check": "which talisman",
+    "install_steps": [
+      "brew install talisman",
+      "Or download from https://github.com/thoughtworks/talisman/releases"
+    ],
+    "note": "Security tool for detecting secrets in commits."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "talisman",
+      "resource": "scan",
+      "action": "repo",
+      "description": "Scan a repository for potential secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talisman",
+        "baseArgs": ["--scan"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install talisman: brew install talisman"
+      },
+      "args": [
+        { "name": "--reportdirectory", "type": "string", "description": "Directory to write scan reports" },
+        { "name": "--ignorehistory", "type": "boolean", "description": "Ignore git history when scanning" },
+        { "name": "--threshold", "type": "string", "description": "Set pattern detection threshold (low, medium, high)" }
+      ]
+    },
+    {
+      "namespace": "talisman",
+      "resource": "hook",
+      "action": "install",
+      "description": "Install Talisman pre-push hook in a repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talisman",
+        "baseArgs": ["--hook"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install talisman: brew install talisman"
+      },
+      "args": [
+        { "name": "--directory", "type": "string", "description": "Target directory for hook installation" }
+      ]
+    },
+    {
+      "namespace": "talisman",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to talisman CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talisman",
+        "passthrough": true,
+        "missingDependencyHelp": "Install talisman: brew install talisman"
+      },
+      "args": []
+    }
+  ]
+}
