@@ -1,0 +1,133 @@
+{
+  "name": "proto",
+  "version": "0.1.0",
+  "description": "Polyglot toolchain manager — install and manage language runtimes, package managers, and dev tools",
+  "source": "https://moonrepo.dev/proto",
+  "checks": [
+    { "type": "binary", "name": "proto" }
+  ],
+  "install_guidance": {
+    "plugin": "proto",
+    "binary": "proto",
+    "check": "proto --version",
+    "install_steps": [
+      "curl -fsSL https://moonrepo.dev/install/proto.sh | sh",
+      "Verify: proto --version",
+      "supercli plugins install ./plugins/proto --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "proto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print proto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "baseArgs": ["--version"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "proto",
+      "resource": "tool",
+      "action": "install",
+      "description": "Install a tool (language runtime, package manager, or dev tool)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "baseArgs": ["install"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool name (e.g. node, npm, rust, go)" },
+        { "name": "--version", "type": "string", "required": false, "description": "Specific version to install" },
+        { "name": "--pin", "type": "boolean", "required": false, "description": "Pin the installed version" }
+      ]
+    },
+    {
+      "namespace": "proto",
+      "resource": "tool",
+      "action": "list",
+      "description": "List all installed tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "baseArgs": ["list"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "proto",
+      "resource": "tool",
+      "action": "list-remote",
+      "description": "List available versions for a tool",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "baseArgs": ["list-remote"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool name to list versions for" }
+      ]
+    },
+    {
+      "namespace": "proto",
+      "resource": "tool",
+      "action": "uninstall",
+      "description": "Uninstall a tool",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "baseArgs": ["uninstall"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool name to uninstall" }
+      ]
+    },
+    {
+      "namespace": "proto",
+      "resource": "tool",
+      "action": "run",
+      "description": "Run a tool at its installed version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "baseArgs": ["run"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool name to run" }
+      ]
+    },
+    {
+      "namespace": "proto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to proto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "proto",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install proto: curl -fsSL https://moonrepo.dev/install/proto.sh | sh"
+      },
+      "args": []
+    }
+  ]
+}
