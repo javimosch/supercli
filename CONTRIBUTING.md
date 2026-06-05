@@ -293,6 +293,37 @@ We are committed to providing a welcoming, inclusive environment. By participati
 - Help newcomers get started
 - Share your experience and knowledge
 
+## Security Vulnerabilities
+
+If you discover a security vulnerability in supercli, please report it responsibly:
+
+**Do NOT open a public GitHub issue for security vulnerabilities.**
+
+### How to Report
+
+1. **Email**: Send a detailed report to the maintainers (see [GitHub profile](https://github.com/javimosch/supercli) for contact).
+2. **Include**:
+   - Description of the vulnerability
+   - Steps to reproduce
+   - Potential impact
+   - Any suggested fix (if applicable)
+3. **Response time**: Expect acknowledgment within 48 hours.
+
+### What to Expect
+
+- Maintainers will work with you to understand and address the issue
+- A fix will be developed and released before public disclosure
+- Credit will be given to reporters (unless anonymity is preferred)
+
+### Scope
+
+Security issues include but are not limited to:
+- Command injection via plugin manifests
+- Unsafe path traversal in ZIP extraction
+- Sandbox escape in custom adapters (vm2)
+- Credential exposure in logs or output
+- Server-side request forgery (SSRF) via HTTP adapters
+
 ## License
 
 By contributing to supercli, you agree that your contributions will be licensed under the [MIT License](LICENSE).

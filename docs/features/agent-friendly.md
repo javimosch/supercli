@@ -1,6 +1,6 @@
 # Agent-Friendly Tooling
 
-SUPERCLI is designed from the ground up to be frictionless for AI agents to discover, understand, and interact with infrastructure.
+supercli is designed from the ground up to be frictionless for AI agents to discover, understand, and interact with infrastructure.
 
 ## Key Features
 

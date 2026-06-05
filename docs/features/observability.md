@@ -1,6 +1,6 @@
 # Observability & Traceability
 
-SUPERCLI maintains a rich audit trail to monitor tool utilization natively, eliminating CLI tooling "blind spots".
+supercli maintains a rich audit trail to monitor tool utilization natively, eliminating CLI tooling "blind spots".
 
 ## Key Features
 

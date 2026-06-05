@@ -1,6 +1,6 @@
 # Server Plugins
 
-Server plugins let the SUPERCLI server distribute plugin capabilities to CLI clients during `supercli sync`.
+Server plugins let the supercli server distribute plugin capabilities to CLI clients during `supercli sync`.
 
 ## Plugin Types
 

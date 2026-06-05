@@ -1,11 +1,11 @@
 # Adapters Integration
 
-SUPERCLI acts as a universal frontend proxy that translates semantic commands (e.g., `aws instances list`) into specific backend protocol requests via adapters.
+supercli acts as a universal frontend proxy that translates semantic commands (e.g., `aws instances list`) into specific backend protocol requests via adapters.
 
 ## Key Features
 
 - **HTTP Adapter**: Directly invokes external REST APIs with configured methods, headers, and interpolated path/query parameters.
-- **OpenAPI Adapter**: Given a registered OpenAPI spec URL, maps a SUPERCLI command dynamically to an OpenAPI operation, handling auth and schema resolution on the fly.
+- **OpenAPI Adapter**: Given a registered OpenAPI spec URL, maps a supercli command dynamically to an OpenAPI operation, handling auth and schema resolution on the fly.
 - **MCP Adapter (Model Context Protocol)**: Connects to local or remote MCP servers to trigger their exposed tools. Supports HTTP endpoints and local `stdio` execution (`command` + `args`).
 - **Local MCP Registry**: Decouples MCP tool integration from the backend server by maintaining MCP server entries in `~/.supercli/config.json`.
 
