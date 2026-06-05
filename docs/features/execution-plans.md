@@ -1,6 +1,6 @@
 # Execution Plans (DAG)
 
-Execution Plans allow SUPERCLI to decouple the intent to execute a command from the actual execution itself. This gives agents (and humans) the ability to dry-run commands, verify correctness, analyze side effects, and explicitly authorize actions.
+Execution Plans allow supercli to decouple the intent to execute a command from the actual execution itself. This gives agents (and humans) the ability to dry-run commands, verify correctness, analyze side effects, and explicitly authorize actions.
 
 ## Key Features
 

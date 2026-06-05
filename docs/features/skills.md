@@ -1,6 +1,6 @@
 # Skill Documents (SKILL.md)
 
-SUPERCLI includes a SKILL.md teaching/catalog system for local LLMs and agents.
+supercli includes a SKILL.md teaching/catalog system for local LLMs and agents.
 
 Terminology:
 - **Capability**: executable command endpoint (commands, MCP tool bindings, OpenAPI-backed operations, workflows).
@@ -18,7 +18,7 @@ Terminology:
 # List all available capabilities briefly as an index
 supercli skills list --json
 
-# Extract the global knowledge required to teach an agent how SUPERCLI works
+# Extract the global knowledge required to teach an agent how supercli works
 supercli skills teach
 
 # Generate a hyper-specific instruction for an AI agent on how to call a command

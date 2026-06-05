@@ -1,10 +1,10 @@
 # Multi-Step Workflows
 
-SUPERCLI handles command chaining inherently via Workflow Commands without forcing agents or developers to write complicated shell orchestration.
+supercli handles command chaining inherently via Workflow Commands without forcing agents or developers to write complicated shell orchestration.
 
 ## Key Features
 
-- **Workflow Adapter Definition**: SUPERCLI represents compound multi-step processes as just another single command in its capability tree (`type: workflow`).
+- **Workflow Adapter Definition**: supercli represents compound multi-step processes as just another single command in its capability tree (`type: workflow`).
 - **Data Piping (Context Mapping)**: When a workflow command executes, the `stdout` JSON result of step 1 can automatically be injected into the arguments of step 2. This creates clean API mapping layers (e.g., extract an ID from one endpoint, pass it to another).
 - **Atomic Abstraction**: A complex graph of actions is compacted into one deterministic interface that agents discover seamlessly.
 

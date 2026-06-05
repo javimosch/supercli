@@ -1,6 +1,6 @@
 # Server Plugins Usage Guide
 
-This guide covers manual testing of server plugins in SUPERCLI, including JSON and ZIP plugin flows.
+This guide covers manual testing of server plugins in supercli, including JSON and ZIP plugin flows.
 
 ## Prerequisites
 
