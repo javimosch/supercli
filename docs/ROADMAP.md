@@ -25,7 +25,7 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 | **Plugin bundles** — Curated groups (security-bundle, cloud-bundle, etc.) | One-command install for vertical use-cases | Faster onboarding |
 | **Otel-native logging** — Every command emits structured traces | Agents can audit their own execution | Debuggability |
 
-**KPI target:** 2 500 plugins, 15K GitHub stars, 50K monthly `npx supercli` runs.
+**KPI target:** 5,000+ plugins (achieved), 15K GitHub stars, 50K monthly `npx supercli` runs.
 
 ### 2026 Q4 — "Context Is All You Need"
 
@@ -37,7 +37,7 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 | **`sc store`** — Community plugin marketplace (like VS Code extensions but for CLI) | Third-party authors publish without PRs | Scale beyond core team |
 | **Local LLM integration** — `sc explain`, `sc suggest` powered by local models | Agents get inline help without phoning home | Offline-first credibility |
 
-**KPI target:** 3 500 plugins, 30K GitHub stars, 200K monthly runs, 100 third-party publishers.
+**KPI target:** 5,500+ plugins, 30K GitHub stars, 200K monthly runs, 100 third-party publishers.
 
 ---
 
@@ -160,7 +160,7 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 
 | Year | Phase | ARR | Valuation | Paid Teams | Plugins |
 |------|-------|-----|-----------|------------|---------|
-| 2026 H2 | OSS Supernova | $0 | — | 0 | 3 500 |
+| 2026 H2 | OSS Supernova | $0 | — | 0 | 5,000+ (achieved) |
 | 2027 H1 | Cloud Layer | $200K | — | 2 000 | 4 500 |
 | 2027 H2 | Platform | $2.5M | — | 10 000 | 6 000 |
 | 2028 Q1 | European Champion | $6M | €80M | 20 000 | 8 000 |

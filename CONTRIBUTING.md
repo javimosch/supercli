@@ -41,11 +41,9 @@ cp .env.example .env
 # Run tests to verify setup
 npm test
 
-# Run linter to check code style
-npm run lint
-
-# Run type checking (if applicable)
-npm run typecheck
+# Note: lint and typecheck commands are not configured in this project
+# Run tests to verify setup
+npm test
 ```
 
 ### Quick Development Commands
@@ -54,8 +52,6 @@ npm run typecheck
 |------|---------|
 | Run all tests | `npm test` |
 | Run specific test file | `npx jest path/to/test.js` |
-| Run linter | `npm run lint` |
-| Fix lint issues | `npm run lint -- --fix` |
 | Build Zig binary | `cd supercli-zig-cli && zig build` |
 | Generate plugin catalog | `node scripts/generate-catalog.js` |
 
