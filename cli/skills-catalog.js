@@ -240,7 +240,7 @@ function syncCatalog() {
       const ref = provider.ref || "main"
       const apiUrl = `https://api.github.com/repos/${owner}/${repo}/git/trees/${ref}?recursive=1`
 
-      const res = spawnSync("curl", ["-fsSL", apiUrl], { encoding: "utf-8", timeout: 15000 })
+      const res = spawnSync("curl", ["-fsSL", apiUrl], { encoding: "utf-8", timeout: 30000, maxBuffer: 10 * 1024 * 1024 })
       if (res.error || res.status !== 0) continue
 
       let tree
