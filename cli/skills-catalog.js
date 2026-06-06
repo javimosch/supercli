@@ -341,12 +341,19 @@ function listCatalogSkills(options = {}) {
   const idx = readIndex()
   let items = idx.skills || []
   if (options.provider) items = items.filter(s => s.provider === options.provider)
-  return items.map(s => ({ id: s.id, name: s.name, description: s.description, provider: s.provider }))
+  return items.map(s => ({ id: s.id, name: s.name, description: s.description, provider: s.provider, tags: Array.isArray(s.tags) ? s.tags : [] }))
 }
 
 function searchCatalog(query, options = {}) {
   const q = String(query || "").trim().toLowerCase()
-  const items = listCatalogSkills(options)
+  const tags = Array.isArray(options.tags) ? options.tags.map(t => t.toLowerCase()) : []
+  let items = listCatalogSkills(options)
+  if (tags.length) {
+    items = items.filter(s => {
+      const skillTags = (s.tags || []).map(t => t.toLowerCase())
+      return tags.some(t => skillTags.includes(t))
+    })
+  }
   if (!q) return items
   return items.filter(s =>
     s.id.toLowerCase().includes(q) ||

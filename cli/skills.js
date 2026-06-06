@@ -414,8 +414,9 @@ function handleSkillsCommand(options) {
 
   if (subcommand === "search") {
     const query = flags.query || positional.slice(2).join(" ")
-    if (!query) {
-      outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills search --query <text> [--provider <provider>] [--limit <n>] [--offset <n>]", recoverable: false })
+    const tags = flags.tags ? String(flags.tags).split(",").map(t => t.trim()).filter(Boolean) : []
+    if (!query && !tags.length) {
+      outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli skills search --query <text> [--tags <tag1,tag2>] [--provider <provider>] [--limit <n>] [--offset <n>]", recoverable: false })
       return true
     }
     const limitExplicit = flags.limit !== undefined
@@ -431,7 +432,7 @@ function handleSkillsCommand(options) {
       outputError({ code: 85, type: "invalid_argument", message: "Invalid --offset. Use a non-negative integer", recoverable: false })
       return true
     }
-    const allSkills = searchCatalog(query, { provider: flags.provider })
+    const allSkills = searchCatalog(query, { provider: flags.provider, tags })
     const total = allSkills.length
     const start = Math.min(offset, total)
     const end = limit !== null ? Math.min(start + limit, total) : total
@@ -564,7 +565,7 @@ function handleSkillsCommand(options) {
       console.log("    get <id>       Get skill documentation");
       console.log("    teach          Get the skills usage guide");
       console.log("    sync           Sync skills catalog");
-      console.log("    search         Search skills catalog (--limit, --offset)");
+      console.log("    search         Search skills catalog (--query, --tags, --provider, --limit, --offset)");
       console.log("    providers      Manage skill providers\n");
       console.log("  Usage:");
       console.log("    supercli skills list [--catalog] [--limit <n>] [--offset <n>]");
@@ -601,8 +602,8 @@ function handleSkillsCommand(options) {
           },
           search: {
             description: "Search skills catalog for matching skills",
-            usage: "supercli skills search --query <text> [--provider <name>] [--limit <n>] [--offset <n>]",
-            examples: ["supercli skills search --query email --json", "supercli skills search --query email --limit 10 --json", "supercli skills search --query email --limit 10 --offset 20 --json"]
+            usage: "supercli skills search --query <text> [--tags <tag1,tag2>] [--provider <name>] [--limit <n>] [--offset <n>]",
+            examples: ["supercli skills search --query email --json", "supercli skills search --tags skills --json", "supercli skills search --query email --tags docker --limit 10 --json", "supercli skills search --query email --limit 10 --offset 20 --json"]
           },
           providers: {
             description: "Manage skill providers (list, add, remove, show)",
