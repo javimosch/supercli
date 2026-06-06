@@ -1,8 +1,8 @@
 {
   "name": "apropos",
   "version": "0.1.0",
-  "description": "apropos — search the manual page names and descriptions for a keyword",
-  "source": "https://man7.org/linux/man-pages/man1/apropos.1.html",
+  "description": "apropos — search the manual page names and descriptions for keywords",
+  "source": "https://man-db.gitlab.io/man-db/",
   "checks": [
     {
       "type": "binary",
@@ -14,10 +14,11 @@
     "binary": "apropos",
     "check": "which apropos",
     "install_steps": [
-      "base system (man-db)",
-      "Verify: apropos --version"
-    ],
-    "note": "Standard Unix utility from man-db. Pre-installed on most Linux distributions."
+      "Pre-installed on most Linux systems (man-db package)",
+      "apt-get install man-db",
+      "Verify: apropos --version",
+      "supercli plugins install ./plugins/apropos --on-conflict replace --json"
+    ]
   },
   "learn": {
     "file": "skills/quickstart/SKILL.md"
@@ -27,77 +28,33 @@
       "namespace": "apropos",
       "resource": "self",
       "action": "version",
-      "description": "Print apropos version",
+      "description": "Show apropos version info",
       "adapter": "process",
       "adapterConfig": {
         "command": "apropos",
         "baseArgs": ["--version"],
-        "missingDependencyHelp": "apropos is part of man-db (base system)"
+        "missingDependencyHelp": "apropos is part of man-db: apt install man-db"
       },
       "args": []
     },
     {
       "namespace": "apropos",
-      "resource": "keyword",
-      "action": "search",
-      "description": "Search man pages for a keyword",
+      "resource": "search",
+      "action": "keyword",
+      "description": "Search man page names and descriptions for a keyword",
       "adapter": "process",
       "adapterConfig": {
         "command": "apropos",
-        "positionalArgs": ["keyword"],
-        "missingDependencyHelp": "apropos is part of man-db (base system)"
+        "missingDependencyHelp": "apropos is part of man-db: apt install man-db"
       },
       "args": [
-        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search in man page descriptions" }
-      ]
-    },
-    {
-      "namespace": "apropos",
-      "resource": "keyword",
-      "action": "search-all",
-      "description": "Search man pages for a keyword with full output (no pager)",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "apropos",
-        "baseArgs": ["-l"],
-        "positionalArgs": ["keyword"],
-        "missingDependencyHelp": "apropos is part of man-db (base system)"
-      },
-      "args": [
-        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search" }
-      ]
-    },
-    {
-      "namespace": "apropos",
-      "resource": "keyword",
-      "action": "search-exact",
-      "description": "Search man pages for exact keyword match only",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "apropos",
-        "baseArgs": ["-e"],
-        "positionalArgs": ["keyword"],
-        "missingDependencyHelp": "apropos is part of man-db (base system)"
-      },
-      "args": [
-        { "name": "keyword", "type": "string", "required": true, "description": "Exact keyword to match" }
-      ]
-    },
-    {
-      "namespace": "apropos",
-      "resource": "keyword",
-      "action": "search-section",
-      "description": "Search man pages in a specific section",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "apropos",
-        "baseArgs": ["-s"],
-        "positionalArgs": ["section", "keyword"],
-        "missingDependencyHelp": "apropos is part of man-db (base system)"
-      },
-      "args": [
-        { "name": "section", "type": "string", "required": true, "description": "Man page section number (e.g. 1, 2, 3, 5, 7, 8)" },
-        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search" }
+        { "name": "keyword", "type": "string", "required": true, "description": "Keyword to search for in man page names and descriptions" },
+        { "name": "--exact", "type": "boolean", "description": "Search each keyword for exact match only" },
+        { "name": "--regex", "type": "boolean", "description": "Interpret each keyword as a regular expression" },
+        { "name": "--wildcard", "type": "boolean", "description": "The keyword(s) contain shell wildcards" },
+        { "name": "--and", "type": "boolean", "description": "Require all keywords to match" },
+        { "name": "--long", "type": "boolean", "description": "Do not trim output to terminal width" },
+        { "name": "--section", "type": "string", "description": "Search only these manual sections (colon-separated, e.g. '1:8')" }
       ]
     },
     {
@@ -109,7 +66,7 @@
       "adapterConfig": {
         "command": "apropos",
         "passthrough": true,
-        "missingDependencyHelp": "apropos is part of man-db (base system)"
+        "missingDependencyHelp": "apropos is part of man-db: apt install man-db"
       },
       "args": []
     }
