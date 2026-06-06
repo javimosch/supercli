@@ -40,10 +40,6 @@ cp .env.example .env
 
 # Run tests to verify setup
 npm test
-
-# Note: lint and typecheck commands are not configured in this project
-# Run tests to verify setup
-npm test
 ```
 
 ### Quick Development Commands
