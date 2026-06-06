@@ -93,8 +93,6 @@ supercli plugins doctor my-plugin
 
 ---
 
-Learn how to create plugin harnesses that turn any CLI into a supercli harness.
-
 ## What is a Plugin Harness?
 
 A **plugin harness** bridges supercli to an external CLI tool. It allows supercli to:
