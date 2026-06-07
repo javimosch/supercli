@@ -64,21 +64,50 @@ supercli plugins install <plugin-name> --on-conflict replace
 
 Default is `fail`.
 
-## Notes
+## Command Reference
 
-- `plugins list` shows installed plugins.
-- `plugins explore` shows discoverable plugins from merged sources: curated registry entries plus bundled manifest auto-discovery.
-- `plugins explore` supports filters: `--name`, `--tags`, `--has-learn true|false`, `--installed true|false`, `--source bundled|git`, `--limit <n>`.
-- `plugins explore --json` includes `has_learn`, `installed`, and `filters` metadata so agents can prioritize plugins with learning content.
-- `plugins learn <name>` prints plugin-provided learning content before or after install.
-- `plugins install` supports local path, registry name, and direct remote git manifest installs.
-- Plugin manifests can define `learn` content via `learn.text` or `learn.file` (path inside plugin folder).
-- Plugin manifests can define `post_install` hooks (`script`, optional `runtime`, optional `timeout_ms`) that execute from the plugin folder after install.
-- Plugin manifests can define `install_guidance` so plugin-specific setup guidance does not require core edits in `cli/plugin-install-guidance.js`.
-- `agency-agents` is a bundled zero-command plugin. Installing it adds a remote skill-document provider named `agency-agents` and refreshes the local skill-doc catalog.
-- `visual-explainer` is a bundled zero-command plugin. Installing it adds a remote skill-document provider named `visual-explainer` sourced from normalized markdown skill documents in `javimosch/visual-explainer` and refreshes the local skill-doc catalog.
-- `browser-use` is a bundled hybrid plugin. Installing it auto-registers a `browser-use` MCP server, discovers and binds Browser Use MCP tools into direct `browseruse.tool.*` commands, and installs local Browser Use skill documents from the plugin folder.
-- `cocoindex-code` is a bundled hybrid plugin. Installing it auto-registers a local `cocoindex-code` MCP server, exposes fast direct search via `cocoindex.code.search`, keeps `cocoindex.mcp.search` for MCP-native flows, and installs local quickstart skill documents.
-- `squirrelscan` is a bundled Docker-backed plugin with broad CLI coverage (`audit`, `crawl`, `analyze`, `report`, `auth`, `config`, `init`, `feedback`, `self`, `skills`) plus passthrough. It lazily builds a pinned local image on first use, then reuses it for fast repeat scans (example: `supercli squirrel audit https://example.com -C quick`).
-- `openhands` is a bundled plugin for OpenHands headless workflows (`task run`, `task file`, `task json`) plus passthrough for full CLI coverage.
-- `uipathcli` is a bundled plugin for UiPath automation lifecycle wrappers (`project pack`, `project analyze`, `project deploy`) plus passthrough.
+| Command | Description |
+|---------|-------------|
+| `plugins list` | Show installed plugins |
+| `plugins explore` | Show discoverable plugins (merged: registry + bundled manifests) |
+| `plugins explore --json` | Includes `has_learn`, `installed`, `filters` metadata for agent prioritization |
+| `plugins learn <name>` | Print plugin-provided learning content (before or after install) |
+| `plugins install <name>` | Install from local path, registry name, or direct remote git manifest |
+
+### Exploration Filters
+
+```bash
+supercli plugins explore --name <query>                  # Filter by name/description
+supercli plugins explore --tags <tag1>,<tag2>            # Filter by tags
+supercli plugins explore --has-learn true --installed false --source bundled --limit 10 --json
+```
+
+## Plugin Manifest Features
+
+- **`learn` content** — Define via `learn.text` (inline) or `learn.file` (path inside plugin folder).
+- **`post_install` hooks** — `script`, optional `runtime`, optional `timeout_ms`. Execute from the plugin folder after install.
+- **`install_guidance`** — Plugin-specific setup guidance without core edits in `cli/plugin-install-guidance.js`.
+
+## Notable Bundled Plugins
+
+### Remote Skill-Document Providers
+
+| Plugin | Type | What It Does |
+|--------|------|-------------|
+| `agency-agents` | Zero-command | Adds remote skill-doc provider from `msitarzewski/agency-agents` |
+| `visual-explainer` | Zero-command | Adds remote skill-doc provider from `javimosch/visual-explainer` (normalized markdown) |
+
+### Hybrid Plugins (MCP + Direct Commands)
+
+| Plugin | What It Does |
+|--------|-------------|
+| `browser-use` | Auto-registers `browser-use` MCP server, binds MCP tools into `browseruse.tool.*` commands, installs local skill documents |
+| `cocoindex-code` | Auto-registers local `cocoindex-code` MCP server, exposes `cocoindex.code.search` for fast direct search, keeps `cocoindex.mcp.search` for MCP-native flows |
+
+### Full-CLI Plugins
+
+| Plugin | CLI Coverage | Notes |
+|--------|-------------|-------|
+| `squirrelscan` | Docker-backed, broad coverage (`audit`, `crawl`, `analyze`, `report`, `auth`, `config`, `init`, `feedback`, `self`, `skills`) + passthrough | Lazily builds pinned local image on first use for fast repeat scans |
+| `openhands` | OpenHands headless workflows (`task run`, `task file`, `task json`) + passthrough | Full CLI coverage |
+| `uipathcli` | UiPath automation lifecycle (`project pack`, `project analyze`, `project deploy`) + passthrough | Full CLI coverage |
