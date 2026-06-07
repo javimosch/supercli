@@ -1,7 +1,8 @@
 <p align="center">
   <img src="https://img.shields.io/npm/v/superacli" alt="npm">
-  <img src="https://img.shields.io/badge/release-2026--05--14-blue" alt="Latest Release">
+  <img src="https://img.shields.io/badge/release-2026--06--07-blue" alt="Latest Release">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
+  <img src="https://img.shields.io/badge/plugins-5000+-blueviolet" alt="Plugins">
   <img src="https://img.shields.io/github/stars/javimosch/supercli?style=social" alt="Stars">
 </p>
 

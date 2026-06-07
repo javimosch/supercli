@@ -111,12 +111,16 @@ Every plugin harness consists of:
 
 ### Minimal Plugin Structure
 
+Use the isolated plugin structure described at the top of this guide. Every file
+must live inside `plugins/<name>/` — never at the top level or in shared directories.
+
 ```
-my-plugin/
-├── plugin.json          # Required: manifest
-├── README.md            # Optional: plugin documentation
-└── examples/            # Optional: example usage
-    └── example.sh
+plugins/my-plugin/
+├── plugin.json              # Required: manifest with commands
+├── meta.json                # Required: description, tags, has_learn
+├── install-guidance.json    # Optional: install steps
+├── skills/quickstart/SKILL.md  # Optional: agent guide
+└── README.md                # Optional: human docs
 ```
 
 ## plugin.json Manifest
@@ -157,9 +161,9 @@ The `plugin.json` file is the core of your harness. It describes:
 {
   "name": "beads",              // Unique plugin identifier
   "version": "0.1.0",           // Semantic versioning
-  "description": "...",         // Short description
+  "description": "...",         // Short description (30-150 chars, see PLUGIN_STANDARDS.md)
   "source": "https://...",      // Link to upstream CLI
-  "tags": ["task", "automation"], // Optional: discovery tags
+  "tags": ["task", "automation"], // Optional: discovery tags (3-8 tags, see TAG_VOCABULARY.md)
   "author": "Your Name"         // Optional: plugin author
 }
 ```
@@ -433,8 +437,10 @@ Once your plugin is tested and working:
 2. **Structure it properly**:
    ```
    my-plugin-harness/
-   ├── plugin.json
-   ├── meta.json
+   ├── plugin.json              # Required: manifest with commands
+   ├── meta.json                # Required: description, tags, has_learn
+   ├── install-guidance.json    # Optional: install steps
+   ├── skills/quickstart/SKILL.md  # Optional: agent guide
    ├── README.md
    ├── LICENSE
    └── examples/
