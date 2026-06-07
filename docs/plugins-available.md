@@ -2,6 +2,27 @@
 
 A comprehensive guide to all currently supported harnesses in supercli, including bundled harnesses, built-in adapters, and popular community harnesses available via the plugin system.
 
+## Quick Reference
+
+| Category | Harness | Install |
+|----------|---------|---------|
+| Task tracking | `beads` | `curl -fsSL https://raw.githubusercontent.com/Dicklesworthstone/beads_rust/main/install.sh \| bash` |
+| Workspace | `gwc` | `npm install -g @googleworkspace/cli` |
+| Commit tooling | `commiat` | `npm install -g commiat` |
+| OpenAPI | Built-in | `supercli openapi <operation-id>` |
+| HTTP | Built-in | `supercli http <method> <url>` |
+| MCP | Built-in | `supercli mcp add <name> --url <url>` |
+| GitHub | `gh` | `supercli plugins install gh` |
+| AWS | `aws` | `supercli plugins install aws` |
+| Docker | `docker` | `supercli plugins install docker` |
+| Kubernetes | `kubectl` | `supercli plugins install kubectl` |
+| Terraform | `terraform` | `supercli plugins install terraform` |
+| Git | `git` | `supercli plugins install git` |
+| npm | `npm` | `supercli plugins install npm` |
+| Ollama | `ollama` | `supercli plugins install ollama` |
+
+Run `supercli plugins explore --name <tool>` for the full list of 5,000+ available plugins.
+
 ## Bundled Harnesses
 
 These harnesses are included with supercli and require only the underlying CLI tool to be installed.

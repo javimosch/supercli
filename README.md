@@ -353,6 +353,18 @@ Both versions co-exist and share plugin storage at `~/.supercli/plugins/plugins.
 | MCP server not connecting | Server not running | Ensure the MCP server process is active and accessible |
 | Zig binary not found | Wrong platform binary | Use `npx supercli` (Node.js) as fallback — both share plugin state |
 
+**Quick diagnosis flowchart:**
+
+```
+Problem?
+  ├─ "command not found" → Run `npx supercli` (zero-install) or `npm install -g superacli`
+  ├─ "plugin not found"  → `supercli plugins explore --name <query>` to search registry
+  ├─ Output not JSON     → Add `--json` flag (JSON is default, this forces it)
+  ├─ MCP not connecting  → Check server process is running + `SUPERCLI_SERVER` env is set
+  ├─ Zig binary missing  → Use `npx supercli` (Node.js fallback, shares plugin state)
+  └─ Arguments rejected  → `supercli inspect <ns> <res> <act>` to see expected schema
+```
+
 For detailed debugging: `supercli` returns the full schema (JSON by default). Use `supercli inspect <ns> <res> <act>` to validate arguments before execution.
 
 ### Getting Help
