@@ -198,18 +198,31 @@ docs(readme): update installation instructions
 
 ### Where to Find Documentation
 
-- `/docs/` - Main documentation directory
-- `/docs/plugins-how-to.md` - Plugin development guide
-- `/docs/skills-catalog.md` - Skill document catalog and provider management
-- `/README.md` - Project overview and quick start
+- `/README.md` — Project overview and quick start
+- `/CONTRIBUTING.md` — This file
+- `/PLUGIN_STANDARDS.md` — Plugin quality standards (descriptions, tags, source URLs)
+- `/TAG_VOCABULARY.md` — Controlled vocabulary for plugin tags
+- `/ARCHITECTURE_PLAN.md` — Architecture plan and design decisions
+- `/docs/` — Main documentation directory
+  - `/docs/plugins-how-to.md` — Plugin development guide
+  - `/docs/skills-catalog.md` — Skill document catalog and provider management
+  - `/docs/server-plugins-usage-guide.md` — Server plugin usage and testing guide
+  - `/docs/AGENTS_FRIENDLY_TOOLS.md` — Agent-friendly CLI design principles
+  - `/docs/ROADMAP.md` — Project roadmap (2026–2028)
+  - `/docs/feature-gaps.md` — Feature gap analysis vs. capability-mesh vision
+  - `/docs/plugins-available.md` — Available plugins listing
+  - `/docs/plugins-examples.md` — Plugin examples
+  - `/docs/features/` — Feature-specific documentation (adapters, skills, workflows, etc.)
 - Plugin-specific docs in `/plugins/*/README.md`
 
 ### Documentation Style
 
 - Use clear, concise language
-- Include practical examples
-- Keep code snippets up to date
-- Use consistent formatting
+- Include practical examples with copy-pasteable commands
+- Keep code snippets up to date with current CLI syntax
+- Use consistent formatting: `backticks` for commands, **bold** for key concepts
+- Reference other docs files when relevant (e.g., "see [PLUGIN_STANDARDS.md](PLUGIN_STANDARDS.md)")
+- Plugin documentation must reflect the isolated file convention (never reference legacy shared files)
 
 ### Contributing Plugin Documentation
 
