@@ -215,6 +215,38 @@ docs(readme): update installation instructions
   - `/docs/features/` — Feature-specific documentation (adapters, skills, workflows, etc.)
 - Plugin-specific docs in `/plugins/*/README.md`
 
+### Documentation Map
+
+This map shows how docs relate to each other, so you can find related reading fast:
+
+```
+README.md
+├── CONTRIBUTING.md (you are here)
+│   ├── PLUGIN_STANDARDS.md ──── description, tag, source URL rules
+│   └── TAG_VOCABULARY.md ──── controlled vocabulary reference
+├── ARCHITECTURE_PLAN.md ──── design decisions, CI/CD status
+├── docs/
+│   ├── plugins-how-to.md ──── plugin harness development
+│   │   ├── plugins-examples.md ──── real plugin manifests
+│   │   └── features/README.md ──── feature deep-dives
+│   ├── AGENTS_FRIENDLY_TOOLS.md ──── agent-first CLI principles
+│   ├── skills-catalog.md ──── SKILL.md provider system
+│   ├── server-plugins-usage-guide.md ──── server plugin testing
+│   ├── ROADMAP.md ──── 2026-2028 product direction
+│   └── feature-gaps.md ──── what's missing vs. capability-mesh vision
+└── plugins/<name>/
+    ├── plugin.json ──── command manifest
+    ├── meta.json ──── registry metadata (description, tags)
+    └── README.md ──── optional human docs
+```
+
+**Key relationships:**
+- `PLUGIN_STANDARDS.md` ↔ `TAG_VOCABULARY.md` — tag rules reference the vocabulary
+- `plugins-how-to.md` → `plugins-examples.md` — how-to explains, examples show
+- `AGENTS_FRIENDLY_TOOLS.md` → `features/agent-friendly.md` — principles → implementation
+- `skills-catalog.md` → `features/skills.md` — catalog system → skill document format
+- `ROADMAP.md` ↔ `feature-gaps.md` — roadmap items address feature gaps
+
 ### Documentation Style
 
 - Use clear, concise language
