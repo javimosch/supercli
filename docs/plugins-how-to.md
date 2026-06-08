@@ -406,14 +406,80 @@ supercli plugins show my-plugin
 supercli plugins doctor my-plugin
 ```
 
-### Validation
+### Validation Checklist
+
+Run these checks before submitting a plugin:
+
+**1. Manifest syntax and required fields:**
 
 ```bash
-# Check syntax of plugin.json
-cat plugins/my-plugin/plugin.json | jq .
+# Validate JSON syntax
+jq . plugins/my-plugin/plugin.json
+jq . plugins/my-plugin/meta.json
 
-# Verify binary detection
+# Check required plugin.json fields
+jq '{name, version, description, source}' plugins/my-plugin/plugin.json
+
+# Check required meta.json fields
+jq '{description, tags}' plugins/my-plugin/meta.json
+
+# Verify tags count (must be 3-8)
+jq '.tags | length' plugins/my-plugin/meta.json
+
+# Verify description length (must be 30-150 chars)
+jq '.description | length' plugins/my-plugin/meta.json
+```
+
+**2. Command definitions:**
+
+```bash
+# List all commands your plugin exposes
+jq '.commands[] | {namespace, resource, action}' plugins/my-plugin/plugin.json
+
+# Verify each command has required fields
+jq '.commands[] | {adapter, description}' plugins/my-plugin/plugin.json
+
+# Check that adapterConfig has the binary name
+jq '.commands[] | select(.adapter=="process") | .adapterConfig.command' plugins/my-plugin/plugin.json
+```
+
+**3. Binary dependency:**
+
+```bash
+# Verify the required binary is in PATH
 which my-cli
+
+# Verify the binary runs
+my-cli --version
+
+# Check install-guidance.json if present
+jq . plugins/my-plugin/install-guidance.json
+```
+
+**4. Discovery and inspection:**
+
+```bash
+# Verify supercli discovers the plugin
+supercli plugins explore --name my-plugin
+
+# Inspect command argument schemas
+supercli inspect my-plugin resource action
+
+# Verify commands appear in listing
+supercli commands --namespace my-plugin
+```
+
+**5. Execution smoke test:**
+
+```bash
+# Run with --json to verify structured output
+supercli my-plugin resource action --json
+
+# Run with --verbose for debugging
+supercli my-plugin resource action --verbose
+
+# Show the planned command before execution
+supercli plan my-plugin resource action --args
 ```
 
 ### Debugging
