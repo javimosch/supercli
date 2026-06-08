@@ -360,8 +360,10 @@ Both versions co-exist and share plugin storage at `~/.supercli/plugins/plugins.
 | `command not found: supercli` | Not installed | Run `npx supercli` (no install needed) or `npm install -g superacli` |
 | Plugin not found | Not in registry | Run `supercli plugins explore --name <query>` to find it |
 | Output is not JSON | Tool may not support JSON output | Use `supercli inspect <ns> <res> <act>` to check if the command supports JSON |
-| MCP server not connecting | Server not running | Ensure the MCP server process is active and accessible |
+| MCP server not connecting | Server not running or wrong URL | See MCP diagnosis steps below |
 | Zig binary not found | Wrong platform binary | Use `npx supercli` (Node.js) as fallback — both share plugin state |
+| `ask` not available | LLM env vars not set | Set `OPENAI_BASE_URL`, `OPENAI_MODEL`, `OPENAI_API_KEY` — see [ask docs](docs/features/ask.md) |
+| Arguments rejected | Wrong arg names or types | Run `supercli inspect <ns> <res> <act>` to see the expected argument schema |
 
 **Quick diagnosis flowchart:**
 
@@ -370,10 +372,38 @@ Problem?
   ├─ "command not found" → Run `npx supercli` (zero-install) or `npm install -g superacli`
   ├─ "plugin not found"  → `supercli plugins explore --name <query>` to search registry
   ├─ Output not JSON     → Verify tool supports JSON; use `supercli inspect` to check adapter config
-  ├─ MCP not connecting  → Check server process is running + `SUPERCLI_SERVER` env is set
+  ├─ MCP not connecting  → Follow MCP diagnosis steps below
+  ├─ "ask" not available → Set OPENAI_BASE_URL, OPENAI_MODEL, OPENAI_API_KEY env vars
   ├─ Zig binary missing  → Use `npx supercli` (Node.js fallback, shares plugin state)
   └─ Arguments rejected  → `supercli inspect <ns> <res> <act>` to see expected schema
 ```
+
+### MCP Server Diagnosis
+
+If an MCP adapter command fails to connect:
+
+```bash
+# 1. Check if the MCP server is registered
+supercli mcp list
+
+# 2. Verify the server URL is correct
+#    For HTTP/SSE: ensure the URL is reachable
+curl -s <server-url>  # Should return a response, not connection refused
+
+# 3. For stdio servers, check the binary exists
+which <command-from-adapterConfig>
+
+# 4. Inspect the command to see the adapter config
+supercli inspect <ns> <res> <act>
+
+# 5. Run with verbose output for debugging
+supercli <ns> <res> <act> --verbose
+```
+
+Common MCP issues:
+- **Connection refused**: Server process not running. Start it first.
+- **Timeout**: Server is slow. Increase `timeout_ms` in `adapterConfig`.
+- **Tool not found**: The `tool` name in `adapterConfig` doesn't match the server's tool list. Check with `supercli inspect`.
 
 For detailed debugging: `supercli` returns the full schema (JSON by default). Use `supercli inspect <ns> <res> <act>` to validate arguments before execution.
 
