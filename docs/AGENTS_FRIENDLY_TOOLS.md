@@ -109,14 +109,14 @@ An agent-friendly tool is one designed for programmatic consumption where **info
 **Example:**
 ```bash
 # Default (human & agent readable)
-$ bdg network requests
+$ sc network requests
 ID: req_123
 URL: https://api.example.com/data
 Status: 200
 Duration: 145ms
 
 # JSON mode (pure machine readable)
-$ bdg network requests --json
+$ sc network requests --json
 {"id":"req_123","url":"https://api.example.com/data","status":200,"duration_ms":145}
 ```
 
@@ -138,7 +138,7 @@ $ bdg network requests --json
 
 **Example:**
 ```bash
-$ bdg performance trace --duration 30s
+$ sc performance trace --duration 30s
 [stderr] Capturing trace... 15s elapsed
 [stderr] Capturing trace... 30s complete
 [stdout] {"trace_file": "/tmp/trace.json", "size_mb": 45.2}
@@ -237,7 +237,7 @@ Agents need **semantic error signals** to make decisions, not friendly messages.
     "recoverable": false,
     "retry_after": null,
     "suggestions": [
-      "List recent requests: bdg network requests --recent",
+      "List recent requests: sc network requests --recent",
       "Check request ID format: should be req_*"
     ]
   }
@@ -256,7 +256,7 @@ Agents need **semantic error signals** to make decisions, not friendly messages.
 **Anti-Pattern:**
 ```bash
 # Tool retries internally (bad)
-$ bdg network requests
+$ sc network requests
 Connecting... failed
 Retrying in 2s...
 Retrying in 4s...
@@ -266,7 +266,7 @@ Error: Connection failed after 3 attempts
 **Correct Pattern:**
 ```bash
 # Tool reports error clearly (good)
-$ bdg network requests --json
+$ sc network requests --json
 {"error": {"code": 105, "type": "connection_timeout", "recoverable": true, "retry_after": 2}}
 $ echo $?
 105
@@ -281,21 +281,21 @@ $ echo $?
 ### Do One Thing Well
 
 **Each command has a specific, well-defined purpose:**
-- `bdg network requests` → List network requests
-- `bdg network failed` → List failed requests only
-- `bdg console errors` → List console errors
+- `sc network requests` → List network requests
+- `sc network failed` → List failed requests only
+- `sc console errors` → List console errors
 
 **Not:**
-- `bdg diagnose-everything` → Analyzes network, console, performance in one command
+- `sc diagnose-everything` → Analyzes network, console, performance in one command
 
 ### Composability Through Pipes
 
 **Design for composition:**
 ```bash
 # Find slow requests, get details, extract URLs
-bdg network slow --threshold 1000ms --json | \
+sc network slow --threshold 1000ms --json | \
   jq -r '.[] | .id' | \
-  xargs -I {} bdg network timing {} --json | \
+  xargs -I {} sc network timing {} --json | \
   jq -r '.url'
 ```
 
@@ -325,7 +325,7 @@ Agents don't read documentation - they query capabilities.
 
 **Help as Data:**
 ```bash
-$ bdg --help-json
+$ sc --help-json
 {
   "version": "1.2.0",
   "commands": {
@@ -352,7 +352,7 @@ $ bdg --help-json
 
 For complex tools, provide JSON schemas:
 ```bash
-$ bdg network requests --schema
+$ sc network requests --schema
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
@@ -427,16 +427,16 @@ req_042 | PUT /update | 503 | 2341ms
 ### CLI Advantages (Observed in Practice)
 
 **Context Efficiency:**
-- **CLI**: Command structure is the schema (`bdg network requests --failed`)
+- **CLI**: Command structure is the schema (`sc network requests --failed`)
 - **MCP**: Protocol overhead + server definitions + request/response wrapping
 - **Observation**: Simpler commands can be more token-efficient in practice
 
 **Debuggability:**
-- **CLI**: `$ bdg network requests` fails → see exact error message
+- **CLI**: `$ sc network requests` fails → see exact error message
 - **MCP**: Errors wrap in protocol layers, may require additional debugging steps
 
 **Composability:**
-- **CLI**: `bdg network requests | jq | grep | sort`
+- **CLI**: `sc network requests | jq | grep | sort`
 - **MCP**: Responses don't naturally compose with Unix tools
 - **Strength**: Unix pipeline patterns for filtering and transformation
 
@@ -461,11 +461,11 @@ req_042 | PUT /update | 503 | 2341ms
 - Complex authentication flows
 - Real-time bidirectional communication
 
-### Design Decision for bdg
+### Design Decision for supercli
 
-**For this project (Chrome DevTools telemetry):** CLI is the chosen approach because:
-- DevTools operations are atomic queries (list requests, get console logs)
-- No stateful multi-turn workflows needed
+**For supercli:** CLI is the chosen approach because:
+- Tool operations are atomic queries (list resources, get details)
+- No stateful multi-turn workflows needed for most use cases
 - Target users already work in terminal environments
 - Unix composability is a natural fit for data filtering/analysis
 
@@ -550,4 +550,4 @@ Agent-friendly tools are not a separate category from good CLI tools - they are 
 
 **The Core Insight:** Design for deterministic, composable operations with structured output. This serves both agents (who need parseable data) and humans (who benefit from predictability).
 
-**For bdg:** Every design decision should ask: "Does this help an agent make decisions?" If yes, implement it. If no, remove it.
+**For supercli:** Every design decision should ask: "Does this help an agent make decisions?" If yes, implement it. If no, remove it.

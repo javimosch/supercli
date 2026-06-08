@@ -48,6 +48,8 @@ npm test
 |------|---------|
 | Run all tests | `npm test` |
 | Run specific test file | `npx jest path/to/test.js` |
+| Lint code | `npm run lint` |
+| Typecheck | `npm run typecheck` |
 | Build Zig binary | `cd supercli-zig-cli && zig build` |
 | Generate plugin catalog | `node scripts/generate-catalog.js` |
 
