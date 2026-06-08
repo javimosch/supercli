@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://img.shields.io/npm/v/superacli" alt="npm">
-  <img src="https://img.shields.io/badge/release-2026--06--07-blue" alt="Latest Release">
+  <img src="https://img.shields.io/badge/release-2026--06--08-blue" alt="Latest Release">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
   <img src="https://img.shields.io/badge/plugins-5000+-blueviolet" alt="Plugins">
   <img src="https://img.shields.io/github/stars/javimosch/supercli?style=social" alt="Stars">
@@ -273,7 +273,16 @@ supercli replaces tool-specific syntax with a **queryable, executable capability
 
 ## 📦 Capability Sources
 
-supercli draws capabilities from **bundled plugins** (5,000+, auto-discovered), **MCP servers** (`mcp add <name>`), and **HTTP APIs** (`api add <name>`). Every capability includes description, tags, argument schemas, and checksum-verified metadata.
+supercli draws capabilities from four source types:
+
+| Source | Count | How to Add | Description |
+|--------|-------|------------|-------------|
+| **Bundled plugins** | 5,000+ | Auto-discovered from `plugins/` | CLI binaries wrapped with metadata, args, and tags |
+| **MCP servers** | Unlimited | `supercli mcp add <name> --url <url>` | Model Context Protocol servers (stdio or SSE) |
+| **HTTP APIs** | Unlimited | `supercli http <method> <url>` | REST endpoints as callable capabilities |
+| **Custom adapters** | Unlimited | Server UI or `supercli sync` | User-defined JS in sandboxed vm2 runtime |
+
+Every capability includes description, tags, argument schemas, and checksum-verified metadata.
 
 ---
 
