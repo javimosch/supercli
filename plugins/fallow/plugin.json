@@ -1,7 +1,7 @@
 {
   "name": "fallow",
-  "version": "0.1.0",
-  "description": "Codebase analyzer for TypeScript and JavaScript - finds unused code, duplication, complexity hotspots",
+  "version": "0.2.0",
+  "description": "Codebase analyzer for TypeScript and JavaScript - finds unused code, circular dependencies, code duplication, complexity hotspots, and architecture boundary violations. Rust-native, sub-second, zero config.",
   "source": "https://github.com/fallow-rs/fallow",
   "checks": [
     { "type": "binary", "name": "fallow" }
@@ -43,6 +43,8 @@
         "command": "fallow",
         "baseArgs": ["dead-code"],
         "passthrough": true,
+        "jsonFlag": "--format",
+        "parseJson": true,
         "timeout_ms": 60000,
         "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
       },
@@ -66,6 +68,8 @@
         "command": "fallow",
         "baseArgs": ["dupes"],
         "passthrough": true,
+        "jsonFlag": "--format",
+        "parseJson": true,
         "timeout_ms": 60000,
         "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
       },
@@ -86,6 +90,8 @@
         "command": "fallow",
         "baseArgs": ["health"],
         "passthrough": true,
+        "jsonFlag": "--format",
+        "parseJson": true,
         "timeout_ms": 60000,
         "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
       },
@@ -110,6 +116,8 @@
         "command": "fallow",
         "baseArgs": ["audit"],
         "passthrough": true,
+        "jsonFlag": "--format",
+        "parseJson": true,
         "timeout_ms": 120000,
         "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
       },
@@ -137,6 +145,44 @@
       },
       "args": [
         { "name": "--dry-run", "type": "boolean", "required": false, "description": "Preview changes without applying" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "score",
+      "action": "run",
+      "description": "Get project health score with letter grade and hotspot ranking",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["health", "--score", "--hotspots", "--targets"],
+        "jsonFlag": "--format",
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: json, badge, markdown" }
+      ]
+    },
+    {
+      "namespace": "fallow",
+      "resource": "ci",
+      "action": "gate",
+      "description": "CI quality gate — non-zero exit on new issues, SARIF output for GitHub",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallow",
+        "baseArgs": ["audit", "--ci"],
+        "jsonFlag": "--format",
+        "parseJson": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install fallow: cargo install fallow-cli"
+      },
+      "args": [
+        { "name": "--base", "type": "string", "required": false, "description": "Base branch (default: main)" },
+        { "name": "--format", "type": "string", "required": false, "description": "Output format: sarif, json, annotations" },
+        { "name": "--min-score", "type": "number", "required": false, "description": "Fail if health score drops below N" }
       ]
     },
     {
