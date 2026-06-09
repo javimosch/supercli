@@ -1,6 +1,6 @@
 {
   "name": "gws",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Official Google Workspace CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more. Dynamically built from Google Discovery Service with structured JSON output and headless CI authentication support.",
   "source": "https://github.com/googleworkspace/cli",
   "checks": [
@@ -35,6 +35,54 @@
     },
     {
       "namespace": "gws",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check Google Workspace authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gws",
+        "baseArgs": ["auth", "status"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Install gws: npm install -g @googleworkspace/cli. Then run: gws auth setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gws",
+      "resource": "auth",
+      "action": "setup",
+      "description": "Walk through Google Cloud project configuration for OAuth",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gws",
+        "baseArgs": ["auth", "setup"],
+        "missingDependencyHelp": "Install gws: npm install -g @googleworkspace/cli"
+      },
+      "args": [
+        { "name": "--project-id", "type": "string", "required": false, "description": "Google Cloud project ID" },
+        { "name": "--client-id", "type": "string", "required": false, "description": "OAuth client ID" },
+        { "name": "--client-secret", "type": "string", "required": false, "description": "OAuth client secret" }
+      ]
+    },
+    {
+      "namespace": "gws",
+      "resource": "auth",
+      "action": "login",
+      "description": "Perform OAuth login to Google Workspace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gws",
+        "baseArgs": ["auth", "login"],
+        "missingDependencyHelp": "Run gws auth setup first to configure credentials"
+      },
+      "args": [
+        { "name": "--headless", "type": "boolean", "required": false, "description": "Headless mode for CI (no browser)" },
+        { "name": "--token-file", "type": "string", "required": false, "description": "Path to save token" }
+      ]
+    },
+    {
+      "namespace": "gws",
       "resource": "_",
       "action": "_",
       "description": "Passthrough to gws CLI for any Google Workspace command",
@@ -42,6 +90,8 @@
       "adapterConfig": {
         "command": "gws",
         "passthrough": true,
+        "jsonFlag": "--json",
+        "parseJson": true,
         "missingDependencyHelp": "Install gws: npm install -g @googleworkspace/cli or brew install googleworkspace-cli. Authenticate with: gws auth setup"
       },
       "args": []

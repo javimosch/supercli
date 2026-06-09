@@ -9,6 +9,11 @@ Official Google Workspace CLI for Drive, Gmail, Calendar, Sheets, Docs, Chat, Ad
 
 ## Commands
 
+### Authentication
+- `gws auth status` — Check Google Workspace authentication status
+- `gws auth setup` — Walk through Google Cloud project configuration
+- `gws auth login` — Perform OAuth login (supports --headless for CI)
+
 ### Google Workspace Operations
 - `gws _ _` — Passthrough to gws CLI for any Google Workspace command
 
