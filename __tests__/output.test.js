@@ -1,4 +1,4 @@
-const { compactKeys } = require("../cli/output");
+const { compactKeys, outputHumanTable } = require("../cli/output");
 
 describe("compactKeys", () => {
   test("returns primitives as-is", () => {
@@ -87,5 +87,91 @@ describe("compactKeys", () => {
 
   test("handles arrays of primitives", () => {
     expect(compactKeys([1, "two", true])).toEqual([1, "two", true]);
+  });
+});
+
+describe("outputHumanTable", () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test("prints a table with headers and rows", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    const rows = [
+      { name: "Alice", role: "Developer" },
+      { name: "Bob", role: "Designer" },
+    ];
+    const columns = [
+      { key: "name", label: "Name" },
+      { key: "role", label: "Role" },
+    ];
+
+    outputHumanTable(rows, columns);
+
+    expect(spy).toHaveBeenCalledTimes(4);
+    const calls = spy.mock.calls.map(([msg]) => msg);
+    // widths: name=5 (max of "Name"=4, "Alice"=5, "Bob"=3), role=9 (max of "Role"=4, "Developer"=9, "Designer"=8)
+    expect(calls[0]).toBe("  Name   Role     ");
+    expect(calls[1]).toBe("  ────────────────");
+    expect(calls[2]).toBe("  Alice  Developer");
+    expect(calls[3]).toBe("  Bob    Designer ");
+
+    spy.mockRestore();
+  });
+
+  test("returns true when rows are printed", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    const result = outputHumanTable([{ x: "1" }], [{ key: "x", label: "X" }]);
+    expect(result).toBe(true);
+
+    spy.mockRestore();
+  });
+
+  test("handles empty rows by printing a placeholder", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    const result = outputHumanTable([], [{ key: "n", label: "N" }]);
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith("  (empty)");
+    expect(result).toBe(true);
+
+    spy.mockRestore();
+  });
+
+  test("handles null/undefined rows by printing a placeholder", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    expect(outputHumanTable(null, [{ key: "n", label: "N" }])).toBe(true);
+    expect(outputHumanTable(undefined, [{ key: "n", label: "N" }])).toBe(true);
+
+    expect(spy).toHaveBeenCalledTimes(2);
+    expect(spy).toHaveBeenCalledWith("  (empty)");
+
+    spy.mockRestore();
+  });
+
+  test("pads columns to match the widest value", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+
+    const rows = [
+      { short: "a", long: "very long value here" },
+    ];
+    const columns = [
+      { key: "short", label: "Short" },
+      { key: "long", label: "Long" },
+    ];
+
+    outputHumanTable(rows, columns);
+
+    const calls = spy.mock.calls.map(([msg]) => msg);
+    // widths: short=5 (max of "Short"=5, "a"=1), long=19 (max of "Long"=4, "very long value here"=19)
+    expect(calls[0]).toBe("  Short  Long                ");
+    expect(calls[1]).toBe("  ───────────────────────────");
+    expect(calls[2]).toBe("  a      very long value here");
+
+    spy.mockRestore();
   });
 });
