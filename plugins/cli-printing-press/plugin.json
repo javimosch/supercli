@@ -1,0 +1,151 @@
+{
+  "name": "cli-printing-press",
+  "version": "0.1.0",
+  "description": "Generate production CLIs from any API — reads docs, studies community CLIs, and prints token-efficient Go CLIs plus Claude Code skills and MCP servers",
+  "source": "https://github.com/mvanhorn/cli-printing-press",
+  "checks": [
+    { "type": "binary", "name": "cli-printing-press" }
+  ],
+  "commands": [
+    {
+      "namespace": "cli-printing-press",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cli-printing-press version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "generate",
+      "action": "run",
+      "description": "Generate a CLI from an API spec (OpenAPI, GraphQL, or discovered)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": [
+        { "name": "--api", "type": "string", "required": true, "description": "API URL or OpenAPI spec path" },
+        { "name": "--name", "type": "string", "required": false, "description": "CLI name override" },
+        { "name": "--out", "type": "string", "required": false, "description": "Output directory" },
+        { "name": "--skill", "type": "boolean", "required": false, "description": "Also generate Claude Code skill" },
+        { "name": "--mcp", "type": "boolean", "required": false, "description": "Also generate MCP server" }
+      ]
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "catalog",
+      "action": "list",
+      "description": "List available printed CLIs in the catalog",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["catalog", "list"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": [
+        { "name": "--category", "type": "string", "required": false, "description": "Filter by category" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "catalog",
+      "action": "search",
+      "description": "Search the catalog for a printed CLI by name or API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["catalog", "search"],
+        "passthrough": true,
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": [
+        { "name": "--query", "type": "string", "required": true, "description": "Search query" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "scorecard",
+      "action": "run",
+      "description": "Score a CLI for agent-readiness (flags, JSON output, error handling)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["scorecard"],
+        "passthrough": true,
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": [
+        { "name": "--binary", "type": "string", "required": true, "description": "Path to CLI binary to score" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "verify",
+      "action": "run",
+      "description": "Verify a generated CLI against its spec",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["verify"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": [
+        { "name": "--dir", "type": "string", "required": true, "description": "Directory containing generated CLI" }
+      ]
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "library",
+      "action": "list",
+      "description": "Browse the Printing Press Library of printed CLIs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "baseArgs": ["library", "list"],
+        "jsonFlag": "--json",
+        "parseJson": true,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": [
+        { "name": "--category", "type": "string", "required": false, "description": "Filter by category" },
+        { "name": "--json", "type": "boolean", "required": false, "description": "JSON output" }
+      ]
+    },
+    {
+      "namespace": "cli-printing-press",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cli-printing-press CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cli-printing-press",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cli-printing-press: go install github.com/mvanhorn/cli-printing-press/v4/cmd/cli-printing-press@latest"
+      },
+      "args": []
+    }
+  ]
+}

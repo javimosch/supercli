@@ -27,6 +27,12 @@ Codebase analyzer for TypeScript and JavaScript. Finds unused code, circular dep
 ### Auto-fix
 - `fallow fix apply` — Auto-remove dead exports and deps
 
+### Score (Quick Health)
+- `fallow score run` — Get health score, hotspots, and refactoring targets in one call
+
+### CI Gate
+- `fallow ci gate` — CI quality gate with non-zero exit on new issues, SARIF output
+
 ## Usage Examples
 
 Run all analyses:
@@ -67,6 +73,19 @@ fallow audit --format json
 Auto-fix preview:
 ```
 fallow fix --dry-run
+```
+
+Quick health score:
+```
+fallow score run
+fallow score run --format badge
+```
+
+CI quality gate:
+```
+fallow ci gate
+fallow ci gate --base main --format sarif
+fallow ci gate --min-score 70
 ```
 
 ## Installation
