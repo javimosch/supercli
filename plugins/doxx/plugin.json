@@ -1,6 +1,6 @@
 {
   "name": "doxx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Terminal-native .docx document viewer — view, search, and export Word files without leaving your command line",
   "source": "https://github.com/bgreenwell/doxx",
   "checks": [
@@ -52,7 +52,8 @@
         { "name": "search", "type": "string", "required": false, "description": "Search and highlight term" },
         { "name": "outline", "type": "boolean", "required": false, "description": "Start with outline view" },
         { "name": "page", "type": "number", "required": false, "description": "Jump to specific page" },
-        { "name": "color", "type": "boolean", "required": false, "description": "Enable color support" }
+        { "name": "color", "type": "boolean", "required": false, "description": "Enable color support" },
+        { "name": "images", "type": "boolean", "required": false, "description": "Display embedded images in terminal" }
       ]
     },
     {
@@ -99,6 +100,7 @@
         "command": "doxx",
         "baseArgs": ["--export", "json"],
         "positionalArgs": ["file"],
+        "parseJson": true,
         "timeout_ms": 30000,
         "missingDependencyHelp": "Install doxx"
       },
@@ -121,6 +123,24 @@
       },
       "args": [
         { "name": "file", "type": "string", "required": true, "description": "Path to .docx file" }
+      ]
+    },
+    {
+      "namespace": "doxx",
+      "resource": "export",
+      "action": "ansi",
+      "description": "Export .docx as ANSI-colored terminal output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "doxx",
+        "baseArgs": ["--export", "ansi"],
+        "positionalArgs": ["file"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install doxx"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to .docx file" },
+        { "name": "color-depth", "type": "number", "required": false, "description": "Color depth: 1 (mono), 4 (16 colors), 8 (256 colors), 24 (true color)" }
       ]
     },
     {
