@@ -5,16 +5,13 @@ const path = require("path");
 const os = require("os");
 const { spawnSync } = require("child_process");
 const { getRegistryPlugin } = require("./plugins-registry");
-const { validateNodeHook } = require("./plugins-hooks");
-
-const BUNDLED_PLUGINS = {};
 
 function commandKey(cmd) {
   return `${cmd.namespace}.${cmd.resource}.${cmd.action}`;
 }
 
 function resolveManifestPath(ref) {
-  const base = BUNDLED_PLUGINS[ref] || path.resolve(ref);
+  const base = path.resolve(ref);
   if (!fs.existsSync(base)) return null;
   const st = fs.statSync(base);
   if (st.isDirectory()) return path.join(base, "plugin.json");
@@ -187,7 +184,6 @@ function loadPluginManifest(ref, options = {}) {
 }
 
 module.exports = {
-  validateNodeHook,
   commandKey,
   resolveManifestPath,
   parseManifestFile,
