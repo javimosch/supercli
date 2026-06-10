@@ -1,4 +1,4 @@
-const { compactKeys, outputHumanTable } = require("../cli/output");
+const { compactKeys, makeOutput, makeOutputError, outputHumanTable, makeStreamEmitter } = require("../cli/output");
 
 describe("compactKeys", () => {
   test("returns primitives as-is", () => {
@@ -173,5 +173,158 @@ describe("outputHumanTable", () => {
     expect(calls[2]).toBe("  a      very long value here");
 
     spy.mockRestore();
+  });
+});
+
+describe("makeOutput", () => {
+  beforeEach(() => {
+    jest.restoreAllMocks();
+  });
+
+  test("compactMode: applies compactKeys and logs JSON", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+    const output = makeOutput({ humanMode: false, compactMode: true });
+
+    output({ command: "test", description: "a cmd", duration_ms: 100 });
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(JSON.stringify({ c: "test", desc: "a cmd", ms: 100 }));
+    spy.mockRestore();
+  });
+
+  test("humanMode with string data: passes string through", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+    const output = makeOutput({ humanMode: true, compactMode: false });
+
+    output("plain text message");
+
+    expect(spy).toHaveBeenCalledWith("plain text message");
+    spy.mockRestore();
+  });
+
+  test("humanMode with object data: pretty-prints JSON", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+    const output = makeOutput({ humanMode: true, compactMode: false });
+
+    output({ result: "ok", count: 3 });
+
+    expect(spy).toHaveBeenCalledWith(JSON.stringify({ result: "ok", count: 3 }, null, 2));
+    spy.mockRestore();
+  });
+
+  test("default mode (neither human nor compact): logs compact JSON", () => {
+    const spy = jest.spyOn(console, "log").mockImplementation(() => {});
+    const output = makeOutput({ humanMode: false, compactMode: false });
+
+    output({ result: "ok" });
+
+    expect(spy).toHaveBeenCalledWith(JSON.stringify({ result: "ok" }));
+    spy.mockRestore();
+  });
+});
+
+describe("makeOutputError", () => {
+  let exitSpy;
+
+  beforeEach(() => {
+    jest.restoreAllMocks();
+    exitSpy = jest.spyOn(process, "exit").mockImplementation(() => {});
+  });
+
+  test("humanMode: writes type and message to stderr", () => {
+    const writeSpy = jest.spyOn(process.stderr, "write").mockImplementation(() => {});
+    const outputError = makeOutputError({ humanMode: true, compactMode: false });
+
+    outputError({ message: "something broke", type: "test_error", code: 42 });
+
+    expect(writeSpy).toHaveBeenCalledWith("test_error: something broke\n");
+    expect(exitSpy).toHaveBeenCalledWith(42);
+    writeSpy.mockRestore();
+  });
+
+  test("humanMode with suggestions: prints them indented", () => {
+    const writeSpy = jest.spyOn(process.stderr, "write").mockImplementation(() => {});
+    const outputError = makeOutputError({ humanMode: true, compactMode: false });
+
+    outputError({
+      message: "not found",
+      suggestions: ["check the name", "use --help"],
+      code: 404,
+    });
+
+    expect(writeSpy).toHaveBeenCalledWith("internal_error: not found\n");
+    expect(writeSpy).toHaveBeenCalledWith("  → check the name\n");
+    expect(writeSpy).toHaveBeenCalledWith("  → use --help\n");
+    writeSpy.mockRestore();
+  });
+
+  test("default mode: writes JSON envelope to stderr", () => {
+    const writeSpy = jest.spyOn(process.stderr, "write").mockImplementation(() => {});
+    const outputError = makeOutputError({ humanMode: false, compactMode: false });
+
+    outputError({ message: "fail", code: 1 });
+
+    const expected = JSON.stringify({
+      error: { code: 1, type: "internal_error", message: "fail", recoverable: false, suggestions: [] },
+    }) + "\n";
+    expect(writeSpy).toHaveBeenCalledWith(expected);
+    expect(exitSpy).toHaveBeenCalledWith(1);
+    writeSpy.mockRestore();
+  });
+
+  test("compactMode: applies compactKeys to JSON envelope", () => {
+    const writeSpy = jest.spyOn(process.stderr, "write").mockImplementation(() => {});
+    const outputError = makeOutputError({ humanMode: false, compactMode: true });
+
+    outputError({ message: "fail", code: 1 });
+
+    const expected = JSON.stringify({
+      err: { code: 1, type: "internal_error", msg: "fail", recoverable: false, sug: [] },
+    }) + "\n";
+    expect(writeSpy).toHaveBeenCalledWith(expected);
+    writeSpy.mockRestore();
+  });
+
+  test("falls back to code 110 when code is missing", () => {
+    const writeSpy = jest.spyOn(process.stderr, "write").mockImplementation(() => {});
+    const outputError = makeOutputError({ humanMode: false, compactMode: false });
+
+    outputError({ message: "unknown" });
+
+    expect(exitSpy).toHaveBeenCalledWith(110);
+    writeSpy.mockRestore();
+  });
+});
+
+describe("makeStreamEmitter", () => {
+  test("returns null when humanMode is true", () => {
+    const result = makeStreamEmitter("test-cmd", { humanMode: true, output: jest.fn() });
+    expect(result).toBeNull();
+  });
+
+  test("returns a function that calls output with stream event", () => {
+    const output = jest.fn();
+    const emitter = makeStreamEmitter("my-command", { humanMode: false, output });
+
+    expect(typeof emitter).toBe("function");
+
+    emitter({ chunk: "data", seq: 1 });
+
+    expect(output).toHaveBeenCalledWith({
+      version: "1.0",
+      command: "my-command",
+      stream: true,
+      data: { chunk: "data", seq: 1 },
+    });
+  });
+
+  test("multiple calls each go through output", () => {
+    const output = jest.fn();
+    const emitter = makeStreamEmitter("multi", { humanMode: false, output });
+
+    emitter("first");
+    emitter("second");
+
+    expect(output).toHaveBeenCalledTimes(2);
   });
 });
