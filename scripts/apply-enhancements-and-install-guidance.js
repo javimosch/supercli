@@ -9,11 +9,22 @@ import { join } from "path";
 const PLUGINS_DIR = join(import.meta.dirname, "..", "plugins");
 const ENHANCEMENTS_PATH = join(import.meta.dirname, "..", "description-enhancements.json");
 
+/**
+ * Load and parse a JSON file.
+ * @param {string} p - Path to the JSON file.
+ * @returns {object|null} Parsed JSON object, or null if the file does not exist.
+ */
 function loadJson(p) {
   if (!existsSync(p)) return null;
   return JSON.parse(readFileSync(p, "utf-8"));
 }
 
+/**
+ * Serialize an object to JSON and write it to a file.
+ * @param {string} p - Path to the output file.
+ * @param {object} data - Data to serialize.
+ * @returns {void}
+ */
 function writeJson(p, data) {
   writeFileSync(p, JSON.stringify(data, null, 2) + "\n");
 }
