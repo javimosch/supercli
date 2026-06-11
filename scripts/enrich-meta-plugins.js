@@ -1,3 +1,16 @@
+/**
+ * Reads plugin-scores.csv and enriches docs/meta-plugins.json with score metadata.
+ *
+ * The CSV file contains per-plugin scores and attributes (language, interactivity,
+ * auth requirements, etc.). This script merges that data into the meta-plugins JSON
+ * under a "score" property on each plugin object, then writes the enriched result
+ * back to disk.
+ *
+ * Usage: node scripts/enrich-meta-plugins.js
+ *
+ * @module enrich-meta-plugins
+ */
+
 "use strict";
 
 const fs = require('fs');
@@ -6,6 +19,16 @@ const path = require('path');
 const SCORES_CSV = path.join(__dirname, '..', 'plugin-scores.csv');
 const META_PLUGINS = path.join(__dirname, '..', 'docs', 'meta-plugins.json');
 
+/**
+ * Parse a CSV file and return an object mapping plugin names to their score rows.
+ *
+ * The first line is treated as a header row; subsequent lines are parsed into
+ * objects keyed by those headers. The result is keyed by the "name" column.
+ *
+ * @param {string} filePath - Absolute or relative path to the CSV file.
+ * @returns {Object<string, Object>} Object where keys are plugin names and values
+ *   are row objects with the CSV headers as property names.
+ */
 function parseCSV(filePath) {
   const content = fs.readFileSync(filePath, 'utf8');
   const lines = content.trim().split('\n');
@@ -25,6 +48,24 @@ function parseCSV(filePath) {
   return scores;
 }
 
+/**
+ * Read plugin-scores.csv, enrich docs/meta-plugins.json, and write back.
+ *
+ * Flow:
+ * 1. Parse the CSV file with {@link parseCSV} to get a map of scores by plugin name.
+ * 2. Read and parse the existing docs/meta-plugins.json.
+ * 3. Map over every plugin: if a matching score row exists, attach a structured
+ *    `score` object (value, no_interactive, go_rust_nodejs, language, cli, tui,
+ *    auth_required, complexity, binary, json_support, install).
+ * 4. Wrap the result in a top-level object with a `generated` timestamp and count.
+ * 5. Write the enriched JSON back to the same file.
+ *
+ * Side effects:
+ * - Reads plugin-scores.csv (throws if not found).
+ * - Reads docs/meta-plugins.json (throws if not found or malformed).
+ * - Overwrites docs/meta-plugins.json with the enriched data.
+ * - Logs progress messages to the console.
+ */
 function enrichMetaPlugins() {
   const scores = parseCSV(SCORES_CSV);
   const metaPlugins = JSON.parse(fs.readFileSync(META_PLUGINS, 'utf8'));
