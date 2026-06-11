@@ -1,3 +1,5 @@
+"use strict";
+
 // Analyze all plugins and score them based on agent-friendly criteria
 // Scoring criteria:
 // - no_interactive: +3 (very important for agents)
