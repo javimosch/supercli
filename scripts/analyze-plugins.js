@@ -1,16 +1,23 @@
+#!/usr/bin/env node
 "use strict";
 
-// Analyze all plugins and score them based on agent-friendly criteria
-// Scoring criteria:
-// - no_interactive: +3 (very important for agents)
-// - go_rust_nodejs: +2 (preferred languages)
-// - cli: +2 (must be a CLI)
-// - tui: -3 (strong penalty for TUI)
-// - auth_required: -1 (penalty but acceptable)
-// - binary: +1 (bonus, not required)
-// - json_support: +2 (bonus for agents)
-// - complexity: low=+2, medium=+1, high=0
-// Usage: node scripts/analyze-plugins.js
+/**
+ * Analyze all plugins and score them based on agent-friendly criteria.
+ *
+ * Scoring criteria:
+ * - no_interactive: +3 (very important for agents)
+ * - go_rust_nodejs: +2 (preferred languages)
+ * - cli: +2 (must be a CLI)
+ * - tui: -3 (strong penalty for TUI)
+ * - auth_required: -1 (penalty but acceptable)
+ * - binary: +1 (bonus, not required)
+ * - json_support: +2 (bonus for agents)
+ * - complexity: low=+2, medium=+1, high=0
+ *
+ * Outputs a CSV file to /tmp/plugin-scores-v2.csv with detailed analysis.
+ *
+ * Usage: node scripts/analyze-plugins.js
+ */
 const f=require('fs'),p=require('path'),b=p.join(__dirname,'..','plugins');
 const plugins=f.readdirSync(b).filter(x=>!x.startsWith('.'));
 const results=[];
