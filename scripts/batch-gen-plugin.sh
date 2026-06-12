@@ -1,6 +1,18 @@
 #!/bin/bash
+#
+# Batch generate plugin files from a data file.
+#
+# Reads tool definitions from scripts/plugin-data.txt (pipe-delimited format)
+# and generates the complete plugin directory structure for each tool:
+# - plugin.json (manifest with commands)
+# - meta.json (registry metadata)
+# - install-guidance.json (install steps)
+# - skills/quickstart/SKILL.md (if has_learn=true)
+#
+# Format: name|binary|description|tags|install_cmd|source|has_learn|cwd
+#
 # Usage: bash scripts/batch-gen-plugin.sh
-# Reads tools from scripts/plugin-data.txt and generates plugin files
+#
 
 set -e
 DATA_FILE="scripts/plugin-data.txt"
