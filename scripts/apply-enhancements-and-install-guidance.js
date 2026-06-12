@@ -1,13 +1,15 @@
 #!/usr/bin/env node
+"use strict";
+
 /**
  * Apply description enhancements to actual plugin files and create
  * install-guidance.json for plugins that lack it.
  */
-import { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } from "fs";
-import { join } from "path";
+const { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } = require("fs");
+const { join } = require("path");
 
-const PLUGINS_DIR = join(import.meta.dirname, "..", "plugins");
-const ENHANCEMENTS_PATH = join(import.meta.dirname, "..", "description-enhancements.json");
+const PLUGINS_DIR = join(__dirname, "..", "plugins");
+const ENHANCEMENTS_PATH = join(__dirname, "..", "description-enhancements.json");
 
 /**
  * Load and parse a JSON file.
