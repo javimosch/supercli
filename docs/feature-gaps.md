@@ -6,7 +6,7 @@ Comparison of the current release versus the broader capability-mesh vision from
 
 | Capability | Status | Notes |
 |------------|--------|-------|
-| Plugin discovery & execution | ✅ Shipping | 5,000+ plugins, 8,000+ commands |
+| Plugin discovery & execution | ✅ Shipping | 6,000+ plugins, 8,000+ commands |
 | MCP server integration | ✅ Shipping | HTTP/SSE and stdio transports |
 | HTTP/OpenAPI adapters | ✅ Shipping | Direct API and spec-based commands |
 | CLI binary wrapping | ✅ Shipping | Process adapter (~90% of plugins) |

@@ -21,7 +21,7 @@ A comprehensive guide to all currently supported harnesses in supercli, includin
 | npm | `npm` | `supercli plugins install npm` |
 | Ollama | `ollama` | `supercli plugins install ollama` |
 
-Run `supercli plugins explore --name <tool>` for the full list of 5,000+ available plugins.
+Run `supercli plugins explore --name <tool>` for the full list of 6,000+ available plugins.
 
 ## Bundled Harnesses
 

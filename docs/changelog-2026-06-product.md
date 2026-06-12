@@ -4,7 +4,7 @@
       <span class="text-2xl">📦</span>
     </div>
     <div>
-      <h3 class="text-xl font-semibold text-white mb-2">5,066 Plugins — 19 New CLI Tools Added</h3>
+      <h3 class="text-xl font-semibold text-white mb-2">6,000 Plugins — 19 New CLI Tools Added</h3>
       <p class="text-slate-400 leading-relaxed">19 hand-curated CLI tools added across security, code intelligence, monitoring, databases, and DevOps. All verified against plugin criteria: no-auth, non-interactive, pipeline-ready with JSON output. Tools include abtop (agent monitoring), slowql (SQL static analysis with 272 rules), zagi (JSON git output), rulesync (agent context management), tokentap (LLM token proxy), and more.</p>
     </div>
   </div>
