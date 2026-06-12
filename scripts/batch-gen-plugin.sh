@@ -5,14 +5,23 @@
 set -e
 DATA_FILE="scripts/plugin-data.txt"
 BASE_DIR="plugins"
+CREATED=0
+SKIPPED=0
 
 while IFS='|' read -r name binary description tags install_cmd source has_learn cwd; do
   # Skip empty lines and comments
   [[ -z "$name" || "$name" == \#* ]] && continue
   
-  echo "Generating plugin: $name"
-  
   DIR="$BASE_DIR/$name"
+  
+  if [ -d "$DIR" ]; then
+    echo "  SKIPPED (already exists): $name"
+    SKIPPED=$((SKIPPED + 1))
+    continue
+  fi
+  
+  echo "  CREATING: $name"
+  CREATED=$((CREATED + 1))
   mkdir -p "$DIR/skills/quickstart"
   
   # Determine cwd config
@@ -93,4 +102,5 @@ SKILLEOF
 done < "$DATA_FILE"
 
 echo ""
-echo "Done generating all plugins!"
+echo "Created: $CREATED | Skipped (already exist): $SKIPPED"
+echo "Done!"
