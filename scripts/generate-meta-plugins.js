@@ -1,3 +1,15 @@
+/**
+ * Generates docs/meta-plugins.json from plugin metadata.
+ *
+ * This script scans the plugins/ directory for meta.json files and combines
+ * them with legacy entries from plugins/plugins.json to create a unified
+ * plugin metadata file for documentation purposes.
+ *
+ * Usage: node scripts/generate-meta-plugins.js
+ *
+ * @module generate-meta-plugins
+ */
+
 "use strict";
 
 const fs = require('fs');
@@ -7,6 +19,12 @@ const PLUGINS_DIR = path.join(__dirname, '..', 'plugins');
 const PLUGINS_JSON = path.join(PLUGINS_DIR, 'plugins.json');
 const OUTPUT_FILE = path.join(__dirname, '..', 'docs', 'meta-plugins.json');
 
+/**
+ * Read and parse a JSON file.
+ *
+ * @param {string} filePath - Absolute or relative path to the JSON file.
+ * @returns {Object|null} Parsed JSON object, or null if file doesn't exist or is invalid.
+ */
 function readJson(filePath) {
   try {
     return JSON.parse(fs.readFileSync(filePath, 'utf8'));
@@ -15,6 +33,16 @@ function readJson(filePath) {
   }
 }
 
+/**
+ * Extract plugin metadata from a plugin directory.
+ *
+ * Reads meta.json from the plugin directory and checks for the presence
+ * of a quickstart skill file to determine if the plugin has learn content.
+ *
+ * @param {string} pluginDir - Absolute path to the plugin directory.
+ * @returns {Object|null} Plugin metadata object with name, description, tags, and has_learn,
+ *   or null if meta.json doesn't exist.
+ */
 function getPluginMeta(pluginDir) {
   const metaPath = path.join(pluginDir, 'meta.json');
   const meta = readJson(metaPath);
@@ -31,6 +59,15 @@ function getPluginMeta(pluginDir) {
   };
 }
 
+/**
+ * Collect plugin metadata from legacy plugins.json entries.
+ *
+ * Reads plugins/plugins.json and extracts metadata for plugins that don't
+ * have a meta.json file (i.e., legacy plugins). Skips plugins that have
+ * been migrated to the new meta.json format.
+ *
+ * @returns {Array<Object>} Array of plugin metadata objects from legacy entries.
+ */
 function collectFromPluginsJson() {
   const data = readJson(PLUGINS_JSON);
   if (!data || !data.plugins) return [];
@@ -55,6 +92,18 @@ function collectFromPluginsJson() {
   }).filter(Boolean);
 }
 
+/**
+ * Main function to generate meta-plugins.json.
+ *
+ * Combines plugin metadata from meta.json files (new format) and plugins.json
+ * (legacy format), deduplicates by name, sorts alphabetically, and writes
+ * the unified output to docs/meta-plugins.json.
+ *
+ * Side effects:
+ * - Reads plugins/ directory and plugins/plugins.json.
+ * - Creates or overwrites docs/meta-plugins.json.
+ * - Logs progress to the console.
+ */
 function main() {
   const plugins = [];
   const seen = new Set();
