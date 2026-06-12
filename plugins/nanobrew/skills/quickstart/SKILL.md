@@ -1,17 +1,16 @@
 ---
 name: nanobrew
-description: Use this skill when the user wants to use the nanobrew command-line tool.
+description: Use this skill to manage macOS packages with a fast Zig-based package manager.
 ---
-
 # nanobrew Plugin
-
-Fastest macOS package manager in Zig
-
+Fast Zig-based macOS package manager.
 ## Commands
-- `nanobrew self version` — Print version
-- `nanobrew _ _` — Passthrough to nanobrew
-
+- `nanobrew _ _` — Passthrough to nanobrew CLI
 ## Installation
 ```bash
-brew install nanobrew
+git clone https://github.com/justrach/nanobrew && cd nanobrew && zig build
 ```
+## Key Features
+- **Fast** — Zig performance
+- **macOS** — Native package management
+- **Minimal** — Low overhead

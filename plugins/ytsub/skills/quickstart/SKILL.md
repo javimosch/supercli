@@ -1,0 +1,1 @@
+---\nname: ytsub\ndescription: Use this skill for ytsub operations.\n---\n# ytsub Plugin\nCLI tool for ytsub.\n## Commands\n- `ytsub _ _` — Passthrough\n## Installation\n```bash\ncargo install ytsub\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

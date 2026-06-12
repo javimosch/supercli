@@ -1,66 +1,60 @@
 ---
 name: qsv
-description: Use this skill when the user wants to process, analyze, filter, join, or transform CSV data files.
+description: Use this skill when the user wants to process, analyze, filter, join, or transform CSV data from the command line with high performance.
 ---
 
 # qsv Plugin
 
-Blazing-fast CSV data wrangling toolkit with 70+ commands for querying, sorting, analyzing, filtering, joining, and transforming tabular data.
+A fast CSV command line toolkit for slicing, dicing, analyzing, splitting, joining, indexing, and enriching CSV data. Supports JSON output and pipeline operations.
 
 ## Commands
-
-### Basic Operations
-- `qsv count <file>` — Count rows in CSV
-- `qsv stats <file>` — Compute column statistics
-- `qsv table <file>` — Format as aligned table
-
-### Data Manipulation
-- `qsv select <columns> <file>` — Select/reorder columns
-- `qsv sort <column> <file>` — Sort data
-- `qsv search <pattern> <file>` — Search with regex
-- `qsv sample <n> <file>` — Random sample
-
-### Advanced
-- `qsv join <key> <file1> <file2>` — Join two CSVs
-- `qsv frequency <file>` — Frequency distribution
-- `qsv luau <script> <file>` — Lua scripting
+- `qsv self version` — Print qsv version
+- `qsv _ _` — Passthrough to qsv CLI
 
 ## Usage Examples
-
-```bash
-# Count rows
-qsv count data.csv
-
-# Get statistics
-qsv stats data.csv --everything | qsv table
-
-# Select columns
-qsv select name,email,age users.csv
-
-# Search
-qsv search "gmail.com" emails.csv
-
-# Join
-qsv join user_id users.csv orders.csv
-
-# Sample
-qsv sample 100 data.csv
-```
+- "Analyze this CSV file"
+- "Filter CSV rows by condition"
+- "Join two CSV files on a column"
+- "Convert CSV to JSON output"
 
 ## Installation
 
 ```bash
-# Download binary
-curl -sSfL https://github.com/dathere/qsv/releases/latest/download/qsv-x86_64-unknown-linux-musl.tar.gz | tar -xzf - -C /usr/local/bin/
-
-# Or via cargo
 cargo install qsv
 ```
 
+Or via Homebrew:
+```bash
+brew install qsv
+```
+
+## Examples
+
+```bash
+# Analyze CSV structure
+qsv stats data.csv
+
+# Filter rows
+qsv search -s name "John" data.csv
+
+# Select columns
+qsv select name,age,email data.csv
+
+# Output as JSON
+qsv json data.csv
+
+# Join two CSV files
+qsv join id left.csv id right.csv
+
+# Sort and deduplicate
+qsv sort -s name data.csv | qsv dedup
+```
+
 ## Key Features
-- 70+ commands for data wrangling
-- 10-100x faster than Python tools
-- Streaming support for large files
-- SQL queries via `qsv sqlp`
-- Lua scripting via `qsv luau`
-- JSON, JSONL, Parquet support
+- **Fast CSV processing** — Written in Rust for maximum performance
+- **JSON output** — Convert CSV to JSON for pipeline integration
+- **Rich command set** — 40+ subcommands for data manipulation
+- **Pipeline-ready** — Works with standard Unix pipes
+- **Data validation** — Schema validation and quality checks
+- **Index creation** — Create indexes for faster queries
+- **Excel support** — Read/write XLSX files

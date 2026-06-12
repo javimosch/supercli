@@ -1,40 +1,16 @@
 ---
 name: hapless
-description: Use this skill when the user wants to run and manage background processes with process monitoring.
+description: Use this skill to run and manage background processes from the CLI.
 ---
-
-# Hapless Plugin
-
-Run and manage background processes with process monitoring.
-
+# hapless Plugin
+Lightweight background process manager.
 ## Commands
-
-### Operations
-- `hapless process start` — start process via hapless
-- `hapless process stop` — stop process via hapless
-- `hapless process list` — list process via hapless
-- `hapless process status` — status process via hapless
-- `hapless log show` — show log via hapless
-- `hapless config show` — show config via hapless
-- `hapless verbose set` — set verbose via hapless
-- `hapless help show` — show help via hapless
-
-## Usage Examples
-- "hapless --help"
-- "hapless <args>"
-
+- `hapless _ _` — Passthrough to hapless CLI
 ## Installation
-
 ```bash
-pip install hapless
+cargo install hapless
 ```
-
-## Examples
-
-```bash
-hapless --version
-hapless --help
-```
-
 ## Key Features
-- process\n- management\n- background
+- **Background processes** — Run and manage
+- **Lightweight** — Minimal overhead
+- **Pipeline-ready** — Automation support

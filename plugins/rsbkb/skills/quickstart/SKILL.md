@@ -1,0 +1,1 @@
+---\nname: rsbkb\ndescription: Use this skill for rsbkb operations.\n---\n# rsbkb Plugin\nCLI tool for rsbkb.\n## Commands\n- `rsbkb _ _` — Passthrough\n## Installation\n```bash\ncargo install rsbkb\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

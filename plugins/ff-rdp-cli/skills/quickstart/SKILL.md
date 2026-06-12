@@ -1,0 +1,1 @@
+---\nname: ff-rdp-cli\ndescription: Use this skill for ff-rdp-cli operations.\n---\n# ff-rdp-cli Plugin\nCLI tool for ff-rdp-cli.\n## Commands\n- `ff-rdp-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install ff-rdp-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

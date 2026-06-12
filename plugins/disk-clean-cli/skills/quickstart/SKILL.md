@@ -1,0 +1,1 @@
+---\nname: disk-clean-cli\ndescription: Use this skill for disk-clean-cli operations.\n---\n# disk-clean-cli Plugin\nCLI tool for disk-clean-cli.\n## Commands\n- `disk-clean-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install disk-clean-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF

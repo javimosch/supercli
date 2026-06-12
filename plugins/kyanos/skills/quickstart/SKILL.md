@@ -1,28 +1,17 @@
 ---
 name: kyanos
-description: Use this skill when the user wants to use kyanos for Kyanos is a networking analysis tool using eBPF. It can visualize the time packe.
+description: Use this skill for eBPF-based network tracing and issue analysis.
 ---
-
 # kyanos Plugin
-
-Kyanos is a networking analysis tool using eBPF. It can visualize the time packets spend in the kernel, capture requests/responses, makes troubleshooting more efficient.
-
+eBPF-based network analysis tool.
 ## Commands
-
-### General
-- `kyanos self version` — Print kyanos version
 - `kyanos _ _` — Passthrough to kyanos CLI
-
-## Usage Examples
-- "Run kyanos"
-- "Use kyanos to Kyanos is a networking analysis tool using eBPF. It can visu"
-
 ## Installation
-
 ```bash
-pip install kyanos
+cargo install kyanos
 ```
-
 ## Key Features
-- Kyanos is a networking analysis tool using eBPF. It can visualize the time packets spend in the kern
-- CLI tool, headless and scriptable
+- **eBPF-powered** — Kernel-level tracing
+- **Network analysis** — Issue diagnostics
+- **Structured output** — Pipeline integration
+- **Fast** — Rust performance

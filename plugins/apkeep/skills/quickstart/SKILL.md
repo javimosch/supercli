@@ -1,0 +1,1 @@
+---\nname: apkeep\ndescription: Use this skill for apkeep operations.\n---\n# apkeep Plugin\nCLI tool for apkeep.\n## Commands\n- `apkeep _ _` — Passthrough\n## Installation\n```bash\ncargo install apkeep\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

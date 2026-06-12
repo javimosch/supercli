@@ -1,0 +1,1 @@
+---\nname: imdb-id\ndescription: Use this skill for imdb-id operations.\n---\n# imdb-id Plugin\nCLI tool for imdb-id.\n## Commands\n- `imdb-id _ _` — Passthrough\n## Installation\n```bash\ncargo install imdb-id\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

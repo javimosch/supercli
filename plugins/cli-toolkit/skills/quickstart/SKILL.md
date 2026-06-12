@@ -1,0 +1,1 @@
+---\nname: cli-toolkit\ndescription: Essential CLI utilities for developers.\n---\n# cli-toolkit Plugin\nCollection of essential CLI utilities.\n## Commands\n- `cli-toolkit _ _` — Passthrough\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF

@@ -1,0 +1,1 @@
+---\nname: remindee-bot\ndescription: Use this skill for remindee-bot operations.\n---\n# remindee-bot Plugin\nCLI tool for remindee-bot.\n## Commands\n- `remindee-bot _ _` — Passthrough\n## Installation\n```bash\ncargo install remindee-bot\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

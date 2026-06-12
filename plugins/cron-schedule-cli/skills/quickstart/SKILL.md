@@ -1,0 +1,1 @@
+---\nname: cron-schedule-cli\ndescription: Use this skill for cron-schedule-cli operations.\n---\n# cron-schedule-cli Plugin\nCLI tool for cron-schedule-cli.\n## Commands\n- `cron-schedule-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install cron-schedule-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF

@@ -1,0 +1,1 @@
+---\nname: vrc-get\ndescription: Use this skill for vrc-get operations.\n---\n# vrc-get Plugin\nCLI tool for vrc-get.\n## Commands\n- `vrc-get _ _` — Passthrough\n## Installation\n```bash\ncargo install vrc-get\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

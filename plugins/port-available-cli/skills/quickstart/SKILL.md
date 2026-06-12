@@ -1,0 +1,1 @@
+---\nname: port-available-cli\ndescription: Use this skill for port-available-cli operations.\n---\n# port-available-cli Plugin\nCLI tool for port-available-cli.\n## Commands\n- `port-available-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install port-available-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF

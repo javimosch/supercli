@@ -1,0 +1,1 @@
+---\nname: petname\ndescription: Use this skill for petname operations.\n---\n# petname Plugin\nCLI tool for petname.\n## Commands\n- `petname _ _` — Passthrough\n## Installation\n```bash\ncargo install petname\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

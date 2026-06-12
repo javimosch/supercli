@@ -1,0 +1,1 @@
+---\nname: adler-cli\ndescription: Use this skill for adler-cli operations.\n---\n# adler-cli Plugin\nCLI tool for adler-cli.\n## Commands\n- `adler-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install adler-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

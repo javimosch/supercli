@@ -1,0 +1,1 @@
+---\nname: topnfiles\ndescription: Use this skill for topnfiles operations.\n---\n# topnfiles Plugin\nCLI tool for topnfiles.\n## Commands\n- `topnfiles _ _` — Passthrough\n## Installation\n```bash\ncargo install topnfiles\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

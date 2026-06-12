@@ -1,0 +1,1 @@
+---\nname: hprof-slurp\ndescription: Use this skill for hprof-slurp operations.\n---\n# hprof-slurp Plugin\nCLI tool for hprof-slurp.\n## Commands\n- `hprof-slurp _ _` — Passthrough\n## Installation\n```bash\ncargo install hprof-slurp\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

@@ -1,0 +1,1 @@
+---\nname: names\ndescription: Use this skill for names operations.\n---\n# names Plugin\nCLI tool for names.\n## Commands\n- `names _ _` — Passthrough\n## Installation\n```bash\ncargo install names\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

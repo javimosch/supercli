@@ -1,0 +1,1 @@
+---\nname: husky-rs\ndescription: Use this skill for husky-rs operations.\n---\n# husky-rs Plugin\nCLI tool for husky-rs.\n## Commands\n- `husky-rs _ _` — Passthrough\n## Installation\n```bash\ncargo install husky-rs\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

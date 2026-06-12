@@ -1,0 +1,1 @@
+---\nname: feroxbuster\ndescription: Use this skill for feroxbuster operations.\n---\n# feroxbuster Plugin\nCLI tool for feroxbuster.\n## Commands\n- `feroxbuster _ _` — Passthrough\n## Installation\n```bash\ncargo install feroxbuster\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

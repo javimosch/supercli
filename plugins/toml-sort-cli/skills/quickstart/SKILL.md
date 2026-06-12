@@ -1,0 +1,1 @@
+---\nname: toml-sort-cli\ndescription: Use this skill for toml-sort-cli operations.\n---\n# toml-sort-cli Plugin\nCLI tool for toml-sort-cli.\n## Commands\n- `toml-sort-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install toml-sort-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF

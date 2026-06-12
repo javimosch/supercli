@@ -1,0 +1,1 @@
+---\nname: qft\ndescription: Use this skill for qft operations.\n---\n# qft Plugin\nCLI tool for qft.\n## Commands\n- `qft _ _` — Passthrough\n## Installation\n```bash\ncargo install qft\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

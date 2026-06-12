@@ -1,0 +1,1 @@
+---\nname: hextazy\ndescription: Use this skill for hextazy operations.\n---\n# hextazy Plugin\nCLI tool for hextazy.\n## Commands\n- `hextazy _ _` — Passthrough\n## Installation\n```bash\ncargo install hextazy\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF

@@ -1,32 +1,16 @@
 ---
 name: zli
-description: Use this skill when the user wants to Build ergonomic CLI tools in Zig.
+description: Use this skill to build fast, ergonomic CLI tools with the Zig zli framework.
 ---
-
 # zli Plugin
-
-Build ergonomic CLI tools in Zig
-
+High-performance Zig CLI framework.
 ## Commands
-
-### Version
-`zli self version` — Print zli version
-
-### Passthrough
-`zli _ _` — Passthrough to zli CLI with all arguments forwarded.
-
-## Usage Examples
-
-```bash
-zli --version
-zli --help
-```
-
+- `zli _ _` — Passthrough to zli CLI
 ## Installation
-
 ```bash
-cargo install zli
+git clone https://github.com/xcaeser/zli && cd zli && zig build
 ```
-
 ## Key Features
-- Build ergonomic CLI tools in Zig
+- **Cobra-like** — Familiar API
+- **Zero-cost** — No runtime overhead
+- **Fast** — Zig performance

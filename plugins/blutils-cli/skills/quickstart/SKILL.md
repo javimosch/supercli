@@ -1,0 +1,1 @@
+---\nname: blutils-cli\ndescription: Use this skill for blutils-cli operations.\n---\n# blutils-cli Plugin\nCLI tool for blutils-cli.\n## Commands\n- `blutils-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install blutils-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
