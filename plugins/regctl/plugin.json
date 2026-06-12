@@ -1,122 +1,26 @@
 {
   "name": "regctl",
   "version": "0.1.0",
-  "description": "regctl — OCI/Docker registry client for inspecting, copying, and managing container images",
+  "description": "Docker registry client for managing container images",
   "source": "https://github.com/regclient/regclient",
-  "checks": [
-    { "type": "binary", "name": "regctl" }
-  ],
+  "checks": [{ "type": "binary", "name": "regctl" }],
   "install_guidance": {
     "plugin": "regctl",
     "binary": "regctl",
     "check": "which regctl",
-    "install_steps": [
-      "brew install regctl",
-      "Verify: regctl version",
-      "supercli plugins install ./plugins/regctl --on-conflict replace --json"
-    ]
+    "install_steps": ["brew install regctl", "Verify: regctl --version", "supercli plugins install ./plugins/regctl --on-conflict replace --json"]
   },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
-  },
-  "commands": [
-    {
-      "namespace": "regctl",
-      "resource": "self",
-      "action": "version",
-      "description": "Print regctl version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "regctl",
-        "baseArgs": ["version"],
-        "missingDependencyHelp": "Install regctl: brew install regctl"
-      },
-      "args": []
+  "commands": [{
+    "namespace": "regctl",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to regctl CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "regctl",
+      "passthrough": true,
+      "missingDependencyHelp": "Install regctl: brew install regctl"
     },
-    {
-      "namespace": "regctl",
-      "resource": "image",
-      "action": "inspect",
-      "description": "Inspect container image manifest",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "regctl",
-        "baseArgs": ["image", "inspect"],
-        "positionalArgs": ["image"],
-        "passthrough": true,
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install regctl"
-      },
-      "args": [
-        { "name": "image", "type": "string", "required": true, "description": "Image reference (e.g., alpine:latest)" }
-      ]
-    },
-    {
-      "namespace": "regctl",
-      "resource": "image",
-      "action": "copy",
-      "description": "Copy container image between registries",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "regctl",
-        "baseArgs": ["image", "copy"],
-        "positionalArgs": ["src", "dest"],
-        "passthrough": true,
-        "timeout_ms": 120000,
-        "missingDependencyHelp": "Install regctl"
-      },
-      "args": [
-        { "name": "src", "type": "string", "required": true, "description": "Source image reference" },
-        { "name": "dest", "type": "string", "required": true, "description": "Destination image reference" }
-      ]
-    },
-    {
-      "namespace": "regctl",
-      "resource": "image",
-      "action": "digest",
-      "description": "Get image digest",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "regctl",
-        "baseArgs": ["image", "digest"],
-        "positionalArgs": ["image"],
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install regctl"
-      },
-      "args": [
-        { "name": "image", "type": "string", "required": true, "description": "Image reference" }
-      ]
-    },
-    {
-      "namespace": "regctl",
-      "resource": "tag",
-      "action": "list",
-      "description": "List tags for a repository",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "regctl",
-        "baseArgs": ["tag", "list"],
-        "positionalArgs": ["repo"],
-        "passthrough": true,
-        "timeout_ms": 30000,
-        "missingDependencyHelp": "Install regctl"
-      },
-      "args": [
-        { "name": "repo", "type": "string", "required": true, "description": "Repository reference" }
-      ]
-    },
-    {
-      "namespace": "regctl",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to regctl CLI",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "regctl",
-        "passthrough": true,
-        "missingDependencyHelp": "Install regctl"
-      },
-      "args": []
-    }
-  ]
+    "args": []
+  }]
 }

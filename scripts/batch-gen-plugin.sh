@@ -1,0 +1,96 @@
+#!/bin/bash
+# Usage: bash scripts/batch-gen-plugin.sh
+# Reads tools from scripts/plugin-data.txt and generates plugin files
+
+set -e
+DATA_FILE="scripts/plugin-data.txt"
+BASE_DIR="plugins"
+
+while IFS='|' read -r name binary description tags install_cmd source has_learn cwd; do
+  # Skip empty lines and comments
+  [[ -z "$name" || "$name" == \#* ]] && continue
+  
+  echo "Generating plugin: $name"
+  
+  DIR="$BASE_DIR/$name"
+  mkdir -p "$DIR/skills/quickstart"
+  
+  # Determine cwd config
+  CWD_JSON=""
+  if [ "$cwd" = "invoke_cwd" ]; then
+    CWD_JSON=', "cwd": "invoke_cwd"'
+  fi
+  
+  # plugin.json
+  cat > "$DIR/plugin.json" << PLUGINEOF
+{
+  "name": "$name",
+  "version": "0.1.0",
+  "description": "$description",
+  "source": "$source",
+  "checks": [{ "type": "binary", "name": "$binary" }],
+  "install_guidance": {
+    "plugin": "$name",
+    "binary": "$binary",
+    "check": "which $binary",
+    "install_steps": ["$install_cmd", "Verify: $binary --version", "supercli plugins install ./plugins/$name --on-conflict replace --json"]
+  },
+  "commands": [{
+    "namespace": "$name",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to $binary CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "$binary",
+      "passthrough": true,
+      "missingDependencyHelp": "Install $name: $install_cmd"$CWD_JSON
+    },
+    "args": []
+  }]
+}
+PLUGINEOF
+
+  # meta.json
+  cat > "$DIR/meta.json" << METAEOF
+{
+  "description": "$description",
+  "tags": [$tags],
+  "has_learn": $has_learn
+}
+METAEOF
+
+  # install-guidance.json
+  cat > "$DIR/install-guidance.json" << GUIDANCEEOF
+{
+  "plugin": "$name",
+  "binary": "$binary",
+  "check": "which $binary",
+  "install_steps": ["$install_cmd", "Verify: $binary --version", "supercli plugins install ./plugins/$name --on-conflict replace --json"]
+}
+GUIDANCEEOF
+
+  # SKILL.md only if has_learn is true
+  if [ "$has_learn" = "true" ]; then
+    cat > "$DIR/skills/quickstart/SKILL.md" << SKILLEOF
+---
+name: $name
+description: $description
+---
+# $name Plugin
+$description
+
+## Usage
+- \`$name _ _ <args>\` — Run $binary with any arguments
+SKILLEOF
+  fi
+
+  # Validate JSON
+  node -e "JSON.parse(require('fs').readFileSync('$DIR/plugin.json'));" 2>/dev/null || echo "  WARNING: plugin.json invalid!"
+  node -e "JSON.parse(require('fs').readFileSync('$DIR/meta.json'));" 2>/dev/null || echo "  WARNING: meta.json invalid!"
+  node -e "JSON.parse(require('fs').readFileSync('$DIR/install-guidance.json'));" 2>/dev/null || echo "  WARNING: install-guidance.json invalid!"
+
+done < "$DATA_FILE"
+
+echo ""
+echo "Done generating all plugins!"

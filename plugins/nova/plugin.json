@@ -1,86 +1,26 @@
 {
   "name": "nova",
   "version": "0.1.0",
-  "description": "Finds outdated Helm charts running in a cluster",
+  "description": "Find outdated Helm charts running in your cluster",
   "source": "https://github.com/FairwindsOps/nova",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "nova"
-    }
-  ],
+  "checks": [{ "type": "binary", "name": "nova" }],
   "install_guidance": {
     "plugin": "nova",
     "binary": "nova",
     "check": "which nova",
-    "install_steps": [
-      "brew install FairwindsOps/tap/nova",
-      "Verify: nova --version",
-      "supercli plugins install ./plugins/nova --on-conflict replace --json"
-    ]
+    "install_steps": ["brew install nova", "Verify: nova --version", "supercli plugins install ./plugins/nova --on-conflict replace --json"]
   },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
-  },
-  "commands": [
-    {
-      "namespace": "nova",
-      "resource": "self",
-      "action": "version",
-      "description": "Print nova version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "nova",
-        "missingDependencyHelp": "Install nova: brew install FairwindsOps/tap/nova",
-        "baseArgs": [
-          "--version"
-        ]
-      },
-      "args": []
+  "commands": [{
+    "namespace": "nova",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to nova CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "nova",
+      "passthrough": true,
+      "missingDependencyHelp": "Install nova: brew install nova"
     },
-    {
-      "namespace": "nova",
-      "resource": "charts",
-      "action": "find",
-      "description": "find charts via nova",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "nova",
-        "missingDependencyHelp": "Install nova: brew install FairwindsOps/tap/nova",
-        "baseArgs": [
-          "find"
-        ],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "nova",
-      "resource": "_",
-      "action": "_",
-      "description": "_ _ via nova",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "nova",
-        "missingDependencyHelp": "Install nova: brew install FairwindsOps/tap/nova",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    }
-  ]
+    "args": []
+  }]
 }

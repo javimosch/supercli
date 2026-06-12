@@ -1,53 +1,26 @@
 {
   "name": "tfsec",
   "version": "0.1.0",
-  "description": "Terraform security scanner with JSON output",
+  "description": "Security scanner for Terraform code",
   "source": "https://github.com/aquasecurity/tfsec",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "tfsec"
-    }
-  ],
+  "checks": [{ "type": "binary", "name": "tfsec" }],
   "install_guidance": {
     "plugin": "tfsec",
     "binary": "tfsec",
     "check": "which tfsec",
-    "install_steps": [
-      "brew install tfsec",
-      "Verify: tfsec --version",
-      "supercli plugins install ./plugins/tfsec --on-conflict replace --json"
-    ]
+    "install_steps": ["brew install tfsec", "Verify: tfsec --version", "supercli plugins install ./plugins/tfsec --on-conflict replace --json"]
   },
-  "commands": [
-    {
-      "namespace": "tfsec",
-      "resource": "self",
-      "action": "version",
-      "description": "Print tfsec version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tfsec",
-        "baseArgs": [
-          "--version"
-        ],
-        "missingDependencyHelp": "Install tfsec: brew install tfsec"
-      },
-      "args": []
+  "commands": [{
+    "namespace": "tfsec",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to tfsec CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "tfsec",
+      "passthrough": true,
+      "missingDependencyHelp": "Install tfsec: brew install tfsec"
     },
-    {
-      "namespace": "tfsec",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to tfsec CLI",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tfsec",
-        "passthrough": true,
-        "cwd": "invoke_cwd",
-        "missingDependencyHelp": "Install tfsec: brew install tfsec"
-      },
-      "args": []
-    }
-  ]
+    "args": []
+  }]
 }

@@ -1,53 +1,26 @@
 {
   "name": "checkov",
   "version": "0.1.0",
-  "description": "Infrastructure as Code security scanner",
+  "description": "Static code analysis for IaC misconfigurations and security",
   "source": "https://github.com/bridgecrewio/checkov",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "checkov"
-    }
-  ],
+  "checks": [{ "type": "binary", "name": "checkov" }],
   "install_guidance": {
     "plugin": "checkov",
     "binary": "checkov",
     "check": "which checkov",
-    "install_steps": [
-      "pip install checkov",
-      "Verify: checkov --version",
-      "supercli plugins install ./plugins/checkov --on-conflict replace --json"
-    ]
+    "install_steps": ["pip install checkov", "Verify: checkov --version", "supercli plugins install ./plugins/checkov --on-conflict replace --json"]
   },
-  "commands": [
-    {
-      "namespace": "checkov",
-      "resource": "self",
-      "action": "version",
-      "description": "Print checkov version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "checkov",
-        "baseArgs": [
-          "--version"
-        ],
-        "missingDependencyHelp": "Install checkov: pip install checkov"
-      },
-      "args": []
+  "commands": [{
+    "namespace": "checkov",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to checkov CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "checkov",
+      "passthrough": true,
+      "missingDependencyHelp": "Install checkov: pip install checkov"
     },
-    {
-      "namespace": "checkov",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to checkov CLI",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "checkov",
-        "passthrough": true,
-        "cwd": "invoke_cwd",
-        "missingDependencyHelp": "Install checkov: pip install checkov"
-      },
-      "args": []
-    }
-  ]
+    "args": []
+  }]
 }

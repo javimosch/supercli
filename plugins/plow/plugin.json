@@ -1,84 +1,26 @@
 {
   "name": "plow",
   "version": "0.1.0",
-  "description": "High-performance HTTP benchmarking tool",
+  "description": "High-performance HTTP benchmarking tool with real-time UI",
   "source": "https://github.com/six-ddc/plow",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "plow"
-    }
-  ],
+  "checks": [{ "type": "binary", "name": "plow" }],
   "install_guidance": {
     "plugin": "plow",
     "binary": "plow",
     "check": "which plow",
-    "install_steps": [
-      "brew install plow",
-      "Verify: plow --version",
-      "supercli plugins install ./plugins/plow --on-conflict replace --json"
-    ]
+    "install_steps": ["go install github.com/six-ddc/plow@latest", "Verify: plow --version", "supercli plugins install ./plugins/plow --on-conflict replace --json"]
   },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
-  },
-  "commands": [
-    {
-      "namespace": "plow",
-      "resource": "self",
-      "action": "version",
-      "description": "Print plow version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "plow",
-        "missingDependencyHelp": "Install plow: brew install plow",
-        "baseArgs": [
-          "--version"
-        ]
-      },
-      "args": []
+  "commands": [{
+    "namespace": "plow",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to plow CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "plow",
+      "passthrough": true,
+      "missingDependencyHelp": "Install plow: go install github.com/six-ddc/plow@latest"
     },
-    {
-      "namespace": "plow",
-      "resource": "endpoint",
-      "action": "test",
-      "description": "test endpoint via plow",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "plow",
-        "missingDependencyHelp": "Install plow: brew install plow",
-        "baseArgs": [],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "plow",
-      "resource": "_",
-      "action": "_",
-      "description": "_ _ via plow",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "plow",
-        "missingDependencyHelp": "Install plow: brew install plow",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    }
-  ]
+    "args": []
+  }]
 }

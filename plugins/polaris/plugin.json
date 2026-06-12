@@ -1,53 +1,26 @@
 {
   "name": "polaris",
   "version": "0.1.0",
-  "description": "Kubernetes config validator with audit path",
+  "description": "Kubernetes best practice and policy validation tool",
   "source": "https://github.com/FairwindsOps/polaris",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "polaris"
-    }
-  ],
+  "checks": [{ "type": "binary", "name": "polaris" }],
   "install_guidance": {
     "plugin": "polaris",
     "binary": "polaris",
     "check": "which polaris",
-    "install_steps": [
-      "curl -sfL https://raw.githubusercontent.com/FairwindsOps/polaris/main/install.sh | sh",
-      "Verify: polaris --version",
-      "supercli plugins install ./plugins/polaris --on-conflict replace --json"
-    ]
+    "install_steps": ["brew install polaris", "Verify: polaris --version", "supercli plugins install ./plugins/polaris --on-conflict replace --json"]
   },
-  "commands": [
-    {
-      "namespace": "polaris",
-      "resource": "self",
-      "action": "version",
-      "description": "Print polaris version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "polaris",
-        "baseArgs": [
-          "--version"
-        ],
-        "missingDependencyHelp": "Install polaris: curl -sfL https://raw.githubusercontent.com/FairwindsOps/polaris/main/install.sh | sh"
-      },
-      "args": []
+  "commands": [{
+    "namespace": "polaris",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to polaris CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "polaris",
+      "passthrough": true,
+      "missingDependencyHelp": "Install polaris: brew install polaris"
     },
-    {
-      "namespace": "polaris",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to polaris CLI",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "polaris",
-        "passthrough": true,
-        "cwd": "invoke_cwd",
-        "missingDependencyHelp": "Install polaris: curl -sfL https://raw.githubusercontent.com/FairwindsOps/polaris/main/install.sh | sh"
-      },
-      "args": []
-    }
-  ]
+    "args": []
+  }]
 }

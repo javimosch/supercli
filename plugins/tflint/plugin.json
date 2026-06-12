@@ -1,170 +1,26 @@
 {
   "name": "tflint",
   "version": "0.1.0",
-  "description": "A pluggable Terraform linter for detecting errors, warnings, and enforcing best practices with JSON output",
+  "description": "Pluggable Terraform linter with deep checking capabilities",
   "source": "https://github.com/terraform-linters/tflint",
-  "checks": [
-    {
-      "type": "binary",
-      "name": "tflint"
-    }
-  ],
+  "checks": [{ "type": "binary", "name": "tflint" }],
   "install_guidance": {
     "plugin": "tflint",
     "binary": "tflint",
     "check": "which tflint",
-    "install_steps": [
-      "brew install tflint",
-      "Or: curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash",
-      "Or download from https://github.com/terraform-linters/tflint/releases",
-      "Verify: tflint --version",
-      "supercli plugins install ./plugins/tflint --on-conflict replace --json"
-    ],
-    "note": "Available via Homebrew, direct binary download, and package managers. Source: https://github.com/terraform-linters/tflint (5.7k+ stars). Written in Go."
+    "install_steps": ["brew install tflint", "Verify: tflint --version", "supercli plugins install ./plugins/tflint --on-conflict replace --json"]
   },
-  "commands": [
-    {
-      "namespace": "tflint",
-      "resource": "lint",
-      "action": "run",
-      "description": "Lint Terraform files in a directory",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tflint",
-        "missingDependencyHelp": "Install tflint: brew install tflint",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "dir",
-          "type": "string",
-          "required": false,
-          "description": "Directory to lint (default: current directory)"
-        },
-        {
-          "name": "format",
-          "type": "string",
-          "required": false,
-          "description": "Output format: default, json, checkstyle, junit, sarif"
-        },
-        {
-          "name": "config",
-          "type": "string",
-          "required": false,
-          "description": "Config file path"
-        },
-        {
-          "name": "chdir",
-          "type": "string",
-          "required": false,
-          "description": "Switch to a different working directory"
-        },
-        {
-          "name": "recursive",
-          "type": "boolean",
-          "required": false,
-          "description": "Lint subdirectories recursively"
-        },
-        {
-          "name": "filter",
-          "type": "string",
-          "required": false,
-          "description": "File filter pattern"
-        },
-        {
-          "name": "ignore-module",
-          "type": "string",
-          "required": false,
-          "description": "Ignore module sources"
-        },
-        {
-          "name": "minimum-failure-severity",
-          "type": "string",
-          "required": false,
-          "description": "Minimum severity to fail: error, warning, notice"
-        },
-        {
-          "name": "action",
-          "type": "boolean",
-          "required": false,
-          "description": "Enable actions (automatic fixes)"
-        },
-        {
-          "name": "force",
-          "type": "boolean",
-          "required": false,
-          "description": "Return zero exit status even if issues found"
-        }
-      ]
+  "commands": [{
+    "namespace": "tflint",
+    "resource": "_",
+    "action": "_",
+    "description": "Passthrough to tflint CLI",
+    "adapter": "process",
+    "adapterConfig": {
+      "command": "tflint",
+      "passthrough": true,
+      "missingDependencyHelp": "Install tflint: brew install tflint"
     },
-    {
-      "namespace": "tflint",
-      "resource": "plugin",
-      "action": "list",
-      "description": "List installed plugins",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tflint",
-        "baseArgs": ["--plugin"],
-        "missingDependencyHelp": "Install tflint: brew install tflint",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "format",
-          "type": "string",
-          "required": false,
-          "description": "Output format: default, json"
-        }
-      ]
-    },
-    {
-      "namespace": "tflint",
-      "resource": "init",
-      "action": "run",
-      "description": "Initialize tflint and install plugins",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tflint",
-        "baseArgs": ["--init"],
-        "missingDependencyHelp": "Install tflint: brew install tflint",
-        "passthrough": true
-      },
-      "args": [
-        {
-          "name": "config",
-          "type": "string",
-          "required": false,
-          "description": "Config file path"
-        }
-      ]
-    },
-    {
-      "namespace": "tflint",
-      "resource": "self",
-      "action": "version",
-      "description": "Print tflint version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tflint",
-        "missingDependencyHelp": "Install tflint: brew install tflint",
-        "baseArgs": ["--version"]
-      },
-      "args": []
-    },
-    {
-      "namespace": "tflint",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to tflint CLI",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "tflint",
-        "missingDependencyHelp": "Install tflint: brew install tflint",
-        "cwd": "invoke_cwd",
-        "passthrough": true
-      },
-      "args": []
-    }
-  ]
+    "args": []
+  }]
 }
