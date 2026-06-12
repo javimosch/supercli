@@ -1,0 +1,50 @@
+{
+  "name": "abtop",
+  "version": "0.1.0",
+  "description": "Agent Monitor",
+  "source": "https://github.com/graykode/abtop",
+  "checks": [
+    { "type": "binary", "name": "abtop" }
+  ],
+  "install_guidance": {
+    "plugin": "abtop",
+    "binary": "abtop",
+    "check": "which abtop",
+    "install_steps": [
+      "cargo install abtop",
+      "Verify: abtop --version",
+      "supercli plugins install ./plugins/abtop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "abtop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print abtop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "abtop",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install abtop: cargo install abtop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "abtop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to abtop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "abtop",
+        "passthrough": true,
+        "missingDependencyHelp": "Install abtop"
+      },
+      "args": []
+    }
+  ]
+}
