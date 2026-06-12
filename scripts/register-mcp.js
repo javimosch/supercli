@@ -42,6 +42,9 @@ const serverConfig = {
   description,
 };
 
+/**
+ * Ensure the supercli config directory exists.
+ */
 fs.mkdirSync(configDir, { recursive: true });
 
 /**
@@ -69,5 +72,8 @@ if (idx >= 0) {
   console.log(`Added ${name} MCP server config`);
 }
 
+/**
+ * Write the updated MCP configuration back to the file.
+ */
 fs.writeFileSync(mcpFile, JSON.stringify(existing, null, 2));
 console.log(`MCP config written to ${mcpFile}`);
