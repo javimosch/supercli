@@ -16,7 +16,9 @@
  *
  * Outputs a CSV file to /tmp/plugin-scores-v2.csv with detailed analysis.
  *
- * Usage: node scripts/analyze-plugins.js
+ * @module analyze-plugins
+ * @example
+ * node scripts/analyze-plugins.js
  */
 const f=require('fs'),p=require('path'),b=p.join(__dirname,'..','plugins');
 const plugins=f.readdirSync(b).filter(x=>!x.startsWith('.'));
