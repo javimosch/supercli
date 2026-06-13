@@ -1,3 +1,5 @@
+"use strict";
+
 const { discoverMcpTools, normalizeTools } = require("./mcp-discovery");
 const { diagnoseMcpServer } = require("./mcp-diagnostics");
 const {
