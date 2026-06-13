@@ -1,3 +1,5 @@
+"use strict";
+
 // config.js — Router re-exporting config sub-modules
 const core = require("./config-core");
 const mcp = require("./config-mcp");

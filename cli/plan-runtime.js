@@ -1,3 +1,5 @@
+"use strict";
+
 const { createPlan } = require("./planner")
 
 function buildLocalPlan(cmd, args) {
