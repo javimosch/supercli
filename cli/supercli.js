@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-"use strict"
+"use strict";
 
 require("dotenv").config({ quiet: true });
 const { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers, upsertCommand, getClientId } = require("./config");
