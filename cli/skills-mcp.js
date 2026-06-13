@@ -1,3 +1,5 @@
+"use strict";
+
 function buildMcpServersUsageSkillMarkdown(options = {}) {
   const {
     showDag = false,
