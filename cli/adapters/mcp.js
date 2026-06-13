@@ -1,3 +1,5 @@
+"use strict";
+
 // MCP Adapter
 // Supports HTTP MCP endpoints and local stdio MCP commands.
 // Stateful MCP servers are routed through the MCP daemon.
