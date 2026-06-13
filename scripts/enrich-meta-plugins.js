@@ -68,6 +68,14 @@ function parseCSV(filePath) {
  * - Logs progress messages to the console.
  */
 function enrichMetaPlugins() {
+  if (!fs.existsSync(SCORES_CSV)) {
+    console.error(`Error: ${SCORES_CSV} not found. Run analyze-plugins.js first to generate it.`);
+    process.exit(1);
+  }
+  if (!fs.existsSync(META_PLUGINS)) {
+    console.error(`Error: ${META_PLUGINS} not found. Run generate-meta-plugins.js first to generate it.`);
+    process.exit(1);
+  }
   const scores = parseCSV(SCORES_CSV);
   const metaPlugins = JSON.parse(fs.readFileSync(META_PLUGINS, 'utf8'));
   
