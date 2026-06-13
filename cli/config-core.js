@@ -16,7 +16,7 @@ function getClientId() {
     return String(process.env.SUPERCLI_CLIENT_ID).trim();
   }
   const pieces = [os.hostname(), os.type(), os.release(), os.arch(), os.userInfo().username];
-  return crypto.createHash('sha256').update(pieces.join('|')).digest('hex');
+  return crypto.createHash("sha256").update(pieces.join("|")).digest("hex");
 }
 
 function ensureCacheDir() {
