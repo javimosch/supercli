@@ -1,3 +1,5 @@
+"use strict";
+
 const { getSettings } = require("../services/pluginsService");
 
 // Cache settings for 30 seconds to avoid repeated storage reads
