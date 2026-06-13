@@ -21,9 +21,26 @@
  * node scripts/analyze-plugins.js
  */
 const f=require('fs'),p=require('path'),b=p.join(__dirname,'..','plugins');
+
+/**
+ * Read all plugin directories from the plugins folder.
+ *
+ * Filters out hidden directories (starting with '.') and returns
+ * the list of plugin names.
+ *
+ * @returns {Array<string>} Array of plugin directory names
+ */
 const plugins=f.readdirSync(b).filter(x=>!x.startsWith('.'));
 const results=[];
 
+/**
+ * Analyze each plugin and compute agent-friendly scores.
+ *
+ * For each plugin directory, reads plugin.json, meta.json, and
+ * install-guidance.json, then analyzes criteria like language,
+ * interactivity, auth requirements, and complexity to compute
+ * a score for agent usability.
+ */
 for(const name of plugins){
   const dir=p.join(b,name);
   const pj=p.join(dir,'plugin.json');
@@ -89,7 +106,19 @@ for(const name of plugins){
   }
 }
 
-// Improved scoring - more balanced, not requiring ALL criteria
+/**
+ * Compute scores for each plugin based on agent-friendly criteria.
+ *
+ * Scoring criteria:
+ * - no_interactive: +3 (very important for agents)
+ * - go_rust_nodejs: +2 (preferred languages)
+ * - cli: +2 (must be a CLI)
+ * - tui: -3 (strong penalty for TUI)
+ * - auth_required: -1 (penalty but acceptable)
+ * - binary: +1 (bonus, not required)
+ * - json_support: +2 (bonus for agents)
+ * - complexity: low=+2, medium=+1, high=0
+ */
 results.forEach(r=>{
   let score=0;
   if(r.no_interactive==='yes') score+=3;  // Very important for agents
