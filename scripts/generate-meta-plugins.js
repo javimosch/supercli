@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+"use strict"
+
 /**
  * Generates docs/meta-plugins.json from plugin metadata.
  *
@@ -9,8 +12,6 @@
  *
  * @module generate-meta-plugins
  */
-
-"use strict";
 
 const fs = require('fs');
 const path = require('path');
