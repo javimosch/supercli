@@ -113,27 +113,28 @@ pub fn main(init: std.process.Init) !void {
     const act = if (pos.len > 2) pos[2] else "_";
 
     var passthrough_args: [][]const u8 = if (pos.len > 1) raw_argv[1..] else raw_argv[0..0];
-    _ = &passthrough_args;
+    _ = &passthrough_args;        // Exact ns.res.act match
+        if (config.findCommand(&lock, ns, res, act)) |cmd| {
+            const user_passthrough = std.mem.eql(u8, res, "_") and std.mem.eql(u8, act, "_");
+            const arg_defs = try executor.parseArgDefs(gpa, cmd.args_raw);
+            defer gpa.free(arg_defs);
 
-    // Exact ns.res.act match
-    if (config.findCommand(&lock, ns, res, act)) |cmd| {
-        const user_passthrough = std.mem.eql(u8, res, "_") and std.mem.eql(u8, act, "_");
-        const arg_defs = try executor.parseArgDefs(gpa, cmd.args_raw);
-        defer gpa.free(arg_defs);
+            var custom_bool_flags = std.StringHashMap(void).init(gpa);
+            defer custom_bool_flags.deinit();
+            for (arg_defs) |arg| {
+                if (arg.is_bool) try custom_bool_flags.put(arg.name, {});
+            }
 
-        var custom_bool_flags = std.StringHashMap(void).init(gpa);
-        defer custom_bool_flags.deinit();
-        for (arg_defs) |arg| {
-            if (arg.is_bool) try custom_bool_flags.put(arg.name, {});
+            var cmd_parsed = try args_mod.parseArgs(gpa, raw_argv, custom_bool_flags);
+            defer cmd_parsed.deinit();
+
+            // Strip the 3 routing args (ns, res, act) from passthrough so they
+            // don't get forwarded as literal arguments to the underlying CLI.
+            // e.g. "sc-zig petname alias generate --words 3" → passthrough args = ["--words", "3"]
+            const cmd_passthrough_args = if (cmd_parsed.positional.len > 3) raw_argv[3..] else raw_argv[0..0];
+            try execute.handleExecuteCommand(io, gpa, mode, cmd, cmd_parsed.flags, cmd_passthrough_args, user_passthrough);
+            return;
         }
-
-        var cmd_parsed = try args_mod.parseArgs(gpa, raw_argv, custom_bool_flags);
-        defer cmd_parsed.deinit();
-
-        const cmd_passthrough_args = if (cmd_parsed.positional.len > 1) raw_argv[1..] else raw_argv[0..0];
-        try execute.handleExecuteCommand(io, gpa, mode, cmd, cmd_parsed.flags, cmd_passthrough_args, user_passthrough);
-        return;
-    }
 
     // Passthrough command for namespace
     if (config.findPassthrough(&lock, ns)) |cmd| {
