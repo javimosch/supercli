@@ -5,6 +5,8 @@
  * Requires: server running on SUPERCLI_SERVER (default http://localhost:3000)
  */
 
+"use strict";
+
 const { execSync } = require("child_process");
 const fs = require("fs");
 const os = require("os");

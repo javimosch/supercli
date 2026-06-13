@@ -5,6 +5,8 @@
  * Requires: server running on SUPERCLI_SERVER
  */
 
+"use strict";
+
 const { execSync } = require("child_process");
 const path = require("path");
 
