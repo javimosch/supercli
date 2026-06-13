@@ -1,3 +1,5 @@
+"use strict";
+
 // MCP Daemon - Persistent process manager for stateful MCP servers
 // Listens on a Unix socket, maintains long-lived MCP server processes.
 
