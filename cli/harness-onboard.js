@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require("fs");
 const path = require("path");
 const { compileForHarness, getAllHarnesses, HARNESS_CONFIGS } = require("../skills/supercli/compile");
