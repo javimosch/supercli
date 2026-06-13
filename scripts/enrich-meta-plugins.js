@@ -1,3 +1,6 @@
+#!/usr/bin/env node
+"use strict"
+
 /**
  * Reads plugin-scores.csv and enriches docs/meta-plugins.json with score metadata.
  *
@@ -10,8 +13,6 @@
  *
  * @module enrich-meta-plugins
  */
-
-"use strict";
 
 const fs = require('fs');
 const path = require('path');
