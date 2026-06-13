@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+"use strict"
+
 /**
  * Register an MCP stdio server with supercli.
  *
@@ -10,7 +12,6 @@
  *
  * @module register-mcp
  */
-"use strict";
 
 const fs = require("fs");
 const path = require("path");
