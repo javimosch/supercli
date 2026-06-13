@@ -1,3 +1,5 @@
+"use strict";
+
 // HTTP Adapter
 // Raw HTTP calls based on adapterConfig: method, url, headers, body
 
