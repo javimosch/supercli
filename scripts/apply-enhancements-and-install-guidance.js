@@ -4,6 +4,8 @@
 /**
  * Apply description enhancements to actual plugin files and create
  * install-guidance.json for plugins that lack it.
+ *
+ * @module apply-enhancements-and-install-guidance
  */
 const { readFileSync, writeFileSync, existsSync, readdirSync, mkdirSync } = require("fs");
 const { join } = require("path");
