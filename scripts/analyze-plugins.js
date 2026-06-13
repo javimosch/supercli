@@ -20,7 +20,9 @@
  * @example
  * node scripts/analyze-plugins.js
  */
-const f=require('fs'),p=require('path'),b=p.join(__dirname,'..','plugins');
+const fs = require('fs');
+const path = require('path');
+const pluginsDir = path.join(__dirname, '..', 'plugins');
 
 /**
  * Read all plugin directories from the plugins folder.
@@ -30,7 +32,7 @@ const f=require('fs'),p=require('path'),b=p.join(__dirname,'..','plugins');
  *
  * @returns {Array<string>} Array of plugin directory names
  */
-const plugins=f.readdirSync(b).filter(x=>!x.startsWith('.'));
+const plugins = fs.readdirSync(pluginsDir).filter(x => !x.startsWith('.'));
 const results=[];
 
 /**
@@ -42,17 +44,17 @@ const results=[];
  * a score for agent usability.
  */
 for(const name of plugins){
-  const dir=p.join(b,name);
-  const pj=p.join(dir,'plugin.json');
-  const mj=p.join(dir,'meta.json');
-  const ij=p.join(dir,'install-guidance.json');
-  
-  if(!f.existsSync(pj)) continue;
-  
+  const dir = path.join(pluginsDir, name);
+  const pj = path.join(dir, 'plugin.json');
+  const mj = path.join(dir, 'meta.json');
+  const ij = path.join(dir, 'install-guidance.json');
+
+  if(!fs.existsSync(pj)) continue;
+
   try{
-    const plugin=JSON.parse(f.readFileSync(pj));
-    const meta=f.existsSync(mj)?JSON.parse(f.readFileSync(mj)):null;
-    const guide=f.existsSync(ij)?JSON.parse(f.readFileSync(ij)):null;
+    const plugin = JSON.parse(fs.readFileSync(pj));
+    const meta = fs.existsSync(mj) ? JSON.parse(fs.readFileSync(mj)) : null;
+    const guide = fs.existsSync(ij) ? JSON.parse(fs.readFileSync(ij)) : null;
     
     // Analyze criteria
     const source=plugin.source||'';
@@ -102,7 +104,7 @@ for(const name of plugins){
       install: install.substring(0,80)
     });
   }catch(e){
-    console.error('Error parsing',name,e.message);
+    console.error('Error parsing', name, e.message);
   }
 }
 
@@ -154,8 +156,8 @@ const csv=header+results.map(r=>[
   `"${r.install.replace(/"/g,'""')}"`
 ].join(',')).join('\n');
 
-f.writeFileSync('/tmp/plugin-scores-v2.csv',csv);
-console.log('Analyzed',results.length,'plugins');
+fs.writeFileSync('/tmp/plugin-scores-v2.csv', csv);
+console.log('Analyzed', results.length, 'plugins');
 console.log('CSV written to /tmp/plugin-scores-v2.csv');
 console.log('\nTop 50 plugins by score:');
 results.slice(0,50).forEach(r=>console.log(`${r.name}: ${r.score} (${r.language}, tui=${r.tui}, auth=${r.auth_required}, binary=${r.binary})`));
