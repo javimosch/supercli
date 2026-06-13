@@ -1,3 +1,5 @@
+"use strict";
+
 function buildCapabilities(config, hasServer) {
   const commands = {
     help: { description: "List namespaces and commands" },
