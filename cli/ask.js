@@ -1,3 +1,5 @@
+"use strict";
+
 async function localLLMCompletion(query, config, baseUrl, model, apiKey) {
   const namespaces = [...new Set(config.commands.map((c) => c.namespace))];
   const allDefs = [];
