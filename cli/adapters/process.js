@@ -1,3 +1,5 @@
+"use strict";
+
 const { spawn, spawnSync } = require("child_process")
 
 function toCliFlags(flags) {

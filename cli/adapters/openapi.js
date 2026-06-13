@@ -1,3 +1,5 @@
+"use strict";
+
 // OpenAPI Adapter
 // Fetches spec, resolves operation by operationId, builds URL, executes HTTP call
 
