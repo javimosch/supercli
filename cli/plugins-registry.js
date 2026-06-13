@@ -1,3 +1,5 @@
+"use strict";
+
 const fs = require("fs")
 const path = require("path")
 const { REMOTE_BUNDLED_DIR } = require("./plugins-store")
