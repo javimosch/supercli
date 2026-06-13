@@ -1,3 +1,5 @@
+"use strict";
+
 const { listRegistryPlugins } = require("./plugins-registry")
 const { listInstalledPlugins, getPluginInstallGuidance } = require("./plugins-manager")
 
