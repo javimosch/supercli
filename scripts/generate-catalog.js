@@ -8,6 +8,8 @@
  * plugin.json and meta.json, computes a short SHA256 checksum of their
  * combined content, and writes the result to plugins/catalog.json.
  * The checksum is used by the CLI to detect plugin updates.
+ *
+ * @module generate-catalog
  */
 
 const fs = require("fs")
