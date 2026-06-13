@@ -1,0 +1,126 @@
+== Architecture Context ==
+- no changes outside of the plugin folder
+
+- use supercli-add-with-search skill to discover and add new plugins
+- ensure plugins candidates are not existing plugins
+
+Available CLI tools: gh (GitHub), git, a2a (bus), bash, and standard Unix utilities. NOT available: webfetch, /root/candidates.json access.
+
+== Shared Memory (panel-backed, persistent across workers) ==
+AM_PANEL_URL and AM_AGENT_TOKEN are set in your environment.
+Define these functions in your shell before using memory:
+  mem_read()  { curl -sf "$AM_PANEL_URL/api/agent/memories?repo=f17c27&token=$AM_AGENT_TOKEN"; }
+  mem_save()  { curl -sf -X POST "$AM_PANEL_URL/api/agent/memories/f17c27?token=$AM_AGENT_TOKEN" \
+                     -H 'Content-Type: application/json' \
+                     -d "{\"content\":\"$1\",\"tag\":\"${2:-LESSON}\"}" > /dev/null && echo 'memory saved'; }
+Commands:
+  mem_read                              # read all memories for this repo (JSON)
+  mem_save "INVARIANT: ..." INVARIANT   # save memory with tag
+  mem_save "PATTERN: ..." PATTERN
+  mem_save "LESSON: ..."                # defaults to LESSON tag
+Tags: INVARIANT | PATTERN | LESSON | FIX | ARCHITECTURE
+
+Repo: https://github.com/javimosch/supercli
+
+A fresh git checkout is already prepared for you at:
+  /root/.automaintainer/work/am-f17c27-tgk761
+It sits on a dedicated branch (am/am-f17c27-tgk761) based on the latest origin/master.
+Do NOT clone the repo. cd into that directory and make all changes there.
+
+!!! CRITICAL: git commit BEFORE marking done !!!
+The automaintainer workflow is:
+  1. cd into the worktree directory above.
+  2. Make your changes.
+  3. git add + git commit with a clear message.
+  4. THEN mark yourself as done on the a2a bus.
+If you mark done without committing, your work is LOST — the worktree is cleaned up after the run.
+Do NOT push or open a PR — automaintainer does that after the run.
+
+== Recently merged work (do NOT repeat or re-review) ==
+  [2026-06-13] lint: add "use strict" to adapter files for consistency
+  [2026-06-13] lint: add "use strict" to skills-mcp.js for consistency
+  [2026-06-13] lint: add "use strict" to mcp-stdio-jsonrpc.js for consistency
+  [2026-06-13] fix: add error handling for missing input files in enrich-meta-plugins.js
+  [2026-06-13] lint: add "use strict" to mcp-discovery.js for consistency
+  [2026-06-13] lint: add "use strict" to planner.js for consistency
+  [2026-06-13] lint: add "use strict" to mcp-daemon.js for consistency
+  [2026-06-13] lint: add "use strict" to help-json.js for consistency
+
+
+== Current top-level files/dirs in this branch ==
+  .agents
+  .claude
+  .devin
+  .env.example
+  .github
+  .gitignore
+  .npmignore
+  AGENTS.md
+  ARCHITECTURE_PLAN.md
+  CHANGELOG.md
+  CONTRIBUTING.md
+  LICENSE
+  PLUGIN_STANDARDS.md
+  QUALITY_REPORT.md
+  README.md
+  TAG_VOCABULARY.md
+  __tests__
+  apply-description-enhancements.ts
+  apply-plugin-fixes.ts
+  cli
+  description-enhancements.json
+  docs
+  enhance-descriptions.ts
+  examples
+  fix-plugin-quality.ts
+  hledger-linux-x64.zip
+  jest.config.js
+  marketing
+  package-lock.json
+  package.json
+  plan.txt
+  plugin-quality-report.json
+  plugins
+  plugins_smoke_test.db
+  scripts
+  server
+  skills-lock.json
+  skills
+  source-url-mapping.json
+  supercli-zig-cli
+  tests
+  tools
+
+
+Goal: Review ONLY the changes introduced in THIS run.
+  Run: git diff origin/master..HEAD  — to see exactly what changed.
+  Wait for dev to announce completion before reviewing.
+  Review the diff and post your findings: A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a send dev "QA review: <findings>" --from qa
+  If issues are found: tell dev what to fix — do NOT commit fixes yourself.
+  Once dev has addressed all issues (or if no issues): a2a status done --as qa
+  IMPORTANT: Never commit code yourself. Your role is review only.
+
+A2A=$(command -v a2a 2>/dev/null)
+[ -z "A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a" ] && [ -x "$HOME/.local/bin/a2a" ] && A2A="$HOME/.local/bin/a2a"
+[ -z "A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a" ] && [ -x "$HOME/.agents/skills/a2a/a2a" ] && A2A="$HOME/.agents/skills/a2a/a2a"
+
+A2A_PROJECT=am-f17c27-tgk761 is already in the environment.
+The a2a bus is already initialized and you are already registered as "qa".
+
+== Peers on the bus ==
+[{"cli":"","id":"dev","pid":2125024,"role":"dev","status":"active"},{"cli":"","id":"qa","pid":null,"role":"qa","status":"active"}]
+
+== Communication Instructions ==
+Use your shell tool to execute these a2a commands:
+1. Check who else is on the bus: A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a list --json
+2. Introduce yourself: A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a send all "I am qa, ready to work" --from qa
+3. Check for messages (blocks up to 30s): A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a recv --as qa --wait 30
+4. Send to a peer: A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a send <peer-id> "your message" --from qa
+5. Broadcast: A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a send all "your message" --from qa
+6. Mark done when your goal is complete: A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a status done --as qa
+
+== Your Work Loop ==
+1. Check for messages with A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a recv --as qa --wait 30
+2. If you receive a message, respond appropriately
+3. If no messages and you have work to do, broadcast your progress
+4. When you complete your goal, run A2A_PROJECT=am-f17c27-tgk761 /root/.local/bin/a2a status done --as qa
