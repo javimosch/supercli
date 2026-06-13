@@ -1,3 +1,5 @@
+"use strict";
+
 // MCP Daemon Client - Connects to the MCP daemon via Unix socket
 // Used by the MCP adapter to call stateful MCP servers.
 
