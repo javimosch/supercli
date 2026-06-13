@@ -1,3 +1,5 @@
+"use strict";
+
 function findNamespacePassthrough(config, positional, rawArgs) {
   const namespace = positional[0]
   if (!namespace || !config || !Array.isArray(config.commands)) return null
