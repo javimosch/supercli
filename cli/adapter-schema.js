@@ -1,3 +1,5 @@
+"use strict";
+
 const SUPPORTED_ADAPTERS = ["http", "openapi", "mcp", "process", "shell"]
 
 function asInvalid(message, suggestions = []) {
