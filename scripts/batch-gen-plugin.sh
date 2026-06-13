@@ -14,7 +14,7 @@
 # Usage: bash scripts/batch-gen-plugin.sh
 #
 
-set -e
+set -eu
 DATA_FILE="scripts/plugin-data.txt"
 BASE_DIR="plugins"
 CREATED=0
