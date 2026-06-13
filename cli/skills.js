@@ -1,3 +1,5 @@
+"use strict"
+
 const { createPlan } = require("./planner")
 const { buildMcpServersUsageSkillMarkdown: buildMcpUsage } = require("./skills-mcp")
 
