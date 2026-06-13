@@ -5,6 +5,8 @@
  * Requires: server running on SUPERCLI_SERVER
  */
 
+"use strict";
+
 const http = require("http");
 const { exec } = require("child_process");
 const util = require("util");
