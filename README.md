@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  ⭐ <b>Like supercli? <a href="https://github.com/javimosch/supercli/stargazers">Star it on GitHub</a></b> — one click, makes a huge difference.
+  ⭐ <b>Like supercli? <a href="https://github.com/javimosch/supercli">Star it on GitHub</a></b> — one click, makes a huge difference.
 </p>
 
 > Think: "Stripe API for CLIs and tools"
