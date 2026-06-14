@@ -6,14 +6,16 @@ description: SuperCLI go-to-market strategy, executed actions, channel intellige
 # SuperCLI GTM Playbook
 
 > **Agentic GTM for SuperCLI** — save this skill to persist state across sessions.
-> Last updated: June 2026 · 7,003 plugins in catalog
+> Last updated: June 14, 2026 · 7,003 plugins in catalog
+> **PRs submitted: 7** (5 first wave + 2 in second wave)
 
 ---
 
 ## What's Been Done (State)
 
-### ✅ Pull Requests Submitted (5 awesome lists)
+### ✅ Pull Requests Submitted (7 total)
 
+#### Wave 1 (5 PRs — June 14)
 | PR | Repo | URL | Status |
 |----|------|-----|--------|
 | #1153 | `agarrharr/awesome-cli-apps` | [PR link](https://github.com/agarrharr/awesome-cli-apps/pull/1153) | ⏳ Awaiting review |
@@ -21,6 +23,12 @@ description: SuperCLI go-to-market strategy, executed actions, channel intellige
 | #1099 | `e2b-dev/awesome-ai-agents` | [PR link](https://github.com/e2b-dev/awesome-ai-agents/pull/1099) | ⏳ Awaiting review |
 | #265 | `devtoolsd/awesome-devtools` | [PR link](https://github.com/devtoolsd/awesome-devtools/pull/265) | ⏳ Awaiting review |
 | — | `wong2/awesome-mcp-servers` | via mcpservers.org | ⏳ Awaiting review |
+
+#### Wave 2 (2 PRs — later June 14)
+| PR | Repo | URL | Status |
+|----|------|-----|--------|
+| #28 | `Kikobeats/awesome-cli` (Framework) | [PR link](https://github.com/Kikobeats/awesome-cli/pull/28) | ⏳ Awaiting review |
+| #1 | `ad-si/awesome-command-line-tools` (Shell Utils) | [PR link](https://github.com/ad-si/awesome-command-line-tools/pull/1) | ⏳ Awaiting review |
 
 ### ✅ Web Submissions (complete)
 
@@ -166,6 +174,8 @@ npm view supercli downloads
 | `sc-zig` passthrough bug (`_ _` args forwarded literally) | Fixed in main.zig — `raw_argv[3..]` strips all 3 routing args |
 | awesome-mcp-servers doesn't accept PRs | Used mcpservers.org web form instead |
 | `sc skills search` namespace error | Skills plugin not installed — use `cat plugins/.../meta.json` or `sc-zig plugins explore` |
+| Vercel bot protection blocks all web forms | Alternative: contact via email, GitHub, or Twitter. Do NOT waste browser-use attempts on Vercel-protected sites (DevelopersDigest, OpenSourceAlternative.to, TLDR all blocked). |
+| mcp-publisher CLI requires GitHub OAuth | Only usable interactively. Skipped for automated workflows. |
 
 ---
 
@@ -198,21 +208,32 @@ cli, cli-tool, developer-tools, ai-agents, mcp, command-line, terminal, devops, 
 | List | URL | Method |
 |------|-----|--------|
 | awesome-cli (framework) | `Kikobeats/awesome-cli` | ✅ PR #28 submitted |
+| awesome-command-line-tools | `ad-si/awesome-command-line-tools` | ✅ PR #1 submitted |
 | awesome-terminal | (defunct — skip) | ❌ |
 | awesome-dev-tools | `awesome-dev-tools/awesome-dev-tools` | PR |
 | awesome-tools-list | `noahbuscher/awesome-tools-list` | PR |
 | awesome-developer-experience | `nicegui-dev/awesome-developer-experience` | PR |
 
-### Dev Tool Directories (Web Forms)
+### Dev Tool Directories (Web Forms — Most Blocked by Vercel)
 
-| Platform | URL | Notes |
-|----------|-----|-------|
-| DevHunt | devhunt.co | Dev tools category |
-| ProductHunt | producthunt.com | Needs account |
-| StackShare | stackshare.io | Add tool page |
-| AlternativeTo | alternativeto.net | Submit tool |
-| Slant | slant.co | Community recommendations |
-| OpenSourceAlternative | opensourcealternative.to | Add listing |
+| Platform | URL | Bypass Method | Auth? |
+|----------|-----|---------------|-------|
+| DevHunt | devhunt.co | Parked domain — skip | ❌ |
+| ProductHunt | producthunt.com | Needs account | ✅ Needs account |
+| StackShare | stackshare.io | Login required (GitHub/Google) | ✅ |
+| AlternativeTo | alternativeto.net | Web form + account | ✅ |
+| Slant | slant.co | Community recommendations | ✅ |
+| OpenSourceAlternative.to | opensourcealternative.to | Vercel blocked — try email | ❌ |
+| DevelopersDigest | developersdigest.tech | Vercel blocked — GitHub alternative: github.com/developersdigest | ❌ |
+| TLDR Newsletter | tldr.tech | Vercel blocked — email editors@tldr.tech | ❌ |
+
+### Programmatic Channels (via gh CLI)
+
+| Channel | Method | Status |
+|---------|--------|--------|
+| MCP Registry (official) | Requires mcp-publisher CLI + GitHub OAuth | ⏳ Needs interactive auth |
+| free-for.dev | GitHub PR but strict criteria (as-a-Service only) | ❌ Not a fit |
+| Language-specific awesome lists | GitHub PR (if tool is in Go/Rust/Python) | 🤔 Worth checking |
 
 ### Content Marketing
 1. Write "What is a CLI Router?" blog post for dev.to / hashnode
@@ -220,6 +241,10 @@ cli, cli-tool, developer-tools, ai-agents, mcp, command-line, terminal, devops, 
 3. Write "SuperCLI vs oclif vs zx" comparison post
 4. Create "7,000+ CLI tools, one interface" infographic
 5. Record short demo video (screen.studio, loom)
+
+### Podcast / Community
+1. devtools.fm — pitch interview about building supercli
+2. GitHub Blog / Open Source Podcast — pitch a "community building" story
 
 ### Community Building
 1. GitHub Discussions — create "Show us your plugin" thread
