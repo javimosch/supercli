@@ -197,7 +197,7 @@ cli, cli-tool, developer-tools, ai-agents, mcp, command-line, terminal, devops, 
 
 | List | URL | Method |
 |------|-----|--------|
-| awesome-cli | `uhub/awesome-cli` | PR |
+| awesome-cli (framework) | `Kikobeats/awesome-cli` | ✅ PR #28 submitted |
 | awesome-terminal | (defunct — skip) | ❌ |
 | awesome-dev-tools | `awesome-dev-tools/awesome-dev-tools` | PR |
 | awesome-tools-list | `noahbuscher/awesome-tools-list` | PR |
