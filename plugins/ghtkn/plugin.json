@@ -1,0 +1,105 @@
+{
+  "name": "ghtkn",
+  "version": "0.1.0",
+  "description": "Generate short-lived (8-hour) GitHub App User Access Tokens for secure local development",
+  "source": "https://github.com/suzuki-shunsuke/ghtkn",
+  "checks": [
+    { "type": "binary", "name": "ghtkn" }
+  ],
+  "install_guidance": {
+    "plugin": "ghtkn",
+    "binary": "ghtkn",
+    "check": "ghtkn --help",
+    "install_steps": [
+      "go install github.com/suzuki-shunsuke/ghtkn@latest",
+      "Verify: ghtkn --help",
+      "supercli plugins install ./plugins/ghtkn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ghtkn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ghtkn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghtkn",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ghtkn: go install github.com/suzuki-shunsuke/ghtkn@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghtkn",
+      "resource": "init",
+      "action": "config",
+      "description": "Initialize ghtkn configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghtkn",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install ghtkn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghtkn",
+      "resource": "get",
+      "action": "token",
+      "description": "Generate or retrieve a GitHub User Access Token",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghtkn",
+        "baseArgs": ["get"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ghtkn"
+      },
+      "args": [
+        { "name": "app", "type": "string", "required": false, "description": "GitHub App name from configuration" }
+      ]
+    },
+    {
+      "namespace": "ghtkn",
+      "resource": "git-credential",
+      "action": "helper",
+      "description": "Use ghtkn as Git credential helper",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghtkn",
+        "baseArgs": ["git-credential"],
+        "missingDependencyHelp": "Install ghtkn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghtkn",
+      "resource": "list",
+      "action": "apps",
+      "description": "List configured GitHub Apps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghtkn",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install ghtkn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghtkn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ghtkn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghtkn",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ghtkn"
+      },
+      "args": []
+    }
+  ]
+}

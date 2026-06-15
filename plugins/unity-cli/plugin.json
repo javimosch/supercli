@@ -1,0 +1,233 @@
+{
+  "name": "unity-cli",
+  "version": "0.1.0",
+  "description": "Control Unity Editor from the command line. Built for AI agents, works with anything.",
+  "source": "https://github.com/youngwoocho02/unity-cli",
+  "checks": [
+    { "type": "binary", "name": "unity-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "unity-cli",
+    "binary": "unity-cli",
+    "check": "unity-cli status",
+    "install_steps": [
+      "curl -fsSL https://raw.githubusercontent.com/youngwoocho02/unity-cli/master/install.sh | sh",
+      "Verify: unity-cli status",
+      "supercli plugins install ./plugins/unity-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unity-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unity-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["update", "--check"],
+        "missingDependencyHelp": "Install unity-cli: curl -fsSL https://raw.githubusercontent.com/youngwoocho02/unity-cli/master/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "editor",
+      "action": "status",
+      "description": "Show Unity Editor connection state",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["status"],
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "editor",
+      "action": "play",
+      "description": "Enter Unity Editor play mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["editor", "play"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": [
+        { "name": "wait", "type": "boolean", "required": false, "description": "Wait until play mode is fully loaded" }
+      ]
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "editor",
+      "action": "stop",
+      "description": "Stop Unity Editor play mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["editor", "stop"],
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "editor",
+      "action": "pause",
+      "description": "Toggle pause in Unity Editor play mode",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["editor", "pause"],
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "console",
+      "action": "read",
+      "description": "Read Unity Editor console logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["console"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": [
+        { "name": "type", "type": "string", "required": false, "description": "Filter by log type (error, warning, log)" },
+        { "name": "lines", "type": "number", "required": false, "description": "Number of log entries to read" },
+        { "name": "filter", "type": "string", "required": false, "description": "Comma-separated filter types" },
+        { "name": "stacktrace", "type": "string", "required": false, "description": "Include stack traces (user, full)" },
+        { "name": "clear", "type": "boolean", "required": false, "description": "Clear console after reading" }
+      ]
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "exec",
+      "action": "code",
+      "description": "Execute C# code inside Unity Editor",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["exec"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": true, "description": "C# code to execute" },
+        { "name": "usings", "type": "string", "required": false, "description": "Comma-separated namespaces to include" },
+        { "name": "allow-async", "type": "boolean", "required": false, "description": "Allow async/coroutine keywords" }
+      ]
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "menu",
+      "action": "execute",
+      "description": "Execute Unity menu item by path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["menu"],
+        "positionalArgs": ["path"],
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Unity menu item path (e.g., File/Save Project)" }
+      ]
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "reserialize",
+      "action": "assets",
+      "description": "Re-serialize Unity assets through Unity's serializer",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["reserialize"],
+        "positionalArgs": ["assets"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": [
+        { "name": "assets", "type": "string", "required": false, "description": "Asset paths to reserialize (optional)" }
+      ]
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "profiler",
+      "action": "hierarchy",
+      "description": "Read Unity profiler hierarchy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["profiler", "hierarchy"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": [
+        { "name": "depth", "type": "number", "required": false, "description": "Recursion depth for hierarchy" }
+      ]
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "test",
+      "action": "run",
+      "description": "Run Unity EditMode/PlayMode tests",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["test"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "screenshot",
+      "action": "capture",
+      "description": "Capture Unity scene/game view as PNG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["screenshot"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "list",
+      "action": "tools",
+      "description": "Show all available Unity CLI tools with parameter schemas",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unity-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unity-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unity-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install unity-cli"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "name": "cmirror",
+  "version": "0.1.0",
+  "description": "China Mirror Manager - unified CLI for managing mirrors: Pip, NPM, Docker, Cargo, Apt, Go, Brew",
+  "source": "https://github.com/ox01024/cmirror",
+  "checks": [
+    { "type": "binary", "name": "cmirror" }
+  ],
+  "install_guidance": {
+    "plugin": "cmirror",
+    "binary": "cmirror",
+    "check": "cmirror --help",
+    "install_steps": [
+      "wget https://github.com/ox01024/cmirror/releases/latest/download/cmirror-linux-x64.tar.gz",
+      "tar -xzf cmirror-linux-x64.tar.gz",
+      "chmod +x cmirror && sudo mv cmirror /usr/local/bin/",
+      "Verify: cmirror --help",
+      "supercli plugins install ./plugins/cmirror --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cmirror",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cmirror version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cmirror",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install cmirror: wget https://github.com/ox01024/cmirror/releases/latest/download/cmirror-linux-x64.tar.gz && tar -xzf cmirror-linux-x64.tar.gz && chmod +x cmirror && sudo mv cmirror /usr/local/bin/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cmirror",
+      "resource": "status",
+      "action": "check",
+      "description": "Check current mirror status for all tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cmirror",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cmirror"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": false, "description": "Specific tool to check (pip, npm, docker, cargo, apt, go, brew)" }
+      ]
+    },
+    {
+      "namespace": "cmirror",
+      "resource": "test",
+      "action": "benchmark",
+      "description": "Benchmark and rank mirror sources by latency",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cmirror",
+        "baseArgs": ["test"],
+        "positionalArgs": ["tool"],
+        "missingDependencyHelp": "Install cmirror"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool to test (pip, npm, docker, cargo, apt, go, brew)" }
+      ]
+    },
+    {
+      "namespace": "cmirror",
+      "resource": "use",
+      "action": "mirror",
+      "description": "Switch to a specific mirror source",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cmirror",
+        "baseArgs": ["use"],
+        "positionalArgs": ["tool", "source"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cmirror"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool to configure (pip, npm, docker, cargo, apt, go, brew)" },
+        { "name": "source", "type": "string", "required": false, "description": "Mirror source name (e.g., aliyun, tuna)" },
+        { "name": "fastest", "type": "boolean", "required": false, "description": "Auto-select fastest mirror" }
+      ]
+    },
+    {
+      "namespace": "cmirror",
+      "resource": "restore",
+      "action": "config",
+      "description": "Restore previous configuration or reset to default",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cmirror",
+        "baseArgs": ["restore"],
+        "positionalArgs": ["tool"],
+        "missingDependencyHelp": "Install cmirror"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool to restore (pip, npm, docker, cargo, apt, go, brew)" }
+      ]
+    },
+    {
+      "namespace": "cmirror",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cmirror CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cmirror",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cmirror"
+      },
+      "args": []
+    }
+  ]
+}
