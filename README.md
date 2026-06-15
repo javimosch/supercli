@@ -468,3 +468,4 @@ If supercli saved you time, consider supporting the project:
 ## License
 
 MIT — <a href="https://www.linkedin.com/in/arancibiajav/" target="_blank">Javier Leandro Arancibia</a>
+<!-- automaintainer smoke test: pipeline OK -->
