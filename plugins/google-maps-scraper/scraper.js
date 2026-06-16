@@ -1,164 +1,151 @@
 // Google Maps Scraper using Lightpanda + puppeteer-core
 // Extracts business data from Google Maps search results
+// v0.3.0 - Updated consent flow + better extraction
 
-async function extractText(page, selector) {
-  try {
-    const element = await page.$(selector);
-    if (element) {
-      return await element.evaluate(el => el.textContent ? el.textContent.trim() : "");
-    }
-  } catch (e) {
-    console.debug('Failed to extract text for ' + selector + ': ' + e.message);
+const SKIP_WORDS = [
+  'google', 'résultats', 'filtres', 'prix', 'disponible', 'inclus',
+  'changer', 'invités', 'connecter', 'cookies', 'privacy', 'terms',
+  'utiliser', 'sans frais', 'précédent', 'suivant', 'plan',
+  'clavier', 'fléchées', 'déplacer', 'appuyer', 'numérique',
+  'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche', 'lundi', 'mardi',
+  "aujourd'hui", 'demain', 'nuit', 'euro'
+];
+
+function isBusinessName(text) {
+  if (!text || text.length < 3) return false;
+  if (text.length > 120) return false;
+  const lower = text.toLowerCase();
+  for (const word of SKIP_WORDS) {
+    if (lower.includes(word)) return false;
   }
-  return "";
+  return true;
 }
 
-async function extractPlaceDetails(page) {
-  const selectors = {
-    name: 'h1[class*="DUwDvf"]',
-    address: 'button[data-item-id="address"] div[class*="fontBodyMedium"]',
-    website: 'a[data-item-id="authority"] div[class*="fontBodyMedium"]',
-    phone: 'button[data-item-id*="phone:tel:"] div[class*="fontBodyMedium"]',
-    rating: 'div[class*="F7nice"] span[aria-hidden="true"]',
-    reviews: 'div[class*="F7nice"] span[aria-label*="reviews"]',
-    type: 'button[class*="DkEaL"]'
-  };
-
-  const details = {};
-  for (const key in selectors) {
-    details[key] = await extractText(page, selectors[key]);
-  }
-
-  if (details.reviews) {
-    const match = details.reviews.replace(/\xa0/g, "").replace(/,/g, "").match(/(\d+)/);
-    details.reviews_count = match ? parseInt(match[1], 10) : null;
-  } else {
-    details.reviews_count = null;
-  }
-
-  if (details.rating) {
-    const parsed = parseFloat(details.rating.replace(/ /g, "").replace(/,/g, "."));
-    details.rating = isNaN(parsed) ? null : parsed;
-  }
-
-  return details;
-}
-
-async function extractFromListingCard(element) {
+async function acceptConsent(page) {
   try {
-    const text = await element.evaluate(el => el.textContent || '');
-    console.log('Listing text: ' + text.substring(0, 100));
-    if (!text || text.trim().length === 0) {
-      return null;
-    }
-    
-    const lines = text.split('\n').map(l => l.trim()).filter(l => l);
-    if (lines.length === 0) {
-      return null;
-    }
-    
-    const name = lines[0];
-    let rating = null;
-    let reviews_count = null;
-    
-    for (var i = 1; i < lines.length; i++) {
-      const line = lines[i];
-      const ratingMatch = line.match(/^([\d.]+)\s*★?/);
-      if (ratingMatch) {
-        rating = parseFloat(ratingMatch[1]);
-        const reviewsMatch = line.match(/\((\d+)\)/);
-        if (reviewsMatch) {
-          reviews_count = parseInt(reviewsMatch[1], 10);
+    const hasConsent = await page.evaluate(() => {
+      return document.body.innerText.includes("Avant d'accéder") ||
+             document.body.innerText.includes('Before you continue');
+    });
+    if (!hasConsent) return false;
+
+    console.log('Consent page detected, handling...');
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Click "Plus d'options" / "More options"
+    await page.evaluate(() => {
+      for (const a of document.querySelectorAll('a')) {
+        const t = a.textContent || '';
+        if (t.includes("Plus d'options") || t.includes('More options')) {
+          a.click(); return;
         }
       }
-    }
-    
-    return {
-      name: name,
-      rating: rating,
-      reviews_count: reviews_count,
-      address: '',
-      website: '',
-      phone: '',
-      type: ''
-    };
+    });
+    await new Promise(r => setTimeout(r, 2000));
+
+    // Click "Tout refuser" / "Reject all"
+    await page.evaluate(() => {
+      for (const b of document.querySelectorAll('button')) {
+        const t = (b.textContent || '').trim();
+        if (t.includes('Tout refuser') || t.includes('Reject all')) {
+          b.click(); return;
+        }
+      }
+    });
+    await new Promise(r => setTimeout(r, 4000));
+    console.log('Consent handled (rejected personalization)');
+    return true;
   } catch (e) {
-    console.log('Error extracting from card: ' + e.message);
-    return null;
+    console.log('Consent handling error: ' + e.message);
+    return false;
   }
 }
 
 async function scrapeGoogleMaps(query, limit) {
   console.log('Scraping Google Maps for: ' + query);
-  
+
   const searchUrl = 'https://www.google.com/maps/search/' + query.replace(/ /g, '+');
   await page.goto(searchUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
-  try {
-    const consentButton = await page.$('button[aria-label="Accept all"]');
-    if (consentButton) {
-      await consentButton.click();
-      console.log('Accepted cookies');
-    }
-  } catch (e) {
+  await acceptConsent(page);
+  await new Promise(r => setTimeout(r, 3000));
+
+  // Scroll to load more results
+  for (let s = 0; s < 10; s++) {
+    await page.mouse.wheel(0, 3000);
+    await new Promise(r => setTimeout(r, 1500));
   }
 
-  await new Promise(function(resolve) { setTimeout(resolve, 5000); });
-
-  for (var scroll = 0; scroll < 3; scroll++) {
-    await page.mouse.wheel(0, 2000);
-    await new Promise(function(resolve) { setTimeout(resolve, 2000); });
-  }
-
-  const listings = await page.evaluate(function() {
+  const rawListings = await page.evaluate(() => {
+    const seen = new Set();
     const results = [];
-    const allDivs = document.querySelectorAll('div[aria-label]');
-    
-    for (var i = 0; i < allDivs.length; i++) {
-      const el = allDivs[i];
-      const ariaLabel = el.getAttribute('aria-label') || '';
-      if (ariaLabel && ariaLabel.length > 5 && ariaLabel.length < 200) {
-        results.push(ariaLabel);
+
+    // Strategy 1: Place links with aria-label
+    for (const el of document.querySelectorAll('a[href*="/maps/place/"]')) {
+      const name = el.getAttribute('aria-label');
+      if (name && !seen.has(name)) {
+        seen.add(name);
+        results.push({ method: 'place', name });
       }
     }
-    
+
+    // Strategy 2: aria-label divs with business-like names (all-caps or title case)
+    for (const el of document.querySelectorAll('div[aria-label]')) {
+      const label = el.getAttribute('aria-label') || '';
+      if (!label || label.length < 3) continue;
+      const firstLine = label.split('\n')[0].trim();
+      if (firstLine && !seen.has(firstLine)) {
+        if (/^[A-Z][A-Za-zÀ-ÿ\s'\-\d]+$/.test(firstLine) && firstLine.length > 3) {
+          seen.add(firstLine);
+          results.push({ method: 'aria', name: firstLine });
+        }
+      }
+    }
+
+    // Strategy 3: Sidebar listing cards
+    for (const el of document.querySelectorAll('.Nv2PK, .THOPZb, .lI9IFe')) {
+      const text = el.textContent || '';
+      const lines = text.split('\n').map(l => l.trim()).filter(l => l);
+      const name = lines[0];
+      if (name && !seen.has(name) && name.length > 3) {
+        seen.add(name);
+        let rating = null, reviews = null;
+        for (const line of lines) {
+          const rm = line.match(/^([\d.]+)\s*[★☆]/);
+          if (rm) {
+            rating = parseFloat(rm[1]);
+            const rcm = line.match(/\((\d+)\)/);
+            if (rcm) reviews = parseInt(rcm[1], 10);
+          }
+        }
+        results.push({ method: 'card', name, rating, reviews });
+      }
+    }
+
     return results;
   });
-  
-  console.log('Found ' + listings.length + ' aria-label elements');
-  
+
+  console.log('Found ' + rawListings.length + ' raw listings');
+
+  const seen = new Set();
   const results = [];
-  
-  for (var i = 0; i < listings.length; i++) {
+  for (const item of rawListings) {
     if (results.length >= limit) break;
-    
-    const text = listings[i];
-    const ratingMatch = text.match(/([\d.]+)\s*$/);
-    const rating = ratingMatch ? parseFloat(ratingMatch[1]) : null;
-    
-    const isBusiness = text.indexOf('Google') === -1 && 
-                      text.indexOf('Résultats') === -1 && 
-                      text.indexOf('Filtres') === -1 &&
-                      text.indexOf('Prix') === -1 &&
-                      text.indexOf('disponible') === -1 &&
-                      text.indexOf('inclus') === -1 &&
-                      text.indexOf('Changer') === -1 &&
-                      text.indexOf('Du lundi') === -1 &&
-                      text.indexOf('€') === -1 &&
-                      text.length > 10;
-    
-    if (isBusiness) {
-      results.push({
-        name: text,
-        rating: rating,
-        reviews_count: null,
-        address: '',
-        website: '',
-        phone: '',
-        type: ''
-      });
-      console.log('Extracted ' + results.length + ': ' + text);
-    }
+    if (seen.has(item.name)) continue;
+    seen.add(item.name);
+    if (!isBusinessName(item.name)) continue;
+
+    results.push({
+      name: item.name,
+      rating: item.rating || null,
+      reviews_count: item.reviews || null,
+      address: '',
+      website: '',
+      phone: '',
+      type: '',
+      query: query
+    });
+    console.log('Extracted ' + results.length + ': ' + item.name);
   }
 
   return results;
