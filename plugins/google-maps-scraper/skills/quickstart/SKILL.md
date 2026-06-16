@@ -1,117 +1,117 @@
 ---
 name: google-maps-scraper
-description: Use this skill when the user wants to scrape business data from Google Maps including names, addresses, websites, phone numbers, ratings, and reviews.
+description: |
+  Scrape business data from Google Maps using Lightpanda (lightweight headless browser).
+  Extracts business names from any search query. ~120 MB one-time binary download.
+  Use when user wants to find businesses, hostels, restaurants, hotels, services in a city.
 ---
 
-# Google Maps Scraper Plugin
+# Google Maps Scraper
 
-Scrape business data from Google Maps using Lightpanda + puppeteer-core. Extracts business names from Google Maps search results.
+Scrape Google Maps for business listings. Works **locally** via Lightpanda (puppeteer-core, not full Puppeteer — much lighter).
 
-## Commands
+## Requirements
 
-### Scraping
-- `google-maps-scraper search scrape` — Scrape Google Maps for business data
-
-## Usage Examples
-
+**One-time setup** (~140 MB total):
 ```bash
-# Scrape restaurants in Paris
-sc google-maps-scraper search scrape --query "restaurants in Paris"
-
-# Scrape with limit
-sc google-maps-scraper search scrape --query "coffee shops in New York" --limit 20
-
-# With verbose logging
-sc google-maps-scraper search scrape --query "hotels in Tokyo" --limit 15 --verbose
-```
-
-## Installation
-
-```bash
+# Install Lightpanda runtime (binary + deps)
 sc lightpanda cli setup
-supercli plugins install ./plugins/google-maps-scraper --on-conflict replace --json
+
+# If that doesn't download the binary, run directly:
+cd /home/jarancibia/.supercli/plugins/bundled/lightpanda/node_modules/@lightpanda/browser
+node dist/scripts/postinstall.js
 ```
+
+## Usage
+
+### Via Node.js (recommended — the `sc` adapter is broken locally)
+
+```bash
+cd ~/ai/supercli/plugins/google-maps-scraper
+node run.js "hostels in Lyon France" 20
+node run.js "restaurants in Paris" 15
+node run.js "coworking space Bordeaux" 10
+```
+
+**Arguments:** `<query>` `[limit]` `[timeout-ms]` `[verbose]`
+
+### Via supercli (when the builtin adapter is fixed)
+
+```bash
+sc google-maps-scraper search scrape --query "hostels in Lyon France" --limit 20
+```
+
+## What It Returns
+
+Each result is a JSON object:
+```json
+{
+  "name": "The People Lyon",
+  "rating": null,
+  "reviews_count": null,
+  "address": "",
+  "website": "",
+  "phone": "",
+  "type": "",
+  "query": "hostels in Lyon France"
+}
+```
+
+Currently extracts **business names only**. Rating/reviews/address extraction needs the detail-page click-through (not implemented yet).
+
+## Consent Handling
+
+The scraper auto-handles Google's updated consent wall:
+1. Detects `"Avant d'accéder"` or `"Before you continue"` page
+2. Clicks **"Plus d'options"** → **"Tout refuser"** (bypasses personalization gate)
+3. Redirects to the actual search results
+
+## Extraction Strategy (3 methods)
+
+| Strategy | Selector | Purpose |
+|----------|----------|---------|
+| Place links | `a[href*="/maps/place/"]` | Primary — most reliable |
+| aria-label | `div[aria-label]` | Fallback — catches cards without links |
+| Sidebar cards | `.Nv2PK, .THOPZb, .lI9IFe` | Secondary — gets ratings when available |
+
+Filters out UI noise: dates, prices, filter chips, consent text, navigation labels.
 
 ## Examples
 
 ```bash
-# Basic scrape
-sc google-maps-scraper search scrape --query "plumbers in Chicago"
+# Hotels
+node run.js "hotels in Nice France" 20
 
-# With more results
-sc google-maps-scraper search scrape --query "dentists in London" --limit 25
+# Specific types
+node run.js "vegan restaurants Lyon" 15
 
-# With custom timeout
-sc google-maps-scraper search scrape --query "gyms in Berlin" --limit 10 --timeout-ms 90000
+# Services
+node run.js "plumbers in Annecy" 10
+
+# Coworking
+node run.js "coworking space Geneva Switzerland" 15
+
+# With longer timeout for slow connections
+node run.js "digital agencies in Paris" 30 180000
 ```
 
-## Key Features
+## Caveats
 
-- **Lightweight**: Uses Lightpanda + puppeteer-core instead of heavy Playwright
-- **Headless by default**: Optimized for automated agent use
-- **Robust selectors**: Uses `div[aria-label]` selector for efficiency
-- **Cookie consent handling**: Automatically accepts cookies
-- **Scrolling**: Automatically scrolls to load more results
-- **JSON output**: Structured data for easy processing
-- **Configurable limits**: Control how many results to scrape
+- **Headless mode limit**: Google returns ~6-15 results per search regardless of `--limit`. Combine multiple queries (different phrasings) for more coverage.
+- **~27s per query**: Includes consent handling, scrolling, and extraction.
+- **Ratings/details**: Currently null — would need to click each result and extract from detail panels.
+- **Google UI changes**: Selectors may break if Google updates Maps. Check the extraction scripts periodically.
 
-## Data Fields
+## Architecture
 
-Each scraped business includes:
-- `name`: Business name
-- `rating`: Average rating (float, may be null)
-- `reviews_count`: Number of reviews (integer, may be null)
-- `address`: Street address (currently empty)
-- `website`: Website URL (currently empty)
-- `phone`: Phone number (currently empty)
-- `type`: Business category (currently empty)
+```
+scraper.js         ← Lightpanda version (supercli plugin, this skill)
+run.js             ← Wrapper that injects query/limit into scraper.js
+improved-scraper.js← Standalone Puppeteer (French biz focused, keyword filter)
+standalone-scraper.js← Standalone Puppeteer (coworking focused)
+scrape.js           ← Standalone Puppeteer (generic, no filter)
+cron-scrape.py      ← Python batch orchestrator for multi-city scraping
+cron-run.sh         ← Shell wrapper for batch scraping
+```
 
-## Caveats and Limitations
-
-### Google Maps Result Limitation
-- **Headless mode limits**: Google Maps returns only 6-10 results per search in headless mode, regardless of the `--limit` parameter
-- **Workaround**: Run multiple searches with different queries (e.g., "restaurants", "cafes", "bars") and combine results to reach desired count
-- **Example**: To get 20+ results, search for multiple categories and merge the outputs
-
-### Current Extraction Limitations
-- **Business names only**: Currently extracts business names from `aria-label` attributes
-- **Missing details**: Address, website, phone, and type fields are currently empty
-- **Rating extraction**: Ratings are not reliably extracted from the current selector approach
-
-### Selector and Filtering
-- **Language sensitivity**: Filter keywords are currently hardcoded in French ("Résultats", "Filtres", "Prix", etc.)
-- **UI elements**: Must filter out non-business elements like "Prix par nuit", "disponible", "inclus"
-- **Selector efficiency**: Using `div[aria-label]` is critical to prevent hanging from expensive DOM traversal
-
-### Performance and Stability
-- **Timeout management**: Always wrap scraper calls with timeout (e.g., `timeout 90`) to prevent hanging
-- **Scrolling effectiveness**: Scrolling may not load significantly more results due to Google Maps limitations
-- **Session cleanup**: The lightpanda wrapper may take time to clean up after execution
-
-### Best Practices for Agents
-1. **Use timeout wrapper**: Always run with `timeout 90` or similar to prevent indefinite hangs
-2. **Combine multiple searches**: To get 20+ results, run multiple category searches and combine
-3. **Filter results**: Post-process to remove duplicates and irrelevant entries
-4. **Handle language**: Adjust filter keywords based on target location language
-5. **Verify results**: Check that extracted names are actual businesses, not UI elements
-
-## Technical Details
-
-The scraper uses the Lightpanda wrapper which provides:
-- `browser`: Connected puppeteer-core browser instance
-- `page`: A new page created for the run
-- `puppeteer`: The imported puppeteer-core module
-- `lightpanda`: The imported @lightpanda/browser module
-- `context`: Metadata about the run including args (query, limit)
-
-### Current Implementation Approach
-- Uses `div[aria-label]` selector for efficient DOM traversal
-- Filters out UI elements using keyword matching
-- Scrolls 3 times to attempt loading more results
-- Extracts text content and attempts rating parsing
-
-### Known Issues
-- Google Maps UI changes may break selectors
-- Headless detection may limit result count
-- Cookie consent handling may need updates
-- Rating extraction is not reliable
+The standalone scrapers (`improved-scraper.js`, `standalone-scraper.js`, `scrape.js`) use **full Puppeteer** instead of Lightpanda — more capable but **~200 MB heavier**. Only use if Lightpanda can't handle your use case.
