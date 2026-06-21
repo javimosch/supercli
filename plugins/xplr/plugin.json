@@ -1,0 +1,64 @@
+{
+  "name": "xplr",
+  "version": "0.1.0",
+  "description": "xplr — hackable, minimal, fast TUI file explorer with Lua-based configuration",
+  "source": "https://github.com/sayanarijit/xplr",
+  "checks": [
+    { "type": "binary", "name": "xplr" }
+  ],
+  "install_guidance": {
+    "plugin": "xplr",
+    "binary": "xplr",
+    "check": "which xplr",
+    "install_steps": [
+      "cargo install xplr",
+      "Verify: xplr --version",
+      "supercli plugins install ./plugins/xplr --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "xplr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xplr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xplr",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install xplr: cargo install xplr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xplr",
+      "resource": "explorer",
+      "action": "open",
+      "description": "Open the xplr file explorer at a path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xplr",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xplr: cargo install xplr"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to open" }
+      ]
+    },
+    {
+      "namespace": "xplr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xplr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xplr",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xplr: cargo install xplr"
+      },
+      "args": []
+    }
+  ]
+}

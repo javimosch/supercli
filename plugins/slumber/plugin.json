@@ -1,0 +1,63 @@
+{
+  "name": "slumber",
+  "version": "0.1.0",
+  "description": "slumber — terminal-based HTTP/REST API client with TUI, request collections, and templating",
+  "source": "https://github.com/LucasPickering/slumber",
+  "checks": [
+    { "type": "binary", "name": "slumber" }
+  ],
+  "install_guidance": {
+    "plugin": "slumber",
+    "binary": "slumber",
+    "check": "which slumber",
+    "install_steps": [
+      "cargo install slumber",
+      "Verify: slumber --version",
+      "supercli plugins install ./plugins/slumber --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "slumber",
+      "resource": "self",
+      "action": "version",
+      "description": "Print slumber version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slumber",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install slumber: cargo install slumber"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slumber",
+      "resource": "request",
+      "action": "run",
+      "description": "Send a request from a collection without the TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slumber",
+        "baseArgs": ["request"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install slumber: cargo install slumber"
+      },
+      "args": [
+        { "name": "id", "type": "string", "required": false, "description": "Recipe/request ID to send" }
+      ]
+    },
+    {
+      "namespace": "slumber",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slumber CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slumber",
+        "passthrough": true,
+        "missingDependencyHelp": "Install slumber: cargo install slumber"
+      },
+      "args": []
+    }
+  ]
+}
