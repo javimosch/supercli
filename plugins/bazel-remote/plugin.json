@@ -1,0 +1,53 @@
+{
+  "name": "bazel-remote",
+  "version": "0.1.0",
+  "description": "Remote cache for Bazel",
+  "source": "https://github.com/buchgr/bazel-remote/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bazel-remote"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bazel-remote",
+    "binary": "bazel-remote",
+    "check": "which bazel-remote",
+    "install_steps": [
+      "brew install bazel-remote",
+      "Verify: bazel-remote --version",
+      "supercli plugins install ./plugins/bazel-remote --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "bazel-remote",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bazel-remote version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bazel-remote",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install bazel-remote: brew install bazel-remote"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bazel-remote",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bazel-remote CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bazel-remote",
+        "passthrough": true,
+        "missingDependencyHelp": "Install bazel-remote"
+      },
+      "args": []
+    }
+  ]
+}

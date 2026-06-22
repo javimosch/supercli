@@ -1,0 +1,53 @@
+{
+  "name": "azcopy",
+  "version": "0.1.0",
+  "description": "Azure Storage data transfer utility",
+  "source": "https://github.com/Azure/azure-storage-azcopy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "azcopy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "azcopy",
+    "binary": "azcopy",
+    "check": "which azcopy",
+    "install_steps": [
+      "brew install azcopy",
+      "Verify: azcopy --version",
+      "supercli plugins install ./plugins/azcopy --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "azcopy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print azcopy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "azcopy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install azcopy: brew install azcopy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "azcopy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to azcopy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "azcopy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install azcopy"
+      },
+      "args": []
+    }
+  ]
+}
