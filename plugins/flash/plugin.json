@@ -1,0 +1,53 @@
+{
+  "name": "flash",
+  "version": "0.1.0",
+  "description": "Command-line script to flash SD card images of any kind",
+  "source": "https://github.com/hypriot/flash",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "flash"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "flash",
+    "binary": "flash",
+    "check": "which flash",
+    "install_steps": [
+      "brew install flash",
+      "Verify: flash --version",
+      "supercli plugins install ./plugins/flash --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "flash",
+      "resource": "self",
+      "action": "version",
+      "description": "Print flash version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flash",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install flash: brew install flash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "flash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to flash CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flash",
+        "passthrough": true,
+        "missingDependencyHelp": "Install flash"
+      },
+      "args": []
+    }
+  ]
+}
