@@ -29,7 +29,7 @@
     </div>
     <div>
       <h3 class="text-xl font-semibold text-white mb-2">Documentation Updates</h3>
-      <p class="text-slate-400 leading-relaxed">Updated README and ROADMAP to reflect 10,000+ plugin milestone across all references. Generated June 2026 changelog with dual-view (Product/Technical) interface. All documentation now accurately reflects the expanded plugin ecosystem.</p>
+      <p class="text-slate-400 leading-relaxed">Updated README and ROADMAP to reflect 9,900+ plugin milestone across all references. Generated June 2026 changelog with dual-view (Product/Technical) interface. Removed 40 case-insensitive duplicate plugins (e.g., Alsamixer/alsamixer) for consistency. All documentation now accurately reflects the plugin ecosystem.</p>
     </div>
   </div>
 </div>

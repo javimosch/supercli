@@ -160,7 +160,7 @@ SuperCLI has already won the *distribution* game. Every tool an agent needs is o
 
 | Year | Phase | ARR | Valuation | Paid Teams | Plugins |
 |------|-------|-----|-----------|------------|---------|
-| 2026 H2 | OSS Supernova | $0 | — | 0 | 10,000+ (achieved) |
+| 2026 H2 | OSS Supernova | $0 | — | 0 | 9,900+ (achieved) |
 | 2027 H1 | Cloud Layer | $200K | — | 2 000 | 5,500 |
 | 2027 H2 | Platform | $2.5M | — | 10 000 | 7,000 |
 | 2028 Q1 | European Champion | $6M | €80M | 20 000 | 8,500 |

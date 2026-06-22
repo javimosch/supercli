@@ -3,7 +3,7 @@
   <img src="https://img.shields.io/npm/v/superacli" alt="npm">
   <img src="https://img.shields.io/badge/release-2026--06--08-blue" alt="Latest Release">
   <img src="https://img.shields.io/badge/license-MIT-green" alt="License">
-  <img src="https://img.shields.io/badge/plugins-10k+-blueviolet" alt="Plugins">
+  <img src="https://img.shields.io/badge/plugins-9.96k-blueviolet" alt="Plugins">
 </p>
 
 <h1 align="center">supercli ⎯ 10,000+ CLI Tools, One Command — and growing daily</h1>
