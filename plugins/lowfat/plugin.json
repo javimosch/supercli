@@ -1,0 +1,56 @@
+{
+  "name": "lowfat",
+  "version": "0.1.0",
+  "description": "CLI tool: lowfat",
+  "source": "https://manpages.debian.org/lowfat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lowfat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lowfat",
+    "binary": "lowfat",
+    "check": "which lowfat",
+    "install_steps": [
+      "apt-get install lowfat 2>/dev/null || which lowfat",
+      "Verify: lowfat --version",
+      "supercli plugins install ./plugins/lowfat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lowfat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lowfat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lowfat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lowfat: apt-get install lowfat 2>/dev/null || which lowfat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lowfat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lowfat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lowfat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lowfat: apt-get install lowfat 2>/dev/null || which lowfat"
+      },
+      "args": []
+    }
+  ]
+}

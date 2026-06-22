@@ -1,0 +1,56 @@
+{
+  "name": "localectl",
+  "version": "0.1.0",
+  "description": "CLI tool: localectl",
+  "source": "https://manpages.debian.org/localectl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "localectl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "localectl",
+    "binary": "localectl",
+    "check": "which localectl",
+    "install_steps": [
+      "apt-get install localectl 2>/dev/null || which localectl",
+      "Verify: localectl --version",
+      "supercli plugins install ./plugins/localectl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "localectl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print localectl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localectl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install localectl: apt-get install localectl 2>/dev/null || which localectl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "localectl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to localectl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localectl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install localectl: apt-get install localectl 2>/dev/null || which localectl"
+      },
+      "args": []
+    }
+  ]
+}

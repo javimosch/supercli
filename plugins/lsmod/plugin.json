@@ -1,0 +1,56 @@
+{
+  "name": "lsmod",
+  "version": "0.1.0",
+  "description": "CLI tool: lsmod",
+  "source": "https://manpages.debian.org/lsmod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lsmod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lsmod",
+    "binary": "lsmod",
+    "check": "which lsmod",
+    "install_steps": [
+      "apt-get install lsmod 2>/dev/null || which lsmod",
+      "Verify: lsmod --version",
+      "supercli plugins install ./plugins/lsmod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lsmod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lsmod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsmod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lsmod: apt-get install lsmod 2>/dev/null || which lsmod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lsmod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lsmod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsmod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lsmod: apt-get install lsmod 2>/dev/null || which lsmod"
+      },
+      "args": []
+    }
+  ]
+}

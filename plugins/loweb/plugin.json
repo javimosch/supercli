@@ -1,0 +1,56 @@
+{
+  "name": "loweb",
+  "version": "0.1.0",
+  "description": "CLI tool: loweb",
+  "source": "https://manpages.debian.org/loweb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "loweb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "loweb",
+    "binary": "loweb",
+    "check": "which loweb",
+    "install_steps": [
+      "apt-get install loweb 2>/dev/null || which loweb",
+      "Verify: loweb --version",
+      "supercli plugins install ./plugins/loweb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "loweb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print loweb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loweb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install loweb: apt-get install loweb 2>/dev/null || which loweb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loweb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to loweb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loweb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install loweb: apt-get install loweb 2>/dev/null || which loweb"
+      },
+      "args": []
+    }
+  ]
+}

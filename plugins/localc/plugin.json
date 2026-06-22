@@ -1,0 +1,56 @@
+{
+  "name": "localc",
+  "version": "0.1.0",
+  "description": "CLI tool: localc",
+  "source": "https://manpages.debian.org/localc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "localc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "localc",
+    "binary": "localc",
+    "check": "which localc",
+    "install_steps": [
+      "apt-get install localc 2>/dev/null || which localc",
+      "Verify: localc --version",
+      "supercli plugins install ./plugins/localc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "localc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print localc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install localc: apt-get install localc 2>/dev/null || which localc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "localc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to localc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "localc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install localc: apt-get install localc 2>/dev/null || which localc"
+      },
+      "args": []
+    }
+  ]
+}

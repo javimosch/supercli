@@ -1,0 +1,56 @@
+{
+  "name": "lpc",
+  "version": "0.1.0",
+  "description": "CLI tool: lpc",
+  "source": "https://manpages.debian.org/lpc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lpc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lpc",
+    "binary": "lpc",
+    "check": "which lpc",
+    "install_steps": [
+      "apt-get install lpc 2>/dev/null || which lpc",
+      "Verify: lpc --version",
+      "supercli plugins install ./plugins/lpc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lpc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lpc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lpc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lpc: apt-get install lpc 2>/dev/null || which lpc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lpc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lpc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lpc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lpc: apt-get install lpc 2>/dev/null || which lpc"
+      },
+      "args": []
+    }
+  ]
+}

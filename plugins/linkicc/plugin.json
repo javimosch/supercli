@@ -1,0 +1,56 @@
+{
+  "name": "linkicc",
+  "version": "0.1.0",
+  "description": "CLI tool: linkicc",
+  "source": "https://manpages.debian.org/linkicc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "linkicc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "linkicc",
+    "binary": "linkicc",
+    "check": "which linkicc",
+    "install_steps": [
+      "apt-get install linkicc 2>/dev/null || which linkicc",
+      "Verify: linkicc --version",
+      "supercli plugins install ./plugins/linkicc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "linkicc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print linkicc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linkicc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install linkicc: apt-get install linkicc 2>/dev/null || which linkicc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linkicc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to linkicc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linkicc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install linkicc: apt-get install linkicc 2>/dev/null || which linkicc"
+      },
+      "args": []
+    }
+  ]
+}

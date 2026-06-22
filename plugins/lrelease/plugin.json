@@ -1,0 +1,56 @@
+{
+  "name": "lrelease",
+  "version": "0.1.0",
+  "description": "CLI tool: lrelease",
+  "source": "https://manpages.debian.org/lrelease",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lrelease"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lrelease",
+    "binary": "lrelease",
+    "check": "which lrelease",
+    "install_steps": [
+      "apt-get install lrelease 2>/dev/null || which lrelease",
+      "Verify: lrelease --version",
+      "supercli plugins install ./plugins/lrelease --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lrelease",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lrelease version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lrelease",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lrelease: apt-get install lrelease 2>/dev/null || which lrelease"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lrelease",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lrelease CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lrelease",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lrelease: apt-get install lrelease 2>/dev/null || which lrelease"
+      },
+      "args": []
+    }
+  ]
+}

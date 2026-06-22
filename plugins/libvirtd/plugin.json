@@ -1,0 +1,56 @@
+{
+  "name": "libvirtd",
+  "version": "0.1.0",
+  "description": "CLI tool: libvirtd",
+  "source": "https://manpages.debian.org/libvirtd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "libvirtd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "libvirtd",
+    "binary": "libvirtd",
+    "check": "which libvirtd",
+    "install_steps": [
+      "apt-get install libvirtd 2>/dev/null || which libvirtd",
+      "Verify: libvirtd --version",
+      "supercli plugins install ./plugins/libvirtd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "libvirtd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print libvirtd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "libvirtd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install libvirtd: apt-get install libvirtd 2>/dev/null || which libvirtd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "libvirtd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to libvirtd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "libvirtd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install libvirtd: apt-get install libvirtd 2>/dev/null || which libvirtd"
+      },
+      "args": []
+    }
+  ]
+}

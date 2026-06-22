@@ -1,0 +1,56 @@
+{
+  "name": "logresolve",
+  "version": "0.1.0",
+  "description": "CLI tool: logresolve",
+  "source": "https://manpages.debian.org/logresolve",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "logresolve"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "logresolve",
+    "binary": "logresolve",
+    "check": "which logresolve",
+    "install_steps": [
+      "apt-get install logresolve 2>/dev/null || which logresolve",
+      "Verify: logresolve --version",
+      "supercli plugins install ./plugins/logresolve --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "logresolve",
+      "resource": "self",
+      "action": "version",
+      "description": "Print logresolve version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "logresolve",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install logresolve: apt-get install logresolve 2>/dev/null || which logresolve"
+      },
+      "args": []
+    },
+    {
+      "namespace": "logresolve",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to logresolve CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "logresolve",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install logresolve: apt-get install logresolve 2>/dev/null || which logresolve"
+      },
+      "args": []
+    }
+  ]
+}

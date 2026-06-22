@@ -1,0 +1,56 @@
+{
+  "name": "lpmove",
+  "version": "0.1.0",
+  "description": "CLI tool: lpmove",
+  "source": "https://manpages.debian.org/lpmove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lpmove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lpmove",
+    "binary": "lpmove",
+    "check": "which lpmove",
+    "install_steps": [
+      "apt-get install lpmove 2>/dev/null || which lpmove",
+      "Verify: lpmove --version",
+      "supercli plugins install ./plugins/lpmove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lpmove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lpmove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lpmove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lpmove: apt-get install lpmove 2>/dev/null || which lpmove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lpmove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lpmove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lpmove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lpmove: apt-get install lpmove 2>/dev/null || which lpmove"
+      },
+      "args": []
+    }
+  ]
+}

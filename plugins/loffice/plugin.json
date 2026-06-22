@@ -1,0 +1,56 @@
+{
+  "name": "loffice",
+  "version": "0.1.0",
+  "description": "CLI tool: loffice",
+  "source": "https://manpages.debian.org/loffice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "loffice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "loffice",
+    "binary": "loffice",
+    "check": "which loffice",
+    "install_steps": [
+      "apt-get install loffice 2>/dev/null || which loffice",
+      "Verify: loffice --version",
+      "supercli plugins install ./plugins/loffice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "loffice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print loffice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loffice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install loffice: apt-get install loffice 2>/dev/null || which loffice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loffice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to loffice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loffice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install loffice: apt-get install loffice 2>/dev/null || which loffice"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "lsns",
+  "version": "0.1.0",
+  "description": "CLI tool: lsns",
+  "source": "https://manpages.debian.org/lsns",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lsns"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lsns",
+    "binary": "lsns",
+    "check": "which lsns",
+    "install_steps": [
+      "apt-get install lsns 2>/dev/null || which lsns",
+      "Verify: lsns --version",
+      "supercli plugins install ./plugins/lsns --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lsns",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lsns version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsns",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lsns: apt-get install lsns 2>/dev/null || which lsns"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lsns",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lsns CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsns",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lsns: apt-get install lsns 2>/dev/null || which lsns"
+      },
+      "args": []
+    }
+  ]
+}

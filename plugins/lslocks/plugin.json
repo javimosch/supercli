@@ -1,0 +1,56 @@
+{
+  "name": "lslocks",
+  "version": "0.1.0",
+  "description": "CLI tool: lslocks",
+  "source": "https://manpages.debian.org/lslocks",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lslocks"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lslocks",
+    "binary": "lslocks",
+    "check": "which lslocks",
+    "install_steps": [
+      "apt-get install lslocks 2>/dev/null || which lslocks",
+      "Verify: lslocks --version",
+      "supercli plugins install ./plugins/lslocks --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lslocks",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lslocks version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lslocks",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lslocks: apt-get install lslocks 2>/dev/null || which lslocks"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lslocks",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lslocks CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lslocks",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lslocks: apt-get install lslocks 2>/dev/null || which lslocks"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "lsipc",
+  "version": "0.1.0",
+  "description": "CLI tool: lsipc",
+  "source": "https://manpages.debian.org/lsipc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lsipc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lsipc",
+    "binary": "lsipc",
+    "check": "which lsipc",
+    "install_steps": [
+      "apt-get install lsipc 2>/dev/null || which lsipc",
+      "Verify: lsipc --version",
+      "supercli plugins install ./plugins/lsipc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lsipc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lsipc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsipc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lsipc: apt-get install lsipc 2>/dev/null || which lsipc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lsipc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lsipc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lsipc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lsipc: apt-get install lsipc 2>/dev/null || which lsipc"
+      },
+      "args": []
+    }
+  ]
+}

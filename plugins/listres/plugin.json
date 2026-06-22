@@ -1,0 +1,56 @@
+{
+  "name": "listres",
+  "version": "0.1.0",
+  "description": "CLI tool: listres",
+  "source": "https://manpages.debian.org/listres",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "listres"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "listres",
+    "binary": "listres",
+    "check": "which listres",
+    "install_steps": [
+      "apt-get install listres 2>/dev/null || which listres",
+      "Verify: listres --version",
+      "supercli plugins install ./plugins/listres --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "listres",
+      "resource": "self",
+      "action": "version",
+      "description": "Print listres version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "listres",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install listres: apt-get install listres 2>/dev/null || which listres"
+      },
+      "args": []
+    },
+    {
+      "namespace": "listres",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to listres CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "listres",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install listres: apt-get install listres 2>/dev/null || which listres"
+      },
+      "args": []
+    }
+  ]
+}

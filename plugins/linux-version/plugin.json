@@ -1,0 +1,56 @@
+{
+  "name": "linux-version",
+  "version": "0.1.0",
+  "description": "CLI tool: linux-version",
+  "source": "https://manpages.debian.org/linux-version",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "linux-version"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "linux-version",
+    "binary": "linux-version",
+    "check": "which linux-version",
+    "install_steps": [
+      "apt-get install linux-version 2>/dev/null || which linux-version",
+      "Verify: linux-version --version",
+      "supercli plugins install ./plugins/linux-version --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "linux-version",
+      "resource": "self",
+      "action": "version",
+      "description": "Print linux-version version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-version",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install linux-version: apt-get install linux-version 2>/dev/null || which linux-version"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linux-version",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to linux-version CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-version",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install linux-version: apt-get install linux-version 2>/dev/null || which linux-version"
+      },
+      "args": []
+    }
+  ]
+}

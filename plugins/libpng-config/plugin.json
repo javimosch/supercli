@@ -1,0 +1,56 @@
+{
+  "name": "libpng-config",
+  "version": "0.1.0",
+  "description": "CLI tool: libpng-config",
+  "source": "https://manpages.debian.org/libpng-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "libpng-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "libpng-config",
+    "binary": "libpng-config",
+    "check": "which libpng-config",
+    "install_steps": [
+      "apt-get install libpng-config 2>/dev/null || which libpng-config",
+      "Verify: libpng-config --version",
+      "supercli plugins install ./plugins/libpng-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "libpng-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print libpng-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "libpng-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install libpng-config: apt-get install libpng-config 2>/dev/null || which libpng-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "libpng-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to libpng-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "libpng-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install libpng-config: apt-get install libpng-config 2>/dev/null || which libpng-config"
+      },
+      "args": []
+    }
+  ]
+}

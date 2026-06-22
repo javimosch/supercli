@@ -1,0 +1,56 @@
+{
+  "name": "lomath",
+  "version": "0.1.0",
+  "description": "CLI tool: lomath",
+  "source": "https://manpages.debian.org/lomath",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lomath"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lomath",
+    "binary": "lomath",
+    "check": "which lomath",
+    "install_steps": [
+      "apt-get install lomath 2>/dev/null || which lomath",
+      "Verify: lomath --version",
+      "supercli plugins install ./plugins/lomath --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lomath",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lomath version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lomath",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lomath: apt-get install lomath 2>/dev/null || which lomath"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lomath",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lomath CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lomath",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lomath: apt-get install lomath 2>/dev/null || which lomath"
+      },
+      "args": []
+    }
+  ]
+}

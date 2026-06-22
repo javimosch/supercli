@@ -1,0 +1,56 @@
+{
+  "name": "lowriter",
+  "version": "0.1.0",
+  "description": "CLI tool: lowriter",
+  "source": "https://manpages.debian.org/lowriter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lowriter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lowriter",
+    "binary": "lowriter",
+    "check": "which lowriter",
+    "install_steps": [
+      "apt-get install lowriter 2>/dev/null || which lowriter",
+      "Verify: lowriter --version",
+      "supercli plugins install ./plugins/lowriter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lowriter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lowriter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lowriter",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lowriter: apt-get install lowriter 2>/dev/null || which lowriter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lowriter",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lowriter CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lowriter",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lowriter: apt-get install lowriter 2>/dev/null || which lowriter"
+      },
+      "args": []
+    }
+  ]
+}

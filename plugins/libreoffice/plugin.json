@@ -1,0 +1,56 @@
+{
+  "name": "libreoffice",
+  "version": "0.1.0",
+  "description": "CLI tool: libreoffice",
+  "source": "https://manpages.debian.org/libreoffice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "libreoffice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "libreoffice",
+    "binary": "libreoffice",
+    "check": "which libreoffice",
+    "install_steps": [
+      "apt-get install libreoffice 2>/dev/null || which libreoffice",
+      "Verify: libreoffice --version",
+      "supercli plugins install ./plugins/libreoffice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "libreoffice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print libreoffice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "libreoffice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install libreoffice: apt-get install libreoffice 2>/dev/null || which libreoffice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "libreoffice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to libreoffice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "libreoffice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install libreoffice: apt-get install libreoffice 2>/dev/null || which libreoffice"
+      },
+      "args": []
+    }
+  ]
+}

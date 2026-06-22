@@ -1,0 +1,56 @@
+{
+  "name": "litellm-proxy",
+  "version": "0.1.0",
+  "description": "CLI tool: litellm-proxy",
+  "source": "https://manpages.debian.org/litellm-proxy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "litellm-proxy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "litellm-proxy",
+    "binary": "litellm-proxy",
+    "check": "which litellm-proxy",
+    "install_steps": [
+      "apt-get install litellm-proxy 2>/dev/null || which litellm-proxy",
+      "Verify: litellm-proxy --version",
+      "supercli plugins install ./plugins/litellm-proxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "litellm-proxy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print litellm-proxy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "litellm-proxy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install litellm-proxy: apt-get install litellm-proxy 2>/dev/null || which litellm-proxy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "litellm-proxy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to litellm-proxy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "litellm-proxy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install litellm-proxy: apt-get install litellm-proxy 2>/dev/null || which litellm-proxy"
+      },
+      "args": []
+    }
+  ]
+}

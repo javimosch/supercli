@@ -1,0 +1,56 @@
+{
+  "name": "lodraw",
+  "version": "0.1.0",
+  "description": "CLI tool: lodraw",
+  "source": "https://manpages.debian.org/lodraw",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lodraw"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lodraw",
+    "binary": "lodraw",
+    "check": "which lodraw",
+    "install_steps": [
+      "apt-get install lodraw 2>/dev/null || which lodraw",
+      "Verify: lodraw --version",
+      "supercli plugins install ./plugins/lodraw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lodraw",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lodraw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lodraw",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lodraw: apt-get install lodraw 2>/dev/null || which lodraw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lodraw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lodraw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lodraw",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lodraw: apt-get install lodraw 2>/dev/null || which lodraw"
+      },
+      "args": []
+    }
+  ]
+}

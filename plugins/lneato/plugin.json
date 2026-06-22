@@ -1,0 +1,56 @@
+{
+  "name": "lneato",
+  "version": "0.1.0",
+  "description": "CLI tool: lneato",
+  "source": "https://manpages.debian.org/lneato",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lneato"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lneato",
+    "binary": "lneato",
+    "check": "which lneato",
+    "install_steps": [
+      "apt-get install lneato 2>/dev/null || which lneato",
+      "Verify: lneato --version",
+      "supercli plugins install ./plugins/lneato --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lneato",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lneato version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lneato",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lneato: apt-get install lneato 2>/dev/null || which lneato"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lneato",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lneato CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lneato",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lneato: apt-get install lneato 2>/dev/null || which lneato"
+      },
+      "args": []
+    }
+  ]
+}

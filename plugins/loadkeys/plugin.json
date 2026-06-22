@@ -1,0 +1,56 @@
+{
+  "name": "loadkeys",
+  "version": "0.1.0",
+  "description": "CLI tool: loadkeys",
+  "source": "https://manpages.debian.org/loadkeys",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "loadkeys"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "loadkeys",
+    "binary": "loadkeys",
+    "check": "which loadkeys",
+    "install_steps": [
+      "apt-get install loadkeys 2>/dev/null || which loadkeys",
+      "Verify: loadkeys --version",
+      "supercli plugins install ./plugins/loadkeys --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "loadkeys",
+      "resource": "self",
+      "action": "version",
+      "description": "Print loadkeys version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loadkeys",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install loadkeys: apt-get install loadkeys 2>/dev/null || which loadkeys"
+      },
+      "args": []
+    },
+    {
+      "namespace": "loadkeys",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to loadkeys CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "loadkeys",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install loadkeys: apt-get install loadkeys 2>/dev/null || which loadkeys"
+      },
+      "args": []
+    }
+  ]
+}
