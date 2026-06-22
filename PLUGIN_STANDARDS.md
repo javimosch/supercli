@@ -112,7 +112,7 @@ https://github.com/[plugin-name]    # Missing owner
 
 Before submitting a new plugin, ensure:
 
-- [ ] **Name:** Matches official tool name
+- [ ] **Name:** Follows naming conventions (see [`docs/NAMING_CONVENTIONS.md`](./docs/NAMING_CONVENTIONS.md))
 - [ ] **Description:** 30-150 characters, clear purpose
 - [ ] **Tags:** 3-8 tags from controlled vocabulary
 - [ ] **Source URL:** Specific GitHub repo, verified accessible
