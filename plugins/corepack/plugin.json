@@ -1,0 +1,53 @@
+{
+  "name": "corepack",
+  "version": "0.1.0",
+  "description": "Package acting as bridge between Node projects and their package managers",
+  "source": "https://github.com/nodejs/corepack",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "corepack"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "corepack",
+    "binary": "corepack",
+    "check": "which corepack",
+    "install_steps": [
+      "brew install corepack",
+      "Verify: corepack --version",
+      "supercli plugins install ./plugins/corepack --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "corepack",
+      "resource": "self",
+      "action": "version",
+      "description": "Print corepack version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "corepack",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install corepack: brew install corepack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "corepack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to corepack CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "corepack",
+        "passthrough": true,
+        "missingDependencyHelp": "Install corepack"
+      },
+      "args": []
+    }
+  ]
+}
