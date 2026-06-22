@@ -1,0 +1,56 @@
+{
+  "name": "zstdless",
+  "version": "0.1.0",
+  "description": "CLI tool: zstdless",
+  "source": "https://manpages.debian.org/zstdless",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zstdless"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zstdless",
+    "binary": "zstdless",
+    "check": "which zstdless",
+    "install_steps": [
+      "apt-get install zstdless 2>/dev/null || which zstdless",
+      "Verify: zstdless --version",
+      "supercli plugins install ./plugins/zstdless --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zstdless",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zstdless version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdless",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zstdless: apt-get install zstdless 2>/dev/null || which zstdless"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zstdless",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zstdless CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdless",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zstdless: apt-get install zstdless 2>/dev/null || which zstdless"
+      },
+      "args": []
+    }
+  ]
+}

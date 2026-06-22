@@ -1,0 +1,56 @@
+{
+  "name": "zstdmt",
+  "version": "0.1.0",
+  "description": "CLI tool: zstdmt",
+  "source": "https://manpages.debian.org/zstdmt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zstdmt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zstdmt",
+    "binary": "zstdmt",
+    "check": "which zstdmt",
+    "install_steps": [
+      "apt-get install zstdmt 2>/dev/null || which zstdmt",
+      "Verify: zstdmt --version",
+      "supercli plugins install ./plugins/zstdmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zstdmt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zstdmt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdmt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zstdmt: apt-get install zstdmt 2>/dev/null || which zstdmt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zstdmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zstdmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdmt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zstdmt: apt-get install zstdmt 2>/dev/null || which zstdmt"
+      },
+      "args": []
+    }
+  ]
+}
