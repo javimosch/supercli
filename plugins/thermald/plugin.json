@@ -1,0 +1,56 @@
+{
+  "name": "thermald",
+  "version": "0.1.0",
+  "description": "CLI tool: thermald",
+  "source": "https://manpages.debian.org/thermald",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thermald"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thermald",
+    "binary": "thermald",
+    "check": "which thermald",
+    "install_steps": [
+      "apt-get install thermald 2>/dev/null || which thermald",
+      "Verify: thermald --version",
+      "supercli plugins install ./plugins/thermald --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thermald",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thermald version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thermald",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thermald: apt-get install thermald 2>/dev/null || which thermald"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thermald",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thermald CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thermald",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thermald: apt-get install thermald 2>/dev/null || which thermald"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "tor-prompt",
+  "version": "0.1.0",
+  "description": "CLI tool: tor-prompt",
+  "source": "https://manpages.debian.org/tor-prompt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tor-prompt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tor-prompt",
+    "binary": "tor-prompt",
+    "check": "which tor-prompt",
+    "install_steps": [
+      "apt-get install tor-prompt 2>/dev/null || which tor-prompt",
+      "Verify: tor-prompt --version",
+      "supercli plugins install ./plugins/tor-prompt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tor-prompt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tor-prompt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tor-prompt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tor-prompt: apt-get install tor-prompt 2>/dev/null || which tor-prompt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tor-prompt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tor-prompt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tor-prompt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tor-prompt: apt-get install tor-prompt 2>/dev/null || which tor-prompt"
+      },
+      "args": []
+    }
+  ]
+}

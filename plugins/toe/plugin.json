@@ -1,0 +1,56 @@
+{
+  "name": "toe",
+  "version": "0.1.0",
+  "description": "CLI tool: toe",
+  "source": "https://manpages.debian.org/toe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "toe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "toe",
+    "binary": "toe",
+    "check": "which toe",
+    "install_steps": [
+      "apt-get install toe 2>/dev/null || which toe",
+      "Verify: toe --version",
+      "supercli plugins install ./plugins/toe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "toe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print toe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install toe: apt-get install toe 2>/dev/null || which toe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to toe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install toe: apt-get install toe 2>/dev/null || which toe"
+      },
+      "args": []
+    }
+  ]
+}

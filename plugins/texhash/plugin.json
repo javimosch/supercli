@@ -1,0 +1,56 @@
+{
+  "name": "texhash",
+  "version": "0.1.0",
+  "description": "CLI tool: texhash",
+  "source": "https://manpages.debian.org/texhash",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "texhash"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "texhash",
+    "binary": "texhash",
+    "check": "which texhash",
+    "install_steps": [
+      "apt-get install texhash 2>/dev/null || which texhash",
+      "Verify: texhash --version",
+      "supercli plugins install ./plugins/texhash --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "texhash",
+      "resource": "self",
+      "action": "version",
+      "description": "Print texhash version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texhash",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install texhash: apt-get install texhash 2>/dev/null || which texhash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "texhash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to texhash CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texhash",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install texhash: apt-get install texhash 2>/dev/null || which texhash"
+      },
+      "args": []
+    }
+  ]
+}

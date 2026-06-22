@@ -1,0 +1,56 @@
+{
+  "name": "texdoctk",
+  "version": "0.1.0",
+  "description": "CLI tool: texdoctk",
+  "source": "https://manpages.debian.org/texdoctk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "texdoctk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "texdoctk",
+    "binary": "texdoctk",
+    "check": "which texdoctk",
+    "install_steps": [
+      "apt-get install texdoctk 2>/dev/null || which texdoctk",
+      "Verify: texdoctk --version",
+      "supercli plugins install ./plugins/texdoctk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "texdoctk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print texdoctk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texdoctk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install texdoctk: apt-get install texdoctk 2>/dev/null || which texdoctk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "texdoctk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to texdoctk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texdoctk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install texdoctk: apt-get install texdoctk 2>/dev/null || which texdoctk"
+      },
+      "args": []
+    }
+  ]
+}

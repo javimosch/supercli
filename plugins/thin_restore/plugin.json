@@ -1,0 +1,56 @@
+{
+  "name": "thin_restore",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_restore",
+  "source": "https://manpages.debian.org/thin_restore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_restore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_restore",
+    "binary": "thin_restore",
+    "check": "which thin_restore",
+    "install_steps": [
+      "apt-get install thin_restore 2>/dev/null || which thin_restore",
+      "Verify: thin_restore --version",
+      "supercli plugins install ./plugins/thin_restore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_restore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_restore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_restore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_restore: apt-get install thin_restore 2>/dev/null || which thin_restore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_restore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_restore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_restore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_restore: apt-get install thin_restore 2>/dev/null || which thin_restore"
+      },
+      "args": []
+    }
+  ]
+}

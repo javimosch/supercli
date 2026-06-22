@@ -1,0 +1,56 @@
+{
+  "name": "tie",
+  "version": "0.1.0",
+  "description": "CLI tool: tie",
+  "source": "https://manpages.debian.org/tie",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tie"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tie",
+    "binary": "tie",
+    "check": "which tie",
+    "install_steps": [
+      "apt-get install tie 2>/dev/null || which tie",
+      "Verify: tie --version",
+      "supercli plugins install ./plugins/tie --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tie",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tie version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tie",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tie: apt-get install tie 2>/dev/null || which tie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tie",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tie CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tie",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tie: apt-get install tie 2>/dev/null || which tie"
+      },
+      "args": []
+    }
+  ]
+}

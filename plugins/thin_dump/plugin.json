@@ -1,0 +1,56 @@
+{
+  "name": "thin_dump",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_dump",
+  "source": "https://manpages.debian.org/thin_dump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_dump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_dump",
+    "binary": "thin_dump",
+    "check": "which thin_dump",
+    "install_steps": [
+      "apt-get install thin_dump 2>/dev/null || which thin_dump",
+      "Verify: thin_dump --version",
+      "supercli plugins install ./plugins/thin_dump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_dump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_dump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_dump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_dump: apt-get install thin_dump 2>/dev/null || which thin_dump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_dump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_dump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_dump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_dump: apt-get install thin_dump 2>/dev/null || which thin_dump"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "thin_rmap",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_rmap",
+  "source": "https://manpages.debian.org/thin_rmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_rmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_rmap",
+    "binary": "thin_rmap",
+    "check": "which thin_rmap",
+    "install_steps": [
+      "apt-get install thin_rmap 2>/dev/null || which thin_rmap",
+      "Verify: thin_rmap --version",
+      "supercli plugins install ./plugins/thin_rmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_rmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_rmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_rmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_rmap: apt-get install thin_rmap 2>/dev/null || which thin_rmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_rmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_rmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_rmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_rmap: apt-get install thin_rmap 2>/dev/null || which thin_rmap"
+      },
+      "args": []
+    }
+  ]
+}

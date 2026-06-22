@@ -1,0 +1,56 @@
+{
+  "name": "tificc",
+  "version": "0.1.0",
+  "description": "CLI tool: tificc",
+  "source": "https://manpages.debian.org/tificc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tificc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tificc",
+    "binary": "tificc",
+    "check": "which tificc",
+    "install_steps": [
+      "apt-get install tificc 2>/dev/null || which tificc",
+      "Verify: tificc --version",
+      "supercli plugins install ./plugins/tificc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tificc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tificc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tificc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tificc: apt-get install tificc 2>/dev/null || which tificc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tificc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tificc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tificc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tificc: apt-get install tificc 2>/dev/null || which tificc"
+      },
+      "args": []
+    }
+  ]
+}

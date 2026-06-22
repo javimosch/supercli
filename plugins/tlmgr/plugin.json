@@ -1,0 +1,56 @@
+{
+  "name": "tlmgr",
+  "version": "0.1.0",
+  "description": "CLI tool: tlmgr",
+  "source": "https://manpages.debian.org/tlmgr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tlmgr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tlmgr",
+    "binary": "tlmgr",
+    "check": "which tlmgr",
+    "install_steps": [
+      "apt-get install tlmgr 2>/dev/null || which tlmgr",
+      "Verify: tlmgr --version",
+      "supercli plugins install ./plugins/tlmgr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tlmgr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tlmgr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tlmgr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tlmgr: apt-get install tlmgr 2>/dev/null || which tlmgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tlmgr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tlmgr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tlmgr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tlmgr: apt-get install tlmgr 2>/dev/null || which tlmgr"
+      },
+      "args": []
+    }
+  ]
+}

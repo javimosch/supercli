@@ -1,0 +1,56 @@
+{
+  "name": "thin_check",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_check",
+  "source": "https://manpages.debian.org/thin_check",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_check"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_check",
+    "binary": "thin_check",
+    "check": "which thin_check",
+    "install_steps": [
+      "apt-get install thin_check 2>/dev/null || which thin_check",
+      "Verify: thin_check --version",
+      "supercli plugins install ./plugins/thin_check --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_check",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_check version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_check",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_check: apt-get install thin_check 2>/dev/null || which thin_check"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_check",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_check CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_check",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_check: apt-get install thin_check 2>/dev/null || which thin_check"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "thin_repair",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_repair",
+  "source": "https://manpages.debian.org/thin_repair",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_repair"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_repair",
+    "binary": "thin_repair",
+    "check": "which thin_repair",
+    "install_steps": [
+      "apt-get install thin_repair 2>/dev/null || which thin_repair",
+      "Verify: thin_repair --version",
+      "supercli plugins install ./plugins/thin_repair --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_repair",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_repair version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_repair",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_repair: apt-get install thin_repair 2>/dev/null || which thin_repair"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_repair",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_repair CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_repair",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_repair: apt-get install thin_repair 2>/dev/null || which thin_repair"
+      },
+      "args": []
+    }
+  ]
+}

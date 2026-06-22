@@ -1,0 +1,56 @@
+{
+  "name": "totem",
+  "version": "0.1.0",
+  "description": "CLI tool: totem",
+  "source": "https://manpages.debian.org/totem",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "totem"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "totem",
+    "binary": "totem",
+    "check": "which totem",
+    "install_steps": [
+      "apt-get install totem 2>/dev/null || which totem",
+      "Verify: totem --version",
+      "supercli plugins install ./plugins/totem --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "totem",
+      "resource": "self",
+      "action": "version",
+      "description": "Print totem version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "totem",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install totem: apt-get install totem 2>/dev/null || which totem"
+      },
+      "args": []
+    },
+    {
+      "namespace": "totem",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to totem CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "totem",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install totem: apt-get install totem 2>/dev/null || which totem"
+      },
+      "args": []
+    }
+  ]
+}

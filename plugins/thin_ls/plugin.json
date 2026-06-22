@@ -1,0 +1,56 @@
+{
+  "name": "thin_ls",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_ls",
+  "source": "https://manpages.debian.org/thin_ls",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_ls"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_ls",
+    "binary": "thin_ls",
+    "check": "which thin_ls",
+    "install_steps": [
+      "apt-get install thin_ls 2>/dev/null || which thin_ls",
+      "Verify: thin_ls --version",
+      "supercli plugins install ./plugins/thin_ls --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_ls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_ls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_ls",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_ls: apt-get install thin_ls 2>/dev/null || which thin_ls"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_ls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_ls CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_ls",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_ls: apt-get install thin_ls 2>/dev/null || which thin_ls"
+      },
+      "args": []
+    }
+  ]
+}

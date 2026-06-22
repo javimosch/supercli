@@ -1,0 +1,53 @@
+{
+  "name": "toml-editor",
+  "version": "0.1.0",
+  "description": "Simple container that has rust/cargo and toml-cli installed. Used as a step in pipelines.",
+  "source": "https://github.com/toml-editor/toml-editor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "toml-editor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "toml-editor",
+    "binary": "toml-editor",
+    "check": "which toml-editor",
+    "install_steps": [
+      "Check GitHub repository for installation instructions",
+      "Verify: toml-editor --version",
+      "supercli plugins install ./plugins/toml-editor --on-conflict replace --json"
+    ],
+    "note": "Dockerfile language CLI tool"
+  },
+  "commands": [
+    {
+      "namespace": "toml-editor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print toml-editor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toml-editor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install toml-editor from project repository"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toml-editor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to toml-editor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toml-editor",
+        "passthrough": true,
+        "missingDependencyHelp": "Install toml-editor from project repository"
+      },
+      "args": []
+    }
+  ]
+}

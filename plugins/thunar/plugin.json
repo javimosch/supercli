@@ -1,0 +1,56 @@
+{
+  "name": "thunar",
+  "version": "0.1.0",
+  "description": "CLI tool: thunar",
+  "source": "https://manpages.debian.org/thunar",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thunar"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thunar",
+    "binary": "thunar",
+    "check": "which thunar",
+    "install_steps": [
+      "apt-get install thunar 2>/dev/null || which thunar",
+      "Verify: thunar --version",
+      "supercli plugins install ./plugins/thunar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thunar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thunar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thunar",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thunar: apt-get install thunar 2>/dev/null || which thunar"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thunar",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thunar CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thunar",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thunar: apt-get install thunar 2>/dev/null || which thunar"
+      },
+      "args": []
+    }
+  ]
+}

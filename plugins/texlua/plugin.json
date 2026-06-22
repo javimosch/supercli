@@ -1,0 +1,56 @@
+{
+  "name": "texlua",
+  "version": "0.1.0",
+  "description": "CLI tool: texlua",
+  "source": "https://manpages.debian.org/texlua",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "texlua"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "texlua",
+    "binary": "texlua",
+    "check": "which texlua",
+    "install_steps": [
+      "apt-get install texlua 2>/dev/null || which texlua",
+      "Verify: texlua --version",
+      "supercli plugins install ./plugins/texlua --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "texlua",
+      "resource": "self",
+      "action": "version",
+      "description": "Print texlua version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texlua",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install texlua: apt-get install texlua 2>/dev/null || which texlua"
+      },
+      "args": []
+    },
+    {
+      "namespace": "texlua",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to texlua CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texlua",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install texlua: apt-get install texlua 2>/dev/null || which texlua"
+      },
+      "args": []
+    }
+  ]
+}

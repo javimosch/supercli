@@ -1,0 +1,56 @@
+{
+  "name": "tftopl",
+  "version": "0.1.0",
+  "description": "CLI tool: tftopl",
+  "source": "https://manpages.debian.org/tftopl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tftopl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tftopl",
+    "binary": "tftopl",
+    "check": "which tftopl",
+    "install_steps": [
+      "apt-get install tftopl 2>/dev/null || which tftopl",
+      "Verify: tftopl --version",
+      "supercli plugins install ./plugins/tftopl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tftopl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tftopl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tftopl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tftopl: apt-get install tftopl 2>/dev/null || which tftopl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tftopl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tftopl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tftopl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tftopl: apt-get install tftopl 2>/dev/null || which tftopl"
+      },
+      "args": []
+    }
+  ]
+}

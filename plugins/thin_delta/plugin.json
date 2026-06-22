@@ -1,0 +1,56 @@
+{
+  "name": "thin_delta",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_delta",
+  "source": "https://manpages.debian.org/thin_delta",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_delta"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_delta",
+    "binary": "thin_delta",
+    "check": "which thin_delta",
+    "install_steps": [
+      "apt-get install thin_delta 2>/dev/null || which thin_delta",
+      "Verify: thin_delta --version",
+      "supercli plugins install ./plugins/thin_delta --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_delta",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_delta version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_delta",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_delta: apt-get install thin_delta 2>/dev/null || which thin_delta"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_delta",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_delta CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_delta",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_delta: apt-get install thin_delta 2>/dev/null || which thin_delta"
+      },
+      "args": []
+    }
+  ]
+}

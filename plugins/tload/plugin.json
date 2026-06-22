@@ -1,0 +1,56 @@
+{
+  "name": "tload",
+  "version": "0.1.0",
+  "description": "CLI tool: tload",
+  "source": "https://manpages.debian.org/tload",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tload"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tload",
+    "binary": "tload",
+    "check": "which tload",
+    "install_steps": [
+      "apt-get install tload 2>/dev/null || which tload",
+      "Verify: tload --version",
+      "supercli plugins install ./plugins/tload --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tload",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tload version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tload",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tload: apt-get install tload 2>/dev/null || which tload"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tload",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tload CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tload",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tload: apt-get install tload 2>/dev/null || which tload"
+      },
+      "args": []
+    }
+  ]
+}

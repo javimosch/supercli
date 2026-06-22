@@ -1,0 +1,56 @@
+{
+  "name": "tnameserv",
+  "version": "0.1.0",
+  "description": "CLI tool: tnameserv",
+  "source": "https://manpages.debian.org/tnameserv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tnameserv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tnameserv",
+    "binary": "tnameserv",
+    "check": "which tnameserv",
+    "install_steps": [
+      "apt-get install tnameserv 2>/dev/null || which tnameserv",
+      "Verify: tnameserv --version",
+      "supercli plugins install ./plugins/tnameserv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tnameserv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tnameserv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tnameserv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tnameserv: apt-get install tnameserv 2>/dev/null || which tnameserv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tnameserv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tnameserv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tnameserv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tnameserv: apt-get install tnameserv 2>/dev/null || which tnameserv"
+      },
+      "args": []
+    }
+  ]
+}

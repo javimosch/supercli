@@ -1,0 +1,56 @@
+{
+  "name": "thunderbird",
+  "version": "0.1.0",
+  "description": "CLI tool: thunderbird",
+  "source": "https://manpages.debian.org/thunderbird",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thunderbird"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thunderbird",
+    "binary": "thunderbird",
+    "check": "which thunderbird",
+    "install_steps": [
+      "apt-get install thunderbird 2>/dev/null || which thunderbird",
+      "Verify: thunderbird --version",
+      "supercli plugins install ./plugins/thunderbird --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thunderbird",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thunderbird version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thunderbird",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thunderbird: apt-get install thunderbird 2>/dev/null || which thunderbird"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thunderbird",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thunderbird CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thunderbird",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thunderbird: apt-get install thunderbird 2>/dev/null || which thunderbird"
+      },
+      "args": []
+    }
+  ]
+}

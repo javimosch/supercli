@@ -1,0 +1,56 @@
+{
+  "name": "texluac",
+  "version": "0.1.0",
+  "description": "CLI tool: texluac",
+  "source": "https://manpages.debian.org/texluac",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "texluac"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "texluac",
+    "binary": "texluac",
+    "check": "which texluac",
+    "install_steps": [
+      "apt-get install texluac 2>/dev/null || which texluac",
+      "Verify: texluac --version",
+      "supercli plugins install ./plugins/texluac --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "texluac",
+      "resource": "self",
+      "action": "version",
+      "description": "Print texluac version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texluac",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install texluac: apt-get install texluac 2>/dev/null || which texluac"
+      },
+      "args": []
+    },
+    {
+      "namespace": "texluac",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to texluac CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texluac",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install texluac: apt-get install texluac 2>/dev/null || which texluac"
+      },
+      "args": []
+    }
+  ]
+}

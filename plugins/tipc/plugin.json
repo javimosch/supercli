@@ -1,0 +1,56 @@
+{
+  "name": "tipc",
+  "version": "0.1.0",
+  "description": "CLI tool: tipc",
+  "source": "https://manpages.debian.org/tipc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tipc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tipc",
+    "binary": "tipc",
+    "check": "which tipc",
+    "install_steps": [
+      "apt-get install tipc 2>/dev/null || which tipc",
+      "Verify: tipc --version",
+      "supercli plugins install ./plugins/tipc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tipc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tipc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tipc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tipc: apt-get install tipc 2>/dev/null || which tipc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tipc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tipc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tipc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tipc: apt-get install tipc 2>/dev/null || which tipc"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "thin_trim",
+  "version": "0.1.0",
+  "description": "CLI tool: thin_trim",
+  "source": "https://manpages.debian.org/thin_trim",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "thin_trim"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "thin_trim",
+    "binary": "thin_trim",
+    "check": "which thin_trim",
+    "install_steps": [
+      "apt-get install thin_trim 2>/dev/null || which thin_trim",
+      "Verify: thin_trim --version",
+      "supercli plugins install ./plugins/thin_trim --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "thin_trim",
+      "resource": "self",
+      "action": "version",
+      "description": "Print thin_trim version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_trim",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install thin_trim: apt-get install thin_trim 2>/dev/null || which thin_trim"
+      },
+      "args": []
+    },
+    {
+      "namespace": "thin_trim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to thin_trim CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "thin_trim",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install thin_trim: apt-get install thin_trim 2>/dev/null || which thin_trim"
+      },
+      "args": []
+    }
+  ]
+}

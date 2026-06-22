@@ -1,0 +1,56 @@
+{
+  "name": "tic",
+  "version": "0.1.0",
+  "description": "CLI tool: tic",
+  "source": "https://manpages.debian.org/tic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tic",
+    "binary": "tic",
+    "check": "which tic",
+    "install_steps": [
+      "apt-get install tic 2>/dev/null || which tic",
+      "Verify: tic --version",
+      "supercli plugins install ./plugins/tic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tic: apt-get install tic 2>/dev/null || which tic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tic: apt-get install tic 2>/dev/null || which tic"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "texdoc",
+  "version": "0.1.0",
+  "description": "CLI tool: texdoc",
+  "source": "https://manpages.debian.org/texdoc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "texdoc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "texdoc",
+    "binary": "texdoc",
+    "check": "which texdoc",
+    "install_steps": [
+      "apt-get install texdoc 2>/dev/null || which texdoc",
+      "Verify: texdoc --version",
+      "supercli plugins install ./plugins/texdoc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "texdoc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print texdoc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texdoc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install texdoc: apt-get install texdoc 2>/dev/null || which texdoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "texdoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to texdoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "texdoc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install texdoc: apt-get install texdoc 2>/dev/null || which texdoc"
+      },
+      "args": []
+    }
+  ]
+}
