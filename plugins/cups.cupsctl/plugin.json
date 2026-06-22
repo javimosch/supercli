@@ -1,0 +1,56 @@
+{
+  "name": "cups.cupsctl",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.cupsctl",
+  "source": "https://manpages.debian.org/cups.cupsctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.cupsctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.cupsctl",
+    "binary": "cups.cupsctl",
+    "check": "which cups.cupsctl",
+    "install_steps": [
+      "apt-get install cups.cupsctl 2>/dev/null || which cups.cupsctl",
+      "Verify: cups.cupsctl --version",
+      "supercli plugins install ./plugins/cups.cupsctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.cupsctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.cupsctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.cupsctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.cupsctl: apt-get install cups.cupsctl 2>/dev/null || which cups.cupsctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.cupsctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.cupsctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.cupsctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.cupsctl: apt-get install cups.cupsctl 2>/dev/null || which cups.cupsctl"
+      },
+      "args": []
+    }
+  ]
+}

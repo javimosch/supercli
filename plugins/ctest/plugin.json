@@ -1,0 +1,56 @@
+{
+  "name": "ctest",
+  "version": "0.1.0",
+  "description": "CLI tool: ctest",
+  "source": "https://manpages.debian.org/ctest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ctest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ctest",
+    "binary": "ctest",
+    "check": "which ctest",
+    "install_steps": [
+      "apt-get install ctest 2>/dev/null || which ctest",
+      "Verify: ctest --version",
+      "supercli plugins install ./plugins/ctest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ctest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ctest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ctest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ctest: apt-get install ctest 2>/dev/null || which ctest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ctest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ctest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ctest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ctest: apt-get install ctest 2>/dev/null || which ctest"
+      },
+      "args": []
+    }
+  ]
+}

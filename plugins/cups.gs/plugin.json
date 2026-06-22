@@ -1,0 +1,56 @@
+{
+  "name": "cups.gs",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.gs",
+  "source": "https://manpages.debian.org/cups.gs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.gs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.gs",
+    "binary": "cups.gs",
+    "check": "which cups.gs",
+    "install_steps": [
+      "apt-get install cups.gs 2>/dev/null || which cups.gs",
+      "Verify: cups.gs --version",
+      "supercli plugins install ./plugins/cups.gs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.gs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.gs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.gs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.gs: apt-get install cups.gs 2>/dev/null || which cups.gs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.gs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.gs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.gs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.gs: apt-get install cups.gs 2>/dev/null || which cups.gs"
+      },
+      "args": []
+    }
+  ]
+}

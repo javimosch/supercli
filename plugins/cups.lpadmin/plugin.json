@@ -1,0 +1,56 @@
+{
+  "name": "cups.lpadmin",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.lpadmin",
+  "source": "https://manpages.debian.org/cups.lpadmin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.lpadmin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.lpadmin",
+    "binary": "cups.lpadmin",
+    "check": "which cups.lpadmin",
+    "install_steps": [
+      "apt-get install cups.lpadmin 2>/dev/null || which cups.lpadmin",
+      "Verify: cups.lpadmin --version",
+      "supercli plugins install ./plugins/cups.lpadmin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.lpadmin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.lpadmin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpadmin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.lpadmin: apt-get install cups.lpadmin 2>/dev/null || which cups.lpadmin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.lpadmin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.lpadmin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpadmin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.lpadmin: apt-get install cups.lpadmin 2>/dev/null || which cups.lpadmin"
+      },
+      "args": []
+    }
+  ]
+}

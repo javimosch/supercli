@@ -1,0 +1,56 @@
+{
+  "name": "chktest",
+  "version": "0.1.0",
+  "description": "CLI tool: chktest",
+  "source": "https://manpages.debian.org/chktest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "chktest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "chktest",
+    "binary": "chktest",
+    "check": "which chktest",
+    "install_steps": [
+      "apt-get install chktest 2>/dev/null || which chktest",
+      "Verify: chktest --version",
+      "supercli plugins install ./plugins/chktest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "chktest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chktest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chktest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install chktest: apt-get install chktest 2>/dev/null || which chktest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chktest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to chktest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chktest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install chktest: apt-get install chktest 2>/dev/null || which chktest"
+      },
+      "args": []
+    }
+  ]
+}

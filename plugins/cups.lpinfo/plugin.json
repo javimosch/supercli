@@ -1,0 +1,56 @@
+{
+  "name": "cups.lpinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.lpinfo",
+  "source": "https://manpages.debian.org/cups.lpinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.lpinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.lpinfo",
+    "binary": "cups.lpinfo",
+    "check": "which cups.lpinfo",
+    "install_steps": [
+      "apt-get install cups.lpinfo 2>/dev/null || which cups.lpinfo",
+      "Verify: cups.lpinfo --version",
+      "supercli plugins install ./plugins/cups.lpinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.lpinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.lpinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.lpinfo: apt-get install cups.lpinfo 2>/dev/null || which cups.lpinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.lpinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.lpinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.lpinfo: apt-get install cups.lpinfo 2>/dev/null || which cups.lpinfo"
+      },
+      "args": []
+    }
+  ]
+}
