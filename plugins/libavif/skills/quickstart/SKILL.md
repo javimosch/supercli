@@ -1,1 +1,0 @@
----\nname: libavif\ndescription: AVIF image encoder\n---\n# libavif Plugin\nAVIF image encoder
