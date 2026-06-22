@@ -1,0 +1,56 @@
+{
+  "name": "lckdo",
+  "version": "0.1.0",
+  "description": "CLI tool: lckdo",
+  "source": "https://manpages.debian.org/lckdo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lckdo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lckdo",
+    "binary": "lckdo",
+    "check": "which lckdo",
+    "install_steps": [
+      "apt-get install lckdo 2>/dev/null || which lckdo",
+      "Verify: lckdo --version",
+      "supercli plugins install ./plugins/lckdo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lckdo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lckdo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lckdo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lckdo: apt-get install lckdo 2>/dev/null || which lckdo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lckdo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lckdo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lckdo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lckdo: apt-get install lckdo 2>/dev/null || which lckdo"
+      },
+      "args": []
+    }
+  ]
+}

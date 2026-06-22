@@ -1,0 +1,56 @@
+{
+  "name": "kpsereadlink",
+  "version": "0.1.0",
+  "description": "CLI tool: kpsereadlink",
+  "source": "https://manpages.debian.org/kpsereadlink",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kpsereadlink"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kpsereadlink",
+    "binary": "kpsereadlink",
+    "check": "which kpsereadlink",
+    "install_steps": [
+      "apt-get install kpsereadlink 2>/dev/null || which kpsereadlink",
+      "Verify: kpsereadlink --version",
+      "supercli plugins install ./plugins/kpsereadlink --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kpsereadlink",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kpsereadlink version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpsereadlink",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kpsereadlink: apt-get install kpsereadlink 2>/dev/null || which kpsereadlink"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kpsereadlink",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kpsereadlink CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpsereadlink",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kpsereadlink: apt-get install kpsereadlink 2>/dev/null || which kpsereadlink"
+      },
+      "args": []
+    }
+  ]
+}

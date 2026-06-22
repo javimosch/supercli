@@ -1,0 +1,56 @@
+{
+  "name": "ld.gold",
+  "version": "0.1.0",
+  "description": "CLI tool: ld.gold",
+  "source": "https://manpages.debian.org/ld.gold",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ld.gold"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ld.gold",
+    "binary": "ld.gold",
+    "check": "which ld.gold",
+    "install_steps": [
+      "apt-get install ld.gold 2>/dev/null || which ld.gold",
+      "Verify: ld.gold --version",
+      "supercli plugins install ./plugins/ld.gold --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ld.gold",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ld.gold version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ld.gold",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ld.gold: apt-get install ld.gold 2>/dev/null || which ld.gold"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ld.gold",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ld.gold CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ld.gold",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ld.gold: apt-get install ld.gold 2>/dev/null || which ld.gold"
+      },
+      "args": []
+    }
+  ]
+}

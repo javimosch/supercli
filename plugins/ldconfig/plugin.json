@@ -1,0 +1,56 @@
+{
+  "name": "ldconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: ldconfig",
+  "source": "https://manpages.debian.org/ldconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ldconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ldconfig",
+    "binary": "ldconfig",
+    "check": "which ldconfig",
+    "install_steps": [
+      "apt-get install ldconfig 2>/dev/null || which ldconfig",
+      "Verify: ldconfig --version",
+      "supercli plugins install ./plugins/ldconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ldconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ldconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ldconfig: apt-get install ldconfig 2>/dev/null || which ldconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ldconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ldconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ldconfig: apt-get install ldconfig 2>/dev/null || which ldconfig"
+      },
+      "args": []
+    }
+  ]
+}

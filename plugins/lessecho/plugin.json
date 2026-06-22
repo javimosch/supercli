@@ -1,0 +1,56 @@
+{
+  "name": "lessecho",
+  "version": "0.1.0",
+  "description": "CLI tool: lessecho",
+  "source": "https://manpages.debian.org/lessecho",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lessecho"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lessecho",
+    "binary": "lessecho",
+    "check": "which lessecho",
+    "install_steps": [
+      "apt-get install lessecho 2>/dev/null || which lessecho",
+      "Verify: lessecho --version",
+      "supercli plugins install ./plugins/lessecho --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lessecho",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lessecho version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lessecho",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lessecho: apt-get install lessecho 2>/dev/null || which lessecho"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lessecho",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lessecho CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lessecho",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lessecho: apt-get install lessecho 2>/dev/null || which lessecho"
+      },
+      "args": []
+    }
+  ]
+}

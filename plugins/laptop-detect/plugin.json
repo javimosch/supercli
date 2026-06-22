@@ -1,0 +1,56 @@
+{
+  "name": "laptop-detect",
+  "version": "0.1.0",
+  "description": "CLI tool: laptop-detect",
+  "source": "https://manpages.debian.org/laptop-detect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "laptop-detect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "laptop-detect",
+    "binary": "laptop-detect",
+    "check": "which laptop-detect",
+    "install_steps": [
+      "apt-get install laptop-detect 2>/dev/null || which laptop-detect",
+      "Verify: laptop-detect --version",
+      "supercli plugins install ./plugins/laptop-detect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "laptop-detect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print laptop-detect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "laptop-detect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install laptop-detect: apt-get install laptop-detect 2>/dev/null || which laptop-detect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "laptop-detect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to laptop-detect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "laptop-detect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install laptop-detect: apt-get install laptop-detect 2>/dev/null || which laptop-detect"
+      },
+      "args": []
+    }
+  ]
+}

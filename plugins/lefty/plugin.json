@@ -1,0 +1,56 @@
+{
+  "name": "lefty",
+  "version": "0.1.0",
+  "description": "CLI tool: lefty",
+  "source": "https://manpages.debian.org/lefty",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lefty"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lefty",
+    "binary": "lefty",
+    "check": "which lefty",
+    "install_steps": [
+      "apt-get install lefty 2>/dev/null || which lefty",
+      "Verify: lefty --version",
+      "supercli plugins install ./plugins/lefty --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lefty",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lefty version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lefty",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lefty: apt-get install lefty 2>/dev/null || which lefty"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lefty",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lefty CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lefty",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lefty: apt-get install lefty 2>/dev/null || which lefty"
+      },
+      "args": []
+    }
+  ]
+}

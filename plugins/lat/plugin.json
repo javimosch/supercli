@@ -1,0 +1,56 @@
+{
+  "name": "lat",
+  "version": "0.1.0",
+  "description": "CLI tool: lat",
+  "source": "https://manpages.debian.org/lat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lat",
+    "binary": "lat",
+    "check": "which lat",
+    "install_steps": [
+      "apt-get install lat 2>/dev/null || which lat",
+      "Verify: lat --version",
+      "supercli plugins install ./plugins/lat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lat: apt-get install lat 2>/dev/null || which lat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lat: apt-get install lat 2>/dev/null || which lat"
+      },
+      "args": []
+    }
+  ]
+}

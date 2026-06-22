@@ -1,0 +1,56 @@
+{
+  "name": "lesskey",
+  "version": "0.1.0",
+  "description": "CLI tool: lesskey",
+  "source": "https://manpages.debian.org/lesskey",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lesskey"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lesskey",
+    "binary": "lesskey",
+    "check": "which lesskey",
+    "install_steps": [
+      "apt-get install lesskey 2>/dev/null || which lesskey",
+      "Verify: lesskey --version",
+      "supercli plugins install ./plugins/lesskey --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lesskey",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lesskey version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lesskey",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lesskey: apt-get install lesskey 2>/dev/null || which lesskey"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lesskey",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lesskey CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lesskey",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lesskey: apt-get install lesskey 2>/dev/null || which lesskey"
+      },
+      "args": []
+    }
+  ]
+}

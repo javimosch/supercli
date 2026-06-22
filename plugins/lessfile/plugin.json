@@ -1,0 +1,56 @@
+{
+  "name": "lessfile",
+  "version": "0.1.0",
+  "description": "CLI tool: lessfile",
+  "source": "https://manpages.debian.org/lessfile",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lessfile"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lessfile",
+    "binary": "lessfile",
+    "check": "which lessfile",
+    "install_steps": [
+      "apt-get install lessfile 2>/dev/null || which lessfile",
+      "Verify: lessfile --version",
+      "supercli plugins install ./plugins/lessfile --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lessfile",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lessfile version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lessfile",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lessfile: apt-get install lessfile 2>/dev/null || which lessfile"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lessfile",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lessfile CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lessfile",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lessfile: apt-get install lessfile 2>/dev/null || which lessfile"
+      },
+      "args": []
+    }
+  ]
+}

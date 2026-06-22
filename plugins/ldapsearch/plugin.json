@@ -1,0 +1,56 @@
+{
+  "name": "ldapsearch",
+  "version": "0.1.0",
+  "description": "CLI tool: ldapsearch",
+  "source": "https://manpages.debian.org/ldapsearch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ldapsearch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ldapsearch",
+    "binary": "ldapsearch",
+    "check": "which ldapsearch",
+    "install_steps": [
+      "apt-get install ldapsearch 2>/dev/null || which ldapsearch",
+      "Verify: ldapsearch --version",
+      "supercli plugins install ./plugins/ldapsearch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ldapsearch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ldapsearch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapsearch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ldapsearch: apt-get install ldapsearch 2>/dev/null || which ldapsearch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ldapsearch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ldapsearch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapsearch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ldapsearch: apt-get install ldapsearch 2>/dev/null || which ldapsearch"
+      },
+      "args": []
+    }
+  ]
+}

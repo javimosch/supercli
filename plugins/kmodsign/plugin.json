@@ -1,0 +1,56 @@
+{
+  "name": "kmodsign",
+  "version": "0.1.0",
+  "description": "CLI tool: kmodsign",
+  "source": "https://manpages.debian.org/kmodsign",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kmodsign"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kmodsign",
+    "binary": "kmodsign",
+    "check": "which kmodsign",
+    "install_steps": [
+      "apt-get install kmodsign 2>/dev/null || which kmodsign",
+      "Verify: kmodsign --version",
+      "supercli plugins install ./plugins/kmodsign --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kmodsign",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kmodsign version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kmodsign",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kmodsign: apt-get install kmodsign 2>/dev/null || which kmodsign"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kmodsign",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kmodsign CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kmodsign",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kmodsign: apt-get install kmodsign 2>/dev/null || which kmodsign"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ldapwhoami",
+  "version": "0.1.0",
+  "description": "CLI tool: ldapwhoami",
+  "source": "https://manpages.debian.org/ldapwhoami",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ldapwhoami"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ldapwhoami",
+    "binary": "ldapwhoami",
+    "check": "which ldapwhoami",
+    "install_steps": [
+      "apt-get install ldapwhoami 2>/dev/null || which ldapwhoami",
+      "Verify: ldapwhoami --version",
+      "supercli plugins install ./plugins/ldapwhoami --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ldapwhoami",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ldapwhoami version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapwhoami",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ldapwhoami: apt-get install ldapwhoami 2>/dev/null || which ldapwhoami"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ldapwhoami",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ldapwhoami CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapwhoami",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ldapwhoami: apt-get install ldapwhoami 2>/dev/null || which ldapwhoami"
+      },
+      "args": []
+    }
+  ]
+}

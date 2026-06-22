@@ -1,0 +1,56 @@
+{
+  "name": "letsencrypt",
+  "version": "0.1.0",
+  "description": "CLI tool: letsencrypt",
+  "source": "https://manpages.debian.org/letsencrypt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "letsencrypt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "letsencrypt",
+    "binary": "letsencrypt",
+    "check": "which letsencrypt",
+    "install_steps": [
+      "apt-get install letsencrypt 2>/dev/null || which letsencrypt",
+      "Verify: letsencrypt --version",
+      "supercli plugins install ./plugins/letsencrypt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "letsencrypt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print letsencrypt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "letsencrypt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install letsencrypt: apt-get install letsencrypt 2>/dev/null || which letsencrypt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "letsencrypt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to letsencrypt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "letsencrypt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install letsencrypt: apt-get install letsencrypt 2>/dev/null || which letsencrypt"
+      },
+      "args": []
+    }
+  ]
+}

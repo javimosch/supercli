@@ -1,0 +1,56 @@
+{
+  "name": "lastb",
+  "version": "0.1.0",
+  "description": "CLI tool: lastb",
+  "source": "https://manpages.debian.org/lastb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lastb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lastb",
+    "binary": "lastb",
+    "check": "which lastb",
+    "install_steps": [
+      "apt-get install lastb 2>/dev/null || which lastb",
+      "Verify: lastb --version",
+      "supercli plugins install ./plugins/lastb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lastb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lastb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lastb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lastb: apt-get install lastb 2>/dev/null || which lastb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lastb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lastb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lastb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lastb: apt-get install lastb 2>/dev/null || which lastb"
+      },
+      "args": []
+    }
+  ]
+}

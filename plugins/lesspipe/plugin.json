@@ -1,0 +1,56 @@
+{
+  "name": "lesspipe",
+  "version": "0.1.0",
+  "description": "CLI tool: lesspipe",
+  "source": "https://manpages.debian.org/lesspipe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lesspipe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lesspipe",
+    "binary": "lesspipe",
+    "check": "which lesspipe",
+    "install_steps": [
+      "apt-get install lesspipe 2>/dev/null || which lesspipe",
+      "Verify: lesspipe --version",
+      "supercli plugins install ./plugins/lesspipe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lesspipe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lesspipe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lesspipe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lesspipe: apt-get install lesspipe 2>/dev/null || which lesspipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lesspipe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lesspipe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lesspipe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lesspipe: apt-get install lesspipe 2>/dev/null || which lesspipe"
+      },
+      "args": []
+    }
+  ]
+}

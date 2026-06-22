@@ -1,0 +1,56 @@
+{
+  "name": "kvm",
+  "version": "0.1.0",
+  "description": "CLI tool: kvm",
+  "source": "https://manpages.debian.org/kvm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kvm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kvm",
+    "binary": "kvm",
+    "check": "which kvm",
+    "install_steps": [
+      "apt-get install kvm 2>/dev/null || which kvm",
+      "Verify: kvm --version",
+      "supercli plugins install ./plugins/kvm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kvm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kvm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kvm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kvm: apt-get install kvm 2>/dev/null || which kvm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kvm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kvm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kvm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kvm: apt-get install kvm 2>/dev/null || which kvm"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "l2ping",
+  "version": "0.1.0",
+  "description": "CLI tool: l2ping",
+  "source": "https://manpages.debian.org/l2ping",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "l2ping"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "l2ping",
+    "binary": "l2ping",
+    "check": "which l2ping",
+    "install_steps": [
+      "apt-get install l2ping 2>/dev/null || which l2ping",
+      "Verify: l2ping --version",
+      "supercli plugins install ./plugins/l2ping --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "l2ping",
+      "resource": "self",
+      "action": "version",
+      "description": "Print l2ping version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "l2ping",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install l2ping: apt-get install l2ping 2>/dev/null || which l2ping"
+      },
+      "args": []
+    },
+    {
+      "namespace": "l2ping",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to l2ping CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "l2ping",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install l2ping: apt-get install l2ping 2>/dev/null || which l2ping"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "latex",
+  "version": "0.1.0",
+  "description": "CLI tool: latex",
+  "source": "https://manpages.debian.org/latex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "latex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "latex",
+    "binary": "latex",
+    "check": "which latex",
+    "install_steps": [
+      "apt-get install latex 2>/dev/null || which latex",
+      "Verify: latex --version",
+      "supercli plugins install ./plugins/latex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "latex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print latex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "latex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install latex: apt-get install latex 2>/dev/null || which latex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "latex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to latex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "latex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install latex: apt-get install latex 2>/dev/null || which latex"
+      },
+      "args": []
+    }
+  ]
+}

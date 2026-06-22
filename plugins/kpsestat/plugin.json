@@ -1,0 +1,56 @@
+{
+  "name": "kpsestat",
+  "version": "0.1.0",
+  "description": "CLI tool: kpsestat",
+  "source": "https://manpages.debian.org/kpsestat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kpsestat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kpsestat",
+    "binary": "kpsestat",
+    "check": "which kpsestat",
+    "install_steps": [
+      "apt-get install kpsestat 2>/dev/null || which kpsestat",
+      "Verify: kpsestat --version",
+      "supercli plugins install ./plugins/kpsestat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kpsestat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kpsestat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpsestat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kpsestat: apt-get install kpsestat 2>/dev/null || which kpsestat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kpsestat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kpsestat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpsestat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kpsestat: apt-get install kpsestat 2>/dev/null || which kpsestat"
+      },
+      "args": []
+    }
+  ]
+}

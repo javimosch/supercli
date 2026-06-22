@@ -1,0 +1,56 @@
+{
+  "name": "kvm-ok",
+  "version": "0.1.0",
+  "description": "CLI tool: kvm-ok",
+  "source": "https://manpages.debian.org/kvm-ok",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kvm-ok"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kvm-ok",
+    "binary": "kvm-ok",
+    "check": "which kvm-ok",
+    "install_steps": [
+      "apt-get install kvm-ok 2>/dev/null || which kvm-ok",
+      "Verify: kvm-ok --version",
+      "supercli plugins install ./plugins/kvm-ok --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kvm-ok",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kvm-ok version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kvm-ok",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kvm-ok: apt-get install kvm-ok 2>/dev/null || which kvm-ok"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kvm-ok",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kvm-ok CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kvm-ok",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kvm-ok: apt-get install kvm-ok 2>/dev/null || which kvm-ok"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "kpseaccess",
+  "version": "0.1.0",
+  "description": "CLI tool: kpseaccess",
+  "source": "https://manpages.debian.org/kpseaccess",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kpseaccess"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kpseaccess",
+    "binary": "kpseaccess",
+    "check": "which kpseaccess",
+    "install_steps": [
+      "apt-get install kpseaccess 2>/dev/null || which kpseaccess",
+      "Verify: kpseaccess --version",
+      "supercli plugins install ./plugins/kpseaccess --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kpseaccess",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kpseaccess version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpseaccess",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kpseaccess: apt-get install kpseaccess 2>/dev/null || which kpseaccess"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kpseaccess",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kpseaccess CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpseaccess",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kpseaccess: apt-get install kpseaccess 2>/dev/null || which kpseaccess"
+      },
+      "args": []
+    }
+  ]
+}

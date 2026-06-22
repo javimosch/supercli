@@ -1,0 +1,56 @@
+{
+  "name": "lastlog",
+  "version": "0.1.0",
+  "description": "CLI tool: lastlog",
+  "source": "https://manpages.debian.org/lastlog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lastlog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lastlog",
+    "binary": "lastlog",
+    "check": "which lastlog",
+    "install_steps": [
+      "apt-get install lastlog 2>/dev/null || which lastlog",
+      "Verify: lastlog --version",
+      "supercli plugins install ./plugins/lastlog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lastlog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lastlog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lastlog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lastlog: apt-get install lastlog 2>/dev/null || which lastlog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lastlog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lastlog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lastlog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lastlog: apt-get install lastlog 2>/dev/null || which lastlog"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "kpsewhich",
+  "version": "0.1.0",
+  "description": "CLI tool: kpsewhich",
+  "source": "https://manpages.debian.org/kpsewhich",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kpsewhich"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kpsewhich",
+    "binary": "kpsewhich",
+    "check": "which kpsewhich",
+    "install_steps": [
+      "apt-get install kpsewhich 2>/dev/null || which kpsewhich",
+      "Verify: kpsewhich --version",
+      "supercli plugins install ./plugins/kpsewhich --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kpsewhich",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kpsewhich version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpsewhich",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kpsewhich: apt-get install kpsewhich 2>/dev/null || which kpsewhich"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kpsewhich",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kpsewhich CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kpsewhich",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kpsewhich: apt-get install kpsewhich 2>/dev/null || which kpsewhich"
+      },
+      "args": []
+    }
+  ]
+}

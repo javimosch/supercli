@@ -1,0 +1,56 @@
+{
+  "name": "lcf",
+  "version": "0.1.0",
+  "description": "CLI tool: lcf",
+  "source": "https://manpages.debian.org/lcf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lcf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lcf",
+    "binary": "lcf",
+    "check": "which lcf",
+    "install_steps": [
+      "apt-get install lcf 2>/dev/null || which lcf",
+      "Verify: lcf --version",
+      "supercli plugins install ./plugins/lcf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lcf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lcf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lcf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lcf: apt-get install lcf 2>/dev/null || which lcf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lcf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lcf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lcf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lcf: apt-get install lcf 2>/dev/null || which lcf"
+      },
+      "args": []
+    }
+  ]
+}

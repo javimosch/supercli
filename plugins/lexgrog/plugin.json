@@ -1,0 +1,56 @@
+{
+  "name": "lexgrog",
+  "version": "0.1.0",
+  "description": "CLI tool: lexgrog",
+  "source": "https://manpages.debian.org/lexgrog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lexgrog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lexgrog",
+    "binary": "lexgrog",
+    "check": "which lexgrog",
+    "install_steps": [
+      "apt-get install lexgrog 2>/dev/null || which lexgrog",
+      "Verify: lexgrog --version",
+      "supercli plugins install ./plugins/lexgrog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lexgrog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lexgrog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lexgrog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lexgrog: apt-get install lexgrog 2>/dev/null || which lexgrog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lexgrog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lexgrog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lexgrog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lexgrog: apt-get install lexgrog 2>/dev/null || which lexgrog"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ld.bfd",
+  "version": "0.1.0",
+  "description": "CLI tool: ld.bfd",
+  "source": "https://manpages.debian.org/ld.bfd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ld.bfd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ld.bfd",
+    "binary": "ld.bfd",
+    "check": "which ld.bfd",
+    "install_steps": [
+      "apt-get install ld.bfd 2>/dev/null || which ld.bfd",
+      "Verify: ld.bfd --version",
+      "supercli plugins install ./plugins/ld.bfd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ld.bfd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ld.bfd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ld.bfd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ld.bfd: apt-get install ld.bfd 2>/dev/null || which ld.bfd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ld.bfd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ld.bfd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ld.bfd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ld.bfd: apt-get install ld.bfd 2>/dev/null || which ld.bfd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "kvm-spice",
+  "version": "0.1.0",
+  "description": "CLI tool: kvm-spice",
+  "source": "https://manpages.debian.org/kvm-spice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kvm-spice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kvm-spice",
+    "binary": "kvm-spice",
+    "check": "which kvm-spice",
+    "install_steps": [
+      "apt-get install kvm-spice 2>/dev/null || which kvm-spice",
+      "Verify: kvm-spice --version",
+      "supercli plugins install ./plugins/kvm-spice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kvm-spice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kvm-spice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kvm-spice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kvm-spice: apt-get install kvm-spice 2>/dev/null || which kvm-spice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kvm-spice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kvm-spice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kvm-spice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kvm-spice: apt-get install kvm-spice 2>/dev/null || which kvm-spice"
+      },
+      "args": []
+    }
+  ]
+}

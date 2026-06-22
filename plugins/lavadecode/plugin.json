@@ -1,0 +1,56 @@
+{
+  "name": "lavadecode",
+  "version": "0.1.0",
+  "description": "CLI tool: lavadecode",
+  "source": "https://manpages.debian.org/lavadecode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lavadecode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lavadecode",
+    "binary": "lavadecode",
+    "check": "which lavadecode",
+    "install_steps": [
+      "apt-get install lavadecode 2>/dev/null || which lavadecode",
+      "Verify: lavadecode --version",
+      "supercli plugins install ./plugins/lavadecode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lavadecode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lavadecode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lavadecode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lavadecode: apt-get install lavadecode 2>/dev/null || which lavadecode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lavadecode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lavadecode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lavadecode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lavadecode: apt-get install lavadecode 2>/dev/null || which lavadecode"
+      },
+      "args": []
+    }
+  ]
+}

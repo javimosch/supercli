@@ -1,0 +1,56 @@
+{
+  "name": "ldappasswd",
+  "version": "0.1.0",
+  "description": "CLI tool: ldappasswd",
+  "source": "https://manpages.debian.org/ldappasswd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ldappasswd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ldappasswd",
+    "binary": "ldappasswd",
+    "check": "which ldappasswd",
+    "install_steps": [
+      "apt-get install ldappasswd 2>/dev/null || which ldappasswd",
+      "Verify: ldappasswd --version",
+      "supercli plugins install ./plugins/ldappasswd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ldappasswd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ldappasswd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldappasswd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ldappasswd: apt-get install ldappasswd 2>/dev/null || which ldappasswd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ldappasswd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ldappasswd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldappasswd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ldappasswd: apt-get install ldappasswd 2>/dev/null || which ldappasswd"
+      },
+      "args": []
+    }
+  ]
+}

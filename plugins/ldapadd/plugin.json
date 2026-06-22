@@ -1,0 +1,56 @@
+{
+  "name": "ldapadd",
+  "version": "0.1.0",
+  "description": "CLI tool: ldapadd",
+  "source": "https://manpages.debian.org/ldapadd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ldapadd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ldapadd",
+    "binary": "ldapadd",
+    "check": "which ldapadd",
+    "install_steps": [
+      "apt-get install ldapadd 2>/dev/null || which ldapadd",
+      "Verify: ldapadd --version",
+      "supercli plugins install ./plugins/ldapadd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ldapadd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ldapadd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapadd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ldapadd: apt-get install ldapadd 2>/dev/null || which ldapadd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ldapadd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ldapadd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapadd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ldapadd: apt-get install ldapadd 2>/dev/null || which ldapadd"
+      },
+      "args": []
+    }
+  ]
+}

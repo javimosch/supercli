@@ -1,0 +1,56 @@
+{
+  "name": "ldapmodify",
+  "version": "0.1.0",
+  "description": "CLI tool: ldapmodify",
+  "source": "https://manpages.debian.org/ldapmodify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ldapmodify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ldapmodify",
+    "binary": "ldapmodify",
+    "check": "which ldapmodify",
+    "install_steps": [
+      "apt-get install ldapmodify 2>/dev/null || which ldapmodify",
+      "Verify: ldapmodify --version",
+      "supercli plugins install ./plugins/ldapmodify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ldapmodify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ldapmodify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapmodify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ldapmodify: apt-get install ldapmodify 2>/dev/null || which ldapmodify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ldapmodify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ldapmodify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ldapmodify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ldapmodify: apt-get install ldapmodify 2>/dev/null || which ldapmodify"
+      },
+      "args": []
+    }
+  ]
+}

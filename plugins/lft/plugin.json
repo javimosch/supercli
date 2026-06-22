@@ -1,0 +1,56 @@
+{
+  "name": "lft",
+  "version": "0.1.0",
+  "description": "CLI tool: lft",
+  "source": "https://manpages.debian.org/lft",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lft"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lft",
+    "binary": "lft",
+    "check": "which lft",
+    "install_steps": [
+      "apt-get install lft 2>/dev/null || which lft",
+      "Verify: lft --version",
+      "supercli plugins install ./plugins/lft --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lft",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lft version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lft",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lft: apt-get install lft 2>/dev/null || which lft"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lft",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lft",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lft: apt-get install lft 2>/dev/null || which lft"
+      },
+      "args": []
+    }
+  ]
+}
