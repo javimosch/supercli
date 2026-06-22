@@ -1,0 +1,56 @@
+{
+  "name": "sushi",
+  "version": "0.1.0",
+  "description": "CLI tool: sushi",
+  "source": "https://manpages.debian.org/sushi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sushi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sushi",
+    "binary": "sushi",
+    "check": "which sushi",
+    "install_steps": [
+      "apt-get install sushi 2>/dev/null || which sushi",
+      "Verify: sushi --version",
+      "supercli plugins install ./plugins/sushi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sushi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sushi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sushi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sushi: apt-get install sushi 2>/dev/null || which sushi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sushi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sushi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sushi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sushi: apt-get install sushi 2>/dev/null || which sushi"
+      },
+      "args": []
+    }
+  ]
+}

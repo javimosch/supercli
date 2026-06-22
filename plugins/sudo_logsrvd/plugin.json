@@ -1,0 +1,56 @@
+{
+  "name": "sudo_logsrvd",
+  "version": "0.1.0",
+  "description": "CLI tool: sudo_logsrvd",
+  "source": "https://manpages.debian.org/sudo_logsrvd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sudo_logsrvd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sudo_logsrvd",
+    "binary": "sudo_logsrvd",
+    "check": "which sudo_logsrvd",
+    "install_steps": [
+      "apt-get install sudo_logsrvd 2>/dev/null || which sudo_logsrvd",
+      "Verify: sudo_logsrvd --version",
+      "supercli plugins install ./plugins/sudo_logsrvd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sudo_logsrvd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sudo_logsrvd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudo_logsrvd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sudo_logsrvd: apt-get install sudo_logsrvd 2>/dev/null || which sudo_logsrvd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sudo_logsrvd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sudo_logsrvd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudo_logsrvd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sudo_logsrvd: apt-get install sudo_logsrvd 2>/dev/null || which sudo_logsrvd"
+      },
+      "args": []
+    }
+  ]
+}

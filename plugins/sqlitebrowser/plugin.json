@@ -1,0 +1,56 @@
+{
+  "name": "sqlitebrowser",
+  "version": "0.1.0",
+  "description": "CLI tool: sqlitebrowser",
+  "source": "https://manpages.debian.org/sqlitebrowser",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sqlitebrowser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sqlitebrowser",
+    "binary": "sqlitebrowser",
+    "check": "which sqlitebrowser",
+    "install_steps": [
+      "apt-get install sqlitebrowser 2>/dev/null || which sqlitebrowser",
+      "Verify: sqlitebrowser --version",
+      "supercli plugins install ./plugins/sqlitebrowser --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqlitebrowser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqlitebrowser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlitebrowser",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sqlitebrowser: apt-get install sqlitebrowser 2>/dev/null || which sqlitebrowser"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqlitebrowser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqlitebrowser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlitebrowser",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqlitebrowser: apt-get install sqlitebrowser 2>/dev/null || which sqlitebrowser"
+      },
+      "args": []
+    }
+  ]
+}

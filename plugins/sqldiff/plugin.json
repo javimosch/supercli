@@ -1,0 +1,56 @@
+{
+  "name": "sqldiff",
+  "version": "0.1.0",
+  "description": "CLI tool: sqldiff",
+  "source": "https://manpages.debian.org/sqldiff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sqldiff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sqldiff",
+    "binary": "sqldiff",
+    "check": "which sqldiff",
+    "install_steps": [
+      "apt-get install sqldiff 2>/dev/null || which sqldiff",
+      "Verify: sqldiff --version",
+      "supercli plugins install ./plugins/sqldiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqldiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqldiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqldiff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sqldiff: apt-get install sqldiff 2>/dev/null || which sqldiff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqldiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqldiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqldiff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqldiff: apt-get install sqldiff 2>/dev/null || which sqldiff"
+      },
+      "args": []
+    }
+  ]
+}

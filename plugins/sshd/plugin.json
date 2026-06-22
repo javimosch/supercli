@@ -1,0 +1,56 @@
+{
+  "name": "sshd",
+  "version": "0.1.0",
+  "description": "CLI tool: sshd",
+  "source": "https://manpages.debian.org/sshd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sshd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sshd",
+    "binary": "sshd",
+    "check": "which sshd",
+    "install_steps": [
+      "apt-get install sshd 2>/dev/null || which sshd",
+      "Verify: sshd --version",
+      "supercli plugins install ./plugins/sshd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sshd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sshd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sshd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sshd: apt-get install sshd 2>/dev/null || which sshd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sshd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sshd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sshd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sshd: apt-get install sshd 2>/dev/null || which sshd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "static-sh",
+  "version": "0.1.0",
+  "description": "CLI tool: static-sh",
+  "source": "https://manpages.debian.org/static-sh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "static-sh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "static-sh",
+    "binary": "static-sh",
+    "check": "which static-sh",
+    "install_steps": [
+      "apt-get install static-sh 2>/dev/null || which static-sh",
+      "Verify: static-sh --version",
+      "supercli plugins install ./plugins/static-sh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "static-sh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print static-sh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "static-sh",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install static-sh: apt-get install static-sh 2>/dev/null || which static-sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "static-sh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to static-sh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "static-sh",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install static-sh: apt-get install static-sh 2>/dev/null || which static-sh"
+      },
+      "args": []
+    }
+  ]
+}

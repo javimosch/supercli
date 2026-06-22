@@ -1,0 +1,56 @@
+{
+  "name": "sudoedit",
+  "version": "0.1.0",
+  "description": "CLI tool: sudoedit",
+  "source": "https://manpages.debian.org/sudoedit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sudoedit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sudoedit",
+    "binary": "sudoedit",
+    "check": "which sudoedit",
+    "install_steps": [
+      "apt-get install sudoedit 2>/dev/null || which sudoedit",
+      "Verify: sudoedit --version",
+      "supercli plugins install ./plugins/sudoedit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sudoedit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sudoedit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudoedit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sudoedit: apt-get install sudoedit 2>/dev/null || which sudoedit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sudoedit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sudoedit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudoedit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sudoedit: apt-get install sudoedit 2>/dev/null || which sudoedit"
+      },
+      "args": []
+    }
+  ]
+}

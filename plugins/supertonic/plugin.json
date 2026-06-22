@@ -1,0 +1,56 @@
+{
+  "name": "supertonic",
+  "version": "0.1.0",
+  "description": "CLI tool: supertonic",
+  "source": "https://manpages.debian.org/supertonic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "supertonic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "supertonic",
+    "binary": "supertonic",
+    "check": "which supertonic",
+    "install_steps": [
+      "apt-get install supertonic 2>/dev/null || which supertonic",
+      "Verify: supertonic --version",
+      "supercli plugins install ./plugins/supertonic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "supertonic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print supertonic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install supertonic: apt-get install supertonic 2>/dev/null || which supertonic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "supertonic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to supertonic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supertonic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install supertonic: apt-get install supertonic 2>/dev/null || which supertonic"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "systemd",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd",
+  "source": "https://manpages.debian.org/systemd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd",
+    "binary": "systemd",
+    "check": "which systemd",
+    "install_steps": [
+      "apt-get install systemd 2>/dev/null || which systemd",
+      "Verify: systemd --version",
+      "supercli plugins install ./plugins/systemd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd: apt-get install systemd 2>/dev/null || which systemd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd: apt-get install systemd 2>/dev/null || which systemd"
+      },
+      "args": []
+    }
+  ]
+}

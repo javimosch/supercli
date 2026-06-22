@@ -1,0 +1,56 @@
+{
+  "name": "switcherooctl",
+  "version": "0.1.0",
+  "description": "CLI tool: switcherooctl",
+  "source": "https://manpages.debian.org/switcherooctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "switcherooctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "switcherooctl",
+    "binary": "switcherooctl",
+    "check": "which switcherooctl",
+    "install_steps": [
+      "apt-get install switcherooctl 2>/dev/null || which switcherooctl",
+      "Verify: switcherooctl --version",
+      "supercli plugins install ./plugins/switcherooctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "switcherooctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print switcherooctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "switcherooctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install switcherooctl: apt-get install switcherooctl 2>/dev/null || which switcherooctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "switcherooctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to switcherooctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "switcherooctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install switcherooctl: apt-get install switcherooctl 2>/dev/null || which switcherooctl"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "system-config-printer",
+  "version": "0.1.0",
+  "description": "CLI tool: system-config-printer",
+  "source": "https://manpages.debian.org/system-config-printer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "system-config-printer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "system-config-printer",
+    "binary": "system-config-printer",
+    "check": "which system-config-printer",
+    "install_steps": [
+      "apt-get install system-config-printer 2>/dev/null || which system-config-printer",
+      "Verify: system-config-printer --version",
+      "supercli plugins install ./plugins/system-config-printer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "system-config-printer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print system-config-printer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "system-config-printer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install system-config-printer: apt-get install system-config-printer 2>/dev/null || which system-config-printer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "system-config-printer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to system-config-printer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "system-config-printer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install system-config-printer: apt-get install system-config-printer 2>/dev/null || which system-config-printer"
+      },
+      "args": []
+    }
+  ]
+}

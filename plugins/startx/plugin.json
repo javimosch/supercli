@@ -1,0 +1,56 @@
+{
+  "name": "startx",
+  "version": "0.1.0",
+  "description": "CLI tool: startx",
+  "source": "https://manpages.debian.org/startx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "startx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "startx",
+    "binary": "startx",
+    "check": "which startx",
+    "install_steps": [
+      "apt-get install startx 2>/dev/null || which startx",
+      "Verify: startx --version",
+      "supercli plugins install ./plugins/startx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "startx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print startx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "startx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install startx: apt-get install startx 2>/dev/null || which startx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "startx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to startx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "startx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install startx: apt-get install startx 2>/dev/null || which startx"
+      },
+      "args": []
+    }
+  ]
+}

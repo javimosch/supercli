@@ -1,0 +1,56 @@
+{
+  "name": "symkeyutil",
+  "version": "0.1.0",
+  "description": "CLI tool: symkeyutil",
+  "source": "https://manpages.debian.org/symkeyutil",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "symkeyutil"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "symkeyutil",
+    "binary": "symkeyutil",
+    "check": "which symkeyutil",
+    "install_steps": [
+      "apt-get install symkeyutil 2>/dev/null || which symkeyutil",
+      "Verify: symkeyutil --version",
+      "supercli plugins install ./plugins/symkeyutil --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "symkeyutil",
+      "resource": "self",
+      "action": "version",
+      "description": "Print symkeyutil version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "symkeyutil",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install symkeyutil: apt-get install symkeyutil 2>/dev/null || which symkeyutil"
+      },
+      "args": []
+    },
+    {
+      "namespace": "symkeyutil",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to symkeyutil CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "symkeyutil",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install symkeyutil: apt-get install symkeyutil 2>/dev/null || which symkeyutil"
+      },
+      "args": []
+    }
+  ]
+}

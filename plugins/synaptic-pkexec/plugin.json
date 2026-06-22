@@ -1,0 +1,56 @@
+{
+  "name": "synaptic-pkexec",
+  "version": "0.1.0",
+  "description": "CLI tool: synaptic-pkexec",
+  "source": "https://manpages.debian.org/synaptic-pkexec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "synaptic-pkexec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "synaptic-pkexec",
+    "binary": "synaptic-pkexec",
+    "check": "which synaptic-pkexec",
+    "install_steps": [
+      "apt-get install synaptic-pkexec 2>/dev/null || which synaptic-pkexec",
+      "Verify: synaptic-pkexec --version",
+      "supercli plugins install ./plugins/synaptic-pkexec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "synaptic-pkexec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print synaptic-pkexec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "synaptic-pkexec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install synaptic-pkexec: apt-get install synaptic-pkexec 2>/dev/null || which synaptic-pkexec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "synaptic-pkexec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to synaptic-pkexec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "synaptic-pkexec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install synaptic-pkexec: apt-get install synaptic-pkexec 2>/dev/null || which synaptic-pkexec"
+      },
+      "args": []
+    }
+  ]
+}

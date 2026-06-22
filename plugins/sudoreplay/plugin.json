@@ -1,0 +1,56 @@
+{
+  "name": "sudoreplay",
+  "version": "0.1.0",
+  "description": "CLI tool: sudoreplay",
+  "source": "https://manpages.debian.org/sudoreplay",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sudoreplay"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sudoreplay",
+    "binary": "sudoreplay",
+    "check": "which sudoreplay",
+    "install_steps": [
+      "apt-get install sudoreplay 2>/dev/null || which sudoreplay",
+      "Verify: sudoreplay --version",
+      "supercli plugins install ./plugins/sudoreplay --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sudoreplay",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sudoreplay version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudoreplay",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sudoreplay: apt-get install sudoreplay 2>/dev/null || which sudoreplay"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sudoreplay",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sudoreplay CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudoreplay",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sudoreplay: apt-get install sudoreplay 2>/dev/null || which sudoreplay"
+      },
+      "args": []
+    }
+  ]
+}

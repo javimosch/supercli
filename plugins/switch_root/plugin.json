@@ -1,0 +1,56 @@
+{
+  "name": "switch_root",
+  "version": "0.1.0",
+  "description": "CLI tool: switch_root",
+  "source": "https://manpages.debian.org/switch_root",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "switch_root"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "switch_root",
+    "binary": "switch_root",
+    "check": "which switch_root",
+    "install_steps": [
+      "apt-get install switch_root 2>/dev/null || which switch_root",
+      "Verify: switch_root --version",
+      "supercli plugins install ./plugins/switch_root --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "switch_root",
+      "resource": "self",
+      "action": "version",
+      "description": "Print switch_root version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "switch_root",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install switch_root: apt-get install switch_root 2>/dev/null || which switch_root"
+      },
+      "args": []
+    },
+    {
+      "namespace": "switch_root",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to switch_root CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "switch_root",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install switch_root: apt-get install switch_root 2>/dev/null || which switch_root"
+      },
+      "args": []
+    }
+  ]
+}

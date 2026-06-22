@@ -1,0 +1,56 @@
+{
+  "name": "streamzip",
+  "version": "0.1.0",
+  "description": "CLI tool: streamzip",
+  "source": "https://manpages.debian.org/streamzip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "streamzip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "streamzip",
+    "binary": "streamzip",
+    "check": "which streamzip",
+    "install_steps": [
+      "apt-get install streamzip 2>/dev/null || which streamzip",
+      "Verify: streamzip --version",
+      "supercli plugins install ./plugins/streamzip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "streamzip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print streamzip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "streamzip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install streamzip: apt-get install streamzip 2>/dev/null || which streamzip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "streamzip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to streamzip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "streamzip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install streamzip: apt-get install streamzip 2>/dev/null || which streamzip"
+      },
+      "args": []
+    }
+  ]
+}

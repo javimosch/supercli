@@ -1,0 +1,56 @@
+{
+  "name": "sssd",
+  "version": "0.1.0",
+  "description": "CLI tool: sssd",
+  "source": "https://manpages.debian.org/sssd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sssd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sssd",
+    "binary": "sssd",
+    "check": "which sssd",
+    "install_steps": [
+      "apt-get install sssd 2>/dev/null || which sssd",
+      "Verify: sssd --version",
+      "supercli plugins install ./plugins/sssd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sssd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sssd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sssd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sssd: apt-get install sssd 2>/dev/null || which sssd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sssd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sssd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sssd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sssd: apt-get install sssd 2>/dev/null || which sssd"
+      },
+      "args": []
+    }
+  ]
+}

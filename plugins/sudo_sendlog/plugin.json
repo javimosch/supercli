@@ -1,0 +1,56 @@
+{
+  "name": "sudo_sendlog",
+  "version": "0.1.0",
+  "description": "CLI tool: sudo_sendlog",
+  "source": "https://manpages.debian.org/sudo_sendlog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sudo_sendlog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sudo_sendlog",
+    "binary": "sudo_sendlog",
+    "check": "which sudo_sendlog",
+    "install_steps": [
+      "apt-get install sudo_sendlog 2>/dev/null || which sudo_sendlog",
+      "Verify: sudo_sendlog --version",
+      "supercli plugins install ./plugins/sudo_sendlog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sudo_sendlog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sudo_sendlog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudo_sendlog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sudo_sendlog: apt-get install sudo_sendlog 2>/dev/null || which sudo_sendlog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sudo_sendlog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sudo_sendlog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sudo_sendlog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sudo_sendlog: apt-get install sudo_sendlog 2>/dev/null || which sudo_sendlog"
+      },
+      "args": []
+    }
+  ]
+}

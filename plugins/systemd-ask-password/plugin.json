@@ -1,0 +1,56 @@
+{
+  "name": "systemd-ask-password",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-ask-password",
+  "source": "https://manpages.debian.org/systemd-ask-password",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-ask-password"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-ask-password",
+    "binary": "systemd-ask-password",
+    "check": "which systemd-ask-password",
+    "install_steps": [
+      "apt-get install systemd-ask-password 2>/dev/null || which systemd-ask-password",
+      "Verify: systemd-ask-password --version",
+      "supercli plugins install ./plugins/systemd-ask-password --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-ask-password",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-ask-password version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-ask-password",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-ask-password: apt-get install systemd-ask-password 2>/dev/null || which systemd-ask-password"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-ask-password",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-ask-password CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-ask-password",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-ask-password: apt-get install systemd-ask-password 2>/dev/null || which systemd-ask-password"
+      },
+      "args": []
+    }
+  ]
+}

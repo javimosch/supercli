@@ -1,0 +1,56 @@
+{
+  "name": "sulogin",
+  "version": "0.1.0",
+  "description": "CLI tool: sulogin",
+  "source": "https://manpages.debian.org/sulogin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sulogin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sulogin",
+    "binary": "sulogin",
+    "check": "which sulogin",
+    "install_steps": [
+      "apt-get install sulogin 2>/dev/null || which sulogin",
+      "Verify: sulogin --version",
+      "supercli plugins install ./plugins/sulogin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sulogin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sulogin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sulogin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sulogin: apt-get install sulogin 2>/dev/null || which sulogin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sulogin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sulogin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sulogin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sulogin: apt-get install sulogin 2>/dev/null || which sulogin"
+      },
+      "args": []
+    }
+  ]
+}

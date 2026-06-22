@@ -1,0 +1,56 @@
+{
+  "name": "swaplabel",
+  "version": "0.1.0",
+  "description": "CLI tool: swaplabel",
+  "source": "https://manpages.debian.org/swaplabel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "swaplabel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "swaplabel",
+    "binary": "swaplabel",
+    "check": "which swaplabel",
+    "install_steps": [
+      "apt-get install swaplabel 2>/dev/null || which swaplabel",
+      "Verify: swaplabel --version",
+      "supercli plugins install ./plugins/swaplabel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "swaplabel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print swaplabel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "swaplabel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install swaplabel: apt-get install swaplabel 2>/dev/null || which swaplabel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "swaplabel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to swaplabel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "swaplabel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install swaplabel: apt-get install swaplabel 2>/dev/null || which swaplabel"
+      },
+      "args": []
+    }
+  ]
+}

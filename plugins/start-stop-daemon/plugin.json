@@ -1,0 +1,56 @@
+{
+  "name": "start-stop-daemon",
+  "version": "0.1.0",
+  "description": "CLI tool: start-stop-daemon",
+  "source": "https://manpages.debian.org/start-stop-daemon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "start-stop-daemon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "start-stop-daemon",
+    "binary": "start-stop-daemon",
+    "check": "which start-stop-daemon",
+    "install_steps": [
+      "apt-get install start-stop-daemon 2>/dev/null || which start-stop-daemon",
+      "Verify: start-stop-daemon --version",
+      "supercli plugins install ./plugins/start-stop-daemon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "start-stop-daemon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print start-stop-daemon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "start-stop-daemon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install start-stop-daemon: apt-get install start-stop-daemon 2>/dev/null || which start-stop-daemon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "start-stop-daemon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to start-stop-daemon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "start-stop-daemon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install start-stop-daemon: apt-get install start-stop-daemon 2>/dev/null || which start-stop-daemon"
+      },
+      "args": []
+    }
+  ]
+}

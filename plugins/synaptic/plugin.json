@@ -1,0 +1,56 @@
+{
+  "name": "synaptic",
+  "version": "0.1.0",
+  "description": "CLI tool: synaptic",
+  "source": "https://manpages.debian.org/synaptic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "synaptic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "synaptic",
+    "binary": "synaptic",
+    "check": "which synaptic",
+    "install_steps": [
+      "apt-get install synaptic 2>/dev/null || which synaptic",
+      "Verify: synaptic --version",
+      "supercli plugins install ./plugins/synaptic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "synaptic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print synaptic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "synaptic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install synaptic: apt-get install synaptic 2>/dev/null || which synaptic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "synaptic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to synaptic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "synaptic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install synaptic: apt-get install synaptic 2>/dev/null || which synaptic"
+      },
+      "args": []
+    }
+  ]
+}

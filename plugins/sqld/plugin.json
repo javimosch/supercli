@@ -1,0 +1,56 @@
+{
+  "name": "sqld",
+  "version": "0.1.0",
+  "description": "CLI tool: sqld",
+  "source": "https://manpages.debian.org/sqld",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sqld"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sqld",
+    "binary": "sqld",
+    "check": "which sqld",
+    "install_steps": [
+      "apt-get install sqld 2>/dev/null || which sqld",
+      "Verify: sqld --version",
+      "supercli plugins install ./plugins/sqld --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqld",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqld version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqld",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sqld: apt-get install sqld 2>/dev/null || which sqld"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqld",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqld CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqld",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqld: apt-get install sqld 2>/dev/null || which sqld"
+      },
+      "args": []
+    }
+  ]
+}

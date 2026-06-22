@@ -1,0 +1,56 @@
+{
+  "name": "strsclnt",
+  "version": "0.1.0",
+  "description": "CLI tool: strsclnt",
+  "source": "https://manpages.debian.org/strsclnt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "strsclnt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "strsclnt",
+    "binary": "strsclnt",
+    "check": "which strsclnt",
+    "install_steps": [
+      "apt-get install strsclnt 2>/dev/null || which strsclnt",
+      "Verify: strsclnt --version",
+      "supercli plugins install ./plugins/strsclnt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "strsclnt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print strsclnt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "strsclnt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install strsclnt: apt-get install strsclnt 2>/dev/null || which strsclnt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "strsclnt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to strsclnt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "strsclnt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install strsclnt: apt-get install strsclnt 2>/dev/null || which strsclnt"
+      },
+      "args": []
+    }
+  ]
+}

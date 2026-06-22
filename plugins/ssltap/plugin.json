@@ -1,0 +1,56 @@
+{
+  "name": "ssltap",
+  "version": "0.1.0",
+  "description": "CLI tool: ssltap",
+  "source": "https://manpages.debian.org/ssltap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ssltap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ssltap",
+    "binary": "ssltap",
+    "check": "which ssltap",
+    "install_steps": [
+      "apt-get install ssltap 2>/dev/null || which ssltap",
+      "Verify: ssltap --version",
+      "supercli plugins install ./plugins/ssltap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ssltap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ssltap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssltap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ssltap: apt-get install ssltap 2>/dev/null || which ssltap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ssltap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ssltap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssltap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ssltap: apt-get install ssltap 2>/dev/null || which ssltap"
+      },
+      "args": []
+    }
+  ]
+}

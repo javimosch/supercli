@@ -1,0 +1,56 @@
+{
+  "name": "supercli",
+  "version": "0.1.0",
+  "description": "CLI tool: supercli",
+  "source": "https://manpages.debian.org/supercli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "supercli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "supercli",
+    "binary": "supercli",
+    "check": "which supercli",
+    "install_steps": [
+      "apt-get install supercli 2>/dev/null || which supercli",
+      "Verify: supercli --version",
+      "supercli plugins install ./plugins/supercli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "supercli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print supercli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supercli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install supercli: apt-get install supercli 2>/dev/null || which supercli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "supercli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to supercli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "supercli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install supercli: apt-get install supercli 2>/dev/null || which supercli"
+      },
+      "args": []
+    }
+  ]
+}

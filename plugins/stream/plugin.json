@@ -1,0 +1,56 @@
+{
+  "name": "stream",
+  "version": "0.1.0",
+  "description": "CLI tool: stream",
+  "source": "https://manpages.debian.org/stream",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "stream"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "stream",
+    "binary": "stream",
+    "check": "which stream",
+    "install_steps": [
+      "apt-get install stream 2>/dev/null || which stream",
+      "Verify: stream --version",
+      "supercli plugins install ./plugins/stream --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "stream",
+      "resource": "self",
+      "action": "version",
+      "description": "Print stream version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stream",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install stream: apt-get install stream 2>/dev/null || which stream"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stream",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to stream CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stream",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install stream: apt-get install stream 2>/dev/null || which stream"
+      },
+      "args": []
+    }
+  ]
+}
