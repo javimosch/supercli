@@ -1,0 +1,56 @@
+{
+  "name": "rcl",
+  "version": "0.1.0",
+  "description": "CLI tool: rcl",
+  "source": "https://manpages.debian.org/rcl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcl",
+    "binary": "rcl",
+    "check": "which rcl",
+    "install_steps": [
+      "apt-get install rcl 2>/dev/null || which rcl",
+      "Verify: rcl --version",
+      "supercli plugins install ./plugins/rcl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcl: apt-get install rcl 2>/dev/null || which rcl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcl: apt-get install rcl 2>/dev/null || which rcl"
+      },
+      "args": []
+    }
+  ]
+}

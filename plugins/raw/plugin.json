@@ -1,0 +1,56 @@
+{
+  "name": "raw",
+  "version": "0.1.0",
+  "description": "CLI tool: raw",
+  "source": "https://manpages.debian.org/raw",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "raw"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "raw",
+    "binary": "raw",
+    "check": "which raw",
+    "install_steps": [
+      "apt-get install raw 2>/dev/null || which raw",
+      "Verify: raw --version",
+      "supercli plugins install ./plugins/raw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "raw",
+      "resource": "self",
+      "action": "version",
+      "description": "Print raw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "raw",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install raw: apt-get install raw 2>/dev/null || which raw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "raw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to raw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "raw",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install raw: apt-get install raw 2>/dev/null || which raw"
+      },
+      "args": []
+    }
+  ]
+}

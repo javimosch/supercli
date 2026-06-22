@@ -1,0 +1,56 @@
+{
+  "name": "quirks-handler",
+  "version": "0.1.0",
+  "description": "CLI tool: quirks-handler",
+  "source": "https://manpages.debian.org/quirks-handler",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "quirks-handler"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "quirks-handler",
+    "binary": "quirks-handler",
+    "check": "which quirks-handler",
+    "install_steps": [
+      "apt-get install quirks-handler 2>/dev/null || which quirks-handler",
+      "Verify: quirks-handler --version",
+      "supercli plugins install ./plugins/quirks-handler --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "quirks-handler",
+      "resource": "self",
+      "action": "version",
+      "description": "Print quirks-handler version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quirks-handler",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install quirks-handler: apt-get install quirks-handler 2>/dev/null || which quirks-handler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "quirks-handler",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to quirks-handler CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quirks-handler",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install quirks-handler: apt-get install quirks-handler 2>/dev/null || which quirks-handler"
+      },
+      "args": []
+    }
+  ]
+}

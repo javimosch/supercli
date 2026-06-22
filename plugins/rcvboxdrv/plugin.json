@@ -1,0 +1,56 @@
+{
+  "name": "rcvboxdrv",
+  "version": "0.1.0",
+  "description": "CLI tool: rcvboxdrv",
+  "source": "https://manpages.debian.org/rcvboxdrv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcvboxdrv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcvboxdrv",
+    "binary": "rcvboxdrv",
+    "check": "which rcvboxdrv",
+    "install_steps": [
+      "apt-get install rcvboxdrv 2>/dev/null || which rcvboxdrv",
+      "Verify: rcvboxdrv --version",
+      "supercli plugins install ./plugins/rcvboxdrv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcvboxdrv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcvboxdrv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcvboxdrv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcvboxdrv: apt-get install rcvboxdrv 2>/dev/null || which rcvboxdrv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcvboxdrv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcvboxdrv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcvboxdrv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcvboxdrv: apt-get install rcvboxdrv 2>/dev/null || which rcvboxdrv"
+      },
+      "args": []
+    }
+  ]
+}

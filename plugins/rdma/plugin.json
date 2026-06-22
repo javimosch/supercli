@@ -1,0 +1,56 @@
+{
+  "name": "rdma",
+  "version": "0.1.0",
+  "description": "CLI tool: rdma",
+  "source": "https://manpages.debian.org/rdma",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rdma"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rdma",
+    "binary": "rdma",
+    "check": "which rdma",
+    "install_steps": [
+      "apt-get install rdma 2>/dev/null || which rdma",
+      "Verify: rdma --version",
+      "supercli plugins install ./plugins/rdma --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rdma",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rdma version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdma",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rdma: apt-get install rdma 2>/dev/null || which rdma"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rdma",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rdma CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdma",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rdma: apt-get install rdma 2>/dev/null || which rdma"
+      },
+      "args": []
+    }
+  ]
+}

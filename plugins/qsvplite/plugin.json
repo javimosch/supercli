@@ -1,0 +1,56 @@
+{
+  "name": "qsvplite",
+  "version": "0.1.0",
+  "description": "CLI tool: qsvplite",
+  "source": "https://manpages.debian.org/qsvplite",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qsvplite"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qsvplite",
+    "binary": "qsvplite",
+    "check": "which qsvplite",
+    "install_steps": [
+      "apt-get install qsvplite 2>/dev/null || which qsvplite",
+      "Verify: qsvplite --version",
+      "supercli plugins install ./plugins/qsvplite --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qsvplite",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qsvplite version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsvplite",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qsvplite: apt-get install qsvplite 2>/dev/null || which qsvplite"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qsvplite",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qsvplite CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsvplite",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qsvplite: apt-get install qsvplite 2>/dev/null || which qsvplite"
+      },
+      "args": []
+    }
+  ]
+}

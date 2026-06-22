@@ -1,0 +1,56 @@
+{
+  "name": "rcc",
+  "version": "0.1.0",
+  "description": "CLI tool: rcc",
+  "source": "https://manpages.debian.org/rcc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcc",
+    "binary": "rcc",
+    "check": "which rcc",
+    "install_steps": [
+      "apt-get install rcc 2>/dev/null || which rcc",
+      "Verify: rcc --version",
+      "supercli plugins install ./plugins/rcc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcc: apt-get install rcc 2>/dev/null || which rcc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcc: apt-get install rcc 2>/dev/null || which rcc"
+      },
+      "args": []
+    }
+  ]
+}

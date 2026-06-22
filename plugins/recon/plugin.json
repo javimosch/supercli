@@ -1,0 +1,133 @@
+{
+  "name": "recon",
+  "version": "0.1.0",
+  "description": "Versatile network reconnaissance CLI covering HTTP(S), TLS/DNS, multi-protocol probes, and a Rhai script engine",
+  "source": "https://github.com/codedeviate/recon",
+  "checks": [
+    { "type": "binary", "name": "recon" }
+  ],
+  "install_guidance": {
+    "plugin": "recon",
+    "binary": "recon",
+    "check": "which recon",
+    "install_steps": [
+      "cargo install recon-cli",
+      "Verify: recon --version",
+      "supercli plugins install ./plugins/recon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "recon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print recon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "recon",
+      "resource": "http",
+      "action": "request",
+      "description": "Make curl-style HTTP(S) request",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Target URL", "positional": true }
+      ]
+    },
+    {
+      "namespace": "recon",
+      "resource": "cert",
+      "action": "inspect",
+      "description": "Inspect TLS certificate chain",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "baseArgs": ["--cert"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Host or URL to inspect", "positional": true }
+      ]
+    },
+    {
+      "namespace": "recon",
+      "resource": "dns",
+      "action": "query",
+      "description": "Query DNS records",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "baseArgs": ["--dns"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Host to query", "positional": true },
+        { "name": "records", "type": "string", "required": false, "description": "Record types (A,AAAA,MX,TXT,...)" }
+      ]
+    },
+    {
+      "namespace": "recon",
+      "resource": "email",
+      "action": "check",
+      "description": "Run email-protection sweep (SPF, DMARC, DKIM, MTA-STS, TLS-RPT, BIMI)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "baseArgs": ["--spf", "--dmarc", "--dkim", "--mta-sts", "--tls-rpt", "--bimi"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "required": true, "description": "Domain to check", "positional": true }
+      ]
+    },
+    {
+      "namespace": "recon",
+      "resource": "script",
+      "action": "run",
+      "description": "Run a Rhai script with protocol probe bindings",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "baseArgs": ["--script"],
+        "positionalArgs": ["script.rhai"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to Rhai script", "positional": true }
+      ]
+    },
+    {
+      "namespace": "recon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to recon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "recon",
+        "passthrough": true,
+        "missingDependencyHelp": "Install recon: cargo install recon-cli"
+      },
+      "args": []
+    }
+  ]
+}

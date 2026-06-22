@@ -1,0 +1,56 @@
+{
+  "name": "qvkgen",
+  "version": "0.1.0",
+  "description": "CLI tool: qvkgen",
+  "source": "https://manpages.debian.org/qvkgen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qvkgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qvkgen",
+    "binary": "qvkgen",
+    "check": "which qvkgen",
+    "install_steps": [
+      "apt-get install qvkgen 2>/dev/null || which qvkgen",
+      "Verify: qvkgen --version",
+      "supercli plugins install ./plugins/qvkgen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qvkgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qvkgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qvkgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qvkgen: apt-get install qvkgen 2>/dev/null || which qvkgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qvkgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qvkgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qvkgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qvkgen: apt-get install qvkgen 2>/dev/null || which qvkgen"
+      },
+      "args": []
+    }
+  ]
+}

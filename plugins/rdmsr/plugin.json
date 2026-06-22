@@ -1,0 +1,56 @@
+{
+  "name": "rdmsr",
+  "version": "0.1.0",
+  "description": "CLI tool: rdmsr",
+  "source": "https://manpages.debian.org/rdmsr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rdmsr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rdmsr",
+    "binary": "rdmsr",
+    "check": "which rdmsr",
+    "install_steps": [
+      "apt-get install rdmsr 2>/dev/null || which rdmsr",
+      "Verify: rdmsr --version",
+      "supercli plugins install ./plugins/rdmsr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rdmsr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rdmsr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdmsr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rdmsr: apt-get install rdmsr 2>/dev/null || which rdmsr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rdmsr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rdmsr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdmsr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rdmsr: apt-get install rdmsr 2>/dev/null || which rdmsr"
+      },
+      "args": []
+    }
+  ]
+}

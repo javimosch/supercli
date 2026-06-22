@@ -1,0 +1,56 @@
+{
+  "name": "qsvp",
+  "version": "0.1.0",
+  "description": "CLI tool: qsvp",
+  "source": "https://manpages.debian.org/qsvp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qsvp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qsvp",
+    "binary": "qsvp",
+    "check": "which qsvp",
+    "install_steps": [
+      "apt-get install qsvp 2>/dev/null || which qsvp",
+      "Verify: qsvp --version",
+      "supercli plugins install ./plugins/qsvp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qsvp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qsvp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsvp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qsvp: apt-get install qsvp 2>/dev/null || which qsvp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qsvp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qsvp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsvp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qsvp: apt-get install qsvp 2>/dev/null || which qsvp"
+      },
+      "args": []
+    }
+  ]
+}

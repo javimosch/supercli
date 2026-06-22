@@ -1,0 +1,56 @@
+{
+  "name": "qtconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: qtconfig",
+  "source": "https://manpages.debian.org/qtconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qtconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qtconfig",
+    "binary": "qtconfig",
+    "check": "which qtconfig",
+    "install_steps": [
+      "apt-get install qtconfig 2>/dev/null || which qtconfig",
+      "Verify: qtconfig --version",
+      "supercli plugins install ./plugins/qtconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qtconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qtconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qtconfig: apt-get install qtconfig 2>/dev/null || which qtconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qtconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qtconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qtconfig: apt-get install qtconfig 2>/dev/null || which qtconfig"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "rcs",
+  "version": "0.1.0",
+  "description": "CLI tool: rcs",
+  "source": "https://manpages.debian.org/rcs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcs",
+    "binary": "rcs",
+    "check": "which rcs",
+    "install_steps": [
+      "apt-get install rcs 2>/dev/null || which rcs",
+      "Verify: rcs --version",
+      "supercli plugins install ./plugins/rcs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcs: apt-get install rcs 2>/dev/null || which rcs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcs: apt-get install rcs 2>/dev/null || which rcs"
+      },
+      "args": []
+    }
+  ]
+}

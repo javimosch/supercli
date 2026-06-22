@@ -1,0 +1,56 @@
+{
+  "name": "rcmd",
+  "version": "0.1.0",
+  "description": "CLI tool: rcmd",
+  "source": "https://manpages.debian.org/rcmd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcmd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcmd",
+    "binary": "rcmd",
+    "check": "which rcmd",
+    "install_steps": [
+      "apt-get install rcmd 2>/dev/null || which rcmd",
+      "Verify: rcmd --version",
+      "supercli plugins install ./plugins/rcmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcmd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcmd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcmd: apt-get install rcmd 2>/dev/null || which rcmd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcmd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcmd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcmd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcmd: apt-get install rcmd 2>/dev/null || which rcmd"
+      },
+      "args": []
+    }
+  ]
+}

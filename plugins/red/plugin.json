@@ -1,0 +1,56 @@
+{
+  "name": "red",
+  "version": "0.1.0",
+  "description": "CLI tool: red",
+  "source": "https://manpages.debian.org/red",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "red"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "red",
+    "binary": "red",
+    "check": "which red",
+    "install_steps": [
+      "apt-get install red 2>/dev/null || which red",
+      "Verify: red --version",
+      "supercli plugins install ./plugins/red --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "red",
+      "resource": "self",
+      "action": "version",
+      "description": "Print red version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "red",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install red: apt-get install red 2>/dev/null || which red"
+      },
+      "args": []
+    },
+    {
+      "namespace": "red",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to red CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "red",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install red: apt-get install red 2>/dev/null || which red"
+      },
+      "args": []
+    }
+  ]
+}

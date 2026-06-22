@@ -1,0 +1,56 @@
+{
+  "name": "refer",
+  "version": "0.1.0",
+  "description": "CLI tool: refer",
+  "source": "https://manpages.debian.org/refer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "refer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "refer",
+    "binary": "refer",
+    "check": "which refer",
+    "install_steps": [
+      "apt-get install refer 2>/dev/null || which refer",
+      "Verify: refer --version",
+      "supercli plugins install ./plugins/refer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "refer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print refer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "refer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install refer: apt-get install refer 2>/dev/null || which refer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "refer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to refer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "refer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install refer: apt-get install refer 2>/dev/null || which refer"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "rcx",
+  "version": "0.1.0",
+  "description": "CLI tool: rcx",
+  "source": "https://manpages.debian.org/rcx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcx",
+    "binary": "rcx",
+    "check": "which rcx",
+    "install_steps": [
+      "apt-get install rcx 2>/dev/null || which rcx",
+      "Verify: rcx --version",
+      "supercli plugins install ./plugins/rcx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcx: apt-get install rcx 2>/dev/null || which rcx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcx: apt-get install rcx 2>/dev/null || which rcx"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "qsvdp",
+  "version": "0.1.0",
+  "description": "CLI tool: qsvdp",
+  "source": "https://manpages.debian.org/qsvdp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qsvdp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qsvdp",
+    "binary": "qsvdp",
+    "check": "which qsvdp",
+    "install_steps": [
+      "apt-get install qsvdp 2>/dev/null || which qsvdp",
+      "Verify: qsvdp --version",
+      "supercli plugins install ./plugins/qsvdp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qsvdp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qsvdp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsvdp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qsvdp: apt-get install qsvdp 2>/dev/null || which qsvdp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qsvdp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qsvdp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qsvdp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qsvdp: apt-get install qsvdp 2>/dev/null || which qsvdp"
+      },
+      "args": []
+    }
+  ]
+}

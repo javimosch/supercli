@@ -1,0 +1,56 @@
+{
+  "name": "qtpaths",
+  "version": "0.1.0",
+  "description": "CLI tool: qtpaths",
+  "source": "https://manpages.debian.org/qtpaths",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qtpaths"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qtpaths",
+    "binary": "qtpaths",
+    "check": "which qtpaths",
+    "install_steps": [
+      "apt-get install qtpaths 2>/dev/null || which qtpaths",
+      "Verify: qtpaths --version",
+      "supercli plugins install ./plugins/qtpaths --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qtpaths",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qtpaths version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtpaths",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qtpaths: apt-get install qtpaths 2>/dev/null || which qtpaths"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qtpaths",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qtpaths CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtpaths",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qtpaths: apt-get install qtpaths 2>/dev/null || which qtpaths"
+      },
+      "args": []
+    }
+  ]
+}

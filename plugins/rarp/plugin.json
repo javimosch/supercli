@@ -1,0 +1,56 @@
+{
+  "name": "rarp",
+  "version": "0.1.0",
+  "description": "CLI tool: rarp",
+  "source": "https://manpages.debian.org/rarp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rarp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rarp",
+    "binary": "rarp",
+    "check": "which rarp",
+    "install_steps": [
+      "apt-get install rarp 2>/dev/null || which rarp",
+      "Verify: rarp --version",
+      "supercli plugins install ./plugins/rarp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rarp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rarp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rarp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rarp: apt-get install rarp 2>/dev/null || which rarp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rarp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rarp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rarp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rarp: apt-get install rarp 2>/dev/null || which rarp"
+      },
+      "args": []
+    }
+  ]
+}

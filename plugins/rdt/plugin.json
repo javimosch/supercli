@@ -1,0 +1,56 @@
+{
+  "name": "rdt",
+  "version": "0.1.0",
+  "description": "CLI tool: rdt",
+  "source": "https://manpages.debian.org/rdt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rdt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rdt",
+    "binary": "rdt",
+    "check": "which rdt",
+    "install_steps": [
+      "apt-get install rdt 2>/dev/null || which rdt",
+      "Verify: rdt --version",
+      "supercli plugins install ./plugins/rdt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rdt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rdt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rdt: apt-get install rdt 2>/dev/null || which rdt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rdt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rdt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rdt: apt-get install rdt 2>/dev/null || which rdt"
+      },
+      "args": []
+    }
+  ]
+}

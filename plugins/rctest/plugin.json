@@ -1,0 +1,56 @@
+{
+  "name": "rctest",
+  "version": "0.1.0",
+  "description": "CLI tool: rctest",
+  "source": "https://manpages.debian.org/rctest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rctest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rctest",
+    "binary": "rctest",
+    "check": "which rctest",
+    "install_steps": [
+      "apt-get install rctest 2>/dev/null || which rctest",
+      "Verify: rctest --version",
+      "supercli plugins install ./plugins/rctest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rctest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rctest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rctest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rctest: apt-get install rctest 2>/dev/null || which rctest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rctest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rctest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rctest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rctest: apt-get install rctest 2>/dev/null || which rctest"
+      },
+      "args": []
+    }
+  ]
+}

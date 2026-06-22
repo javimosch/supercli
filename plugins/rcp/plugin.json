@@ -1,0 +1,56 @@
+{
+  "name": "rcp",
+  "version": "0.1.0",
+  "description": "CLI tool: rcp",
+  "source": "https://manpages.debian.org/rcp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rcp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rcp",
+    "binary": "rcp",
+    "check": "which rcp",
+    "install_steps": [
+      "apt-get install rcp 2>/dev/null || which rcp",
+      "Verify: rcp --version",
+      "supercli plugins install ./plugins/rcp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rcp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rcp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rcp: apt-get install rcp 2>/dev/null || which rcp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rcp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rcp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rcp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rcp: apt-get install rcp 2>/dev/null || which rcp"
+      },
+      "args": []
+    }
+  ]
+}

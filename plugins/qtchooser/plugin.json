@@ -1,0 +1,56 @@
+{
+  "name": "qtchooser",
+  "version": "0.1.0",
+  "description": "CLI tool: qtchooser",
+  "source": "https://manpages.debian.org/qtchooser",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qtchooser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qtchooser",
+    "binary": "qtchooser",
+    "check": "which qtchooser",
+    "install_steps": [
+      "apt-get install qtchooser 2>/dev/null || which qtchooser",
+      "Verify: qtchooser --version",
+      "supercli plugins install ./plugins/qtchooser --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qtchooser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qtchooser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtchooser",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qtchooser: apt-get install qtchooser 2>/dev/null || which qtchooser"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qtchooser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qtchooser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtchooser",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qtchooser: apt-get install qtchooser 2>/dev/null || which qtchooser"
+      },
+      "args": []
+    }
+  ]
+}

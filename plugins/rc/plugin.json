@@ -1,0 +1,56 @@
+{
+  "name": "rc",
+  "version": "0.1.0",
+  "description": "CLI tool: rc",
+  "source": "https://manpages.debian.org/rc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rc",
+    "binary": "rc",
+    "check": "which rc",
+    "install_steps": [
+      "apt-get install rc 2>/dev/null || which rc",
+      "Verify: rc --version",
+      "supercli plugins install ./plugins/rc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rc: apt-get install rc 2>/dev/null || which rc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rc: apt-get install rc 2>/dev/null || which rc"
+      },
+      "args": []
+    }
+  ]
+}

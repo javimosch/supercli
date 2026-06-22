@@ -1,0 +1,56 @@
+{
+  "name": "qtdiag",
+  "version": "0.1.0",
+  "description": "CLI tool: qtdiag",
+  "source": "https://manpages.debian.org/qtdiag",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qtdiag"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qtdiag",
+    "binary": "qtdiag",
+    "check": "which qtdiag",
+    "install_steps": [
+      "apt-get install qtdiag 2>/dev/null || which qtdiag",
+      "Verify: qtdiag --version",
+      "supercli plugins install ./plugins/qtdiag --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qtdiag",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qtdiag version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtdiag",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qtdiag: apt-get install qtdiag 2>/dev/null || which qtdiag"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qtdiag",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qtdiag CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qtdiag",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qtdiag: apt-get install qtdiag 2>/dev/null || which qtdiag"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "rdiffdir",
+  "version": "0.1.0",
+  "description": "CLI tool: rdiffdir",
+  "source": "https://manpages.debian.org/rdiffdir",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rdiffdir"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rdiffdir",
+    "binary": "rdiffdir",
+    "check": "which rdiffdir",
+    "install_steps": [
+      "apt-get install rdiffdir 2>/dev/null || which rdiffdir",
+      "Verify: rdiffdir --version",
+      "supercli plugins install ./plugins/rdiffdir --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rdiffdir",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rdiffdir version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdiffdir",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rdiffdir: apt-get install rdiffdir 2>/dev/null || which rdiffdir"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rdiffdir",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rdiffdir CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rdiffdir",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rdiffdir: apt-get install rdiffdir 2>/dev/null || which rdiffdir"
+      },
+      "args": []
+    }
+  ]
+}
