@@ -1,0 +1,56 @@
+{
+  "name": "pw-mididump",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-mididump",
+  "source": "https://manpages.debian.org/pw-mididump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-mididump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-mididump",
+    "binary": "pw-mididump",
+    "check": "which pw-mididump",
+    "install_steps": [
+      "apt-get install pw-mididump 2>/dev/null || which pw-mididump",
+      "Verify: pw-mididump --version",
+      "supercli plugins install ./plugins/pw-mididump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-mididump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-mididump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-mididump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-mididump: apt-get install pw-mididump 2>/dev/null || which pw-mididump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-mididump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-mididump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-mididump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-mididump: apt-get install pw-mididump 2>/dev/null || which pw-mididump"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pyclean",
+  "version": "0.1.0",
+  "description": "CLI tool: pyclean",
+  "source": "https://manpages.debian.org/pyclean",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pyclean"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pyclean",
+    "binary": "pyclean",
+    "check": "which pyclean",
+    "install_steps": [
+      "apt-get install pyclean 2>/dev/null || which pyclean",
+      "Verify: pyclean --version",
+      "supercli plugins install ./plugins/pyclean --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pyclean",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pyclean version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyclean",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pyclean: apt-get install pyclean 2>/dev/null || which pyclean"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pyclean",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pyclean CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyclean",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pyclean: apt-get install pyclean 2>/dev/null || which pyclean"
+      },
+      "args": []
+    }
+  ]
+}

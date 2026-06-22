@@ -1,0 +1,56 @@
+{
+  "name": "pw-play",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-play",
+  "source": "https://manpages.debian.org/pw-play",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-play"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-play",
+    "binary": "pw-play",
+    "check": "which pw-play",
+    "install_steps": [
+      "apt-get install pw-play 2>/dev/null || which pw-play",
+      "Verify: pw-play --version",
+      "supercli plugins install ./plugins/pw-play --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-play",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-play version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-play",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-play: apt-get install pw-play 2>/dev/null || which pw-play"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-play",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-play CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-play",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-play: apt-get install pw-play 2>/dev/null || which pw-play"
+      },
+      "args": []
+    }
+  ]
+}

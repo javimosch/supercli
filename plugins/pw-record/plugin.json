@@ -1,0 +1,56 @@
+{
+  "name": "pw-record",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-record",
+  "source": "https://manpages.debian.org/pw-record",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-record"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-record",
+    "binary": "pw-record",
+    "check": "which pw-record",
+    "install_steps": [
+      "apt-get install pw-record 2>/dev/null || which pw-record",
+      "Verify: pw-record --version",
+      "supercli plugins install ./plugins/pw-record --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-record",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-record version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-record",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-record: apt-get install pw-record 2>/dev/null || which pw-record"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-record",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-record CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-record",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-record: apt-get install pw-record 2>/dev/null || which pw-record"
+      },
+      "args": []
+    }
+  ]
+}

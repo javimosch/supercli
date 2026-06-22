@@ -1,0 +1,56 @@
+{
+  "name": "pw-mon",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-mon",
+  "source": "https://manpages.debian.org/pw-mon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-mon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-mon",
+    "binary": "pw-mon",
+    "check": "which pw-mon",
+    "install_steps": [
+      "apt-get install pw-mon 2>/dev/null || which pw-mon",
+      "Verify: pw-mon --version",
+      "supercli plugins install ./plugins/pw-mon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-mon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-mon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-mon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-mon: apt-get install pw-mon 2>/dev/null || which pw-mon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-mon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-mon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-mon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-mon: apt-get install pw-mon 2>/dev/null || which pw-mon"
+      },
+      "args": []
+    }
+  ]
+}

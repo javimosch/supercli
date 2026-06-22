@@ -1,0 +1,56 @@
+{
+  "name": "pw-profiler",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-profiler",
+  "source": "https://manpages.debian.org/pw-profiler",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-profiler"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-profiler",
+    "binary": "pw-profiler",
+    "check": "which pw-profiler",
+    "install_steps": [
+      "apt-get install pw-profiler 2>/dev/null || which pw-profiler",
+      "Verify: pw-profiler --version",
+      "supercli plugins install ./plugins/pw-profiler --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-profiler",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-profiler version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-profiler",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-profiler: apt-get install pw-profiler 2>/dev/null || which pw-profiler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-profiler",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-profiler CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-profiler",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-profiler: apt-get install pw-profiler 2>/dev/null || which pw-profiler"
+      },
+      "args": []
+    }
+  ]
+}

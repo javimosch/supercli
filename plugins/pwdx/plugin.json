@@ -1,0 +1,56 @@
+{
+  "name": "pwdx",
+  "version": "0.1.0",
+  "description": "CLI tool: pwdx",
+  "source": "https://manpages.debian.org/pwdx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pwdx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pwdx",
+    "binary": "pwdx",
+    "check": "which pwdx",
+    "install_steps": [
+      "apt-get install pwdx 2>/dev/null || which pwdx",
+      "Verify: pwdx --version",
+      "supercli plugins install ./plugins/pwdx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pwdx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pwdx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwdx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pwdx: apt-get install pwdx 2>/dev/null || which pwdx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pwdx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pwdx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwdx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pwdx: apt-get install pwdx 2>/dev/null || which pwdx"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pw-reserve",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-reserve",
+  "source": "https://manpages.debian.org/pw-reserve",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-reserve"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-reserve",
+    "binary": "pw-reserve",
+    "check": "which pw-reserve",
+    "install_steps": [
+      "apt-get install pw-reserve 2>/dev/null || which pw-reserve",
+      "Verify: pw-reserve --version",
+      "supercli plugins install ./plugins/pw-reserve --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-reserve",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-reserve version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-reserve",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-reserve: apt-get install pw-reserve 2>/dev/null || which pw-reserve"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-reserve",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-reserve CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-reserve",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-reserve: apt-get install pw-reserve 2>/dev/null || which pw-reserve"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pw-top",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-top",
+  "source": "https://manpages.debian.org/pw-top",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-top"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-top",
+    "binary": "pw-top",
+    "check": "which pw-top",
+    "install_steps": [
+      "apt-get install pw-top 2>/dev/null || which pw-top",
+      "Verify: pw-top --version",
+      "supercli plugins install ./plugins/pw-top --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-top",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-top version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-top",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-top: apt-get install pw-top 2>/dev/null || which pw-top"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-top",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-top CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-top",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-top: apt-get install pw-top 2>/dev/null || which pw-top"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pw-link",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-link",
+  "source": "https://manpages.debian.org/pw-link",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-link"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-link",
+    "binary": "pw-link",
+    "check": "which pw-link",
+    "install_steps": [
+      "apt-get install pw-link 2>/dev/null || which pw-link",
+      "Verify: pw-link --version",
+      "supercli plugins install ./plugins/pw-link --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-link",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-link version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-link",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-link: apt-get install pw-link 2>/dev/null || which pw-link"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-link",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-link CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-link",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-link: apt-get install pw-link 2>/dev/null || which pw-link"
+      },
+      "args": []
+    }
+  ]
+}
