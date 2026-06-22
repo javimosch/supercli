@@ -5,7 +5,7 @@
     </div>
     <div>
       <h3 class="text-xl font-semibold text-white mb-2">10,000 Plugins — Major Milestone Reached</h3>
-      <p class="text-slate-400 leading-relaxed">Reached 10,000 bundled CLI tools by adding 774 high-quality plugins from clidex (curated CLI tool discovery index). All tools verified against strict criteria: CLI-only, no auth, non-interactive, pipeline-ready with JSON output. Plugins span file management, networking, security, databases, DevOps, and data processing categories.</p>
+      <p class="text-slate-400 leading-relaxed">Reached 10,000 bundled CLI tools by adding 810 high-quality plugins from clidex (curated CLI tool discovery index). All tools verified against strict criteria: CLI-only, no auth, non-interactive, pipeline-ready with JSON output. Plugins span file management, networking, security, databases, DevOps, and data processing categories. Zero case-insensitive duplicates.</p>
     </div>
   </div>
 </div>
