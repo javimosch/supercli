@@ -1,0 +1,56 @@
+{
+  "name": "gparted",
+  "version": "0.1.0",
+  "description": "CLI tool: gparted",
+  "source": "https://manpages.debian.org/gparted",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gparted"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gparted",
+    "binary": "gparted",
+    "check": "which gparted",
+    "install_steps": [
+      "apt-get install gparted 2>/dev/null || which gparted",
+      "Verify: gparted --version",
+      "supercli plugins install ./plugins/gparted --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gparted",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gparted version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gparted",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gparted: apt-get install gparted 2>/dev/null || which gparted"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gparted",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gparted CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gparted",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gparted: apt-get install gparted 2>/dev/null || which gparted"
+      },
+      "args": []
+    }
+  ]
+}

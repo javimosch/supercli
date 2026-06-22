@@ -1,0 +1,56 @@
+{
+  "name": "gnome-system-monitor",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-system-monitor",
+  "source": "https://manpages.debian.org/gnome-system-monitor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-system-monitor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-system-monitor",
+    "binary": "gnome-system-monitor",
+    "check": "which gnome-system-monitor",
+    "install_steps": [
+      "apt-get install gnome-system-monitor 2>/dev/null || which gnome-system-monitor",
+      "Verify: gnome-system-monitor --version",
+      "supercli plugins install ./plugins/gnome-system-monitor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-system-monitor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-system-monitor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-system-monitor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-system-monitor: apt-get install gnome-system-monitor 2>/dev/null || which gnome-system-monitor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-system-monitor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-system-monitor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-system-monitor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-system-monitor: apt-get install gnome-system-monitor 2>/dev/null || which gnome-system-monitor"
+      },
+      "args": []
+    }
+  ]
+}

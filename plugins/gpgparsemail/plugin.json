@@ -1,0 +1,56 @@
+{
+  "name": "gpgparsemail",
+  "version": "0.1.0",
+  "description": "CLI tool: gpgparsemail",
+  "source": "https://manpages.debian.org/gpgparsemail",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpgparsemail"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpgparsemail",
+    "binary": "gpgparsemail",
+    "check": "which gpgparsemail",
+    "install_steps": [
+      "apt-get install gpgparsemail 2>/dev/null || which gpgparsemail",
+      "Verify: gpgparsemail --version",
+      "supercli plugins install ./plugins/gpgparsemail --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpgparsemail",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpgparsemail version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgparsemail",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpgparsemail: apt-get install gpgparsemail 2>/dev/null || which gpgparsemail"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpgparsemail",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpgparsemail CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgparsemail",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpgparsemail: apt-get install gpgparsemail 2>/dev/null || which gpgparsemail"
+      },
+      "args": []
+    }
+  ]
+}

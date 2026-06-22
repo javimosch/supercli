@@ -1,0 +1,56 @@
+{
+  "name": "gpgcompose",
+  "version": "0.1.0",
+  "description": "CLI tool: gpgcompose",
+  "source": "https://manpages.debian.org/gpgcompose",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpgcompose"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpgcompose",
+    "binary": "gpgcompose",
+    "check": "which gpgcompose",
+    "install_steps": [
+      "apt-get install gpgcompose 2>/dev/null || which gpgcompose",
+      "Verify: gpgcompose --version",
+      "supercli plugins install ./plugins/gpgcompose --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpgcompose",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpgcompose version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgcompose",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpgcompose: apt-get install gpgcompose 2>/dev/null || which gpgcompose"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpgcompose",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpgcompose CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgcompose",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpgcompose: apt-get install gpgcompose 2>/dev/null || which gpgcompose"
+      },
+      "args": []
+    }
+  ]
+}

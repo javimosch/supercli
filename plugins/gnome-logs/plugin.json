@@ -1,0 +1,56 @@
+{
+  "name": "gnome-logs",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-logs",
+  "source": "https://manpages.debian.org/gnome-logs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-logs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-logs",
+    "binary": "gnome-logs",
+    "check": "which gnome-logs",
+    "install_steps": [
+      "apt-get install gnome-logs 2>/dev/null || which gnome-logs",
+      "Verify: gnome-logs --version",
+      "supercli plugins install ./plugins/gnome-logs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-logs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-logs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-logs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-logs: apt-get install gnome-logs 2>/dev/null || which gnome-logs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-logs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-logs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-logs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-logs: apt-get install gnome-logs 2>/dev/null || which gnome-logs"
+      },
+      "args": []
+    }
+  ]
+}

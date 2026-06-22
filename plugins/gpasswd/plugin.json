@@ -1,0 +1,56 @@
+{
+  "name": "gpasswd",
+  "version": "0.1.0",
+  "description": "CLI tool: gpasswd",
+  "source": "https://manpages.debian.org/gpasswd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpasswd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpasswd",
+    "binary": "gpasswd",
+    "check": "which gpasswd",
+    "install_steps": [
+      "apt-get install gpasswd 2>/dev/null || which gpasswd",
+      "Verify: gpasswd --version",
+      "supercli plugins install ./plugins/gpasswd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpasswd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpasswd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpasswd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpasswd: apt-get install gpasswd 2>/dev/null || which gpasswd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpasswd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpasswd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpasswd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpasswd: apt-get install gpasswd 2>/dev/null || which gpasswd"
+      },
+      "args": []
+    }
+  ]
+}

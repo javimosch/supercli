@@ -1,0 +1,56 @@
+{
+  "name": "google",
+  "version": "0.1.0",
+  "description": "CLI tool: google",
+  "source": "https://manpages.debian.org/google",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "google"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "google",
+    "binary": "google",
+    "check": "which google",
+    "install_steps": [
+      "apt-get install google 2>/dev/null || which google",
+      "Verify: google --version",
+      "supercli plugins install ./plugins/google --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "google",
+      "resource": "self",
+      "action": "version",
+      "description": "Print google version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "google",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install google: apt-get install google 2>/dev/null || which google"
+      },
+      "args": []
+    },
+    {
+      "namespace": "google",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to google CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "google",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install google: apt-get install google 2>/dev/null || which google"
+      },
+      "args": []
+    }
+  ]
+}

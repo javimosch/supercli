@@ -1,0 +1,56 @@
+{
+  "name": "gnome-terminal",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-terminal",
+  "source": "https://manpages.debian.org/gnome-terminal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-terminal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-terminal",
+    "binary": "gnome-terminal",
+    "check": "which gnome-terminal",
+    "install_steps": [
+      "apt-get install gnome-terminal 2>/dev/null || which gnome-terminal",
+      "Verify: gnome-terminal --version",
+      "supercli plugins install ./plugins/gnome-terminal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-terminal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-terminal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-terminal",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-terminal: apt-get install gnome-terminal 2>/dev/null || which gnome-terminal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-terminal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-terminal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-terminal",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-terminal: apt-get install gnome-terminal 2>/dev/null || which gnome-terminal"
+      },
+      "args": []
+    }
+  ]
+}

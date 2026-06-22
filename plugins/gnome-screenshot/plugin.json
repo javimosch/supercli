@@ -1,0 +1,56 @@
+{
+  "name": "gnome-screenshot",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-screenshot",
+  "source": "https://manpages.debian.org/gnome-screenshot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-screenshot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-screenshot",
+    "binary": "gnome-screenshot",
+    "check": "which gnome-screenshot",
+    "install_steps": [
+      "apt-get install gnome-screenshot 2>/dev/null || which gnome-screenshot",
+      "Verify: gnome-screenshot --version",
+      "supercli plugins install ./plugins/gnome-screenshot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-screenshot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-screenshot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-screenshot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-screenshot: apt-get install gnome-screenshot 2>/dev/null || which gnome-screenshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-screenshot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-screenshot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-screenshot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-screenshot: apt-get install gnome-screenshot 2>/dev/null || which gnome-screenshot"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gnome-software",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-software",
+  "source": "https://manpages.debian.org/gnome-software",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-software"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-software",
+    "binary": "gnome-software",
+    "check": "which gnome-software",
+    "install_steps": [
+      "apt-get install gnome-software 2>/dev/null || which gnome-software",
+      "Verify: gnome-software --version",
+      "supercli plugins install ./plugins/gnome-software --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-software",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-software version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-software",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-software: apt-get install gnome-software 2>/dev/null || which gnome-software"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-software",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-software CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-software",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-software: apt-get install gnome-software 2>/dev/null || which gnome-software"
+      },
+      "args": []
+    }
+  ]
+}

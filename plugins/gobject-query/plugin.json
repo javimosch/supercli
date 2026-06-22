@@ -1,0 +1,56 @@
+{
+  "name": "gobject-query",
+  "version": "0.1.0",
+  "description": "CLI tool: gobject-query",
+  "source": "https://manpages.debian.org/gobject-query",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gobject-query"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gobject-query",
+    "binary": "gobject-query",
+    "check": "which gobject-query",
+    "install_steps": [
+      "apt-get install gobject-query 2>/dev/null || which gobject-query",
+      "Verify: gobject-query --version",
+      "supercli plugins install ./plugins/gobject-query --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gobject-query",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gobject-query version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobject-query",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gobject-query: apt-get install gobject-query 2>/dev/null || which gobject-query"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gobject-query",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gobject-query CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gobject-query",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gobject-query: apt-get install gobject-query 2>/dev/null || which gobject-query"
+      },
+      "args": []
+    }
+  ]
+}

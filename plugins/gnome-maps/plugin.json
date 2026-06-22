@@ -1,0 +1,56 @@
+{
+  "name": "gnome-maps",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-maps",
+  "source": "https://manpages.debian.org/gnome-maps",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-maps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-maps",
+    "binary": "gnome-maps",
+    "check": "which gnome-maps",
+    "install_steps": [
+      "apt-get install gnome-maps 2>/dev/null || which gnome-maps",
+      "Verify: gnome-maps --version",
+      "supercli plugins install ./plugins/gnome-maps --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-maps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-maps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-maps",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-maps: apt-get install gnome-maps 2>/dev/null || which gnome-maps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-maps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-maps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-maps",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-maps: apt-get install gnome-maps 2>/dev/null || which gnome-maps"
+      },
+      "args": []
+    }
+  ]
+}

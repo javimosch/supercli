@@ -1,0 +1,56 @@
+{
+  "name": "google-chrome",
+  "version": "0.1.0",
+  "description": "CLI tool: google-chrome",
+  "source": "https://manpages.debian.org/google-chrome",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "google-chrome"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "google-chrome",
+    "binary": "google-chrome",
+    "check": "which google-chrome",
+    "install_steps": [
+      "apt-get install google-chrome 2>/dev/null || which google-chrome",
+      "Verify: google-chrome --version",
+      "supercli plugins install ./plugins/google-chrome --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "google-chrome",
+      "resource": "self",
+      "action": "version",
+      "description": "Print google-chrome version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "google-chrome",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install google-chrome: apt-get install google-chrome 2>/dev/null || which google-chrome"
+      },
+      "args": []
+    },
+    {
+      "namespace": "google-chrome",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to google-chrome CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "google-chrome",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install google-chrome: apt-get install google-chrome 2>/dev/null || which google-chrome"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gnome-todo",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-todo",
+  "source": "https://manpages.debian.org/gnome-todo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-todo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-todo",
+    "binary": "gnome-todo",
+    "check": "which gnome-todo",
+    "install_steps": [
+      "apt-get install gnome-todo 2>/dev/null || which gnome-todo",
+      "Verify: gnome-todo --version",
+      "supercli plugins install ./plugins/gnome-todo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-todo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-todo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-todo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-todo: apt-get install gnome-todo 2>/dev/null || which gnome-todo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-todo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-todo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-todo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-todo: apt-get install gnome-todo 2>/dev/null || which gnome-todo"
+      },
+      "args": []
+    }
+  ]
+}

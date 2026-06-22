@@ -1,0 +1,56 @@
+{
+  "name": "gnome-music",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-music",
+  "source": "https://manpages.debian.org/gnome-music",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-music"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-music",
+    "binary": "gnome-music",
+    "check": "which gnome-music",
+    "install_steps": [
+      "apt-get install gnome-music 2>/dev/null || which gnome-music",
+      "Verify: gnome-music --version",
+      "supercli plugins install ./plugins/gnome-music --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-music",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-music version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-music",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-music: apt-get install gnome-music 2>/dev/null || which gnome-music"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-music",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-music CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-music",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-music: apt-get install gnome-music 2>/dev/null || which gnome-music"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gpgsplit",
+  "version": "0.1.0",
+  "description": "CLI tool: gpgsplit",
+  "source": "https://manpages.debian.org/gpgsplit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpgsplit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpgsplit",
+    "binary": "gpgsplit",
+    "check": "which gpgsplit",
+    "install_steps": [
+      "apt-get install gpgsplit 2>/dev/null || which gpgsplit",
+      "Verify: gpgsplit --version",
+      "supercli plugins install ./plugins/gpgsplit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpgsplit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpgsplit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgsplit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpgsplit: apt-get install gpgsplit 2>/dev/null || which gpgsplit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpgsplit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpgsplit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgsplit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpgsplit: apt-get install gpgsplit 2>/dev/null || which gpgsplit"
+      },
+      "args": []
+    }
+  ]
+}

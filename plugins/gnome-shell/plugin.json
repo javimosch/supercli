@@ -1,0 +1,56 @@
+{
+  "name": "gnome-shell",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-shell",
+  "source": "https://manpages.debian.org/gnome-shell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-shell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-shell",
+    "binary": "gnome-shell",
+    "check": "which gnome-shell",
+    "install_steps": [
+      "apt-get install gnome-shell 2>/dev/null || which gnome-shell",
+      "Verify: gnome-shell --version",
+      "supercli plugins install ./plugins/gnome-shell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-shell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-shell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-shell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-shell: apt-get install gnome-shell 2>/dev/null || which gnome-shell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-shell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-shell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-shell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-shell: apt-get install gnome-shell 2>/dev/null || which gnome-shell"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gpgrt-config",
+  "version": "0.1.0",
+  "description": "CLI tool: gpgrt-config",
+  "source": "https://manpages.debian.org/gpgrt-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpgrt-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpgrt-config",
+    "binary": "gpgrt-config",
+    "check": "which gpgrt-config",
+    "install_steps": [
+      "apt-get install gpgrt-config 2>/dev/null || which gpgrt-config",
+      "Verify: gpgrt-config --version",
+      "supercli plugins install ./plugins/gpgrt-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpgrt-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpgrt-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgrt-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpgrt-config: apt-get install gpgrt-config 2>/dev/null || which gpgrt-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpgrt-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpgrt-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgrt-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpgrt-config: apt-get install gpgrt-config 2>/dev/null || which gpgrt-config"
+      },
+      "args": []
+    }
+  ]
+}

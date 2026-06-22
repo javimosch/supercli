@@ -1,0 +1,56 @@
+{
+  "name": "gnome-tweaks",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-tweaks",
+  "source": "https://manpages.debian.org/gnome-tweaks",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-tweaks"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-tweaks",
+    "binary": "gnome-tweaks",
+    "check": "which gnome-tweaks",
+    "install_steps": [
+      "apt-get install gnome-tweaks 2>/dev/null || which gnome-tweaks",
+      "Verify: gnome-tweaks --version",
+      "supercli plugins install ./plugins/gnome-tweaks --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-tweaks",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-tweaks version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-tweaks",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-tweaks: apt-get install gnome-tweaks 2>/dev/null || which gnome-tweaks"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-tweaks",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-tweaks CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-tweaks",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-tweaks: apt-get install gnome-tweaks 2>/dev/null || which gnome-tweaks"
+      },
+      "args": []
+    }
+  ]
+}

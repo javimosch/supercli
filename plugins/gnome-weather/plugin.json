@@ -1,0 +1,56 @@
+{
+  "name": "gnome-weather",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-weather",
+  "source": "https://manpages.debian.org/gnome-weather",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-weather"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-weather",
+    "binary": "gnome-weather",
+    "check": "which gnome-weather",
+    "install_steps": [
+      "apt-get install gnome-weather 2>/dev/null || which gnome-weather",
+      "Verify: gnome-weather --version",
+      "supercli plugins install ./plugins/gnome-weather --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-weather",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-weather version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-weather",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-weather: apt-get install gnome-weather 2>/dev/null || which gnome-weather"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-weather",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-weather CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-weather",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-weather: apt-get install gnome-weather 2>/dev/null || which gnome-weather"
+      },
+      "args": []
+    }
+  ]
+}
