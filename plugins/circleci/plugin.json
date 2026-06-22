@@ -1,0 +1,52 @@
+{
+  "name": "circleci",
+  "version": "0.1.0",
+  "description": "Enables you to reproduce the CircleCI environment locally",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "circleci"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "circleci",
+    "binary": "circleci",
+    "check": "which circleci",
+    "install_steps": [
+      "brew install circleci",
+      "Verify: circleci --version",
+      "supercli plugins install ./plugins/circleci --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "circleci",
+      "resource": "self",
+      "action": "version",
+      "description": "Print circleci version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "circleci",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install circleci: brew install circleci"
+      },
+      "args": []
+    },
+    {
+      "namespace": "circleci",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to circleci CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "circleci",
+        "passthrough": true,
+        "missingDependencyHelp": "Install circleci"
+      },
+      "args": []
+    }
+  ]
+}

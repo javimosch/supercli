@@ -1,0 +1,53 @@
+{
+  "name": "chaoskube",
+  "version": "0.1.0",
+  "description": "Periodically kills random pods in your Kubernetes cluster",
+  "source": "https://github.com/linki/chaoskube",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "chaoskube"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "chaoskube",
+    "binary": "chaoskube",
+    "check": "which chaoskube",
+    "install_steps": [
+      "brew install chaoskube",
+      "Verify: chaoskube --version",
+      "supercli plugins install ./plugins/chaoskube --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "chaoskube",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chaoskube version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chaoskube",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install chaoskube: brew install chaoskube"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chaoskube",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to chaoskube CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chaoskube",
+        "passthrough": true,
+        "missingDependencyHelp": "Install chaoskube"
+      },
+      "args": []
+    }
+  ]
+}

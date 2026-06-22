@@ -1,0 +1,52 @@
+{
+  "name": "cilium-cli",
+  "version": "0.1.0",
+  "description": "CLI to install, manage & troubleshoot Kubernetes clusters running Cilium",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cilium-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cilium-cli",
+    "binary": "cilium-cli",
+    "check": "which cilium-cli",
+    "install_steps": [
+      "brew install cilium-cli",
+      "Verify: cilium-cli --version",
+      "supercli plugins install ./plugins/cilium-cli --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "cilium-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cilium-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cilium-cli: brew install cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cilium-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cilium-cli"
+      },
+      "args": []
+    }
+  ]
+}

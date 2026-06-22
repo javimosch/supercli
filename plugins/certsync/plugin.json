@@ -1,0 +1,53 @@
+{
+  "name": "certsync",
+  "version": "0.1.0",
+  "description": "Dump NTDS with golden certificates and UnPAC the hash",
+  "source": "https://github.com/zblurx/certsync",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "certsync"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "certsync",
+    "binary": "certsync",
+    "check": "which certsync",
+    "install_steps": [
+      "brew install certsync",
+      "Verify: certsync --version",
+      "supercli plugins install ./plugins/certsync --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "certsync",
+      "resource": "self",
+      "action": "version",
+      "description": "Print certsync version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certsync",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install certsync: brew install certsync"
+      },
+      "args": []
+    },
+    {
+      "namespace": "certsync",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to certsync CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "certsync",
+        "passthrough": true,
+        "missingDependencyHelp": "Install certsync"
+      },
+      "args": []
+    }
+  ]
+}

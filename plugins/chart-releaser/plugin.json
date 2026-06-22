@@ -1,0 +1,53 @@
+{
+  "name": "chart-releaser",
+  "version": "0.1.0",
+  "description": "Hosting Helm Charts via GitHub Pages and Releases",
+  "source": "https://github.com/helm/chart-releaser/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "chart-releaser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "chart-releaser",
+    "binary": "chart-releaser",
+    "check": "which chart-releaser",
+    "install_steps": [
+      "brew install chart-releaser",
+      "Verify: chart-releaser --version",
+      "supercli plugins install ./plugins/chart-releaser --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "chart-releaser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chart-releaser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chart-releaser",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install chart-releaser: brew install chart-releaser"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chart-releaser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to chart-releaser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chart-releaser",
+        "passthrough": true,
+        "missingDependencyHelp": "Install chart-releaser"
+      },
+      "args": []
+    }
+  ]
+}
