@@ -1,0 +1,56 @@
+{
+  "name": "ModemManager",
+  "version": "0.1.0",
+  "description": "CLI tool: ModemManager",
+  "source": "https://manpages.debian.org/ModemManager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ModemManager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ModemManager",
+    "binary": "ModemManager",
+    "check": "which ModemManager",
+    "install_steps": [
+      "apt-get install ModemManager 2>/dev/null || which ModemManager",
+      "Verify: ModemManager --version",
+      "supercli plugins install ./plugins/ModemManager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ModemManager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ModemManager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ModemManager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ModemManager: apt-get install ModemManager 2>/dev/null || which ModemManager"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ModemManager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ModemManager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ModemManager",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ModemManager: apt-get install ModemManager 2>/dev/null || which ModemManager"
+      },
+      "args": []
+    }
+  ]
+}

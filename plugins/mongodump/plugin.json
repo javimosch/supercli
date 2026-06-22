@@ -1,0 +1,56 @@
+{
+  "name": "mongodump",
+  "version": "0.1.0",
+  "description": "CLI tool: mongodump",
+  "source": "https://manpages.debian.org/mongodump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongodump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongodump",
+    "binary": "mongodump",
+    "check": "which mongodump",
+    "install_steps": [
+      "apt-get install mongodump 2>/dev/null || which mongodump",
+      "Verify: mongodump --version",
+      "supercli plugins install ./plugins/mongodump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongodump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongodump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongodump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongodump: apt-get install mongodump 2>/dev/null || which mongodump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongodump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongodump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongodump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongodump: apt-get install mongodump 2>/dev/null || which mongodump"
+      },
+      "args": []
+    }
+  ]
+}

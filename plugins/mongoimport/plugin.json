@@ -1,0 +1,56 @@
+{
+  "name": "mongoimport",
+  "version": "0.1.0",
+  "description": "CLI tool: mongoimport",
+  "source": "https://manpages.debian.org/mongoimport",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongoimport"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongoimport",
+    "binary": "mongoimport",
+    "check": "which mongoimport",
+    "install_steps": [
+      "apt-get install mongoimport 2>/dev/null || which mongoimport",
+      "Verify: mongoimport --version",
+      "supercli plugins install ./plugins/mongoimport --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongoimport",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongoimport version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongoimport",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongoimport: apt-get install mongoimport 2>/dev/null || which mongoimport"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongoimport",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongoimport CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongoimport",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongoimport: apt-get install mongoimport 2>/dev/null || which mongoimport"
+      },
+      "args": []
+    }
+  ]
+}

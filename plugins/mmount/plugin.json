@@ -1,0 +1,56 @@
+{
+  "name": "mmount",
+  "version": "0.1.0",
+  "description": "CLI tool: mmount",
+  "source": "https://manpages.debian.org/mmount",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mmount"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mmount",
+    "binary": "mmount",
+    "check": "which mmount",
+    "install_steps": [
+      "apt-get install mmount 2>/dev/null || which mmount",
+      "Verify: mmount --version",
+      "supercli plugins install ./plugins/mmount --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmount",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mmount version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmount",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mmount: apt-get install mmount 2>/dev/null || which mmount"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmount",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mmount CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmount",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mmount: apt-get install mmount 2>/dev/null || which mmount"
+      },
+      "args": []
+    }
+  ]
+}

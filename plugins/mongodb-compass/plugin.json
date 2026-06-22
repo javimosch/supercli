@@ -1,0 +1,56 @@
+{
+  "name": "mongodb-compass",
+  "version": "0.1.0",
+  "description": "CLI tool: mongodb-compass",
+  "source": "https://manpages.debian.org/mongodb-compass",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongodb-compass"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongodb-compass",
+    "binary": "mongodb-compass",
+    "check": "which mongodb-compass",
+    "install_steps": [
+      "apt-get install mongodb-compass 2>/dev/null || which mongodb-compass",
+      "Verify: mongodb-compass --version",
+      "supercli plugins install ./plugins/mongodb-compass --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongodb-compass",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongodb-compass version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongodb-compass",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongodb-compass: apt-get install mongodb-compass 2>/dev/null || which mongodb-compass"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongodb-compass",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongodb-compass CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongodb-compass",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongodb-compass: apt-get install mongodb-compass 2>/dev/null || which mongodb-compass"
+      },
+      "args": []
+    }
+  ]
+}

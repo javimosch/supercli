@@ -1,0 +1,56 @@
+{
+  "name": "monitor-sensor",
+  "version": "0.1.0",
+  "description": "CLI tool: monitor-sensor",
+  "source": "https://manpages.debian.org/monitor-sensor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "monitor-sensor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "monitor-sensor",
+    "binary": "monitor-sensor",
+    "check": "which monitor-sensor",
+    "install_steps": [
+      "apt-get install monitor-sensor 2>/dev/null || which monitor-sensor",
+      "Verify: monitor-sensor --version",
+      "supercli plugins install ./plugins/monitor-sensor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "monitor-sensor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print monitor-sensor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "monitor-sensor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install monitor-sensor: apt-get install monitor-sensor 2>/dev/null || which monitor-sensor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "monitor-sensor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to monitor-sensor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "monitor-sensor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install monitor-sensor: apt-get install monitor-sensor 2>/dev/null || which monitor-sensor"
+      },
+      "args": []
+    }
+  ]
+}

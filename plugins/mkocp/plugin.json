@@ -1,0 +1,56 @@
+{
+  "name": "mkocp",
+  "version": "0.1.0",
+  "description": "CLI tool: mkocp",
+  "source": "https://manpages.debian.org/mkocp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkocp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkocp",
+    "binary": "mkocp",
+    "check": "which mkocp",
+    "install_steps": [
+      "apt-get install mkocp 2>/dev/null || which mkocp",
+      "Verify: mkocp --version",
+      "supercli plugins install ./plugins/mkocp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkocp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkocp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkocp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkocp: apt-get install mkocp 2>/dev/null || which mkocp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkocp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkocp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkocp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkocp: apt-get install mkocp 2>/dev/null || which mkocp"
+      },
+      "args": []
+    }
+  ]
+}

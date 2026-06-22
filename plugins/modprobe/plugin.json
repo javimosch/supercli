@@ -1,0 +1,56 @@
+{
+  "name": "modprobe",
+  "version": "0.1.0",
+  "description": "CLI tool: modprobe",
+  "source": "https://manpages.debian.org/modprobe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "modprobe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "modprobe",
+    "binary": "modprobe",
+    "check": "which modprobe",
+    "install_steps": [
+      "apt-get install modprobe 2>/dev/null || which modprobe",
+      "Verify: modprobe --version",
+      "supercli plugins install ./plugins/modprobe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "modprobe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print modprobe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modprobe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install modprobe: apt-get install modprobe 2>/dev/null || which modprobe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "modprobe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to modprobe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modprobe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install modprobe: apt-get install modprobe 2>/dev/null || which modprobe"
+      },
+      "args": []
+    }
+  ]
+}

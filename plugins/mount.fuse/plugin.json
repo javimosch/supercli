@@ -1,0 +1,56 @@
+{
+  "name": "mount.fuse",
+  "version": "0.1.0",
+  "description": "CLI tool: mount.fuse",
+  "source": "https://manpages.debian.org/mount.fuse",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mount.fuse"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mount.fuse",
+    "binary": "mount.fuse",
+    "check": "which mount.fuse",
+    "install_steps": [
+      "apt-get install mount.fuse 2>/dev/null || which mount.fuse",
+      "Verify: mount.fuse --version",
+      "supercli plugins install ./plugins/mount.fuse --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mount.fuse",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mount.fuse version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mount.fuse",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mount.fuse: apt-get install mount.fuse 2>/dev/null || which mount.fuse"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mount.fuse",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mount.fuse CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mount.fuse",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mount.fuse: apt-get install mount.fuse 2>/dev/null || which mount.fuse"
+      },
+      "args": []
+    }
+  ]
+}

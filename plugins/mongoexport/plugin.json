@@ -1,0 +1,56 @@
+{
+  "name": "mongoexport",
+  "version": "0.1.0",
+  "description": "CLI tool: mongoexport",
+  "source": "https://manpages.debian.org/mongoexport",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongoexport"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongoexport",
+    "binary": "mongoexport",
+    "check": "which mongoexport",
+    "install_steps": [
+      "apt-get install mongoexport 2>/dev/null || which mongoexport",
+      "Verify: mongoexport --version",
+      "supercli plugins install ./plugins/mongoexport --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongoexport",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongoexport version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongoexport",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongoexport: apt-get install mongoexport 2>/dev/null || which mongoexport"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongoexport",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongoexport CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongoexport",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongoexport: apt-get install mongoexport 2>/dev/null || which mongoexport"
+      },
+      "args": []
+    }
+  ]
+}

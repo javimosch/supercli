@@ -1,0 +1,56 @@
+{
+  "name": "mkmanifest",
+  "version": "0.1.0",
+  "description": "CLI tool: mkmanifest",
+  "source": "https://manpages.debian.org/mkmanifest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkmanifest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkmanifest",
+    "binary": "mkmanifest",
+    "check": "which mkmanifest",
+    "install_steps": [
+      "apt-get install mkmanifest 2>/dev/null || which mkmanifest",
+      "Verify: mkmanifest --version",
+      "supercli plugins install ./plugins/mkmanifest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkmanifest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkmanifest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkmanifest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkmanifest: apt-get install mkmanifest 2>/dev/null || which mkmanifest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkmanifest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkmanifest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkmanifest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkmanifest: apt-get install mkmanifest 2>/dev/null || which mkmanifest"
+      },
+      "args": []
+    }
+  ]
+}

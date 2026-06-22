@@ -1,0 +1,56 @@
+{
+  "name": "modutil",
+  "version": "0.1.0",
+  "description": "CLI tool: modutil",
+  "source": "https://manpages.debian.org/modutil",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "modutil"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "modutil",
+    "binary": "modutil",
+    "check": "which modutil",
+    "install_steps": [
+      "apt-get install modutil 2>/dev/null || which modutil",
+      "Verify: modutil --version",
+      "supercli plugins install ./plugins/modutil --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "modutil",
+      "resource": "self",
+      "action": "version",
+      "description": "Print modutil version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modutil",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install modutil: apt-get install modutil 2>/dev/null || which modutil"
+      },
+      "args": []
+    },
+    {
+      "namespace": "modutil",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to modutil CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modutil",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install modutil: apt-get install modutil 2>/dev/null || which modutil"
+      },
+      "args": []
+    }
+  ]
+}

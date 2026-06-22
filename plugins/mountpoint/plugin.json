@@ -1,0 +1,56 @@
+{
+  "name": "mountpoint",
+  "version": "0.1.0",
+  "description": "CLI tool: mountpoint",
+  "source": "https://manpages.debian.org/mountpoint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mountpoint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mountpoint",
+    "binary": "mountpoint",
+    "check": "which mountpoint",
+    "install_steps": [
+      "apt-get install mountpoint 2>/dev/null || which mountpoint",
+      "Verify: mountpoint --version",
+      "supercli plugins install ./plugins/mountpoint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mountpoint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mountpoint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mountpoint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mountpoint: apt-get install mountpoint 2>/dev/null || which mountpoint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mountpoint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mountpoint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mountpoint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mountpoint: apt-get install mountpoint 2>/dev/null || which mountpoint"
+      },
+      "args": []
+    }
+  ]
+}

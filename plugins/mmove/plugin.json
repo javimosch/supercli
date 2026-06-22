@@ -1,0 +1,56 @@
+{
+  "name": "mmove",
+  "version": "0.1.0",
+  "description": "CLI tool: mmove",
+  "source": "https://manpages.debian.org/mmove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mmove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mmove",
+    "binary": "mmove",
+    "check": "which mmove",
+    "install_steps": [
+      "apt-get install mmove 2>/dev/null || which mmove",
+      "Verify: mmove --version",
+      "supercli plugins install ./plugins/mmove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mmove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mmove: apt-get install mmove 2>/dev/null || which mmove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mmove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mmove: apt-get install mmove 2>/dev/null || which mmove"
+      },
+      "args": []
+    }
+  ]
+}

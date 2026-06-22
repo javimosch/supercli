@@ -1,0 +1,56 @@
+{
+  "name": "mktexfmt",
+  "version": "0.1.0",
+  "description": "CLI tool: mktexfmt",
+  "source": "https://manpages.debian.org/mktexfmt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mktexfmt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mktexfmt",
+    "binary": "mktexfmt",
+    "check": "which mktexfmt",
+    "install_steps": [
+      "apt-get install mktexfmt 2>/dev/null || which mktexfmt",
+      "Verify: mktexfmt --version",
+      "supercli plugins install ./plugins/mktexfmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mktexfmt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mktexfmt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mktexfmt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mktexfmt: apt-get install mktexfmt 2>/dev/null || which mktexfmt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mktexfmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mktexfmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mktexfmt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mktexfmt: apt-get install mktexfmt 2>/dev/null || which mktexfmt"
+      },
+      "args": []
+    }
+  ]
+}

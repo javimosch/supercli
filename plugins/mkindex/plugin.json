@@ -1,0 +1,56 @@
+{
+  "name": "mkindex",
+  "version": "0.1.0",
+  "description": "CLI tool: mkindex",
+  "source": "https://manpages.debian.org/mkindex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkindex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkindex",
+    "binary": "mkindex",
+    "check": "which mkindex",
+    "install_steps": [
+      "apt-get install mkindex 2>/dev/null || which mkindex",
+      "Verify: mkindex --version",
+      "supercli plugins install ./plugins/mkindex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkindex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkindex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkindex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkindex: apt-get install mkindex 2>/dev/null || which mkindex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkindex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkindex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkindex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkindex: apt-get install mkindex 2>/dev/null || which mkindex"
+      },
+      "args": []
+    }
+  ]
+}

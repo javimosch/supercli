@@ -1,0 +1,56 @@
+{
+  "name": "mount.sshfs",
+  "version": "0.1.0",
+  "description": "CLI tool: mount.sshfs",
+  "source": "https://manpages.debian.org/mount.sshfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mount.sshfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mount.sshfs",
+    "binary": "mount.sshfs",
+    "check": "which mount.sshfs",
+    "install_steps": [
+      "apt-get install mount.sshfs 2>/dev/null || which mount.sshfs",
+      "Verify: mount.sshfs --version",
+      "supercli plugins install ./plugins/mount.sshfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mount.sshfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mount.sshfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mount.sshfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mount.sshfs: apt-get install mount.sshfs 2>/dev/null || which mount.sshfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mount.sshfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mount.sshfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mount.sshfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mount.sshfs: apt-get install mount.sshfs 2>/dev/null || which mount.sshfs"
+      },
+      "args": []
+    }
+  ]
+}

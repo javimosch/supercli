@@ -1,0 +1,56 @@
+{
+  "name": "mkofm",
+  "version": "0.1.0",
+  "description": "CLI tool: mkofm",
+  "source": "https://manpages.debian.org/mkofm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkofm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkofm",
+    "binary": "mkofm",
+    "check": "which mkofm",
+    "install_steps": [
+      "apt-get install mkofm 2>/dev/null || which mkofm",
+      "Verify: mkofm --version",
+      "supercli plugins install ./plugins/mkofm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkofm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkofm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkofm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkofm: apt-get install mkofm 2>/dev/null || which mkofm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkofm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkofm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkofm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkofm: apt-get install mkofm 2>/dev/null || which mkofm"
+      },
+      "args": []
+    }
+  ]
+}

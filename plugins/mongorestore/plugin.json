@@ -1,0 +1,56 @@
+{
+  "name": "mongorestore",
+  "version": "0.1.0",
+  "description": "CLI tool: mongorestore",
+  "source": "https://manpages.debian.org/mongorestore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongorestore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongorestore",
+    "binary": "mongorestore",
+    "check": "which mongorestore",
+    "install_steps": [
+      "apt-get install mongorestore 2>/dev/null || which mongorestore",
+      "Verify: mongorestore --version",
+      "supercli plugins install ./plugins/mongorestore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongorestore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongorestore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongorestore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongorestore: apt-get install mongorestore 2>/dev/null || which mongorestore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongorestore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongorestore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongorestore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongorestore: apt-get install mongorestore 2>/dev/null || which mongorestore"
+      },
+      "args": []
+    }
+  ]
+}

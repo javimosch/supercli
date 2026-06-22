@@ -1,0 +1,56 @@
+{
+  "name": "mkinitramfs",
+  "version": "0.1.0",
+  "description": "CLI tool: mkinitramfs",
+  "source": "https://manpages.debian.org/mkinitramfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkinitramfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkinitramfs",
+    "binary": "mkinitramfs",
+    "check": "which mkinitramfs",
+    "install_steps": [
+      "apt-get install mkinitramfs 2>/dev/null || which mkinitramfs",
+      "Verify: mkinitramfs --version",
+      "supercli plugins install ./plugins/mkinitramfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkinitramfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkinitramfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkinitramfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkinitramfs: apt-get install mkinitramfs 2>/dev/null || which mkinitramfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkinitramfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkinitramfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkinitramfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkinitramfs: apt-get install mkinitramfs 2>/dev/null || which mkinitramfs"
+      },
+      "args": []
+    }
+  ]
+}

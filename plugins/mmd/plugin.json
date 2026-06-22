@@ -1,0 +1,56 @@
+{
+  "name": "mmd",
+  "version": "0.1.0",
+  "description": "CLI tool: mmd",
+  "source": "https://manpages.debian.org/mmd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mmd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mmd",
+    "binary": "mmd",
+    "check": "which mmd",
+    "install_steps": [
+      "apt-get install mmd 2>/dev/null || which mmd",
+      "Verify: mmd --version",
+      "supercli plugins install ./plugins/mmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mmd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mmd: apt-get install mmd 2>/dev/null || which mmd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mmd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mmd: apt-get install mmd 2>/dev/null || which mmd"
+      },
+      "args": []
+    }
+  ]
+}

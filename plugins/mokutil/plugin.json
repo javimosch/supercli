@@ -1,0 +1,56 @@
+{
+  "name": "mokutil",
+  "version": "0.1.0",
+  "description": "CLI tool: mokutil",
+  "source": "https://manpages.debian.org/mokutil",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mokutil"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mokutil",
+    "binary": "mokutil",
+    "check": "which mokutil",
+    "install_steps": [
+      "apt-get install mokutil 2>/dev/null || which mokutil",
+      "Verify: mokutil --version",
+      "supercli plugins install ./plugins/mokutil --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mokutil",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mokutil version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mokutil",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mokutil: apt-get install mokutil 2>/dev/null || which mokutil"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mokutil",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mokutil CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mokutil",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mokutil: apt-get install mokutil 2>/dev/null || which mokutil"
+      },
+      "args": []
+    }
+  ]
+}

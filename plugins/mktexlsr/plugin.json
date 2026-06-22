@@ -1,0 +1,56 @@
+{
+  "name": "mktexlsr",
+  "version": "0.1.0",
+  "description": "CLI tool: mktexlsr",
+  "source": "https://manpages.debian.org/mktexlsr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mktexlsr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mktexlsr",
+    "binary": "mktexlsr",
+    "check": "which mktexlsr",
+    "install_steps": [
+      "apt-get install mktexlsr 2>/dev/null || which mktexlsr",
+      "Verify: mktexlsr --version",
+      "supercli plugins install ./plugins/mktexlsr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mktexlsr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mktexlsr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mktexlsr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mktexlsr: apt-get install mktexlsr 2>/dev/null || which mktexlsr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mktexlsr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mktexlsr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mktexlsr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mktexlsr: apt-get install mktexlsr 2>/dev/null || which mktexlsr"
+      },
+      "args": []
+    }
+  ]
+}

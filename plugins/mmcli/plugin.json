@@ -1,0 +1,56 @@
+{
+  "name": "mmcli",
+  "version": "0.1.0",
+  "description": "CLI tool: mmcli",
+  "source": "https://manpages.debian.org/mmcli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mmcli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mmcli",
+    "binary": "mmcli",
+    "check": "which mmcli",
+    "install_steps": [
+      "apt-get install mmcli 2>/dev/null || which mmcli",
+      "Verify: mmcli --version",
+      "supercli plugins install ./plugins/mmcli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmcli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mmcli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmcli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mmcli: apt-get install mmcli 2>/dev/null || which mmcli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmcli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mmcli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmcli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mmcli: apt-get install mmcli 2>/dev/null || which mmcli"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mkisofs",
+  "version": "0.1.0",
+  "description": "CLI tool: mkisofs",
+  "source": "https://manpages.debian.org/mkisofs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkisofs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkisofs",
+    "binary": "mkisofs",
+    "check": "which mkisofs",
+    "install_steps": [
+      "apt-get install mkisofs 2>/dev/null || which mkisofs",
+      "Verify: mkisofs --version",
+      "supercli plugins install ./plugins/mkisofs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkisofs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkisofs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkisofs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkisofs: apt-get install mkisofs 2>/dev/null || which mkisofs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkisofs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkisofs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkisofs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkisofs: apt-get install mkisofs 2>/dev/null || which mkisofs"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mongotop",
+  "version": "0.1.0",
+  "description": "CLI tool: mongotop",
+  "source": "https://manpages.debian.org/mongotop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongotop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongotop",
+    "binary": "mongotop",
+    "check": "which mongotop",
+    "install_steps": [
+      "apt-get install mongotop 2>/dev/null || which mongotop",
+      "Verify: mongotop --version",
+      "supercli plugins install ./plugins/mongotop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongotop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongotop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongotop",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongotop: apt-get install mongotop 2>/dev/null || which mongotop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongotop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongotop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongotop",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongotop: apt-get install mongotop 2>/dev/null || which mongotop"
+      },
+      "args": []
+    }
+  ]
+}

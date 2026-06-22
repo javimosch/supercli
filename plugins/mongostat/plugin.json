@@ -1,0 +1,56 @@
+{
+  "name": "mongostat",
+  "version": "0.1.0",
+  "description": "CLI tool: mongostat",
+  "source": "https://manpages.debian.org/mongostat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mongostat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mongostat",
+    "binary": "mongostat",
+    "check": "which mongostat",
+    "install_steps": [
+      "apt-get install mongostat 2>/dev/null || which mongostat",
+      "Verify: mongostat --version",
+      "supercli plugins install ./plugins/mongostat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mongostat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mongostat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongostat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mongostat: apt-get install mongostat 2>/dev/null || which mongostat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mongostat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mongostat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mongostat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mongostat: apt-get install mongostat 2>/dev/null || which mongostat"
+      },
+      "args": []
+    }
+  ]
+}

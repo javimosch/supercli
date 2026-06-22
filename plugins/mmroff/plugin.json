@@ -1,0 +1,56 @@
+{
+  "name": "mmroff",
+  "version": "0.1.0",
+  "description": "CLI tool: mmroff",
+  "source": "https://manpages.debian.org/mmroff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mmroff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mmroff",
+    "binary": "mmroff",
+    "check": "which mmroff",
+    "install_steps": [
+      "apt-get install mmroff 2>/dev/null || which mmroff",
+      "Verify: mmroff --version",
+      "supercli plugins install ./plugins/mmroff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mmroff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mmroff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmroff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mmroff: apt-get install mmroff 2>/dev/null || which mmroff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mmroff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mmroff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mmroff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mmroff: apt-get install mmroff 2>/dev/null || which mmroff"
+      },
+      "args": []
+    }
+  ]
+}

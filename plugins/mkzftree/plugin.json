@@ -1,0 +1,56 @@
+{
+  "name": "mkzftree",
+  "version": "0.1.0",
+  "description": "CLI tool: mkzftree",
+  "source": "https://manpages.debian.org/mkzftree",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkzftree"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkzftree",
+    "binary": "mkzftree",
+    "check": "which mkzftree",
+    "install_steps": [
+      "apt-get install mkzftree 2>/dev/null || which mkzftree",
+      "Verify: mkzftree --version",
+      "supercli plugins install ./plugins/mkzftree --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkzftree",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkzftree version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkzftree",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkzftree: apt-get install mkzftree 2>/dev/null || which mkzftree"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkzftree",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkzftree CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkzftree",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkzftree: apt-get install mkzftree 2>/dev/null || which mkzftree"
+      },
+      "args": []
+    }
+  ]
+}

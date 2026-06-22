@@ -1,0 +1,56 @@
+{
+  "name": "mlabel",
+  "version": "0.1.0",
+  "description": "CLI tool: mlabel",
+  "source": "https://manpages.debian.org/mlabel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mlabel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mlabel",
+    "binary": "mlabel",
+    "check": "which mlabel",
+    "install_steps": [
+      "apt-get install mlabel 2>/dev/null || which mlabel",
+      "Verify: mlabel --version",
+      "supercli plugins install ./plugins/mlabel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mlabel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mlabel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mlabel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mlabel: apt-get install mlabel 2>/dev/null || which mlabel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mlabel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mlabel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mlabel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mlabel: apt-get install mlabel 2>/dev/null || which mlabel"
+      },
+      "args": []
+    }
+  ]
+}
