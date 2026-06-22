@@ -1,0 +1,261 @@
+{
+  "name": "outline-cli",
+  "version": "0.1.0",
+  "description": "Outline CLI — official CLI for the Outline wiki/knowledge base API. Full API coverage for documents, collections, search, authentication with OAuth and OS keyring integration. Terminal-friendly markdown rendering, multi-user support, and AI-friendly JSON output.",
+  "source": "https://github.com/Doist/outline-cli",
+  "checks": [
+    { "type": "binary", "name": "ol" }
+  ],
+  "install_guidance": {
+    "plugin": "outline-cli",
+    "binary": "ol",
+    "check": "ol --version",
+    "install_steps": [
+      "npm install -g @doist/outline-cli",
+      "Verify: ol --version",
+      "Authenticate: ol auth login (opens browser for OAuth)",
+      "Alternative: ol auth token --base-url <url> <token>",
+      "supercli plugins install ./plugins/outline-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "outline",
+      "resource": "self",
+      "action": "version",
+      "description": "Print outline-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install outline-cli: npm install -g @doist/outline-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "outline",
+      "resource": "auth",
+      "action": "status",
+      "description": "Check Outline authentication status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["auth", "status"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install outline-cli and authenticate: ol auth login"
+      },
+      "args": []
+    },
+    {
+      "namespace": "outline",
+      "resource": "auth",
+      "action": "login",
+      "description": "Authenticate with Outline via OAuth (opens browser)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["auth", "login"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install outline-cli: npm install -g @doist/outline-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "outline",
+      "resource": "auth",
+      "action": "token",
+      "description": "Save Outline API token for CLI auth",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["auth", "token"],
+        "passthrough": true,
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install outline-cli: npm install -g @doist/outline-cli"
+      },
+      "args": [
+        { "name": "--base-url", "type": "string", "required": true, "description": "Outline base URL" },
+        { "name": "token", "type": "string", "required": true, "description": "Outline API token (ol_api_...)" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "search",
+      "action": "run",
+      "description": "Search Outline documents by query string",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "Search query text" },
+        { "name": "--limit", "type": "number", "required": false, "description": "Limit results (default 10)" },
+        { "name": "--collection", "type": "string", "required": false, "description": "Filter by collection ID" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "document",
+      "action": "list",
+      "description": "List documents in a collection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["document", "list"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "--collection", "type": "string", "required": false, "description": "Collection ID to filter" },
+        { "name": "--limit", "type": "number", "required": false, "description": "Limit results" },
+        { "name": "--sort", "type": "string", "required": false, "description": "Sort field (e.g., updatedAt)" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "document",
+      "action": "get",
+      "description": "Get document details or content",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["document", "get"],
+        "positionalArgs": ["documentId"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "documentId", "type": "string", "required": true, "description": "Document URL ID or full URL" },
+        { "name": "--raw", "type": "boolean", "required": false, "description": "Output raw markdown" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "document",
+      "action": "create",
+      "description": "Create a new document",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["document", "create"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "--title", "type": "string", "required": true, "description": "Document title" },
+        { "name": "--collection", "type": "string", "required": true, "description": "Collection ID" },
+        { "name": "--file", "type": "string", "required": false, "description": "Markdown file to import" },
+        { "name": "--publish", "type": "boolean", "required": false, "description": "Publish immediately" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "document",
+      "action": "update",
+      "description": "Update an existing document",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["document", "update"],
+        "positionalArgs": ["documentId"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "documentId", "type": "string", "required": true, "description": "Document URL ID" },
+        { "name": "--file", "type": "string", "required": false, "description": "Markdown file with updated content" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "document",
+      "action": "open",
+      "description": "Open document in browser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["document", "open"],
+        "positionalArgs": ["documentId"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "documentId", "type": "string", "required": true, "description": "Document URL ID" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "collection",
+      "action": "list",
+      "description": "List all collections",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["collection", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "outline",
+      "resource": "collection",
+      "action": "get",
+      "description": "Get collection details",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["collection", "get"],
+        "positionalArgs": ["collectionId"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "collectionId", "type": "string", "required": true, "description": "Collection ID" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "collection",
+      "action": "create",
+      "description": "Create a new collection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "baseArgs": ["collection", "create"],
+        "passthrough": true,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install outline-cli and authenticate"
+      },
+      "args": [
+        { "name": "--name", "type": "string", "required": true, "description": "Collection name" },
+        { "name": "--color", "type": "string", "required": false, "description": "Collection color (hex)" }
+      ]
+    },
+    {
+      "namespace": "outline",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to outline CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ol",
+        "passthrough": true,
+        "missingDependencyHelp": "Install outline-cli: npm install -g @doist/outline-cli. Authenticate: ol auth login"
+      },
+      "args": []
+    }
+  ]
+}
