@@ -1,0 +1,56 @@
+{
+  "name": "update-ca-certificates",
+  "version": "0.1.0",
+  "description": "CLI tool: update-ca-certificates",
+  "source": "https://manpages.debian.org/update-ca-certificates",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-ca-certificates"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-ca-certificates",
+    "binary": "update-ca-certificates",
+    "check": "which update-ca-certificates",
+    "install_steps": [
+      "apt-get install update-ca-certificates 2>/dev/null || which update-ca-certificates",
+      "Verify: update-ca-certificates --version",
+      "supercli plugins install ./plugins/update-ca-certificates --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-ca-certificates",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-ca-certificates version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-ca-certificates",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-ca-certificates: apt-get install update-ca-certificates 2>/dev/null || which update-ca-certificates"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-ca-certificates",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-ca-certificates CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-ca-certificates",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-ca-certificates: apt-get install update-ca-certificates 2>/dev/null || which update-ca-certificates"
+      },
+      "args": []
+    }
+  ]
+}

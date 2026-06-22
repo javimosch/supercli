@@ -1,0 +1,56 @@
+{
+  "name": "unzstd",
+  "version": "0.1.0",
+  "description": "CLI tool: unzstd",
+  "source": "https://manpages.debian.org/unzstd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unzstd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unzstd",
+    "binary": "unzstd",
+    "check": "which unzstd",
+    "install_steps": [
+      "apt-get install unzstd 2>/dev/null || which unzstd",
+      "Verify: unzstd --version",
+      "supercli plugins install ./plugins/unzstd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unzstd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unzstd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unzstd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unzstd: apt-get install unzstd 2>/dev/null || which unzstd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unzstd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unzstd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unzstd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unzstd: apt-get install unzstd 2>/dev/null || which unzstd"
+      },
+      "args": []
+    }
+  ]
+}

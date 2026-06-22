@@ -1,0 +1,56 @@
+{
+  "name": "ulid",
+  "version": "0.1.0",
+  "description": "CLI tool: ulid",
+  "source": "https://manpages.debian.org/ulid",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ulid"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ulid",
+    "binary": "ulid",
+    "check": "which ulid",
+    "install_steps": [
+      "apt-get install ulid 2>/dev/null || which ulid",
+      "Verify: ulid --version",
+      "supercli plugins install ./plugins/ulid --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ulid",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ulid version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ulid",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ulid: apt-get install ulid 2>/dev/null || which ulid"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ulid",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ulid CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ulid",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ulid: apt-get install ulid 2>/dev/null || which ulid"
+      },
+      "args": []
+    }
+  ]
+}

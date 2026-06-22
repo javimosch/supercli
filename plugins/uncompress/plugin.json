@@ -1,0 +1,56 @@
+{
+  "name": "uncompress",
+  "version": "0.1.0",
+  "description": "CLI tool: uncompress",
+  "source": "https://manpages.debian.org/uncompress",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "uncompress"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "uncompress",
+    "binary": "uncompress",
+    "check": "which uncompress",
+    "install_steps": [
+      "apt-get install uncompress 2>/dev/null || which uncompress",
+      "Verify: uncompress --version",
+      "supercli plugins install ./plugins/uncompress --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uncompress",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uncompress version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uncompress",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install uncompress: apt-get install uncompress 2>/dev/null || which uncompress"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uncompress",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uncompress CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uncompress",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install uncompress: apt-get install uncompress 2>/dev/null || which uncompress"
+      },
+      "args": []
+    }
+  ]
+}

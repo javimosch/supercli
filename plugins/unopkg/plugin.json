@@ -1,0 +1,56 @@
+{
+  "name": "unopkg",
+  "version": "0.1.0",
+  "description": "CLI tool: unopkg",
+  "source": "https://manpages.debian.org/unopkg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unopkg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unopkg",
+    "binary": "unopkg",
+    "check": "which unopkg",
+    "install_steps": [
+      "apt-get install unopkg 2>/dev/null || which unopkg",
+      "Verify: unopkg --version",
+      "supercli plugins install ./plugins/unopkg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unopkg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unopkg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unopkg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unopkg: apt-get install unopkg 2>/dev/null || which unopkg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unopkg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unopkg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unopkg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unopkg: apt-get install unopkg 2>/dev/null || which unopkg"
+      },
+      "args": []
+    }
+  ]
+}

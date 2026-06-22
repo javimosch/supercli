@@ -1,0 +1,56 @@
+{
+  "name": "unxz",
+  "version": "0.1.0",
+  "description": "CLI tool: unxz",
+  "source": "https://manpages.debian.org/unxz",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unxz"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unxz",
+    "binary": "unxz",
+    "check": "which unxz",
+    "install_steps": [
+      "apt-get install unxz 2>/dev/null || which unxz",
+      "Verify: unxz --version",
+      "supercli plugins install ./plugins/unxz --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unxz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unxz version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unxz",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unxz: apt-get install unxz 2>/dev/null || which unxz"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unxz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unxz CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unxz",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unxz: apt-get install unxz 2>/dev/null || which unxz"
+      },
+      "args": []
+    }
+  ]
+}

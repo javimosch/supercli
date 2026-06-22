@@ -1,0 +1,56 @@
+{
+  "name": "unix_chkpwd",
+  "version": "0.1.0",
+  "description": "CLI tool: unix_chkpwd",
+  "source": "https://manpages.debian.org/unix_chkpwd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unix_chkpwd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unix_chkpwd",
+    "binary": "unix_chkpwd",
+    "check": "which unix_chkpwd",
+    "install_steps": [
+      "apt-get install unix_chkpwd 2>/dev/null || which unix_chkpwd",
+      "Verify: unix_chkpwd --version",
+      "supercli plugins install ./plugins/unix_chkpwd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unix_chkpwd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unix_chkpwd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unix_chkpwd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unix_chkpwd: apt-get install unix_chkpwd 2>/dev/null || which unix_chkpwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unix_chkpwd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unix_chkpwd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unix_chkpwd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unix_chkpwd: apt-get install unix_chkpwd 2>/dev/null || which unix_chkpwd"
+      },
+      "args": []
+    }
+  ]
+}

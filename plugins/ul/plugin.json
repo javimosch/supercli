@@ -1,0 +1,56 @@
+{
+  "name": "ul",
+  "version": "0.1.0",
+  "description": "CLI tool: ul",
+  "source": "https://manpages.debian.org/ul",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ul"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ul",
+    "binary": "ul",
+    "check": "which ul",
+    "install_steps": [
+      "apt-get install ul 2>/dev/null || which ul",
+      "Verify: ul --version",
+      "supercli plugins install ./plugins/ul --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ul",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ul version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ul",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ul: apt-get install ul 2>/dev/null || which ul"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ul",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ul CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ul",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ul: apt-get install ul 2>/dev/null || which ul"
+      },
+      "args": []
+    }
+  ]
+}

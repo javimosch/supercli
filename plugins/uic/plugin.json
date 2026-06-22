@@ -1,0 +1,56 @@
+{
+  "name": "uic",
+  "version": "0.1.0",
+  "description": "CLI tool: uic",
+  "source": "https://manpages.debian.org/uic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "uic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "uic",
+    "binary": "uic",
+    "check": "which uic",
+    "install_steps": [
+      "apt-get install uic 2>/dev/null || which uic",
+      "Verify: uic --version",
+      "supercli plugins install ./plugins/uic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install uic: apt-get install uic 2>/dev/null || which uic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install uic: apt-get install uic 2>/dev/null || which uic"
+      },
+      "args": []
+    }
+  ]
+}

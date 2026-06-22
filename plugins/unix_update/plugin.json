@@ -1,0 +1,56 @@
+{
+  "name": "unix_update",
+  "version": "0.1.0",
+  "description": "CLI tool: unix_update",
+  "source": "https://manpages.debian.org/unix_update",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unix_update"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unix_update",
+    "binary": "unix_update",
+    "check": "which unix_update",
+    "install_steps": [
+      "apt-get install unix_update 2>/dev/null || which unix_update",
+      "Verify: unix_update --version",
+      "supercli plugins install ./plugins/unix_update --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unix_update",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unix_update version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unix_update",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unix_update: apt-get install unix_update 2>/dev/null || which unix_update"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unix_update",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unix_update CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unix_update",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unix_update: apt-get install unix_update 2>/dev/null || which unix_update"
+      },
+      "args": []
+    }
+  ]
+}

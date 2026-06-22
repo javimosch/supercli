@@ -1,0 +1,56 @@
+{
+  "name": "uclampset",
+  "version": "0.1.0",
+  "description": "CLI tool: uclampset",
+  "source": "https://manpages.debian.org/uclampset",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "uclampset"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "uclampset",
+    "binary": "uclampset",
+    "check": "which uclampset",
+    "install_steps": [
+      "apt-get install uclampset 2>/dev/null || which uclampset",
+      "Verify: uclampset --version",
+      "supercli plugins install ./plugins/uclampset --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uclampset",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uclampset version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uclampset",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install uclampset: apt-get install uclampset 2>/dev/null || which uclampset"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uclampset",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uclampset CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uclampset",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install uclampset: apt-get install uclampset 2>/dev/null || which uclampset"
+      },
+      "args": []
+    }
+  ]
+}

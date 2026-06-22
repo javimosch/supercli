@@ -1,0 +1,56 @@
+{
+  "name": "unattended-upgrades",
+  "version": "0.1.0",
+  "description": "CLI tool: unattended-upgrades",
+  "source": "https://manpages.debian.org/unattended-upgrades",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unattended-upgrades"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unattended-upgrades",
+    "binary": "unattended-upgrades",
+    "check": "which unattended-upgrades",
+    "install_steps": [
+      "apt-get install unattended-upgrades 2>/dev/null || which unattended-upgrades",
+      "Verify: unattended-upgrades --version",
+      "supercli plugins install ./plugins/unattended-upgrades --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unattended-upgrades",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unattended-upgrades version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unattended-upgrades",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unattended-upgrades: apt-get install unattended-upgrades 2>/dev/null || which unattended-upgrades"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unattended-upgrades",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unattended-upgrades CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unattended-upgrades",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unattended-upgrades: apt-get install unattended-upgrades 2>/dev/null || which unattended-upgrades"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "unix2mac",
+  "version": "0.1.0",
+  "description": "CLI tool: unix2mac",
+  "source": "https://manpages.debian.org/unix2mac",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unix2mac"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unix2mac",
+    "binary": "unix2mac",
+    "check": "which unix2mac",
+    "install_steps": [
+      "apt-get install unix2mac 2>/dev/null || which unix2mac",
+      "Verify: unix2mac --version",
+      "supercli plugins install ./plugins/unix2mac --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unix2mac",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unix2mac version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unix2mac",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unix2mac: apt-get install unix2mac 2>/dev/null || which unix2mac"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unix2mac",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unix2mac CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unix2mac",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unix2mac: apt-get install unix2mac 2>/dev/null || which unix2mac"
+      },
+      "args": []
+    }
+  ]
+}

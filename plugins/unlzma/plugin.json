@@ -1,0 +1,56 @@
+{
+  "name": "unlzma",
+  "version": "0.1.0",
+  "description": "CLI tool: unlzma",
+  "source": "https://manpages.debian.org/unlzma",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unlzma"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unlzma",
+    "binary": "unlzma",
+    "check": "which unlzma",
+    "install_steps": [
+      "apt-get install unlzma 2>/dev/null || which unlzma",
+      "Verify: unlzma --version",
+      "supercli plugins install ./plugins/unlzma --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unlzma",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unlzma version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlzma",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unlzma: apt-get install unlzma 2>/dev/null || which unlzma"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unlzma",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unlzma CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlzma",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unlzma: apt-get install unlzma 2>/dev/null || which unlzma"
+      },
+      "args": []
+    }
+  ]
+}

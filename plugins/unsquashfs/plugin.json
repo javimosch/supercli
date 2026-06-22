@@ -1,0 +1,56 @@
+{
+  "name": "unsquashfs",
+  "version": "0.1.0",
+  "description": "CLI tool: unsquashfs",
+  "source": "https://manpages.debian.org/unsquashfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unsquashfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unsquashfs",
+    "binary": "unsquashfs",
+    "check": "which unsquashfs",
+    "install_steps": [
+      "apt-get install unsquashfs 2>/dev/null || which unsquashfs",
+      "Verify: unsquashfs --version",
+      "supercli plugins install ./plugins/unsquashfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unsquashfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unsquashfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unsquashfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unsquashfs: apt-get install unsquashfs 2>/dev/null || which unsquashfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unsquashfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unsquashfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unsquashfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unsquashfs: apt-get install unsquashfs 2>/dev/null || which unsquashfs"
+      },
+      "args": []
+    }
+  ]
+}

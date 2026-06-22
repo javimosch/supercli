@@ -1,0 +1,56 @@
+{
+  "name": "udisksctl",
+  "version": "0.1.0",
+  "description": "CLI tool: udisksctl",
+  "source": "https://manpages.debian.org/udisksctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "udisksctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "udisksctl",
+    "binary": "udisksctl",
+    "check": "which udisksctl",
+    "install_steps": [
+      "apt-get install udisksctl 2>/dev/null || which udisksctl",
+      "Verify: udisksctl --version",
+      "supercli plugins install ./plugins/udisksctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "udisksctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print udisksctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udisksctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install udisksctl: apt-get install udisksctl 2>/dev/null || which udisksctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "udisksctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to udisksctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "udisksctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install udisksctl: apt-get install udisksctl 2>/dev/null || which udisksctl"
+      },
+      "args": []
+    }
+  ]
+}

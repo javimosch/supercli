@@ -1,0 +1,56 @@
+{
+  "name": "update-catalog",
+  "version": "0.1.0",
+  "description": "CLI tool: update-catalog",
+  "source": "https://manpages.debian.org/update-catalog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-catalog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-catalog",
+    "binary": "update-catalog",
+    "check": "which update-catalog",
+    "install_steps": [
+      "apt-get install update-catalog 2>/dev/null || which update-catalog",
+      "Verify: update-catalog --version",
+      "supercli plugins install ./plugins/update-catalog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-catalog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-catalog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-catalog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-catalog: apt-get install update-catalog 2>/dev/null || which update-catalog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-catalog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-catalog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-catalog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-catalog: apt-get install update-catalog 2>/dev/null || which update-catalog"
+      },
+      "args": []
+    }
+  ]
+}
