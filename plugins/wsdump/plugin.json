@@ -1,0 +1,56 @@
+{
+  "name": "wsdump",
+  "version": "0.1.0",
+  "description": "CLI tool: wsdump",
+  "source": "https://manpages.debian.org/wsdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wsdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wsdump",
+    "binary": "wsdump",
+    "check": "which wsdump",
+    "install_steps": [
+      "apt-get install wsdump 2>/dev/null || which wsdump",
+      "Verify: wsdump --version",
+      "supercli plugins install ./plugins/wsdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wsdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wsdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wsdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wsdump: apt-get install wsdump 2>/dev/null || which wsdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wsdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wsdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wsdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wsdump: apt-get install wsdump 2>/dev/null || which wsdump"
+      },
+      "args": []
+    }
+  ]
+}

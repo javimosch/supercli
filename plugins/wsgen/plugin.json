@@ -1,0 +1,56 @@
+{
+  "name": "wsgen",
+  "version": "0.1.0",
+  "description": "CLI tool: wsgen",
+  "source": "https://manpages.debian.org/wsgen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wsgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wsgen",
+    "binary": "wsgen",
+    "check": "which wsgen",
+    "install_steps": [
+      "apt-get install wsgen 2>/dev/null || which wsgen",
+      "Verify: wsgen --version",
+      "supercli plugins install ./plugins/wsgen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wsgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wsgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wsgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wsgen: apt-get install wsgen 2>/dev/null || which wsgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wsgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wsgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wsgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wsgen: apt-get install wsgen 2>/dev/null || which wsgen"
+      },
+      "args": []
+    }
+  ]
+}

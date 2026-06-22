@@ -1,0 +1,56 @@
+{
+  "name": "wrmsr",
+  "version": "0.1.0",
+  "description": "CLI tool: wrmsr",
+  "source": "https://manpages.debian.org/wrmsr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wrmsr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wrmsr",
+    "binary": "wrmsr",
+    "check": "which wrmsr",
+    "install_steps": [
+      "apt-get install wrmsr 2>/dev/null || which wrmsr",
+      "Verify: wrmsr --version",
+      "supercli plugins install ./plugins/wrmsr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wrmsr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wrmsr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrmsr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wrmsr: apt-get install wrmsr 2>/dev/null || which wrmsr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wrmsr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wrmsr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wrmsr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wrmsr: apt-get install wrmsr 2>/dev/null || which wrmsr"
+      },
+      "args": []
+    }
+  ]
+}

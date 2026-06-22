@@ -1,0 +1,56 @@
+{
+  "name": "x11perf",
+  "version": "0.1.0",
+  "description": "CLI tool: x11perf",
+  "source": "https://manpages.debian.org/x11perf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "x11perf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "x11perf",
+    "binary": "x11perf",
+    "check": "which x11perf",
+    "install_steps": [
+      "apt-get install x11perf 2>/dev/null || which x11perf",
+      "Verify: x11perf --version",
+      "supercli plugins install ./plugins/x11perf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "x11perf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print x11perf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x11perf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install x11perf: apt-get install x11perf 2>/dev/null || which x11perf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "x11perf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to x11perf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x11perf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install x11perf: apt-get install x11perf 2>/dev/null || which x11perf"
+      },
+      "args": []
+    }
+  ]
+}

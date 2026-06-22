@@ -1,0 +1,56 @@
+{
+  "name": "wpa_action",
+  "version": "0.1.0",
+  "description": "CLI tool: wpa_action",
+  "source": "https://manpages.debian.org/wpa_action",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wpa_action"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wpa_action",
+    "binary": "wpa_action",
+    "check": "which wpa_action",
+    "install_steps": [
+      "apt-get install wpa_action 2>/dev/null || which wpa_action",
+      "Verify: wpa_action --version",
+      "supercli plugins install ./plugins/wpa_action --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wpa_action",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wpa_action version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wpa_action",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wpa_action: apt-get install wpa_action 2>/dev/null || which wpa_action"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wpa_action",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wpa_action CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wpa_action",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wpa_action: apt-get install wpa_action 2>/dev/null || which wpa_action"
+      },
+      "args": []
+    }
+  ]
+}

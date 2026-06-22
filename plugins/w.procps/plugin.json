@@ -1,0 +1,56 @@
+{
+  "name": "w.procps",
+  "version": "0.1.0",
+  "description": "CLI tool: w.procps",
+  "source": "https://manpages.debian.org/w.procps",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "w.procps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "w.procps",
+    "binary": "w.procps",
+    "check": "which w.procps",
+    "install_steps": [
+      "apt-get install w.procps 2>/dev/null || which w.procps",
+      "Verify: w.procps --version",
+      "supercli plugins install ./plugins/w.procps --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "w.procps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print w.procps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "w.procps",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install w.procps: apt-get install w.procps 2>/dev/null || which w.procps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "w.procps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to w.procps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "w.procps",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install w.procps: apt-get install w.procps 2>/dev/null || which w.procps"
+      },
+      "args": []
+    }
+  ]
+}

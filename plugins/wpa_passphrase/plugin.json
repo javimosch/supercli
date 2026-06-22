@@ -1,0 +1,56 @@
+{
+  "name": "wpa_passphrase",
+  "version": "0.1.0",
+  "description": "CLI tool: wpa_passphrase",
+  "source": "https://manpages.debian.org/wpa_passphrase",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wpa_passphrase"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wpa_passphrase",
+    "binary": "wpa_passphrase",
+    "check": "which wpa_passphrase",
+    "install_steps": [
+      "apt-get install wpa_passphrase 2>/dev/null || which wpa_passphrase",
+      "Verify: wpa_passphrase --version",
+      "supercli plugins install ./plugins/wpa_passphrase --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wpa_passphrase",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wpa_passphrase version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wpa_passphrase",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wpa_passphrase: apt-get install wpa_passphrase 2>/dev/null || which wpa_passphrase"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wpa_passphrase",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wpa_passphrase CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wpa_passphrase",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wpa_passphrase: apt-get install wpa_passphrase 2>/dev/null || which wpa_passphrase"
+      },
+      "args": []
+    }
+  ]
+}

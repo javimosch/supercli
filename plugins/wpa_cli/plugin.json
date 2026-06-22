@@ -1,0 +1,56 @@
+{
+  "name": "wpa_cli",
+  "version": "0.1.0",
+  "description": "CLI tool: wpa_cli",
+  "source": "https://manpages.debian.org/wpa_cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wpa_cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wpa_cli",
+    "binary": "wpa_cli",
+    "check": "which wpa_cli",
+    "install_steps": [
+      "apt-get install wpa_cli 2>/dev/null || which wpa_cli",
+      "Verify: wpa_cli --version",
+      "supercli plugins install ./plugins/wpa_cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wpa_cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wpa_cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wpa_cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wpa_cli: apt-get install wpa_cli 2>/dev/null || which wpa_cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wpa_cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wpa_cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wpa_cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wpa_cli: apt-get install wpa_cli 2>/dev/null || which wpa_cli"
+      },
+      "args": []
+    }
+  ]
+}
