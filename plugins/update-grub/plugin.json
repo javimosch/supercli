@@ -1,0 +1,56 @@
+{
+  "name": "update-grub",
+  "version": "0.1.0",
+  "description": "CLI tool: update-grub",
+  "source": "https://manpages.debian.org/update-grub",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-grub"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-grub",
+    "binary": "update-grub",
+    "check": "which update-grub",
+    "install_steps": [
+      "apt-get install update-grub 2>/dev/null || which update-grub",
+      "Verify: update-grub --version",
+      "supercli plugins install ./plugins/update-grub --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-grub",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-grub version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-grub",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-grub: apt-get install update-grub 2>/dev/null || which update-grub"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-grub",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-grub CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-grub",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-grub: apt-get install update-grub 2>/dev/null || which update-grub"
+      },
+      "args": []
+    }
+  ]
+}

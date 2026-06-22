@@ -1,0 +1,56 @@
+{
+  "name": "uptex",
+  "version": "0.1.0",
+  "description": "CLI tool: uptex",
+  "source": "https://manpages.debian.org/uptex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "uptex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "uptex",
+    "binary": "uptex",
+    "check": "which uptex",
+    "install_steps": [
+      "apt-get install uptex 2>/dev/null || which uptex",
+      "Verify: uptex --version",
+      "supercli plugins install ./plugins/uptex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uptex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uptex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uptex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install uptex: apt-get install uptex 2>/dev/null || which uptex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uptex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uptex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uptex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install uptex: apt-get install uptex 2>/dev/null || which uptex"
+      },
+      "args": []
+    }
+  ]
+}

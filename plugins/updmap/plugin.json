@@ -1,0 +1,56 @@
+{
+  "name": "updmap",
+  "version": "0.1.0",
+  "description": "CLI tool: updmap",
+  "source": "https://manpages.debian.org/updmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "updmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "updmap",
+    "binary": "updmap",
+    "check": "which updmap",
+    "install_steps": [
+      "apt-get install updmap 2>/dev/null || which updmap",
+      "Verify: updmap --version",
+      "supercli plugins install ./plugins/updmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "updmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print updmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "updmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install updmap: apt-get install updmap 2>/dev/null || which updmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "updmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to updmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "updmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install updmap: apt-get install updmap 2>/dev/null || which updmap"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "update-notifier",
+  "version": "0.1.0",
+  "description": "CLI tool: update-notifier",
+  "source": "https://manpages.debian.org/update-notifier",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-notifier"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-notifier",
+    "binary": "update-notifier",
+    "check": "which update-notifier",
+    "install_steps": [
+      "apt-get install update-notifier 2>/dev/null || which update-notifier",
+      "Verify: update-notifier --version",
+      "supercli plugins install ./plugins/update-notifier --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-notifier",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-notifier version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-notifier",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-notifier: apt-get install update-notifier 2>/dev/null || which update-notifier"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-notifier",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-notifier CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-notifier",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-notifier: apt-get install update-notifier 2>/dev/null || which update-notifier"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "upmendex",
+  "version": "0.1.0",
+  "description": "CLI tool: upmendex",
+  "source": "https://manpages.debian.org/upmendex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "upmendex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "upmendex",
+    "binary": "upmendex",
+    "check": "which upmendex",
+    "install_steps": [
+      "apt-get install upmendex 2>/dev/null || which upmendex",
+      "Verify: upmendex --version",
+      "supercli plugins install ./plugins/upmendex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "upmendex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print upmendex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "upmendex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install upmendex: apt-get install upmendex 2>/dev/null || which upmendex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "upmendex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to upmendex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "upmendex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install upmendex: apt-get install upmendex 2>/dev/null || which upmendex"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "update-manager",
+  "version": "0.1.0",
+  "description": "CLI tool: update-manager",
+  "source": "https://manpages.debian.org/update-manager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-manager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-manager",
+    "binary": "update-manager",
+    "check": "which update-manager",
+    "install_steps": [
+      "apt-get install update-manager 2>/dev/null || which update-manager",
+      "Verify: update-manager --version",
+      "supercli plugins install ./plugins/update-manager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-manager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-manager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-manager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-manager: apt-get install update-manager 2>/dev/null || which update-manager"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-manager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-manager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-manager",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-manager: apt-get install update-manager 2>/dev/null || which update-manager"
+      },
+      "args": []
+    }
+  ]
+}

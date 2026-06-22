@@ -1,0 +1,56 @@
+{
+  "name": "usbhid-dump",
+  "version": "0.1.0",
+  "description": "CLI tool: usbhid-dump",
+  "source": "https://manpages.debian.org/usbhid-dump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "usbhid-dump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "usbhid-dump",
+    "binary": "usbhid-dump",
+    "check": "which usbhid-dump",
+    "install_steps": [
+      "apt-get install usbhid-dump 2>/dev/null || which usbhid-dump",
+      "Verify: usbhid-dump --version",
+      "supercli plugins install ./plugins/usbhid-dump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usbhid-dump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usbhid-dump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usbhid-dump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install usbhid-dump: apt-get install usbhid-dump 2>/dev/null || which usbhid-dump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usbhid-dump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usbhid-dump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usbhid-dump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usbhid-dump: apt-get install usbhid-dump 2>/dev/null || which usbhid-dump"
+      },
+      "args": []
+    }
+  ]
+}

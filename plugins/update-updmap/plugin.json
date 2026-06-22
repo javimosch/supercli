@@ -1,0 +1,56 @@
+{
+  "name": "update-updmap",
+  "version": "0.1.0",
+  "description": "CLI tool: update-updmap",
+  "source": "https://manpages.debian.org/update-updmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-updmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-updmap",
+    "binary": "update-updmap",
+    "check": "which update-updmap",
+    "install_steps": [
+      "apt-get install update-updmap 2>/dev/null || which update-updmap",
+      "Verify: update-updmap --version",
+      "supercli plugins install ./plugins/update-updmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-updmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-updmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-updmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-updmap: apt-get install update-updmap 2>/dev/null || which update-updmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-updmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-updmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-updmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-updmap: apt-get install update-updmap 2>/dev/null || which update-updmap"
+      },
+      "args": []
+    }
+  ]
+}

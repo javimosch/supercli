@@ -1,0 +1,56 @@
+{
+  "name": "update-inetd",
+  "version": "0.1.0",
+  "description": "CLI tool: update-inetd",
+  "source": "https://manpages.debian.org/update-inetd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-inetd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-inetd",
+    "binary": "update-inetd",
+    "check": "which update-inetd",
+    "install_steps": [
+      "apt-get install update-inetd 2>/dev/null || which update-inetd",
+      "Verify: update-inetd --version",
+      "supercli plugins install ./plugins/update-inetd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-inetd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-inetd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-inetd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-inetd: apt-get install update-inetd 2>/dev/null || which update-inetd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-inetd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-inetd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-inetd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-inetd: apt-get install update-inetd 2>/dev/null || which update-inetd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "update-shells",
+  "version": "0.1.0",
+  "description": "CLI tool: update-shells",
+  "source": "https://manpages.debian.org/update-shells",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-shells"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-shells",
+    "binary": "update-shells",
+    "check": "which update-shells",
+    "install_steps": [
+      "apt-get install update-shells 2>/dev/null || which update-shells",
+      "Verify: update-shells --version",
+      "supercli plugins install ./plugins/update-shells --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-shells",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-shells version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-shells",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-shells: apt-get install update-shells 2>/dev/null || which update-shells"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-shells",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-shells CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-shells",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-shells: apt-get install update-shells 2>/dev/null || which update-shells"
+      },
+      "args": []
+    }
+  ]
+}

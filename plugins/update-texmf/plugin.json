@@ -1,0 +1,56 @@
+{
+  "name": "update-texmf",
+  "version": "0.1.0",
+  "description": "CLI tool: update-texmf",
+  "source": "https://manpages.debian.org/update-texmf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-texmf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-texmf",
+    "binary": "update-texmf",
+    "check": "which update-texmf",
+    "install_steps": [
+      "apt-get install update-texmf 2>/dev/null || which update-texmf",
+      "Verify: update-texmf --version",
+      "supercli plugins install ./plugins/update-texmf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-texmf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-texmf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-texmf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-texmf: apt-get install update-texmf 2>/dev/null || which update-texmf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-texmf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-texmf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-texmf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-texmf: apt-get install update-texmf 2>/dev/null || which update-texmf"
+      },
+      "args": []
+    }
+  ]
+}

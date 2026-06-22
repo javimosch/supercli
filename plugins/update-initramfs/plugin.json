@@ -1,0 +1,56 @@
+{
+  "name": "update-initramfs",
+  "version": "0.1.0",
+  "description": "CLI tool: update-initramfs",
+  "source": "https://manpages.debian.org/update-initramfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-initramfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-initramfs",
+    "binary": "update-initramfs",
+    "check": "which update-initramfs",
+    "install_steps": [
+      "apt-get install update-initramfs 2>/dev/null || which update-initramfs",
+      "Verify: update-initramfs --version",
+      "supercli plugins install ./plugins/update-initramfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-initramfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-initramfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-initramfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-initramfs: apt-get install update-initramfs 2>/dev/null || which update-initramfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-initramfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-initramfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-initramfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-initramfs: apt-get install update-initramfs 2>/dev/null || which update-initramfs"
+      },
+      "args": []
+    }
+  ]
+}

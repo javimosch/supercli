@@ -1,0 +1,56 @@
+{
+  "name": "usb-devices",
+  "version": "0.1.0",
+  "description": "CLI tool: usb-devices",
+  "source": "https://manpages.debian.org/usb-devices",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "usb-devices"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "usb-devices",
+    "binary": "usb-devices",
+    "check": "which usb-devices",
+    "install_steps": [
+      "apt-get install usb-devices 2>/dev/null || which usb-devices",
+      "Verify: usb-devices --version",
+      "supercli plugins install ./plugins/usb-devices --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usb-devices",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usb-devices version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usb-devices",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install usb-devices: apt-get install usb-devices 2>/dev/null || which usb-devices"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usb-devices",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usb-devices CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usb-devices",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usb-devices: apt-get install usb-devices 2>/dev/null || which usb-devices"
+      },
+      "args": []
+    }
+  ]
+}

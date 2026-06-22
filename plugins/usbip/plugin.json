@@ -1,0 +1,56 @@
+{
+  "name": "usbip",
+  "version": "0.1.0",
+  "description": "CLI tool: usbip",
+  "source": "https://manpages.debian.org/usbip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "usbip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "usbip",
+    "binary": "usbip",
+    "check": "which usbip",
+    "install_steps": [
+      "apt-get install usbip 2>/dev/null || which usbip",
+      "Verify: usbip --version",
+      "supercli plugins install ./plugins/usbip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usbip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usbip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usbip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install usbip: apt-get install usbip 2>/dev/null || which usbip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usbip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usbip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usbip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usbip: apt-get install usbip 2>/dev/null || which usbip"
+      },
+      "args": []
+    }
+  ]
+}

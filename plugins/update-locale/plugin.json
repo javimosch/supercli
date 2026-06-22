@@ -1,0 +1,56 @@
+{
+  "name": "update-locale",
+  "version": "0.1.0",
+  "description": "CLI tool: update-locale",
+  "source": "https://manpages.debian.org/update-locale",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-locale"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-locale",
+    "binary": "update-locale",
+    "check": "which update-locale",
+    "install_steps": [
+      "apt-get install update-locale 2>/dev/null || which update-locale",
+      "Verify: update-locale --version",
+      "supercli plugins install ./plugins/update-locale --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-locale",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-locale version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-locale",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-locale: apt-get install update-locale 2>/dev/null || which update-locale"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-locale",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-locale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-locale",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-locale: apt-get install update-locale 2>/dev/null || which update-locale"
+      },
+      "args": []
+    }
+  ]
+}

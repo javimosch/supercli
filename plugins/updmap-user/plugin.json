@@ -1,0 +1,56 @@
+{
+  "name": "updmap-user",
+  "version": "0.1.0",
+  "description": "CLI tool: updmap-user",
+  "source": "https://manpages.debian.org/updmap-user",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "updmap-user"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "updmap-user",
+    "binary": "updmap-user",
+    "check": "which updmap-user",
+    "install_steps": [
+      "apt-get install updmap-user 2>/dev/null || which updmap-user",
+      "Verify: updmap-user --version",
+      "supercli plugins install ./plugins/updmap-user --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "updmap-user",
+      "resource": "self",
+      "action": "version",
+      "description": "Print updmap-user version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "updmap-user",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install updmap-user: apt-get install updmap-user 2>/dev/null || which updmap-user"
+      },
+      "args": []
+    },
+    {
+      "namespace": "updmap-user",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to updmap-user CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "updmap-user",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install updmap-user: apt-get install updmap-user 2>/dev/null || which updmap-user"
+      },
+      "args": []
+    }
+  ]
+}

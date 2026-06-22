@@ -1,0 +1,56 @@
+{
+  "name": "update-passwd",
+  "version": "0.1.0",
+  "description": "CLI tool: update-passwd",
+  "source": "https://manpages.debian.org/update-passwd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-passwd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-passwd",
+    "binary": "update-passwd",
+    "check": "which update-passwd",
+    "install_steps": [
+      "apt-get install update-passwd 2>/dev/null || which update-passwd",
+      "Verify: update-passwd --version",
+      "supercli plugins install ./plugins/update-passwd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-passwd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-passwd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-passwd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-passwd: apt-get install update-passwd 2>/dev/null || which update-passwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-passwd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-passwd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-passwd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-passwd: apt-get install update-passwd 2>/dev/null || which update-passwd"
+      },
+      "args": []
+    }
+  ]
+}

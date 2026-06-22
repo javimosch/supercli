@@ -1,0 +1,56 @@
+{
+  "name": "update-pciids",
+  "version": "0.1.0",
+  "description": "CLI tool: update-pciids",
+  "source": "https://manpages.debian.org/update-pciids",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-pciids"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-pciids",
+    "binary": "update-pciids",
+    "check": "which update-pciids",
+    "install_steps": [
+      "apt-get install update-pciids 2>/dev/null || which update-pciids",
+      "Verify: update-pciids --version",
+      "supercli plugins install ./plugins/update-pciids --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-pciids",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-pciids version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-pciids",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-pciids: apt-get install update-pciids 2>/dev/null || which update-pciids"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-pciids",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-pciids CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-pciids",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-pciids: apt-get install update-pciids 2>/dev/null || which update-pciids"
+      },
+      "args": []
+    }
+  ]
+}

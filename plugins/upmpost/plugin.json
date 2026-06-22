@@ -1,0 +1,56 @@
+{
+  "name": "upmpost",
+  "version": "0.1.0",
+  "description": "CLI tool: upmpost",
+  "source": "https://manpages.debian.org/upmpost",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "upmpost"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "upmpost",
+    "binary": "upmpost",
+    "check": "which upmpost",
+    "install_steps": [
+      "apt-get install upmpost 2>/dev/null || which upmpost",
+      "Verify: upmpost --version",
+      "supercli plugins install ./plugins/upmpost --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "upmpost",
+      "resource": "self",
+      "action": "version",
+      "description": "Print upmpost version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "upmpost",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install upmpost: apt-get install upmpost 2>/dev/null || which upmpost"
+      },
+      "args": []
+    },
+    {
+      "namespace": "upmpost",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to upmpost CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "upmpost",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install upmpost: apt-get install upmpost 2>/dev/null || which upmpost"
+      },
+      "args": []
+    }
+  ]
+}

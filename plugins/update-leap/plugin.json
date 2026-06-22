@@ -1,0 +1,56 @@
+{
+  "name": "update-leap",
+  "version": "0.1.0",
+  "description": "CLI tool: update-leap",
+  "source": "https://manpages.debian.org/update-leap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "update-leap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "update-leap",
+    "binary": "update-leap",
+    "check": "which update-leap",
+    "install_steps": [
+      "apt-get install update-leap 2>/dev/null || which update-leap",
+      "Verify: update-leap --version",
+      "supercli plugins install ./plugins/update-leap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "update-leap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print update-leap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-leap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install update-leap: apt-get install update-leap 2>/dev/null || which update-leap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "update-leap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to update-leap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "update-leap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install update-leap: apt-get install update-leap 2>/dev/null || which update-leap"
+      },
+      "args": []
+    }
+  ]
+}

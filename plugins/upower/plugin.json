@@ -1,0 +1,56 @@
+{
+  "name": "upower",
+  "version": "0.1.0",
+  "description": "CLI tool: upower",
+  "source": "https://manpages.debian.org/upower",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "upower"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "upower",
+    "binary": "upower",
+    "check": "which upower",
+    "install_steps": [
+      "apt-get install upower 2>/dev/null || which upower",
+      "Verify: upower --version",
+      "supercli plugins install ./plugins/upower --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "upower",
+      "resource": "self",
+      "action": "version",
+      "description": "Print upower version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "upower",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install upower: apt-get install upower 2>/dev/null || which upower"
+      },
+      "args": []
+    },
+    {
+      "namespace": "upower",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to upower CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "upower",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install upower: apt-get install upower 2>/dev/null || which upower"
+      },
+      "args": []
+    }
+  ]
+}
