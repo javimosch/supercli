@@ -1,0 +1,56 @@
+{
+  "name": "skill",
+  "version": "0.1.0",
+  "description": "CLI tool: skill",
+  "source": "https://manpages.debian.org/skill",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "skill"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "skill",
+    "binary": "skill",
+    "check": "which skill",
+    "install_steps": [
+      "apt-get install skill 2>/dev/null || which skill",
+      "Verify: skill --version",
+      "supercli plugins install ./plugins/skill --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "skill",
+      "resource": "self",
+      "action": "version",
+      "description": "Print skill version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skill",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install skill: apt-get install skill 2>/dev/null || which skill"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skill",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to skill CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skill",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skill: apt-get install skill 2>/dev/null || which skill"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "slogin",
+  "version": "0.1.0",
+  "description": "CLI tool: slogin",
+  "source": "https://manpages.debian.org/slogin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "slogin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "slogin",
+    "binary": "slogin",
+    "check": "which slogin",
+    "install_steps": [
+      "apt-get install slogin 2>/dev/null || which slogin",
+      "Verify: slogin --version",
+      "supercli plugins install ./plugins/slogin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "slogin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print slogin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slogin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install slogin: apt-get install slogin 2>/dev/null || which slogin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slogin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slogin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slogin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install slogin: apt-get install slogin 2>/dev/null || which slogin"
+      },
+      "args": []
+    }
+  ]
+}

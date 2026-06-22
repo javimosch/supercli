@@ -1,0 +1,56 @@
+{
+  "name": "snice",
+  "version": "0.1.0",
+  "description": "CLI tool: snice",
+  "source": "https://manpages.debian.org/snice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "snice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "snice",
+    "binary": "snice",
+    "check": "which snice",
+    "install_steps": [
+      "apt-get install snice 2>/dev/null || which snice",
+      "Verify: snice --version",
+      "supercli plugins install ./plugins/snice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "snice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print snice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install snice: apt-get install snice 2>/dev/null || which snice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "snice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to snice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install snice: apt-get install snice 2>/dev/null || which snice"
+      },
+      "args": []
+    }
+  ]
+}

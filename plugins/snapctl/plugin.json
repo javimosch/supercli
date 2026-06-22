@@ -1,0 +1,56 @@
+{
+  "name": "snapctl",
+  "version": "0.1.0",
+  "description": "CLI tool: snapctl",
+  "source": "https://manpages.debian.org/snapctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "snapctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "snapctl",
+    "binary": "snapctl",
+    "check": "which snapctl",
+    "install_steps": [
+      "apt-get install snapctl 2>/dev/null || which snapctl",
+      "Verify: snapctl --version",
+      "supercli plugins install ./plugins/snapctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "snapctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print snapctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snapctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install snapctl: apt-get install snapctl 2>/dev/null || which snapctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "snapctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to snapctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snapctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install snapctl: apt-get install snapctl 2>/dev/null || which snapctl"
+      },
+      "args": []
+    }
+  ]
+}

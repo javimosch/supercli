@@ -1,0 +1,56 @@
+{
+  "name": "speaker-test",
+  "version": "0.1.0",
+  "description": "CLI tool: speaker-test",
+  "source": "https://manpages.debian.org/speaker-test",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "speaker-test"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "speaker-test",
+    "binary": "speaker-test",
+    "check": "which speaker-test",
+    "install_steps": [
+      "apt-get install speaker-test 2>/dev/null || which speaker-test",
+      "Verify: speaker-test --version",
+      "supercli plugins install ./plugins/speaker-test --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "speaker-test",
+      "resource": "self",
+      "action": "version",
+      "description": "Print speaker-test version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speaker-test",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install speaker-test: apt-get install speaker-test 2>/dev/null || which speaker-test"
+      },
+      "args": []
+    },
+    {
+      "namespace": "speaker-test",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to speaker-test CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speaker-test",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install speaker-test: apt-get install speaker-test 2>/dev/null || which speaker-test"
+      },
+      "args": []
+    }
+  ]
+}

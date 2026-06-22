@@ -1,0 +1,56 @@
+{
+  "name": "smproxy",
+  "version": "0.1.0",
+  "description": "CLI tool: smproxy",
+  "source": "https://manpages.debian.org/smproxy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "smproxy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "smproxy",
+    "binary": "smproxy",
+    "check": "which smproxy",
+    "install_steps": [
+      "apt-get install smproxy 2>/dev/null || which smproxy",
+      "Verify: smproxy --version",
+      "supercli plugins install ./plugins/smproxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "smproxy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print smproxy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "smproxy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install smproxy: apt-get install smproxy 2>/dev/null || which smproxy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "smproxy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to smproxy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "smproxy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install smproxy: apt-get install smproxy 2>/dev/null || which smproxy"
+      },
+      "args": []
+    }
+  ]
+}

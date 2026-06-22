@@ -1,0 +1,56 @@
+{
+  "name": "spa-monitor",
+  "version": "0.1.0",
+  "description": "CLI tool: spa-monitor",
+  "source": "https://manpages.debian.org/spa-monitor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spa-monitor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spa-monitor",
+    "binary": "spa-monitor",
+    "check": "which spa-monitor",
+    "install_steps": [
+      "apt-get install spa-monitor 2>/dev/null || which spa-monitor",
+      "Verify: spa-monitor --version",
+      "supercli plugins install ./plugins/spa-monitor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spa-monitor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spa-monitor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spa-monitor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spa-monitor: apt-get install spa-monitor 2>/dev/null || which spa-monitor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spa-monitor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spa-monitor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spa-monitor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spa-monitor: apt-get install spa-monitor 2>/dev/null || which spa-monitor"
+      },
+      "args": []
+    }
+  ]
+}

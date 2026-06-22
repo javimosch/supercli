@@ -1,0 +1,56 @@
+{
+  "name": "slirp4netns",
+  "version": "0.1.0",
+  "description": "CLI tool: slirp4netns",
+  "source": "https://manpages.debian.org/slirp4netns",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "slirp4netns"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "slirp4netns",
+    "binary": "slirp4netns",
+    "check": "which slirp4netns",
+    "install_steps": [
+      "apt-get install slirp4netns 2>/dev/null || which slirp4netns",
+      "Verify: slirp4netns --version",
+      "supercli plugins install ./plugins/slirp4netns --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "slirp4netns",
+      "resource": "self",
+      "action": "version",
+      "description": "Print slirp4netns version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slirp4netns",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install slirp4netns: apt-get install slirp4netns 2>/dev/null || which slirp4netns"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slirp4netns",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slirp4netns CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slirp4netns",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install slirp4netns: apt-get install slirp4netns 2>/dev/null || which slirp4netns"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "signver",
+  "version": "0.1.0",
+  "description": "CLI tool: signver",
+  "source": "https://manpages.debian.org/signver",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "signver"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "signver",
+    "binary": "signver",
+    "check": "which signver",
+    "install_steps": [
+      "apt-get install signver 2>/dev/null || which signver",
+      "Verify: signver --version",
+      "supercli plugins install ./plugins/signver --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "signver",
+      "resource": "self",
+      "action": "version",
+      "description": "Print signver version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signver",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install signver: apt-get install signver 2>/dev/null || which signver"
+      },
+      "args": []
+    },
+    {
+      "namespace": "signver",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to signver CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signver",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install signver: apt-get install signver 2>/dev/null || which signver"
+      },
+      "args": []
+    }
+  ]
+}

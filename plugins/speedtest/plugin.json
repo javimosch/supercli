@@ -1,0 +1,56 @@
+{
+  "name": "speedtest",
+  "version": "0.1.0",
+  "description": "CLI tool: speedtest",
+  "source": "https://manpages.debian.org/speedtest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "speedtest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "speedtest",
+    "binary": "speedtest",
+    "check": "which speedtest",
+    "install_steps": [
+      "apt-get install speedtest 2>/dev/null || which speedtest",
+      "Verify: speedtest --version",
+      "supercli plugins install ./plugins/speedtest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "speedtest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print speedtest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speedtest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install speedtest: apt-get install speedtest 2>/dev/null || which speedtest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "speedtest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to speedtest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "speedtest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install speedtest: apt-get install speedtest 2>/dev/null || which speedtest"
+      },
+      "args": []
+    }
+  ]
+}

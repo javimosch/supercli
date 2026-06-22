@@ -1,0 +1,56 @@
+{
+  "name": "soelim",
+  "version": "0.1.0",
+  "description": "CLI tool: soelim",
+  "source": "https://manpages.debian.org/soelim",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "soelim"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "soelim",
+    "binary": "soelim",
+    "check": "which soelim",
+    "install_steps": [
+      "apt-get install soelim 2>/dev/null || which soelim",
+      "Verify: soelim --version",
+      "supercli plugins install ./plugins/soelim --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "soelim",
+      "resource": "self",
+      "action": "version",
+      "description": "Print soelim version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "soelim",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install soelim: apt-get install soelim 2>/dev/null || which soelim"
+      },
+      "args": []
+    },
+    {
+      "namespace": "soelim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to soelim CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "soelim",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install soelim: apt-get install soelim 2>/dev/null || which soelim"
+      },
+      "args": []
+    }
+  ]
+}

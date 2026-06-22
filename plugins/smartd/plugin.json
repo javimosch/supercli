@@ -1,0 +1,56 @@
+{
+  "name": "smartd",
+  "version": "0.1.0",
+  "description": "CLI tool: smartd",
+  "source": "https://manpages.debian.org/smartd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "smartd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "smartd",
+    "binary": "smartd",
+    "check": "which smartd",
+    "install_steps": [
+      "apt-get install smartd 2>/dev/null || which smartd",
+      "Verify: smartd --version",
+      "supercli plugins install ./plugins/smartd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "smartd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print smartd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "smartd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install smartd: apt-get install smartd 2>/dev/null || which smartd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "smartd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to smartd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "smartd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install smartd: apt-get install smartd 2>/dev/null || which smartd"
+      },
+      "args": []
+    }
+  ]
+}

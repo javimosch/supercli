@@ -1,0 +1,56 @@
+{
+  "name": "soffice",
+  "version": "0.1.0",
+  "description": "CLI tool: soffice",
+  "source": "https://manpages.debian.org/soffice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "soffice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "soffice",
+    "binary": "soffice",
+    "check": "which soffice",
+    "install_steps": [
+      "apt-get install soffice 2>/dev/null || which soffice",
+      "Verify: soffice --version",
+      "supercli plugins install ./plugins/soffice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "soffice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print soffice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "soffice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install soffice: apt-get install soffice 2>/dev/null || which soffice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "soffice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to soffice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "soffice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install soffice: apt-get install soffice 2>/dev/null || which soffice"
+      },
+      "args": []
+    }
+  ]
+}

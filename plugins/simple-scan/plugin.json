@@ -1,0 +1,56 @@
+{
+  "name": "simple-scan",
+  "version": "0.1.0",
+  "description": "CLI tool: simple-scan",
+  "source": "https://manpages.debian.org/simple-scan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "simple-scan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "simple-scan",
+    "binary": "simple-scan",
+    "check": "which simple-scan",
+    "install_steps": [
+      "apt-get install simple-scan 2>/dev/null || which simple-scan",
+      "Verify: simple-scan --version",
+      "supercli plugins install ./plugins/simple-scan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "simple-scan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print simple-scan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "simple-scan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install simple-scan: apt-get install simple-scan 2>/dev/null || which simple-scan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "simple-scan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to simple-scan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "simple-scan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install simple-scan: apt-get install simple-scan 2>/dev/null || which simple-scan"
+      },
+      "args": []
+    }
+  ]
+}

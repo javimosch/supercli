@@ -1,0 +1,56 @@
+{
+  "name": "spa-inspect",
+  "version": "0.1.0",
+  "description": "CLI tool: spa-inspect",
+  "source": "https://manpages.debian.org/spa-inspect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spa-inspect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spa-inspect",
+    "binary": "spa-inspect",
+    "check": "which spa-inspect",
+    "install_steps": [
+      "apt-get install spa-inspect 2>/dev/null || which spa-inspect",
+      "Verify: spa-inspect --version",
+      "supercli plugins install ./plugins/spa-inspect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spa-inspect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spa-inspect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spa-inspect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spa-inspect: apt-get install spa-inspect 2>/dev/null || which spa-inspect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spa-inspect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spa-inspect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spa-inspect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spa-inspect: apt-get install spa-inspect 2>/dev/null || which spa-inspect"
+      },
+      "args": []
+    }
+  ]
+}

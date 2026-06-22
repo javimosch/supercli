@@ -1,0 +1,56 @@
+{
+  "name": "sntp",
+  "version": "0.1.0",
+  "description": "CLI tool: sntp",
+  "source": "https://manpages.debian.org/sntp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sntp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sntp",
+    "binary": "sntp",
+    "check": "which sntp",
+    "install_steps": [
+      "apt-get install sntp 2>/dev/null || which sntp",
+      "Verify: sntp --version",
+      "supercli plugins install ./plugins/sntp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sntp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sntp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sntp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sntp: apt-get install sntp 2>/dev/null || which sntp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sntp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sntp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sntp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sntp: apt-get install sntp 2>/dev/null || which sntp"
+      },
+      "args": []
+    }
+  ]
+}

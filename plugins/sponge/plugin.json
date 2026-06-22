@@ -1,0 +1,56 @@
+{
+  "name": "sponge",
+  "version": "0.1.0",
+  "description": "CLI tool: sponge",
+  "source": "https://manpages.debian.org/sponge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sponge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sponge",
+    "binary": "sponge",
+    "check": "which sponge",
+    "install_steps": [
+      "apt-get install sponge 2>/dev/null || which sponge",
+      "Verify: sponge --version",
+      "supercli plugins install ./plugins/sponge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sponge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sponge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sponge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sponge: apt-get install sponge 2>/dev/null || which sponge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sponge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sponge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sponge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sponge: apt-get install sponge 2>/dev/null || which sponge"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "splain",
+  "version": "0.1.0",
+  "description": "CLI tool: splain",
+  "source": "https://manpages.debian.org/splain",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "splain"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "splain",
+    "binary": "splain",
+    "check": "which splain",
+    "install_steps": [
+      "apt-get install splain 2>/dev/null || which splain",
+      "Verify: splain --version",
+      "supercli plugins install ./plugins/splain --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "splain",
+      "resource": "self",
+      "action": "version",
+      "description": "Print splain version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "splain",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install splain: apt-get install splain 2>/dev/null || which splain"
+      },
+      "args": []
+    },
+    {
+      "namespace": "splain",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to splain CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "splain",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install splain: apt-get install splain 2>/dev/null || which splain"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "slabtop",
+  "version": "0.1.0",
+  "description": "CLI tool: slabtop",
+  "source": "https://manpages.debian.org/slabtop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "slabtop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "slabtop",
+    "binary": "slabtop",
+    "check": "which slabtop",
+    "install_steps": [
+      "apt-get install slabtop 2>/dev/null || which slabtop",
+      "Verify: slabtop --version",
+      "supercli plugins install ./plugins/slabtop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "slabtop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print slabtop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slabtop",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install slabtop: apt-get install slabtop 2>/dev/null || which slabtop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slabtop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slabtop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slabtop",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install slabtop: apt-get install slabtop 2>/dev/null || which slabtop"
+      },
+      "args": []
+    }
+  ]
+}

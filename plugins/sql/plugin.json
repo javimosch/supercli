@@ -1,0 +1,56 @@
+{
+  "name": "sql",
+  "version": "0.1.0",
+  "description": "CLI tool: sql",
+  "source": "https://manpages.debian.org/sql",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sql"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sql",
+    "binary": "sql",
+    "check": "which sql",
+    "install_steps": [
+      "apt-get install sql 2>/dev/null || which sql",
+      "Verify: sql --version",
+      "supercli plugins install ./plugins/sql --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sql",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sql version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sql",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sql: apt-get install sql 2>/dev/null || which sql"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sql",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sql CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sql",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sql: apt-get install sql 2>/dev/null || which sql"
+      },
+      "args": []
+    }
+  ]
+}

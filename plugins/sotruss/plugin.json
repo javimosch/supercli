@@ -1,0 +1,56 @@
+{
+  "name": "sotruss",
+  "version": "0.1.0",
+  "description": "CLI tool: sotruss",
+  "source": "https://manpages.debian.org/sotruss",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sotruss"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sotruss",
+    "binary": "sotruss",
+    "check": "which sotruss",
+    "install_steps": [
+      "apt-get install sotruss 2>/dev/null || which sotruss",
+      "Verify: sotruss --version",
+      "supercli plugins install ./plugins/sotruss --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sotruss",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sotruss version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sotruss",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sotruss: apt-get install sotruss 2>/dev/null || which sotruss"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sotruss",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sotruss CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sotruss",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sotruss: apt-get install sotruss 2>/dev/null || which sotruss"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,20 +1,56 @@
 {
   "name": "spyql",
   "version": "0.1.0",
-  "description": "spyql — query CSV, JSON, and text data using SQL-like syntax with JSON output support",
-  "source": "https://github.com/dcmoura/spyql",
-  "checks": [{ "type": "binary", "name": "spyql" }],
-  "commands": [{
-    "namespace": "spyql",
-    "resource": "_",
-    "action": "_",
-    "description": "Passthrough to spyql CLI",
-    "adapter": "process",
-    "adapterConfig": {
-      "command": "spyql",
-      "passthrough": true,
-      "missingDependencyHelp": "Install spyql: pip install spyql"
+  "description": "CLI tool: spyql",
+  "source": "https://manpages.debian.org/spyql",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spyql"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spyql",
+    "binary": "spyql",
+    "check": "which spyql",
+    "install_steps": [
+      "apt-get install spyql 2>/dev/null || which spyql",
+      "Verify: spyql --version",
+      "supercli plugins install ./plugins/spyql --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spyql",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spyql version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spyql",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spyql: apt-get install spyql 2>/dev/null || which spyql"
+      },
+      "args": []
     },
-    "args": []
-  }]
+    {
+      "namespace": "spyql",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spyql CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spyql",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spyql: apt-get install spyql 2>/dev/null || which spyql"
+      },
+      "args": []
+    }
+  ]
 }

@@ -1,0 +1,56 @@
+{
+  "name": "sprof",
+  "version": "0.1.0",
+  "description": "CLI tool: sprof",
+  "source": "https://manpages.debian.org/sprof",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sprof"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sprof",
+    "binary": "sprof",
+    "check": "which sprof",
+    "install_steps": [
+      "apt-get install sprof 2>/dev/null || which sprof",
+      "Verify: sprof --version",
+      "supercli plugins install ./plugins/sprof --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sprof",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sprof version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sprof",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sprof: apt-get install sprof 2>/dev/null || which sprof"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sprof",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sprof CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sprof",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sprof: apt-get install sprof 2>/dev/null || which sprof"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "snapfuse",
+  "version": "0.1.0",
+  "description": "CLI tool: snapfuse",
+  "source": "https://manpages.debian.org/snapfuse",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "snapfuse"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "snapfuse",
+    "binary": "snapfuse",
+    "check": "which snapfuse",
+    "install_steps": [
+      "apt-get install snapfuse 2>/dev/null || which snapfuse",
+      "Verify: snapfuse --version",
+      "supercli plugins install ./plugins/snapfuse --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "snapfuse",
+      "resource": "self",
+      "action": "version",
+      "description": "Print snapfuse version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snapfuse",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install snapfuse: apt-get install snapfuse 2>/dev/null || which snapfuse"
+      },
+      "args": []
+    },
+    {
+      "namespace": "snapfuse",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to snapfuse CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "snapfuse",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install snapfuse: apt-get install snapfuse 2>/dev/null || which snapfuse"
+      },
+      "args": []
+    }
+  ]
+}

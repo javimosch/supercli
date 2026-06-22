@@ -1,0 +1,56 @@
+{
+  "name": "sputoppm",
+  "version": "0.1.0",
+  "description": "CLI tool: sputoppm",
+  "source": "https://manpages.debian.org/sputoppm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sputoppm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sputoppm",
+    "binary": "sputoppm",
+    "check": "which sputoppm",
+    "install_steps": [
+      "apt-get install sputoppm 2>/dev/null || which sputoppm",
+      "Verify: sputoppm --version",
+      "supercli plugins install ./plugins/sputoppm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sputoppm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sputoppm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sputoppm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sputoppm: apt-get install sputoppm 2>/dev/null || which sputoppm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sputoppm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sputoppm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sputoppm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sputoppm: apt-get install sputoppm 2>/dev/null || which sputoppm"
+      },
+      "args": []
+    }
+  ]
+}

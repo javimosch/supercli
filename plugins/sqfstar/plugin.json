@@ -1,0 +1,56 @@
+{
+  "name": "sqfstar",
+  "version": "0.1.0",
+  "description": "CLI tool: sqfstar",
+  "source": "https://manpages.debian.org/sqfstar",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sqfstar"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sqfstar",
+    "binary": "sqfstar",
+    "check": "which sqfstar",
+    "install_steps": [
+      "apt-get install sqfstar 2>/dev/null || which sqfstar",
+      "Verify: sqfstar --version",
+      "supercli plugins install ./plugins/sqfstar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqfstar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqfstar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqfstar",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sqfstar: apt-get install sqfstar 2>/dev/null || which sqfstar"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqfstar",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqfstar CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqfstar",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqfstar: apt-get install sqfstar 2>/dev/null || which sqfstar"
+      },
+      "args": []
+    }
+  ]
+}

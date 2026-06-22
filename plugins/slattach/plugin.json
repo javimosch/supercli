@@ -1,0 +1,56 @@
+{
+  "name": "slattach",
+  "version": "0.1.0",
+  "description": "CLI tool: slattach",
+  "source": "https://manpages.debian.org/slattach",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "slattach"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "slattach",
+    "binary": "slattach",
+    "check": "which slattach",
+    "install_steps": [
+      "apt-get install slattach 2>/dev/null || which slattach",
+      "Verify: slattach --version",
+      "supercli plugins install ./plugins/slattach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "slattach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print slattach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slattach",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install slattach: apt-get install slattach 2>/dev/null || which slattach"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slattach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slattach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slattach",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install slattach: apt-get install slattach 2>/dev/null || which slattach"
+      },
+      "args": []
+    }
+  ]
+}

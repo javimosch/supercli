@@ -1,0 +1,56 @@
+{
+  "name": "spdsend",
+  "version": "0.1.0",
+  "description": "CLI tool: spdsend",
+  "source": "https://manpages.debian.org/spdsend",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spdsend"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spdsend",
+    "binary": "spdsend",
+    "check": "which spdsend",
+    "install_steps": [
+      "apt-get install spdsend 2>/dev/null || which spdsend",
+      "Verify: spdsend --version",
+      "supercli plugins install ./plugins/spdsend --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spdsend",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spdsend version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spdsend",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spdsend: apt-get install spdsend 2>/dev/null || which spdsend"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spdsend",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spdsend CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spdsend",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spdsend: apt-get install spdsend 2>/dev/null || which spdsend"
+      },
+      "args": []
+    }
+  ]
+}

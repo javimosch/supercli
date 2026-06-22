@@ -1,0 +1,56 @@
+{
+  "name": "spd-conf",
+  "version": "0.1.0",
+  "description": "CLI tool: spd-conf",
+  "source": "https://manpages.debian.org/spd-conf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spd-conf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spd-conf",
+    "binary": "spd-conf",
+    "check": "which spd-conf",
+    "install_steps": [
+      "apt-get install spd-conf 2>/dev/null || which spd-conf",
+      "Verify: spd-conf --version",
+      "supercli plugins install ./plugins/spd-conf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spd-conf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spd-conf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spd-conf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spd-conf: apt-get install spd-conf 2>/dev/null || which spd-conf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spd-conf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spd-conf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spd-conf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spd-conf: apt-get install spd-conf 2>/dev/null || which spd-conf"
+      },
+      "args": []
+    }
+  ]
+}

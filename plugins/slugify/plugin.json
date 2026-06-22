@@ -1,0 +1,56 @@
+{
+  "name": "slugify",
+  "version": "0.1.0",
+  "description": "CLI tool: slugify",
+  "source": "https://manpages.debian.org/slugify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "slugify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "slugify",
+    "binary": "slugify",
+    "check": "which slugify",
+    "install_steps": [
+      "apt-get install slugify 2>/dev/null || which slugify",
+      "Verify: slugify --version",
+      "supercli plugins install ./plugins/slugify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "slugify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print slugify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slugify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install slugify: apt-get install slugify 2>/dev/null || which slugify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slugify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slugify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slugify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install slugify: apt-get install slugify 2>/dev/null || which slugify"
+      },
+      "args": []
+    }
+  ]
+}

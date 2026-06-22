@@ -1,0 +1,56 @@
+{
+  "name": "spd-say",
+  "version": "0.1.0",
+  "description": "CLI tool: spd-say",
+  "source": "https://manpages.debian.org/spd-say",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "spd-say"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "spd-say",
+    "binary": "spd-say",
+    "check": "which spd-say",
+    "install_steps": [
+      "apt-get install spd-say 2>/dev/null || which spd-say",
+      "Verify: spd-say --version",
+      "supercli plugins install ./plugins/spd-say --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "spd-say",
+      "resource": "self",
+      "action": "version",
+      "description": "Print spd-say version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spd-say",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install spd-say: apt-get install spd-say 2>/dev/null || which spd-say"
+      },
+      "args": []
+    },
+    {
+      "namespace": "spd-say",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to spd-say CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "spd-say",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install spd-say: apt-get install spd-say 2>/dev/null || which spd-say"
+      },
+      "args": []
+    }
+  ]
+}
