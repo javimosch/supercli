@@ -1,0 +1,56 @@
+{
+  "name": "mimeopen",
+  "version": "0.1.0",
+  "description": "CLI tool: mimeopen",
+  "source": "https://manpages.debian.org/mimeopen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mimeopen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mimeopen",
+    "binary": "mimeopen",
+    "check": "which mimeopen",
+    "install_steps": [
+      "apt-get install mimeopen 2>/dev/null || which mimeopen",
+      "Verify: mimeopen --version",
+      "supercli plugins install ./plugins/mimeopen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mimeopen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mimeopen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mimeopen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mimeopen: apt-get install mimeopen 2>/dev/null || which mimeopen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mimeopen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mimeopen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mimeopen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mimeopen: apt-get install mimeopen 2>/dev/null || which mimeopen"
+      },
+      "args": []
+    }
+  ]
+}

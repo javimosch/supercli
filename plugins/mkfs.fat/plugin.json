@@ -1,0 +1,56 @@
+{
+  "name": "mkfs.fat",
+  "version": "0.1.0",
+  "description": "CLI tool: mkfs.fat",
+  "source": "https://manpages.debian.org/mkfs.fat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkfs.fat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkfs.fat",
+    "binary": "mkfs.fat",
+    "check": "which mkfs.fat",
+    "install_steps": [
+      "apt-get install mkfs.fat 2>/dev/null || which mkfs.fat",
+      "Verify: mkfs.fat --version",
+      "supercli plugins install ./plugins/mkfs.fat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkfs.fat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkfs.fat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs.fat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkfs.fat: apt-get install mkfs.fat 2>/dev/null || which mkfs.fat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkfs.fat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkfs.fat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs.fat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkfs.fat: apt-get install mkfs.fat 2>/dev/null || which mkfs.fat"
+      },
+      "args": []
+    }
+  ]
+}

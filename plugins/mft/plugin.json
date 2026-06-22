@@ -1,0 +1,56 @@
+{
+  "name": "mft",
+  "version": "0.1.0",
+  "description": "CLI tool: mft",
+  "source": "https://manpages.debian.org/mft",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mft"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mft",
+    "binary": "mft",
+    "check": "which mft",
+    "install_steps": [
+      "apt-get install mft 2>/dev/null || which mft",
+      "Verify: mft --version",
+      "supercli plugins install ./plugins/mft --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mft",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mft version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mft",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mft: apt-get install mft 2>/dev/null || which mft"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mft",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mft",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mft: apt-get install mft 2>/dev/null || which mft"
+      },
+      "args": []
+    }
+  ]
+}

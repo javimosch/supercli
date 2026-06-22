@@ -1,0 +1,56 @@
+{
+  "name": "mf",
+  "version": "0.1.0",
+  "description": "CLI tool: mf",
+  "source": "https://manpages.debian.org/mf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mf",
+    "binary": "mf",
+    "check": "which mf",
+    "install_steps": [
+      "apt-get install mf 2>/dev/null || which mf",
+      "Verify: mf --version",
+      "supercli plugins install ./plugins/mf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mf: apt-get install mf 2>/dev/null || which mf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mf: apt-get install mf 2>/dev/null || which mf"
+      },
+      "args": []
+    }
+  ]
+}

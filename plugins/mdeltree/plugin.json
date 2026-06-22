@@ -1,0 +1,56 @@
+{
+  "name": "mdeltree",
+  "version": "0.1.0",
+  "description": "CLI tool: mdeltree",
+  "source": "https://manpages.debian.org/mdeltree",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mdeltree"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mdeltree",
+    "binary": "mdeltree",
+    "check": "which mdeltree",
+    "install_steps": [
+      "apt-get install mdeltree 2>/dev/null || which mdeltree",
+      "Verify: mdeltree --version",
+      "supercli plugins install ./plugins/mdeltree --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdeltree",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdeltree version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdeltree",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mdeltree: apt-get install mdeltree 2>/dev/null || which mdeltree"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdeltree",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdeltree CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdeltree",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mdeltree: apt-get install mdeltree 2>/dev/null || which mdeltree"
+      },
+      "args": []
+    }
+  ]
+}

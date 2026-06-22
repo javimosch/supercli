@@ -1,0 +1,56 @@
+{
+  "name": "mii-tool",
+  "version": "0.1.0",
+  "description": "CLI tool: mii-tool",
+  "source": "https://manpages.debian.org/mii-tool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mii-tool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mii-tool",
+    "binary": "mii-tool",
+    "check": "which mii-tool",
+    "install_steps": [
+      "apt-get install mii-tool 2>/dev/null || which mii-tool",
+      "Verify: mii-tool --version",
+      "supercli plugins install ./plugins/mii-tool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mii-tool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mii-tool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mii-tool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mii-tool: apt-get install mii-tool 2>/dev/null || which mii-tool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mii-tool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mii-tool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mii-tool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mii-tool: apt-get install mii-tool 2>/dev/null || which mii-tool"
+      },
+      "args": []
+    }
+  ]
+}

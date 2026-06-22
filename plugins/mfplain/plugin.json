@@ -1,0 +1,56 @@
+{
+  "name": "mfplain",
+  "version": "0.1.0",
+  "description": "CLI tool: mfplain",
+  "source": "https://manpages.debian.org/mfplain",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mfplain"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mfplain",
+    "binary": "mfplain",
+    "check": "which mfplain",
+    "install_steps": [
+      "apt-get install mfplain 2>/dev/null || which mfplain",
+      "Verify: mfplain --version",
+      "supercli plugins install ./plugins/mfplain --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mfplain",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mfplain version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mfplain",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mfplain: apt-get install mfplain 2>/dev/null || which mfplain"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mfplain",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mfplain CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mfplain",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mfplain: apt-get install mfplain 2>/dev/null || which mfplain"
+      },
+      "args": []
+    }
+  ]
+}

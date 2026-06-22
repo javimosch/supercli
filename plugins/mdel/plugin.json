@@ -1,0 +1,56 @@
+{
+  "name": "mdel",
+  "version": "0.1.0",
+  "description": "CLI tool: mdel",
+  "source": "https://manpages.debian.org/mdel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mdel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mdel",
+    "binary": "mdel",
+    "check": "which mdel",
+    "install_steps": [
+      "apt-get install mdel 2>/dev/null || which mdel",
+      "Verify: mdel --version",
+      "supercli plugins install ./plugins/mdel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mdel: apt-get install mdel 2>/dev/null || which mdel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mdel: apt-get install mdel 2>/dev/null || which mdel"
+      },
+      "args": []
+    }
+  ]
+}

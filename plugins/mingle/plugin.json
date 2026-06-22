@@ -1,0 +1,56 @@
+{
+  "name": "mingle",
+  "version": "0.1.0",
+  "description": "CLI tool: mingle",
+  "source": "https://manpages.debian.org/mingle",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mingle"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mingle",
+    "binary": "mingle",
+    "check": "which mingle",
+    "install_steps": [
+      "apt-get install mingle 2>/dev/null || which mingle",
+      "Verify: mingle --version",
+      "supercli plugins install ./plugins/mingle --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mingle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mingle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mingle",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mingle: apt-get install mingle 2>/dev/null || which mingle"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mingle",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mingle CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mingle",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mingle: apt-get install mingle 2>/dev/null || which mingle"
+      },
+      "args": []
+    }
+  ]
+}

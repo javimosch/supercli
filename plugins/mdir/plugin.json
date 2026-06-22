@@ -1,0 +1,56 @@
+{
+  "name": "mdir",
+  "version": "0.1.0",
+  "description": "CLI tool: mdir",
+  "source": "https://manpages.debian.org/mdir",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mdir"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mdir",
+    "binary": "mdir",
+    "check": "which mdir",
+    "install_steps": [
+      "apt-get install mdir 2>/dev/null || which mdir",
+      "Verify: mdir --version",
+      "supercli plugins install ./plugins/mdir --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdir",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdir version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdir",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mdir: apt-get install mdir 2>/dev/null || which mdir"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdir",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdir CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdir",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mdir: apt-get install mdir 2>/dev/null || which mdir"
+      },
+      "args": []
+    }
+  ]
+}

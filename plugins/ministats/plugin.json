@@ -1,0 +1,56 @@
+{
+  "name": "ministats",
+  "version": "0.1.0",
+  "description": "CLI tool: ministats",
+  "source": "https://manpages.debian.org/ministats",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ministats"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ministats",
+    "binary": "ministats",
+    "check": "which ministats",
+    "install_steps": [
+      "apt-get install ministats 2>/dev/null || which ministats",
+      "Verify: ministats --version",
+      "supercli plugins install ./plugins/ministats --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ministats",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ministats version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ministats",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ministats: apt-get install ministats 2>/dev/null || which ministats"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ministats",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ministats CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ministats",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ministats: apt-get install ministats 2>/dev/null || which ministats"
+      },
+      "args": []
+    }
+  ]
+}

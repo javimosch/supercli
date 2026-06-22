@@ -1,0 +1,56 @@
+{
+  "name": "mformat",
+  "version": "0.1.0",
+  "description": "CLI tool: mformat",
+  "source": "https://manpages.debian.org/mformat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mformat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mformat",
+    "binary": "mformat",
+    "check": "which mformat",
+    "install_steps": [
+      "apt-get install mformat 2>/dev/null || which mformat",
+      "Verify: mformat --version",
+      "supercli plugins install ./plugins/mformat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mformat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mformat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mformat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mformat: apt-get install mformat 2>/dev/null || which mformat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mformat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mformat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mformat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mformat: apt-get install mformat 2>/dev/null || which mformat"
+      },
+      "args": []
+    }
+  ]
+}

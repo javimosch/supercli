@@ -1,0 +1,56 @@
+{
+  "name": "mem",
+  "version": "0.1.0",
+  "description": "CLI tool: mem",
+  "source": "https://manpages.debian.org/mem",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mem"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mem",
+    "binary": "mem",
+    "check": "which mem",
+    "install_steps": [
+      "apt-get install mem 2>/dev/null || which mem",
+      "Verify: mem --version",
+      "supercli plugins install ./plugins/mem --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mem",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mem version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mem",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mem: apt-get install mem 2>/dev/null || which mem"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mem",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mem CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mem",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mem: apt-get install mem 2>/dev/null || which mem"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mdig",
+  "version": "0.1.0",
+  "description": "CLI tool: mdig",
+  "source": "https://manpages.debian.org/mdig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mdig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mdig",
+    "binary": "mdig",
+    "check": "which mdig",
+    "install_steps": [
+      "apt-get install mdig 2>/dev/null || which mdig",
+      "Verify: mdig --version",
+      "supercli plugins install ./plugins/mdig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mdig: apt-get install mdig 2>/dev/null || which mdig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mdig: apt-get install mdig 2>/dev/null || which mdig"
+      },
+      "args": []
+    }
+  ]
+}

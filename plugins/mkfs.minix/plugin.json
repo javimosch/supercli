@@ -1,0 +1,56 @@
+{
+  "name": "mkfs.minix",
+  "version": "0.1.0",
+  "description": "CLI tool: mkfs.minix",
+  "source": "https://manpages.debian.org/mkfs.minix",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkfs.minix"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkfs.minix",
+    "binary": "mkfs.minix",
+    "check": "which mkfs.minix",
+    "install_steps": [
+      "apt-get install mkfs.minix 2>/dev/null || which mkfs.minix",
+      "Verify: mkfs.minix --version",
+      "supercli plugins install ./plugins/mkfs.minix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkfs.minix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkfs.minix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs.minix",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkfs.minix: apt-get install mkfs.minix 2>/dev/null || which mkfs.minix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkfs.minix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkfs.minix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs.minix",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkfs.minix: apt-get install mkfs.minix 2>/dev/null || which mkfs.minix"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mdu",
+  "version": "0.1.0",
+  "description": "CLI tool: mdu",
+  "source": "https://manpages.debian.org/mdu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mdu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mdu",
+    "binary": "mdu",
+    "check": "which mdu",
+    "install_steps": [
+      "apt-get install mdu 2>/dev/null || which mdu",
+      "Verify: mdu --version",
+      "supercli plugins install ./plugins/mdu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mdu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mdu: apt-get install mdu 2>/dev/null || which mdu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mdu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mdu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mdu: apt-get install mdu 2>/dev/null || which mdu"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mitmweb",
+  "version": "0.1.0",
+  "description": "CLI tool: mitmweb",
+  "source": "https://manpages.debian.org/mitmweb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mitmweb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mitmweb",
+    "binary": "mitmweb",
+    "check": "which mitmweb",
+    "install_steps": [
+      "apt-get install mitmweb 2>/dev/null || which mitmweb",
+      "Verify: mitmweb --version",
+      "supercli plugins install ./plugins/mitmweb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mitmweb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mitmweb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmweb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mitmweb: apt-get install mitmweb 2>/dev/null || which mitmweb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mitmweb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mitmweb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmweb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mitmweb: apt-get install mitmweb 2>/dev/null || which mitmweb"
+      },
+      "args": []
+    }
+  ]
+}

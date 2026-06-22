@@ -1,0 +1,56 @@
+{
+  "name": "mkfs.bfs",
+  "version": "0.1.0",
+  "description": "CLI tool: mkfs.bfs",
+  "source": "https://manpages.debian.org/mkfs.bfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkfs.bfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkfs.bfs",
+    "binary": "mkfs.bfs",
+    "check": "which mkfs.bfs",
+    "install_steps": [
+      "apt-get install mkfs.bfs 2>/dev/null || which mkfs.bfs",
+      "Verify: mkfs.bfs --version",
+      "supercli plugins install ./plugins/mkfs.bfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkfs.bfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkfs.bfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs.bfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkfs.bfs: apt-get install mkfs.bfs 2>/dev/null || which mkfs.bfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkfs.bfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkfs.bfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs.bfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkfs.bfs: apt-get install mkfs.bfs 2>/dev/null || which mkfs.bfs"
+      },
+      "args": []
+    }
+  ]
+}

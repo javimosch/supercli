@@ -1,0 +1,56 @@
+{
+  "name": "minipostiz",
+  "version": "0.1.0",
+  "description": "CLI tool: minipostiz",
+  "source": "https://manpages.debian.org/minipostiz",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "minipostiz"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "minipostiz",
+    "binary": "minipostiz",
+    "check": "which minipostiz",
+    "install_steps": [
+      "apt-get install minipostiz 2>/dev/null || which minipostiz",
+      "Verify: minipostiz --version",
+      "supercli plugins install ./plugins/minipostiz --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "minipostiz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print minipostiz version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "minipostiz",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install minipostiz: apt-get install minipostiz 2>/dev/null || which minipostiz"
+      },
+      "args": []
+    },
+    {
+      "namespace": "minipostiz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to minipostiz CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "minipostiz",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install minipostiz: apt-get install minipostiz 2>/dev/null || which minipostiz"
+      },
+      "args": []
+    }
+  ]
+}

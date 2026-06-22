@@ -1,0 +1,56 @@
+{
+  "name": "mflua",
+  "version": "0.1.0",
+  "description": "CLI tool: mflua",
+  "source": "https://manpages.debian.org/mflua",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mflua"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mflua",
+    "binary": "mflua",
+    "check": "which mflua",
+    "install_steps": [
+      "apt-get install mflua 2>/dev/null || which mflua",
+      "Verify: mflua --version",
+      "supercli plugins install ./plugins/mflua --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mflua",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mflua version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mflua",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mflua: apt-get install mflua 2>/dev/null || which mflua"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mflua",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mflua CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mflua",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mflua: apt-get install mflua 2>/dev/null || which mflua"
+      },
+      "args": []
+    }
+  ]
+}

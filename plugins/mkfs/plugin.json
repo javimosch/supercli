@@ -1,0 +1,56 @@
+{
+  "name": "mkfs",
+  "version": "0.1.0",
+  "description": "CLI tool: mkfs",
+  "source": "https://manpages.debian.org/mkfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mkfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mkfs",
+    "binary": "mkfs",
+    "check": "which mkfs",
+    "install_steps": [
+      "apt-get install mkfs 2>/dev/null || which mkfs",
+      "Verify: mkfs --version",
+      "supercli plugins install ./plugins/mkfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mkfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mkfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mkfs: apt-get install mkfs 2>/dev/null || which mkfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mkfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mkfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mkfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mkfs: apt-get install mkfs 2>/dev/null || which mkfs"
+      },
+      "args": []
+    }
+  ]
+}

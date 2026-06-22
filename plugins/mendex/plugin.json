@@ -1,0 +1,56 @@
+{
+  "name": "mendex",
+  "version": "0.1.0",
+  "description": "CLI tool: mendex",
+  "source": "https://manpages.debian.org/mendex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mendex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mendex",
+    "binary": "mendex",
+    "check": "which mendex",
+    "install_steps": [
+      "apt-get install mendex 2>/dev/null || which mendex",
+      "Verify: mendex --version",
+      "supercli plugins install ./plugins/mendex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mendex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mendex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mendex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mendex: apt-get install mendex 2>/dev/null || which mendex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mendex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mendex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mendex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mendex: apt-get install mendex 2>/dev/null || which mendex"
+      },
+      "args": []
+    }
+  ]
+}

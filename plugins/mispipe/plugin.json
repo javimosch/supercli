@@ -1,0 +1,56 @@
+{
+  "name": "mispipe",
+  "version": "0.1.0",
+  "description": "CLI tool: mispipe",
+  "source": "https://manpages.debian.org/mispipe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mispipe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mispipe",
+    "binary": "mispipe",
+    "check": "which mispipe",
+    "install_steps": [
+      "apt-get install mispipe 2>/dev/null || which mispipe",
+      "Verify: mispipe --version",
+      "supercli plugins install ./plugins/mispipe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mispipe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mispipe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mispipe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mispipe: apt-get install mispipe 2>/dev/null || which mispipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mispipe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mispipe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mispipe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mispipe: apt-get install mispipe 2>/dev/null || which mispipe"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mitmdump",
+  "version": "0.1.0",
+  "description": "CLI tool: mitmdump",
+  "source": "https://manpages.debian.org/mitmdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mitmdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mitmdump",
+    "binary": "mitmdump",
+    "check": "which mitmdump",
+    "install_steps": [
+      "apt-get install mitmdump 2>/dev/null || which mitmdump",
+      "Verify: mitmdump --version",
+      "supercli plugins install ./plugins/mitmdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mitmdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mitmdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mitmdump: apt-get install mitmdump 2>/dev/null || which mitmdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mitmdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mitmdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mitmdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mitmdump: apt-get install mitmdump 2>/dev/null || which mitmdump"
+      },
+      "args": []
+    }
+  ]
+}
