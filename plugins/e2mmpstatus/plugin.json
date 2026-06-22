@@ -1,0 +1,56 @@
+{
+  "name": "e2mmpstatus",
+  "version": "0.1.0",
+  "description": "CLI tool: e2mmpstatus",
+  "source": "https://manpages.debian.org/e2mmpstatus",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e2mmpstatus"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e2mmpstatus",
+    "binary": "e2mmpstatus",
+    "check": "which e2mmpstatus",
+    "install_steps": [
+      "apt-get install e2mmpstatus 2>/dev/null || which e2mmpstatus",
+      "Verify: e2mmpstatus --version",
+      "supercli plugins install ./plugins/e2mmpstatus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e2mmpstatus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e2mmpstatus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2mmpstatus",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e2mmpstatus: apt-get install e2mmpstatus 2>/dev/null || which e2mmpstatus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e2mmpstatus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e2mmpstatus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2mmpstatus",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e2mmpstatus: apt-get install e2mmpstatus 2>/dev/null || which e2mmpstatus"
+      },
+      "args": []
+    }
+  ]
+}

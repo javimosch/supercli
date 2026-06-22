@@ -1,0 +1,56 @@
+{
+  "name": "dviselect",
+  "version": "0.1.0",
+  "description": "CLI tool: dviselect",
+  "source": "https://manpages.debian.org/dviselect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dviselect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dviselect",
+    "binary": "dviselect",
+    "check": "which dviselect",
+    "install_steps": [
+      "apt-get install dviselect 2>/dev/null || which dviselect",
+      "Verify: dviselect --version",
+      "supercli plugins install ./plugins/dviselect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dviselect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dviselect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dviselect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dviselect: apt-get install dviselect 2>/dev/null || which dviselect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dviselect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dviselect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dviselect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dviselect: apt-get install dviselect 2>/dev/null || which dviselect"
+      },
+      "args": []
+    }
+  ]
+}

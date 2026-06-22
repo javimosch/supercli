@@ -1,0 +1,56 @@
+{
+  "name": "e2undo",
+  "version": "0.1.0",
+  "description": "CLI tool: e2undo",
+  "source": "https://manpages.debian.org/e2undo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e2undo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e2undo",
+    "binary": "e2undo",
+    "check": "which e2undo",
+    "install_steps": [
+      "apt-get install e2undo 2>/dev/null || which e2undo",
+      "Verify: e2undo --version",
+      "supercli plugins install ./plugins/e2undo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e2undo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e2undo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2undo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e2undo: apt-get install e2undo 2>/dev/null || which e2undo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e2undo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e2undo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2undo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e2undo: apt-get install e2undo 2>/dev/null || which e2undo"
+      },
+      "args": []
+    }
+  ]
+}

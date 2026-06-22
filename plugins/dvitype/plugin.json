@@ -1,0 +1,56 @@
+{
+  "name": "dvitype",
+  "version": "0.1.0",
+  "description": "CLI tool: dvitype",
+  "source": "https://manpages.debian.org/dvitype",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvitype"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvitype",
+    "binary": "dvitype",
+    "check": "which dvitype",
+    "install_steps": [
+      "apt-get install dvitype 2>/dev/null || which dvitype",
+      "Verify: dvitype --version",
+      "supercli plugins install ./plugins/dvitype --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvitype",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvitype version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvitype",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvitype: apt-get install dvitype 2>/dev/null || which dvitype"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvitype",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvitype CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvitype",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvitype: apt-get install dvitype 2>/dev/null || which dvitype"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "dvipdfmx",
+  "version": "0.1.0",
+  "description": "CLI tool: dvipdfmx",
+  "source": "https://manpages.debian.org/dvipdfmx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvipdfmx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvipdfmx",
+    "binary": "dvipdfmx",
+    "check": "which dvipdfmx",
+    "install_steps": [
+      "apt-get install dvipdfmx 2>/dev/null || which dvipdfmx",
+      "Verify: dvipdfmx --version",
+      "supercli plugins install ./plugins/dvipdfmx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvipdfmx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvipdfmx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvipdfmx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvipdfmx: apt-get install dvipdfmx 2>/dev/null || which dvipdfmx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvipdfmx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvipdfmx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvipdfmx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvipdfmx: apt-get install dvipdfmx 2>/dev/null || which dvipdfmx"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "dvisvgm",
+  "version": "0.1.0",
+  "description": "CLI tool: dvisvgm",
+  "source": "https://manpages.debian.org/dvisvgm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvisvgm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvisvgm",
+    "binary": "dvisvgm",
+    "check": "which dvisvgm",
+    "install_steps": [
+      "apt-get install dvisvgm 2>/dev/null || which dvisvgm",
+      "Verify: dvisvgm --version",
+      "supercli plugins install ./plugins/dvisvgm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvisvgm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvisvgm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvisvgm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvisvgm: apt-get install dvisvgm 2>/dev/null || which dvisvgm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvisvgm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvisvgm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvisvgm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvisvgm: apt-get install dvisvgm 2>/dev/null || which dvisvgm"
+      },
+      "args": []
+    }
+  ]
+}

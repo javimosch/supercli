@@ -1,0 +1,56 @@
+{
+  "name": "dvispc",
+  "version": "0.1.0",
+  "description": "CLI tool: dvispc",
+  "source": "https://manpages.debian.org/dvispc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvispc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvispc",
+    "binary": "dvispc",
+    "check": "which dvispc",
+    "install_steps": [
+      "apt-get install dvispc 2>/dev/null || which dvispc",
+      "Verify: dvispc --version",
+      "supercli plugins install ./plugins/dvispc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvispc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvispc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvispc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvispc: apt-get install dvispc 2>/dev/null || which dvispc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvispc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvispc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvispc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvispc: apt-get install dvispc 2>/dev/null || which dvispc"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ebb",
+  "version": "0.1.0",
+  "description": "CLI tool: ebb",
+  "source": "https://manpages.debian.org/ebb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ebb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ebb",
+    "binary": "ebb",
+    "check": "which ebb",
+    "install_steps": [
+      "apt-get install ebb 2>/dev/null || which ebb",
+      "Verify: ebb --version",
+      "supercli plugins install ./plugins/ebb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ebb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ebb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ebb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ebb: apt-get install ebb 2>/dev/null || which ebb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ebb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ebb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ebb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ebb: apt-get install ebb 2>/dev/null || which ebb"
+      },
+      "args": []
+    }
+  ]
+}

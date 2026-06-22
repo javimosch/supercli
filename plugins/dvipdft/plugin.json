@@ -1,0 +1,56 @@
+{
+  "name": "dvipdft",
+  "version": "0.1.0",
+  "description": "CLI tool: dvipdft",
+  "source": "https://manpages.debian.org/dvipdft",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvipdft"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvipdft",
+    "binary": "dvipdft",
+    "check": "which dvipdft",
+    "install_steps": [
+      "apt-get install dvipdft 2>/dev/null || which dvipdft",
+      "Verify: dvipdft --version",
+      "supercli plugins install ./plugins/dvipdft --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvipdft",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvipdft version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvipdft",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvipdft: apt-get install dvipdft 2>/dev/null || which dvipdft"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvipdft",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvipdft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvipdft",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvipdft: apt-get install dvipdft 2>/dev/null || which dvipdft"
+      },
+      "args": []
+    }
+  ]
+}

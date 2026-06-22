@@ -1,0 +1,56 @@
+{
+  "name": "env_parallel.sh",
+  "version": "0.1.0",
+  "description": "CLI tool: env_parallel.sh",
+  "source": "https://manpages.debian.org/env_parallel.sh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "env_parallel.sh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "env_parallel.sh",
+    "binary": "env_parallel.sh",
+    "check": "which env_parallel.sh",
+    "install_steps": [
+      "apt-get install env_parallel.sh 2>/dev/null || which env_parallel.sh",
+      "Verify: env_parallel.sh --version",
+      "supercli plugins install ./plugins/env_parallel.sh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "env_parallel.sh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print env_parallel.sh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "env_parallel.sh",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install env_parallel.sh: apt-get install env_parallel.sh 2>/dev/null || which env_parallel.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "env_parallel.sh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to env_parallel.sh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "env_parallel.sh",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install env_parallel.sh: apt-get install env_parallel.sh 2>/dev/null || which env_parallel.sh"
+      },
+      "args": []
+    }
+  ]
+}

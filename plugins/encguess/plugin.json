@@ -1,0 +1,56 @@
+{
+  "name": "encguess",
+  "version": "0.1.0",
+  "description": "CLI tool: encguess",
+  "source": "https://manpages.debian.org/encguess",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "encguess"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "encguess",
+    "binary": "encguess",
+    "check": "which encguess",
+    "install_steps": [
+      "apt-get install encguess 2>/dev/null || which encguess",
+      "Verify: encguess --version",
+      "supercli plugins install ./plugins/encguess --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "encguess",
+      "resource": "self",
+      "action": "version",
+      "description": "Print encguess version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "encguess",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install encguess: apt-get install encguess 2>/dev/null || which encguess"
+      },
+      "args": []
+    },
+    {
+      "namespace": "encguess",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to encguess CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "encguess",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install encguess: apt-get install encguess 2>/dev/null || which encguess"
+      },
+      "args": []
+    }
+  ]
+}

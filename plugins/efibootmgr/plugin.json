@@ -1,0 +1,56 @@
+{
+  "name": "efibootmgr",
+  "version": "0.1.0",
+  "description": "CLI tool: efibootmgr",
+  "source": "https://manpages.debian.org/efibootmgr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "efibootmgr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "efibootmgr",
+    "binary": "efibootmgr",
+    "check": "which efibootmgr",
+    "install_steps": [
+      "apt-get install efibootmgr 2>/dev/null || which efibootmgr",
+      "Verify: efibootmgr --version",
+      "supercli plugins install ./plugins/efibootmgr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "efibootmgr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print efibootmgr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "efibootmgr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install efibootmgr: apt-get install efibootmgr 2>/dev/null || which efibootmgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "efibootmgr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to efibootmgr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "efibootmgr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install efibootmgr: apt-get install efibootmgr 2>/dev/null || which efibootmgr"
+      },
+      "args": []
+    }
+  ]
+}

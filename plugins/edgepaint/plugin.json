@@ -1,0 +1,56 @@
+{
+  "name": "edgepaint",
+  "version": "0.1.0",
+  "description": "CLI tool: edgepaint",
+  "source": "https://manpages.debian.org/edgepaint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "edgepaint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "edgepaint",
+    "binary": "edgepaint",
+    "check": "which edgepaint",
+    "install_steps": [
+      "apt-get install edgepaint 2>/dev/null || which edgepaint",
+      "Verify: edgepaint --version",
+      "supercli plugins install ./plugins/edgepaint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "edgepaint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print edgepaint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "edgepaint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install edgepaint: apt-get install edgepaint 2>/dev/null || which edgepaint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "edgepaint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to edgepaint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "edgepaint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install edgepaint: apt-get install edgepaint 2>/dev/null || which edgepaint"
+      },
+      "args": []
+    }
+  ]
+}

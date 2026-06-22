@@ -1,0 +1,56 @@
+{
+  "name": "dvitomp",
+  "version": "0.1.0",
+  "description": "CLI tool: dvitomp",
+  "source": "https://manpages.debian.org/dvitomp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvitomp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvitomp",
+    "binary": "dvitomp",
+    "check": "which dvitomp",
+    "install_steps": [
+      "apt-get install dvitomp 2>/dev/null || which dvitomp",
+      "Verify: dvitomp --version",
+      "supercli plugins install ./plugins/dvitomp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvitomp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvitomp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvitomp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvitomp: apt-get install dvitomp 2>/dev/null || which dvitomp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvitomp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvitomp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvitomp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvitomp: apt-get install dvitomp 2>/dev/null || which dvitomp"
+      },
+      "args": []
+    }
+  ]
+}

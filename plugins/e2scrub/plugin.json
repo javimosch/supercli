@@ -1,0 +1,56 @@
+{
+  "name": "e2scrub",
+  "version": "0.1.0",
+  "description": "CLI tool: e2scrub",
+  "source": "https://manpages.debian.org/e2scrub",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e2scrub"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e2scrub",
+    "binary": "e2scrub",
+    "check": "which e2scrub",
+    "install_steps": [
+      "apt-get install e2scrub 2>/dev/null || which e2scrub",
+      "Verify: e2scrub --version",
+      "supercli plugins install ./plugins/e2scrub --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e2scrub",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e2scrub version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2scrub",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e2scrub: apt-get install e2scrub 2>/dev/null || which e2scrub"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e2scrub",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e2scrub CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2scrub",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e2scrub: apt-get install e2scrub 2>/dev/null || which e2scrub"
+      },
+      "args": []
+    }
+  ]
+}

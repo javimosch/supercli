@@ -1,0 +1,56 @@
+{
+  "name": "env-diff",
+  "version": "0.1.0",
+  "description": "CLI tool: env-diff",
+  "source": "https://manpages.debian.org/env-diff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "env-diff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "env-diff",
+    "binary": "env-diff",
+    "check": "which env-diff",
+    "install_steps": [
+      "apt-get install env-diff 2>/dev/null || which env-diff",
+      "Verify: env-diff --version",
+      "supercli plugins install ./plugins/env-diff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "env-diff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print env-diff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "env-diff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install env-diff: apt-get install env-diff 2>/dev/null || which env-diff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "env-diff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to env-diff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "env-diff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install env-diff: apt-get install env-diff 2>/dev/null || which env-diff"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "dvipdf",
+  "version": "0.1.0",
+  "description": "CLI tool: dvipdf",
+  "source": "https://manpages.debian.org/dvipdf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvipdf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvipdf",
+    "binary": "dvipdf",
+    "check": "which dvipdf",
+    "install_steps": [
+      "apt-get install dvipdf 2>/dev/null || which dvipdf",
+      "Verify: dvipdf --version",
+      "supercli plugins install ./plugins/dvipdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvipdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvipdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvipdf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvipdf: apt-get install dvipdf 2>/dev/null || which dvipdf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvipdf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvipdf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvipdf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvipdf: apt-get install dvipdf 2>/dev/null || which dvipdf"
+      },
+      "args": []
+    }
+  ]
+}

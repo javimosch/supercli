@@ -1,0 +1,56 @@
+{
+  "name": "e2image",
+  "version": "0.1.0",
+  "description": "CLI tool: e2image",
+  "source": "https://manpages.debian.org/e2image",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e2image"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e2image",
+    "binary": "e2image",
+    "check": "which e2image",
+    "install_steps": [
+      "apt-get install e2image 2>/dev/null || which e2image",
+      "Verify: e2image --version",
+      "supercli plugins install ./plugins/e2image --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e2image",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e2image version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2image",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e2image: apt-get install e2image 2>/dev/null || which e2image"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e2image",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e2image CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2image",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e2image: apt-get install e2image 2>/dev/null || which e2image"
+      },
+      "args": []
+    }
+  ]
+}

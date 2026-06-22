@@ -1,0 +1,56 @@
+{
+  "name": "dviluatex",
+  "version": "0.1.0",
+  "description": "CLI tool: dviluatex",
+  "source": "https://manpages.debian.org/dviluatex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dviluatex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dviluatex",
+    "binary": "dviluatex",
+    "check": "which dviluatex",
+    "install_steps": [
+      "apt-get install dviluatex 2>/dev/null || which dviluatex",
+      "Verify: dviluatex --version",
+      "supercli plugins install ./plugins/dviluatex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dviluatex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dviluatex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dviluatex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dviluatex: apt-get install dviluatex 2>/dev/null || which dviluatex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dviluatex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dviluatex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dviluatex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dviluatex: apt-get install dviluatex 2>/dev/null || which dviluatex"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "elfedit",
+  "version": "0.1.0",
+  "description": "CLI tool: elfedit",
+  "source": "https://manpages.debian.org/elfedit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "elfedit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "elfedit",
+    "binary": "elfedit",
+    "check": "which elfedit",
+    "install_steps": [
+      "apt-get install elfedit 2>/dev/null || which elfedit",
+      "Verify: elfedit --version",
+      "supercli plugins install ./plugins/elfedit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "elfedit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print elfedit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "elfedit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install elfedit: apt-get install elfedit 2>/dev/null || which elfedit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "elfedit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to elfedit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "elfedit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install elfedit: apt-get install elfedit 2>/dev/null || which elfedit"
+      },
+      "args": []
+    }
+  ]
+}

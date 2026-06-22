@@ -1,0 +1,56 @@
+{
+  "name": "e2fsck",
+  "version": "0.1.0",
+  "description": "CLI tool: e2fsck",
+  "source": "https://manpages.debian.org/e2fsck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e2fsck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e2fsck",
+    "binary": "e2fsck",
+    "check": "which e2fsck",
+    "install_steps": [
+      "apt-get install e2fsck 2>/dev/null || which e2fsck",
+      "Verify: e2fsck --version",
+      "supercli plugins install ./plugins/e2fsck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e2fsck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e2fsck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2fsck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e2fsck: apt-get install e2fsck 2>/dev/null || which e2fsck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e2fsck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e2fsck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2fsck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e2fsck: apt-get install e2fsck 2>/dev/null || which e2fsck"
+      },
+      "args": []
+    }
+  ]
+}

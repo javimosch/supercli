@@ -1,0 +1,56 @@
+{
+  "name": "efibootdump",
+  "version": "0.1.0",
+  "description": "CLI tool: efibootdump",
+  "source": "https://manpages.debian.org/efibootdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "efibootdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "efibootdump",
+    "binary": "efibootdump",
+    "check": "which efibootdump",
+    "install_steps": [
+      "apt-get install efibootdump 2>/dev/null || which efibootdump",
+      "Verify: efibootdump --version",
+      "supercli plugins install ./plugins/efibootdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "efibootdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print efibootdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "efibootdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install efibootdump: apt-get install efibootdump 2>/dev/null || which efibootdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "efibootdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to efibootdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "efibootdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install efibootdump: apt-get install efibootdump 2>/dev/null || which efibootdump"
+      },
+      "args": []
+    }
+  ]
+}

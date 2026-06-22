@@ -1,0 +1,56 @@
+{
+  "name": "e2label",
+  "version": "0.1.0",
+  "description": "CLI tool: e2label",
+  "source": "https://manpages.debian.org/e2label",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e2label"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e2label",
+    "binary": "e2label",
+    "check": "which e2label",
+    "install_steps": [
+      "apt-get install e2label 2>/dev/null || which e2label",
+      "Verify: e2label --version",
+      "supercli plugins install ./plugins/e2label --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e2label",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e2label version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2label",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e2label: apt-get install e2label 2>/dev/null || which e2label"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e2label",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e2label CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e2label",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e2label: apt-get install e2label 2>/dev/null || which e2label"
+      },
+      "args": []
+    }
+  ]
+}

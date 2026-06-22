@@ -1,0 +1,56 @@
+{
+  "name": "e4crypt",
+  "version": "0.1.0",
+  "description": "CLI tool: e4crypt",
+  "source": "https://manpages.debian.org/e4crypt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "e4crypt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "e4crypt",
+    "binary": "e4crypt",
+    "check": "which e4crypt",
+    "install_steps": [
+      "apt-get install e4crypt 2>/dev/null || which e4crypt",
+      "Verify: e4crypt --version",
+      "supercli plugins install ./plugins/e4crypt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "e4crypt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print e4crypt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e4crypt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install e4crypt: apt-get install e4crypt 2>/dev/null || which e4crypt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "e4crypt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to e4crypt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "e4crypt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install e4crypt: apt-get install e4crypt 2>/dev/null || which e4crypt"
+      },
+      "args": []
+    }
+  ]
+}
