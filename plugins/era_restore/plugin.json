@@ -1,0 +1,56 @@
+{
+  "name": "era_restore",
+  "version": "0.1.0",
+  "description": "CLI tool: era_restore",
+  "source": "https://manpages.debian.org/era_restore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "era_restore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "era_restore",
+    "binary": "era_restore",
+    "check": "which era_restore",
+    "install_steps": [
+      "apt-get install era_restore 2>/dev/null || which era_restore",
+      "Verify: era_restore --version",
+      "supercli plugins install ./plugins/era_restore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "era_restore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print era_restore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "era_restore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install era_restore: apt-get install era_restore 2>/dev/null || which era_restore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "era_restore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to era_restore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "era_restore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install era_restore: apt-get install era_restore 2>/dev/null || which era_restore"
+      },
+      "args": []
+    }
+  ]
+}

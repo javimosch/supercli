@@ -1,0 +1,56 @@
+{
+  "name": "euptex",
+  "version": "0.1.0",
+  "description": "CLI tool: euptex",
+  "source": "https://manpages.debian.org/euptex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "euptex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "euptex",
+    "binary": "euptex",
+    "check": "which euptex",
+    "install_steps": [
+      "apt-get install euptex 2>/dev/null || which euptex",
+      "Verify: euptex --version",
+      "supercli plugins install ./plugins/euptex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "euptex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print euptex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "euptex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install euptex: apt-get install euptex 2>/dev/null || which euptex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "euptex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to euptex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "euptex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install euptex: apt-get install euptex 2>/dev/null || which euptex"
+      },
+      "args": []
+    }
+  ]
+}

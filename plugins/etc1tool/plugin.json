@@ -1,0 +1,56 @@
+{
+  "name": "etc1tool",
+  "version": "0.1.0",
+  "description": "CLI tool: etc1tool",
+  "source": "https://manpages.debian.org/etc1tool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "etc1tool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "etc1tool",
+    "binary": "etc1tool",
+    "check": "which etc1tool",
+    "install_steps": [
+      "apt-get install etc1tool 2>/dev/null || which etc1tool",
+      "Verify: etc1tool --version",
+      "supercli plugins install ./plugins/etc1tool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "etc1tool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print etc1tool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "etc1tool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install etc1tool: apt-get install etc1tool 2>/dev/null || which etc1tool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "etc1tool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to etc1tool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "etc1tool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install etc1tool: apt-get install etc1tool 2>/dev/null || which etc1tool"
+      },
+      "args": []
+    }
+  ]
+}

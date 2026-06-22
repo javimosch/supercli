@@ -1,0 +1,56 @@
+{
+  "name": "etex",
+  "version": "0.1.0",
+  "description": "CLI tool: etex",
+  "source": "https://manpages.debian.org/etex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "etex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "etex",
+    "binary": "etex",
+    "check": "which etex",
+    "install_steps": [
+      "apt-get install etex 2>/dev/null || which etex",
+      "Verify: etex --version",
+      "supercli plugins install ./plugins/etex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "etex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print etex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "etex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install etex: apt-get install etex 2>/dev/null || which etex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "etex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to etex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "etex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install etex: apt-get install etex 2>/dev/null || which etex"
+      },
+      "args": []
+    }
+  ]
+}

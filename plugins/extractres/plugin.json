@@ -1,0 +1,56 @@
+{
+  "name": "extractres",
+  "version": "0.1.0",
+  "description": "CLI tool: extractres",
+  "source": "https://manpages.debian.org/extractres",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "extractres"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "extractres",
+    "binary": "extractres",
+    "check": "which extractres",
+    "install_steps": [
+      "apt-get install extractres 2>/dev/null || which extractres",
+      "Verify: extractres --version",
+      "supercli plugins install ./plugins/extractres --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "extractres",
+      "resource": "self",
+      "action": "version",
+      "description": "Print extractres version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "extractres",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install extractres: apt-get install extractres 2>/dev/null || which extractres"
+      },
+      "args": []
+    },
+    {
+      "namespace": "extractres",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to extractres CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "extractres",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install extractres: apt-get install extractres 2>/dev/null || which extractres"
+      },
+      "args": []
+    }
+  ]
+}

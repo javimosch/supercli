@@ -1,0 +1,56 @@
+{
+  "name": "eptex",
+  "version": "0.1.0",
+  "description": "CLI tool: eptex",
+  "source": "https://manpages.debian.org/eptex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "eptex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "eptex",
+    "binary": "eptex",
+    "check": "which eptex",
+    "install_steps": [
+      "apt-get install eptex 2>/dev/null || which eptex",
+      "Verify: eptex --version",
+      "supercli plugins install ./plugins/eptex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "eptex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print eptex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eptex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install eptex: apt-get install eptex 2>/dev/null || which eptex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "eptex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to eptex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eptex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install eptex: apt-get install eptex 2>/dev/null || which eptex"
+      },
+      "args": []
+    }
+  ]
+}

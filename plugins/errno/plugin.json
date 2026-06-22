@@ -1,0 +1,56 @@
+{
+  "name": "errno",
+  "version": "0.1.0",
+  "description": "CLI tool: errno",
+  "source": "https://manpages.debian.org/errno",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "errno"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "errno",
+    "binary": "errno",
+    "check": "which errno",
+    "install_steps": [
+      "apt-get install errno 2>/dev/null || which errno",
+      "Verify: errno --version",
+      "supercli plugins install ./plugins/errno --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "errno",
+      "resource": "self",
+      "action": "version",
+      "description": "Print errno version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "errno",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install errno: apt-get install errno 2>/dev/null || which errno"
+      },
+      "args": []
+    },
+    {
+      "namespace": "errno",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to errno CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "errno",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install errno: apt-get install errno 2>/dev/null || which errno"
+      },
+      "args": []
+    }
+  ]
+}

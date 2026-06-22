@@ -1,0 +1,56 @@
+{
+  "name": "extcheck",
+  "version": "0.1.0",
+  "description": "CLI tool: extcheck",
+  "source": "https://manpages.debian.org/extcheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "extcheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "extcheck",
+    "binary": "extcheck",
+    "check": "which extcheck",
+    "install_steps": [
+      "apt-get install extcheck 2>/dev/null || which extcheck",
+      "Verify: extcheck --version",
+      "supercli plugins install ./plugins/extcheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "extcheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print extcheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "extcheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install extcheck: apt-get install extcheck 2>/dev/null || which extcheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "extcheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to extcheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "extcheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install extcheck: apt-get install extcheck 2>/dev/null || which extcheck"
+      },
+      "args": []
+    }
+  ]
+}

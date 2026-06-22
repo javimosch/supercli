@@ -1,0 +1,56 @@
+{
+  "name": "faillog",
+  "version": "0.1.0",
+  "description": "CLI tool: faillog",
+  "source": "https://manpages.debian.org/faillog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "faillog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "faillog",
+    "binary": "faillog",
+    "check": "which faillog",
+    "install_steps": [
+      "apt-get install faillog 2>/dev/null || which faillog",
+      "Verify: faillog --version",
+      "supercli plugins install ./plugins/faillog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "faillog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print faillog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "faillog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install faillog: apt-get install faillog 2>/dev/null || which faillog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "faillog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to faillog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "faillog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install faillog: apt-get install faillog 2>/dev/null || which faillog"
+      },
+      "args": []
+    }
+  ]
+}

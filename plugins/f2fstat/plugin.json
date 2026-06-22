@@ -1,0 +1,56 @@
+{
+  "name": "f2fstat",
+  "version": "0.1.0",
+  "description": "CLI tool: f2fstat",
+  "source": "https://manpages.debian.org/f2fstat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "f2fstat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "f2fstat",
+    "binary": "f2fstat",
+    "check": "which f2fstat",
+    "install_steps": [
+      "apt-get install f2fstat 2>/dev/null || which f2fstat",
+      "Verify: f2fstat --version",
+      "supercli plugins install ./plugins/f2fstat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "f2fstat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print f2fstat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "f2fstat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install f2fstat: apt-get install f2fstat 2>/dev/null || which f2fstat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "f2fstat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to f2fstat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "f2fstat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install f2fstat: apt-get install f2fstat 2>/dev/null || which f2fstat"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "era_dump",
+  "version": "0.1.0",
+  "description": "CLI tool: era_dump",
+  "source": "https://manpages.debian.org/era_dump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "era_dump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "era_dump",
+    "binary": "era_dump",
+    "check": "which era_dump",
+    "install_steps": [
+      "apt-get install era_dump 2>/dev/null || which era_dump",
+      "Verify: era_dump --version",
+      "supercli plugins install ./plugins/era_dump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "era_dump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print era_dump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "era_dump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install era_dump: apt-get install era_dump 2>/dev/null || which era_dump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "era_dump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to era_dump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "era_dump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install era_dump: apt-get install era_dump 2>/dev/null || which era_dump"
+      },
+      "args": []
+    }
+  ]
+}

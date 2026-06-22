@@ -1,0 +1,56 @@
+{
+  "name": "evince",
+  "version": "0.1.0",
+  "description": "CLI tool: evince",
+  "source": "https://manpages.debian.org/evince",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "evince"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "evince",
+    "binary": "evince",
+    "check": "which evince",
+    "install_steps": [
+      "apt-get install evince 2>/dev/null || which evince",
+      "Verify: evince --version",
+      "supercli plugins install ./plugins/evince --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "evince",
+      "resource": "self",
+      "action": "version",
+      "description": "Print evince version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "evince",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install evince: apt-get install evince 2>/dev/null || which evince"
+      },
+      "args": []
+    },
+    {
+      "namespace": "evince",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to evince CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "evince",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install evince: apt-get install evince 2>/dev/null || which evince"
+      },
+      "args": []
+    }
+  ]
+}

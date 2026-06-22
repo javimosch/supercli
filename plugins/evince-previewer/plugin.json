@@ -1,0 +1,56 @@
+{
+  "name": "evince-previewer",
+  "version": "0.1.0",
+  "description": "CLI tool: evince-previewer",
+  "source": "https://manpages.debian.org/evince-previewer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "evince-previewer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "evince-previewer",
+    "binary": "evince-previewer",
+    "check": "which evince-previewer",
+    "install_steps": [
+      "apt-get install evince-previewer 2>/dev/null || which evince-previewer",
+      "Verify: evince-previewer --version",
+      "supercli plugins install ./plugins/evince-previewer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "evince-previewer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print evince-previewer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "evince-previewer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install evince-previewer: apt-get install evince-previewer 2>/dev/null || which evince-previewer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "evince-previewer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to evince-previewer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "evince-previewer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install evince-previewer: apt-get install evince-previewer 2>/dev/null || which evince-previewer"
+      },
+      "args": []
+    }
+  ]
+}

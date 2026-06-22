@@ -1,0 +1,56 @@
+{
+  "name": "fallocate",
+  "version": "0.1.0",
+  "description": "CLI tool: fallocate",
+  "source": "https://manpages.debian.org/fallocate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fallocate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fallocate",
+    "binary": "fallocate",
+    "check": "which fallocate",
+    "install_steps": [
+      "apt-get install fallocate 2>/dev/null || which fallocate",
+      "Verify: fallocate --version",
+      "supercli plugins install ./plugins/fallocate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fallocate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fallocate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallocate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fallocate: apt-get install fallocate 2>/dev/null || which fallocate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fallocate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fallocate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fallocate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fallocate: apt-get install fallocate 2>/dev/null || which fallocate"
+      },
+      "args": []
+    }
+  ]
+}

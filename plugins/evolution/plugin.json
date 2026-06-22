@@ -1,0 +1,56 @@
+{
+  "name": "evolution",
+  "version": "0.1.0",
+  "description": "CLI tool: evolution",
+  "source": "https://manpages.debian.org/evolution",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "evolution"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "evolution",
+    "binary": "evolution",
+    "check": "which evolution",
+    "install_steps": [
+      "apt-get install evolution 2>/dev/null || which evolution",
+      "Verify: evolution --version",
+      "supercli plugins install ./plugins/evolution --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "evolution",
+      "resource": "self",
+      "action": "version",
+      "description": "Print evolution version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "evolution",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install evolution: apt-get install evolution 2>/dev/null || which evolution"
+      },
+      "args": []
+    },
+    {
+      "namespace": "evolution",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to evolution CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "evolution",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install evolution: apt-get install evolution 2>/dev/null || which evolution"
+      },
+      "args": []
+    }
+  ]
+}

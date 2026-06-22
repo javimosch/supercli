@@ -1,0 +1,56 @@
+{
+  "name": "fastboot",
+  "version": "0.1.0",
+  "description": "CLI tool: fastboot",
+  "source": "https://manpages.debian.org/fastboot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fastboot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fastboot",
+    "binary": "fastboot",
+    "check": "which fastboot",
+    "install_steps": [
+      "apt-get install fastboot 2>/dev/null || which fastboot",
+      "Verify: fastboot --version",
+      "supercli plugins install ./plugins/fastboot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fastboot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fastboot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastboot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fastboot: apt-get install fastboot 2>/dev/null || which fastboot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastboot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fastboot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastboot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastboot: apt-get install fastboot 2>/dev/null || which fastboot"
+      },
+      "args": []
+    }
+  ]
+}

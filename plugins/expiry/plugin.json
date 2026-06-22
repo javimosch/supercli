@@ -1,0 +1,56 @@
+{
+  "name": "expiry",
+  "version": "0.1.0",
+  "description": "CLI tool: expiry",
+  "source": "https://manpages.debian.org/expiry",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "expiry"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "expiry",
+    "binary": "expiry",
+    "check": "which expiry",
+    "install_steps": [
+      "apt-get install expiry 2>/dev/null || which expiry",
+      "Verify: expiry --version",
+      "supercli plugins install ./plugins/expiry --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "expiry",
+      "resource": "self",
+      "action": "version",
+      "description": "Print expiry version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "expiry",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install expiry: apt-get install expiry 2>/dev/null || which expiry"
+      },
+      "args": []
+    },
+    {
+      "namespace": "expiry",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to expiry CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "expiry",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install expiry: apt-get install expiry 2>/dev/null || which expiry"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "eutp",
+  "version": "0.1.0",
+  "description": "CLI tool: eutp",
+  "source": "https://manpages.debian.org/eutp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "eutp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "eutp",
+    "binary": "eutp",
+    "check": "which eutp",
+    "install_steps": [
+      "apt-get install eutp 2>/dev/null || which eutp",
+      "Verify: eutp --version",
+      "supercli plugins install ./plugins/eutp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "eutp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print eutp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eutp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install eutp: apt-get install eutp 2>/dev/null || which eutp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "eutp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to eutp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "eutp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install eutp: apt-get install eutp 2>/dev/null || which eutp"
+      },
+      "args": []
+    }
+  ]
+}

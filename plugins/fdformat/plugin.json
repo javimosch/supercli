@@ -1,0 +1,56 @@
+{
+  "name": "fdformat",
+  "version": "0.1.0",
+  "description": "CLI tool: fdformat",
+  "source": "https://manpages.debian.org/fdformat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fdformat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fdformat",
+    "binary": "fdformat",
+    "check": "which fdformat",
+    "install_steps": [
+      "apt-get install fdformat 2>/dev/null || which fdformat",
+      "Verify: fdformat --version",
+      "supercli plugins install ./plugins/fdformat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fdformat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fdformat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fdformat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fdformat: apt-get install fdformat 2>/dev/null || which fdformat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fdformat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fdformat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fdformat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fdformat: apt-get install fdformat 2>/dev/null || which fdformat"
+      },
+      "args": []
+    }
+  ]
+}
