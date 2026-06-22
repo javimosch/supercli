@@ -1,0 +1,56 @@
+{
+  "name": "hciattach",
+  "version": "0.1.0",
+  "description": "CLI tool: hciattach",
+  "source": "https://manpages.debian.org/hciattach",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hciattach"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hciattach",
+    "binary": "hciattach",
+    "check": "which hciattach",
+    "install_steps": [
+      "apt-get install hciattach 2>/dev/null || which hciattach",
+      "Verify: hciattach --version",
+      "supercli plugins install ./plugins/hciattach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hciattach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hciattach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hciattach",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hciattach: apt-get install hciattach 2>/dev/null || which hciattach"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hciattach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hciattach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hciattach",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hciattach: apt-get install hciattach 2>/dev/null || which hciattach"
+      },
+      "args": []
+    }
+  ]
+}

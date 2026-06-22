@@ -1,0 +1,56 @@
+{
+  "name": "gvfs-ls",
+  "version": "0.1.0",
+  "description": "CLI tool: gvfs-ls",
+  "source": "https://manpages.debian.org/gvfs-ls",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvfs-ls"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvfs-ls",
+    "binary": "gvfs-ls",
+    "check": "which gvfs-ls",
+    "install_steps": [
+      "apt-get install gvfs-ls 2>/dev/null || which gvfs-ls",
+      "Verify: gvfs-ls --version",
+      "supercli plugins install ./plugins/gvfs-ls --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvfs-ls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvfs-ls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-ls",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvfs-ls: apt-get install gvfs-ls 2>/dev/null || which gvfs-ls"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvfs-ls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvfs-ls CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-ls",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvfs-ls: apt-get install gvfs-ls 2>/dev/null || which gvfs-ls"
+      },
+      "args": []
+    }
+  ]
+}

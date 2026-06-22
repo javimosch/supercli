@@ -1,0 +1,56 @@
+{
+  "name": "gvfs-cat",
+  "version": "0.1.0",
+  "description": "CLI tool: gvfs-cat",
+  "source": "https://manpages.debian.org/gvfs-cat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvfs-cat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvfs-cat",
+    "binary": "gvfs-cat",
+    "check": "which gvfs-cat",
+    "install_steps": [
+      "apt-get install gvfs-cat 2>/dev/null || which gvfs-cat",
+      "Verify: gvfs-cat --version",
+      "supercli plugins install ./plugins/gvfs-cat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvfs-cat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvfs-cat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-cat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvfs-cat: apt-get install gvfs-cat 2>/dev/null || which gvfs-cat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvfs-cat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvfs-cat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-cat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvfs-cat: apt-get install gvfs-cat 2>/dev/null || which gvfs-cat"
+      },
+      "args": []
+    }
+  ]
+}

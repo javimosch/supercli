@@ -1,0 +1,56 @@
+{
+  "name": "gvpr",
+  "version": "0.1.0",
+  "description": "CLI tool: gvpr",
+  "source": "https://manpages.debian.org/gvpr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvpr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvpr",
+    "binary": "gvpr",
+    "check": "which gvpr",
+    "install_steps": [
+      "apt-get install gvpr 2>/dev/null || which gvpr",
+      "Verify: gvpr --version",
+      "supercli plugins install ./plugins/gvpr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvpr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvpr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvpr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvpr: apt-get install gvpr 2>/dev/null || which gvpr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvpr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvpr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvpr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvpr: apt-get install gvpr 2>/dev/null || which gvpr"
+      },
+      "args": []
+    }
+  ]
+}

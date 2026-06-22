@@ -1,0 +1,56 @@
+{
+  "name": "gvfs-trash",
+  "version": "0.1.0",
+  "description": "CLI tool: gvfs-trash",
+  "source": "https://manpages.debian.org/gvfs-trash",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvfs-trash"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvfs-trash",
+    "binary": "gvfs-trash",
+    "check": "which gvfs-trash",
+    "install_steps": [
+      "apt-get install gvfs-trash 2>/dev/null || which gvfs-trash",
+      "Verify: gvfs-trash --version",
+      "supercli plugins install ./plugins/gvfs-trash --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvfs-trash",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvfs-trash version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-trash",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvfs-trash: apt-get install gvfs-trash 2>/dev/null || which gvfs-trash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvfs-trash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvfs-trash CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-trash",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvfs-trash: apt-get install gvfs-trash 2>/dev/null || which gvfs-trash"
+      },
+      "args": []
+    }
+  ]
+}

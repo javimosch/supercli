@@ -1,0 +1,56 @@
+{
+  "name": "gunzip",
+  "version": "0.1.0",
+  "description": "CLI tool: gunzip",
+  "source": "https://manpages.debian.org/gunzip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gunzip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gunzip",
+    "binary": "gunzip",
+    "check": "which gunzip",
+    "install_steps": [
+      "apt-get install gunzip 2>/dev/null || which gunzip",
+      "Verify: gunzip --version",
+      "supercli plugins install ./plugins/gunzip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gunzip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gunzip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gunzip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gunzip: apt-get install gunzip 2>/dev/null || which gunzip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gunzip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gunzip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gunzip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gunzip: apt-get install gunzip 2>/dev/null || which gunzip"
+      },
+      "args": []
+    }
+  ]
+}

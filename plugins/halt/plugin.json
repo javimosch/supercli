@@ -1,0 +1,56 @@
+{
+  "name": "halt",
+  "version": "0.1.0",
+  "description": "CLI tool: halt",
+  "source": "https://manpages.debian.org/halt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "halt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "halt",
+    "binary": "halt",
+    "check": "which halt",
+    "install_steps": [
+      "apt-get install halt 2>/dev/null || which halt",
+      "Verify: halt --version",
+      "supercli plugins install ./plugins/halt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "halt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print halt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "halt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install halt: apt-get install halt 2>/dev/null || which halt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "halt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to halt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "halt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install halt: apt-get install halt 2>/dev/null || which halt"
+      },
+      "args": []
+    }
+  ]
+}

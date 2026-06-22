@@ -1,0 +1,56 @@
+{
+  "name": "h2xs",
+  "version": "0.1.0",
+  "description": "CLI tool: h2xs",
+  "source": "https://manpages.debian.org/h2xs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "h2xs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "h2xs",
+    "binary": "h2xs",
+    "check": "which h2xs",
+    "install_steps": [
+      "apt-get install h2xs 2>/dev/null || which h2xs",
+      "Verify: h2xs --version",
+      "supercli plugins install ./plugins/h2xs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "h2xs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print h2xs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "h2xs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install h2xs: apt-get install h2xs 2>/dev/null || which h2xs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "h2xs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to h2xs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "h2xs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install h2xs: apt-get install h2xs 2>/dev/null || which h2xs"
+      },
+      "args": []
+    }
+  ]
+}

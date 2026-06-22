@@ -1,0 +1,56 @@
+{
+  "name": "hostid",
+  "version": "0.1.0",
+  "description": "CLI tool: hostid",
+  "source": "https://manpages.debian.org/hostid",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hostid"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hostid",
+    "binary": "hostid",
+    "check": "which hostid",
+    "install_steps": [
+      "apt-get install hostid 2>/dev/null || which hostid",
+      "Verify: hostid --version",
+      "supercli plugins install ./plugins/hostid --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hostid",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hostid version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostid",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hostid: apt-get install hostid 2>/dev/null || which hostid"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hostid",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hostid CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostid",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hostid: apt-get install hostid 2>/dev/null || which hostid"
+      },
+      "args": []
+    }
+  ]
+}

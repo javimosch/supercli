@@ -1,0 +1,56 @@
+{
+  "name": "hd",
+  "version": "0.1.0",
+  "description": "CLI tool: hd",
+  "source": "https://manpages.debian.org/hd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hd",
+    "binary": "hd",
+    "check": "which hd",
+    "install_steps": [
+      "apt-get install hd 2>/dev/null || which hd",
+      "Verify: hd --version",
+      "supercli plugins install ./plugins/hd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hd: apt-get install hd 2>/dev/null || which hd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hd: apt-get install hd 2>/dev/null || which hd"
+      },
+      "args": []
+    }
+  ]
+}

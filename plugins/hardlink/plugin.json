@@ -1,0 +1,56 @@
+{
+  "name": "hardlink",
+  "version": "0.1.0",
+  "description": "CLI tool: hardlink",
+  "source": "https://manpages.debian.org/hardlink",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hardlink"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hardlink",
+    "binary": "hardlink",
+    "check": "which hardlink",
+    "install_steps": [
+      "apt-get install hardlink 2>/dev/null || which hardlink",
+      "Verify: hardlink --version",
+      "supercli plugins install ./plugins/hardlink --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hardlink",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hardlink version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hardlink",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hardlink: apt-get install hardlink 2>/dev/null || which hardlink"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hardlink",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hardlink CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hardlink",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hardlink: apt-get install hardlink 2>/dev/null || which hardlink"
+      },
+      "args": []
+    }
+  ]
+}

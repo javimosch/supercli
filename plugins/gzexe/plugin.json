@@ -1,0 +1,56 @@
+{
+  "name": "gzexe",
+  "version": "0.1.0",
+  "description": "CLI tool: gzexe",
+  "source": "https://manpages.debian.org/gzexe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gzexe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gzexe",
+    "binary": "gzexe",
+    "check": "which gzexe",
+    "install_steps": [
+      "apt-get install gzexe 2>/dev/null || which gzexe",
+      "Verify: gzexe --version",
+      "supercli plugins install ./plugins/gzexe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gzexe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gzexe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gzexe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gzexe: apt-get install gzexe 2>/dev/null || which gzexe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gzexe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gzexe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gzexe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gzexe: apt-get install gzexe 2>/dev/null || which gzexe"
+      },
+      "args": []
+    }
+  ]
+}

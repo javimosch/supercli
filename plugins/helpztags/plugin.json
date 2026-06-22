@@ -1,0 +1,56 @@
+{
+  "name": "helpztags",
+  "version": "0.1.0",
+  "description": "CLI tool: helpztags",
+  "source": "https://manpages.debian.org/helpztags",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "helpztags"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "helpztags",
+    "binary": "helpztags",
+    "check": "which helpztags",
+    "install_steps": [
+      "apt-get install helpztags 2>/dev/null || which helpztags",
+      "Verify: helpztags --version",
+      "supercli plugins install ./plugins/helpztags --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "helpztags",
+      "resource": "self",
+      "action": "version",
+      "description": "Print helpztags version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "helpztags",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install helpztags: apt-get install helpztags 2>/dev/null || which helpztags"
+      },
+      "args": []
+    },
+    {
+      "namespace": "helpztags",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to helpztags CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "helpztags",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install helpztags: apt-get install helpztags 2>/dev/null || which helpztags"
+      },
+      "args": []
+    }
+  ]
+}

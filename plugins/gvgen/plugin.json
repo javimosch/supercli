@@ -1,0 +1,56 @@
+{
+  "name": "gvgen",
+  "version": "0.1.0",
+  "description": "CLI tool: gvgen",
+  "source": "https://manpages.debian.org/gvgen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvgen",
+    "binary": "gvgen",
+    "check": "which gvgen",
+    "install_steps": [
+      "apt-get install gvgen 2>/dev/null || which gvgen",
+      "Verify: gvgen --version",
+      "supercli plugins install ./plugins/gvgen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvgen: apt-get install gvgen 2>/dev/null || which gvgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvgen: apt-get install gvgen 2>/dev/null || which gvgen"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "hex2hcd",
+  "version": "0.1.0",
+  "description": "CLI tool: hex2hcd",
+  "source": "https://manpages.debian.org/hex2hcd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hex2hcd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hex2hcd",
+    "binary": "hex2hcd",
+    "check": "which hex2hcd",
+    "install_steps": [
+      "apt-get install hex2hcd 2>/dev/null || which hex2hcd",
+      "Verify: hex2hcd --version",
+      "supercli plugins install ./plugins/hex2hcd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hex2hcd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hex2hcd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hex2hcd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hex2hcd: apt-get install hex2hcd 2>/dev/null || which hex2hcd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hex2hcd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hex2hcd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hex2hcd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hex2hcd: apt-get install hex2hcd 2>/dev/null || which hex2hcd"
+      },
+      "args": []
+    }
+  ]
+}

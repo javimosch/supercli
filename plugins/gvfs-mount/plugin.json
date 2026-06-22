@@ -1,0 +1,56 @@
+{
+  "name": "gvfs-mount",
+  "version": "0.1.0",
+  "description": "CLI tool: gvfs-mount",
+  "source": "https://manpages.debian.org/gvfs-mount",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvfs-mount"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvfs-mount",
+    "binary": "gvfs-mount",
+    "check": "which gvfs-mount",
+    "install_steps": [
+      "apt-get install gvfs-mount 2>/dev/null || which gvfs-mount",
+      "Verify: gvfs-mount --version",
+      "supercli plugins install ./plugins/gvfs-mount --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvfs-mount",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvfs-mount version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-mount",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvfs-mount: apt-get install gvfs-mount 2>/dev/null || which gvfs-mount"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvfs-mount",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvfs-mount CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-mount",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvfs-mount: apt-get install gvfs-mount 2>/dev/null || which gvfs-mount"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "hf",
+  "version": "0.1.0",
+  "description": "CLI tool: hf",
+  "source": "https://manpages.debian.org/hf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hf",
+    "binary": "hf",
+    "check": "which hf",
+    "install_steps": [
+      "apt-get install hf 2>/dev/null || which hf",
+      "Verify: hf --version",
+      "supercli plugins install ./plugins/hf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hf: apt-get install hf 2>/dev/null || which hf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hf: apt-get install hf 2>/dev/null || which hf"
+      },
+      "args": []
+    }
+  ]
+}

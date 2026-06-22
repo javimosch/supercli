@@ -1,0 +1,56 @@
+{
+  "name": "gvfs-mkdir",
+  "version": "0.1.0",
+  "description": "CLI tool: gvfs-mkdir",
+  "source": "https://manpages.debian.org/gvfs-mkdir",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvfs-mkdir"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvfs-mkdir",
+    "binary": "gvfs-mkdir",
+    "check": "which gvfs-mkdir",
+    "install_steps": [
+      "apt-get install gvfs-mkdir 2>/dev/null || which gvfs-mkdir",
+      "Verify: gvfs-mkdir --version",
+      "supercli plugins install ./plugins/gvfs-mkdir --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvfs-mkdir",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvfs-mkdir version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-mkdir",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvfs-mkdir: apt-get install gvfs-mkdir 2>/dev/null || which gvfs-mkdir"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvfs-mkdir",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvfs-mkdir CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvfs-mkdir",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvfs-mkdir: apt-get install gvfs-mkdir 2>/dev/null || which gvfs-mkdir"
+      },
+      "args": []
+    }
+  ]
+}

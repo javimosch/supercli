@@ -1,0 +1,56 @@
+{
+  "name": "gvmap",
+  "version": "0.1.0",
+  "description": "CLI tool: gvmap",
+  "source": "https://manpages.debian.org/gvmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvmap",
+    "binary": "gvmap",
+    "check": "which gvmap",
+    "install_steps": [
+      "apt-get install gvmap 2>/dev/null || which gvmap",
+      "Verify: gvmap --version",
+      "supercli plugins install ./plugins/gvmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvmap: apt-get install gvmap 2>/dev/null || which gvmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvmap: apt-get install gvmap 2>/dev/null || which gvmap"
+      },
+      "args": []
+    }
+  ]
+}

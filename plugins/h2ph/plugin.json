@@ -1,0 +1,56 @@
+{
+  "name": "h2ph",
+  "version": "0.1.0",
+  "description": "CLI tool: h2ph",
+  "source": "https://manpages.debian.org/h2ph",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "h2ph"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "h2ph",
+    "binary": "h2ph",
+    "check": "which h2ph",
+    "install_steps": [
+      "apt-get install h2ph 2>/dev/null || which h2ph",
+      "Verify: h2ph --version",
+      "supercli plugins install ./plugins/h2ph --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "h2ph",
+      "resource": "self",
+      "action": "version",
+      "description": "Print h2ph version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "h2ph",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install h2ph: apt-get install h2ph 2>/dev/null || which h2ph"
+      },
+      "args": []
+    },
+    {
+      "namespace": "h2ph",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to h2ph CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "h2ph",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install h2ph: apt-get install h2ph 2>/dev/null || which h2ph"
+      },
+      "args": []
+    }
+  ]
+}

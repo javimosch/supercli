@@ -1,0 +1,56 @@
+{
+  "name": "gvpack",
+  "version": "0.1.0",
+  "description": "CLI tool: gvpack",
+  "source": "https://manpages.debian.org/gvpack",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gvpack"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gvpack",
+    "binary": "gvpack",
+    "check": "which gvpack",
+    "install_steps": [
+      "apt-get install gvpack 2>/dev/null || which gvpack",
+      "Verify: gvpack --version",
+      "supercli plugins install ./plugins/gvpack --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gvpack",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gvpack version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvpack",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gvpack: apt-get install gvpack 2>/dev/null || which gvpack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gvpack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gvpack CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gvpack",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gvpack: apt-get install gvpack 2>/dev/null || which gvpack"
+      },
+      "args": []
+    }
+  ]
+}
