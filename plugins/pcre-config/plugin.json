@@ -1,0 +1,56 @@
+{
+  "name": "pcre-config",
+  "version": "0.1.0",
+  "description": "CLI tool: pcre-config",
+  "source": "https://manpages.debian.org/pcre-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pcre-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pcre-config",
+    "binary": "pcre-config",
+    "check": "which pcre-config",
+    "install_steps": [
+      "apt-get install pcre-config 2>/dev/null || which pcre-config",
+      "Verify: pcre-config --version",
+      "supercli plugins install ./plugins/pcre-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pcre-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pcre-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcre-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pcre-config: apt-get install pcre-config 2>/dev/null || which pcre-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pcre-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pcre-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pcre-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pcre-config: apt-get install pcre-config 2>/dev/null || which pcre-config"
+      },
+      "args": []
+    }
+  ]
+}

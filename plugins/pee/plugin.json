@@ -1,0 +1,56 @@
+{
+  "name": "pee",
+  "version": "0.1.0",
+  "description": "CLI tool: pee",
+  "source": "https://manpages.debian.org/pee",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pee"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pee",
+    "binary": "pee",
+    "check": "which pee",
+    "install_steps": [
+      "apt-get install pee 2>/dev/null || which pee",
+      "Verify: pee --version",
+      "supercli plugins install ./plugins/pee --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pee",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pee version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pee",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pee: apt-get install pee 2>/dev/null || which pee"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pee",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pee CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pee",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pee: apt-get install pee 2>/dev/null || which pee"
+      },
+      "args": []
+    }
+  ]
+}

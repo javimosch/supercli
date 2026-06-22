@@ -1,0 +1,56 @@
+{
+  "name": "pbmtogem",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtogem",
+  "source": "https://manpages.debian.org/pbmtogem",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtogem"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtogem",
+    "binary": "pbmtogem",
+    "check": "which pbmtogem",
+    "install_steps": [
+      "apt-get install pbmtogem 2>/dev/null || which pbmtogem",
+      "Verify: pbmtogem --version",
+      "supercli plugins install ./plugins/pbmtogem --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtogem",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtogem version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtogem",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtogem: apt-get install pbmtogem 2>/dev/null || which pbmtogem"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtogem",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtogem CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtogem",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtogem: apt-get install pbmtogem 2>/dev/null || which pbmtogem"
+      },
+      "args": []
+    }
+  ]
+}

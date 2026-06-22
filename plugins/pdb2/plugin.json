@@ -1,0 +1,56 @@
+{
+  "name": "pdb2",
+  "version": "0.1.0",
+  "description": "CLI tool: pdb2",
+  "source": "https://manpages.debian.org/pdb2",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdb2"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdb2",
+    "binary": "pdb2",
+    "check": "which pdb2",
+    "install_steps": [
+      "apt-get install pdb2 2>/dev/null || which pdb2",
+      "Verify: pdb2 --version",
+      "supercli plugins install ./plugins/pdb2 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdb2",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdb2 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdb2",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdb2: apt-get install pdb2 2>/dev/null || which pdb2"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdb2",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdb2 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdb2",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdb2: apt-get install pdb2 2>/dev/null || which pdb2"
+      },
+      "args": []
+    }
+  ]
+}

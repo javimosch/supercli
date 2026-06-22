@@ -1,0 +1,56 @@
+{
+  "name": "pbmtogo",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtogo",
+  "source": "https://manpages.debian.org/pbmtogo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtogo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtogo",
+    "binary": "pbmtogo",
+    "check": "which pbmtogo",
+    "install_steps": [
+      "apt-get install pbmtogo 2>/dev/null || which pbmtogo",
+      "Verify: pbmtogo --version",
+      "supercli plugins install ./plugins/pbmtogo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtogo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtogo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtogo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtogo: apt-get install pbmtogo 2>/dev/null || which pbmtogo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtogo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtogo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtogo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtogo: apt-get install pbmtogo 2>/dev/null || which pbmtogo"
+      },
+      "args": []
+    }
+  ]
+}

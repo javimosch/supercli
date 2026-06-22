@@ -1,0 +1,56 @@
+{
+  "name": "pdftocairo",
+  "version": "0.1.0",
+  "description": "CLI tool: pdftocairo",
+  "source": "https://manpages.debian.org/pdftocairo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdftocairo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdftocairo",
+    "binary": "pdftocairo",
+    "check": "which pdftocairo",
+    "install_steps": [
+      "apt-get install pdftocairo 2>/dev/null || which pdftocairo",
+      "Verify: pdftocairo --version",
+      "supercli plugins install ./plugins/pdftocairo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdftocairo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdftocairo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdftocairo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdftocairo: apt-get install pdftocairo 2>/dev/null || which pdftocairo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdftocairo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdftocairo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdftocairo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdftocairo: apt-get install pdftocairo 2>/dev/null || which pdftocairo"
+      },
+      "args": []
+    }
+  ]
+}

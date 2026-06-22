@@ -1,0 +1,56 @@
+{
+  "name": "pdfattach",
+  "version": "0.1.0",
+  "description": "CLI tool: pdfattach",
+  "source": "https://manpages.debian.org/pdfattach",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdfattach"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdfattach",
+    "binary": "pdfattach",
+    "check": "which pdfattach",
+    "install_steps": [
+      "apt-get install pdfattach 2>/dev/null || which pdfattach",
+      "Verify: pdfattach --version",
+      "supercli plugins install ./plugins/pdfattach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdfattach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdfattach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfattach",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdfattach: apt-get install pdfattach 2>/dev/null || which pdfattach"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdfattach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdfattach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfattach",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdfattach: apt-get install pdfattach 2>/dev/null || which pdfattach"
+      },
+      "args": []
+    }
+  ]
+}

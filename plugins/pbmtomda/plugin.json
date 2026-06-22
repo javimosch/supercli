@@ -1,0 +1,56 @@
+{
+  "name": "pbmtomda",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtomda",
+  "source": "https://manpages.debian.org/pbmtomda",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtomda"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtomda",
+    "binary": "pbmtomda",
+    "check": "which pbmtomda",
+    "install_steps": [
+      "apt-get install pbmtomda 2>/dev/null || which pbmtomda",
+      "Verify: pbmtomda --version",
+      "supercli plugins install ./plugins/pbmtomda --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtomda",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtomda version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtomda",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtomda: apt-get install pbmtomda 2>/dev/null || which pbmtomda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtomda",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtomda CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtomda",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtomda: apt-get install pbmtomda 2>/dev/null || which pbmtomda"
+      },
+      "args": []
+    }
+  ]
+}

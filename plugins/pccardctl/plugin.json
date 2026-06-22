@@ -1,0 +1,56 @@
+{
+  "name": "pccardctl",
+  "version": "0.1.0",
+  "description": "CLI tool: pccardctl",
+  "source": "https://manpages.debian.org/pccardctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pccardctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pccardctl",
+    "binary": "pccardctl",
+    "check": "which pccardctl",
+    "install_steps": [
+      "apt-get install pccardctl 2>/dev/null || which pccardctl",
+      "Verify: pccardctl --version",
+      "supercli plugins install ./plugins/pccardctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pccardctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pccardctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pccardctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pccardctl: apt-get install pccardctl 2>/dev/null || which pccardctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pccardctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pccardctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pccardctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pccardctl: apt-get install pccardctl 2>/dev/null || which pccardctl"
+      },
+      "args": []
+    }
+  ]
+}

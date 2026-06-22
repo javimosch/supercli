@@ -1,0 +1,56 @@
+{
+  "name": "pbmtozinc",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtozinc",
+  "source": "https://manpages.debian.org/pbmtozinc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtozinc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtozinc",
+    "binary": "pbmtozinc",
+    "check": "which pbmtozinc",
+    "install_steps": [
+      "apt-get install pbmtozinc 2>/dev/null || which pbmtozinc",
+      "Verify: pbmtozinc --version",
+      "supercli plugins install ./plugins/pbmtozinc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtozinc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtozinc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtozinc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtozinc: apt-get install pbmtozinc 2>/dev/null || which pbmtozinc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtozinc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtozinc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtozinc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtozinc: apt-get install pbmtozinc 2>/dev/null || which pbmtozinc"
+      },
+      "args": []
+    }
+  ]
+}

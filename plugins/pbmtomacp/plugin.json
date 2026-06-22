@@ -1,0 +1,56 @@
+{
+  "name": "pbmtomacp",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtomacp",
+  "source": "https://manpages.debian.org/pbmtomacp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtomacp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtomacp",
+    "binary": "pbmtomacp",
+    "check": "which pbmtomacp",
+    "install_steps": [
+      "apt-get install pbmtomacp 2>/dev/null || which pbmtomacp",
+      "Verify: pbmtomacp --version",
+      "supercli plugins install ./plugins/pbmtomacp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtomacp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtomacp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtomacp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtomacp: apt-get install pbmtomacp 2>/dev/null || which pbmtomacp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtomacp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtomacp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtomacp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtomacp: apt-get install pbmtomacp 2>/dev/null || which pbmtomacp"
+      },
+      "args": []
+    }
+  ]
+}

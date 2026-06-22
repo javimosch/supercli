@@ -1,0 +1,56 @@
+{
+  "name": "pdf2dsc",
+  "version": "0.1.0",
+  "description": "CLI tool: pdf2dsc",
+  "source": "https://manpages.debian.org/pdf2dsc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdf2dsc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdf2dsc",
+    "binary": "pdf2dsc",
+    "check": "which pdf2dsc",
+    "install_steps": [
+      "apt-get install pdf2dsc 2>/dev/null || which pdf2dsc",
+      "Verify: pdf2dsc --version",
+      "supercli plugins install ./plugins/pdf2dsc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdf2dsc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdf2dsc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdf2dsc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdf2dsc: apt-get install pdf2dsc 2>/dev/null || which pdf2dsc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdf2dsc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdf2dsc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdf2dsc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdf2dsc: apt-get install pdf2dsc 2>/dev/null || which pdf2dsc"
+      },
+      "args": []
+    }
+  ]
+}

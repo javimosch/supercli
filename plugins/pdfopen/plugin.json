@@ -1,0 +1,56 @@
+{
+  "name": "pdfopen",
+  "version": "0.1.0",
+  "description": "CLI tool: pdfopen",
+  "source": "https://manpages.debian.org/pdfopen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdfopen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdfopen",
+    "binary": "pdfopen",
+    "check": "which pdfopen",
+    "install_steps": [
+      "apt-get install pdfopen 2>/dev/null || which pdfopen",
+      "Verify: pdfopen --version",
+      "supercli plugins install ./plugins/pdfopen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdfopen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdfopen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfopen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdfopen: apt-get install pdfopen 2>/dev/null || which pdfopen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdfopen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdfopen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfopen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdfopen: apt-get install pdfopen 2>/dev/null || which pdfopen"
+      },
+      "args": []
+    }
+  ]
+}

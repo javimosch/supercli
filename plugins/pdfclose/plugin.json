@@ -1,0 +1,56 @@
+{
+  "name": "pdfclose",
+  "version": "0.1.0",
+  "description": "CLI tool: pdfclose",
+  "source": "https://manpages.debian.org/pdfclose",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdfclose"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdfclose",
+    "binary": "pdfclose",
+    "check": "which pdfclose",
+    "install_steps": [
+      "apt-get install pdfclose 2>/dev/null || which pdfclose",
+      "Verify: pdfclose --version",
+      "supercli plugins install ./plugins/pdfclose --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdfclose",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdfclose version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfclose",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdfclose: apt-get install pdfclose 2>/dev/null || which pdfclose"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdfclose",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdfclose CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfclose",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdfclose: apt-get install pdfclose 2>/dev/null || which pdfclose"
+      },
+      "args": []
+    }
+  ]
+}

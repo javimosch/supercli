@@ -1,0 +1,56 @@
+{
+  "name": "pdfroff",
+  "version": "0.1.0",
+  "description": "CLI tool: pdfroff",
+  "source": "https://manpages.debian.org/pdfroff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdfroff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdfroff",
+    "binary": "pdfroff",
+    "check": "which pdfroff",
+    "install_steps": [
+      "apt-get install pdfroff 2>/dev/null || which pdfroff",
+      "Verify: pdfroff --version",
+      "supercli plugins install ./plugins/pdfroff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdfroff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdfroff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfroff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdfroff: apt-get install pdfroff 2>/dev/null || which pdfroff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdfroff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdfroff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfroff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdfroff: apt-get install pdfroff 2>/dev/null || which pdfroff"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pdfmom",
+  "version": "0.1.0",
+  "description": "CLI tool: pdfmom",
+  "source": "https://manpages.debian.org/pdfmom",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdfmom"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdfmom",
+    "binary": "pdfmom",
+    "check": "which pdfmom",
+    "install_steps": [
+      "apt-get install pdfmom 2>/dev/null || which pdfmom",
+      "Verify: pdfmom --version",
+      "supercli plugins install ./plugins/pdfmom --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdfmom",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdfmom version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfmom",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdfmom: apt-get install pdfmom 2>/dev/null || which pdfmom"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdfmom",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdfmom CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfmom",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdfmom: apt-get install pdfmom 2>/dev/null || which pdfmom"
+      },
+      "args": []
+    }
+  ]
+}

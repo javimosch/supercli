@@ -1,0 +1,56 @@
+{
+  "name": "pbmupc",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmupc",
+  "source": "https://manpages.debian.org/pbmupc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmupc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmupc",
+    "binary": "pbmupc",
+    "check": "which pbmupc",
+    "install_steps": [
+      "apt-get install pbmupc 2>/dev/null || which pbmupc",
+      "Verify: pbmupc --version",
+      "supercli plugins install ./plugins/pbmupc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmupc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmupc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmupc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmupc: apt-get install pbmupc 2>/dev/null || which pbmupc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmupc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmupc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmupc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmupc: apt-get install pbmupc 2>/dev/null || which pbmupc"
+      },
+      "args": []
+    }
+  ]
+}

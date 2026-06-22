@@ -1,0 +1,56 @@
+{
+  "name": "pbmtomgr",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtomgr",
+  "source": "https://manpages.debian.org/pbmtomgr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtomgr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtomgr",
+    "binary": "pbmtomgr",
+    "check": "which pbmtomgr",
+    "install_steps": [
+      "apt-get install pbmtomgr 2>/dev/null || which pbmtomgr",
+      "Verify: pbmtomgr --version",
+      "supercli plugins install ./plugins/pbmtomgr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtomgr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtomgr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtomgr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtomgr: apt-get install pbmtomgr 2>/dev/null || which pbmtomgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtomgr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtomgr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtomgr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtomgr: apt-get install pbmtomgr 2>/dev/null || which pbmtomgr"
+      },
+      "args": []
+    }
+  ]
+}

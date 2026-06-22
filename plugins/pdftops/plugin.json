@@ -1,0 +1,56 @@
+{
+  "name": "pdftops",
+  "version": "0.1.0",
+  "description": "CLI tool: pdftops",
+  "source": "https://manpages.debian.org/pdftops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdftops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdftops",
+    "binary": "pdftops",
+    "check": "which pdftops",
+    "install_steps": [
+      "apt-get install pdftops 2>/dev/null || which pdftops",
+      "Verify: pdftops --version",
+      "supercli plugins install ./plugins/pdftops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdftops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdftops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdftops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdftops: apt-get install pdftops 2>/dev/null || which pdftops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdftops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdftops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdftops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdftops: apt-get install pdftops 2>/dev/null || which pdftops"
+      },
+      "args": []
+    }
+  ]
+}

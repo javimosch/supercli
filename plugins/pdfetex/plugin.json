@@ -1,0 +1,56 @@
+{
+  "name": "pdfetex",
+  "version": "0.1.0",
+  "description": "CLI tool: pdfetex",
+  "source": "https://manpages.debian.org/pdfetex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdfetex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdfetex",
+    "binary": "pdfetex",
+    "check": "which pdfetex",
+    "install_steps": [
+      "apt-get install pdfetex 2>/dev/null || which pdfetex",
+      "Verify: pdfetex --version",
+      "supercli plugins install ./plugins/pdfetex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdfetex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdfetex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfetex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdfetex: apt-get install pdfetex 2>/dev/null || which pdfetex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdfetex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdfetex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdfetex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdfetex: apt-get install pdfetex 2>/dev/null || which pdfetex"
+      },
+      "args": []
+    }
+  ]
+}

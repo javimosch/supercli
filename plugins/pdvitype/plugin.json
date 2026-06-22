@@ -1,0 +1,56 @@
+{
+  "name": "pdvitype",
+  "version": "0.1.0",
+  "description": "CLI tool: pdvitype",
+  "source": "https://manpages.debian.org/pdvitype",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdvitype"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdvitype",
+    "binary": "pdvitype",
+    "check": "which pdvitype",
+    "install_steps": [
+      "apt-get install pdvitype 2>/dev/null || which pdvitype",
+      "Verify: pdvitype --version",
+      "supercli plugins install ./plugins/pdvitype --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdvitype",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdvitype version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdvitype",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdvitype: apt-get install pdvitype 2>/dev/null || which pdvitype"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdvitype",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdvitype CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdvitype",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdvitype: apt-get install pdvitype 2>/dev/null || which pdvitype"
+      },
+      "args": []
+    }
+  ]
+}

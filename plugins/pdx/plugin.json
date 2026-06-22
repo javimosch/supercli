@@ -1,0 +1,56 @@
+{
+  "name": "pdx",
+  "version": "0.1.0",
+  "description": "CLI tool: pdx",
+  "source": "https://manpages.debian.org/pdx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pdx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pdx",
+    "binary": "pdx",
+    "check": "which pdx",
+    "install_steps": [
+      "apt-get install pdx 2>/dev/null || which pdx",
+      "Verify: pdx --version",
+      "supercli plugins install ./plugins/pdx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pdx: apt-get install pdx 2>/dev/null || which pdx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdx: apt-get install pdx 2>/dev/null || which pdx"
+      },
+      "args": []
+    }
+  ]
+}
