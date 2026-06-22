@@ -1,0 +1,56 @@
+{
+  "name": "pinecone",
+  "version": "0.1.0",
+  "description": "CLI tool: pinecone",
+  "source": "https://manpages.debian.org/pinecone",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pinecone"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pinecone",
+    "binary": "pinecone",
+    "check": "which pinecone",
+    "install_steps": [
+      "apt-get install pinecone 2>/dev/null || which pinecone",
+      "Verify: pinecone --version",
+      "supercli plugins install ./plugins/pinecone --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pinecone",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pinecone version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinecone",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pinecone: apt-get install pinecone 2>/dev/null || which pinecone"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pinecone",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pinecone CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinecone",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pinecone: apt-get install pinecone 2>/dev/null || which pinecone"
+      },
+      "args": []
+    }
+  ]
+}

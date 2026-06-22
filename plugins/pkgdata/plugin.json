@@ -1,0 +1,56 @@
+{
+  "name": "pkgdata",
+  "version": "0.1.0",
+  "description": "CLI tool: pkgdata",
+  "source": "https://manpages.debian.org/pkgdata",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkgdata"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkgdata",
+    "binary": "pkgdata",
+    "check": "which pkgdata",
+    "install_steps": [
+      "apt-get install pkgdata 2>/dev/null || which pkgdata",
+      "Verify: pkgdata --version",
+      "supercli plugins install ./plugins/pkgdata --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkgdata",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkgdata version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkgdata",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkgdata: apt-get install pkgdata 2>/dev/null || which pkgdata"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkgdata",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkgdata CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkgdata",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkgdata: apt-get install pkgdata 2>/dev/null || which pkgdata"
+      },
+      "args": []
+    }
+  ]
+}

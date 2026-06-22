@@ -1,0 +1,56 @@
+{
+  "name": "pipewire",
+  "version": "0.1.0",
+  "description": "CLI tool: pipewire",
+  "source": "https://manpages.debian.org/pipewire",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pipewire"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pipewire",
+    "binary": "pipewire",
+    "check": "which pipewire",
+    "install_steps": [
+      "apt-get install pipewire 2>/dev/null || which pipewire",
+      "Verify: pipewire --version",
+      "supercli plugins install ./plugins/pipewire --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pipewire",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pipewire version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipewire",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pipewire: apt-get install pipewire 2>/dev/null || which pipewire"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipewire",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pipewire CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipewire",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pipewire: apt-get install pipewire 2>/dev/null || which pipewire"
+      },
+      "args": []
+    }
+  ]
+}

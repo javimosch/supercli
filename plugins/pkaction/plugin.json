@@ -1,0 +1,56 @@
+{
+  "name": "pkaction",
+  "version": "0.1.0",
+  "description": "CLI tool: pkaction",
+  "source": "https://manpages.debian.org/pkaction",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkaction"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkaction",
+    "binary": "pkaction",
+    "check": "which pkaction",
+    "install_steps": [
+      "apt-get install pkaction 2>/dev/null || which pkaction",
+      "Verify: pkaction --version",
+      "supercli plugins install ./plugins/pkaction --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkaction",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkaction version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkaction",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkaction: apt-get install pkaction 2>/dev/null || which pkaction"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkaction",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkaction CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkaction",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkaction: apt-get install pkaction 2>/dev/null || which pkaction"
+      },
+      "args": []
+    }
+  ]
+}

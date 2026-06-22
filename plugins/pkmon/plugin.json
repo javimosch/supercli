@@ -1,0 +1,56 @@
+{
+  "name": "pkmon",
+  "version": "0.1.0",
+  "description": "CLI tool: pkmon",
+  "source": "https://manpages.debian.org/pkmon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkmon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkmon",
+    "binary": "pkmon",
+    "check": "which pkmon",
+    "install_steps": [
+      "apt-get install pkmon 2>/dev/null || which pkmon",
+      "Verify: pkmon --version",
+      "supercli plugins install ./plugins/pkmon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkmon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkmon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkmon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkmon: apt-get install pkmon 2>/dev/null || which pkmon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkmon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkmon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkmon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkmon: apt-get install pkmon 2>/dev/null || which pkmon"
+      },
+      "args": []
+    }
+  ]
+}

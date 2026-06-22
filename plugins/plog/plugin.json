@@ -1,0 +1,56 @@
+{
+  "name": "plog",
+  "version": "0.1.0",
+  "description": "CLI tool: plog",
+  "source": "https://manpages.debian.org/plog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "plog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "plog",
+    "binary": "plog",
+    "check": "which plog",
+    "install_steps": [
+      "apt-get install plog 2>/dev/null || which plog",
+      "Verify: plog --version",
+      "supercli plugins install ./plugins/plog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "plog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print plog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "plog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install plog: apt-get install plog 2>/dev/null || which plog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "plog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to plog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "plog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install plog: apt-get install plog 2>/dev/null || which plog"
+      },
+      "args": []
+    }
+  ]
+}

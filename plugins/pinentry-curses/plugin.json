@@ -1,0 +1,56 @@
+{
+  "name": "pinentry-curses",
+  "version": "0.1.0",
+  "description": "CLI tool: pinentry-curses",
+  "source": "https://manpages.debian.org/pinentry-curses",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pinentry-curses"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pinentry-curses",
+    "binary": "pinentry-curses",
+    "check": "which pinentry-curses",
+    "install_steps": [
+      "apt-get install pinentry-curses 2>/dev/null || which pinentry-curses",
+      "Verify: pinentry-curses --version",
+      "supercli plugins install ./plugins/pinentry-curses --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pinentry-curses",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pinentry-curses version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinentry-curses",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pinentry-curses: apt-get install pinentry-curses 2>/dev/null || which pinentry-curses"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pinentry-curses",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pinentry-curses CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinentry-curses",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pinentry-curses: apt-get install pinentry-curses 2>/dev/null || which pinentry-curses"
+      },
+      "args": []
+    }
+  ]
+}

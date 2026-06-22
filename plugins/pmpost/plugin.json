@@ -1,0 +1,56 @@
+{
+  "name": "pmpost",
+  "version": "0.1.0",
+  "description": "CLI tool: pmpost",
+  "source": "https://manpages.debian.org/pmpost",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pmpost"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pmpost",
+    "binary": "pmpost",
+    "check": "which pmpost",
+    "install_steps": [
+      "apt-get install pmpost 2>/dev/null || which pmpost",
+      "Verify: pmpost --version",
+      "supercli plugins install ./plugins/pmpost --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pmpost",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pmpost version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmpost",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pmpost: apt-get install pmpost 2>/dev/null || which pmpost"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmpost",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pmpost CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmpost",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmpost: apt-get install pmpost 2>/dev/null || which pmpost"
+      },
+      "args": []
+    }
+  ]
+}

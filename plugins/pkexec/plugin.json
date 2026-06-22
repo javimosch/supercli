@@ -1,0 +1,56 @@
+{
+  "name": "pkexec",
+  "version": "0.1.0",
+  "description": "CLI tool: pkexec",
+  "source": "https://manpages.debian.org/pkexec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkexec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkexec",
+    "binary": "pkexec",
+    "check": "which pkexec",
+    "install_steps": [
+      "apt-get install pkexec 2>/dev/null || which pkexec",
+      "Verify: pkexec --version",
+      "supercli plugins install ./plugins/pkexec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkexec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkexec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkexec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkexec: apt-get install pkexec 2>/dev/null || which pkexec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkexec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkexec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkexec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkexec: apt-get install pkexec 2>/dev/null || which pkexec"
+      },
+      "args": []
+    }
+  ]
+}

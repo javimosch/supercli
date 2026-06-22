@@ -1,0 +1,56 @@
+{
+  "name": "pidwait",
+  "version": "0.1.0",
+  "description": "CLI tool: pidwait",
+  "source": "https://manpages.debian.org/pidwait",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pidwait"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pidwait",
+    "binary": "pidwait",
+    "check": "which pidwait",
+    "install_steps": [
+      "apt-get install pidwait 2>/dev/null || which pidwait",
+      "Verify: pidwait --version",
+      "supercli plugins install ./plugins/pidwait --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pidwait",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pidwait version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pidwait",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pidwait: apt-get install pidwait 2>/dev/null || which pidwait"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pidwait",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pidwait CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pidwait",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pidwait: apt-get install pidwait 2>/dev/null || which pidwait"
+      },
+      "args": []
+    }
+  ]
+}

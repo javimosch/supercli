@@ -1,0 +1,56 @@
+{
+  "name": "pkcon",
+  "version": "0.1.0",
+  "description": "CLI tool: pkcon",
+  "source": "https://manpages.debian.org/pkcon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkcon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkcon",
+    "binary": "pkcon",
+    "check": "which pkcon",
+    "install_steps": [
+      "apt-get install pkcon 2>/dev/null || which pkcon",
+      "Verify: pkcon --version",
+      "supercli plugins install ./plugins/pkcon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkcon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkcon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkcon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkcon: apt-get install pkcon 2>/dev/null || which pkcon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkcon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkcon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkcon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkcon: apt-get install pkcon 2>/dev/null || which pkcon"
+      },
+      "args": []
+    }
+  ]
+}

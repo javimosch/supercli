@@ -1,0 +1,56 @@
+{
+  "name": "pixeltool",
+  "version": "0.1.0",
+  "description": "CLI tool: pixeltool",
+  "source": "https://manpages.debian.org/pixeltool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pixeltool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pixeltool",
+    "binary": "pixeltool",
+    "check": "which pixeltool",
+    "install_steps": [
+      "apt-get install pixeltool 2>/dev/null || which pixeltool",
+      "Verify: pixeltool --version",
+      "supercli plugins install ./plugins/pixeltool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pixeltool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pixeltool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pixeltool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pixeltool: apt-get install pixeltool 2>/dev/null || which pixeltool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pixeltool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pixeltool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pixeltool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pixeltool: apt-get install pixeltool 2>/dev/null || which pixeltool"
+      },
+      "args": []
+    }
+  ]
+}

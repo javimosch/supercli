@@ -1,0 +1,56 @@
+{
+  "name": "pnmalias",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmalias",
+  "source": "https://manpages.debian.org/pnmalias",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmalias"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmalias",
+    "binary": "pnmalias",
+    "check": "which pnmalias",
+    "install_steps": [
+      "apt-get install pnmalias 2>/dev/null || which pnmalias",
+      "Verify: pnmalias --version",
+      "supercli plugins install ./plugins/pnmalias --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmalias",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmalias version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmalias",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmalias: apt-get install pnmalias 2>/dev/null || which pnmalias"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmalias",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmalias CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmalias",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmalias: apt-get install pnmalias 2>/dev/null || which pnmalias"
+      },
+      "args": []
+    }
+  ]
+}

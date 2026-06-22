@@ -1,0 +1,56 @@
+{
+  "name": "pkg-config",
+  "version": "0.1.0",
+  "description": "CLI tool: pkg-config",
+  "source": "https://manpages.debian.org/pkg-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkg-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkg-config",
+    "binary": "pkg-config",
+    "check": "which pkg-config",
+    "install_steps": [
+      "apt-get install pkg-config 2>/dev/null || which pkg-config",
+      "Verify: pkg-config --version",
+      "supercli plugins install ./plugins/pkg-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkg-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkg-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkg-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkg-config: apt-get install pkg-config 2>/dev/null || which pkg-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkg-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkg-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkg-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkg-config: apt-get install pkg-config 2>/dev/null || which pkg-config"
+      },
+      "args": []
+    }
+  ]
+}

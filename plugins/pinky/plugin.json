@@ -1,0 +1,56 @@
+{
+  "name": "pinky",
+  "version": "0.1.0",
+  "description": "CLI tool: pinky",
+  "source": "https://manpages.debian.org/pinky",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pinky"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pinky",
+    "binary": "pinky",
+    "check": "which pinky",
+    "install_steps": [
+      "apt-get install pinky 2>/dev/null || which pinky",
+      "Verify: pinky --version",
+      "supercli plugins install ./plugins/pinky --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pinky",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pinky version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinky",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pinky: apt-get install pinky 2>/dev/null || which pinky"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pinky",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pinky CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pinky",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pinky: apt-get install pinky 2>/dev/null || which pinky"
+      },
+      "args": []
+    }
+  ]
+}

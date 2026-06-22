@@ -1,0 +1,56 @@
+{
+  "name": "pkttyagent",
+  "version": "0.1.0",
+  "description": "CLI tool: pkttyagent",
+  "source": "https://manpages.debian.org/pkttyagent",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkttyagent"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkttyagent",
+    "binary": "pkttyagent",
+    "check": "which pkttyagent",
+    "install_steps": [
+      "apt-get install pkttyagent 2>/dev/null || which pkttyagent",
+      "Verify: pkttyagent --version",
+      "supercli plugins install ./plugins/pkttyagent --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkttyagent",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkttyagent version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkttyagent",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkttyagent: apt-get install pkttyagent 2>/dev/null || which pkttyagent"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkttyagent",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkttyagent CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkttyagent",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkttyagent: apt-get install pkttyagent 2>/dev/null || which pkttyagent"
+      },
+      "args": []
+    }
+  ]
+}

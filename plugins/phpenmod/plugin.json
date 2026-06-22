@@ -1,0 +1,56 @@
+{
+  "name": "phpenmod",
+  "version": "0.1.0",
+  "description": "CLI tool: phpenmod",
+  "source": "https://manpages.debian.org/phpenmod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "phpenmod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "phpenmod",
+    "binary": "phpenmod",
+    "check": "which phpenmod",
+    "install_steps": [
+      "apt-get install phpenmod 2>/dev/null || which phpenmod",
+      "Verify: phpenmod --version",
+      "supercli plugins install ./plugins/phpenmod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "phpenmod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print phpenmod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "phpenmod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install phpenmod: apt-get install phpenmod 2>/dev/null || which phpenmod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "phpenmod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to phpenmod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "phpenmod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install phpenmod: apt-get install phpenmod 2>/dev/null || which phpenmod"
+      },
+      "args": []
+    }
+  ]
+}

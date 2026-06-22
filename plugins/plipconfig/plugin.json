@@ -1,0 +1,56 @@
+{
+  "name": "plipconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: plipconfig",
+  "source": "https://manpages.debian.org/plipconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "plipconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "plipconfig",
+    "binary": "plipconfig",
+    "check": "which plipconfig",
+    "install_steps": [
+      "apt-get install plipconfig 2>/dev/null || which plipconfig",
+      "Verify: plipconfig --version",
+      "supercli plugins install ./plugins/plipconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "plipconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print plipconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "plipconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install plipconfig: apt-get install plipconfig 2>/dev/null || which plipconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "plipconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to plipconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "plipconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install plipconfig: apt-get install plipconfig 2>/dev/null || which plipconfig"
+      },
+      "args": []
+    }
+  ]
+}

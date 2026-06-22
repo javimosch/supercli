@@ -1,0 +1,56 @@
+{
+  "name": "pktogf",
+  "version": "0.1.0",
+  "description": "CLI tool: pktogf",
+  "source": "https://manpages.debian.org/pktogf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pktogf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pktogf",
+    "binary": "pktogf",
+    "check": "which pktogf",
+    "install_steps": [
+      "apt-get install pktogf 2>/dev/null || which pktogf",
+      "Verify: pktogf --version",
+      "supercli plugins install ./plugins/pktogf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pktogf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pktogf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pktogf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pktogf: apt-get install pktogf 2>/dev/null || which pktogf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pktogf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pktogf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pktogf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pktogf: apt-get install pktogf 2>/dev/null || which pktogf"
+      },
+      "args": []
+    }
+  ]
+}

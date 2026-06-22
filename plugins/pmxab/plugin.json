@@ -1,0 +1,56 @@
+{
+  "name": "pmxab",
+  "version": "0.1.0",
+  "description": "CLI tool: pmxab",
+  "source": "https://manpages.debian.org/pmxab",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pmxab"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pmxab",
+    "binary": "pmxab",
+    "check": "which pmxab",
+    "install_steps": [
+      "apt-get install pmxab 2>/dev/null || which pmxab",
+      "Verify: pmxab --version",
+      "supercli plugins install ./plugins/pmxab --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pmxab",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pmxab version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmxab",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pmxab: apt-get install pmxab 2>/dev/null || which pmxab"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmxab",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pmxab CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmxab",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmxab: apt-get install pmxab 2>/dev/null || which pmxab"
+      },
+      "args": []
+    }
+  ]
+}

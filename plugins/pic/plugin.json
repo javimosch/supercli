@@ -1,0 +1,56 @@
+{
+  "name": "pic",
+  "version": "0.1.0",
+  "description": "CLI tool: pic",
+  "source": "https://manpages.debian.org/pic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pic",
+    "binary": "pic",
+    "check": "which pic",
+    "install_steps": [
+      "apt-get install pic 2>/dev/null || which pic",
+      "Verify: pic --version",
+      "supercli plugins install ./plugins/pic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pic: apt-get install pic 2>/dev/null || which pic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pic: apt-get install pic 2>/dev/null || which pic"
+      },
+      "args": []
+    }
+  ]
+}

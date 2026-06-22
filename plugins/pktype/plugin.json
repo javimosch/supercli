@@ -1,0 +1,56 @@
+{
+  "name": "pktype",
+  "version": "0.1.0",
+  "description": "CLI tool: pktype",
+  "source": "https://manpages.debian.org/pktype",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pktype"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pktype",
+    "binary": "pktype",
+    "check": "which pktype",
+    "install_steps": [
+      "apt-get install pktype 2>/dev/null || which pktype",
+      "Verify: pktype --version",
+      "supercli plugins install ./plugins/pktype --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pktype",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pktype version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pktype",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pktype: apt-get install pktype 2>/dev/null || which pktype"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pktype",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pktype CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pktype",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pktype: apt-get install pktype 2>/dev/null || which pktype"
+      },
+      "args": []
+    }
+  ]
+}

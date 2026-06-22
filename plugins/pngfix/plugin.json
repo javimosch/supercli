@@ -1,0 +1,56 @@
+{
+  "name": "pngfix",
+  "version": "0.1.0",
+  "description": "CLI tool: pngfix",
+  "source": "https://manpages.debian.org/pngfix",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pngfix"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pngfix",
+    "binary": "pngfix",
+    "check": "which pngfix",
+    "install_steps": [
+      "apt-get install pngfix 2>/dev/null || which pngfix",
+      "Verify: pngfix --version",
+      "supercli plugins install ./plugins/pngfix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pngfix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pngfix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pngfix",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pngfix: apt-get install pngfix 2>/dev/null || which pngfix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pngfix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pngfix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pngfix",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pngfix: apt-get install pngfix 2>/dev/null || which pngfix"
+      },
+      "args": []
+    }
+  ]
+}

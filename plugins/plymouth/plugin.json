@@ -1,0 +1,56 @@
+{
+  "name": "plymouth",
+  "version": "0.1.0",
+  "description": "CLI tool: plymouth",
+  "source": "https://manpages.debian.org/plymouth",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "plymouth"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "plymouth",
+    "binary": "plymouth",
+    "check": "which plymouth",
+    "install_steps": [
+      "apt-get install plymouth 2>/dev/null || which plymouth",
+      "Verify: plymouth --version",
+      "supercli plugins install ./plugins/plymouth --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "plymouth",
+      "resource": "self",
+      "action": "version",
+      "description": "Print plymouth version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "plymouth",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install plymouth: apt-get install plymouth 2>/dev/null || which plymouth"
+      },
+      "args": []
+    },
+    {
+      "namespace": "plymouth",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to plymouth CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "plymouth",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install plymouth: apt-get install plymouth 2>/dev/null || which plymouth"
+      },
+      "args": []
+    }
+  ]
+}

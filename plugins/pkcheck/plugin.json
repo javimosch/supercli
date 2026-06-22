@@ -1,0 +1,56 @@
+{
+  "name": "pkcheck",
+  "version": "0.1.0",
+  "description": "CLI tool: pkcheck",
+  "source": "https://manpages.debian.org/pkcheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pkcheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pkcheck",
+    "binary": "pkcheck",
+    "check": "which pkcheck",
+    "install_steps": [
+      "apt-get install pkcheck 2>/dev/null || which pkcheck",
+      "Verify: pkcheck --version",
+      "supercli plugins install ./plugins/pkcheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pkcheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pkcheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkcheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pkcheck: apt-get install pkcheck 2>/dev/null || which pkcheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pkcheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pkcheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pkcheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pkcheck: apt-get install pkcheck 2>/dev/null || which pkcheck"
+      },
+      "args": []
+    }
+  ]
+}

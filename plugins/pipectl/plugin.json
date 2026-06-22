@@ -1,0 +1,108 @@
+{
+  "name": "pipectl",
+  "version": "0.1.0",
+  "description": "CLI for running YAML-defined data pipelines with JSON, JSONL, and CSV support",
+  "source": "https://github.com/pipectl/pipectl",
+  "checks": [
+    { "type": "binary", "name": "pipectl" }
+  ],
+  "install_guidance": {
+    "plugin": "pipectl",
+    "binary": "pipectl",
+    "check": "which pipectl",
+    "install_steps": [
+      "go install github.com/pipectl/pipectl/cmd/pipectl@latest",
+      "Verify: pipectl --version",
+      "supercli plugins install ./plugins/pipectl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pipectl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pipectl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipectl",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pipectl: go install github.com/pipectl/pipectl/cmd/pipectl@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pipectl",
+      "resource": "pipeline",
+      "action": "run",
+      "description": "Run a YAML-defined data pipeline",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipectl",
+        "baseArgs": ["run"],
+        "positionalArgs": ["pipeline.yaml"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pipectl: go install github.com/pipectl/pipectl/cmd/pipectl@latest"
+      },
+      "args": [
+        { "name": "pipeline", "type": "string", "required": true, "description": "Path to pipeline YAML file", "positional": true },
+        { "name": "input", "type": "string", "required": false, "description": "Read input from file (alternative to stdin)" },
+        { "name": "output", "type": "string", "required": false, "description": "Write output to file instead of stdout" },
+        { "name": "quiet", "type": "boolean", "required": false, "description": "Suppress all diagnostic output" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Validate pipeline and print plan without executing" },
+        { "name": "timing", "type": "boolean", "required": false, "description": "Print per-step timing table to stderr" },
+        { "name": "var", "type": "string", "required": false, "description": "Substitute ${VAR} tokens in pipeline YAML (repeatable)" }
+      ]
+    },
+    {
+      "namespace": "pipectl",
+      "resource": "pipeline",
+      "action": "validate",
+      "description": "Validate a pipeline YAML file without executing it",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipectl",
+        "baseArgs": ["validate"],
+        "positionalArgs": ["pipeline.yaml"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pipectl: go install github.com/pipectl/pipectl/cmd/pipectl@latest"
+      },
+      "args": [
+        { "name": "pipeline", "type": "string", "required": true, "description": "Path to pipeline YAML file", "positional": true }
+      ]
+    },
+    {
+      "namespace": "pipectl",
+      "resource": "docs",
+      "action": "show",
+      "description": "Show documentation for built-in pipeline steps",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipectl",
+        "baseArgs": ["docs"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install pipectl: go install github.com/pipectl/pipectl/cmd/pipectl@latest"
+      },
+      "args": [
+        { "name": "step", "type": "string", "required": false, "description": "Specific step name to document", "positional": true }
+      ]
+    },
+    {
+      "namespace": "pipectl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pipectl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pipectl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install pipectl: go install github.com/pipectl/pipectl/cmd/pipectl@latest"
+      },
+      "args": []
+    }
+  ]
+}

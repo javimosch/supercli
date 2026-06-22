@@ -1,0 +1,56 @@
+{
+  "name": "piconv",
+  "version": "0.1.0",
+  "description": "CLI tool: piconv",
+  "source": "https://manpages.debian.org/piconv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "piconv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "piconv",
+    "binary": "piconv",
+    "check": "which piconv",
+    "install_steps": [
+      "apt-get install piconv 2>/dev/null || which piconv",
+      "Verify: piconv --version",
+      "supercli plugins install ./plugins/piconv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "piconv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print piconv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "piconv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install piconv: apt-get install piconv 2>/dev/null || which piconv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "piconv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to piconv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "piconv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install piconv: apt-get install piconv 2>/dev/null || which piconv"
+      },
+      "args": []
+    }
+  ]
+}
