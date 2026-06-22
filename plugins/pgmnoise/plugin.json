@@ -1,0 +1,56 @@
+{
+  "name": "pgmnoise",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmnoise",
+  "source": "https://manpages.debian.org/pgmnoise",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmnoise"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmnoise",
+    "binary": "pgmnoise",
+    "check": "which pgmnoise",
+    "install_steps": [
+      "apt-get install pgmnoise 2>/dev/null || which pgmnoise",
+      "Verify: pgmnoise --version",
+      "supercli plugins install ./plugins/pgmnoise --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmnoise",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmnoise version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmnoise",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmnoise: apt-get install pgmnoise 2>/dev/null || which pgmnoise"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmnoise",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmnoise CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmnoise",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmnoise: apt-get install pgmnoise 2>/dev/null || which pgmnoise"
+      },
+      "args": []
+    }
+  ]
+}

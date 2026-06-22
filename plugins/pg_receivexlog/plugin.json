@@ -1,0 +1,56 @@
+{
+  "name": "pg_receivexlog",
+  "version": "0.1.0",
+  "description": "CLI tool: pg_receivexlog",
+  "source": "https://manpages.debian.org/pg_receivexlog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pg_receivexlog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pg_receivexlog",
+    "binary": "pg_receivexlog",
+    "check": "which pg_receivexlog",
+    "install_steps": [
+      "apt-get install pg_receivexlog 2>/dev/null || which pg_receivexlog",
+      "Verify: pg_receivexlog --version",
+      "supercli plugins install ./plugins/pg_receivexlog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pg_receivexlog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pg_receivexlog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg_receivexlog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pg_receivexlog: apt-get install pg_receivexlog 2>/dev/null || which pg_receivexlog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pg_receivexlog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pg_receivexlog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg_receivexlog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg_receivexlog: apt-get install pg_receivexlog 2>/dev/null || which pg_receivexlog"
+      },
+      "args": []
+    }
+  ]
+}

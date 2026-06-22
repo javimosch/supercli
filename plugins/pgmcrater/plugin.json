@@ -1,0 +1,56 @@
+{
+  "name": "pgmcrater",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmcrater",
+  "source": "https://manpages.debian.org/pgmcrater",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmcrater"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmcrater",
+    "binary": "pgmcrater",
+    "check": "which pgmcrater",
+    "install_steps": [
+      "apt-get install pgmcrater 2>/dev/null || which pgmcrater",
+      "Verify: pgmcrater --version",
+      "supercli plugins install ./plugins/pgmcrater --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmcrater",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmcrater version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmcrater",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmcrater: apt-get install pgmcrater 2>/dev/null || which pgmcrater"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmcrater",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmcrater CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmcrater",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmcrater: apt-get install pgmcrater 2>/dev/null || which pgmcrater"
+      },
+      "args": []
+    }
+  ]
+}

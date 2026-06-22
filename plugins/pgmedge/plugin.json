@@ -1,0 +1,56 @@
+{
+  "name": "pgmedge",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmedge",
+  "source": "https://manpages.debian.org/pgmedge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmedge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmedge",
+    "binary": "pgmedge",
+    "check": "which pgmedge",
+    "install_steps": [
+      "apt-get install pgmedge 2>/dev/null || which pgmedge",
+      "Verify: pgmedge --version",
+      "supercli plugins install ./plugins/pgmedge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmedge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmedge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmedge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmedge: apt-get install pgmedge 2>/dev/null || which pgmedge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmedge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmedge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmedge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmedge: apt-get install pgmedge 2>/dev/null || which pgmedge"
+      },
+      "args": []
+    }
+  ]
+}

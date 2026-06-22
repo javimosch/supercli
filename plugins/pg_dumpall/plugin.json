@@ -1,0 +1,56 @@
+{
+  "name": "pg_dumpall",
+  "version": "0.1.0",
+  "description": "CLI tool: pg_dumpall",
+  "source": "https://manpages.debian.org/pg_dumpall",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pg_dumpall"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pg_dumpall",
+    "binary": "pg_dumpall",
+    "check": "which pg_dumpall",
+    "install_steps": [
+      "apt-get install pg_dumpall 2>/dev/null || which pg_dumpall",
+      "Verify: pg_dumpall --version",
+      "supercli plugins install ./plugins/pg_dumpall --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pg_dumpall",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pg_dumpall version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg_dumpall",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pg_dumpall: apt-get install pg_dumpall 2>/dev/null || which pg_dumpall"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pg_dumpall",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pg_dumpall CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg_dumpall",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg_dumpall: apt-get install pg_dumpall 2>/dev/null || which pg_dumpall"
+      },
+      "args": []
+    }
+  ]
+}

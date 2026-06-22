@@ -1,0 +1,56 @@
+{
+  "name": "pgmslice",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmslice",
+  "source": "https://manpages.debian.org/pgmslice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmslice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmslice",
+    "binary": "pgmslice",
+    "check": "which pgmslice",
+    "install_steps": [
+      "apt-get install pgmslice 2>/dev/null || which pgmslice",
+      "Verify: pgmslice --version",
+      "supercli plugins install ./plugins/pgmslice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmslice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmslice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmslice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmslice: apt-get install pgmslice 2>/dev/null || which pgmslice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmslice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmslice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmslice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmslice: apt-get install pgmslice 2>/dev/null || which pgmslice"
+      },
+      "args": []
+    }
+  ]
+}

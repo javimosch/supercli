@@ -1,0 +1,56 @@
+{
+  "name": "pgmenhance",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmenhance",
+  "source": "https://manpages.debian.org/pgmenhance",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmenhance"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmenhance",
+    "binary": "pgmenhance",
+    "check": "which pgmenhance",
+    "install_steps": [
+      "apt-get install pgmenhance 2>/dev/null || which pgmenhance",
+      "Verify: pgmenhance --version",
+      "supercli plugins install ./plugins/pgmenhance --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmenhance",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmenhance version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmenhance",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmenhance: apt-get install pgmenhance 2>/dev/null || which pgmenhance"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmenhance",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmenhance CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmenhance",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmenhance: apt-get install pgmenhance 2>/dev/null || which pgmenhance"
+      },
+      "args": []
+    }
+  ]
+}

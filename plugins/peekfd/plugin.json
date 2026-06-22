@@ -1,0 +1,56 @@
+{
+  "name": "peekfd",
+  "version": "0.1.0",
+  "description": "CLI tool: peekfd",
+  "source": "https://manpages.debian.org/peekfd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "peekfd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "peekfd",
+    "binary": "peekfd",
+    "check": "which peekfd",
+    "install_steps": [
+      "apt-get install peekfd 2>/dev/null || which peekfd",
+      "Verify: peekfd --version",
+      "supercli plugins install ./plugins/peekfd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "peekfd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print peekfd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peekfd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install peekfd: apt-get install peekfd 2>/dev/null || which peekfd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "peekfd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to peekfd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "peekfd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install peekfd: apt-get install peekfd 2>/dev/null || which peekfd"
+      },
+      "args": []
+    }
+  ]
+}

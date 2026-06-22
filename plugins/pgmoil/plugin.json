@@ -1,0 +1,56 @@
+{
+  "name": "pgmoil",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmoil",
+  "source": "https://manpages.debian.org/pgmoil",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmoil"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmoil",
+    "binary": "pgmoil",
+    "check": "which pgmoil",
+    "install_steps": [
+      "apt-get install pgmoil 2>/dev/null || which pgmoil",
+      "Verify: pgmoil --version",
+      "supercli plugins install ./plugins/pgmoil --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmoil",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmoil version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmoil",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmoil: apt-get install pgmoil 2>/dev/null || which pgmoil"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmoil",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmoil CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmoil",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmoil: apt-get install pgmoil 2>/dev/null || which pgmoil"
+      },
+      "args": []
+    }
+  ]
+}

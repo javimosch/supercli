@@ -1,0 +1,56 @@
+{
+  "name": "perlivp",
+  "version": "0.1.0",
+  "description": "CLI tool: perlivp",
+  "source": "https://manpages.debian.org/perlivp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "perlivp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "perlivp",
+    "binary": "perlivp",
+    "check": "which perlivp",
+    "install_steps": [
+      "apt-get install perlivp 2>/dev/null || which perlivp",
+      "Verify: perlivp --version",
+      "supercli plugins install ./plugins/perlivp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "perlivp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print perlivp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perlivp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install perlivp: apt-get install perlivp 2>/dev/null || which perlivp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "perlivp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to perlivp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perlivp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install perlivp: apt-get install perlivp 2>/dev/null || which perlivp"
+      },
+      "args": []
+    }
+  ]
+}

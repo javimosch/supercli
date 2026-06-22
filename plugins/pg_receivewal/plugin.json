@@ -1,0 +1,56 @@
+{
+  "name": "pg_receivewal",
+  "version": "0.1.0",
+  "description": "CLI tool: pg_receivewal",
+  "source": "https://manpages.debian.org/pg_receivewal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pg_receivewal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pg_receivewal",
+    "binary": "pg_receivewal",
+    "check": "which pg_receivewal",
+    "install_steps": [
+      "apt-get install pg_receivewal 2>/dev/null || which pg_receivewal",
+      "Verify: pg_receivewal --version",
+      "supercli plugins install ./plugins/pg_receivewal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pg_receivewal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pg_receivewal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg_receivewal",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pg_receivewal: apt-get install pg_receivewal 2>/dev/null || which pg_receivewal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pg_receivewal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pg_receivewal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg_receivewal",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg_receivewal: apt-get install pg_receivewal 2>/dev/null || which pg_receivewal"
+      },
+      "args": []
+    }
+  ]
+}

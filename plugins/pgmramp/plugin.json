@@ -1,0 +1,56 @@
+{
+  "name": "pgmramp",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmramp",
+  "source": "https://manpages.debian.org/pgmramp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmramp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmramp",
+    "binary": "pgmramp",
+    "check": "which pgmramp",
+    "install_steps": [
+      "apt-get install pgmramp 2>/dev/null || which pgmramp",
+      "Verify: pgmramp --version",
+      "supercli plugins install ./plugins/pgmramp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmramp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmramp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmramp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmramp: apt-get install pgmramp 2>/dev/null || which pgmramp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmramp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmramp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmramp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmramp: apt-get install pgmramp 2>/dev/null || which pgmramp"
+      },
+      "args": []
+    }
+  ]
+}

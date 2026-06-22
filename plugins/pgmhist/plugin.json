@@ -1,0 +1,56 @@
+{
+  "name": "pgmhist",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmhist",
+  "source": "https://manpages.debian.org/pgmhist",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmhist"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmhist",
+    "binary": "pgmhist",
+    "check": "which pgmhist",
+    "install_steps": [
+      "apt-get install pgmhist 2>/dev/null || which pgmhist",
+      "Verify: pgmhist --version",
+      "supercli plugins install ./plugins/pgmhist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmhist",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmhist version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmhist",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmhist: apt-get install pgmhist 2>/dev/null || which pgmhist"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmhist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmhist CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmhist",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmhist: apt-get install pgmhist 2>/dev/null || which pgmhist"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "perldoc",
+  "version": "0.1.0",
+  "description": "CLI tool: perldoc",
+  "source": "https://manpages.debian.org/perldoc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "perldoc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "perldoc",
+    "binary": "perldoc",
+    "check": "which perldoc",
+    "install_steps": [
+      "apt-get install perldoc 2>/dev/null || which perldoc",
+      "Verify: perldoc --version",
+      "supercli plugins install ./plugins/perldoc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "perldoc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print perldoc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perldoc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install perldoc: apt-get install perldoc 2>/dev/null || which perldoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "perldoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to perldoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perldoc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install perldoc: apt-get install perldoc 2>/dev/null || which perldoc"
+      },
+      "args": []
+    }
+  ]
+}

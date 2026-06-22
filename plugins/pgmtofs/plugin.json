@@ -1,0 +1,56 @@
+{
+  "name": "pgmtofs",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmtofs",
+  "source": "https://manpages.debian.org/pgmtofs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmtofs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmtofs",
+    "binary": "pgmtofs",
+    "check": "which pgmtofs",
+    "install_steps": [
+      "apt-get install pgmtofs 2>/dev/null || which pgmtofs",
+      "Verify: pgmtofs --version",
+      "supercli plugins install ./plugins/pgmtofs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmtofs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmtofs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmtofs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmtofs: apt-get install pgmtofs 2>/dev/null || which pgmtofs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmtofs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmtofs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmtofs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmtofs: apt-get install pgmtofs 2>/dev/null || which pgmtofs"
+      },
+      "args": []
+    }
+  ]
+}

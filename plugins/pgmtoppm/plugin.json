@@ -1,0 +1,56 @@
+{
+  "name": "pgmtoppm",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmtoppm",
+  "source": "https://manpages.debian.org/pgmtoppm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmtoppm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmtoppm",
+    "binary": "pgmtoppm",
+    "check": "which pgmtoppm",
+    "install_steps": [
+      "apt-get install pgmtoppm 2>/dev/null || which pgmtoppm",
+      "Verify: pgmtoppm --version",
+      "supercli plugins install ./plugins/pgmtoppm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmtoppm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmtoppm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmtoppm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmtoppm: apt-get install pgmtoppm 2>/dev/null || which pgmtoppm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmtoppm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmtoppm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmtoppm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmtoppm: apt-get install pgmtoppm 2>/dev/null || which pgmtoppm"
+      },
+      "args": []
+    }
+  ]
+}

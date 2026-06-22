@@ -1,0 +1,56 @@
+{
+  "name": "pgmkernel",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmkernel",
+  "source": "https://manpages.debian.org/pgmkernel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmkernel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmkernel",
+    "binary": "pgmkernel",
+    "check": "which pgmkernel",
+    "install_steps": [
+      "apt-get install pgmkernel 2>/dev/null || which pgmkernel",
+      "Verify: pgmkernel --version",
+      "supercli plugins install ./plugins/pgmkernel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmkernel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmkernel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmkernel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmkernel: apt-get install pgmkernel 2>/dev/null || which pgmkernel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmkernel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmkernel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmkernel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmkernel: apt-get install pgmkernel 2>/dev/null || which pgmkernel"
+      },
+      "args": []
+    }
+  ]
+}

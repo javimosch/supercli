@@ -1,0 +1,56 @@
+{
+  "name": "pgmnorm",
+  "version": "0.1.0",
+  "description": "CLI tool: pgmnorm",
+  "source": "https://manpages.debian.org/pgmnorm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgmnorm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgmnorm",
+    "binary": "pgmnorm",
+    "check": "which pgmnorm",
+    "install_steps": [
+      "apt-get install pgmnorm 2>/dev/null || which pgmnorm",
+      "Verify: pgmnorm --version",
+      "supercli plugins install ./plugins/pgmnorm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgmnorm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgmnorm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmnorm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgmnorm: apt-get install pgmnorm 2>/dev/null || which pgmnorm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgmnorm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgmnorm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgmnorm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgmnorm: apt-get install pgmnorm 2>/dev/null || which pgmnorm"
+      },
+      "args": []
+    }
+  ]
+}

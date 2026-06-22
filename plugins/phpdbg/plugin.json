@@ -1,0 +1,56 @@
+{
+  "name": "phpdbg",
+  "version": "0.1.0",
+  "description": "CLI tool: phpdbg",
+  "source": "https://manpages.debian.org/phpdbg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "phpdbg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "phpdbg",
+    "binary": "phpdbg",
+    "check": "which phpdbg",
+    "install_steps": [
+      "apt-get install phpdbg 2>/dev/null || which phpdbg",
+      "Verify: phpdbg --version",
+      "supercli plugins install ./plugins/phpdbg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "phpdbg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print phpdbg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "phpdbg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install phpdbg: apt-get install phpdbg 2>/dev/null || which phpdbg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "phpdbg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to phpdbg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "phpdbg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install phpdbg: apt-get install phpdbg 2>/dev/null || which phpdbg"
+      },
+      "args": []
+    }
+  ]
+}

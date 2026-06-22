@@ -1,0 +1,56 @@
+{
+  "name": "pfbtopfa",
+  "version": "0.1.0",
+  "description": "CLI tool: pfbtopfa",
+  "source": "https://manpages.debian.org/pfbtopfa",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pfbtopfa"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pfbtopfa",
+    "binary": "pfbtopfa",
+    "check": "which pfbtopfa",
+    "install_steps": [
+      "apt-get install pfbtopfa 2>/dev/null || which pfbtopfa",
+      "Verify: pfbtopfa --version",
+      "supercli plugins install ./plugins/pfbtopfa --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pfbtopfa",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pfbtopfa version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pfbtopfa",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pfbtopfa: apt-get install pfbtopfa 2>/dev/null || which pfbtopfa"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pfbtopfa",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pfbtopfa CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pfbtopfa",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pfbtopfa: apt-get install pfbtopfa 2>/dev/null || which pfbtopfa"
+      },
+      "args": []
+    }
+  ]
+}

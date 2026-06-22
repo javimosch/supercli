@@ -1,0 +1,56 @@
+{
+  "name": "pgbench",
+  "version": "0.1.0",
+  "description": "CLI tool: pgbench",
+  "source": "https://manpages.debian.org/pgbench",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pgbench"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pgbench",
+    "binary": "pgbench",
+    "check": "which pgbench",
+    "install_steps": [
+      "apt-get install pgbench 2>/dev/null || which pgbench",
+      "Verify: pgbench --version",
+      "supercli plugins install ./plugins/pgbench --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgbench",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgbench version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgbench",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pgbench: apt-get install pgbench 2>/dev/null || which pgbench"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgbench",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgbench CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgbench",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgbench: apt-get install pgbench 2>/dev/null || which pgbench"
+      },
+      "args": []
+    }
+  ]
+}

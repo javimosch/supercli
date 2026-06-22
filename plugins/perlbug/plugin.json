@@ -1,0 +1,56 @@
+{
+  "name": "perlbug",
+  "version": "0.1.0",
+  "description": "CLI tool: perlbug",
+  "source": "https://manpages.debian.org/perlbug",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "perlbug"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "perlbug",
+    "binary": "perlbug",
+    "check": "which perlbug",
+    "install_steps": [
+      "apt-get install perlbug 2>/dev/null || which perlbug",
+      "Verify: perlbug --version",
+      "supercli plugins install ./plugins/perlbug --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "perlbug",
+      "resource": "self",
+      "action": "version",
+      "description": "Print perlbug version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perlbug",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install perlbug: apt-get install perlbug 2>/dev/null || which perlbug"
+      },
+      "args": []
+    },
+    {
+      "namespace": "perlbug",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to perlbug CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "perlbug",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install perlbug: apt-get install perlbug 2>/dev/null || which perlbug"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pfbtops",
+  "version": "0.1.0",
+  "description": "CLI tool: pfbtops",
+  "source": "https://manpages.debian.org/pfbtops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pfbtops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pfbtops",
+    "binary": "pfbtops",
+    "check": "which pfbtops",
+    "install_steps": [
+      "apt-get install pfbtops 2>/dev/null || which pfbtops",
+      "Verify: pfbtops --version",
+      "supercli plugins install ./plugins/pfbtops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pfbtops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pfbtops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pfbtops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pfbtops: apt-get install pfbtops 2>/dev/null || which pfbtops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pfbtops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pfbtops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pfbtops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pfbtops: apt-get install pfbtops 2>/dev/null || which pfbtops"
+      },
+      "args": []
+    }
+  ]
+}
