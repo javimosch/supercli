@@ -1,0 +1,56 @@
+{
+  "name": "jshell",
+  "version": "0.1.0",
+  "description": "CLI tool: jshell",
+  "source": "https://manpages.debian.org/jshell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jshell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jshell",
+    "binary": "jshell",
+    "check": "which jshell",
+    "install_steps": [
+      "apt-get install jshell 2>/dev/null || which jshell",
+      "Verify: jshell --version",
+      "supercli plugins install ./plugins/jshell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jshell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jshell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jshell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jshell: apt-get install jshell 2>/dev/null || which jshell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jshell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jshell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jshell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jshell: apt-get install jshell 2>/dev/null || which jshell"
+      },
+      "args": []
+    }
+  ]
+}

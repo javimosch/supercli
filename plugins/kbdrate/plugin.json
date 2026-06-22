@@ -1,0 +1,56 @@
+{
+  "name": "kbdrate",
+  "version": "0.1.0",
+  "description": "CLI tool: kbdrate",
+  "source": "https://manpages.debian.org/kbdrate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kbdrate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kbdrate",
+    "binary": "kbdrate",
+    "check": "which kbdrate",
+    "install_steps": [
+      "apt-get install kbdrate 2>/dev/null || which kbdrate",
+      "Verify: kbdrate --version",
+      "supercli plugins install ./plugins/kbdrate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kbdrate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kbdrate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbdrate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kbdrate: apt-get install kbdrate 2>/dev/null || which kbdrate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kbdrate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kbdrate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbdrate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kbdrate: apt-get install kbdrate 2>/dev/null || which kbdrate"
+      },
+      "args": []
+    }
+  ]
+}

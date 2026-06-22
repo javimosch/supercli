@@ -1,0 +1,56 @@
+{
+  "name": "kbxutil",
+  "version": "0.1.0",
+  "description": "CLI tool: kbxutil",
+  "source": "https://manpages.debian.org/kbxutil",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kbxutil"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kbxutil",
+    "binary": "kbxutil",
+    "check": "which kbxutil",
+    "install_steps": [
+      "apt-get install kbxutil 2>/dev/null || which kbxutil",
+      "Verify: kbxutil --version",
+      "supercli plugins install ./plugins/kbxutil --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kbxutil",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kbxutil version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbxutil",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kbxutil: apt-get install kbxutil 2>/dev/null || which kbxutil"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kbxutil",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kbxutil CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbxutil",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kbxutil: apt-get install kbxutil 2>/dev/null || which kbxutil"
+      },
+      "args": []
+    }
+  ]
+}

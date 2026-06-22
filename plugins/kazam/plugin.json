@@ -1,0 +1,56 @@
+{
+  "name": "kazam",
+  "version": "0.1.0",
+  "description": "CLI tool: kazam",
+  "source": "https://manpages.debian.org/kazam",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kazam"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kazam",
+    "binary": "kazam",
+    "check": "which kazam",
+    "install_steps": [
+      "apt-get install kazam 2>/dev/null || which kazam",
+      "Verify: kazam --version",
+      "supercli plugins install ./plugins/kazam --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kazam",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kazam version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kazam",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kazam: apt-get install kazam 2>/dev/null || which kazam"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kazam",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kazam CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kazam",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kazam: apt-get install kazam 2>/dev/null || which kazam"
+      },
+      "args": []
+    }
+  ]
+}

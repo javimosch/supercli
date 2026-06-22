@@ -1,0 +1,56 @@
+{
+  "name": "kbdinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: kbdinfo",
+  "source": "https://manpages.debian.org/kbdinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kbdinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kbdinfo",
+    "binary": "kbdinfo",
+    "check": "which kbdinfo",
+    "install_steps": [
+      "apt-get install kbdinfo 2>/dev/null || which kbdinfo",
+      "Verify: kbdinfo --version",
+      "supercli plugins install ./plugins/kbdinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kbdinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kbdinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbdinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kbdinfo: apt-get install kbdinfo 2>/dev/null || which kbdinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kbdinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kbdinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbdinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kbdinfo: apt-get install kbdinfo 2>/dev/null || which kbdinfo"
+      },
+      "args": []
+    }
+  ]
+}

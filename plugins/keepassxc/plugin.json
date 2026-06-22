@@ -1,0 +1,56 @@
+{
+  "name": "keepassxc",
+  "version": "0.1.0",
+  "description": "CLI tool: keepassxc",
+  "source": "https://manpages.debian.org/keepassxc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "keepassxc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "keepassxc",
+    "binary": "keepassxc",
+    "check": "which keepassxc",
+    "install_steps": [
+      "apt-get install keepassxc 2>/dev/null || which keepassxc",
+      "Verify: keepassxc --version",
+      "supercli plugins install ./plugins/keepassxc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "keepassxc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print keepassxc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "keepassxc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install keepassxc: apt-get install keepassxc 2>/dev/null || which keepassxc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "keepassxc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to keepassxc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "keepassxc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install keepassxc: apt-get install keepassxc 2>/dev/null || which keepassxc"
+      },
+      "args": []
+    }
+  ]
+}

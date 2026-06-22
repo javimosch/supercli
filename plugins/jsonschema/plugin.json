@@ -1,0 +1,56 @@
+{
+  "name": "jsonschema",
+  "version": "0.1.0",
+  "description": "CLI tool: jsonschema",
+  "source": "https://manpages.debian.org/jsonschema",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jsonschema"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jsonschema",
+    "binary": "jsonschema",
+    "check": "which jsonschema",
+    "install_steps": [
+      "apt-get install jsonschema 2>/dev/null || which jsonschema",
+      "Verify: jsonschema --version",
+      "supercli plugins install ./plugins/jsonschema --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jsonschema",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jsonschema version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jsonschema",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jsonschema: apt-get install jsonschema 2>/dev/null || which jsonschema"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jsonschema",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jsonschema CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jsonschema",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jsonschema: apt-get install jsonschema 2>/dev/null || which jsonschema"
+      },
+      "args": []
+    }
+  ]
+}

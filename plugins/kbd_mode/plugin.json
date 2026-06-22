@@ -1,0 +1,56 @@
+{
+  "name": "kbd_mode",
+  "version": "0.1.0",
+  "description": "CLI tool: kbd_mode",
+  "source": "https://manpages.debian.org/kbd_mode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kbd_mode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kbd_mode",
+    "binary": "kbd_mode",
+    "check": "which kbd_mode",
+    "install_steps": [
+      "apt-get install kbd_mode 2>/dev/null || which kbd_mode",
+      "Verify: kbd_mode --version",
+      "supercli plugins install ./plugins/kbd_mode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kbd_mode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kbd_mode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbd_mode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kbd_mode: apt-get install kbd_mode 2>/dev/null || which kbd_mode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kbd_mode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kbd_mode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kbd_mode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kbd_mode: apt-get install kbd_mode 2>/dev/null || which kbd_mode"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "jcmd",
+  "version": "0.1.0",
+  "description": "CLI tool: jcmd",
+  "source": "https://manpages.debian.org/jcmd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jcmd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jcmd",
+    "binary": "jcmd",
+    "check": "which jcmd",
+    "install_steps": [
+      "apt-get install jcmd 2>/dev/null || which jcmd",
+      "Verify: jcmd --version",
+      "supercli plugins install ./plugins/jcmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jcmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jcmd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jcmd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jcmd: apt-get install jcmd 2>/dev/null || which jcmd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jcmd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jcmd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jcmd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jcmd: apt-get install jcmd 2>/dev/null || which jcmd"
+      },
+      "args": []
+    }
+  ]
+}

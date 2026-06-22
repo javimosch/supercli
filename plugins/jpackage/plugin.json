@@ -1,0 +1,56 @@
+{
+  "name": "jpackage",
+  "version": "0.1.0",
+  "description": "CLI tool: jpackage",
+  "source": "https://manpages.debian.org/jpackage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jpackage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jpackage",
+    "binary": "jpackage",
+    "check": "which jpackage",
+    "install_steps": [
+      "apt-get install jpackage 2>/dev/null || which jpackage",
+      "Verify: jpackage --version",
+      "supercli plugins install ./plugins/jpackage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jpackage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jpackage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jpackage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jpackage: apt-get install jpackage 2>/dev/null || which jpackage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jpackage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jpackage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jpackage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jpackage: apt-get install jpackage 2>/dev/null || which jpackage"
+      },
+      "args": []
+    }
+  ]
+}

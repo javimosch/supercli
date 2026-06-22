@@ -1,0 +1,56 @@
+{
+  "name": "jstatd",
+  "version": "0.1.0",
+  "description": "CLI tool: jstatd",
+  "source": "https://manpages.debian.org/jstatd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jstatd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jstatd",
+    "binary": "jstatd",
+    "check": "which jstatd",
+    "install_steps": [
+      "apt-get install jstatd 2>/dev/null || which jstatd",
+      "Verify: jstatd --version",
+      "supercli plugins install ./plugins/jstatd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jstatd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jstatd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jstatd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jstatd: apt-get install jstatd 2>/dev/null || which jstatd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jstatd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jstatd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jstatd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jstatd: apt-get install jstatd 2>/dev/null || which jstatd"
+      },
+      "args": []
+    }
+  ]
+}

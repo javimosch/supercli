@@ -1,0 +1,56 @@
+{
+  "name": "jdeps",
+  "version": "0.1.0",
+  "description": "CLI tool: jdeps",
+  "source": "https://manpages.debian.org/jdeps",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jdeps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jdeps",
+    "binary": "jdeps",
+    "check": "which jdeps",
+    "install_steps": [
+      "apt-get install jdeps 2>/dev/null || which jdeps",
+      "Verify: jdeps --version",
+      "supercli plugins install ./plugins/jdeps --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jdeps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jdeps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jdeps",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jdeps: apt-get install jdeps 2>/dev/null || which jdeps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jdeps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jdeps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jdeps",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jdeps: apt-get install jdeps 2>/dev/null || which jdeps"
+      },
+      "args": []
+    }
+  ]
+}

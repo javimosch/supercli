@@ -1,0 +1,56 @@
+{
+  "name": "kmod",
+  "version": "0.1.0",
+  "description": "CLI tool: kmod",
+  "source": "https://manpages.debian.org/kmod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kmod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kmod",
+    "binary": "kmod",
+    "check": "which kmod",
+    "install_steps": [
+      "apt-get install kmod 2>/dev/null || which kmod",
+      "Verify: kmod --version",
+      "supercli plugins install ./plugins/kmod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kmod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kmod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kmod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kmod: apt-get install kmod 2>/dev/null || which kmod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kmod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kmod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kmod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kmod: apt-get install kmod 2>/dev/null || which kmod"
+      },
+      "args": []
+    }
+  ]
+}

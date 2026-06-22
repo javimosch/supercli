@@ -1,0 +1,56 @@
+{
+  "name": "junie",
+  "version": "0.1.0",
+  "description": "CLI tool: junie",
+  "source": "https://manpages.debian.org/junie",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "junie"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "junie",
+    "binary": "junie",
+    "check": "which junie",
+    "install_steps": [
+      "apt-get install junie 2>/dev/null || which junie",
+      "Verify: junie --version",
+      "supercli plugins install ./plugins/junie --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "junie",
+      "resource": "self",
+      "action": "version",
+      "description": "Print junie version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "junie",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install junie: apt-get install junie 2>/dev/null || which junie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "junie",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to junie CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "junie",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install junie: apt-get install junie 2>/dev/null || which junie"
+      },
+      "args": []
+    }
+  ]
+}

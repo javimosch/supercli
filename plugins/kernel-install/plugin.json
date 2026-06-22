@@ -1,0 +1,56 @@
+{
+  "name": "kernel-install",
+  "version": "0.1.0",
+  "description": "CLI tool: kernel-install",
+  "source": "https://manpages.debian.org/kernel-install",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kernel-install"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kernel-install",
+    "binary": "kernel-install",
+    "check": "which kernel-install",
+    "install_steps": [
+      "apt-get install kernel-install 2>/dev/null || which kernel-install",
+      "Verify: kernel-install --version",
+      "supercli plugins install ./plugins/kernel-install --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kernel-install",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kernel-install version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kernel-install",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kernel-install: apt-get install kernel-install 2>/dev/null || which kernel-install"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kernel-install",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kernel-install CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kernel-install",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kernel-install: apt-get install kernel-install 2>/dev/null || which kernel-install"
+      },
+      "args": []
+    }
+  ]
+}

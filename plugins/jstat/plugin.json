@@ -1,0 +1,56 @@
+{
+  "name": "jstat",
+  "version": "0.1.0",
+  "description": "CLI tool: jstat",
+  "source": "https://manpages.debian.org/jstat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jstat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jstat",
+    "binary": "jstat",
+    "check": "which jstat",
+    "install_steps": [
+      "apt-get install jstat 2>/dev/null || which jstat",
+      "Verify: jstat --version",
+      "supercli plugins install ./plugins/jstat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jstat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jstat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jstat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jstat: apt-get install jstat 2>/dev/null || which jstat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jstat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jstat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jstat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jstat: apt-get install jstat 2>/dev/null || which jstat"
+      },
+      "args": []
+    }
+  ]
+}

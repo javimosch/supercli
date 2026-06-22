@@ -1,0 +1,56 @@
+{
+  "name": "jdb",
+  "version": "0.1.0",
+  "description": "CLI tool: jdb",
+  "source": "https://manpages.debian.org/jdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jdb",
+    "binary": "jdb",
+    "check": "which jdb",
+    "install_steps": [
+      "apt-get install jdb 2>/dev/null || which jdb",
+      "Verify: jdb --version",
+      "supercli plugins install ./plugins/jdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jdb: apt-get install jdb 2>/dev/null || which jdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jdb: apt-get install jdb 2>/dev/null || which jdb"
+      },
+      "args": []
+    }
+  ]
+}

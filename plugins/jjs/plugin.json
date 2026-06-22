@@ -1,0 +1,56 @@
+{
+  "name": "jjs",
+  "version": "0.1.0",
+  "description": "CLI tool: jjs",
+  "source": "https://manpages.debian.org/jjs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jjs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jjs",
+    "binary": "jjs",
+    "check": "which jjs",
+    "install_steps": [
+      "apt-get install jjs 2>/dev/null || which jjs",
+      "Verify: jjs --version",
+      "supercli plugins install ./plugins/jjs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jjs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jjs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jjs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jjs: apt-get install jjs 2>/dev/null || which jjs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jjs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jjs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jjs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jjs: apt-get install jjs 2>/dev/null || which jjs"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "jhsdb",
+  "version": "0.1.0",
+  "description": "CLI tool: jhsdb",
+  "source": "https://manpages.debian.org/jhsdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jhsdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jhsdb",
+    "binary": "jhsdb",
+    "check": "which jhsdb",
+    "install_steps": [
+      "apt-get install jhsdb 2>/dev/null || which jhsdb",
+      "Verify: jhsdb --version",
+      "supercli plugins install ./plugins/jhsdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jhsdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jhsdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jhsdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jhsdb: apt-get install jhsdb 2>/dev/null || which jhsdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jhsdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jhsdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jhsdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jhsdb: apt-get install jhsdb 2>/dev/null || which jhsdb"
+      },
+      "args": []
+    }
+  ]
+}

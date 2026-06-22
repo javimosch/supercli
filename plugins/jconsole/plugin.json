@@ -1,0 +1,56 @@
+{
+  "name": "jconsole",
+  "version": "0.1.0",
+  "description": "CLI tool: jconsole",
+  "source": "https://manpages.debian.org/jconsole",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jconsole"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jconsole",
+    "binary": "jconsole",
+    "check": "which jconsole",
+    "install_steps": [
+      "apt-get install jconsole 2>/dev/null || which jconsole",
+      "Verify: jconsole --version",
+      "supercli plugins install ./plugins/jconsole --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jconsole",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jconsole version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jconsole",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jconsole: apt-get install jconsole 2>/dev/null || which jconsole"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jconsole",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jconsole CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jconsole",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jconsole: apt-get install jconsole 2>/dev/null || which jconsole"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "jps",
+  "version": "0.1.0",
+  "description": "CLI tool: jps",
+  "source": "https://manpages.debian.org/jps",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jps",
+    "binary": "jps",
+    "check": "which jps",
+    "install_steps": [
+      "apt-get install jps 2>/dev/null || which jps",
+      "Verify: jps --version",
+      "supercli plugins install ./plugins/jps --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jps",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jps: apt-get install jps 2>/dev/null || which jps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jps",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jps: apt-get install jps 2>/dev/null || which jps"
+      },
+      "args": []
+    }
+  ]
+}

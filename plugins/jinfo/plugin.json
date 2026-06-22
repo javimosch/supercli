@@ -1,0 +1,56 @@
+{
+  "name": "jinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: jinfo",
+  "source": "https://manpages.debian.org/jinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jinfo",
+    "binary": "jinfo",
+    "check": "which jinfo",
+    "install_steps": [
+      "apt-get install jinfo 2>/dev/null || which jinfo",
+      "Verify: jinfo --version",
+      "supercli plugins install ./plugins/jinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jinfo: apt-get install jinfo 2>/dev/null || which jinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jinfo: apt-get install jinfo 2>/dev/null || which jinfo"
+      },
+      "args": []
+    }
+  ]
+}

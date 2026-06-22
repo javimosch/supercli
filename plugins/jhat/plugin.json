@@ -1,0 +1,56 @@
+{
+  "name": "jhat",
+  "version": "0.1.0",
+  "description": "CLI tool: jhat",
+  "source": "https://manpages.debian.org/jhat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jhat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jhat",
+    "binary": "jhat",
+    "check": "which jhat",
+    "install_steps": [
+      "apt-get install jhat 2>/dev/null || which jhat",
+      "Verify: jhat --version",
+      "supercli plugins install ./plugins/jhat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jhat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jhat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jhat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jhat: apt-get install jhat 2>/dev/null || which jhat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jhat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jhat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jhat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jhat: apt-get install jhat 2>/dev/null || which jhat"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "jexec",
+  "version": "0.1.0",
+  "description": "CLI tool: jexec",
+  "source": "https://manpages.debian.org/jexec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jexec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jexec",
+    "binary": "jexec",
+    "check": "which jexec",
+    "install_steps": [
+      "apt-get install jexec 2>/dev/null || which jexec",
+      "Verify: jexec --version",
+      "supercli plugins install ./plugins/jexec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jexec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jexec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jexec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jexec: apt-get install jexec 2>/dev/null || which jexec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jexec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jexec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jexec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jexec: apt-get install jexec 2>/dev/null || which jexec"
+      },
+      "args": []
+    }
+  ]
+}

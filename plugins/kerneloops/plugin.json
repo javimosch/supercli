@@ -1,0 +1,56 @@
+{
+  "name": "kerneloops",
+  "version": "0.1.0",
+  "description": "CLI tool: kerneloops",
+  "source": "https://manpages.debian.org/kerneloops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kerneloops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kerneloops",
+    "binary": "kerneloops",
+    "check": "which kerneloops",
+    "install_steps": [
+      "apt-get install kerneloops 2>/dev/null || which kerneloops",
+      "Verify: kerneloops --version",
+      "supercli plugins install ./plugins/kerneloops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kerneloops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kerneloops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kerneloops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kerneloops: apt-get install kerneloops 2>/dev/null || which kerneloops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kerneloops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kerneloops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kerneloops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kerneloops: apt-get install kerneloops 2>/dev/null || which kerneloops"
+      },
+      "args": []
+    }
+  ]
+}

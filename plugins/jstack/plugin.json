@@ -1,0 +1,56 @@
+{
+  "name": "jstack",
+  "version": "0.1.0",
+  "description": "CLI tool: jstack",
+  "source": "https://manpages.debian.org/jstack",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jstack"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jstack",
+    "binary": "jstack",
+    "check": "which jstack",
+    "install_steps": [
+      "apt-get install jstack 2>/dev/null || which jstack",
+      "Verify: jstack --version",
+      "supercli plugins install ./plugins/jstack --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jstack",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jstack version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jstack",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jstack: apt-get install jstack 2>/dev/null || which jstack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jstack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jstack CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jstack",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jstack: apt-get install jstack 2>/dev/null || which jstack"
+      },
+      "args": []
+    }
+  ]
+}

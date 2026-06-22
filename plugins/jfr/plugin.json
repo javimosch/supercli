@@ -1,0 +1,56 @@
+{
+  "name": "jfr",
+  "version": "0.1.0",
+  "description": "CLI tool: jfr",
+  "source": "https://manpages.debian.org/jfr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jfr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jfr",
+    "binary": "jfr",
+    "check": "which jfr",
+    "install_steps": [
+      "apt-get install jfr 2>/dev/null || which jfr",
+      "Verify: jfr --version",
+      "supercli plugins install ./plugins/jfr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jfr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jfr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jfr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jfr: apt-get install jfr 2>/dev/null || which jfr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jfr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jfr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jfr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jfr: apt-get install jfr 2>/dev/null || which jfr"
+      },
+      "args": []
+    }
+  ]
+}

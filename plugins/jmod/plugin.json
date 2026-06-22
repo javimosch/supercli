@@ -1,0 +1,56 @@
+{
+  "name": "jmod",
+  "version": "0.1.0",
+  "description": "CLI tool: jmod",
+  "source": "https://manpages.debian.org/jmod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jmod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jmod",
+    "binary": "jmod",
+    "check": "which jmod",
+    "install_steps": [
+      "apt-get install jmod 2>/dev/null || which jmod",
+      "Verify: jmod --version",
+      "supercli plugins install ./plugins/jmod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jmod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jmod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jmod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jmod: apt-get install jmod 2>/dev/null || which jmod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jmod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jmod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jmod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jmod: apt-get install jmod 2>/dev/null || which jmod"
+      },
+      "args": []
+    }
+  ]
+}

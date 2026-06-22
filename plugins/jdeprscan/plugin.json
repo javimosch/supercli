@@ -1,0 +1,56 @@
+{
+  "name": "jdeprscan",
+  "version": "0.1.0",
+  "description": "CLI tool: jdeprscan",
+  "source": "https://manpages.debian.org/jdeprscan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jdeprscan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jdeprscan",
+    "binary": "jdeprscan",
+    "check": "which jdeprscan",
+    "install_steps": [
+      "apt-get install jdeprscan 2>/dev/null || which jdeprscan",
+      "Verify: jdeprscan --version",
+      "supercli plugins install ./plugins/jdeprscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jdeprscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jdeprscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jdeprscan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jdeprscan: apt-get install jdeprscan 2>/dev/null || which jdeprscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jdeprscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jdeprscan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jdeprscan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jdeprscan: apt-get install jdeprscan 2>/dev/null || which jdeprscan"
+      },
+      "args": []
+    }
+  ]
+}

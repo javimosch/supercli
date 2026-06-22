@@ -1,0 +1,56 @@
+{
+  "name": "jmap",
+  "version": "0.1.0",
+  "description": "CLI tool: jmap",
+  "source": "https://manpages.debian.org/jmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jmap",
+    "binary": "jmap",
+    "check": "which jmap",
+    "install_steps": [
+      "apt-get install jmap 2>/dev/null || which jmap",
+      "Verify: jmap --version",
+      "supercli plugins install ./plugins/jmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jmap: apt-get install jmap 2>/dev/null || which jmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jmap: apt-get install jmap 2>/dev/null || which jmap"
+      },
+      "args": []
+    }
+  ]
+}
