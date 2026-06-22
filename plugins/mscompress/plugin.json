@@ -1,0 +1,56 @@
+{
+  "name": "mscompress",
+  "version": "0.1.0",
+  "description": "CLI tool: mscompress",
+  "source": "https://manpages.debian.org/mscompress",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mscompress"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mscompress",
+    "binary": "mscompress",
+    "check": "which mscompress",
+    "install_steps": [
+      "apt-get install mscompress 2>/dev/null || which mscompress",
+      "Verify: mscompress --version",
+      "supercli plugins install ./plugins/mscompress --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mscompress",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mscompress version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mscompress",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mscompress: apt-get install mscompress 2>/dev/null || which mscompress"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mscompress",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mscompress CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mscompress",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mscompress: apt-get install mscompress 2>/dev/null || which mscompress"
+      },
+      "args": []
+    }
+  ]
+}

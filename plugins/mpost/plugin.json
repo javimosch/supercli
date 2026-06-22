@@ -1,0 +1,56 @@
+{
+  "name": "mpost",
+  "version": "0.1.0",
+  "description": "CLI tool: mpost",
+  "source": "https://manpages.debian.org/mpost",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpost"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpost",
+    "binary": "mpost",
+    "check": "which mpost",
+    "install_steps": [
+      "apt-get install mpost 2>/dev/null || which mpost",
+      "Verify: mpost --version",
+      "supercli plugins install ./plugins/mpost --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpost",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpost version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpost",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpost: apt-get install mpost 2>/dev/null || which mpost"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpost",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpost CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpost",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpost: apt-get install mpost 2>/dev/null || which mpost"
+      },
+      "args": []
+    }
+  ]
+}

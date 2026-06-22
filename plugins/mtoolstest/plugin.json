@@ -1,0 +1,56 @@
+{
+  "name": "mtoolstest",
+  "version": "0.1.0",
+  "description": "CLI tool: mtoolstest",
+  "source": "https://manpages.debian.org/mtoolstest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mtoolstest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mtoolstest",
+    "binary": "mtoolstest",
+    "check": "which mtoolstest",
+    "install_steps": [
+      "apt-get install mtoolstest 2>/dev/null || which mtoolstest",
+      "Verify: mtoolstest --version",
+      "supercli plugins install ./plugins/mtoolstest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mtoolstest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mtoolstest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtoolstest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mtoolstest: apt-get install mtoolstest 2>/dev/null || which mtoolstest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mtoolstest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mtoolstest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtoolstest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mtoolstest: apt-get install mtoolstest 2>/dev/null || which mtoolstest"
+      },
+      "args": []
+    }
+  ]
+}

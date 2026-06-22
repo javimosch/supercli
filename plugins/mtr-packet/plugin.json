@@ -1,0 +1,56 @@
+{
+  "name": "mtr-packet",
+  "version": "0.1.0",
+  "description": "CLI tool: mtr-packet",
+  "source": "https://manpages.debian.org/mtr-packet",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mtr-packet"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mtr-packet",
+    "binary": "mtr-packet",
+    "check": "which mtr-packet",
+    "install_steps": [
+      "apt-get install mtr-packet 2>/dev/null || which mtr-packet",
+      "Verify: mtr-packet --version",
+      "supercli plugins install ./plugins/mtr-packet --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mtr-packet",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mtr-packet version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtr-packet",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mtr-packet: apt-get install mtr-packet 2>/dev/null || which mtr-packet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mtr-packet",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mtr-packet CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtr-packet",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mtr-packet: apt-get install mtr-packet 2>/dev/null || which mtr-packet"
+      },
+      "args": []
+    }
+  ]
+}

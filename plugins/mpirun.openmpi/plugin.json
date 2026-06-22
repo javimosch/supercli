@@ -1,0 +1,56 @@
+{
+  "name": "mpirun.openmpi",
+  "version": "0.1.0",
+  "description": "CLI tool: mpirun.openmpi",
+  "source": "https://manpages.debian.org/mpirun.openmpi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpirun.openmpi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpirun.openmpi",
+    "binary": "mpirun.openmpi",
+    "check": "which mpirun.openmpi",
+    "install_steps": [
+      "apt-get install mpirun.openmpi 2>/dev/null || which mpirun.openmpi",
+      "Verify: mpirun.openmpi --version",
+      "supercli plugins install ./plugins/mpirun.openmpi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpirun.openmpi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpirun.openmpi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpirun.openmpi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpirun.openmpi: apt-get install mpirun.openmpi 2>/dev/null || which mpirun.openmpi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpirun.openmpi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpirun.openmpi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpirun.openmpi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpirun.openmpi: apt-get install mpirun.openmpi 2>/dev/null || which mpirun.openmpi"
+      },
+      "args": []
+    }
+  ]
+}

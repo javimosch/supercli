@@ -1,0 +1,56 @@
+{
+  "name": "msgcat",
+  "version": "0.1.0",
+  "description": "CLI tool: msgcat",
+  "source": "https://manpages.debian.org/msgcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgcat",
+    "binary": "msgcat",
+    "check": "which msgcat",
+    "install_steps": [
+      "apt-get install msgcat 2>/dev/null || which msgcat",
+      "Verify: msgcat --version",
+      "supercli plugins install ./plugins/msgcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgcat: apt-get install msgcat 2>/dev/null || which msgcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgcat: apt-get install msgcat 2>/dev/null || which msgcat"
+      },
+      "args": []
+    }
+  ]
+}

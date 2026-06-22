@@ -1,0 +1,56 @@
+{
+  "name": "msginit",
+  "version": "0.1.0",
+  "description": "CLI tool: msginit",
+  "source": "https://manpages.debian.org/msginit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msginit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msginit",
+    "binary": "msginit",
+    "check": "which msginit",
+    "install_steps": [
+      "apt-get install msginit 2>/dev/null || which msginit",
+      "Verify: msginit --version",
+      "supercli plugins install ./plugins/msginit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msginit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msginit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msginit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msginit: apt-get install msginit 2>/dev/null || which msginit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msginit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msginit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msginit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msginit: apt-get install msginit 2>/dev/null || which msginit"
+      },
+      "args": []
+    }
+  ]
+}

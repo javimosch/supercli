@@ -1,0 +1,56 @@
+{
+  "name": "mpicxx",
+  "version": "0.1.0",
+  "description": "CLI tool: mpicxx",
+  "source": "https://manpages.debian.org/mpicxx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpicxx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpicxx",
+    "binary": "mpicxx",
+    "check": "which mpicxx",
+    "install_steps": [
+      "apt-get install mpicxx 2>/dev/null || which mpicxx",
+      "Verify: mpicxx --version",
+      "supercli plugins install ./plugins/mpicxx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpicxx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpicxx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpicxx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpicxx: apt-get install mpicxx 2>/dev/null || which mpicxx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpicxx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpicxx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpicxx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpicxx: apt-get install mpicxx 2>/dev/null || which mpicxx"
+      },
+      "args": []
+    }
+  ]
+}

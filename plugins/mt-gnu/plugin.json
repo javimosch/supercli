@@ -1,0 +1,56 @@
+{
+  "name": "mt-gnu",
+  "version": "0.1.0",
+  "description": "CLI tool: mt-gnu",
+  "source": "https://manpages.debian.org/mt-gnu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mt-gnu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mt-gnu",
+    "binary": "mt-gnu",
+    "check": "which mt-gnu",
+    "install_steps": [
+      "apt-get install mt-gnu 2>/dev/null || which mt-gnu",
+      "Verify: mt-gnu --version",
+      "supercli plugins install ./plugins/mt-gnu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mt-gnu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mt-gnu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mt-gnu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mt-gnu: apt-get install mt-gnu 2>/dev/null || which mt-gnu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mt-gnu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mt-gnu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mt-gnu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mt-gnu: apt-get install mt-gnu 2>/dev/null || which mt-gnu"
+      },
+      "args": []
+    }
+  ]
+}

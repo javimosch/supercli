@@ -1,0 +1,56 @@
+{
+  "name": "mren",
+  "version": "0.1.0",
+  "description": "CLI tool: mren",
+  "source": "https://manpages.debian.org/mren",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mren"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mren",
+    "binary": "mren",
+    "check": "which mren",
+    "install_steps": [
+      "apt-get install mren 2>/dev/null || which mren",
+      "Verify: mren --version",
+      "supercli plugins install ./plugins/mren --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mren",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mren version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mren",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mren: apt-get install mren 2>/dev/null || which mren"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mren",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mren CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mren",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mren: apt-get install mren 2>/dev/null || which mren"
+      },
+      "args": []
+    }
+  ]
+}

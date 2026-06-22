@@ -1,0 +1,56 @@
+{
+  "name": "mpicalc",
+  "version": "0.1.0",
+  "description": "CLI tool: mpicalc",
+  "source": "https://manpages.debian.org/mpicalc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpicalc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpicalc",
+    "binary": "mpicalc",
+    "check": "which mpicalc",
+    "install_steps": [
+      "apt-get install mpicalc 2>/dev/null || which mpicalc",
+      "Verify: mpicalc --version",
+      "supercli plugins install ./plugins/mpicalc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpicalc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpicalc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpicalc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpicalc: apt-get install mpicalc 2>/dev/null || which mpicalc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpicalc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpicalc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpicalc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpicalc: apt-get install mpicalc 2>/dev/null || which mpicalc"
+      },
+      "args": []
+    }
+  ]
+}

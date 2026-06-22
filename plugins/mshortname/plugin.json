@@ -1,0 +1,56 @@
+{
+  "name": "mshortname",
+  "version": "0.1.0",
+  "description": "CLI tool: mshortname",
+  "source": "https://manpages.debian.org/mshortname",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mshortname"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mshortname",
+    "binary": "mshortname",
+    "check": "which mshortname",
+    "install_steps": [
+      "apt-get install mshortname 2>/dev/null || which mshortname",
+      "Verify: mshortname --version",
+      "supercli plugins install ./plugins/mshortname --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mshortname",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mshortname version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mshortname",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mshortname: apt-get install mshortname 2>/dev/null || which mshortname"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mshortname",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mshortname CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mshortname",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mshortname: apt-get install mshortname 2>/dev/null || which mshortname"
+      },
+      "args": []
+    }
+  ]
+}

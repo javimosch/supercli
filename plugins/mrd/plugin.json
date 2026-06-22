@@ -1,0 +1,56 @@
+{
+  "name": "mrd",
+  "version": "0.1.0",
+  "description": "CLI tool: mrd",
+  "source": "https://manpages.debian.org/mrd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mrd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mrd",
+    "binary": "mrd",
+    "check": "which mrd",
+    "install_steps": [
+      "apt-get install mrd 2>/dev/null || which mrd",
+      "Verify: mrd --version",
+      "supercli plugins install ./plugins/mrd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mrd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mrd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mrd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mrd: apt-get install mrd 2>/dev/null || which mrd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mrd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mrd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mrd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mrd: apt-get install mrd 2>/dev/null || which mrd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "msgfilter",
+  "version": "0.1.0",
+  "description": "CLI tool: msgfilter",
+  "source": "https://manpages.debian.org/msgfilter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgfilter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgfilter",
+    "binary": "msgfilter",
+    "check": "which msgfilter",
+    "install_steps": [
+      "apt-get install msgfilter 2>/dev/null || which msgfilter",
+      "Verify: msgfilter --version",
+      "supercli plugins install ./plugins/msgfilter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgfilter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgfilter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgfilter",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgfilter: apt-get install msgfilter 2>/dev/null || which msgfilter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgfilter",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgfilter CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgfilter",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgfilter: apt-get install msgfilter 2>/dev/null || which msgfilter"
+      },
+      "args": []
+    }
+  ]
+}

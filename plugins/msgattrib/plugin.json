@@ -1,0 +1,56 @@
+{
+  "name": "msgattrib",
+  "version": "0.1.0",
+  "description": "CLI tool: msgattrib",
+  "source": "https://manpages.debian.org/msgattrib",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgattrib"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgattrib",
+    "binary": "msgattrib",
+    "check": "which msgattrib",
+    "install_steps": [
+      "apt-get install msgattrib 2>/dev/null || which msgattrib",
+      "Verify: msgattrib --version",
+      "supercli plugins install ./plugins/msgattrib --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgattrib",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgattrib version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgattrib",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgattrib: apt-get install msgattrib 2>/dev/null || which msgattrib"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgattrib",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgattrib CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgattrib",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgattrib: apt-get install msgattrib 2>/dev/null || which msgattrib"
+      },
+      "args": []
+    }
+  ]
+}

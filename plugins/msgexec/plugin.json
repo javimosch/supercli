@@ -1,0 +1,56 @@
+{
+  "name": "msgexec",
+  "version": "0.1.0",
+  "description": "CLI tool: msgexec",
+  "source": "https://manpages.debian.org/msgexec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgexec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgexec",
+    "binary": "msgexec",
+    "check": "which msgexec",
+    "install_steps": [
+      "apt-get install msgexec 2>/dev/null || which msgexec",
+      "Verify: msgexec --version",
+      "supercli plugins install ./plugins/msgexec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgexec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgexec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgexec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgexec: apt-get install msgexec 2>/dev/null || which msgexec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgexec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgexec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgexec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgexec: apt-get install msgexec 2>/dev/null || which msgexec"
+      },
+      "args": []
+    }
+  ]
+}

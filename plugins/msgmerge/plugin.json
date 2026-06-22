@@ -1,0 +1,56 @@
+{
+  "name": "msgmerge",
+  "version": "0.1.0",
+  "description": "CLI tool: msgmerge",
+  "source": "https://manpages.debian.org/msgmerge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgmerge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgmerge",
+    "binary": "msgmerge",
+    "check": "which msgmerge",
+    "install_steps": [
+      "apt-get install msgmerge 2>/dev/null || which msgmerge",
+      "Verify: msgmerge --version",
+      "supercli plugins install ./plugins/msgmerge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgmerge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgmerge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgmerge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgmerge: apt-get install msgmerge 2>/dev/null || which msgmerge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgmerge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgmerge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgmerge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgmerge: apt-get install msgmerge 2>/dev/null || which msgmerge"
+      },
+      "args": []
+    }
+  ]
+}

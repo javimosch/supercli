@@ -1,0 +1,56 @@
+{
+  "name": "mpifort",
+  "version": "0.1.0",
+  "description": "CLI tool: mpifort",
+  "source": "https://manpages.debian.org/mpifort",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpifort"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpifort",
+    "binary": "mpifort",
+    "check": "which mpifort",
+    "install_steps": [
+      "apt-get install mpifort 2>/dev/null || which mpifort",
+      "Verify: mpifort --version",
+      "supercli plugins install ./plugins/mpifort --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpifort",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpifort version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpifort",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpifort: apt-get install mpifort 2>/dev/null || which mpifort"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpifort",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpifort CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpifort",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpifort: apt-get install mpifort 2>/dev/null || which mpifort"
+      },
+      "args": []
+    }
+  ]
+}

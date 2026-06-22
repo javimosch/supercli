@@ -1,0 +1,56 @@
+{
+  "name": "mpartition",
+  "version": "0.1.0",
+  "description": "CLI tool: mpartition",
+  "source": "https://manpages.debian.org/mpartition",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpartition"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpartition",
+    "binary": "mpartition",
+    "check": "which mpartition",
+    "install_steps": [
+      "apt-get install mpartition 2>/dev/null || which mpartition",
+      "Verify: mpartition --version",
+      "supercli plugins install ./plugins/mpartition --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpartition",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpartition version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpartition",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpartition: apt-get install mpartition 2>/dev/null || which mpartition"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpartition",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpartition CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpartition",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpartition: apt-get install mpartition 2>/dev/null || which mpartition"
+      },
+      "args": []
+    }
+  ]
+}

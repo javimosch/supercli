@@ -1,0 +1,56 @@
+{
+  "name": "msggrep",
+  "version": "0.1.0",
+  "description": "CLI tool: msggrep",
+  "source": "https://manpages.debian.org/msggrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msggrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msggrep",
+    "binary": "msggrep",
+    "check": "which msggrep",
+    "install_steps": [
+      "apt-get install msggrep 2>/dev/null || which msggrep",
+      "Verify: msggrep --version",
+      "supercli plugins install ./plugins/msggrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msggrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msggrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msggrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msggrep: apt-get install msggrep 2>/dev/null || which msggrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msggrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msggrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msggrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msggrep: apt-get install msggrep 2>/dev/null || which msggrep"
+      },
+      "args": []
+    }
+  ]
+}

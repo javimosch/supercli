@@ -1,0 +1,56 @@
+{
+  "name": "msgconv",
+  "version": "0.1.0",
+  "description": "CLI tool: msgconv",
+  "source": "https://manpages.debian.org/msgconv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgconv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgconv",
+    "binary": "msgconv",
+    "check": "which msgconv",
+    "install_steps": [
+      "apt-get install msgconv 2>/dev/null || which msgconv",
+      "Verify: msgconv --version",
+      "supercli plugins install ./plugins/msgconv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgconv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgconv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgconv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgconv: apt-get install msgconv 2>/dev/null || which msgconv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgconv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgconv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgconv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgconv: apt-get install msgconv 2>/dev/null || which msgconv"
+      },
+      "args": []
+    }
+  ]
+}

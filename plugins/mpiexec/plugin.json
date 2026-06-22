@@ -1,0 +1,56 @@
+{
+  "name": "mpiexec",
+  "version": "0.1.0",
+  "description": "CLI tool: mpiexec",
+  "source": "https://manpages.debian.org/mpiexec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpiexec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpiexec",
+    "binary": "mpiexec",
+    "check": "which mpiexec",
+    "install_steps": [
+      "apt-get install mpiexec 2>/dev/null || which mpiexec",
+      "Verify: mpiexec --version",
+      "supercli plugins install ./plugins/mpiexec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpiexec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpiexec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpiexec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpiexec: apt-get install mpiexec 2>/dev/null || which mpiexec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpiexec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpiexec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpiexec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpiexec: apt-get install mpiexec 2>/dev/null || which mpiexec"
+      },
+      "args": []
+    }
+  ]
+}

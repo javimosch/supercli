@@ -1,0 +1,56 @@
+{
+  "name": "msgcmp",
+  "version": "0.1.0",
+  "description": "CLI tool: msgcmp",
+  "source": "https://manpages.debian.org/msgcmp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgcmp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgcmp",
+    "binary": "msgcmp",
+    "check": "which msgcmp",
+    "install_steps": [
+      "apt-get install msgcmp 2>/dev/null || which msgcmp",
+      "Verify: msgcmp --version",
+      "supercli plugins install ./plugins/msgcmp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgcmp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgcmp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgcmp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgcmp: apt-get install msgcmp 2>/dev/null || which msgcmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgcmp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgcmp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgcmp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgcmp: apt-get install msgcmp 2>/dev/null || which msgcmp"
+      },
+      "args": []
+    }
+  ]
+}

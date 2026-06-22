@@ -1,0 +1,56 @@
+{
+  "name": "msgen",
+  "version": "0.1.0",
+  "description": "CLI tool: msgen",
+  "source": "https://manpages.debian.org/msgen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgen",
+    "binary": "msgen",
+    "check": "which msgen",
+    "install_steps": [
+      "apt-get install msgen 2>/dev/null || which msgen",
+      "Verify: msgen --version",
+      "supercli plugins install ./plugins/msgen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgen: apt-get install msgen 2>/dev/null || which msgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgen: apt-get install msgen 2>/dev/null || which msgen"
+      },
+      "args": []
+    }
+  ]
+}

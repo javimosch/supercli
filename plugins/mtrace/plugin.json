@@ -1,0 +1,56 @@
+{
+  "name": "mtrace",
+  "version": "0.1.0",
+  "description": "CLI tool: mtrace",
+  "source": "https://manpages.debian.org/mtrace",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mtrace"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mtrace",
+    "binary": "mtrace",
+    "check": "which mtrace",
+    "install_steps": [
+      "apt-get install mtrace 2>/dev/null || which mtrace",
+      "Verify: mtrace --version",
+      "supercli plugins install ./plugins/mtrace --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mtrace",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mtrace version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtrace",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mtrace: apt-get install mtrace 2>/dev/null || which mtrace"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mtrace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mtrace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtrace",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mtrace: apt-get install mtrace 2>/dev/null || which mtrace"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mtools",
+  "version": "0.1.0",
+  "description": "CLI tool: mtools",
+  "source": "https://manpages.debian.org/mtools",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mtools"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mtools",
+    "binary": "mtools",
+    "check": "which mtools",
+    "install_steps": [
+      "apt-get install mtools 2>/dev/null || which mtools",
+      "Verify: mtools --version",
+      "supercli plugins install ./plugins/mtools --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mtools",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mtools version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtools",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mtools: apt-get install mtools 2>/dev/null || which mtools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mtools",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mtools CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtools",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mtools: apt-get install mtools 2>/dev/null || which mtools"
+      },
+      "args": []
+    }
+  ]
+}

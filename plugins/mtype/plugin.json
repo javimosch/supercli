@@ -1,0 +1,56 @@
+{
+  "name": "mtype",
+  "version": "0.1.0",
+  "description": "CLI tool: mtype",
+  "source": "https://manpages.debian.org/mtype",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mtype"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mtype",
+    "binary": "mtype",
+    "check": "which mtype",
+    "install_steps": [
+      "apt-get install mtype 2>/dev/null || which mtype",
+      "Verify: mtype --version",
+      "supercli plugins install ./plugins/mtype --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mtype",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mtype version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtype",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mtype: apt-get install mtype 2>/dev/null || which mtype"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mtype",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mtype CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mtype",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mtype: apt-get install mtype 2>/dev/null || which mtype"
+      },
+      "args": []
+    }
+  ]
+}

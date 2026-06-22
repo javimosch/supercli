@@ -1,0 +1,56 @@
+{
+  "name": "msexpand",
+  "version": "0.1.0",
+  "description": "CLI tool: msexpand",
+  "source": "https://manpages.debian.org/msexpand",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msexpand"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msexpand",
+    "binary": "msexpand",
+    "check": "which msexpand",
+    "install_steps": [
+      "apt-get install msexpand 2>/dev/null || which msexpand",
+      "Verify: msexpand --version",
+      "supercli plugins install ./plugins/msexpand --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msexpand",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msexpand version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msexpand",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msexpand: apt-get install msexpand 2>/dev/null || which msexpand"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msexpand",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msexpand CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msexpand",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msexpand: apt-get install msexpand 2>/dev/null || which msexpand"
+      },
+      "args": []
+    }
+  ]
+}

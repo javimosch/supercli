@@ -1,0 +1,56 @@
+{
+  "name": "msgfmt",
+  "version": "0.1.0",
+  "description": "CLI tool: msgfmt",
+  "source": "https://manpages.debian.org/msgfmt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "msgfmt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "msgfmt",
+    "binary": "msgfmt",
+    "check": "which msgfmt",
+    "install_steps": [
+      "apt-get install msgfmt 2>/dev/null || which msgfmt",
+      "Verify: msgfmt --version",
+      "supercli plugins install ./plugins/msgfmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "msgfmt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print msgfmt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgfmt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install msgfmt: apt-get install msgfmt 2>/dev/null || which msgfmt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "msgfmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to msgfmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "msgfmt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install msgfmt: apt-get install msgfmt 2>/dev/null || which msgfmt"
+      },
+      "args": []
+    }
+  ]
+}

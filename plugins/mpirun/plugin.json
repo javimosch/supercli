@@ -1,0 +1,56 @@
+{
+  "name": "mpirun",
+  "version": "0.1.0",
+  "description": "CLI tool: mpirun",
+  "source": "https://manpages.debian.org/mpirun",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpirun"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpirun",
+    "binary": "mpirun",
+    "check": "which mpirun",
+    "install_steps": [
+      "apt-get install mpirun 2>/dev/null || which mpirun",
+      "Verify: mpirun --version",
+      "supercli plugins install ./plugins/mpirun --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpirun",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpirun version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpirun",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpirun: apt-get install mpirun 2>/dev/null || which mpirun"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpirun",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpirun CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpirun",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpirun: apt-get install mpirun 2>/dev/null || which mpirun"
+      },
+      "args": []
+    }
+  ]
+}

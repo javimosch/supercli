@@ -1,0 +1,56 @@
+{
+  "name": "mpiexec.openmpi",
+  "version": "0.1.0",
+  "description": "CLI tool: mpiexec.openmpi",
+  "source": "https://manpages.debian.org/mpiexec.openmpi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpiexec.openmpi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpiexec.openmpi",
+    "binary": "mpiexec.openmpi",
+    "check": "which mpiexec.openmpi",
+    "install_steps": [
+      "apt-get install mpiexec.openmpi 2>/dev/null || which mpiexec.openmpi",
+      "Verify: mpiexec.openmpi --version",
+      "supercli plugins install ./plugins/mpiexec.openmpi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpiexec.openmpi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpiexec.openmpi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpiexec.openmpi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpiexec.openmpi: apt-get install mpiexec.openmpi 2>/dev/null || which mpiexec.openmpi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpiexec.openmpi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpiexec.openmpi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpiexec.openmpi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpiexec.openmpi: apt-get install mpiexec.openmpi 2>/dev/null || which mpiexec.openmpi"
+      },
+      "args": []
+    }
+  ]
+}

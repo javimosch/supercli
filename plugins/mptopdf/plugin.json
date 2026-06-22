@@ -1,0 +1,56 @@
+{
+  "name": "mptopdf",
+  "version": "0.1.0",
+  "description": "CLI tool: mptopdf",
+  "source": "https://manpages.debian.org/mptopdf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mptopdf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mptopdf",
+    "binary": "mptopdf",
+    "check": "which mptopdf",
+    "install_steps": [
+      "apt-get install mptopdf 2>/dev/null || which mptopdf",
+      "Verify: mptopdf --version",
+      "supercli plugins install ./plugins/mptopdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mptopdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mptopdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mptopdf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mptopdf: apt-get install mptopdf 2>/dev/null || which mptopdf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mptopdf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mptopdf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mptopdf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mptopdf: apt-get install mptopdf 2>/dev/null || which mptopdf"
+      },
+      "args": []
+    }
+  ]
+}

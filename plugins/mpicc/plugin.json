@@ -1,0 +1,56 @@
+{
+  "name": "mpicc",
+  "version": "0.1.0",
+  "description": "CLI tool: mpicc",
+  "source": "https://manpages.debian.org/mpicc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mpicc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mpicc",
+    "binary": "mpicc",
+    "check": "which mpicc",
+    "install_steps": [
+      "apt-get install mpicc 2>/dev/null || which mpicc",
+      "Verify: mpicc --version",
+      "supercli plugins install ./plugins/mpicc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mpicc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mpicc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpicc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mpicc: apt-get install mpicc 2>/dev/null || which mpicc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mpicc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mpicc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mpicc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mpicc: apt-get install mpicc 2>/dev/null || which mpicc"
+      },
+      "args": []
+    }
+  ]
+}
