@@ -5,3 +5,4 @@ description: install_guidance in plugin.json includes an extra 'note' field not 
 ## Notes
 
 - 2026-06-22T11-49-27Z [head-of-product] install_guidance in plugin.json includes an extra 'note' field not present in install-guidance.json; the latter is a subset
+- 2026-06-22T12-19-55Z [head-of-product] plugin.json install_guidance includes an extra 'note' field not present in install-guidance.json; the latter is a subset
