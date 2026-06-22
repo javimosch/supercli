@@ -1,0 +1,56 @@
+{
+  "name": "gtscheck",
+  "version": "0.1.0",
+  "description": "CLI tool: gtscheck",
+  "source": "https://manpages.debian.org/gtscheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gtscheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gtscheck",
+    "binary": "gtscheck",
+    "check": "which gtscheck",
+    "install_steps": [
+      "apt-get install gtscheck 2>/dev/null || which gtscheck",
+      "Verify: gtscheck --version",
+      "supercli plugins install ./plugins/gtscheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gtscheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gtscheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtscheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gtscheck: apt-get install gtscheck 2>/dev/null || which gtscheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gtscheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gtscheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtscheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gtscheck: apt-get install gtscheck 2>/dev/null || which gtscheck"
+      },
+      "args": []
+    }
+  ]
+}

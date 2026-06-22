@@ -1,0 +1,56 @@
+{
+  "name": "gtf",
+  "version": "0.1.0",
+  "description": "CLI tool: gtf",
+  "source": "https://manpages.debian.org/gtf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gtf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gtf",
+    "binary": "gtf",
+    "check": "which gtf",
+    "install_steps": [
+      "apt-get install gtf 2>/dev/null || which gtf",
+      "Verify: gtf --version",
+      "supercli plugins install ./plugins/gtf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gtf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gtf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gtf: apt-get install gtf 2>/dev/null || which gtf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gtf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gtf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gtf: apt-get install gtf 2>/dev/null || which gtf"
+      },
+      "args": []
+    }
+  ]
+}

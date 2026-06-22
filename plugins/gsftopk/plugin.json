@@ -1,0 +1,56 @@
+{
+  "name": "gsftopk",
+  "version": "0.1.0",
+  "description": "CLI tool: gsftopk",
+  "source": "https://manpages.debian.org/gsftopk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gsftopk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gsftopk",
+    "binary": "gsftopk",
+    "check": "which gsftopk",
+    "install_steps": [
+      "apt-get install gsftopk 2>/dev/null || which gsftopk",
+      "Verify: gsftopk --version",
+      "supercli plugins install ./plugins/gsftopk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gsftopk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gsftopk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsftopk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gsftopk: apt-get install gsftopk 2>/dev/null || which gsftopk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gsftopk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gsftopk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsftopk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gsftopk: apt-get install gsftopk 2>/dev/null || which gsftopk"
+      },
+      "args": []
+    }
+  ]
+}

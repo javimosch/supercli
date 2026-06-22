@@ -1,0 +1,56 @@
+{
+  "name": "grub-mount",
+  "version": "0.1.0",
+  "description": "CLI tool: grub-mount",
+  "source": "https://manpages.debian.org/grub-mount",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grub-mount"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grub-mount",
+    "binary": "grub-mount",
+    "check": "which grub-mount",
+    "install_steps": [
+      "apt-get install grub-mount 2>/dev/null || which grub-mount",
+      "Verify: grub-mount --version",
+      "supercli plugins install ./plugins/grub-mount --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grub-mount",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grub-mount version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-mount",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grub-mount: apt-get install grub-mount 2>/dev/null || which grub-mount"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grub-mount",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grub-mount CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-mount",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grub-mount: apt-get install grub-mount 2>/dev/null || which grub-mount"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "grub-probe",
+  "version": "0.1.0",
+  "description": "CLI tool: grub-probe",
+  "source": "https://manpages.debian.org/grub-probe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grub-probe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grub-probe",
+    "binary": "grub-probe",
+    "check": "which grub-probe",
+    "install_steps": [
+      "apt-get install grub-probe 2>/dev/null || which grub-probe",
+      "Verify: grub-probe --version",
+      "supercli plugins install ./plugins/grub-probe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grub-probe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grub-probe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-probe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grub-probe: apt-get install grub-probe 2>/dev/null || which grub-probe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grub-probe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grub-probe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-probe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grub-probe: apt-get install grub-probe 2>/dev/null || which grub-probe"
+      },
+      "args": []
+    }
+  ]
+}

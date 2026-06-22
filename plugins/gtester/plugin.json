@@ -1,0 +1,56 @@
+{
+  "name": "gtester",
+  "version": "0.1.0",
+  "description": "CLI tool: gtester",
+  "source": "https://manpages.debian.org/gtester",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gtester"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gtester",
+    "binary": "gtester",
+    "check": "which gtester",
+    "install_steps": [
+      "apt-get install gtester 2>/dev/null || which gtester",
+      "Verify: gtester --version",
+      "supercli plugins install ./plugins/gtester --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gtester",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gtester version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtester",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gtester: apt-get install gtester 2>/dev/null || which gtester"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gtester",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gtester CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtester",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gtester: apt-get install gtester 2>/dev/null || which gtester"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gsbj",
+  "version": "0.1.0",
+  "description": "CLI tool: gsbj",
+  "source": "https://manpages.debian.org/gsbj",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gsbj"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gsbj",
+    "binary": "gsbj",
+    "check": "which gsbj",
+    "install_steps": [
+      "apt-get install gsbj 2>/dev/null || which gsbj",
+      "Verify: gsbj --version",
+      "supercli plugins install ./plugins/gsbj --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gsbj",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gsbj version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsbj",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gsbj: apt-get install gsbj 2>/dev/null || which gsbj"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gsbj",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gsbj CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsbj",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gsbj: apt-get install gsbj 2>/dev/null || which gsbj"
+      },
+      "args": []
+    }
+  ]
+}

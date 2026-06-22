@@ -1,0 +1,56 @@
+{
+  "name": "gslp",
+  "version": "0.1.0",
+  "description": "CLI tool: gslp",
+  "source": "https://manpages.debian.org/gslp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gslp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gslp",
+    "binary": "gslp",
+    "check": "which gslp",
+    "install_steps": [
+      "apt-get install gslp 2>/dev/null || which gslp",
+      "Verify: gslp --version",
+      "supercli plugins install ./plugins/gslp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gslp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gslp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gslp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gslp: apt-get install gslp 2>/dev/null || which gslp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gslp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gslp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gslp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gslp: apt-get install gslp 2>/dev/null || which gslp"
+      },
+      "args": []
+    }
+  ]
+}

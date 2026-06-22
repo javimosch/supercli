@@ -1,0 +1,56 @@
+{
+  "name": "gtbl",
+  "version": "0.1.0",
+  "description": "CLI tool: gtbl",
+  "source": "https://manpages.debian.org/gtbl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gtbl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gtbl",
+    "binary": "gtbl",
+    "check": "which gtbl",
+    "install_steps": [
+      "apt-get install gtbl 2>/dev/null || which gtbl",
+      "Verify: gtbl --version",
+      "supercli plugins install ./plugins/gtbl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gtbl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gtbl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtbl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gtbl: apt-get install gtbl 2>/dev/null || which gtbl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gtbl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gtbl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtbl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gtbl: apt-get install gtbl 2>/dev/null || which gtbl"
+      },
+      "args": []
+    }
+  ]
+}

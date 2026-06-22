@@ -1,0 +1,56 @@
+{
+  "name": "grub-reboot",
+  "version": "0.1.0",
+  "description": "CLI tool: grub-reboot",
+  "source": "https://manpages.debian.org/grub-reboot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grub-reboot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grub-reboot",
+    "binary": "grub-reboot",
+    "check": "which grub-reboot",
+    "install_steps": [
+      "apt-get install grub-reboot 2>/dev/null || which grub-reboot",
+      "Verify: grub-reboot --version",
+      "supercli plugins install ./plugins/grub-reboot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grub-reboot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grub-reboot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-reboot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grub-reboot: apt-get install grub-reboot 2>/dev/null || which grub-reboot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grub-reboot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grub-reboot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-reboot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grub-reboot: apt-get install grub-reboot 2>/dev/null || which grub-reboot"
+      },
+      "args": []
+    }
+  ]
+}

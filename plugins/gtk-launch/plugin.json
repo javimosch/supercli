@@ -1,0 +1,56 @@
+{
+  "name": "gtk-launch",
+  "version": "0.1.0",
+  "description": "CLI tool: gtk-launch",
+  "source": "https://manpages.debian.org/gtk-launch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gtk-launch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gtk-launch",
+    "binary": "gtk-launch",
+    "check": "which gtk-launch",
+    "install_steps": [
+      "apt-get install gtk-launch 2>/dev/null || which gtk-launch",
+      "Verify: gtk-launch --version",
+      "supercli plugins install ./plugins/gtk-launch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gtk-launch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gtk-launch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtk-launch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gtk-launch: apt-get install gtk-launch 2>/dev/null || which gtk-launch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gtk-launch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gtk-launch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gtk-launch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gtk-launch: apt-get install gtk-launch 2>/dev/null || which gtk-launch"
+      },
+      "args": []
+    }
+  ]
+}

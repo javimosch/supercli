@@ -1,0 +1,56 @@
+{
+  "name": "gsnd",
+  "version": "0.1.0",
+  "description": "CLI tool: gsnd",
+  "source": "https://manpages.debian.org/gsnd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gsnd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gsnd",
+    "binary": "gsnd",
+    "check": "which gsnd",
+    "install_steps": [
+      "apt-get install gsnd 2>/dev/null || which gsnd",
+      "Verify: gsnd --version",
+      "supercli plugins install ./plugins/gsnd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gsnd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gsnd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsnd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gsnd: apt-get install gsnd 2>/dev/null || which gsnd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gsnd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gsnd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsnd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gsnd: apt-get install gsnd 2>/dev/null || which gsnd"
+      },
+      "args": []
+    }
+  ]
+}

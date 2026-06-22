@@ -1,0 +1,56 @@
+{
+  "name": "gslj",
+  "version": "0.1.0",
+  "description": "CLI tool: gslj",
+  "source": "https://manpages.debian.org/gslj",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gslj"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gslj",
+    "binary": "gslj",
+    "check": "which gslj",
+    "install_steps": [
+      "apt-get install gslj 2>/dev/null || which gslj",
+      "Verify: gslj --version",
+      "supercli plugins install ./plugins/gslj --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gslj",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gslj version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gslj",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gslj: apt-get install gslj 2>/dev/null || which gslj"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gslj",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gslj CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gslj",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gslj: apt-get install gslj 2>/dev/null || which gslj"
+      },
+      "args": []
+    }
+  ]
+}

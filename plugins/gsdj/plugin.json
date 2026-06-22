@@ -1,0 +1,56 @@
+{
+  "name": "gsdj",
+  "version": "0.1.0",
+  "description": "CLI tool: gsdj",
+  "source": "https://manpages.debian.org/gsdj",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gsdj"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gsdj",
+    "binary": "gsdj",
+    "check": "which gsdj",
+    "install_steps": [
+      "apt-get install gsdj 2>/dev/null || which gsdj",
+      "Verify: gsdj --version",
+      "supercli plugins install ./plugins/gsdj --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gsdj",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gsdj version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsdj",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gsdj: apt-get install gsdj 2>/dev/null || which gsdj"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gsdj",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gsdj CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsdj",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gsdj: apt-get install gsdj 2>/dev/null || which gsdj"
+      },
+      "args": []
+    }
+  ]
+}

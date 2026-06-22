@@ -1,0 +1,56 @@
+{
+  "name": "gts-config",
+  "version": "0.1.0",
+  "description": "CLI tool: gts-config",
+  "source": "https://manpages.debian.org/gts-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gts-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gts-config",
+    "binary": "gts-config",
+    "check": "which gts-config",
+    "install_steps": [
+      "apt-get install gts-config 2>/dev/null || which gts-config",
+      "Verify: gts-config --version",
+      "supercli plugins install ./plugins/gts-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gts-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gts-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gts-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gts-config: apt-get install gts-config 2>/dev/null || which gts-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gts-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gts-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gts-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gts-config: apt-get install gts-config 2>/dev/null || which gts-config"
+      },
+      "args": []
+    }
+  ]
+}

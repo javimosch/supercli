@@ -1,0 +1,56 @@
+{
+  "name": "gsf",
+  "version": "0.1.0",
+  "description": "CLI tool: gsf",
+  "source": "https://manpages.debian.org/gsf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gsf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gsf",
+    "binary": "gsf",
+    "check": "which gsf",
+    "install_steps": [
+      "apt-get install gsf 2>/dev/null || which gsf",
+      "Verify: gsf --version",
+      "supercli plugins install ./plugins/gsf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gsf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gsf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gsf: apt-get install gsf 2>/dev/null || which gsf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gsf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gsf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gsf: apt-get install gsf 2>/dev/null || which gsf"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gsettings",
+  "version": "0.1.0",
+  "description": "CLI tool: gsettings",
+  "source": "https://manpages.debian.org/gsettings",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gsettings"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gsettings",
+    "binary": "gsettings",
+    "check": "which gsettings",
+    "install_steps": [
+      "apt-get install gsettings 2>/dev/null || which gsettings",
+      "Verify: gsettings --version",
+      "supercli plugins install ./plugins/gsettings --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gsettings",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gsettings version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsettings",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gsettings: apt-get install gsettings 2>/dev/null || which gsettings"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gsettings",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gsettings CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gsettings",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gsettings: apt-get install gsettings 2>/dev/null || which gsettings"
+      },
+      "args": []
+    }
+  ]
+}
