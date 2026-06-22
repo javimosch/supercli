@@ -1,0 +1,56 @@
+{
+  "name": "gdialog",
+  "version": "0.1.0",
+  "description": "CLI tool: gdialog",
+  "source": "https://manpages.debian.org/gdialog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gdialog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gdialog",
+    "binary": "gdialog",
+    "check": "which gdialog",
+    "install_steps": [
+      "apt-get install gdialog 2>/dev/null || which gdialog",
+      "Verify: gdialog --version",
+      "supercli plugins install ./plugins/gdialog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gdialog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gdialog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdialog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gdialog: apt-get install gdialog 2>/dev/null || which gdialog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gdialog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gdialog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdialog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gdialog: apt-get install gdialog 2>/dev/null || which gdialog"
+      },
+      "args": []
+    }
+  ]
+}

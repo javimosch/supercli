@@ -1,0 +1,56 @@
+{
+  "name": "gdbserver",
+  "version": "0.1.0",
+  "description": "CLI tool: gdbserver",
+  "source": "https://manpages.debian.org/gdbserver",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gdbserver"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gdbserver",
+    "binary": "gdbserver",
+    "check": "which gdbserver",
+    "install_steps": [
+      "apt-get install gdbserver 2>/dev/null || which gdbserver",
+      "Verify: gdbserver --version",
+      "supercli plugins install ./plugins/gdbserver --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gdbserver",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gdbserver version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdbserver",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gdbserver: apt-get install gdbserver 2>/dev/null || which gdbserver"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gdbserver",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gdbserver CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdbserver",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gdbserver: apt-get install gdbserver 2>/dev/null || which gdbserver"
+      },
+      "args": []
+    }
+  ]
+}

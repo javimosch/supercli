@@ -1,0 +1,56 @@
+{
+  "name": "gdbus",
+  "version": "0.1.0",
+  "description": "CLI tool: gdbus",
+  "source": "https://manpages.debian.org/gdbus",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gdbus"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gdbus",
+    "binary": "gdbus",
+    "check": "which gdbus",
+    "install_steps": [
+      "apt-get install gdbus 2>/dev/null || which gdbus",
+      "Verify: gdbus --version",
+      "supercli plugins install ./plugins/gdbus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gdbus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gdbus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdbus",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gdbus: apt-get install gdbus 2>/dev/null || which gdbus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gdbus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gdbus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdbus",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gdbus: apt-get install gdbus 2>/dev/null || which gdbus"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gencnval",
+  "version": "0.1.0",
+  "description": "CLI tool: gencnval",
+  "source": "https://manpages.debian.org/gencnval",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gencnval"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gencnval",
+    "binary": "gencnval",
+    "check": "which gencnval",
+    "install_steps": [
+      "apt-get install gencnval 2>/dev/null || which gencnval",
+      "Verify: gencnval --version",
+      "supercli plugins install ./plugins/gencnval --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gencnval",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gencnval version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gencnval",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gencnval: apt-get install gencnval 2>/dev/null || which gencnval"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gencnval",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gencnval CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gencnval",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gencnval: apt-get install gencnval 2>/dev/null || which gencnval"
+      },
+      "args": []
+    }
+  ]
+}

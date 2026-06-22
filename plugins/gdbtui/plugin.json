@@ -1,0 +1,56 @@
+{
+  "name": "gdbtui",
+  "version": "0.1.0",
+  "description": "CLI tool: gdbtui",
+  "source": "https://manpages.debian.org/gdbtui",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gdbtui"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gdbtui",
+    "binary": "gdbtui",
+    "check": "which gdbtui",
+    "install_steps": [
+      "apt-get install gdbtui 2>/dev/null || which gdbtui",
+      "Verify: gdbtui --version",
+      "supercli plugins install ./plugins/gdbtui --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gdbtui",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gdbtui version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdbtui",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gdbtui: apt-get install gdbtui 2>/dev/null || which gdbtui"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gdbtui",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gdbtui CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdbtui",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gdbtui: apt-get install gdbtui 2>/dev/null || which gdbtui"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "genisoimage",
+  "version": "0.1.0",
+  "description": "CLI tool: genisoimage",
+  "source": "https://manpages.debian.org/genisoimage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "genisoimage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "genisoimage",
+    "binary": "genisoimage",
+    "check": "which genisoimage",
+    "install_steps": [
+      "apt-get install genisoimage 2>/dev/null || which genisoimage",
+      "Verify: genisoimage --version",
+      "supercli plugins install ./plugins/genisoimage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "genisoimage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print genisoimage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "genisoimage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install genisoimage: apt-get install genisoimage 2>/dev/null || which genisoimage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "genisoimage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to genisoimage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "genisoimage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install genisoimage: apt-get install genisoimage 2>/dev/null || which genisoimage"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "geod",
+  "version": "0.1.0",
+  "description": "CLI tool: geod",
+  "source": "https://manpages.debian.org/geod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "geod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "geod",
+    "binary": "geod",
+    "check": "which geod",
+    "install_steps": [
+      "apt-get install geod 2>/dev/null || which geod",
+      "Verify: geod --version",
+      "supercli plugins install ./plugins/geod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "geod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print geod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "geod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install geod: apt-get install geod 2>/dev/null || which geod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "geod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to geod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "geod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install geod: apt-get install geod 2>/dev/null || which geod"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "gencfu",
+  "version": "0.1.0",
+  "description": "CLI tool: gencfu",
+  "source": "https://manpages.debian.org/gencfu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gencfu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gencfu",
+    "binary": "gencfu",
+    "check": "which gencfu",
+    "install_steps": [
+      "apt-get install gencfu 2>/dev/null || which gencfu",
+      "Verify: gencfu --version",
+      "supercli plugins install ./plugins/gencfu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gencfu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gencfu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gencfu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gencfu: apt-get install gencfu 2>/dev/null || which gencfu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gencfu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gencfu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gencfu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gencfu: apt-get install gencfu 2>/dev/null || which gencfu"
+      },
+      "args": []
+    }
+  ]
+}

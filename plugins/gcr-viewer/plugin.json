@@ -1,0 +1,56 @@
+{
+  "name": "gcr-viewer",
+  "version": "0.1.0",
+  "description": "CLI tool: gcr-viewer",
+  "source": "https://manpages.debian.org/gcr-viewer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gcr-viewer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gcr-viewer",
+    "binary": "gcr-viewer",
+    "check": "which gcr-viewer",
+    "install_steps": [
+      "apt-get install gcr-viewer 2>/dev/null || which gcr-viewer",
+      "Verify: gcr-viewer --version",
+      "supercli plugins install ./plugins/gcr-viewer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gcr-viewer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gcr-viewer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcr-viewer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gcr-viewer: apt-get install gcr-viewer 2>/dev/null || which gcr-viewer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gcr-viewer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gcr-viewer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcr-viewer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gcr-viewer: apt-get install gcr-viewer 2>/dev/null || which gcr-viewer"
+      },
+      "args": []
+    }
+  ]
+}

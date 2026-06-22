@@ -1,0 +1,56 @@
+{
+  "name": "gendict",
+  "version": "0.1.0",
+  "description": "CLI tool: gendict",
+  "source": "https://manpages.debian.org/gendict",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gendict"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gendict",
+    "binary": "gendict",
+    "check": "which gendict",
+    "install_steps": [
+      "apt-get install gendict 2>/dev/null || which gendict",
+      "Verify: gendict --version",
+      "supercli plugins install ./plugins/gendict --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gendict",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gendict version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gendict",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gendict: apt-get install gendict 2>/dev/null || which gendict"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gendict",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gendict CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gendict",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gendict: apt-get install gendict 2>/dev/null || which gendict"
+      },
+      "args": []
+    }
+  ]
+}

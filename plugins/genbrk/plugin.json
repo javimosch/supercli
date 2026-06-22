@@ -1,0 +1,56 @@
+{
+  "name": "genbrk",
+  "version": "0.1.0",
+  "description": "CLI tool: genbrk",
+  "source": "https://manpages.debian.org/genbrk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "genbrk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "genbrk",
+    "binary": "genbrk",
+    "check": "which genbrk",
+    "install_steps": [
+      "apt-get install genbrk 2>/dev/null || which genbrk",
+      "Verify: genbrk --version",
+      "supercli plugins install ./plugins/genbrk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "genbrk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print genbrk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "genbrk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install genbrk: apt-get install genbrk 2>/dev/null || which genbrk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "genbrk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to genbrk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "genbrk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install genbrk: apt-get install genbrk 2>/dev/null || which genbrk"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "genccode",
+  "version": "0.1.0",
+  "description": "CLI tool: genccode",
+  "source": "https://manpages.debian.org/genccode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "genccode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "genccode",
+    "binary": "genccode",
+    "check": "which genccode",
+    "install_steps": [
+      "apt-get install genccode 2>/dev/null || which genccode",
+      "Verify: genccode --version",
+      "supercli plugins install ./plugins/genccode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "genccode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print genccode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "genccode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install genccode: apt-get install genccode 2>/dev/null || which genccode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "genccode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to genccode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "genccode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install genccode: apt-get install genccode 2>/dev/null || which genccode"
+      },
+      "args": []
+    }
+  ]
+}

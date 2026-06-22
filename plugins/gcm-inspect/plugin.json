@@ -1,0 +1,56 @@
+{
+  "name": "gcm-inspect",
+  "version": "0.1.0",
+  "description": "CLI tool: gcm-inspect",
+  "source": "https://manpages.debian.org/gcm-inspect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gcm-inspect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gcm-inspect",
+    "binary": "gcm-inspect",
+    "check": "which gcm-inspect",
+    "install_steps": [
+      "apt-get install gcm-inspect 2>/dev/null || which gcm-inspect",
+      "Verify: gcm-inspect --version",
+      "supercli plugins install ./plugins/gcm-inspect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gcm-inspect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gcm-inspect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcm-inspect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gcm-inspect: apt-get install gcm-inspect 2>/dev/null || which gcm-inspect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gcm-inspect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gcm-inspect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcm-inspect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gcm-inspect: apt-get install gcm-inspect 2>/dev/null || which gcm-inspect"
+      },
+      "args": []
+    }
+  ]
+}

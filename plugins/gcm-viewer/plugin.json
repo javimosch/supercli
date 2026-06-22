@@ -1,0 +1,56 @@
+{
+  "name": "gcm-viewer",
+  "version": "0.1.0",
+  "description": "CLI tool: gcm-viewer",
+  "source": "https://manpages.debian.org/gcm-viewer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gcm-viewer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gcm-viewer",
+    "binary": "gcm-viewer",
+    "check": "which gcm-viewer",
+    "install_steps": [
+      "apt-get install gcm-viewer 2>/dev/null || which gcm-viewer",
+      "Verify: gcm-viewer --version",
+      "supercli plugins install ./plugins/gcm-viewer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gcm-viewer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gcm-viewer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcm-viewer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gcm-viewer: apt-get install gcm-viewer 2>/dev/null || which gcm-viewer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gcm-viewer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gcm-viewer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcm-viewer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gcm-viewer: apt-get install gcm-viewer 2>/dev/null || which gcm-viewer"
+      },
+      "args": []
+    }
+  ]
+}

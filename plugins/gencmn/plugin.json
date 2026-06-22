@@ -1,0 +1,56 @@
+{
+  "name": "gencmn",
+  "version": "0.1.0",
+  "description": "CLI tool: gencmn",
+  "source": "https://manpages.debian.org/gencmn",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gencmn"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gencmn",
+    "binary": "gencmn",
+    "check": "which gencmn",
+    "install_steps": [
+      "apt-get install gencmn 2>/dev/null || which gencmn",
+      "Verify: gencmn --version",
+      "supercli plugins install ./plugins/gencmn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gencmn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gencmn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gencmn",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gencmn: apt-get install gencmn 2>/dev/null || which gencmn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gencmn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gencmn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gencmn",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gencmn: apt-get install gencmn 2>/dev/null || which gencmn"
+      },
+      "args": []
+    }
+  ]
+}

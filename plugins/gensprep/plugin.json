@@ -1,0 +1,56 @@
+{
+  "name": "gensprep",
+  "version": "0.1.0",
+  "description": "CLI tool: gensprep",
+  "source": "https://manpages.debian.org/gensprep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gensprep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gensprep",
+    "binary": "gensprep",
+    "check": "which gensprep",
+    "install_steps": [
+      "apt-get install gensprep 2>/dev/null || which gensprep",
+      "Verify: gensprep --version",
+      "supercli plugins install ./plugins/gensprep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gensprep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gensprep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gensprep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gensprep: apt-get install gensprep 2>/dev/null || which gensprep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gensprep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gensprep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gensprep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gensprep: apt-get install gensprep 2>/dev/null || which gensprep"
+      },
+      "args": []
+    }
+  ]
+}

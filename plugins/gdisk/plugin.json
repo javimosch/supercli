@@ -1,0 +1,56 @@
+{
+  "name": "gdisk",
+  "version": "0.1.0",
+  "description": "CLI tool: gdisk",
+  "source": "https://manpages.debian.org/gdisk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gdisk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gdisk",
+    "binary": "gdisk",
+    "check": "which gdisk",
+    "install_steps": [
+      "apt-get install gdisk 2>/dev/null || which gdisk",
+      "Verify: gdisk --version",
+      "supercli plugins install ./plugins/gdisk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gdisk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gdisk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdisk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gdisk: apt-get install gdisk 2>/dev/null || which gdisk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gdisk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gdisk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gdisk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gdisk: apt-get install gdisk 2>/dev/null || which gdisk"
+      },
+      "args": []
+    }
+  ]
+}
