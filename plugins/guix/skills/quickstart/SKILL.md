@@ -1,1 +1,0 @@
----\nname: guix\ndescription: GNU Guix package manager\n---\n# guix Plugin\nGNU Guix package manager
