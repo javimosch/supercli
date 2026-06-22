@@ -1,0 +1,53 @@
+{
+  "name": "fwupd",
+  "version": "0.1.0",
+  "description": "Firmware update daemon",
+  "source": "https://github.com/fwupd/fwupd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fwupd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fwupd",
+    "binary": "fwupd",
+    "check": "which fwupd",
+    "install_steps": [
+      "brew install fwupd",
+      "Verify: fwupd --version",
+      "supercli plugins install ./plugins/fwupd --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "fwupd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fwupd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fwupd: brew install fwupd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fwupd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fwupd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fwupd"
+      },
+      "args": []
+    }
+  ]
+}
