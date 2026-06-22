@@ -1,0 +1,53 @@
+{
+  "name": "dhcpdump",
+  "version": "0.1.0",
+  "description": "Monitor DHCP traffic for debugging purposes",
+  "source": "https://github.com/bbonev/dhcpdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dhcpdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dhcpdump",
+    "binary": "dhcpdump",
+    "check": "which dhcpdump",
+    "install_steps": [
+      "brew install dhcpdump",
+      "Verify: dhcpdump --version",
+      "supercli plugins install ./plugins/dhcpdump --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "dhcpdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dhcpdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dhcpdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dhcpdump: brew install dhcpdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dhcpdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dhcpdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dhcpdump",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dhcpdump"
+      },
+      "args": []
+    }
+  ]
+}
