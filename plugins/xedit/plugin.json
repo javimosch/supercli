@@ -1,0 +1,56 @@
+{
+  "name": "xedit",
+  "version": "0.1.0",
+  "description": "CLI tool: xedit",
+  "source": "https://manpages.debian.org/xedit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xedit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xedit",
+    "binary": "xedit",
+    "check": "which xedit",
+    "install_steps": [
+      "apt-get install xedit 2>/dev/null || which xedit",
+      "Verify: xedit --version",
+      "supercli plugins install ./plugins/xedit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xedit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xedit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xedit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xedit: apt-get install xedit 2>/dev/null || which xedit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xedit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xedit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xedit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xedit: apt-get install xedit 2>/dev/null || which xedit"
+      },
+      "args": []
+    }
+  ]
+}

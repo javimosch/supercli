@@ -1,0 +1,56 @@
+{
+  "name": "xdg-settings",
+  "version": "0.1.0",
+  "description": "CLI tool: xdg-settings",
+  "source": "https://manpages.debian.org/xdg-settings",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xdg-settings"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xdg-settings",
+    "binary": "xdg-settings",
+    "check": "which xdg-settings",
+    "install_steps": [
+      "apt-get install xdg-settings 2>/dev/null || which xdg-settings",
+      "Verify: xdg-settings --version",
+      "supercli plugins install ./plugins/xdg-settings --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xdg-settings",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xdg-settings version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xdg-settings",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xdg-settings: apt-get install xdg-settings 2>/dev/null || which xdg-settings"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xdg-settings",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xdg-settings CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xdg-settings",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xdg-settings: apt-get install xdg-settings 2>/dev/null || which xdg-settings"
+      },
+      "args": []
+    }
+  ]
+}

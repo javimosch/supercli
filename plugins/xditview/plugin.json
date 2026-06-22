@@ -1,0 +1,56 @@
+{
+  "name": "xditview",
+  "version": "0.1.0",
+  "description": "CLI tool: xditview",
+  "source": "https://manpages.debian.org/xditview",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xditview"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xditview",
+    "binary": "xditview",
+    "check": "which xditview",
+    "install_steps": [
+      "apt-get install xditview 2>/dev/null || which xditview",
+      "Verify: xditview --version",
+      "supercli plugins install ./plugins/xditview --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xditview",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xditview version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xditview",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xditview: apt-get install xditview 2>/dev/null || which xditview"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xditview",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xditview CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xditview",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xditview: apt-get install xditview 2>/dev/null || which xditview"
+      },
+      "args": []
+    }
+  ]
+}

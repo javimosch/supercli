@@ -1,0 +1,56 @@
+{
+  "name": "xfdesktop",
+  "version": "0.1.0",
+  "description": "CLI tool: xfdesktop",
+  "source": "https://manpages.debian.org/xfdesktop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xfdesktop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xfdesktop",
+    "binary": "xfdesktop",
+    "check": "which xfdesktop",
+    "install_steps": [
+      "apt-get install xfdesktop 2>/dev/null || which xfdesktop",
+      "Verify: xfdesktop --version",
+      "supercli plugins install ./plugins/xfdesktop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xfdesktop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xfdesktop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfdesktop",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xfdesktop: apt-get install xfdesktop 2>/dev/null || which xfdesktop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xfdesktop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xfdesktop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfdesktop",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xfdesktop: apt-get install xfdesktop 2>/dev/null || which xfdesktop"
+      },
+      "args": []
+    }
+  ]
+}

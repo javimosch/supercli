@@ -1,0 +1,56 @@
+{
+  "name": "xeyes",
+  "version": "0.1.0",
+  "description": "CLI tool: xeyes",
+  "source": "https://manpages.debian.org/xeyes",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xeyes"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xeyes",
+    "binary": "xeyes",
+    "check": "which xeyes",
+    "install_steps": [
+      "apt-get install xeyes 2>/dev/null || which xeyes",
+      "Verify: xeyes --version",
+      "supercli plugins install ./plugins/xeyes --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xeyes",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xeyes version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xeyes",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xeyes: apt-get install xeyes 2>/dev/null || which xeyes"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xeyes",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xeyes CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xeyes",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xeyes: apt-get install xeyes 2>/dev/null || which xeyes"
+      },
+      "args": []
+    }
+  ]
+}

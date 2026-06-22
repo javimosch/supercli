@@ -1,0 +1,56 @@
+{
+  "name": "xdvi",
+  "version": "0.1.0",
+  "description": "CLI tool: xdvi",
+  "source": "https://manpages.debian.org/xdvi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xdvi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xdvi",
+    "binary": "xdvi",
+    "check": "which xdvi",
+    "install_steps": [
+      "apt-get install xdvi 2>/dev/null || which xdvi",
+      "Verify: xdvi --version",
+      "supercli plugins install ./plugins/xdvi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xdvi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xdvi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xdvi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xdvi: apt-get install xdvi 2>/dev/null || which xdvi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xdvi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xdvi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xdvi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xdvi: apt-get install xdvi 2>/dev/null || which xdvi"
+      },
+      "args": []
+    }
+  ]
+}
