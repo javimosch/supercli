@@ -1,0 +1,56 @@
+{
+  "name": "pnmarith",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmarith",
+  "source": "https://manpages.debian.org/pnmarith",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmarith"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmarith",
+    "binary": "pnmarith",
+    "check": "which pnmarith",
+    "install_steps": [
+      "apt-get install pnmarith 2>/dev/null || which pnmarith",
+      "Verify: pnmarith --version",
+      "supercli plugins install ./plugins/pnmarith --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmarith",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmarith version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmarith",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmarith: apt-get install pnmarith 2>/dev/null || which pnmarith"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmarith",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmarith CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmarith",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmarith: apt-get install pnmarith 2>/dev/null || which pnmarith"
+      },
+      "args": []
+    }
+  ]
+}

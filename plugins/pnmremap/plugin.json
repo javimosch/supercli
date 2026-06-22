@@ -1,0 +1,56 @@
+{
+  "name": "pnmremap",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmremap",
+  "source": "https://manpages.debian.org/pnmremap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmremap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmremap",
+    "binary": "pnmremap",
+    "check": "which pnmremap",
+    "install_steps": [
+      "apt-get install pnmremap 2>/dev/null || which pnmremap",
+      "Verify: pnmremap --version",
+      "supercli plugins install ./plugins/pnmremap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmremap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmremap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmremap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmremap: apt-get install pnmremap 2>/dev/null || which pnmremap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmremap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmremap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmremap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmremap: apt-get install pnmremap 2>/dev/null || which pnmremap"
+      },
+      "args": []
+    }
+  ]
+}

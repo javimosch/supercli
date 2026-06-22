@@ -1,0 +1,56 @@
+{
+  "name": "pnmtops",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmtops",
+  "source": "https://manpages.debian.org/pnmtops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmtops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmtops",
+    "binary": "pnmtops",
+    "check": "which pnmtops",
+    "install_steps": [
+      "apt-get install pnmtops 2>/dev/null || which pnmtops",
+      "Verify: pnmtops --version",
+      "supercli plugins install ./plugins/pnmtops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmtops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmtops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmtops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmtops: apt-get install pnmtops 2>/dev/null || which pnmtops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmtops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmtops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmtops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmtops: apt-get install pnmtops 2>/dev/null || which pnmtops"
+      },
+      "args": []
+    }
+  ]
+}

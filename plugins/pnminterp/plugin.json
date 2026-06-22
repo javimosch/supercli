@@ -1,0 +1,56 @@
+{
+  "name": "pnminterp",
+  "version": "0.1.0",
+  "description": "CLI tool: pnminterp",
+  "source": "https://manpages.debian.org/pnminterp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnminterp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnminterp",
+    "binary": "pnminterp",
+    "check": "which pnminterp",
+    "install_steps": [
+      "apt-get install pnminterp 2>/dev/null || which pnminterp",
+      "Verify: pnminterp --version",
+      "supercli plugins install ./plugins/pnminterp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnminterp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnminterp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnminterp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnminterp: apt-get install pnminterp 2>/dev/null || which pnminterp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnminterp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnminterp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnminterp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnminterp: apt-get install pnminterp 2>/dev/null || which pnminterp"
+      },
+      "args": []
+    }
+  ]
+}

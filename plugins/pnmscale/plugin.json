@@ -1,0 +1,56 @@
+{
+  "name": "pnmscale",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmscale",
+  "source": "https://manpages.debian.org/pnmscale",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmscale"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmscale",
+    "binary": "pnmscale",
+    "check": "which pnmscale",
+    "install_steps": [
+      "apt-get install pnmscale 2>/dev/null || which pnmscale",
+      "Verify: pnmscale --version",
+      "supercli plugins install ./plugins/pnmscale --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmscale",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmscale version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmscale",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmscale: apt-get install pnmscale 2>/dev/null || which pnmscale"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmscale",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmscale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmscale",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmscale: apt-get install pnmscale 2>/dev/null || which pnmscale"
+      },
+      "args": []
+    }
+  ]
+}

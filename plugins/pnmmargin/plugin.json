@@ -1,0 +1,56 @@
+{
+  "name": "pnmmargin",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmmargin",
+  "source": "https://manpages.debian.org/pnmmargin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmmargin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmmargin",
+    "binary": "pnmmargin",
+    "check": "which pnmmargin",
+    "install_steps": [
+      "apt-get install pnmmargin 2>/dev/null || which pnmmargin",
+      "Verify: pnmmargin --version",
+      "supercli plugins install ./plugins/pnmmargin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmmargin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmmargin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmmargin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmmargin: apt-get install pnmmargin 2>/dev/null || which pnmmargin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmmargin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmmargin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmmargin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmmargin: apt-get install pnmmargin 2>/dev/null || which pnmmargin"
+      },
+      "args": []
+    }
+  ]
+}

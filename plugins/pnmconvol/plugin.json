@@ -1,0 +1,56 @@
+{
+  "name": "pnmconvol",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmconvol",
+  "source": "https://manpages.debian.org/pnmconvol",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmconvol"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmconvol",
+    "binary": "pnmconvol",
+    "check": "which pnmconvol",
+    "install_steps": [
+      "apt-get install pnmconvol 2>/dev/null || which pnmconvol",
+      "Verify: pnmconvol --version",
+      "supercli plugins install ./plugins/pnmconvol --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmconvol",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmconvol version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmconvol",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmconvol: apt-get install pnmconvol 2>/dev/null || which pnmconvol"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmconvol",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmconvol CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmconvol",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmconvol: apt-get install pnmconvol 2>/dev/null || which pnmconvol"
+      },
+      "args": []
+    }
+  ]
+}

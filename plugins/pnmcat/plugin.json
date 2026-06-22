@@ -1,0 +1,56 @@
+{
+  "name": "pnmcat",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmcat",
+  "source": "https://manpages.debian.org/pnmcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmcat",
+    "binary": "pnmcat",
+    "check": "which pnmcat",
+    "install_steps": [
+      "apt-get install pnmcat 2>/dev/null || which pnmcat",
+      "Verify: pnmcat --version",
+      "supercli plugins install ./plugins/pnmcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmcat: apt-get install pnmcat 2>/dev/null || which pnmcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmcat: apt-get install pnmcat 2>/dev/null || which pnmcat"
+      },
+      "args": []
+    }
+  ]
+}

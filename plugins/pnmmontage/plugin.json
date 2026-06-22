@@ -1,0 +1,56 @@
+{
+  "name": "pnmmontage",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmmontage",
+  "source": "https://manpages.debian.org/pnmmontage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmmontage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmmontage",
+    "binary": "pnmmontage",
+    "check": "which pnmmontage",
+    "install_steps": [
+      "apt-get install pnmmontage 2>/dev/null || which pnmmontage",
+      "Verify: pnmmontage --version",
+      "supercli plugins install ./plugins/pnmmontage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmmontage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmmontage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmmontage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmmontage: apt-get install pnmmontage 2>/dev/null || which pnmmontage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmmontage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmmontage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmmontage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmmontage: apt-get install pnmmontage 2>/dev/null || which pnmmontage"
+      },
+      "args": []
+    }
+  ]
+}

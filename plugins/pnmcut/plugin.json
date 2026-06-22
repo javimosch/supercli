@@ -1,0 +1,56 @@
+{
+  "name": "pnmcut",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmcut",
+  "source": "https://manpages.debian.org/pnmcut",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmcut"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmcut",
+    "binary": "pnmcut",
+    "check": "which pnmcut",
+    "install_steps": [
+      "apt-get install pnmcut 2>/dev/null || which pnmcut",
+      "Verify: pnmcut --version",
+      "supercli plugins install ./plugins/pnmcut --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmcut",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmcut version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcut",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmcut: apt-get install pnmcut 2>/dev/null || which pnmcut"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmcut",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmcut CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcut",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmcut: apt-get install pnmcut 2>/dev/null || which pnmcut"
+      },
+      "args": []
+    }
+  ]
+}

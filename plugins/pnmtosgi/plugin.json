@@ -1,0 +1,56 @@
+{
+  "name": "pnmtosgi",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmtosgi",
+  "source": "https://manpages.debian.org/pnmtosgi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmtosgi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmtosgi",
+    "binary": "pnmtosgi",
+    "check": "which pnmtosgi",
+    "install_steps": [
+      "apt-get install pnmtosgi 2>/dev/null || which pnmtosgi",
+      "Verify: pnmtosgi --version",
+      "supercli plugins install ./plugins/pnmtosgi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmtosgi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmtosgi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmtosgi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmtosgi: apt-get install pnmtosgi 2>/dev/null || which pnmtosgi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmtosgi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmtosgi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmtosgi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmtosgi: apt-get install pnmtosgi 2>/dev/null || which pnmtosgi"
+      },
+      "args": []
+    }
+  ]
+}

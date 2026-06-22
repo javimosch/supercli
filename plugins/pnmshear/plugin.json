@@ -1,0 +1,56 @@
+{
+  "name": "pnmshear",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmshear",
+  "source": "https://manpages.debian.org/pnmshear",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmshear"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmshear",
+    "binary": "pnmshear",
+    "check": "which pnmshear",
+    "install_steps": [
+      "apt-get install pnmshear 2>/dev/null || which pnmshear",
+      "Verify: pnmshear --version",
+      "supercli plugins install ./plugins/pnmshear --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmshear",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmshear version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmshear",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmshear: apt-get install pnmshear 2>/dev/null || which pnmshear"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmshear",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmshear CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmshear",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmshear: apt-get install pnmshear 2>/dev/null || which pnmshear"
+      },
+      "args": []
+    }
+  ]
+}

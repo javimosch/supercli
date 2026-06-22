@@ -1,0 +1,56 @@
+{
+  "name": "pnmfile",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmfile",
+  "source": "https://manpages.debian.org/pnmfile",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmfile"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmfile",
+    "binary": "pnmfile",
+    "check": "which pnmfile",
+    "install_steps": [
+      "apt-get install pnmfile 2>/dev/null || which pnmfile",
+      "Verify: pnmfile --version",
+      "supercli plugins install ./plugins/pnmfile --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmfile",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmfile version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmfile",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmfile: apt-get install pnmfile 2>/dev/null || which pnmfile"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmfile",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmfile CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmfile",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmfile: apt-get install pnmfile 2>/dev/null || which pnmfile"
+      },
+      "args": []
+    }
+  ]
+}

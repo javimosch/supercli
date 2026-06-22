@@ -1,0 +1,56 @@
+{
+  "name": "pnmtosir",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmtosir",
+  "source": "https://manpages.debian.org/pnmtosir",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmtosir"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmtosir",
+    "binary": "pnmtosir",
+    "check": "which pnmtosir",
+    "install_steps": [
+      "apt-get install pnmtosir 2>/dev/null || which pnmtosir",
+      "Verify: pnmtosir --version",
+      "supercli plugins install ./plugins/pnmtosir --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmtosir",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmtosir version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmtosir",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmtosir: apt-get install pnmtosir 2>/dev/null || which pnmtosir"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmtosir",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmtosir CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmtosir",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmtosir: apt-get install pnmtosir 2>/dev/null || which pnmtosir"
+      },
+      "args": []
+    }
+  ]
+}

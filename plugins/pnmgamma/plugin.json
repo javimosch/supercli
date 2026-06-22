@@ -1,0 +1,56 @@
+{
+  "name": "pnmgamma",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmgamma",
+  "source": "https://manpages.debian.org/pnmgamma",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmgamma"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmgamma",
+    "binary": "pnmgamma",
+    "check": "which pnmgamma",
+    "install_steps": [
+      "apt-get install pnmgamma 2>/dev/null || which pnmgamma",
+      "Verify: pnmgamma --version",
+      "supercli plugins install ./plugins/pnmgamma --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmgamma",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmgamma version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmgamma",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmgamma: apt-get install pnmgamma 2>/dev/null || which pnmgamma"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmgamma",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmgamma CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmgamma",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmgamma: apt-get install pnmgamma 2>/dev/null || which pnmgamma"
+      },
+      "args": []
+    }
+  ]
+}

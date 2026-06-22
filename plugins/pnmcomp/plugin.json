@@ -1,0 +1,56 @@
+{
+  "name": "pnmcomp",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmcomp",
+  "source": "https://manpages.debian.org/pnmcomp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmcomp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmcomp",
+    "binary": "pnmcomp",
+    "check": "which pnmcomp",
+    "install_steps": [
+      "apt-get install pnmcomp 2>/dev/null || which pnmcomp",
+      "Verify: pnmcomp --version",
+      "supercli plugins install ./plugins/pnmcomp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmcomp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmcomp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcomp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmcomp: apt-get install pnmcomp 2>/dev/null || which pnmcomp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmcomp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmcomp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcomp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmcomp: apt-get install pnmcomp 2>/dev/null || which pnmcomp"
+      },
+      "args": []
+    }
+  ]
+}

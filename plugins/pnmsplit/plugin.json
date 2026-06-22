@@ -1,0 +1,56 @@
+{
+  "name": "pnmsplit",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmsplit",
+  "source": "https://manpages.debian.org/pnmsplit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmsplit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmsplit",
+    "binary": "pnmsplit",
+    "check": "which pnmsplit",
+    "install_steps": [
+      "apt-get install pnmsplit 2>/dev/null || which pnmsplit",
+      "Verify: pnmsplit --version",
+      "supercli plugins install ./plugins/pnmsplit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmsplit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmsplit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmsplit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmsplit: apt-get install pnmsplit 2>/dev/null || which pnmsplit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmsplit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmsplit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmsplit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmsplit: apt-get install pnmsplit 2>/dev/null || which pnmsplit"
+      },
+      "args": []
+    }
+  ]
+}

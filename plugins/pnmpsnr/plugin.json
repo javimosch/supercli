@@ -1,0 +1,56 @@
+{
+  "name": "pnmpsnr",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmpsnr",
+  "source": "https://manpages.debian.org/pnmpsnr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmpsnr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmpsnr",
+    "binary": "pnmpsnr",
+    "check": "which pnmpsnr",
+    "install_steps": [
+      "apt-get install pnmpsnr 2>/dev/null || which pnmpsnr",
+      "Verify: pnmpsnr --version",
+      "supercli plugins install ./plugins/pnmpsnr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmpsnr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmpsnr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmpsnr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmpsnr: apt-get install pnmpsnr 2>/dev/null || which pnmpsnr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmpsnr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmpsnr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmpsnr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmpsnr: apt-get install pnmpsnr 2>/dev/null || which pnmpsnr"
+      },
+      "args": []
+    }
+  ]
+}

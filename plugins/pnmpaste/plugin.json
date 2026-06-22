@@ -1,0 +1,56 @@
+{
+  "name": "pnmpaste",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmpaste",
+  "source": "https://manpages.debian.org/pnmpaste",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmpaste"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmpaste",
+    "binary": "pnmpaste",
+    "check": "which pnmpaste",
+    "install_steps": [
+      "apt-get install pnmpaste 2>/dev/null || which pnmpaste",
+      "Verify: pnmpaste --version",
+      "supercli plugins install ./plugins/pnmpaste --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmpaste",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmpaste version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmpaste",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmpaste: apt-get install pnmpaste 2>/dev/null || which pnmpaste"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmpaste",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmpaste CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmpaste",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmpaste: apt-get install pnmpaste 2>/dev/null || which pnmpaste"
+      },
+      "args": []
+    }
+  ]
+}

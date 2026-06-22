@@ -1,0 +1,56 @@
+{
+  "name": "pnmcrop",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmcrop",
+  "source": "https://manpages.debian.org/pnmcrop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmcrop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmcrop",
+    "binary": "pnmcrop",
+    "check": "which pnmcrop",
+    "install_steps": [
+      "apt-get install pnmcrop 2>/dev/null || which pnmcrop",
+      "Verify: pnmcrop --version",
+      "supercli plugins install ./plugins/pnmcrop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmcrop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmcrop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcrop",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmcrop: apt-get install pnmcrop 2>/dev/null || which pnmcrop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmcrop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmcrop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmcrop",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmcrop: apt-get install pnmcrop 2>/dev/null || which pnmcrop"
+      },
+      "args": []
+    }
+  ]
+}

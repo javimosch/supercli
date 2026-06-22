@@ -1,0 +1,56 @@
+{
+  "name": "pnmpad",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmpad",
+  "source": "https://manpages.debian.org/pnmpad",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmpad"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmpad",
+    "binary": "pnmpad",
+    "check": "which pnmpad",
+    "install_steps": [
+      "apt-get install pnmpad 2>/dev/null || which pnmpad",
+      "Verify: pnmpad --version",
+      "supercli plugins install ./plugins/pnmpad --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmpad",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmpad version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmpad",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmpad: apt-get install pnmpad 2>/dev/null || which pnmpad"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmpad",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmpad CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmpad",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmpad: apt-get install pnmpad 2>/dev/null || which pnmpad"
+      },
+      "args": []
+    }
+  ]
+}

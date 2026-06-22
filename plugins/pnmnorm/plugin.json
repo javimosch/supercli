@@ -1,0 +1,56 @@
+{
+  "name": "pnmnorm",
+  "version": "0.1.0",
+  "description": "CLI tool: pnmnorm",
+  "source": "https://manpages.debian.org/pnmnorm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnmnorm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnmnorm",
+    "binary": "pnmnorm",
+    "check": "which pnmnorm",
+    "install_steps": [
+      "apt-get install pnmnorm 2>/dev/null || which pnmnorm",
+      "Verify: pnmnorm --version",
+      "supercli plugins install ./plugins/pnmnorm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnmnorm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnmnorm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmnorm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnmnorm: apt-get install pnmnorm 2>/dev/null || which pnmnorm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnmnorm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnmnorm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnmnorm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnmnorm: apt-get install pnmnorm 2>/dev/null || which pnmnorm"
+      },
+      "args": []
+    }
+  ]
+}

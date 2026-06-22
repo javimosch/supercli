@@ -1,0 +1,56 @@
+{
+  "name": "pnminvert",
+  "version": "0.1.0",
+  "description": "CLI tool: pnminvert",
+  "source": "https://manpages.debian.org/pnminvert",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pnminvert"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pnminvert",
+    "binary": "pnminvert",
+    "check": "which pnminvert",
+    "install_steps": [
+      "apt-get install pnminvert 2>/dev/null || which pnminvert",
+      "Verify: pnminvert --version",
+      "supercli plugins install ./plugins/pnminvert --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pnminvert",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pnminvert version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnminvert",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pnminvert: apt-get install pnminvert 2>/dev/null || which pnminvert"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pnminvert",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pnminvert CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pnminvert",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pnminvert: apt-get install pnminvert 2>/dev/null || which pnminvert"
+      },
+      "args": []
+    }
+  ]
+}
