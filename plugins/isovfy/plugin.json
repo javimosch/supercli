@@ -1,0 +1,56 @@
+{
+  "name": "isovfy",
+  "version": "0.1.0",
+  "description": "CLI tool: isovfy",
+  "source": "https://manpages.debian.org/isovfy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isovfy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isovfy",
+    "binary": "isovfy",
+    "check": "which isovfy",
+    "install_steps": [
+      "apt-get install isovfy 2>/dev/null || which isovfy",
+      "Verify: isovfy --version",
+      "supercli plugins install ./plugins/isovfy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isovfy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isovfy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isovfy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isovfy: apt-get install isovfy 2>/dev/null || which isovfy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isovfy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isovfy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isovfy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isovfy: apt-get install isovfy 2>/dev/null || which isovfy"
+      },
+      "args": []
+    }
+  ]
+}

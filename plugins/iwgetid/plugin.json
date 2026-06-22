@@ -1,0 +1,56 @@
+{
+  "name": "iwgetid",
+  "version": "0.1.0",
+  "description": "CLI tool: iwgetid",
+  "source": "https://manpages.debian.org/iwgetid",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iwgetid"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iwgetid",
+    "binary": "iwgetid",
+    "check": "which iwgetid",
+    "install_steps": [
+      "apt-get install iwgetid 2>/dev/null || which iwgetid",
+      "Verify: iwgetid --version",
+      "supercli plugins install ./plugins/iwgetid --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iwgetid",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iwgetid version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwgetid",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iwgetid: apt-get install iwgetid 2>/dev/null || which iwgetid"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iwgetid",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iwgetid CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwgetid",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iwgetid: apt-get install iwgetid 2>/dev/null || which iwgetid"
+      },
+      "args": []
+    }
+  ]
+}

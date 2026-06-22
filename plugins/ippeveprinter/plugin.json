@@ -1,0 +1,56 @@
+{
+  "name": "ippeveprinter",
+  "version": "0.1.0",
+  "description": "CLI tool: ippeveprinter",
+  "source": "https://manpages.debian.org/ippeveprinter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ippeveprinter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ippeveprinter",
+    "binary": "ippeveprinter",
+    "check": "which ippeveprinter",
+    "install_steps": [
+      "apt-get install ippeveprinter 2>/dev/null || which ippeveprinter",
+      "Verify: ippeveprinter --version",
+      "supercli plugins install ./plugins/ippeveprinter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ippeveprinter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ippeveprinter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ippeveprinter",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ippeveprinter: apt-get install ippeveprinter 2>/dev/null || which ippeveprinter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ippeveprinter",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ippeveprinter CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ippeveprinter",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ippeveprinter: apt-get install ippeveprinter 2>/dev/null || which ippeveprinter"
+      },
+      "args": []
+    }
+  ]
+}

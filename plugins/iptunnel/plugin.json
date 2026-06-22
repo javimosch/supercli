@@ -1,0 +1,56 @@
+{
+  "name": "iptunnel",
+  "version": "0.1.0",
+  "description": "CLI tool: iptunnel",
+  "source": "https://manpages.debian.org/iptunnel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptunnel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptunnel",
+    "binary": "iptunnel",
+    "check": "which iptunnel",
+    "install_steps": [
+      "apt-get install iptunnel 2>/dev/null || which iptunnel",
+      "Verify: iptunnel --version",
+      "supercli plugins install ./plugins/iptunnel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptunnel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptunnel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptunnel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptunnel: apt-get install iptunnel 2>/dev/null || which iptunnel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptunnel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptunnel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptunnel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptunnel: apt-get install iptunnel 2>/dev/null || which iptunnel"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ipmaddr",
+  "version": "0.1.0",
+  "description": "CLI tool: ipmaddr",
+  "source": "https://manpages.debian.org/ipmaddr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ipmaddr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ipmaddr",
+    "binary": "ipmaddr",
+    "check": "which ipmaddr",
+    "install_steps": [
+      "apt-get install ipmaddr 2>/dev/null || which ipmaddr",
+      "Verify: ipmaddr --version",
+      "supercli plugins install ./plugins/ipmaddr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ipmaddr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ipmaddr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipmaddr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ipmaddr: apt-get install ipmaddr 2>/dev/null || which ipmaddr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ipmaddr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ipmaddr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipmaddr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ipmaddr: apt-get install ipmaddr 2>/dev/null || which ipmaddr"
+      },
+      "args": []
+    }
+  ]
+}

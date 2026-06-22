@@ -1,0 +1,56 @@
+{
+  "name": "ischroot",
+  "version": "0.1.0",
+  "description": "CLI tool: ischroot",
+  "source": "https://manpages.debian.org/ischroot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ischroot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ischroot",
+    "binary": "ischroot",
+    "check": "which ischroot",
+    "install_steps": [
+      "apt-get install ischroot 2>/dev/null || which ischroot",
+      "Verify: ischroot --version",
+      "supercli plugins install ./plugins/ischroot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ischroot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ischroot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ischroot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ischroot: apt-get install ischroot 2>/dev/null || which ischroot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ischroot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ischroot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ischroot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ischroot: apt-get install ischroot 2>/dev/null || which ischroot"
+      },
+      "args": []
+    }
+  ]
+}

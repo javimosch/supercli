@@ -1,0 +1,56 @@
+{
+  "name": "isoprod",
+  "version": "0.1.0",
+  "description": "CLI tool: isoprod",
+  "source": "https://manpages.debian.org/isoprod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isoprod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isoprod",
+    "binary": "isoprod",
+    "check": "which isoprod",
+    "install_steps": [
+      "apt-get install isoprod 2>/dev/null || which isoprod",
+      "Verify: isoprod --version",
+      "supercli plugins install ./plugins/isoprod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isoprod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isoprod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isoprod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isoprod: apt-get install isoprod 2>/dev/null || which isoprod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isoprod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isoprod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isoprod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isoprod: apt-get install isoprod 2>/dev/null || which isoprod"
+      },
+      "args": []
+    }
+  ]
+}

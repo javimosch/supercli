@@ -1,0 +1,56 @@
+{
+  "name": "ipscan",
+  "version": "0.1.0",
+  "description": "CLI tool: ipscan",
+  "source": "https://manpages.debian.org/ipscan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ipscan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ipscan",
+    "binary": "ipscan",
+    "check": "which ipscan",
+    "install_steps": [
+      "apt-get install ipscan 2>/dev/null || which ipscan",
+      "Verify: ipscan --version",
+      "supercli plugins install ./plugins/ipscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ipscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ipscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipscan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ipscan: apt-get install ipscan 2>/dev/null || which ipscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ipscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ipscan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipscan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ipscan: apt-get install ipscan 2>/dev/null || which ipscan"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ionice",
+  "version": "0.1.0",
+  "description": "CLI tool: ionice",
+  "source": "https://manpages.debian.org/ionice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ionice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ionice",
+    "binary": "ionice",
+    "check": "which ionice",
+    "install_steps": [
+      "apt-get install ionice 2>/dev/null || which ionice",
+      "Verify: ionice --version",
+      "supercli plugins install ./plugins/ionice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ionice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ionice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ionice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ionice: apt-get install ionice 2>/dev/null || which ionice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ionice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ionice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ionice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ionice: apt-get install ionice 2>/dev/null || which ionice"
+      },
+      "args": []
+    }
+  ]
+}

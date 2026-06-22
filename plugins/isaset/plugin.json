@@ -1,0 +1,56 @@
+{
+  "name": "isaset",
+  "version": "0.1.0",
+  "description": "CLI tool: isaset",
+  "source": "https://manpages.debian.org/isaset",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isaset"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isaset",
+    "binary": "isaset",
+    "check": "which isaset",
+    "install_steps": [
+      "apt-get install isaset 2>/dev/null || which isaset",
+      "Verify: isaset --version",
+      "supercli plugins install ./plugins/isaset --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isaset",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isaset version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isaset",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isaset: apt-get install isaset 2>/dev/null || which isaset"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isaset",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isaset CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isaset",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isaset: apt-get install isaset 2>/dev/null || which isaset"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "isodump",
+  "version": "0.1.0",
+  "description": "CLI tool: isodump",
+  "source": "https://manpages.debian.org/isodump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isodump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isodump",
+    "binary": "isodump",
+    "check": "which isodump",
+    "install_steps": [
+      "apt-get install isodump 2>/dev/null || which isodump",
+      "Verify: isodump --version",
+      "supercli plugins install ./plugins/isodump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isodump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isodump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isodump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isodump: apt-get install isodump 2>/dev/null || which isodump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isodump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isodump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isodump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isodump: apt-get install isodump 2>/dev/null || which isodump"
+      },
+      "args": []
+    }
+  ]
+}

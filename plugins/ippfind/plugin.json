@@ -1,0 +1,56 @@
+{
+  "name": "ippfind",
+  "version": "0.1.0",
+  "description": "CLI tool: ippfind",
+  "source": "https://manpages.debian.org/ippfind",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ippfind"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ippfind",
+    "binary": "ippfind",
+    "check": "which ippfind",
+    "install_steps": [
+      "apt-get install ippfind 2>/dev/null || which ippfind",
+      "Verify: ippfind --version",
+      "supercli plugins install ./plugins/ippfind --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ippfind",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ippfind version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ippfind",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ippfind: apt-get install ippfind 2>/dev/null || which ippfind"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ippfind",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ippfind CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ippfind",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ippfind: apt-get install ippfind 2>/dev/null || which ippfind"
+      },
+      "args": []
+    }
+  ]
+}

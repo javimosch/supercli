@@ -1,0 +1,56 @@
+{
+  "name": "iucode-tool",
+  "version": "0.1.0",
+  "description": "CLI tool: iucode-tool",
+  "source": "https://manpages.debian.org/iucode-tool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iucode-tool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iucode-tool",
+    "binary": "iucode-tool",
+    "check": "which iucode-tool",
+    "install_steps": [
+      "apt-get install iucode-tool 2>/dev/null || which iucode-tool",
+      "Verify: iucode-tool --version",
+      "supercli plugins install ./plugins/iucode-tool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iucode-tool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iucode-tool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iucode-tool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iucode-tool: apt-get install iucode-tool 2>/dev/null || which iucode-tool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iucode-tool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iucode-tool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iucode-tool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iucode-tool: apt-get install iucode-tool 2>/dev/null || which iucode-tool"
+      },
+      "args": []
+    }
+  ]
+}

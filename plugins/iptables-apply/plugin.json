@@ -1,0 +1,56 @@
+{
+  "name": "iptables-apply",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-apply",
+  "source": "https://manpages.debian.org/iptables-apply",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-apply"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-apply",
+    "binary": "iptables-apply",
+    "check": "which iptables-apply",
+    "install_steps": [
+      "apt-get install iptables-apply 2>/dev/null || which iptables-apply",
+      "Verify: iptables-apply --version",
+      "supercli plugins install ./plugins/iptables-apply --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-apply",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-apply version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-apply",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-apply: apt-get install iptables-apply 2>/dev/null || which iptables-apply"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-apply",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-apply CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-apply",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-apply: apt-get install iptables-apply 2>/dev/null || which iptables-apply"
+      },
+      "args": []
+    }
+  ]
+}

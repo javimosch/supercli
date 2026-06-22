@@ -1,0 +1,56 @@
+{
+  "name": "isoinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: isoinfo",
+  "source": "https://manpages.debian.org/isoinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isoinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isoinfo",
+    "binary": "isoinfo",
+    "check": "which isoinfo",
+    "install_steps": [
+      "apt-get install isoinfo 2>/dev/null || which isoinfo",
+      "Verify: isoinfo --version",
+      "supercli plugins install ./plugins/isoinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isoinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isoinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isoinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isoinfo: apt-get install isoinfo 2>/dev/null || which isoinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isoinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isoinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isoinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isoinfo: apt-get install isoinfo 2>/dev/null || which isoinfo"
+      },
+      "args": []
+    }
+  ]
+}

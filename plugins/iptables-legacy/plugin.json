@@ -1,0 +1,56 @@
+{
+  "name": "iptables-legacy",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-legacy",
+  "source": "https://manpages.debian.org/iptables-legacy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-legacy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-legacy",
+    "binary": "iptables-legacy",
+    "check": "which iptables-legacy",
+    "install_steps": [
+      "apt-get install iptables-legacy 2>/dev/null || which iptables-legacy",
+      "Verify: iptables-legacy --version",
+      "supercli plugins install ./plugins/iptables-legacy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-legacy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-legacy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-legacy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-legacy: apt-get install iptables-legacy 2>/dev/null || which iptables-legacy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-legacy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-legacy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-legacy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-legacy: apt-get install iptables-legacy 2>/dev/null || which iptables-legacy"
+      },
+      "args": []
+    }
+  ]
+}

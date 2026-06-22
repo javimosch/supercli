@@ -1,0 +1,56 @@
+{
+  "name": "iptables-nft",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-nft",
+  "source": "https://manpages.debian.org/iptables-nft",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-nft"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-nft",
+    "binary": "iptables-nft",
+    "check": "which iptables-nft",
+    "install_steps": [
+      "apt-get install iptables-nft 2>/dev/null || which iptables-nft",
+      "Verify: iptables-nft --version",
+      "supercli plugins install ./plugins/iptables-nft --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-nft",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-nft version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-nft",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-nft: apt-get install iptables-nft 2>/dev/null || which iptables-nft"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-nft",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-nft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-nft",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-nft: apt-get install iptables-nft 2>/dev/null || which iptables-nft"
+      },
+      "args": []
+    }
+  ]
+}

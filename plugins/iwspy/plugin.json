@@ -1,0 +1,56 @@
+{
+  "name": "iwspy",
+  "version": "0.1.0",
+  "description": "CLI tool: iwspy",
+  "source": "https://manpages.debian.org/iwspy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iwspy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iwspy",
+    "binary": "iwspy",
+    "check": "which iwspy",
+    "install_steps": [
+      "apt-get install iwspy 2>/dev/null || which iwspy",
+      "Verify: iwspy --version",
+      "supercli plugins install ./plugins/iwspy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iwspy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iwspy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwspy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iwspy: apt-get install iwspy 2>/dev/null || which iwspy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iwspy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iwspy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwspy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iwspy: apt-get install iwspy 2>/dev/null || which iwspy"
+      },
+      "args": []
+    }
+  ]
+}

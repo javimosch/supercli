@@ -1,0 +1,56 @@
+{
+  "name": "isympy",
+  "version": "0.1.0",
+  "description": "CLI tool: isympy",
+  "source": "https://manpages.debian.org/isympy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isympy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isympy",
+    "binary": "isympy",
+    "check": "which isympy",
+    "install_steps": [
+      "apt-get install isympy 2>/dev/null || which isympy",
+      "Verify: isympy --version",
+      "supercli plugins install ./plugins/isympy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isympy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isympy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isympy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isympy: apt-get install isympy 2>/dev/null || which isympy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isympy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isympy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isympy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isympy: apt-get install isympy 2>/dev/null || which isympy"
+      },
+      "args": []
+    }
+  ]
+}

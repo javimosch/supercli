@@ -1,0 +1,56 @@
+{
+  "name": "iptables-translate",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-translate",
+  "source": "https://manpages.debian.org/iptables-translate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-translate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-translate",
+    "binary": "iptables-translate",
+    "check": "which iptables-translate",
+    "install_steps": [
+      "apt-get install iptables-translate 2>/dev/null || which iptables-translate",
+      "Verify: iptables-translate --version",
+      "supercli plugins install ./plugins/iptables-translate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-translate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-translate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-translate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-translate: apt-get install iptables-translate 2>/dev/null || which iptables-translate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-translate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-translate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-translate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-translate: apt-get install iptables-translate 2>/dev/null || which iptables-translate"
+      },
+      "args": []
+    }
+  ]
+}

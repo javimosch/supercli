@@ -1,0 +1,56 @@
+{
+  "name": "iptables-xml",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-xml",
+  "source": "https://manpages.debian.org/iptables-xml",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-xml"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-xml",
+    "binary": "iptables-xml",
+    "check": "which iptables-xml",
+    "install_steps": [
+      "apt-get install iptables-xml 2>/dev/null || which iptables-xml",
+      "Verify: iptables-xml --version",
+      "supercli plugins install ./plugins/iptables-xml --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-xml",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-xml version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-xml",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-xml: apt-get install iptables-xml 2>/dev/null || which iptables-xml"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-xml",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-xml CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-xml",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-xml: apt-get install iptables-xml 2>/dev/null || which iptables-xml"
+      },
+      "args": []
+    }
+  ]
+}

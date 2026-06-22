@@ -1,0 +1,56 @@
+{
+  "name": "ipptool",
+  "version": "0.1.0",
+  "description": "CLI tool: ipptool",
+  "source": "https://manpages.debian.org/ipptool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ipptool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ipptool",
+    "binary": "ipptool",
+    "check": "which ipptool",
+    "install_steps": [
+      "apt-get install ipptool 2>/dev/null || which ipptool",
+      "Verify: ipptool --version",
+      "supercli plugins install ./plugins/ipptool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ipptool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ipptool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipptool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ipptool: apt-get install ipptool 2>/dev/null || which ipptool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ipptool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ipptool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ipptool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ipptool: apt-get install ipptool 2>/dev/null || which ipptool"
+      },
+      "args": []
+    }
+  ]
+}

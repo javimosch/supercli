@@ -1,0 +1,56 @@
+{
+  "name": "isosize",
+  "version": "0.1.0",
+  "description": "CLI tool: isosize",
+  "source": "https://manpages.debian.org/isosize",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "isosize"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "isosize",
+    "binary": "isosize",
+    "check": "which isosize",
+    "install_steps": [
+      "apt-get install isosize 2>/dev/null || which isosize",
+      "Verify: isosize --version",
+      "supercli plugins install ./plugins/isosize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "isosize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print isosize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isosize",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install isosize: apt-get install isosize 2>/dev/null || which isosize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "isosize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to isosize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "isosize",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install isosize: apt-get install isosize 2>/dev/null || which isosize"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "iwevent",
+  "version": "0.1.0",
+  "description": "CLI tool: iwevent",
+  "source": "https://manpages.debian.org/iwevent",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iwevent"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iwevent",
+    "binary": "iwevent",
+    "check": "which iwevent",
+    "install_steps": [
+      "apt-get install iwevent 2>/dev/null || which iwevent",
+      "Verify: iwevent --version",
+      "supercli plugins install ./plugins/iwevent --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iwevent",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iwevent version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwevent",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iwevent: apt-get install iwevent 2>/dev/null || which iwevent"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iwevent",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iwevent CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwevent",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iwevent: apt-get install iwevent 2>/dev/null || which iwevent"
+      },
+      "args": []
+    }
+  ]
+}

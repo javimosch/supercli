@@ -1,0 +1,56 @@
+{
+  "name": "jarsigner",
+  "version": "0.1.0",
+  "description": "CLI tool: jarsigner",
+  "source": "https://manpages.debian.org/jarsigner",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jarsigner"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jarsigner",
+    "binary": "jarsigner",
+    "check": "which jarsigner",
+    "install_steps": [
+      "apt-get install jarsigner 2>/dev/null || which jarsigner",
+      "Verify: jarsigner --version",
+      "supercli plugins install ./plugins/jarsigner --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "jarsigner",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jarsigner version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jarsigner",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jarsigner: apt-get install jarsigner 2>/dev/null || which jarsigner"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jarsigner",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jarsigner CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jarsigner",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install jarsigner: apt-get install jarsigner 2>/dev/null || which jarsigner"
+      },
+      "args": []
+    }
+  ]
+}

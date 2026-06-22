@@ -1,0 +1,56 @@
+{
+  "name": "iwpriv",
+  "version": "0.1.0",
+  "description": "CLI tool: iwpriv",
+  "source": "https://manpages.debian.org/iwpriv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iwpriv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iwpriv",
+    "binary": "iwpriv",
+    "check": "which iwpriv",
+    "install_steps": [
+      "apt-get install iwpriv 2>/dev/null || which iwpriv",
+      "Verify: iwpriv --version",
+      "supercli plugins install ./plugins/iwpriv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iwpriv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iwpriv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwpriv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iwpriv: apt-get install iwpriv 2>/dev/null || which iwpriv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iwpriv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iwpriv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iwpriv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iwpriv: apt-get install iwpriv 2>/dev/null || which iwpriv"
+      },
+      "args": []
+    }
+  ]
+}

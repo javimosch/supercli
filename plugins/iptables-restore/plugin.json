@@ -1,0 +1,56 @@
+{
+  "name": "iptables-restore",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-restore",
+  "source": "https://manpages.debian.org/iptables-restore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-restore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-restore",
+    "binary": "iptables-restore",
+    "check": "which iptables-restore",
+    "install_steps": [
+      "apt-get install iptables-restore 2>/dev/null || which iptables-restore",
+      "Verify: iptables-restore --version",
+      "supercli plugins install ./plugins/iptables-restore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-restore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-restore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-restore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-restore: apt-get install iptables-restore 2>/dev/null || which iptables-restore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-restore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-restore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-restore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-restore: apt-get install iptables-restore 2>/dev/null || which iptables-restore"
+      },
+      "args": []
+    }
+  ]
+}

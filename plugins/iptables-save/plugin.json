@@ -1,0 +1,56 @@
+{
+  "name": "iptables-save",
+  "version": "0.1.0",
+  "description": "CLI tool: iptables-save",
+  "source": "https://manpages.debian.org/iptables-save",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iptables-save"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iptables-save",
+    "binary": "iptables-save",
+    "check": "which iptables-save",
+    "install_steps": [
+      "apt-get install iptables-save 2>/dev/null || which iptables-save",
+      "Verify: iptables-save --version",
+      "supercli plugins install ./plugins/iptables-save --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iptables-save",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iptables-save version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-save",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iptables-save: apt-get install iptables-save 2>/dev/null || which iptables-save"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iptables-save",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iptables-save CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iptables-save",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iptables-save: apt-get install iptables-save 2>/dev/null || which iptables-save"
+      },
+      "args": []
+    }
+  ]
+}
