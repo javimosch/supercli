@@ -1,0 +1,56 @@
+{
+  "name": "vgrename",
+  "version": "0.1.0",
+  "description": "CLI tool: vgrename",
+  "source": "https://manpages.debian.org/vgrename",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgrename"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgrename",
+    "binary": "vgrename",
+    "check": "which vgrename",
+    "install_steps": [
+      "apt-get install vgrename 2>/dev/null || which vgrename",
+      "Verify: vgrename --version",
+      "supercli plugins install ./plugins/vgrename --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgrename",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgrename version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgrename",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgrename: apt-get install vgrename 2>/dev/null || which vgrename"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgrename",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgrename CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgrename",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgrename: apt-get install vgrename 2>/dev/null || which vgrename"
+      },
+      "args": []
+    }
+  ]
+}

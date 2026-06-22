@@ -1,0 +1,56 @@
+{
+  "name": "vipe",
+  "version": "0.1.0",
+  "description": "CLI tool: vipe",
+  "source": "https://manpages.debian.org/vipe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vipe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vipe",
+    "binary": "vipe",
+    "check": "which vipe",
+    "install_steps": [
+      "apt-get install vipe 2>/dev/null || which vipe",
+      "Verify: vipe --version",
+      "supercli plugins install ./plugins/vipe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vipe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vipe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vipe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vipe: apt-get install vipe 2>/dev/null || which vipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vipe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vipe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vipe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vipe: apt-get install vipe 2>/dev/null || which vipe"
+      },
+      "args": []
+    }
+  ]
+}

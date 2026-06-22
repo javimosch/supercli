@@ -1,0 +1,56 @@
+{
+  "name": "vgreduce",
+  "version": "0.1.0",
+  "description": "CLI tool: vgreduce",
+  "source": "https://manpages.debian.org/vgreduce",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgreduce"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgreduce",
+    "binary": "vgreduce",
+    "check": "which vgreduce",
+    "install_steps": [
+      "apt-get install vgreduce 2>/dev/null || which vgreduce",
+      "Verify: vgreduce --version",
+      "supercli plugins install ./plugins/vgreduce --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgreduce",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgreduce version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgreduce",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgreduce: apt-get install vgreduce 2>/dev/null || which vgreduce"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgreduce",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgreduce CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgreduce",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgreduce: apt-get install vgreduce 2>/dev/null || which vgreduce"
+      },
+      "args": []
+    }
+  ]
+}

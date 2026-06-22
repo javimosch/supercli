@@ -1,0 +1,56 @@
+{
+  "name": "virtlogd",
+  "version": "0.1.0",
+  "description": "CLI tool: virtlogd",
+  "source": "https://manpages.debian.org/virtlogd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "virtlogd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "virtlogd",
+    "binary": "virtlogd",
+    "check": "which virtlogd",
+    "install_steps": [
+      "apt-get install virtlogd 2>/dev/null || which virtlogd",
+      "Verify: virtlogd --version",
+      "supercli plugins install ./plugins/virtlogd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "virtlogd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print virtlogd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virtlogd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install virtlogd: apt-get install virtlogd 2>/dev/null || which virtlogd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "virtlogd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to virtlogd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virtlogd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install virtlogd: apt-get install virtlogd 2>/dev/null || which virtlogd"
+      },
+      "args": []
+    }
+  ]
+}

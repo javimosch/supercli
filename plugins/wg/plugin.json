@@ -1,0 +1,56 @@
+{
+  "name": "wg",
+  "version": "0.1.0",
+  "description": "CLI tool: wg",
+  "source": "https://manpages.debian.org/wg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wg",
+    "binary": "wg",
+    "check": "which wg",
+    "install_steps": [
+      "apt-get install wg 2>/dev/null || which wg",
+      "Verify: wg --version",
+      "supercli plugins install ./plugins/wg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wg: apt-get install wg 2>/dev/null || which wg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wg: apt-get install wg 2>/dev/null || which wg"
+      },
+      "args": []
+    }
+  ]
+}

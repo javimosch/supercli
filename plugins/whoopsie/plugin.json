@@ -1,0 +1,56 @@
+{
+  "name": "whoopsie",
+  "version": "0.1.0",
+  "description": "CLI tool: whoopsie",
+  "source": "https://manpages.debian.org/whoopsie",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "whoopsie"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "whoopsie",
+    "binary": "whoopsie",
+    "check": "which whoopsie",
+    "install_steps": [
+      "apt-get install whoopsie 2>/dev/null || which whoopsie",
+      "Verify: whoopsie --version",
+      "supercli plugins install ./plugins/whoopsie --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "whoopsie",
+      "resource": "self",
+      "action": "version",
+      "description": "Print whoopsie version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "whoopsie",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install whoopsie: apt-get install whoopsie 2>/dev/null || which whoopsie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "whoopsie",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to whoopsie CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "whoopsie",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install whoopsie: apt-get install whoopsie 2>/dev/null || which whoopsie"
+      },
+      "args": []
+    }
+  ]
+}

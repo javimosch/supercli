@@ -1,0 +1,56 @@
+{
+  "name": "VirtualBox",
+  "version": "0.1.0",
+  "description": "CLI tool: VirtualBox",
+  "source": "https://manpages.debian.org/VirtualBox",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "VirtualBox"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "VirtualBox",
+    "binary": "VirtualBox",
+    "check": "which VirtualBox",
+    "install_steps": [
+      "apt-get install VirtualBox 2>/dev/null || which VirtualBox",
+      "Verify: VirtualBox --version",
+      "supercli plugins install ./plugins/VirtualBox --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "VirtualBox",
+      "resource": "self",
+      "action": "version",
+      "description": "Print VirtualBox version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "VirtualBox",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install VirtualBox: apt-get install VirtualBox 2>/dev/null || which VirtualBox"
+      },
+      "args": []
+    },
+    {
+      "namespace": "VirtualBox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to VirtualBox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "VirtualBox",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install VirtualBox: apt-get install VirtualBox 2>/dev/null || which VirtualBox"
+      },
+      "args": []
+    }
+  ]
+}

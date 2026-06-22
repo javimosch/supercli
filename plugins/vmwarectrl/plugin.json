@@ -1,0 +1,56 @@
+{
+  "name": "vmwarectrl",
+  "version": "0.1.0",
+  "description": "CLI tool: vmwarectrl",
+  "source": "https://manpages.debian.org/vmwarectrl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vmwarectrl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vmwarectrl",
+    "binary": "vmwarectrl",
+    "check": "which vmwarectrl",
+    "install_steps": [
+      "apt-get install vmwarectrl 2>/dev/null || which vmwarectrl",
+      "Verify: vmwarectrl --version",
+      "supercli plugins install ./plugins/vmwarectrl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vmwarectrl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vmwarectrl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vmwarectrl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vmwarectrl: apt-get install vmwarectrl 2>/dev/null || which vmwarectrl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vmwarectrl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vmwarectrl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vmwarectrl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vmwarectrl: apt-get install vmwarectrl 2>/dev/null || which vmwarectrl"
+      },
+      "args": []
+    }
+  ]
+}

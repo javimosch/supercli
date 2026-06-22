@@ -1,0 +1,56 @@
+{
+  "name": "vgscan",
+  "version": "0.1.0",
+  "description": "CLI tool: vgscan",
+  "source": "https://manpages.debian.org/vgscan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgscan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgscan",
+    "binary": "vgscan",
+    "check": "which vgscan",
+    "install_steps": [
+      "apt-get install vgscan 2>/dev/null || which vgscan",
+      "Verify: vgscan --version",
+      "supercli plugins install ./plugins/vgscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgscan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgscan: apt-get install vgscan 2>/dev/null || which vgscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgscan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgscan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgscan: apt-get install vgscan 2>/dev/null || which vgscan"
+      },
+      "args": []
+    }
+  ]
+}

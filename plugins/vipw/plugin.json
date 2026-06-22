@@ -1,0 +1,56 @@
+{
+  "name": "vipw",
+  "version": "0.1.0",
+  "description": "CLI tool: vipw",
+  "source": "https://manpages.debian.org/vipw",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vipw"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vipw",
+    "binary": "vipw",
+    "check": "which vipw",
+    "install_steps": [
+      "apt-get install vipw 2>/dev/null || which vipw",
+      "Verify: vipw --version",
+      "supercli plugins install ./plugins/vipw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vipw",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vipw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vipw",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vipw: apt-get install vipw 2>/dev/null || which vipw"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vipw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vipw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vipw",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vipw: apt-get install vipw 2>/dev/null || which vipw"
+      },
+      "args": []
+    }
+  ]
+}

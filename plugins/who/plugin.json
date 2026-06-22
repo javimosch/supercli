@@ -1,0 +1,56 @@
+{
+  "name": "who",
+  "version": "0.1.0",
+  "description": "CLI tool: who",
+  "source": "https://manpages.debian.org/who",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "who"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "who",
+    "binary": "who",
+    "check": "which who",
+    "install_steps": [
+      "apt-get install who 2>/dev/null || which who",
+      "Verify: who --version",
+      "supercli plugins install ./plugins/who --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "who",
+      "resource": "self",
+      "action": "version",
+      "description": "Print who version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "who",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install who: apt-get install who 2>/dev/null || which who"
+      },
+      "args": []
+    },
+    {
+      "namespace": "who",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to who CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "who",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install who: apt-get install who 2>/dev/null || which who"
+      },
+      "args": []
+    }
+  ]
+}

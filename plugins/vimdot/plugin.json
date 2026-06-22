@@ -1,0 +1,56 @@
+{
+  "name": "vimdot",
+  "version": "0.1.0",
+  "description": "CLI tool: vimdot",
+  "source": "https://manpages.debian.org/vimdot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vimdot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vimdot",
+    "binary": "vimdot",
+    "check": "which vimdot",
+    "install_steps": [
+      "apt-get install vimdot 2>/dev/null || which vimdot",
+      "Verify: vimdot --version",
+      "supercli plugins install ./plugins/vimdot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vimdot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vimdot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vimdot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vimdot: apt-get install vimdot 2>/dev/null || which vimdot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vimdot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vimdot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vimdot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vimdot: apt-get install vimdot 2>/dev/null || which vimdot"
+      },
+      "args": []
+    }
+  ]
+}

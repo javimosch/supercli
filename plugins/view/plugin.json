@@ -1,0 +1,56 @@
+{
+  "name": "view",
+  "version": "0.1.0",
+  "description": "CLI tool: view",
+  "source": "https://manpages.debian.org/view",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "view"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "view",
+    "binary": "view",
+    "check": "which view",
+    "install_steps": [
+      "apt-get install view 2>/dev/null || which view",
+      "Verify: view --version",
+      "supercli plugins install ./plugins/view --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "view",
+      "resource": "self",
+      "action": "version",
+      "description": "Print view version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "view",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install view: apt-get install view 2>/dev/null || which view"
+      },
+      "args": []
+    },
+    {
+      "namespace": "view",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to view CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "view",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install view: apt-get install view 2>/dev/null || which view"
+      },
+      "args": []
+    }
+  ]
+}

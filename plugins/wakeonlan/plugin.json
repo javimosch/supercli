@@ -1,0 +1,56 @@
+{
+  "name": "wakeonlan",
+  "version": "0.1.0",
+  "description": "CLI tool: wakeonlan",
+  "source": "https://manpages.debian.org/wakeonlan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wakeonlan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wakeonlan",
+    "binary": "wakeonlan",
+    "check": "which wakeonlan",
+    "install_steps": [
+      "apt-get install wakeonlan 2>/dev/null || which wakeonlan",
+      "Verify: wakeonlan --version",
+      "supercli plugins install ./plugins/wakeonlan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wakeonlan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wakeonlan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wakeonlan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wakeonlan: apt-get install wakeonlan 2>/dev/null || which wakeonlan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wakeonlan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wakeonlan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wakeonlan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wakeonlan: apt-get install wakeonlan 2>/dev/null || which wakeonlan"
+      },
+      "args": []
+    }
+  ]
+}

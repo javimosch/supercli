@@ -1,0 +1,56 @@
+{
+  "name": "wdctl",
+  "version": "0.1.0",
+  "description": "CLI tool: wdctl",
+  "source": "https://manpages.debian.org/wdctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wdctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wdctl",
+    "binary": "wdctl",
+    "check": "which wdctl",
+    "install_steps": [
+      "apt-get install wdctl 2>/dev/null || which wdctl",
+      "Verify: wdctl --version",
+      "supercli plugins install ./plugins/wdctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wdctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wdctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wdctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wdctl: apt-get install wdctl 2>/dev/null || which wdctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wdctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wdctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wdctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wdctl: apt-get install wdctl 2>/dev/null || which wdctl"
+      },
+      "args": []
+    }
+  ]
+}

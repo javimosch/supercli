@@ -1,0 +1,56 @@
+{
+  "name": "volname",
+  "version": "0.1.0",
+  "description": "CLI tool: volname",
+  "source": "https://manpages.debian.org/volname",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "volname"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "volname",
+    "binary": "volname",
+    "check": "which volname",
+    "install_steps": [
+      "apt-get install volname 2>/dev/null || which volname",
+      "Verify: volname --version",
+      "supercli plugins install ./plugins/volname --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "volname",
+      "resource": "self",
+      "action": "version",
+      "description": "Print volname version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "volname",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install volname: apt-get install volname 2>/dev/null || which volname"
+      },
+      "args": []
+    },
+    {
+      "namespace": "volname",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to volname CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "volname",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install volname: apt-get install volname 2>/dev/null || which volname"
+      },
+      "args": []
+    }
+  ]
+}

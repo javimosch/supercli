@@ -1,0 +1,56 @@
+{
+  "name": "wheel",
+  "version": "0.1.0",
+  "description": "CLI tool: wheel",
+  "source": "https://manpages.debian.org/wheel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wheel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wheel",
+    "binary": "wheel",
+    "check": "which wheel",
+    "install_steps": [
+      "apt-get install wheel 2>/dev/null || which wheel",
+      "Verify: wheel --version",
+      "supercli plugins install ./plugins/wheel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wheel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wheel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wheel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wheel: apt-get install wheel 2>/dev/null || which wheel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wheel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wheel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wheel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wheel: apt-get install wheel 2>/dev/null || which wheel"
+      },
+      "args": []
+    }
+  ]
+}

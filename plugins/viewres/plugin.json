@@ -1,0 +1,56 @@
+{
+  "name": "viewres",
+  "version": "0.1.0",
+  "description": "CLI tool: viewres",
+  "source": "https://manpages.debian.org/viewres",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "viewres"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "viewres",
+    "binary": "viewres",
+    "check": "which viewres",
+    "install_steps": [
+      "apt-get install viewres 2>/dev/null || which viewres",
+      "Verify: viewres --version",
+      "supercli plugins install ./plugins/viewres --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "viewres",
+      "resource": "self",
+      "action": "version",
+      "description": "Print viewres version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viewres",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install viewres: apt-get install viewres 2>/dev/null || which viewres"
+      },
+      "args": []
+    },
+    {
+      "namespace": "viewres",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to viewres CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "viewres",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install viewres: apt-get install viewres 2>/dev/null || which viewres"
+      },
+      "args": []
+    }
+  ]
+}

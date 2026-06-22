@@ -1,0 +1,56 @@
+{
+  "name": "wasm-opt",
+  "version": "0.1.0",
+  "description": "CLI tool: wasm-opt",
+  "source": "https://manpages.debian.org/wasm-opt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wasm-opt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wasm-opt",
+    "binary": "wasm-opt",
+    "check": "which wasm-opt",
+    "install_steps": [
+      "apt-get install wasm-opt 2>/dev/null || which wasm-opt",
+      "Verify: wasm-opt --version",
+      "supercli plugins install ./plugins/wasm-opt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wasm-opt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wasm-opt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wasm-opt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wasm-opt: apt-get install wasm-opt 2>/dev/null || which wasm-opt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wasm-opt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wasm-opt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wasm-opt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wasm-opt: apt-get install wasm-opt 2>/dev/null || which wasm-opt"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "whoami",
+  "version": "0.1.0",
+  "description": "CLI tool: whoami",
+  "source": "https://manpages.debian.org/whoami",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "whoami"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "whoami",
+    "binary": "whoami",
+    "check": "which whoami",
+    "install_steps": [
+      "apt-get install whoami 2>/dev/null || which whoami",
+      "Verify: whoami --version",
+      "supercli plugins install ./plugins/whoami --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "whoami",
+      "resource": "self",
+      "action": "version",
+      "description": "Print whoami version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "whoami",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install whoami: apt-get install whoami 2>/dev/null || which whoami"
+      },
+      "args": []
+    },
+    {
+      "namespace": "whoami",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to whoami CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "whoami",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install whoami: apt-get install whoami 2>/dev/null || which whoami"
+      },
+      "args": []
+    }
+  ]
+}

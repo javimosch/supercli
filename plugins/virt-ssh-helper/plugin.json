@@ -1,0 +1,56 @@
+{
+  "name": "virt-ssh-helper",
+  "version": "0.1.0",
+  "description": "CLI tool: virt-ssh-helper",
+  "source": "https://manpages.debian.org/virt-ssh-helper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "virt-ssh-helper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "virt-ssh-helper",
+    "binary": "virt-ssh-helper",
+    "check": "which virt-ssh-helper",
+    "install_steps": [
+      "apt-get install virt-ssh-helper 2>/dev/null || which virt-ssh-helper",
+      "Verify: virt-ssh-helper --version",
+      "supercli plugins install ./plugins/virt-ssh-helper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "virt-ssh-helper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print virt-ssh-helper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virt-ssh-helper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install virt-ssh-helper: apt-get install virt-ssh-helper 2>/dev/null || which virt-ssh-helper"
+      },
+      "args": []
+    },
+    {
+      "namespace": "virt-ssh-helper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to virt-ssh-helper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virt-ssh-helper",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install virt-ssh-helper: apt-get install virt-ssh-helper 2>/dev/null || which virt-ssh-helper"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "virt-qemu-run",
+  "version": "0.1.0",
+  "description": "CLI tool: virt-qemu-run",
+  "source": "https://manpages.debian.org/virt-qemu-run",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "virt-qemu-run"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "virt-qemu-run",
+    "binary": "virt-qemu-run",
+    "check": "which virt-qemu-run",
+    "install_steps": [
+      "apt-get install virt-qemu-run 2>/dev/null || which virt-qemu-run",
+      "Verify: virt-qemu-run --version",
+      "supercli plugins install ./plugins/virt-qemu-run --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "virt-qemu-run",
+      "resource": "self",
+      "action": "version",
+      "description": "Print virt-qemu-run version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virt-qemu-run",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install virt-qemu-run: apt-get install virt-qemu-run 2>/dev/null || which virt-qemu-run"
+      },
+      "args": []
+    },
+    {
+      "namespace": "virt-qemu-run",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to virt-qemu-run CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virt-qemu-run",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install virt-qemu-run: apt-get install virt-qemu-run 2>/dev/null || which virt-qemu-run"
+      },
+      "args": []
+    }
+  ]
+}

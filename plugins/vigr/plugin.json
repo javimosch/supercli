@@ -1,0 +1,56 @@
+{
+  "name": "vigr",
+  "version": "0.1.0",
+  "description": "CLI tool: vigr",
+  "source": "https://manpages.debian.org/vigr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vigr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vigr",
+    "binary": "vigr",
+    "check": "which vigr",
+    "install_steps": [
+      "apt-get install vigr 2>/dev/null || which vigr",
+      "Verify: vigr --version",
+      "supercli plugins install ./plugins/vigr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vigr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vigr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vigr: apt-get install vigr 2>/dev/null || which vigr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vigr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vigr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vigr: apt-get install vigr 2>/dev/null || which vigr"
+      },
+      "args": []
+    }
+  ]
+}

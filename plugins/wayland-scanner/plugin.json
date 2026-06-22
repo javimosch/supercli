@@ -1,0 +1,56 @@
+{
+  "name": "wayland-scanner",
+  "version": "0.1.0",
+  "description": "CLI tool: wayland-scanner",
+  "source": "https://manpages.debian.org/wayland-scanner",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wayland-scanner"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wayland-scanner",
+    "binary": "wayland-scanner",
+    "check": "which wayland-scanner",
+    "install_steps": [
+      "apt-get install wayland-scanner 2>/dev/null || which wayland-scanner",
+      "Verify: wayland-scanner --version",
+      "supercli plugins install ./plugins/wayland-scanner --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wayland-scanner",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wayland-scanner version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayland-scanner",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wayland-scanner: apt-get install wayland-scanner 2>/dev/null || which wayland-scanner"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wayland-scanner",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wayland-scanner CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayland-scanner",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wayland-scanner: apt-get install wayland-scanner 2>/dev/null || which wayland-scanner"
+      },
+      "args": []
+    }
+  ]
+}

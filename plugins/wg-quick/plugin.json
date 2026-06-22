@@ -1,0 +1,56 @@
+{
+  "name": "wg-quick",
+  "version": "0.1.0",
+  "description": "CLI tool: wg-quick",
+  "source": "https://manpages.debian.org/wg-quick",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "wg-quick"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "wg-quick",
+    "binary": "wg-quick",
+    "check": "which wg-quick",
+    "install_steps": [
+      "apt-get install wg-quick 2>/dev/null || which wg-quick",
+      "Verify: wg-quick --version",
+      "supercli plugins install ./plugins/wg-quick --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wg-quick",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wg-quick version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wg-quick",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install wg-quick: apt-get install wg-quick 2>/dev/null || which wg-quick"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wg-quick",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wg-quick CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wg-quick",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wg-quick: apt-get install wg-quick 2>/dev/null || which wg-quick"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "watchfiles",
+  "version": "0.1.0",
+  "description": "CLI tool: watchfiles",
+  "source": "https://manpages.debian.org/watchfiles",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "watchfiles"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "watchfiles",
+    "binary": "watchfiles",
+    "check": "which watchfiles",
+    "install_steps": [
+      "apt-get install watchfiles 2>/dev/null || which watchfiles",
+      "Verify: watchfiles --version",
+      "supercli plugins install ./plugins/watchfiles --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "watchfiles",
+      "resource": "self",
+      "action": "version",
+      "description": "Print watchfiles version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchfiles",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install watchfiles: apt-get install watchfiles 2>/dev/null || which watchfiles"
+      },
+      "args": []
+    },
+    {
+      "namespace": "watchfiles",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to watchfiles CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchfiles",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install watchfiles: apt-get install watchfiles 2>/dev/null || which watchfiles"
+      },
+      "args": []
+    }
+  ]
+}

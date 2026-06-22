@@ -1,0 +1,56 @@
+{
+  "name": "watchmedo",
+  "version": "0.1.0",
+  "description": "CLI tool: watchmedo",
+  "source": "https://manpages.debian.org/watchmedo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "watchmedo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "watchmedo",
+    "binary": "watchmedo",
+    "check": "which watchmedo",
+    "install_steps": [
+      "apt-get install watchmedo 2>/dev/null || which watchmedo",
+      "Verify: watchmedo --version",
+      "supercli plugins install ./plugins/watchmedo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "watchmedo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print watchmedo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchmedo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install watchmedo: apt-get install watchmedo 2>/dev/null || which watchmedo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "watchmedo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to watchmedo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "watchmedo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install watchmedo: apt-get install watchmedo 2>/dev/null || which watchmedo"
+      },
+      "args": []
+    }
+  ]
+}

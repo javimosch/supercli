@@ -1,0 +1,56 @@
+{
+  "name": "vlna",
+  "version": "0.1.0",
+  "description": "CLI tool: vlna",
+  "source": "https://manpages.debian.org/vlna",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vlna"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vlna",
+    "binary": "vlna",
+    "check": "which vlna",
+    "install_steps": [
+      "apt-get install vlna 2>/dev/null || which vlna",
+      "Verify: vlna --version",
+      "supercli plugins install ./plugins/vlna --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vlna",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vlna version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vlna",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vlna: apt-get install vlna 2>/dev/null || which vlna"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vlna",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vlna CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vlna",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vlna: apt-get install vlna 2>/dev/null || which vlna"
+      },
+      "args": []
+    }
+  ]
+}

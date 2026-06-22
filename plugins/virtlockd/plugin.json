@@ -1,0 +1,56 @@
+{
+  "name": "virtlockd",
+  "version": "0.1.0",
+  "description": "CLI tool: virtlockd",
+  "source": "https://manpages.debian.org/virtlockd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "virtlockd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "virtlockd",
+    "binary": "virtlockd",
+    "check": "which virtlockd",
+    "install_steps": [
+      "apt-get install virtlockd 2>/dev/null || which virtlockd",
+      "Verify: virtlockd --version",
+      "supercli plugins install ./plugins/virtlockd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "virtlockd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print virtlockd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virtlockd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install virtlockd: apt-get install virtlockd 2>/dev/null || which virtlockd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "virtlockd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to virtlockd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virtlockd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install virtlockd: apt-get install virtlockd 2>/dev/null || which virtlockd"
+      },
+      "args": []
+    }
+  ]
+}

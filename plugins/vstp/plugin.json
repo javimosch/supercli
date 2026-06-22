@@ -1,0 +1,56 @@
+{
+  "name": "vstp",
+  "version": "0.1.0",
+  "description": "CLI tool: vstp",
+  "source": "https://manpages.debian.org/vstp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vstp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vstp",
+    "binary": "vstp",
+    "check": "which vstp",
+    "install_steps": [
+      "apt-get install vstp 2>/dev/null || which vstp",
+      "Verify: vstp --version",
+      "supercli plugins install ./plugins/vstp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vstp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vstp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vstp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vstp: apt-get install vstp 2>/dev/null || which vstp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vstp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vstp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vstp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vstp: apt-get install vstp 2>/dev/null || which vstp"
+      },
+      "args": []
+    }
+  ]
+}

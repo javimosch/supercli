@@ -1,0 +1,56 @@
+{
+  "name": "vgsplit",
+  "version": "0.1.0",
+  "description": "CLI tool: vgsplit",
+  "source": "https://manpages.debian.org/vgsplit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgsplit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgsplit",
+    "binary": "vgsplit",
+    "check": "which vgsplit",
+    "install_steps": [
+      "apt-get install vgsplit 2>/dev/null || which vgsplit",
+      "Verify: vgsplit --version",
+      "supercli plugins install ./plugins/vgsplit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgsplit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgsplit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgsplit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgsplit: apt-get install vgsplit 2>/dev/null || which vgsplit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgsplit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgsplit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgsplit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgsplit: apt-get install vgsplit 2>/dev/null || which vgsplit"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "weave",
+  "version": "0.1.0",
+  "description": "CLI tool: weave",
+  "source": "https://manpages.debian.org/weave",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "weave"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "weave",
+    "binary": "weave",
+    "check": "which weave",
+    "install_steps": [
+      "apt-get install weave 2>/dev/null || which weave",
+      "Verify: weave --version",
+      "supercli plugins install ./plugins/weave --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "weave",
+      "resource": "self",
+      "action": "version",
+      "description": "Print weave version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "weave",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install weave: apt-get install weave 2>/dev/null || which weave"
+      },
+      "args": []
+    },
+    {
+      "namespace": "weave",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to weave CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "weave",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install weave: apt-get install weave 2>/dev/null || which weave"
+      },
+      "args": []
+    }
+  ]
+}

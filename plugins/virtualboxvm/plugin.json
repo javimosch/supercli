@@ -1,0 +1,56 @@
+{
+  "name": "virtualboxvm",
+  "version": "0.1.0",
+  "description": "CLI tool: virtualboxvm",
+  "source": "https://manpages.debian.org/virtualboxvm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "virtualboxvm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "virtualboxvm",
+    "binary": "virtualboxvm",
+    "check": "which virtualboxvm",
+    "install_steps": [
+      "apt-get install virtualboxvm 2>/dev/null || which virtualboxvm",
+      "Verify: virtualboxvm --version",
+      "supercli plugins install ./plugins/virtualboxvm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "virtualboxvm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print virtualboxvm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virtualboxvm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install virtualboxvm: apt-get install virtualboxvm 2>/dev/null || which virtualboxvm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "virtualboxvm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to virtualboxvm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "virtualboxvm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install virtualboxvm: apt-get install virtualboxvm 2>/dev/null || which virtualboxvm"
+      },
+      "args": []
+    }
+  ]
+}

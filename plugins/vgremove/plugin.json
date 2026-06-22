@@ -1,0 +1,56 @@
+{
+  "name": "vgremove",
+  "version": "0.1.0",
+  "description": "CLI tool: vgremove",
+  "source": "https://manpages.debian.org/vgremove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgremove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgremove",
+    "binary": "vgremove",
+    "check": "which vgremove",
+    "install_steps": [
+      "apt-get install vgremove 2>/dev/null || which vgremove",
+      "Verify: vgremove --version",
+      "supercli plugins install ./plugins/vgremove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgremove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgremove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgremove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgremove: apt-get install vgremove 2>/dev/null || which vgremove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgremove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgremove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgremove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgremove: apt-get install vgremove 2>/dev/null || which vgremove"
+      },
+      "args": []
+    }
+  ]
+}
