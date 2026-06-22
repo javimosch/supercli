@@ -1,0 +1,53 @@
+{
+  "name": "invoice",
+  "version": "0.1.0",
+  "description": "Command-line invoice generator",
+  "source": "https://github.com/maaslalani/invoice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "invoice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "invoice",
+    "binary": "invoice",
+    "check": "which invoice",
+    "install_steps": [
+      "brew install invoice",
+      "Verify: invoice --version",
+      "supercli plugins install ./plugins/invoice --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "invoice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print invoice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "invoice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install invoice: brew install invoice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "invoice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to invoice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "invoice",
+        "passthrough": true,
+        "missingDependencyHelp": "Install invoice"
+      },
+      "args": []
+    }
+  ]
+}

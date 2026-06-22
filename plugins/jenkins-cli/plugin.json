@@ -1,0 +1,53 @@
+{
+  "name": "jenkins-cli",
+  "version": "0.1.0",
+  "description": "CLI for jenkins",
+  "source": "https://github.com/jenkins-zh/jenkins-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jenkins-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jenkins-cli",
+    "binary": "jenkins-cli",
+    "check": "which jenkins-cli",
+    "install_steps": [
+      "brew install jenkins-cli",
+      "Verify: jenkins-cli --version",
+      "supercli plugins install ./plugins/jenkins-cli --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "jenkins-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jenkins-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jenkins-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jenkins-cli: brew install jenkins-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jenkins-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jenkins-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jenkins-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jenkins-cli"
+      },
+      "args": []
+    }
+  ]
+}

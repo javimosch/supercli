@@ -1,0 +1,53 @@
+{
+  "name": "gup",
+  "version": "0.1.0",
+  "description": "Update binaries installed by go install",
+  "source": "https://github.com/nao1215/gup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gup",
+    "binary": "gup",
+    "check": "which gup",
+    "install_steps": [
+      "brew install gup",
+      "Verify: gup --version",
+      "supercli plugins install ./plugins/gup --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "gup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gup",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gup: brew install gup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gup",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gup"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "helm-ls",
+  "version": "0.1.0",
+  "description": "Language server for Helm",
+  "source": "https://github.com/mrjosh/helm-ls",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "helm-ls"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "helm-ls",
+    "binary": "helm-ls",
+    "check": "which helm-ls",
+    "install_steps": [
+      "brew install helm-ls",
+      "Verify: helm-ls --version",
+      "supercli plugins install ./plugins/helm-ls --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "helm-ls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print helm-ls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "helm-ls",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install helm-ls: brew install helm-ls"
+      },
+      "args": []
+    },
+    {
+      "namespace": "helm-ls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to helm-ls CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "helm-ls",
+        "passthrough": true,
+        "missingDependencyHelp": "Install helm-ls"
+      },
+      "args": []
+    }
+  ]
+}

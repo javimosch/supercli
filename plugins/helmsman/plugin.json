@@ -1,0 +1,53 @@
+{
+  "name": "helmsman",
+  "version": "0.1.0",
+  "description": "Helm Charts as Code tool",
+  "source": "https://github.com/mkubaczyk/helmsman",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "helmsman"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "helmsman",
+    "binary": "helmsman",
+    "check": "which helmsman",
+    "install_steps": [
+      "brew install helmsman",
+      "Verify: helmsman --version",
+      "supercli plugins install ./plugins/helmsman --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "helmsman",
+      "resource": "self",
+      "action": "version",
+      "description": "Print helmsman version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "helmsman",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install helmsman: brew install helmsman"
+      },
+      "args": []
+    },
+    {
+      "namespace": "helmsman",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to helmsman CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "helmsman",
+        "passthrough": true,
+        "missingDependencyHelp": "Install helmsman"
+      },
+      "args": []
+    }
+  ]
+}

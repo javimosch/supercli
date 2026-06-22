@@ -1,0 +1,53 @@
+{
+  "name": "release",
+  "version": "0.1.0",
+  "description": "Generate changelogs with a single command",
+  "source": "https://github.com/vercel/release",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "release"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "release",
+    "binary": "release",
+    "check": "which release",
+    "install_steps": [
+      "npm install -g release",
+      "Verify: release --version",
+      "supercli plugins install ./plugins/release --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "release",
+      "resource": "self",
+      "action": "version",
+      "description": "Print release version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "release",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install release: npm install -g release"
+      },
+      "args": []
+    },
+    {
+      "namespace": "release",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to release CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "release",
+        "passthrough": true,
+        "missingDependencyHelp": "Install release"
+      },
+      "args": []
+    }
+  ]
+}

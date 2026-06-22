@@ -1,0 +1,52 @@
+{
+  "name": "goreleaser",
+  "version": "0.1.0",
+  "description": "Deliver Go binaries as fast and easily as possible",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "goreleaser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "goreleaser",
+    "binary": "goreleaser",
+    "check": "which goreleaser",
+    "install_steps": [
+      "brew install goreleaser",
+      "Verify: goreleaser --version",
+      "supercli plugins install ./plugins/goreleaser --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "goreleaser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print goreleaser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goreleaser",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install goreleaser: brew install goreleaser"
+      },
+      "args": []
+    },
+    {
+      "namespace": "goreleaser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to goreleaser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "goreleaser",
+        "passthrough": true,
+        "missingDependencyHelp": "Install goreleaser"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "name": "jemalloc",
+  "version": "0.1.0",
+  "description": "Implementation of malloc emphasizing fragmentation avoidance",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jemalloc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jemalloc",
+    "binary": "jemalloc",
+    "check": "which jemalloc",
+    "install_steps": [
+      "brew install jemalloc",
+      "Verify: jemalloc --version",
+      "supercli plugins install ./plugins/jemalloc --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "jemalloc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jemalloc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jemalloc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jemalloc: brew install jemalloc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jemalloc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jemalloc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jemalloc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jemalloc"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "name": "koji",
+  "version": "0.1.0",
+  "description": "Interactive CLI for creating conventional commits",
+  "source": "https://github.com/cococonscious/koji",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "koji"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "koji",
+    "binary": "koji",
+    "check": "which koji",
+    "install_steps": [
+      "brew install koji",
+      "Verify: koji --version",
+      "supercli plugins install ./plugins/koji --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "koji",
+      "resource": "self",
+      "action": "version",
+      "description": "Print koji version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "koji",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install koji: brew install koji"
+      },
+      "args": []
+    },
+    {
+      "namespace": "koji",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to koji CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "koji",
+        "passthrough": true,
+        "missingDependencyHelp": "Install koji"
+      },
+      "args": []
+    }
+  ]
+}

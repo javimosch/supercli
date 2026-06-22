@@ -1,0 +1,52 @@
+{
+  "name": "jenkins",
+  "version": "0.1.0",
+  "description": "Extendable open source continuous integration server",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "jenkins"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "jenkins",
+    "binary": "jenkins",
+    "check": "which jenkins",
+    "install_steps": [
+      "brew install jenkins",
+      "Verify: jenkins --version",
+      "supercli plugins install ./plugins/jenkins --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "jenkins",
+      "resource": "self",
+      "action": "version",
+      "description": "Print jenkins version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jenkins",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install jenkins: brew install jenkins"
+      },
+      "args": []
+    },
+    {
+      "namespace": "jenkins",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to jenkins CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "jenkins",
+        "passthrough": true,
+        "missingDependencyHelp": "Install jenkins"
+      },
+      "args": []
+    }
+  ]
+}

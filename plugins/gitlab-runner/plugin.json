@@ -1,0 +1,52 @@
+{
+  "name": "gitlab-runner",
+  "version": "0.1.0",
+  "description": "Official GitLab CI runner",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gitlab-runner"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gitlab-runner",
+    "binary": "gitlab-runner",
+    "check": "which gitlab-runner",
+    "install_steps": [
+      "brew install gitlab-runner",
+      "Verify: gitlab-runner --version",
+      "supercli plugins install ./plugins/gitlab-runner --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "gitlab-runner",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitlab-runner version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-runner",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gitlab-runner: brew install gitlab-runner"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-runner",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitlab-runner CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-runner",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gitlab-runner"
+      },
+      "args": []
+    }
+  ]
+}

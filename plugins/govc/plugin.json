@@ -1,0 +1,53 @@
+{
+  "name": "govc",
+  "version": "0.1.0",
+  "description": "Command-line tool for VMware vSphere",
+  "source": "https://github.com/vmware/govmomi/tree/main/govc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "govc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "govc",
+    "binary": "govc",
+    "check": "which govc",
+    "install_steps": [
+      "brew install govc",
+      "Verify: govc --version",
+      "supercli plugins install ./plugins/govc --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "govc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print govc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "govc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install govc: brew install govc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "govc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to govc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "govc",
+        "passthrough": true,
+        "missingDependencyHelp": "Install govc"
+      },
+      "args": []
+    }
+  ]
+}
