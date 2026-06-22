@@ -1,0 +1,56 @@
+{
+  "name": "dvihp",
+  "version": "0.1.0",
+  "description": "CLI tool: dvihp",
+  "source": "https://manpages.debian.org/dvihp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvihp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvihp",
+    "binary": "dvihp",
+    "check": "which dvihp",
+    "install_steps": [
+      "apt-get install dvihp 2>/dev/null || which dvihp",
+      "Verify: dvihp --version",
+      "supercli plugins install ./plugins/dvihp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvihp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvihp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvihp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvihp: apt-get install dvihp 2>/dev/null || which dvihp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvihp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvihp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvihp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvihp: apt-get install dvihp 2>/dev/null || which dvihp"
+      },
+      "args": []
+    }
+  ]
+}

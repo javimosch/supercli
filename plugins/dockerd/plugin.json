@@ -1,0 +1,56 @@
+{
+  "name": "dockerd",
+  "version": "0.1.0",
+  "description": "CLI tool: dockerd",
+  "source": "https://manpages.debian.org/dockerd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dockerd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dockerd",
+    "binary": "dockerd",
+    "check": "which dockerd",
+    "install_steps": [
+      "apt-get install dockerd 2>/dev/null || which dockerd",
+      "Verify: dockerd --version",
+      "supercli plugins install ./plugins/dockerd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dockerd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dockerd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dockerd: apt-get install dockerd 2>/dev/null || which dockerd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dockerd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dockerd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dockerd: apt-get install dockerd 2>/dev/null || which dockerd"
+      },
+      "args": []
+    }
+  ]
+}

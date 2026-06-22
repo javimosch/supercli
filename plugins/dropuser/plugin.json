@@ -1,0 +1,56 @@
+{
+  "name": "dropuser",
+  "version": "0.1.0",
+  "description": "CLI tool: dropuser",
+  "source": "https://manpages.debian.org/dropuser",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dropuser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dropuser",
+    "binary": "dropuser",
+    "check": "which dropuser",
+    "install_steps": [
+      "apt-get install dropuser 2>/dev/null || which dropuser",
+      "Verify: dropuser --version",
+      "supercli plugins install ./plugins/dropuser --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dropuser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dropuser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dropuser",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dropuser: apt-get install dropuser 2>/dev/null || which dropuser"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dropuser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dropuser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dropuser",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dropuser: apt-get install dropuser 2>/dev/null || which dropuser"
+      },
+      "args": []
+    }
+  ]
+}

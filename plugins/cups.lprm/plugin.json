@@ -1,0 +1,56 @@
+{
+  "name": "cups.lprm",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.lprm",
+  "source": "https://manpages.debian.org/cups.lprm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.lprm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.lprm",
+    "binary": "cups.lprm",
+    "check": "which cups.lprm",
+    "install_steps": [
+      "apt-get install cups.lprm 2>/dev/null || which cups.lprm",
+      "Verify: cups.lprm --version",
+      "supercli plugins install ./plugins/cups.lprm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.lprm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.lprm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lprm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.lprm: apt-get install cups.lprm 2>/dev/null || which cups.lprm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.lprm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.lprm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lprm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.lprm: apt-get install cups.lprm 2>/dev/null || which cups.lprm"
+      },
+      "args": []
+    }
+  ]
+}

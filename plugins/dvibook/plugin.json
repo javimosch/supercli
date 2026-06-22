@@ -1,0 +1,56 @@
+{
+  "name": "dvibook",
+  "version": "0.1.0",
+  "description": "CLI tool: dvibook",
+  "source": "https://manpages.debian.org/dvibook",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvibook"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvibook",
+    "binary": "dvibook",
+    "check": "which dvibook",
+    "install_steps": [
+      "apt-get install dvibook 2>/dev/null || which dvibook",
+      "Verify: dvibook --version",
+      "supercli plugins install ./plugins/dvibook --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvibook",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvibook version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvibook",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvibook: apt-get install dvibook 2>/dev/null || which dvibook"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvibook",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvibook CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvibook",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvibook: apt-get install dvibook 2>/dev/null || which dvibook"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "debri",
+  "version": "0.1.0",
+  "description": "CLI tool: debri",
+  "source": "https://manpages.debian.org/debri",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "debri"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "debri",
+    "binary": "debri",
+    "check": "which debri",
+    "install_steps": [
+      "apt-get install debri 2>/dev/null || which debri",
+      "Verify: debri --version",
+      "supercli plugins install ./plugins/debri --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "debri",
+      "resource": "self",
+      "action": "version",
+      "description": "Print debri version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "debri",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install debri: apt-get install debri 2>/dev/null || which debri"
+      },
+      "args": []
+    },
+    {
+      "namespace": "debri",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to debri CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "debri",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install debri: apt-get install debri 2>/dev/null || which debri"
+      },
+      "args": []
+    }
+  ]
+}

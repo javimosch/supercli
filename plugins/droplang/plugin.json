@@ -1,0 +1,56 @@
+{
+  "name": "droplang",
+  "version": "0.1.0",
+  "description": "CLI tool: droplang",
+  "source": "https://manpages.debian.org/droplang",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "droplang"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "droplang",
+    "binary": "droplang",
+    "check": "which droplang",
+    "install_steps": [
+      "apt-get install droplang 2>/dev/null || which droplang",
+      "Verify: droplang --version",
+      "supercli plugins install ./plugins/droplang --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "droplang",
+      "resource": "self",
+      "action": "version",
+      "description": "Print droplang version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "droplang",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install droplang: apt-get install droplang 2>/dev/null || which droplang"
+      },
+      "args": []
+    },
+    {
+      "namespace": "droplang",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to droplang CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "droplang",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install droplang: apt-get install droplang 2>/dev/null || which droplang"
+      },
+      "args": []
+    }
+  ]
+}

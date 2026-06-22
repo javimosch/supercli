@@ -1,0 +1,56 @@
+{
+  "name": "debugfs",
+  "version": "0.1.0",
+  "description": "CLI tool: debugfs",
+  "source": "https://manpages.debian.org/debugfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "debugfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "debugfs",
+    "binary": "debugfs",
+    "check": "which debugfs",
+    "install_steps": [
+      "apt-get install debugfs 2>/dev/null || which debugfs",
+      "Verify: debugfs --version",
+      "supercli plugins install ./plugins/debugfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "debugfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print debugfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "debugfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install debugfs: apt-get install debugfs 2>/dev/null || which debugfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "debugfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to debugfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "debugfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install debugfs: apt-get install debugfs 2>/dev/null || which debugfs"
+      },
+      "args": []
+    }
+  ]
+}

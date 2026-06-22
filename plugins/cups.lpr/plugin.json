@@ -1,0 +1,56 @@
+{
+  "name": "cups.lpr",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.lpr",
+  "source": "https://manpages.debian.org/cups.lpr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.lpr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.lpr",
+    "binary": "cups.lpr",
+    "check": "which cups.lpr",
+    "install_steps": [
+      "apt-get install cups.lpr 2>/dev/null || which cups.lpr",
+      "Verify: cups.lpr --version",
+      "supercli plugins install ./plugins/cups.lpr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.lpr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.lpr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.lpr: apt-get install cups.lpr 2>/dev/null || which cups.lpr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.lpr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.lpr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.lpr: apt-get install cups.lpr 2>/dev/null || which cups.lpr"
+      },
+      "args": []
+    }
+  ]
+}

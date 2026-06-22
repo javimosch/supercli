@@ -1,0 +1,56 @@
+{
+  "name": "dviconcat",
+  "version": "0.1.0",
+  "description": "CLI tool: dviconcat",
+  "source": "https://manpages.debian.org/dviconcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dviconcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dviconcat",
+    "binary": "dviconcat",
+    "check": "which dviconcat",
+    "install_steps": [
+      "apt-get install dviconcat 2>/dev/null || which dviconcat",
+      "Verify: dviconcat --version",
+      "supercli plugins install ./plugins/dviconcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dviconcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dviconcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dviconcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dviconcat: apt-get install dviconcat 2>/dev/null || which dviconcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dviconcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dviconcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dviconcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dviconcat: apt-get install dviconcat 2>/dev/null || which dviconcat"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "driverless",
+  "version": "0.1.0",
+  "description": "CLI tool: driverless",
+  "source": "https://manpages.debian.org/driverless",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "driverless"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "driverless",
+    "binary": "driverless",
+    "check": "which driverless",
+    "install_steps": [
+      "apt-get install driverless 2>/dev/null || which driverless",
+      "Verify: driverless --version",
+      "supercli plugins install ./plugins/driverless --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "driverless",
+      "resource": "self",
+      "action": "version",
+      "description": "Print driverless version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "driverless",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install driverless: apt-get install driverless 2>/dev/null || which driverless"
+      },
+      "args": []
+    },
+    {
+      "namespace": "driverless",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to driverless CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "driverless",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install driverless: apt-get install driverless 2>/dev/null || which driverless"
+      },
+      "args": []
+    }
+  ]
+}

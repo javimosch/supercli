@@ -1,0 +1,56 @@
+{
+  "name": "dumpsexp",
+  "version": "0.1.0",
+  "description": "CLI tool: dumpsexp",
+  "source": "https://manpages.debian.org/dumpsexp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dumpsexp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dumpsexp",
+    "binary": "dumpsexp",
+    "check": "which dumpsexp",
+    "install_steps": [
+      "apt-get install dumpsexp 2>/dev/null || which dumpsexp",
+      "Verify: dumpsexp --version",
+      "supercli plugins install ./plugins/dumpsexp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dumpsexp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dumpsexp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dumpsexp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dumpsexp: apt-get install dumpsexp 2>/dev/null || which dumpsexp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dumpsexp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dumpsexp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dumpsexp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dumpsexp: apt-get install dumpsexp 2>/dev/null || which dumpsexp"
+      },
+      "args": []
+    }
+  ]
+}

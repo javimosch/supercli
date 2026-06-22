@@ -1,0 +1,56 @@
+{
+  "name": "dpkg-preconfigure",
+  "version": "0.1.0",
+  "description": "CLI tool: dpkg-preconfigure",
+  "source": "https://manpages.debian.org/dpkg-preconfigure",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dpkg-preconfigure"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dpkg-preconfigure",
+    "binary": "dpkg-preconfigure",
+    "check": "which dpkg-preconfigure",
+    "install_steps": [
+      "apt-get install dpkg-preconfigure 2>/dev/null || which dpkg-preconfigure",
+      "Verify: dpkg-preconfigure --version",
+      "supercli plugins install ./plugins/dpkg-preconfigure --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dpkg-preconfigure",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dpkg-preconfigure version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dpkg-preconfigure",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dpkg-preconfigure: apt-get install dpkg-preconfigure 2>/dev/null || which dpkg-preconfigure"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dpkg-preconfigure",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dpkg-preconfigure CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dpkg-preconfigure",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dpkg-preconfigure: apt-get install dpkg-preconfigure 2>/dev/null || which dpkg-preconfigure"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "dvicopy",
+  "version": "0.1.0",
+  "description": "CLI tool: dvicopy",
+  "source": "https://manpages.debian.org/dvicopy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dvicopy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dvicopy",
+    "binary": "dvicopy",
+    "check": "which dvicopy",
+    "install_steps": [
+      "apt-get install dvicopy 2>/dev/null || which dvicopy",
+      "Verify: dvicopy --version",
+      "supercli plugins install ./plugins/dvicopy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dvicopy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dvicopy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvicopy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dvicopy: apt-get install dvicopy 2>/dev/null || which dvicopy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dvicopy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dvicopy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dvicopy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dvicopy: apt-get install dvicopy 2>/dev/null || which dvicopy"
+      },
+      "args": []
+    }
+  ]
+}

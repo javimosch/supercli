@@ -1,0 +1,56 @@
+{
+  "name": "dpkg-reconfigure",
+  "version": "0.1.0",
+  "description": "CLI tool: dpkg-reconfigure",
+  "source": "https://manpages.debian.org/dpkg-reconfigure",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dpkg-reconfigure"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dpkg-reconfigure",
+    "binary": "dpkg-reconfigure",
+    "check": "which dpkg-reconfigure",
+    "install_steps": [
+      "apt-get install dpkg-reconfigure 2>/dev/null || which dpkg-reconfigure",
+      "Verify: dpkg-reconfigure --version",
+      "supercli plugins install ./plugins/dpkg-reconfigure --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dpkg-reconfigure",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dpkg-reconfigure version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dpkg-reconfigure",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dpkg-reconfigure: apt-get install dpkg-reconfigure 2>/dev/null || which dpkg-reconfigure"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dpkg-reconfigure",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dpkg-reconfigure CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dpkg-reconfigure",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dpkg-reconfigure: apt-get install dpkg-reconfigure 2>/dev/null || which dpkg-reconfigure"
+      },
+      "args": []
+    }
+  ]
+}

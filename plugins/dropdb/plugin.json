@@ -1,0 +1,56 @@
+{
+  "name": "dropdb",
+  "version": "0.1.0",
+  "description": "CLI tool: dropdb",
+  "source": "https://manpages.debian.org/dropdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dropdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dropdb",
+    "binary": "dropdb",
+    "check": "which dropdb",
+    "install_steps": [
+      "apt-get install dropdb 2>/dev/null || which dropdb",
+      "Verify: dropdb --version",
+      "supercli plugins install ./plugins/dropdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dropdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dropdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dropdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dropdb: apt-get install dropdb 2>/dev/null || which dropdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dropdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dropdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dropdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dropdb: apt-get install dropdb 2>/dev/null || which dropdb"
+      },
+      "args": []
+    }
+  ]
+}

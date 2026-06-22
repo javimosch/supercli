@@ -1,0 +1,56 @@
+{
+  "name": "dockerd-rootless.sh",
+  "version": "0.1.0",
+  "description": "CLI tool: dockerd-rootless.sh",
+  "source": "https://manpages.debian.org/dockerd-rootless.sh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dockerd-rootless.sh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dockerd-rootless.sh",
+    "binary": "dockerd-rootless.sh",
+    "check": "which dockerd-rootless.sh",
+    "install_steps": [
+      "apt-get install dockerd-rootless.sh 2>/dev/null || which dockerd-rootless.sh",
+      "Verify: dockerd-rootless.sh --version",
+      "supercli plugins install ./plugins/dockerd-rootless.sh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dockerd-rootless.sh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dockerd-rootless.sh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerd-rootless.sh",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dockerd-rootless.sh: apt-get install dockerd-rootless.sh 2>/dev/null || which dockerd-rootless.sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dockerd-rootless.sh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dockerd-rootless.sh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dockerd-rootless.sh",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dockerd-rootless.sh: apt-get install dockerd-rootless.sh 2>/dev/null || which dockerd-rootless.sh"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "cups.lpstat",
+  "version": "0.1.0",
+  "description": "CLI tool: cups.lpstat",
+  "source": "https://manpages.debian.org/cups.lpstat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cups.lpstat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cups.lpstat",
+    "binary": "cups.lpstat",
+    "check": "which cups.lpstat",
+    "install_steps": [
+      "apt-get install cups.lpstat 2>/dev/null || which cups.lpstat",
+      "Verify: cups.lpstat --version",
+      "supercli plugins install ./plugins/cups.lpstat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cups.lpstat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cups.lpstat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpstat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cups.lpstat: apt-get install cups.lpstat 2>/dev/null || which cups.lpstat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cups.lpstat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cups.lpstat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cups.lpstat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cups.lpstat: apt-get install cups.lpstat 2>/dev/null || which cups.lpstat"
+      },
+      "args": []
+    }
+  ]
+}

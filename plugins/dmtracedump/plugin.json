@@ -1,0 +1,56 @@
+{
+  "name": "dmtracedump",
+  "version": "0.1.0",
+  "description": "CLI tool: dmtracedump",
+  "source": "https://manpages.debian.org/dmtracedump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dmtracedump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dmtracedump",
+    "binary": "dmtracedump",
+    "check": "which dmtracedump",
+    "install_steps": [
+      "apt-get install dmtracedump 2>/dev/null || which dmtracedump",
+      "Verify: dmtracedump --version",
+      "supercli plugins install ./plugins/dmtracedump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dmtracedump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dmtracedump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dmtracedump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dmtracedump: apt-get install dmtracedump 2>/dev/null || which dmtracedump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dmtracedump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dmtracedump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dmtracedump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dmtracedump: apt-get install dmtracedump 2>/dev/null || which dmtracedump"
+      },
+      "args": []
+    }
+  ]
+}
