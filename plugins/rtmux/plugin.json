@@ -1,0 +1,56 @@
+{
+  "name": "rtmux",
+  "version": "0.1.0",
+  "description": "CLI tool: rtmux",
+  "source": "https://manpages.debian.org/rtmux",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rtmux"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rtmux",
+    "binary": "rtmux",
+    "check": "which rtmux",
+    "install_steps": [
+      "apt-get install rtmux 2>/dev/null || which rtmux",
+      "Verify: rtmux --version",
+      "supercli plugins install ./plugins/rtmux --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rtmux",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rtmux version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtmux",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rtmux: apt-get install rtmux 2>/dev/null || which rtmux"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rtmux",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rtmux CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtmux",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rtmux: apt-get install rtmux 2>/dev/null || which rtmux"
+      },
+      "args": []
+    }
+  ]
+}

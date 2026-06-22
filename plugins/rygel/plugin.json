@@ -1,0 +1,56 @@
+{
+  "name": "rygel",
+  "version": "0.1.0",
+  "description": "CLI tool: rygel",
+  "source": "https://manpages.debian.org/rygel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rygel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rygel",
+    "binary": "rygel",
+    "check": "which rygel",
+    "install_steps": [
+      "apt-get install rygel 2>/dev/null || which rygel",
+      "Verify: rygel --version",
+      "supercli plugins install ./plugins/rygel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rygel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rygel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rygel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rygel: apt-get install rygel 2>/dev/null || which rygel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rygel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rygel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rygel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rygel: apt-get install rygel 2>/dev/null || which rygel"
+      },
+      "args": []
+    }
+  ]
+}

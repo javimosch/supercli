@@ -1,0 +1,56 @@
+{
+  "name": "sccmap",
+  "version": "0.1.0",
+  "description": "CLI tool: sccmap",
+  "source": "https://manpages.debian.org/sccmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sccmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sccmap",
+    "binary": "sccmap",
+    "check": "which sccmap",
+    "install_steps": [
+      "apt-get install sccmap 2>/dev/null || which sccmap",
+      "Verify: sccmap --version",
+      "supercli plugins install ./plugins/sccmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sccmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sccmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sccmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sccmap: apt-get install sccmap 2>/dev/null || which sccmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sccmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sccmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sccmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sccmap: apt-get install sccmap 2>/dev/null || which sccmap"
+      },
+      "args": []
+    }
+  ]
+}

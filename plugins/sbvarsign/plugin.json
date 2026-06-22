@@ -1,0 +1,56 @@
+{
+  "name": "sbvarsign",
+  "version": "0.1.0",
+  "description": "CLI tool: sbvarsign",
+  "source": "https://manpages.debian.org/sbvarsign",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sbvarsign"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sbvarsign",
+    "binary": "sbvarsign",
+    "check": "which sbvarsign",
+    "install_steps": [
+      "apt-get install sbvarsign 2>/dev/null || which sbvarsign",
+      "Verify: sbvarsign --version",
+      "supercli plugins install ./plugins/sbvarsign --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbvarsign",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbvarsign version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbvarsign",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sbvarsign: apt-get install sbvarsign 2>/dev/null || which sbvarsign"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbvarsign",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbvarsign CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbvarsign",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbvarsign: apt-get install sbvarsign 2>/dev/null || which sbvarsign"
+      },
+      "args": []
+    }
+  ]
+}

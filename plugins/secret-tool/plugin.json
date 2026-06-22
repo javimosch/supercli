@@ -1,0 +1,56 @@
+{
+  "name": "secret-tool",
+  "version": "0.1.0",
+  "description": "CLI tool: secret-tool",
+  "source": "https://manpages.debian.org/secret-tool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "secret-tool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "secret-tool",
+    "binary": "secret-tool",
+    "check": "which secret-tool",
+    "install_steps": [
+      "apt-get install secret-tool 2>/dev/null || which secret-tool",
+      "Verify: secret-tool --version",
+      "supercli plugins install ./plugins/secret-tool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "secret-tool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print secret-tool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "secret-tool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install secret-tool: apt-get install secret-tool 2>/dev/null || which secret-tool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "secret-tool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to secret-tool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "secret-tool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install secret-tool: apt-get install secret-tool 2>/dev/null || which secret-tool"
+      },
+      "args": []
+    }
+  ]
+}

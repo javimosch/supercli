@@ -1,0 +1,56 @@
+{
+  "name": "scriptlive",
+  "version": "0.1.0",
+  "description": "CLI tool: scriptlive",
+  "source": "https://manpages.debian.org/scriptlive",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "scriptlive"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "scriptlive",
+    "binary": "scriptlive",
+    "check": "which scriptlive",
+    "install_steps": [
+      "apt-get install scriptlive 2>/dev/null || which scriptlive",
+      "Verify: scriptlive --version",
+      "supercli plugins install ./plugins/scriptlive --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "scriptlive",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scriptlive version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptlive",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install scriptlive: apt-get install scriptlive 2>/dev/null || which scriptlive"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scriptlive",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scriptlive CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scriptlive",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install scriptlive: apt-get install scriptlive 2>/dev/null || which scriptlive"
+      },
+      "args": []
+    }
+  ]
+}

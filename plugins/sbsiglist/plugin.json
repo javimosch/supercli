@@ -1,0 +1,56 @@
+{
+  "name": "sbsiglist",
+  "version": "0.1.0",
+  "description": "CLI tool: sbsiglist",
+  "source": "https://manpages.debian.org/sbsiglist",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sbsiglist"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sbsiglist",
+    "binary": "sbsiglist",
+    "check": "which sbsiglist",
+    "install_steps": [
+      "apt-get install sbsiglist 2>/dev/null || which sbsiglist",
+      "Verify: sbsiglist --version",
+      "supercli plugins install ./plugins/sbsiglist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbsiglist",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbsiglist version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbsiglist",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sbsiglist: apt-get install sbsiglist 2>/dev/null || which sbsiglist"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbsiglist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbsiglist CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbsiglist",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbsiglist: apt-get install sbsiglist 2>/dev/null || which sbsiglist"
+      },
+      "args": []
+    }
+  ]
+}

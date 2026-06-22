@@ -1,0 +1,56 @@
+{
+  "name": "scli",
+  "version": "0.1.0",
+  "description": "CLI tool: scli",
+  "source": "https://manpages.debian.org/scli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "scli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "scli",
+    "binary": "scli",
+    "check": "which scli",
+    "install_steps": [
+      "apt-get install scli 2>/dev/null || which scli",
+      "Verify: scli --version",
+      "supercli plugins install ./plugins/scli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "scli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install scli: apt-get install scli 2>/dev/null || which scli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install scli: apt-get install scli 2>/dev/null || which scli"
+      },
+      "args": []
+    }
+  ]
+}

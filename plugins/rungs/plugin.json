@@ -1,0 +1,56 @@
+{
+  "name": "rungs",
+  "version": "0.1.0",
+  "description": "CLI tool: rungs",
+  "source": "https://manpages.debian.org/rungs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rungs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rungs",
+    "binary": "rungs",
+    "check": "which rungs",
+    "install_steps": [
+      "apt-get install rungs 2>/dev/null || which rungs",
+      "Verify: rungs --version",
+      "supercli plugins install ./plugins/rungs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rungs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rungs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rungs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rungs: apt-get install rungs 2>/dev/null || which rungs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rungs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rungs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rungs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rungs: apt-get install rungs 2>/dev/null || which rungs"
+      },
+      "args": []
+    }
+  ]
+}

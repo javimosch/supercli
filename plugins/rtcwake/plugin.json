@@ -1,0 +1,56 @@
+{
+  "name": "rtcwake",
+  "version": "0.1.0",
+  "description": "CLI tool: rtcwake",
+  "source": "https://manpages.debian.org/rtcwake",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rtcwake"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rtcwake",
+    "binary": "rtcwake",
+    "check": "which rtcwake",
+    "install_steps": [
+      "apt-get install rtcwake 2>/dev/null || which rtcwake",
+      "Verify: rtcwake --version",
+      "supercli plugins install ./plugins/rtcwake --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rtcwake",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rtcwake version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtcwake",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rtcwake: apt-get install rtcwake 2>/dev/null || which rtcwake"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rtcwake",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rtcwake CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtcwake",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rtcwake: apt-get install rtcwake 2>/dev/null || which rtcwake"
+      },
+      "args": []
+    }
+  ]
+}

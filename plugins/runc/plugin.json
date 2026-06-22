@@ -1,0 +1,56 @@
+{
+  "name": "runc",
+  "version": "0.1.0",
+  "description": "CLI tool: runc",
+  "source": "https://manpages.debian.org/runc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "runc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "runc",
+    "binary": "runc",
+    "check": "which runc",
+    "install_steps": [
+      "apt-get install runc 2>/dev/null || which runc",
+      "Verify: runc --version",
+      "supercli plugins install ./plugins/runc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "runc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print runc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "runc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install runc: apt-get install runc 2>/dev/null || which runc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "runc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to runc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "runc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install runc: apt-get install runc 2>/dev/null || which runc"
+      },
+      "args": []
+    }
+  ]
+}

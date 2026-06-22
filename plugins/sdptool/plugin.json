@@ -1,0 +1,56 @@
+{
+  "name": "sdptool",
+  "version": "0.1.0",
+  "description": "CLI tool: sdptool",
+  "source": "https://manpages.debian.org/sdptool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sdptool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sdptool",
+    "binary": "sdptool",
+    "check": "which sdptool",
+    "install_steps": [
+      "apt-get install sdptool 2>/dev/null || which sdptool",
+      "Verify: sdptool --version",
+      "supercli plugins install ./plugins/sdptool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sdptool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sdptool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sdptool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sdptool: apt-get install sdptool 2>/dev/null || which sdptool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sdptool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sdptool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sdptool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sdptool: apt-get install sdptool 2>/dev/null || which sdptool"
+      },
+      "args": []
+    }
+  ]
+}

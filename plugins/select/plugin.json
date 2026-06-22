@@ -1,0 +1,56 @@
+{
+  "name": "select",
+  "version": "0.1.0",
+  "description": "CLI tool: select",
+  "source": "https://manpages.debian.org/select",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "select"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "select",
+    "binary": "select",
+    "check": "which select",
+    "install_steps": [
+      "apt-get install select 2>/dev/null || which select",
+      "Verify: select --version",
+      "supercli plugins install ./plugins/select --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "select",
+      "resource": "self",
+      "action": "version",
+      "description": "Print select version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "select",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install select: apt-get install select 2>/dev/null || which select"
+      },
+      "args": []
+    },
+    {
+      "namespace": "select",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to select CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "select",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install select: apt-get install select 2>/dev/null || which select"
+      },
+      "args": []
+    }
+  ]
+}

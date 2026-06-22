@@ -1,0 +1,56 @@
+{
+  "name": "schemagen",
+  "version": "0.1.0",
+  "description": "CLI tool: schemagen",
+  "source": "https://manpages.debian.org/schemagen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "schemagen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "schemagen",
+    "binary": "schemagen",
+    "check": "which schemagen",
+    "install_steps": [
+      "apt-get install schemagen 2>/dev/null || which schemagen",
+      "Verify: schemagen --version",
+      "supercli plugins install ./plugins/schemagen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "schemagen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print schemagen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "schemagen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install schemagen: apt-get install schemagen 2>/dev/null || which schemagen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "schemagen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to schemagen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "schemagen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install schemagen: apt-get install schemagen 2>/dev/null || which schemagen"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "sbkeysync",
+  "version": "0.1.0",
+  "description": "CLI tool: sbkeysync",
+  "source": "https://manpages.debian.org/sbkeysync",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sbkeysync"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sbkeysync",
+    "binary": "sbkeysync",
+    "check": "which sbkeysync",
+    "install_steps": [
+      "apt-get install sbkeysync 2>/dev/null || which sbkeysync",
+      "Verify: sbkeysync --version",
+      "supercli plugins install ./plugins/sbkeysync --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbkeysync",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbkeysync version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbkeysync",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sbkeysync: apt-get install sbkeysync 2>/dev/null || which sbkeysync"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbkeysync",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbkeysync CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbkeysync",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbkeysync: apt-get install sbkeysync 2>/dev/null || which sbkeysync"
+      },
+      "args": []
+    }
+  ]
+}

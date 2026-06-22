@@ -1,0 +1,56 @@
+{
+  "name": "rtkitctl",
+  "version": "0.1.0",
+  "description": "CLI tool: rtkitctl",
+  "source": "https://manpages.debian.org/rtkitctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rtkitctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rtkitctl",
+    "binary": "rtkitctl",
+    "check": "which rtkitctl",
+    "install_steps": [
+      "apt-get install rtkitctl 2>/dev/null || which rtkitctl",
+      "Verify: rtkitctl --version",
+      "supercli plugins install ./plugins/rtkitctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rtkitctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rtkitctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtkitctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rtkitctl: apt-get install rtkitctl 2>/dev/null || which rtkitctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rtkitctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rtkitctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rtkitctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rtkitctl: apt-get install rtkitctl 2>/dev/null || which rtkitctl"
+      },
+      "args": []
+    }
+  ]
+}

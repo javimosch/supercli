@@ -1,0 +1,56 @@
+{
+  "name": "scanimage",
+  "version": "0.1.0",
+  "description": "CLI tool: scanimage",
+  "source": "https://manpages.debian.org/scanimage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "scanimage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "scanimage",
+    "binary": "scanimage",
+    "check": "which scanimage",
+    "install_steps": [
+      "apt-get install scanimage 2>/dev/null || which scanimage",
+      "Verify: scanimage --version",
+      "supercli plugins install ./plugins/scanimage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "scanimage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scanimage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scanimage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install scanimage: apt-get install scanimage 2>/dev/null || which scanimage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scanimage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scanimage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scanimage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install scanimage: apt-get install scanimage 2>/dev/null || which scanimage"
+      },
+      "args": []
+    }
+  ]
+}

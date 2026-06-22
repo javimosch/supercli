@@ -1,0 +1,56 @@
+{
+  "name": "sbsign",
+  "version": "0.1.0",
+  "description": "CLI tool: sbsign",
+  "source": "https://manpages.debian.org/sbsign",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sbsign"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sbsign",
+    "binary": "sbsign",
+    "check": "which sbsign",
+    "install_steps": [
+      "apt-get install sbsign 2>/dev/null || which sbsign",
+      "Verify: sbsign --version",
+      "supercli plugins install ./plugins/sbsign --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbsign",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbsign version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbsign",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sbsign: apt-get install sbsign 2>/dev/null || which sbsign"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbsign",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbsign CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbsign",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbsign: apt-get install sbsign 2>/dev/null || which sbsign"
+      },
+      "args": []
+    }
+  ]
+}

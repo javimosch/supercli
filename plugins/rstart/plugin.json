@@ -1,0 +1,56 @@
+{
+  "name": "rstart",
+  "version": "0.1.0",
+  "description": "CLI tool: rstart",
+  "source": "https://manpages.debian.org/rstart",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rstart"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rstart",
+    "binary": "rstart",
+    "check": "which rstart",
+    "install_steps": [
+      "apt-get install rstart 2>/dev/null || which rstart",
+      "Verify: rstart --version",
+      "supercli plugins install ./plugins/rstart --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rstart",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rstart version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rstart",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rstart: apt-get install rstart 2>/dev/null || which rstart"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rstart",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rstart CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rstart",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rstart: apt-get install rstart 2>/dev/null || which rstart"
+      },
+      "args": []
+    }
+  ]
+}

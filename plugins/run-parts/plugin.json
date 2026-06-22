@@ -1,0 +1,56 @@
+{
+  "name": "run-parts",
+  "version": "0.1.0",
+  "description": "CLI tool: run-parts",
+  "source": "https://manpages.debian.org/run-parts",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "run-parts"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "run-parts",
+    "binary": "run-parts",
+    "check": "which run-parts",
+    "install_steps": [
+      "apt-get install run-parts 2>/dev/null || which run-parts",
+      "Verify: run-parts --version",
+      "supercli plugins install ./plugins/run-parts --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "run-parts",
+      "resource": "self",
+      "action": "version",
+      "description": "Print run-parts version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "run-parts",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install run-parts: apt-get install run-parts 2>/dev/null || which run-parts"
+      },
+      "args": []
+    },
+    {
+      "namespace": "run-parts",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to run-parts CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "run-parts",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install run-parts: apt-get install run-parts 2>/dev/null || which run-parts"
+      },
+      "args": []
+    }
+  ]
+}

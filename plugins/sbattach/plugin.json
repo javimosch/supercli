@@ -1,0 +1,56 @@
+{
+  "name": "sbattach",
+  "version": "0.1.0",
+  "description": "CLI tool: sbattach",
+  "source": "https://manpages.debian.org/sbattach",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sbattach"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sbattach",
+    "binary": "sbattach",
+    "check": "which sbattach",
+    "install_steps": [
+      "apt-get install sbattach 2>/dev/null || which sbattach",
+      "Verify: sbattach --version",
+      "supercli plugins install ./plugins/sbattach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbattach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbattach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbattach",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sbattach: apt-get install sbattach 2>/dev/null || which sbattach"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbattach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbattach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbattach",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbattach: apt-get install sbattach 2>/dev/null || which sbattach"
+      },
+      "args": []
+    }
+  ]
+}

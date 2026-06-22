@@ -1,0 +1,56 @@
+{
+  "name": "rst2xetex",
+  "version": "0.1.0",
+  "description": "CLI tool: rst2xetex",
+  "source": "https://manpages.debian.org/rst2xetex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rst2xetex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rst2xetex",
+    "binary": "rst2xetex",
+    "check": "which rst2xetex",
+    "install_steps": [
+      "apt-get install rst2xetex 2>/dev/null || which rst2xetex",
+      "Verify: rst2xetex --version",
+      "supercli plugins install ./plugins/rst2xetex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rst2xetex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rst2xetex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rst2xetex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rst2xetex: apt-get install rst2xetex 2>/dev/null || which rst2xetex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rst2xetex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rst2xetex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rst2xetex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rst2xetex: apt-get install rst2xetex 2>/dev/null || which rst2xetex"
+      },
+      "args": []
+    }
+  ]
+}

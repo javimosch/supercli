@@ -1,0 +1,56 @@
+{
+  "name": "sbverify",
+  "version": "0.1.0",
+  "description": "CLI tool: sbverify",
+  "source": "https://manpages.debian.org/sbverify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sbverify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sbverify",
+    "binary": "sbverify",
+    "check": "which sbverify",
+    "install_steps": [
+      "apt-get install sbverify 2>/dev/null || which sbverify",
+      "Verify: sbverify --version",
+      "supercli plugins install ./plugins/sbverify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbverify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbverify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbverify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sbverify: apt-get install sbverify 2>/dev/null || which sbverify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbverify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbverify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbverify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbverify: apt-get install sbverify 2>/dev/null || which sbverify"
+      },
+      "args": []
+    }
+  ]
+}

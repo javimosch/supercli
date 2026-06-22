@@ -1,0 +1,56 @@
+{
+  "name": "ruscreen",
+  "version": "0.1.0",
+  "description": "CLI tool: ruscreen",
+  "source": "https://manpages.debian.org/ruscreen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ruscreen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ruscreen",
+    "binary": "ruscreen",
+    "check": "which ruscreen",
+    "install_steps": [
+      "apt-get install ruscreen 2>/dev/null || which ruscreen",
+      "Verify: ruscreen --version",
+      "supercli plugins install ./plugins/ruscreen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ruscreen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ruscreen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruscreen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ruscreen: apt-get install ruscreen 2>/dev/null || which ruscreen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ruscreen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ruscreen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ruscreen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ruscreen: apt-get install ruscreen 2>/dev/null || which ruscreen"
+      },
+      "args": []
+    }
+  ]
+}

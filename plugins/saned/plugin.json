@@ -1,0 +1,56 @@
+{
+  "name": "saned",
+  "version": "0.1.0",
+  "description": "CLI tool: saned",
+  "source": "https://manpages.debian.org/saned",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "saned"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "saned",
+    "binary": "saned",
+    "check": "which saned",
+    "install_steps": [
+      "apt-get install saned 2>/dev/null || which saned",
+      "Verify: saned --version",
+      "supercli plugins install ./plugins/saned --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "saned",
+      "resource": "self",
+      "action": "version",
+      "description": "Print saned version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "saned",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install saned: apt-get install saned 2>/dev/null || which saned"
+      },
+      "args": []
+    },
+    {
+      "namespace": "saned",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to saned CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "saned",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install saned: apt-get install saned 2>/dev/null || which saned"
+      },
+      "args": []
+    }
+  ]
+}

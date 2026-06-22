@@ -1,0 +1,56 @@
+{
+  "name": "screendump",
+  "version": "0.1.0",
+  "description": "CLI tool: screendump",
+  "source": "https://manpages.debian.org/screendump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "screendump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "screendump",
+    "binary": "screendump",
+    "check": "which screendump",
+    "install_steps": [
+      "apt-get install screendump 2>/dev/null || which screendump",
+      "Verify: screendump --version",
+      "supercli plugins install ./plugins/screendump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "screendump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print screendump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "screendump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install screendump: apt-get install screendump 2>/dev/null || which screendump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "screendump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to screendump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "screendump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install screendump: apt-get install screendump 2>/dev/null || which screendump"
+      },
+      "args": []
+    }
+  ]
+}
