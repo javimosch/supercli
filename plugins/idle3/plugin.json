@@ -1,0 +1,56 @@
+{
+  "name": "idle3",
+  "version": "0.1.0",
+  "description": "CLI tool: idle3",
+  "source": "https://manpages.debian.org/idle3",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "idle3"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "idle3",
+    "binary": "idle3",
+    "check": "which idle3",
+    "install_steps": [
+      "apt-get install idle3 2>/dev/null || which idle3",
+      "Verify: idle3 --version",
+      "supercli plugins install ./plugins/idle3 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "idle3",
+      "resource": "self",
+      "action": "version",
+      "description": "Print idle3 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "idle3",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install idle3: apt-get install idle3 2>/dev/null || which idle3"
+      },
+      "args": []
+    },
+    {
+      "namespace": "idle3",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to idle3 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "idle3",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install idle3: apt-get install idle3 2>/dev/null || which idle3"
+      },
+      "args": []
+    }
+  ]
+}

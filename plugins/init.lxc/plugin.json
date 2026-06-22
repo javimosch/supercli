@@ -1,0 +1,56 @@
+{
+  "name": "init.lxc",
+  "version": "0.1.0",
+  "description": "CLI tool: init.lxc",
+  "source": "https://manpages.debian.org/init.lxc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "init.lxc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "init.lxc",
+    "binary": "init.lxc",
+    "check": "which init.lxc",
+    "install_steps": [
+      "apt-get install init.lxc 2>/dev/null || which init.lxc",
+      "Verify: init.lxc --version",
+      "supercli plugins install ./plugins/init.lxc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "init.lxc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print init.lxc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "init.lxc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install init.lxc: apt-get install init.lxc 2>/dev/null || which init.lxc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "init.lxc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to init.lxc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "init.lxc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install init.lxc: apt-get install init.lxc 2>/dev/null || which init.lxc"
+      },
+      "args": []
+    }
+  ]
+}

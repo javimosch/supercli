@@ -1,0 +1,56 @@
+{
+  "name": "im-launch",
+  "version": "0.1.0",
+  "description": "CLI tool: im-launch",
+  "source": "https://manpages.debian.org/im-launch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "im-launch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "im-launch",
+    "binary": "im-launch",
+    "check": "which im-launch",
+    "install_steps": [
+      "apt-get install im-launch 2>/dev/null || which im-launch",
+      "Verify: im-launch --version",
+      "supercli plugins install ./plugins/im-launch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "im-launch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print im-launch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "im-launch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install im-launch: apt-get install im-launch 2>/dev/null || which im-launch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "im-launch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to im-launch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "im-launch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install im-launch: apt-get install im-launch 2>/dev/null || which im-launch"
+      },
+      "args": []
+    }
+  ]
+}

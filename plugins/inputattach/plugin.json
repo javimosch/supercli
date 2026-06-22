@@ -1,0 +1,56 @@
+{
+  "name": "inputattach",
+  "version": "0.1.0",
+  "description": "CLI tool: inputattach",
+  "source": "https://manpages.debian.org/inputattach",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "inputattach"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "inputattach",
+    "binary": "inputattach",
+    "check": "which inputattach",
+    "install_steps": [
+      "apt-get install inputattach 2>/dev/null || which inputattach",
+      "Verify: inputattach --version",
+      "supercli plugins install ./plugins/inputattach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "inputattach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print inputattach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inputattach",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install inputattach: apt-get install inputattach 2>/dev/null || which inputattach"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inputattach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to inputattach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inputattach",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install inputattach: apt-get install inputattach 2>/dev/null || which inputattach"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "insmod",
+  "version": "0.1.0",
+  "description": "CLI tool: insmod",
+  "source": "https://manpages.debian.org/insmod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "insmod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "insmod",
+    "binary": "insmod",
+    "check": "which insmod",
+    "install_steps": [
+      "apt-get install insmod 2>/dev/null || which insmod",
+      "Verify: insmod --version",
+      "supercli plugins install ./plugins/insmod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "insmod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print insmod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "insmod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install insmod: apt-get install insmod 2>/dev/null || which insmod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "insmod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to insmod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "insmod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install insmod: apt-get install insmod 2>/dev/null || which insmod"
+      },
+      "args": []
+    }
+  ]
+}

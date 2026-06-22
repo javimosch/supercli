@@ -1,0 +1,56 @@
+{
+  "name": "imagetops",
+  "version": "0.1.0",
+  "description": "CLI tool: imagetops",
+  "source": "https://manpages.debian.org/imagetops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "imagetops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "imagetops",
+    "binary": "imagetops",
+    "check": "which imagetops",
+    "install_steps": [
+      "apt-get install imagetops 2>/dev/null || which imagetops",
+      "Verify: imagetops --version",
+      "supercli plugins install ./plugins/imagetops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "imagetops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print imagetops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "imagetops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install imagetops: apt-get install imagetops 2>/dev/null || which imagetops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "imagetops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to imagetops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "imagetops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install imagetops: apt-get install imagetops 2>/dev/null || which imagetops"
+      },
+      "args": []
+    }
+  ]
+}

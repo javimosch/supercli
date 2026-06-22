@@ -1,0 +1,56 @@
+{
+  "name": "ifnames",
+  "version": "0.1.0",
+  "description": "CLI tool: ifnames",
+  "source": "https://manpages.debian.org/ifnames",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ifnames"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ifnames",
+    "binary": "ifnames",
+    "check": "which ifnames",
+    "install_steps": [
+      "apt-get install ifnames 2>/dev/null || which ifnames",
+      "Verify: ifnames --version",
+      "supercli plugins install ./plugins/ifnames --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ifnames",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ifnames version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ifnames",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ifnames: apt-get install ifnames 2>/dev/null || which ifnames"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ifnames",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ifnames CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ifnames",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ifnames: apt-get install ifnames 2>/dev/null || which ifnames"
+      },
+      "args": []
+    }
+  ]
+}

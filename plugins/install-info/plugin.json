@@ -1,0 +1,56 @@
+{
+  "name": "install-info",
+  "version": "0.1.0",
+  "description": "CLI tool: install-info",
+  "source": "https://manpages.debian.org/install-info",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "install-info"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "install-info",
+    "binary": "install-info",
+    "check": "which install-info",
+    "install_steps": [
+      "apt-get install install-info 2>/dev/null || which install-info",
+      "Verify: install-info --version",
+      "supercli plugins install ./plugins/install-info --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "install-info",
+      "resource": "self",
+      "action": "version",
+      "description": "Print install-info version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "install-info",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install install-info: apt-get install install-info 2>/dev/null || which install-info"
+      },
+      "args": []
+    },
+    {
+      "namespace": "install-info",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to install-info CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "install-info",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install install-info: apt-get install install-info 2>/dev/null || which install-info"
+      },
+      "args": []
+    }
+  ]
+}

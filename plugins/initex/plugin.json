@@ -1,0 +1,56 @@
+{
+  "name": "initex",
+  "version": "0.1.0",
+  "description": "CLI tool: initex",
+  "source": "https://manpages.debian.org/initex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "initex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "initex",
+    "binary": "initex",
+    "check": "which initex",
+    "install_steps": [
+      "apt-get install initex 2>/dev/null || which initex",
+      "Verify: initex --version",
+      "supercli plugins install ./plugins/initex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "initex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print initex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "initex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install initex: apt-get install initex 2>/dev/null || which initex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "initex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to initex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "initex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install initex: apt-get install initex 2>/dev/null || which initex"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "iecset",
+  "version": "0.1.0",
+  "description": "CLI tool: iecset",
+  "source": "https://manpages.debian.org/iecset",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iecset"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iecset",
+    "binary": "iecset",
+    "check": "which iecset",
+    "install_steps": [
+      "apt-get install iecset 2>/dev/null || which iecset",
+      "Verify: iecset --version",
+      "supercli plugins install ./plugins/iecset --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iecset",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iecset version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iecset",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iecset: apt-get install iecset 2>/dev/null || which iecset"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iecset",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iecset CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iecset",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iecset: apt-get install iecset 2>/dev/null || which iecset"
+      },
+      "args": []
+    }
+  ]
+}

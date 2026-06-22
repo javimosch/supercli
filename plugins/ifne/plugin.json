@@ -1,0 +1,56 @@
+{
+  "name": "ifne",
+  "version": "0.1.0",
+  "description": "CLI tool: ifne",
+  "source": "https://manpages.debian.org/ifne",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ifne"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ifne",
+    "binary": "ifne",
+    "check": "which ifne",
+    "install_steps": [
+      "apt-get install ifne 2>/dev/null || which ifne",
+      "Verify: ifne --version",
+      "supercli plugins install ./plugins/ifne --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ifne",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ifne version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ifne",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ifne: apt-get install ifne 2>/dev/null || which ifne"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ifne",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ifne CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ifne",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ifne: apt-get install ifne 2>/dev/null || which ifne"
+      },
+      "args": []
+    }
+  ]
+}

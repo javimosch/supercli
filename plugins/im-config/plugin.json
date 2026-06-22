@@ -1,0 +1,56 @@
+{
+  "name": "im-config",
+  "version": "0.1.0",
+  "description": "CLI tool: im-config",
+  "source": "https://manpages.debian.org/im-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "im-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "im-config",
+    "binary": "im-config",
+    "check": "which im-config",
+    "install_steps": [
+      "apt-get install im-config 2>/dev/null || which im-config",
+      "Verify: im-config --version",
+      "supercli plugins install ./plugins/im-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "im-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print im-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "im-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install im-config: apt-get install im-config 2>/dev/null || which im-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "im-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to im-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "im-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install im-config: apt-get install im-config 2>/dev/null || which im-config"
+      },
+      "args": []
+    }
+  ]
+}

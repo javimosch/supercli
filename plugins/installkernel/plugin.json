@@ -1,0 +1,56 @@
+{
+  "name": "installkernel",
+  "version": "0.1.0",
+  "description": "CLI tool: installkernel",
+  "source": "https://manpages.debian.org/installkernel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "installkernel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "installkernel",
+    "binary": "installkernel",
+    "check": "which installkernel",
+    "install_steps": [
+      "apt-get install installkernel 2>/dev/null || which installkernel",
+      "Verify: installkernel --version",
+      "supercli plugins install ./plugins/installkernel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "installkernel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print installkernel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "installkernel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install installkernel: apt-get install installkernel 2>/dev/null || which installkernel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "installkernel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to installkernel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "installkernel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install installkernel: apt-get install installkernel 2>/dev/null || which installkernel"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ifdata",
+  "version": "0.1.0",
+  "description": "CLI tool: ifdata",
+  "source": "https://manpages.debian.org/ifdata",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ifdata"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ifdata",
+    "binary": "ifdata",
+    "check": "which ifdata",
+    "install_steps": [
+      "apt-get install ifdata 2>/dev/null || which ifdata",
+      "Verify: ifdata --version",
+      "supercli plugins install ./plugins/ifdata --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ifdata",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ifdata version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ifdata",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ifdata: apt-get install ifdata 2>/dev/null || which ifdata"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ifdata",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ifdata CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ifdata",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ifdata: apt-get install ifdata 2>/dev/null || which ifdata"
+      },
+      "args": []
+    }
+  ]
+}

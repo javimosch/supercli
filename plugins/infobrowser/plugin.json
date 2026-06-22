@@ -1,0 +1,56 @@
+{
+  "name": "infobrowser",
+  "version": "0.1.0",
+  "description": "CLI tool: infobrowser",
+  "source": "https://manpages.debian.org/infobrowser",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "infobrowser"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "infobrowser",
+    "binary": "infobrowser",
+    "check": "which infobrowser",
+    "install_steps": [
+      "apt-get install infobrowser 2>/dev/null || which infobrowser",
+      "Verify: infobrowser --version",
+      "supercli plugins install ./plugins/infobrowser --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "infobrowser",
+      "resource": "self",
+      "action": "version",
+      "description": "Print infobrowser version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infobrowser",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install infobrowser: apt-get install infobrowser 2>/dev/null || which infobrowser"
+      },
+      "args": []
+    },
+    {
+      "namespace": "infobrowser",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to infobrowser CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infobrowser",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install infobrowser: apt-get install infobrowser 2>/dev/null || which infobrowser"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "iio-sensor-proxy",
+  "version": "0.1.0",
+  "description": "CLI tool: iio-sensor-proxy",
+  "source": "https://manpages.debian.org/iio-sensor-proxy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iio-sensor-proxy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iio-sensor-proxy",
+    "binary": "iio-sensor-proxy",
+    "check": "which iio-sensor-proxy",
+    "install_steps": [
+      "apt-get install iio-sensor-proxy 2>/dev/null || which iio-sensor-proxy",
+      "Verify: iio-sensor-proxy --version",
+      "supercli plugins install ./plugins/iio-sensor-proxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iio-sensor-proxy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iio-sensor-proxy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iio-sensor-proxy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iio-sensor-proxy: apt-get install iio-sensor-proxy 2>/dev/null || which iio-sensor-proxy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iio-sensor-proxy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iio-sensor-proxy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iio-sensor-proxy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iio-sensor-proxy: apt-get install iio-sensor-proxy 2>/dev/null || which iio-sensor-proxy"
+      },
+      "args": []
+    }
+  ]
+}

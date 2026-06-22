@@ -1,0 +1,56 @@
+{
+  "name": "info",
+  "version": "0.1.0",
+  "description": "CLI tool: info",
+  "source": "https://manpages.debian.org/info",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "info"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "info",
+    "binary": "info",
+    "check": "which info",
+    "install_steps": [
+      "apt-get install info 2>/dev/null || which info",
+      "Verify: info --version",
+      "supercli plugins install ./plugins/info --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "info",
+      "resource": "self",
+      "action": "version",
+      "description": "Print info version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "info",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install info: apt-get install info 2>/dev/null || which info"
+      },
+      "args": []
+    },
+    {
+      "namespace": "info",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to info CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "info",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install info: apt-get install info 2>/dev/null || which info"
+      },
+      "args": []
+    }
+  ]
+}

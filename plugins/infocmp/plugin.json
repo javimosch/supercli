@@ -1,0 +1,56 @@
+{
+  "name": "infocmp",
+  "version": "0.1.0",
+  "description": "CLI tool: infocmp",
+  "source": "https://manpages.debian.org/infocmp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "infocmp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "infocmp",
+    "binary": "infocmp",
+    "check": "which infocmp",
+    "install_steps": [
+      "apt-get install infocmp 2>/dev/null || which infocmp",
+      "Verify: infocmp --version",
+      "supercli plugins install ./plugins/infocmp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "infocmp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print infocmp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infocmp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install infocmp: apt-get install infocmp 2>/dev/null || which infocmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "infocmp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to infocmp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infocmp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install infocmp: apt-get install infocmp 2>/dev/null || which infocmp"
+      },
+      "args": []
+    }
+  ]
+}

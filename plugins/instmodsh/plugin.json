@@ -1,0 +1,56 @@
+{
+  "name": "instmodsh",
+  "version": "0.1.0",
+  "description": "CLI tool: instmodsh",
+  "source": "https://manpages.debian.org/instmodsh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "instmodsh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "instmodsh",
+    "binary": "instmodsh",
+    "check": "which instmodsh",
+    "install_steps": [
+      "apt-get install instmodsh 2>/dev/null || which instmodsh",
+      "Verify: instmodsh --version",
+      "supercli plugins install ./plugins/instmodsh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "instmodsh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print instmodsh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "instmodsh",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install instmodsh: apt-get install instmodsh 2>/dev/null || which instmodsh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "instmodsh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to instmodsh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "instmodsh",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install instmodsh: apt-get install instmodsh 2>/dev/null || which instmodsh"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "init",
+  "version": "0.1.0",
+  "description": "CLI tool: init",
+  "source": "https://manpages.debian.org/init",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "init"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "init",
+    "binary": "init",
+    "check": "which init",
+    "install_steps": [
+      "apt-get install init 2>/dev/null || which init",
+      "Verify: init --version",
+      "supercli plugins install ./plugins/init --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "init",
+      "resource": "self",
+      "action": "version",
+      "description": "Print init version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "init",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install init: apt-get install init 2>/dev/null || which init"
+      },
+      "args": []
+    },
+    {
+      "namespace": "init",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to init CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "init",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install init: apt-get install init 2>/dev/null || which init"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "invproj",
+  "version": "0.1.0",
+  "description": "CLI tool: invproj",
+  "source": "https://manpages.debian.org/invproj",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "invproj"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "invproj",
+    "binary": "invproj",
+    "check": "which invproj",
+    "install_steps": [
+      "apt-get install invproj 2>/dev/null || which invproj",
+      "Verify: invproj --version",
+      "supercli plugins install ./plugins/invproj --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "invproj",
+      "resource": "self",
+      "action": "version",
+      "description": "Print invproj version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "invproj",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install invproj: apt-get install invproj 2>/dev/null || which invproj"
+      },
+      "args": []
+    },
+    {
+      "namespace": "invproj",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to invproj CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "invproj",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install invproj: apt-get install invproj 2>/dev/null || which invproj"
+      },
+      "args": []
+    }
+  ]
+}
