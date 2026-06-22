@@ -1,0 +1,56 @@
+{
+  "name": "twitter",
+  "version": "0.1.0",
+  "description": "CLI tool: twitter",
+  "source": "https://manpages.debian.org/twitter",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "twitter"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "twitter",
+    "binary": "twitter",
+    "check": "which twitter",
+    "install_steps": [
+      "apt-get install twitter 2>/dev/null || which twitter",
+      "Verify: twitter --version",
+      "supercli plugins install ./plugins/twitter --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "twitter",
+      "resource": "self",
+      "action": "version",
+      "description": "Print twitter version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twitter",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install twitter: apt-get install twitter 2>/dev/null || which twitter"
+      },
+      "args": []
+    },
+    {
+      "namespace": "twitter",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to twitter CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twitter",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install twitter: apt-get install twitter 2>/dev/null || which twitter"
+      },
+      "args": []
+    }
+  ]
+}
