@@ -1,0 +1,56 @@
+{
+  "name": "setcap",
+  "version": "0.1.0",
+  "description": "CLI tool: setcap",
+  "source": "https://manpages.debian.org/setcap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setcap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setcap",
+    "binary": "setcap",
+    "check": "which setcap",
+    "install_steps": [
+      "apt-get install setcap 2>/dev/null || which setcap",
+      "Verify: setcap --version",
+      "supercli plugins install ./plugins/setcap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setcap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setcap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setcap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setcap: apt-get install setcap 2>/dev/null || which setcap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setcap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setcap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setcap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setcap: apt-get install setcap 2>/dev/null || which setcap"
+      },
+      "args": []
+    }
+  ]
+}

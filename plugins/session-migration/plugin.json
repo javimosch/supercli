@@ -1,0 +1,56 @@
+{
+  "name": "session-migration",
+  "version": "0.1.0",
+  "description": "CLI tool: session-migration",
+  "source": "https://manpages.debian.org/session-migration",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "session-migration"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "session-migration",
+    "binary": "session-migration",
+    "check": "which session-migration",
+    "install_steps": [
+      "apt-get install session-migration 2>/dev/null || which session-migration",
+      "Verify: session-migration --version",
+      "supercli plugins install ./plugins/session-migration --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "session-migration",
+      "resource": "self",
+      "action": "version",
+      "description": "Print session-migration version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "session-migration",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install session-migration: apt-get install session-migration 2>/dev/null || which session-migration"
+      },
+      "args": []
+    },
+    {
+      "namespace": "session-migration",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to session-migration CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "session-migration",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install session-migration: apt-get install session-migration 2>/dev/null || which session-migration"
+      },
+      "args": []
+    }
+  ]
+}

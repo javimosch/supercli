@@ -1,0 +1,56 @@
+{
+  "name": "service",
+  "version": "0.1.0",
+  "description": "CLI tool: service",
+  "source": "https://manpages.debian.org/service",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "service"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "service",
+    "binary": "service",
+    "check": "which service",
+    "install_steps": [
+      "apt-get install service 2>/dev/null || which service",
+      "Verify: service --version",
+      "supercli plugins install ./plugins/service --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "service",
+      "resource": "self",
+      "action": "version",
+      "description": "Print service version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "service",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install service: apt-get install service 2>/dev/null || which service"
+      },
+      "args": []
+    },
+    {
+      "namespace": "service",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to service CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "service",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install service: apt-get install service 2>/dev/null || which service"
+      },
+      "args": []
+    }
+  ]
+}

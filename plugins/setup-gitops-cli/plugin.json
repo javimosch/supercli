@@ -1,0 +1,53 @@
+{
+  "name": "setup-gitops-cli",
+  "version": "0.1.0",
+  "description": "GitHub Action to setup GitOps CLI in the CI pipeline",
+  "source": "https://github.com/setup-gitops-cli/setup-gitops-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setup-gitops-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setup-gitops-cli",
+    "binary": "setup-gitops-cli",
+    "check": "which setup-gitops-cli",
+    "install_steps": [
+      "Check GitHub repository for installation instructions",
+      "Verify: setup-gitops-cli --version",
+      "supercli plugins install ./plugins/setup-gitops-cli --on-conflict replace --json"
+    ],
+    "note": "TypeScript language CLI tool"
+  },
+  "commands": [
+    {
+      "namespace": "setup-gitops-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setup-gitops-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setup-gitops-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setup-gitops-cli from project repository"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setup-gitops-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setup-gitops-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setup-gitops-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install setup-gitops-cli from project repository"
+      },
+      "args": []
+    }
+  ]
+}

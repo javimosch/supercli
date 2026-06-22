@@ -1,0 +1,56 @@
+{
+  "name": "shadowconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: shadowconfig",
+  "source": "https://manpages.debian.org/shadowconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shadowconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shadowconfig",
+    "binary": "shadowconfig",
+    "check": "which shadowconfig",
+    "install_steps": [
+      "apt-get install shadowconfig 2>/dev/null || which shadowconfig",
+      "Verify: shadowconfig --version",
+      "supercli plugins install ./plugins/shadowconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shadowconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shadowconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shadowconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shadowconfig: apt-get install shadowconfig 2>/dev/null || which shadowconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shadowconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shadowconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shadowconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shadowconfig: apt-get install shadowconfig 2>/dev/null || which shadowconfig"
+      },
+      "args": []
+    }
+  ]
+}

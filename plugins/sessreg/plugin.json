@@ -1,0 +1,56 @@
+{
+  "name": "sessreg",
+  "version": "0.1.0",
+  "description": "CLI tool: sessreg",
+  "source": "https://manpages.debian.org/sessreg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sessreg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sessreg",
+    "binary": "sessreg",
+    "check": "which sessreg",
+    "install_steps": [
+      "apt-get install sessreg 2>/dev/null || which sessreg",
+      "Verify: sessreg --version",
+      "supercli plugins install ./plugins/sessreg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sessreg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sessreg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sessreg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sessreg: apt-get install sessreg 2>/dev/null || which sessreg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sessreg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sessreg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sessreg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sessreg: apt-get install sessreg 2>/dev/null || which sessreg"
+      },
+      "args": []
+    }
+  ]
+}

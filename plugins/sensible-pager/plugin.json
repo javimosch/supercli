@@ -1,0 +1,56 @@
+{
+  "name": "sensible-pager",
+  "version": "0.1.0",
+  "description": "CLI tool: sensible-pager",
+  "source": "https://manpages.debian.org/sensible-pager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sensible-pager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sensible-pager",
+    "binary": "sensible-pager",
+    "check": "which sensible-pager",
+    "install_steps": [
+      "apt-get install sensible-pager 2>/dev/null || which sensible-pager",
+      "Verify: sensible-pager --version",
+      "supercli plugins install ./plugins/sensible-pager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sensible-pager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sensible-pager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sensible-pager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sensible-pager: apt-get install sensible-pager 2>/dev/null || which sensible-pager"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sensible-pager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sensible-pager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sensible-pager",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sensible-pager: apt-get install sensible-pager 2>/dev/null || which sensible-pager"
+      },
+      "args": []
+    }
+  ]
+}

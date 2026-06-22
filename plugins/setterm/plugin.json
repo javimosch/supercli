@@ -1,0 +1,56 @@
+{
+  "name": "setterm",
+  "version": "0.1.0",
+  "description": "CLI tool: setterm",
+  "source": "https://manpages.debian.org/setterm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setterm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setterm",
+    "binary": "setterm",
+    "check": "which setterm",
+    "install_steps": [
+      "apt-get install setterm 2>/dev/null || which setterm",
+      "Verify: setterm --version",
+      "supercli plugins install ./plugins/setterm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setterm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setterm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setterm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setterm: apt-get install setterm 2>/dev/null || which setterm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setterm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setterm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setterm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setterm: apt-get install setterm 2>/dev/null || which setterm"
+      },
+      "args": []
+    }
+  ]
+}

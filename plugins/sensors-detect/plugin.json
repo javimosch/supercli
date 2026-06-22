@@ -1,0 +1,56 @@
+{
+  "name": "sensors-detect",
+  "version": "0.1.0",
+  "description": "CLI tool: sensors-detect",
+  "source": "https://manpages.debian.org/sensors-detect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sensors-detect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sensors-detect",
+    "binary": "sensors-detect",
+    "check": "which sensors-detect",
+    "install_steps": [
+      "apt-get install sensors-detect 2>/dev/null || which sensors-detect",
+      "Verify: sensors-detect --version",
+      "supercli plugins install ./plugins/sensors-detect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sensors-detect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sensors-detect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sensors-detect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sensors-detect: apt-get install sensors-detect 2>/dev/null || which sensors-detect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sensors-detect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sensors-detect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sensors-detect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sensors-detect: apt-get install sensors-detect 2>/dev/null || which sensors-detect"
+      },
+      "args": []
+    }
+  ]
+}

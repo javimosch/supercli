@@ -1,0 +1,56 @@
+{
+  "name": "showchar",
+  "version": "0.1.0",
+  "description": "CLI tool: showchar",
+  "source": "https://manpages.debian.org/showchar",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "showchar"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "showchar",
+    "binary": "showchar",
+    "check": "which showchar",
+    "install_steps": [
+      "apt-get install showchar 2>/dev/null || which showchar",
+      "Verify: showchar --version",
+      "supercli plugins install ./plugins/showchar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "showchar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print showchar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "showchar",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install showchar: apt-get install showchar 2>/dev/null || which showchar"
+      },
+      "args": []
+    },
+    {
+      "namespace": "showchar",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to showchar CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "showchar",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install showchar: apt-get install showchar 2>/dev/null || which showchar"
+      },
+      "args": []
+    }
+  ]
+}

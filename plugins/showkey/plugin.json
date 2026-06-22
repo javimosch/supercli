@@ -1,0 +1,56 @@
+{
+  "name": "showkey",
+  "version": "0.1.0",
+  "description": "CLI tool: showkey",
+  "source": "https://manpages.debian.org/showkey",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "showkey"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "showkey",
+    "binary": "showkey",
+    "check": "which showkey",
+    "install_steps": [
+      "apt-get install showkey 2>/dev/null || which showkey",
+      "Verify: showkey --version",
+      "supercli plugins install ./plugins/showkey --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "showkey",
+      "resource": "self",
+      "action": "version",
+      "description": "Print showkey version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "showkey",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install showkey: apt-get install showkey 2>/dev/null || which showkey"
+      },
+      "args": []
+    },
+    {
+      "namespace": "showkey",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to showkey CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "showkey",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install showkey: apt-get install showkey 2>/dev/null || which showkey"
+      },
+      "args": []
+    }
+  ]
+}

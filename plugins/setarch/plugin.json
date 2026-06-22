@@ -1,0 +1,56 @@
+{
+  "name": "setarch",
+  "version": "0.1.0",
+  "description": "CLI tool: setarch",
+  "source": "https://manpages.debian.org/setarch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setarch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setarch",
+    "binary": "setarch",
+    "check": "which setarch",
+    "install_steps": [
+      "apt-get install setarch 2>/dev/null || which setarch",
+      "Verify: setarch --version",
+      "supercli plugins install ./plugins/setarch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setarch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setarch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setarch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setarch: apt-get install setarch 2>/dev/null || which setarch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setarch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setarch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setarch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setarch: apt-get install setarch 2>/dev/null || which setarch"
+      },
+      "args": []
+    }
+  ]
+}

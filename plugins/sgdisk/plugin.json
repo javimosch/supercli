@@ -1,0 +1,56 @@
+{
+  "name": "sgdisk",
+  "version": "0.1.0",
+  "description": "CLI tool: sgdisk",
+  "source": "https://manpages.debian.org/sgdisk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sgdisk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sgdisk",
+    "binary": "sgdisk",
+    "check": "which sgdisk",
+    "install_steps": [
+      "apt-get install sgdisk 2>/dev/null || which sgdisk",
+      "Verify: sgdisk --version",
+      "supercli plugins install ./plugins/sgdisk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sgdisk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sgdisk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sgdisk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sgdisk: apt-get install sgdisk 2>/dev/null || which sgdisk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sgdisk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sgdisk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sgdisk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sgdisk: apt-get install sgdisk 2>/dev/null || which sgdisk"
+      },
+      "args": []
+    }
+  ]
+}

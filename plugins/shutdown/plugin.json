@@ -1,0 +1,56 @@
+{
+  "name": "shutdown",
+  "version": "0.1.0",
+  "description": "CLI tool: shutdown",
+  "source": "https://manpages.debian.org/shutdown",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shutdown"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shutdown",
+    "binary": "shutdown",
+    "check": "which shutdown",
+    "install_steps": [
+      "apt-get install shutdown 2>/dev/null || which shutdown",
+      "Verify: shutdown --version",
+      "supercli plugins install ./plugins/shutdown --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shutdown",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shutdown version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shutdown",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shutdown: apt-get install shutdown 2>/dev/null || which shutdown"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shutdown",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shutdown CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shutdown",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shutdown: apt-get install shutdown 2>/dev/null || which shutdown"
+      },
+      "args": []
+    }
+  ]
+}

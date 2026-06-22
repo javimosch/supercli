@@ -1,0 +1,56 @@
+{
+  "name": "setupcon",
+  "version": "0.1.0",
+  "description": "CLI tool: setupcon",
+  "source": "https://manpages.debian.org/setupcon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setupcon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setupcon",
+    "binary": "setupcon",
+    "check": "which setupcon",
+    "install_steps": [
+      "apt-get install setupcon 2>/dev/null || which setupcon",
+      "Verify: setupcon --version",
+      "supercli plugins install ./plugins/setupcon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setupcon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setupcon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setupcon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setupcon: apt-get install setupcon 2>/dev/null || which setupcon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setupcon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setupcon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setupcon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setupcon: apt-get install setupcon 2>/dev/null || which setupcon"
+      },
+      "args": []
+    }
+  ]
+}

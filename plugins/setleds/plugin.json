@@ -1,0 +1,56 @@
+{
+  "name": "setleds",
+  "version": "0.1.0",
+  "description": "CLI tool: setleds",
+  "source": "https://manpages.debian.org/setleds",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setleds"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setleds",
+    "binary": "setleds",
+    "check": "which setleds",
+    "install_steps": [
+      "apt-get install setleds 2>/dev/null || which setleds",
+      "Verify: setleds --version",
+      "supercli plugins install ./plugins/setleds --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setleds",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setleds version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setleds",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setleds: apt-get install setleds 2>/dev/null || which setleds"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setleds",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setleds CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setleds",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setleds: apt-get install setleds 2>/dev/null || which setleds"
+      },
+      "args": []
+    }
+  ]
+}

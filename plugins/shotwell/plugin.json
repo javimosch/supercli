@@ -1,0 +1,56 @@
+{
+  "name": "shotwell",
+  "version": "0.1.0",
+  "description": "CLI tool: shotwell",
+  "source": "https://manpages.debian.org/shotwell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shotwell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shotwell",
+    "binary": "shotwell",
+    "check": "which shotwell",
+    "install_steps": [
+      "apt-get install shotwell 2>/dev/null || which shotwell",
+      "Verify: shotwell --version",
+      "supercli plugins install ./plugins/shotwell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shotwell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shotwell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shotwell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shotwell: apt-get install shotwell 2>/dev/null || which shotwell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shotwell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shotwell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shotwell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shotwell: apt-get install shotwell 2>/dev/null || which shotwell"
+      },
+      "args": []
+    }
+  ]
+}

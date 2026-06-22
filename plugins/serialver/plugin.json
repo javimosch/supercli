@@ -1,0 +1,56 @@
+{
+  "name": "serialver",
+  "version": "0.1.0",
+  "description": "CLI tool: serialver",
+  "source": "https://manpages.debian.org/serialver",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "serialver"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "serialver",
+    "binary": "serialver",
+    "check": "which serialver",
+    "install_steps": [
+      "apt-get install serialver 2>/dev/null || which serialver",
+      "Verify: serialver --version",
+      "supercli plugins install ./plugins/serialver --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "serialver",
+      "resource": "self",
+      "action": "version",
+      "description": "Print serialver version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serialver",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install serialver: apt-get install serialver 2>/dev/null || which serialver"
+      },
+      "args": []
+    },
+    {
+      "namespace": "serialver",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to serialver CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "serialver",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install serialver: apt-get install serialver 2>/dev/null || which serialver"
+      },
+      "args": []
+    }
+  ]
+}

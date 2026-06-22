@@ -1,0 +1,56 @@
+{
+  "name": "setpci",
+  "version": "0.1.0",
+  "description": "CLI tool: setpci",
+  "source": "https://manpages.debian.org/setpci",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setpci"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setpci",
+    "binary": "setpci",
+    "check": "which setpci",
+    "install_steps": [
+      "apt-get install setpci 2>/dev/null || which setpci",
+      "Verify: setpci --version",
+      "supercli plugins install ./plugins/setpci --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setpci",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setpci version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setpci",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setpci: apt-get install setpci 2>/dev/null || which setpci"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setpci",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setpci CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setpci",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setpci: apt-get install setpci 2>/dev/null || which setpci"
+      },
+      "args": []
+    }
+  ]
+}

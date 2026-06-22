@@ -1,0 +1,56 @@
+{
+  "name": "select-editor",
+  "version": "0.1.0",
+  "description": "CLI tool: select-editor",
+  "source": "https://manpages.debian.org/select-editor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "select-editor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "select-editor",
+    "binary": "select-editor",
+    "check": "which select-editor",
+    "install_steps": [
+      "apt-get install select-editor 2>/dev/null || which select-editor",
+      "Verify: select-editor --version",
+      "supercli plugins install ./plugins/select-editor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "select-editor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print select-editor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "select-editor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install select-editor: apt-get install select-editor 2>/dev/null || which select-editor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "select-editor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to select-editor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "select-editor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install select-editor: apt-get install select-editor 2>/dev/null || which select-editor"
+      },
+      "args": []
+    }
+  ]
+}

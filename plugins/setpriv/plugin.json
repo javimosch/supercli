@@ -1,0 +1,56 @@
+{
+  "name": "setpriv",
+  "version": "0.1.0",
+  "description": "CLI tool: setpriv",
+  "source": "https://manpages.debian.org/setpriv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setpriv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setpriv",
+    "binary": "setpriv",
+    "check": "which setpriv",
+    "install_steps": [
+      "apt-get install setpriv 2>/dev/null || which setpriv",
+      "Verify: setpriv --version",
+      "supercli plugins install ./plugins/setpriv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setpriv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setpriv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setpriv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setpriv: apt-get install setpriv 2>/dev/null || which setpriv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setpriv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setpriv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setpriv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setpriv: apt-get install setpriv 2>/dev/null || which setpriv"
+      },
+      "args": []
+    }
+  ]
+}

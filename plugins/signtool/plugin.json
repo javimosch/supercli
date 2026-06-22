@@ -1,0 +1,56 @@
+{
+  "name": "signtool",
+  "version": "0.1.0",
+  "description": "CLI tool: signtool",
+  "source": "https://manpages.debian.org/signtool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "signtool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "signtool",
+    "binary": "signtool",
+    "check": "which signtool",
+    "install_steps": [
+      "apt-get install signtool 2>/dev/null || which signtool",
+      "Verify: signtool --version",
+      "supercli plugins install ./plugins/signtool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "signtool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print signtool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signtool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install signtool: apt-get install signtool 2>/dev/null || which signtool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "signtool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to signtool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "signtool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install signtool: apt-get install signtool 2>/dev/null || which signtool"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "sg",
+  "version": "0.1.0",
+  "description": "CLI tool: sg",
+  "source": "https://manpages.debian.org/sg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sg",
+    "binary": "sg",
+    "check": "which sg",
+    "install_steps": [
+      "apt-get install sg 2>/dev/null || which sg",
+      "Verify: sg --version",
+      "supercli plugins install ./plugins/sg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install sg: apt-get install sg 2>/dev/null || which sg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sg: apt-get install sg 2>/dev/null || which sg"
+      },
+      "args": []
+    }
+  ]
+}

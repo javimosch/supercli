@@ -1,0 +1,56 @@
+{
+  "name": "selfserv",
+  "version": "0.1.0",
+  "description": "CLI tool: selfserv",
+  "source": "https://manpages.debian.org/selfserv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "selfserv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "selfserv",
+    "binary": "selfserv",
+    "check": "which selfserv",
+    "install_steps": [
+      "apt-get install selfserv 2>/dev/null || which selfserv",
+      "Verify: selfserv --version",
+      "supercli plugins install ./plugins/selfserv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "selfserv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print selfserv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "selfserv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install selfserv: apt-get install selfserv 2>/dev/null || which selfserv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "selfserv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to selfserv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "selfserv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install selfserv: apt-get install selfserv 2>/dev/null || which selfserv"
+      },
+      "args": []
+    }
+  ]
+}

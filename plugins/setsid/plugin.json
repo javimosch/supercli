@@ -1,0 +1,56 @@
+{
+  "name": "setsid",
+  "version": "0.1.0",
+  "description": "CLI tool: setsid",
+  "source": "https://manpages.debian.org/setsid",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "setsid"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "setsid",
+    "binary": "setsid",
+    "check": "which setsid",
+    "install_steps": [
+      "apt-get install setsid 2>/dev/null || which setsid",
+      "Verify: setsid --version",
+      "supercli plugins install ./plugins/setsid --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "setsid",
+      "resource": "self",
+      "action": "version",
+      "description": "Print setsid version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setsid",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install setsid: apt-get install setsid 2>/dev/null || which setsid"
+      },
+      "args": []
+    },
+    {
+      "namespace": "setsid",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to setsid CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "setsid",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install setsid: apt-get install setsid 2>/dev/null || which setsid"
+      },
+      "args": []
+    }
+  ]
+}

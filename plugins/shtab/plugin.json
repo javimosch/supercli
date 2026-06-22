@@ -1,0 +1,56 @@
+{
+  "name": "shtab",
+  "version": "0.1.0",
+  "description": "CLI tool: shtab",
+  "source": "https://manpages.debian.org/shtab",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shtab"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shtab",
+    "binary": "shtab",
+    "check": "which shtab",
+    "install_steps": [
+      "apt-get install shtab 2>/dev/null || which shtab",
+      "Verify: shtab --version",
+      "supercli plugins install ./plugins/shtab --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shtab",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shtab version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shtab",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shtab: apt-get install shtab 2>/dev/null || which shtab"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shtab",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shtab CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shtab",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install shtab: apt-get install shtab 2>/dev/null || which shtab"
+      },
+      "args": []
+    }
+  ]
+}

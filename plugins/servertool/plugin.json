@@ -1,0 +1,56 @@
+{
+  "name": "servertool",
+  "version": "0.1.0",
+  "description": "CLI tool: servertool",
+  "source": "https://manpages.debian.org/servertool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "servertool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "servertool",
+    "binary": "servertool",
+    "check": "which servertool",
+    "install_steps": [
+      "apt-get install servertool 2>/dev/null || which servertool",
+      "Verify: servertool --version",
+      "supercli plugins install ./plugins/servertool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "servertool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print servertool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "servertool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install servertool: apt-get install servertool 2>/dev/null || which servertool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "servertool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to servertool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "servertool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install servertool: apt-get install servertool 2>/dev/null || which servertool"
+      },
+      "args": []
+    }
+  ]
+}
