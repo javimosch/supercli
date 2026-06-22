@@ -1,0 +1,53 @@
+{
+  "name": "dumpling",
+  "version": "0.1.0",
+  "description": "Creating SQL dump from a MySQL-compatible database",
+  "source": "https://github.com/pingcap/tidb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "dumpling"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "dumpling",
+    "binary": "dumpling",
+    "check": "which dumpling",
+    "install_steps": [
+      "brew install dumpling",
+      "Verify: dumpling --version",
+      "supercli plugins install ./plugins/dumpling --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "dumpling",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dumpling version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dumpling",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install dumpling: brew install dumpling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dumpling",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dumpling CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dumpling",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dumpling"
+      },
+      "args": []
+    }
+  ]
+}
