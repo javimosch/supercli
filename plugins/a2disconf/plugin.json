@@ -1,0 +1,56 @@
+{
+  "name": "a2disconf",
+  "version": "0.1.0",
+  "description": "CLI tool: a2disconf",
+  "source": "https://manpages.debian.org/a2disconf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "a2disconf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "a2disconf",
+    "binary": "a2disconf",
+    "check": "which a2disconf",
+    "install_steps": [
+      "apt-get install a2disconf 2>/dev/null || which a2disconf",
+      "Verify: a2disconf --version",
+      "supercli plugins install ./plugins/a2disconf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "a2disconf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print a2disconf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2disconf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install a2disconf: apt-get install a2disconf 2>/dev/null || which a2disconf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2disconf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to a2disconf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2disconf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install a2disconf: apt-get install a2disconf 2>/dev/null || which a2disconf"
+      },
+      "args": []
+    }
+  ]
+}

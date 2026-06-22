@@ -1,0 +1,56 @@
+{
+  "name": "a2a-spawn",
+  "version": "0.1.0",
+  "description": "CLI tool: a2a-spawn",
+  "source": "https://manpages.debian.org/a2a-spawn",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "a2a-spawn"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "a2a-spawn",
+    "binary": "a2a-spawn",
+    "check": "which a2a-spawn",
+    "install_steps": [
+      "apt-get install a2a-spawn 2>/dev/null || which a2a-spawn",
+      "Verify: a2a-spawn --version",
+      "supercli plugins install ./plugins/a2a-spawn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "a2a-spawn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print a2a-spawn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a-spawn",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install a2a-spawn: apt-get install a2a-spawn 2>/dev/null || which a2a-spawn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "a2a-spawn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to a2a-spawn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "a2a-spawn",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install a2a-spawn: apt-get install a2a-spawn 2>/dev/null || which a2a-spawn"
+      },
+      "args": []
+    }
+  ]
+}

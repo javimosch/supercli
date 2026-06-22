@@ -1,0 +1,56 @@
+{
+  "name": "7z",
+  "version": "0.1.0",
+  "description": "CLI tool: 7z",
+  "source": "https://manpages.debian.org/7z",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "7z"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "7z",
+    "binary": "7z",
+    "check": "which 7z",
+    "install_steps": [
+      "apt-get install 7z 2>/dev/null || which 7z",
+      "Verify: 7z --version",
+      "supercli plugins install ./plugins/7z --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "7z",
+      "resource": "self",
+      "action": "version",
+      "description": "Print 7z version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "7z",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install 7z: apt-get install 7z 2>/dev/null || which 7z"
+      },
+      "args": []
+    },
+    {
+      "namespace": "7z",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to 7z CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "7z",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install 7z: apt-get install 7z 2>/dev/null || which 7z"
+      },
+      "args": []
+    }
+  ]
+}

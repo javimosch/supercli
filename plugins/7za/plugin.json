@@ -1,0 +1,56 @@
+{
+  "name": "7za",
+  "version": "0.1.0",
+  "description": "CLI tool: 7za",
+  "source": "https://manpages.debian.org/7za",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "7za"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "7za",
+    "binary": "7za",
+    "check": "which 7za",
+    "install_steps": [
+      "apt-get install 7za 2>/dev/null || which 7za",
+      "Verify: 7za --version",
+      "supercli plugins install ./plugins/7za --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "7za",
+      "resource": "self",
+      "action": "version",
+      "description": "Print 7za version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "7za",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install 7za: apt-get install 7za 2>/dev/null || which 7za"
+      },
+      "args": []
+    },
+    {
+      "namespace": "7za",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to 7za CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "7za",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install 7za: apt-get install 7za 2>/dev/null || which 7za"
+      },
+      "args": []
+    }
+  ]
+}

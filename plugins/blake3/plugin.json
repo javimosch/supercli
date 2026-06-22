@@ -1,0 +1,56 @@
+{
+  "name": "blake3",
+  "version": "0.1.0",
+  "description": "Command line tool for the BLAKE3 hash function",
+  "source": "https://github.com/BLAKE3-team/BLAKE3",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "b3sum"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "blake3",
+    "binary": "b3sum",
+    "check": "which b3sum",
+    "install_steps": [
+      "cargo install b3sum",
+      "Verify: b3sum --version",
+      "supercli plugins install ./plugins/blake3 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "blake3",
+      "resource": "self",
+      "action": "version",
+      "description": "Print blake3 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install blake3: cargo install b3sum"
+      },
+      "args": []
+    },
+    {
+      "namespace": "blake3",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to blake3 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "b3sum",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install blake3: cargo install b3sum"
+      },
+      "args": []
+    }
+  ]
+}

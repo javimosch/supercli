@@ -1,0 +1,56 @@
+{
+  "name": "calibrate_ppa",
+  "version": "0.1.0",
+  "description": "CLI tool: calibrate_ppa",
+  "source": "https://manpages.debian.org/calibrate_ppa",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "calibrate_ppa"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "calibrate_ppa",
+    "binary": "calibrate_ppa",
+    "check": "which calibrate_ppa",
+    "install_steps": [
+      "apt-get install calibrate_ppa 2>/dev/null || which calibrate_ppa",
+      "Verify: calibrate_ppa --version",
+      "supercli plugins install ./plugins/calibrate_ppa --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "calibrate_ppa",
+      "resource": "self",
+      "action": "version",
+      "description": "Print calibrate_ppa version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "calibrate_ppa",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install calibrate_ppa: apt-get install calibrate_ppa 2>/dev/null || which calibrate_ppa"
+      },
+      "args": []
+    },
+    {
+      "namespace": "calibrate_ppa",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to calibrate_ppa CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "calibrate_ppa",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install calibrate_ppa: apt-get install calibrate_ppa 2>/dev/null || which calibrate_ppa"
+      },
+      "args": []
+    }
+  ]
+}

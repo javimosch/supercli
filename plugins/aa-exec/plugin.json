@@ -1,0 +1,56 @@
+{
+  "name": "aa-exec",
+  "version": "0.1.0",
+  "description": "CLI tool: aa-exec",
+  "source": "https://manpages.debian.org/aa-exec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "aa-exec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "aa-exec",
+    "binary": "aa-exec",
+    "check": "which aa-exec",
+    "install_steps": [
+      "apt-get install aa-exec 2>/dev/null || which aa-exec",
+      "Verify: aa-exec --version",
+      "supercli plugins install ./plugins/aa-exec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aa-exec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print aa-exec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aa-exec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install aa-exec: apt-get install aa-exec 2>/dev/null || which aa-exec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "aa-exec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aa-exec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aa-exec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install aa-exec: apt-get install aa-exec 2>/dev/null || which aa-exec"
+      },
+      "args": []
+    }
+  ]
+}

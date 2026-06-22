@@ -1,0 +1,56 @@
+{
+  "name": "7zr",
+  "version": "0.1.0",
+  "description": "CLI tool: 7zr",
+  "source": "https://manpages.debian.org/7zr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "7zr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "7zr",
+    "binary": "7zr",
+    "check": "which 7zr",
+    "install_steps": [
+      "apt-get install 7zr 2>/dev/null || which 7zr",
+      "Verify: 7zr --version",
+      "supercli plugins install ./plugins/7zr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "7zr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print 7zr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "7zr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install 7zr: apt-get install 7zr 2>/dev/null || which 7zr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "7zr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to 7zr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "7zr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install 7zr: apt-get install 7zr 2>/dev/null || which 7zr"
+      },
+      "args": []
+    }
+  ]
+}

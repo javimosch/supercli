@@ -1,0 +1,56 @@
+{
+  "name": "aa-status",
+  "version": "0.1.0",
+  "description": "CLI tool: aa-status",
+  "source": "https://manpages.debian.org/aa-status",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "aa-status"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "aa-status",
+    "binary": "aa-status",
+    "check": "which aa-status",
+    "install_steps": [
+      "apt-get install aa-status 2>/dev/null || which aa-status",
+      "Verify: aa-status --version",
+      "supercli plugins install ./plugins/aa-status --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aa-status",
+      "resource": "self",
+      "action": "version",
+      "description": "Print aa-status version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aa-status",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install aa-status: apt-get install aa-status 2>/dev/null || which aa-status"
+      },
+      "args": []
+    },
+    {
+      "namespace": "aa-status",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aa-status CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aa-status",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install aa-status: apt-get install aa-status 2>/dev/null || which aa-status"
+      },
+      "args": []
+    }
+  ]
+}

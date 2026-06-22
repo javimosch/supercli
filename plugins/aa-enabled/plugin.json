@@ -1,0 +1,56 @@
+{
+  "name": "aa-enabled",
+  "version": "0.1.0",
+  "description": "CLI tool: aa-enabled",
+  "source": "https://manpages.debian.org/aa-enabled",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "aa-enabled"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "aa-enabled",
+    "binary": "aa-enabled",
+    "check": "which aa-enabled",
+    "install_steps": [
+      "apt-get install aa-enabled 2>/dev/null || which aa-enabled",
+      "Verify: aa-enabled --version",
+      "supercli plugins install ./plugins/aa-enabled --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "aa-enabled",
+      "resource": "self",
+      "action": "version",
+      "description": "Print aa-enabled version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aa-enabled",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install aa-enabled: apt-get install aa-enabled 2>/dev/null || which aa-enabled"
+      },
+      "args": []
+    },
+    {
+      "namespace": "aa-enabled",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to aa-enabled CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "aa-enabled",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install aa-enabled: apt-get install aa-enabled 2>/dev/null || which aa-enabled"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "bloaty",
+  "version": "0.1.0",
+  "description": "A size profiler for binaries",
+  "source": "https://github.com/google/bloaty",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bloaty"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bloaty",
+    "binary": "bloaty",
+    "check": "which bloaty",
+    "install_steps": [
+      "apt-get install bloaty",
+      "Verify: bloaty --version",
+      "supercli plugins install ./plugins/bloaty --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "bloaty",
+      "resource": "self",
+      "action": "version",
+      "description": "Print bloaty version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bloaty",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install bloaty: apt-get install bloaty"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bloaty",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to bloaty CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bloaty",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install bloaty: apt-get install bloaty"
+      },
+      "args": []
+    }
+  ]
+}
