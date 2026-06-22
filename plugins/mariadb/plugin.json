@@ -1,0 +1,52 @@
+{
+  "name": "mariadb",
+  "version": "0.1.0",
+  "description": "Drop-in replacement for MySQL",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mariadb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mariadb",
+    "binary": "mariadb",
+    "check": "which mariadb",
+    "install_steps": [
+      "brew install mariadb",
+      "Verify: mariadb --version",
+      "supercli plugins install ./plugins/mariadb --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "mariadb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mariadb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mariadb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mariadb: brew install mariadb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mariadb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mariadb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mariadb",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mariadb"
+      },
+      "args": []
+    }
+  ]
+}

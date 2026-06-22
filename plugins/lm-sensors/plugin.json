@@ -1,0 +1,53 @@
+{
+  "name": "lm-sensors",
+  "version": "0.1.0",
+  "description": "Tools for monitoring the temperatures, voltages, and fans",
+  "source": "https://github.com/hramrach/lm-sensors",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lm-sensors"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lm-sensors",
+    "binary": "lm-sensors",
+    "check": "which lm-sensors",
+    "install_steps": [
+      "brew install lm-sensors",
+      "Verify: lm-sensors --version",
+      "supercli plugins install ./plugins/lm-sensors --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "lm-sensors",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lm-sensors version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lm-sensors",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lm-sensors: brew install lm-sensors"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lm-sensors",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lm-sensors CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lm-sensors",
+        "passthrough": true,
+        "missingDependencyHelp": "Install lm-sensors"
+      },
+      "args": []
+    }
+  ]
+}
