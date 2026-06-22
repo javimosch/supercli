@@ -1,0 +1,56 @@
+{
+  "name": "lxc-cgroup",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-cgroup",
+  "source": "https://manpages.debian.org/lxc-cgroup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-cgroup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-cgroup",
+    "binary": "lxc-cgroup",
+    "check": "which lxc-cgroup",
+    "install_steps": [
+      "apt-get install lxc-cgroup 2>/dev/null || which lxc-cgroup",
+      "Verify: lxc-cgroup --version",
+      "supercli plugins install ./plugins/lxc-cgroup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-cgroup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-cgroup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-cgroup",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-cgroup: apt-get install lxc-cgroup 2>/dev/null || which lxc-cgroup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-cgroup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-cgroup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-cgroup",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-cgroup: apt-get install lxc-cgroup 2>/dev/null || which lxc-cgroup"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "lvresize",
+  "version": "0.1.0",
+  "description": "CLI tool: lvresize",
+  "source": "https://manpages.debian.org/lvresize",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvresize"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvresize",
+    "binary": "lvresize",
+    "check": "which lvresize",
+    "install_steps": [
+      "apt-get install lvresize 2>/dev/null || which lvresize",
+      "Verify: lvresize --version",
+      "supercli plugins install ./plugins/lvresize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvresize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvresize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvresize",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvresize: apt-get install lvresize 2>/dev/null || which lvresize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvresize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvresize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvresize",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvresize: apt-get install lvresize 2>/dev/null || which lvresize"
+      },
+      "args": []
+    }
+  ]
+}

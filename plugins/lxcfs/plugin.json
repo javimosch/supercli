@@ -1,0 +1,56 @@
+{
+  "name": "lxcfs",
+  "version": "0.1.0",
+  "description": "CLI tool: lxcfs",
+  "source": "https://manpages.debian.org/lxcfs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxcfs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxcfs",
+    "binary": "lxcfs",
+    "check": "which lxcfs",
+    "install_steps": [
+      "apt-get install lxcfs 2>/dev/null || which lxcfs",
+      "Verify: lxcfs --version",
+      "supercli plugins install ./plugins/lxcfs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxcfs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxcfs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxcfs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxcfs: apt-get install lxcfs 2>/dev/null || which lxcfs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxcfs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxcfs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxcfs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxcfs: apt-get install lxcfs 2>/dev/null || which lxcfs"
+      },
+      "args": []
+    }
+  ]
+}

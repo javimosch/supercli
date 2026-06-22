@@ -1,0 +1,56 @@
+{
+  "name": "luit",
+  "version": "0.1.0",
+  "description": "CLI tool: luit",
+  "source": "https://manpages.debian.org/luit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "luit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "luit",
+    "binary": "luit",
+    "check": "which luit",
+    "install_steps": [
+      "apt-get install luit 2>/dev/null || which luit",
+      "Verify: luit --version",
+      "supercli plugins install ./plugins/luit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "luit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print luit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "luit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install luit: apt-get install luit 2>/dev/null || which luit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "luit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to luit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "luit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install luit: apt-get install luit 2>/dev/null || which luit"
+      },
+      "args": []
+    }
+  ]
+}

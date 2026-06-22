@@ -1,0 +1,56 @@
+{
+  "name": "luatex",
+  "version": "0.1.0",
+  "description": "CLI tool: luatex",
+  "source": "https://manpages.debian.org/luatex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "luatex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "luatex",
+    "binary": "luatex",
+    "check": "which luatex",
+    "install_steps": [
+      "apt-get install luatex 2>/dev/null || which luatex",
+      "Verify: luatex --version",
+      "supercli plugins install ./plugins/luatex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "luatex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print luatex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "luatex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install luatex: apt-get install luatex 2>/dev/null || which luatex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "luatex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to luatex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "luatex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install luatex: apt-get install luatex 2>/dev/null || which luatex"
+      },
+      "args": []
+    }
+  ]
+}

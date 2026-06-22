@@ -1,0 +1,56 @@
+{
+  "name": "lxc-monitor",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-monitor",
+  "source": "https://manpages.debian.org/lxc-monitor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-monitor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-monitor",
+    "binary": "lxc-monitor",
+    "check": "which lxc-monitor",
+    "install_steps": [
+      "apt-get install lxc-monitor 2>/dev/null || which lxc-monitor",
+      "Verify: lxc-monitor --version",
+      "supercli plugins install ./plugins/lxc-monitor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-monitor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-monitor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-monitor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-monitor: apt-get install lxc-monitor 2>/dev/null || which lxc-monitor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-monitor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-monitor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-monitor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-monitor: apt-get install lxc-monitor 2>/dev/null || which lxc-monitor"
+      },
+      "args": []
+    }
+  ]
+}

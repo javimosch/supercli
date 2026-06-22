@@ -1,0 +1,56 @@
+{
+  "name": "lvreduce",
+  "version": "0.1.0",
+  "description": "CLI tool: lvreduce",
+  "source": "https://manpages.debian.org/lvreduce",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvreduce"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvreduce",
+    "binary": "lvreduce",
+    "check": "which lvreduce",
+    "install_steps": [
+      "apt-get install lvreduce 2>/dev/null || which lvreduce",
+      "Verify: lvreduce --version",
+      "supercli plugins install ./plugins/lvreduce --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvreduce",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvreduce version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvreduce",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvreduce: apt-get install lvreduce 2>/dev/null || which lvreduce"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvreduce",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvreduce CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvreduce",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvreduce: apt-get install lvreduce 2>/dev/null || which lvreduce"
+      },
+      "args": []
+    }
+  ]
+}

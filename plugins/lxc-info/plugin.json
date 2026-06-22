@@ -1,0 +1,56 @@
+{
+  "name": "lxc-info",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-info",
+  "source": "https://manpages.debian.org/lxc-info",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-info"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-info",
+    "binary": "lxc-info",
+    "check": "which lxc-info",
+    "install_steps": [
+      "apt-get install lxc-info 2>/dev/null || which lxc-info",
+      "Verify: lxc-info --version",
+      "supercli plugins install ./plugins/lxc-info --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-info",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-info version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-info",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-info: apt-get install lxc-info 2>/dev/null || which lxc-info"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-info",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-info CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-info",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-info: apt-get install lxc-info 2>/dev/null || which lxc-info"
+      },
+      "args": []
+    }
+  ]
+}

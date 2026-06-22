@@ -1,0 +1,56 @@
+{
+  "name": "lvconvert",
+  "version": "0.1.0",
+  "description": "CLI tool: lvconvert",
+  "source": "https://manpages.debian.org/lvconvert",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvconvert"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvconvert",
+    "binary": "lvconvert",
+    "check": "which lvconvert",
+    "install_steps": [
+      "apt-get install lvconvert 2>/dev/null || which lvconvert",
+      "Verify: lvconvert --version",
+      "supercli plugins install ./plugins/lvconvert --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvconvert",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvconvert version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvconvert",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvconvert: apt-get install lvconvert 2>/dev/null || which lvconvert"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvconvert",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvconvert CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvconvert",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvconvert: apt-get install lvconvert 2>/dev/null || which lvconvert"
+      },
+      "args": []
+    }
+  ]
+}

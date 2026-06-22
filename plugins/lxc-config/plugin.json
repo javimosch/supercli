@@ -1,0 +1,56 @@
+{
+  "name": "lxc-config",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-config",
+  "source": "https://manpages.debian.org/lxc-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-config",
+    "binary": "lxc-config",
+    "check": "which lxc-config",
+    "install_steps": [
+      "apt-get install lxc-config 2>/dev/null || which lxc-config",
+      "Verify: lxc-config --version",
+      "supercli plugins install ./plugins/lxc-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-config: apt-get install lxc-config 2>/dev/null || which lxc-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-config: apt-get install lxc-config 2>/dev/null || which lxc-config"
+      },
+      "args": []
+    }
+  ]
+}

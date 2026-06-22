@@ -1,0 +1,56 @@
+{
+  "name": "lvmsar",
+  "version": "0.1.0",
+  "description": "CLI tool: lvmsar",
+  "source": "https://manpages.debian.org/lvmsar",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvmsar"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvmsar",
+    "binary": "lvmsar",
+    "check": "which lvmsar",
+    "install_steps": [
+      "apt-get install lvmsar 2>/dev/null || which lvmsar",
+      "Verify: lvmsar --version",
+      "supercli plugins install ./plugins/lvmsar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvmsar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvmsar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmsar",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvmsar: apt-get install lvmsar 2>/dev/null || which lvmsar"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvmsar",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvmsar CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmsar",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvmsar: apt-get install lvmsar 2>/dev/null || which lvmsar"
+      },
+      "args": []
+    }
+  ]
+}

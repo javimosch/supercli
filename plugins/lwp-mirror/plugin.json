@@ -1,0 +1,56 @@
+{
+  "name": "lwp-mirror",
+  "version": "0.1.0",
+  "description": "CLI tool: lwp-mirror",
+  "source": "https://manpages.debian.org/lwp-mirror",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lwp-mirror"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lwp-mirror",
+    "binary": "lwp-mirror",
+    "check": "which lwp-mirror",
+    "install_steps": [
+      "apt-get install lwp-mirror 2>/dev/null || which lwp-mirror",
+      "Verify: lwp-mirror --version",
+      "supercli plugins install ./plugins/lwp-mirror --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lwp-mirror",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lwp-mirror version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lwp-mirror",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lwp-mirror: apt-get install lwp-mirror 2>/dev/null || which lwp-mirror"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lwp-mirror",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lwp-mirror CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lwp-mirror",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lwp-mirror: apt-get install lwp-mirror 2>/dev/null || which lwp-mirror"
+      },
+      "args": []
+    }
+  ]
+}

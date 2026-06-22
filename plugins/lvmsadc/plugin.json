@@ -1,0 +1,56 @@
+{
+  "name": "lvmsadc",
+  "version": "0.1.0",
+  "description": "CLI tool: lvmsadc",
+  "source": "https://manpages.debian.org/lvmsadc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvmsadc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvmsadc",
+    "binary": "lvmsadc",
+    "check": "which lvmsadc",
+    "install_steps": [
+      "apt-get install lvmsadc 2>/dev/null || which lvmsadc",
+      "Verify: lvmsadc --version",
+      "supercli plugins install ./plugins/lvmsadc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvmsadc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvmsadc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmsadc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvmsadc: apt-get install lvmsadc 2>/dev/null || which lvmsadc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvmsadc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvmsadc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmsadc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvmsadc: apt-get install lvmsadc 2>/dev/null || which lvmsadc"
+      },
+      "args": []
+    }
+  ]
+}

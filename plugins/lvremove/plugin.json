@@ -1,0 +1,56 @@
+{
+  "name": "lvremove",
+  "version": "0.1.0",
+  "description": "CLI tool: lvremove",
+  "source": "https://manpages.debian.org/lvremove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvremove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvremove",
+    "binary": "lvremove",
+    "check": "which lvremove",
+    "install_steps": [
+      "apt-get install lvremove 2>/dev/null || which lvremove",
+      "Verify: lvremove --version",
+      "supercli plugins install ./plugins/lvremove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvremove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvremove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvremove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvremove: apt-get install lvremove 2>/dev/null || which lvremove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvremove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvremove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvremove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvremove: apt-get install lvremove 2>/dev/null || which lvremove"
+      },
+      "args": []
+    }
+  ]
+}

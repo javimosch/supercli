@@ -1,0 +1,56 @@
+{
+  "name": "lvmdump",
+  "version": "0.1.0",
+  "description": "CLI tool: lvmdump",
+  "source": "https://manpages.debian.org/lvmdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvmdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvmdump",
+    "binary": "lvmdump",
+    "check": "which lvmdump",
+    "install_steps": [
+      "apt-get install lvmdump 2>/dev/null || which lvmdump",
+      "Verify: lvmdump --version",
+      "supercli plugins install ./plugins/lvmdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvmdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvmdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvmdump: apt-get install lvmdump 2>/dev/null || which lvmdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvmdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvmdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvmdump: apt-get install lvmdump 2>/dev/null || which lvmdump"
+      },
+      "args": []
+    }
+  ]
+}

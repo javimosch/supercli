@@ -1,0 +1,56 @@
+{
+  "name": "lvextend",
+  "version": "0.1.0",
+  "description": "CLI tool: lvextend",
+  "source": "https://manpages.debian.org/lvextend",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvextend"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvextend",
+    "binary": "lvextend",
+    "check": "which lvextend",
+    "install_steps": [
+      "apt-get install lvextend 2>/dev/null || which lvextend",
+      "Verify: lvextend --version",
+      "supercli plugins install ./plugins/lvextend --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvextend",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvextend version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvextend",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvextend: apt-get install lvextend 2>/dev/null || which lvextend"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvextend",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvextend CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvextend",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvextend: apt-get install lvextend 2>/dev/null || which lvextend"
+      },
+      "args": []
+    }
+  ]
+}

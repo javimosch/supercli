@@ -1,0 +1,56 @@
+{
+  "name": "lxc-attach",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-attach",
+  "source": "https://manpages.debian.org/lxc-attach",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-attach"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-attach",
+    "binary": "lxc-attach",
+    "check": "which lxc-attach",
+    "install_steps": [
+      "apt-get install lxc-attach 2>/dev/null || which lxc-attach",
+      "Verify: lxc-attach --version",
+      "supercli plugins install ./plugins/lxc-attach --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-attach",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-attach version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-attach",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-attach: apt-get install lxc-attach 2>/dev/null || which lxc-attach"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-attach",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-attach CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-attach",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-attach: apt-get install lxc-attach 2>/dev/null || which lxc-attach"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "lvchange",
+  "version": "0.1.0",
+  "description": "CLI tool: lvchange",
+  "source": "https://manpages.debian.org/lvchange",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvchange"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvchange",
+    "binary": "lvchange",
+    "check": "which lvchange",
+    "install_steps": [
+      "apt-get install lvchange 2>/dev/null || which lvchange",
+      "Verify: lvchange --version",
+      "supercli plugins install ./plugins/lvchange --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvchange",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvchange version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvchange",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvchange: apt-get install lvchange 2>/dev/null || which lvchange"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvchange",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvchange CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvchange",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvchange: apt-get install lvchange 2>/dev/null || which lvchange"
+      },
+      "args": []
+    }
+  ]
+}

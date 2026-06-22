@@ -1,0 +1,56 @@
+{
+  "name": "lxc-execute",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-execute",
+  "source": "https://manpages.debian.org/lxc-execute",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-execute"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-execute",
+    "binary": "lxc-execute",
+    "check": "which lxc-execute",
+    "install_steps": [
+      "apt-get install lxc-execute 2>/dev/null || which lxc-execute",
+      "Verify: lxc-execute --version",
+      "supercli plugins install ./plugins/lxc-execute --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-execute",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-execute version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-execute",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-execute: apt-get install lxc-execute 2>/dev/null || which lxc-execute"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-execute",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-execute CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-execute",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-execute: apt-get install lxc-execute 2>/dev/null || which lxc-execute"
+      },
+      "args": []
+    }
+  ]
+}

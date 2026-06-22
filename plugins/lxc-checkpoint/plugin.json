@@ -1,0 +1,56 @@
+{
+  "name": "lxc-checkpoint",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-checkpoint",
+  "source": "https://manpages.debian.org/lxc-checkpoint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-checkpoint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-checkpoint",
+    "binary": "lxc-checkpoint",
+    "check": "which lxc-checkpoint",
+    "install_steps": [
+      "apt-get install lxc-checkpoint 2>/dev/null || which lxc-checkpoint",
+      "Verify: lxc-checkpoint --version",
+      "supercli plugins install ./plugins/lxc-checkpoint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-checkpoint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-checkpoint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-checkpoint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-checkpoint: apt-get install lxc-checkpoint 2>/dev/null || which lxc-checkpoint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-checkpoint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-checkpoint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-checkpoint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-checkpoint: apt-get install lxc-checkpoint 2>/dev/null || which lxc-checkpoint"
+      },
+      "args": []
+    }
+  ]
+}

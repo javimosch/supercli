@@ -1,0 +1,56 @@
+{
+  "name": "lvmconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: lvmconfig",
+  "source": "https://manpages.debian.org/lvmconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvmconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvmconfig",
+    "binary": "lvmconfig",
+    "check": "which lvmconfig",
+    "install_steps": [
+      "apt-get install lvmconfig 2>/dev/null || which lvmconfig",
+      "Verify: lvmconfig --version",
+      "supercli plugins install ./plugins/lvmconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvmconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvmconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvmconfig: apt-get install lvmconfig 2>/dev/null || which lvmconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvmconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvmconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvmconfig: apt-get install lvmconfig 2>/dev/null || which lvmconfig"
+      },
+      "args": []
+    }
+  ]
+}

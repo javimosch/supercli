@@ -1,0 +1,56 @@
+{
+  "name": "lvmpolld",
+  "version": "0.1.0",
+  "description": "CLI tool: lvmpolld",
+  "source": "https://manpages.debian.org/lvmpolld",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvmpolld"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvmpolld",
+    "binary": "lvmpolld",
+    "check": "which lvmpolld",
+    "install_steps": [
+      "apt-get install lvmpolld 2>/dev/null || which lvmpolld",
+      "Verify: lvmpolld --version",
+      "supercli plugins install ./plugins/lvmpolld --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvmpolld",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvmpolld version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmpolld",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvmpolld: apt-get install lvmpolld 2>/dev/null || which lvmpolld"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvmpolld",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvmpolld CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmpolld",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvmpolld: apt-get install lvmpolld 2>/dev/null || which lvmpolld"
+      },
+      "args": []
+    }
+  ]
+}

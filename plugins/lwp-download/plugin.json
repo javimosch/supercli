@@ -1,0 +1,56 @@
+{
+  "name": "lwp-download",
+  "version": "0.1.0",
+  "description": "CLI tool: lwp-download",
+  "source": "https://manpages.debian.org/lwp-download",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lwp-download"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lwp-download",
+    "binary": "lwp-download",
+    "check": "which lwp-download",
+    "install_steps": [
+      "apt-get install lwp-download 2>/dev/null || which lwp-download",
+      "Verify: lwp-download --version",
+      "supercli plugins install ./plugins/lwp-download --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lwp-download",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lwp-download version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lwp-download",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lwp-download: apt-get install lwp-download 2>/dev/null || which lwp-download"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lwp-download",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lwp-download CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lwp-download",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lwp-download: apt-get install lwp-download 2>/dev/null || which lwp-download"
+      },
+      "args": []
+    }
+  ]
+}

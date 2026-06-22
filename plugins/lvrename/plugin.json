@@ -1,0 +1,56 @@
+{
+  "name": "lvrename",
+  "version": "0.1.0",
+  "description": "CLI tool: lvrename",
+  "source": "https://manpages.debian.org/lvrename",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvrename"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvrename",
+    "binary": "lvrename",
+    "check": "which lvrename",
+    "install_steps": [
+      "apt-get install lvrename 2>/dev/null || which lvrename",
+      "Verify: lvrename --version",
+      "supercli plugins install ./plugins/lvrename --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvrename",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvrename version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvrename",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvrename: apt-get install lvrename 2>/dev/null || which lvrename"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvrename",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvrename CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvrename",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvrename: apt-get install lvrename 2>/dev/null || which lvrename"
+      },
+      "args": []
+    }
+  ]
+}

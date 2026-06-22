@@ -1,0 +1,56 @@
+{
+  "name": "lxc-ls",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-ls",
+  "source": "https://manpages.debian.org/lxc-ls",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-ls"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-ls",
+    "binary": "lxc-ls",
+    "check": "which lxc-ls",
+    "install_steps": [
+      "apt-get install lxc-ls 2>/dev/null || which lxc-ls",
+      "Verify: lxc-ls --version",
+      "supercli plugins install ./plugins/lxc-ls --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-ls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-ls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-ls",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-ls: apt-get install lxc-ls 2>/dev/null || which lxc-ls"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-ls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-ls CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-ls",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-ls: apt-get install lxc-ls 2>/dev/null || which lxc-ls"
+      },
+      "args": []
+    }
+  ]
+}

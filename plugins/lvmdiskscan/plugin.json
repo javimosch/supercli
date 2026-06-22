@@ -1,0 +1,56 @@
+{
+  "name": "lvmdiskscan",
+  "version": "0.1.0",
+  "description": "CLI tool: lvmdiskscan",
+  "source": "https://manpages.debian.org/lvmdiskscan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lvmdiskscan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lvmdiskscan",
+    "binary": "lvmdiskscan",
+    "check": "which lvmdiskscan",
+    "install_steps": [
+      "apt-get install lvmdiskscan 2>/dev/null || which lvmdiskscan",
+      "Verify: lvmdiskscan --version",
+      "supercli plugins install ./plugins/lvmdiskscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lvmdiskscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lvmdiskscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmdiskscan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lvmdiskscan: apt-get install lvmdiskscan 2>/dev/null || which lvmdiskscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lvmdiskscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lvmdiskscan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lvmdiskscan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lvmdiskscan: apt-get install lvmdiskscan 2>/dev/null || which lvmdiskscan"
+      },
+      "args": []
+    }
+  ]
+}
