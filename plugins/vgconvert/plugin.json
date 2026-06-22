@@ -1,0 +1,56 @@
+{
+  "name": "vgconvert",
+  "version": "0.1.0",
+  "description": "CLI tool: vgconvert",
+  "source": "https://manpages.debian.org/vgconvert",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgconvert"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgconvert",
+    "binary": "vgconvert",
+    "check": "which vgconvert",
+    "install_steps": [
+      "apt-get install vgconvert 2>/dev/null || which vgconvert",
+      "Verify: vgconvert --version",
+      "supercli plugins install ./plugins/vgconvert --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgconvert",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgconvert version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgconvert",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgconvert: apt-get install vgconvert 2>/dev/null || which vgconvert"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgconvert",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgconvert CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgconvert",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgconvert: apt-get install vgconvert 2>/dev/null || which vgconvert"
+      },
+      "args": []
+    }
+  ]
+}

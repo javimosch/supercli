@@ -1,0 +1,56 @@
+{
+  "name": "vboxconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: vboxconfig",
+  "source": "https://manpages.debian.org/vboxconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vboxconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vboxconfig",
+    "binary": "vboxconfig",
+    "check": "which vboxconfig",
+    "install_steps": [
+      "apt-get install vboxconfig 2>/dev/null || which vboxconfig",
+      "Verify: vboxconfig --version",
+      "supercli plugins install ./plugins/vboxconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vboxconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vboxconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vboxconfig: apt-get install vboxconfig 2>/dev/null || which vboxconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vboxconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vboxconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vboxconfig: apt-get install vboxconfig 2>/dev/null || which vboxconfig"
+      },
+      "args": []
+    }
+  ]
+}

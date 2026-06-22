@@ -1,0 +1,56 @@
+{
+  "name": "usr",
+  "version": "0.1.0",
+  "description": "CLI tool: usr",
+  "source": "https://manpages.debian.org/usr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "usr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "usr",
+    "binary": "usr",
+    "check": "which usr",
+    "install_steps": [
+      "apt-get install usr 2>/dev/null || which usr",
+      "Verify: usr --version",
+      "supercli plugins install ./plugins/usr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install usr: apt-get install usr 2>/dev/null || which usr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usr: apt-get install usr 2>/dev/null || which usr"
+      },
+      "args": []
+    }
+  ]
+}

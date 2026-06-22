@@ -1,0 +1,56 @@
+{
+  "name": "uuidd",
+  "version": "0.1.0",
+  "description": "CLI tool: uuidd",
+  "source": "https://manpages.debian.org/uuidd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "uuidd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "uuidd",
+    "binary": "uuidd",
+    "check": "which uuidd",
+    "install_steps": [
+      "apt-get install uuidd 2>/dev/null || which uuidd",
+      "Verify: uuidd --version",
+      "supercli plugins install ./plugins/uuidd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "uuidd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print uuidd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uuidd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install uuidd: apt-get install uuidd 2>/dev/null || which uuidd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "uuidd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to uuidd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "uuidd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install uuidd: apt-get install uuidd 2>/dev/null || which uuidd"
+      },
+      "args": []
+    }
+  ]
+}

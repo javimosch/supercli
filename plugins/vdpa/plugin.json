@@ -1,0 +1,56 @@
+{
+  "name": "vdpa",
+  "version": "0.1.0",
+  "description": "CLI tool: vdpa",
+  "source": "https://manpages.debian.org/vdpa",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vdpa"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vdpa",
+    "binary": "vdpa",
+    "check": "which vdpa",
+    "install_steps": [
+      "apt-get install vdpa 2>/dev/null || which vdpa",
+      "Verify: vdpa --version",
+      "supercli plugins install ./plugins/vdpa --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vdpa",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vdpa version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vdpa",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vdpa: apt-get install vdpa 2>/dev/null || which vdpa"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vdpa",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vdpa CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vdpa",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vdpa: apt-get install vdpa 2>/dev/null || which vdpa"
+      },
+      "args": []
+    }
+  ]
+}

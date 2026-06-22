@@ -1,0 +1,56 @@
+{
+  "name": "vcstime",
+  "version": "0.1.0",
+  "description": "CLI tool: vcstime",
+  "source": "https://manpages.debian.org/vcstime",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vcstime"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vcstime",
+    "binary": "vcstime",
+    "check": "which vcstime",
+    "install_steps": [
+      "apt-get install vcstime 2>/dev/null || which vcstime",
+      "Verify: vcstime --version",
+      "supercli plugins install ./plugins/vcstime --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vcstime",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vcstime version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vcstime",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vcstime: apt-get install vcstime 2>/dev/null || which vcstime"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vcstime",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vcstime CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vcstime",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vcstime: apt-get install vcstime 2>/dev/null || which vcstime"
+      },
+      "args": []
+    }
+  ]
+}

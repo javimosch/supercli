@@ -1,0 +1,56 @@
+{
+  "name": "vacuumdb",
+  "version": "0.1.0",
+  "description": "CLI tool: vacuumdb",
+  "source": "https://manpages.debian.org/vacuumdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vacuumdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vacuumdb",
+    "binary": "vacuumdb",
+    "check": "which vacuumdb",
+    "install_steps": [
+      "apt-get install vacuumdb 2>/dev/null || which vacuumdb",
+      "Verify: vacuumdb --version",
+      "supercli plugins install ./plugins/vacuumdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vacuumdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vacuumdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vacuumdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vacuumdb: apt-get install vacuumdb 2>/dev/null || which vacuumdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vacuumdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vacuumdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vacuumdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vacuumdb: apt-get install vacuumdb 2>/dev/null || which vacuumdb"
+      },
+      "args": []
+    }
+  ]
+}

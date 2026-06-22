@@ -1,0 +1,56 @@
+{
+  "name": "vfyserv",
+  "version": "0.1.0",
+  "description": "CLI tool: vfyserv",
+  "source": "https://manpages.debian.org/vfyserv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vfyserv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vfyserv",
+    "binary": "vfyserv",
+    "check": "which vfyserv",
+    "install_steps": [
+      "apt-get install vfyserv 2>/dev/null || which vfyserv",
+      "Verify: vfyserv --version",
+      "supercli plugins install ./plugins/vfyserv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vfyserv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vfyserv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vfyserv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vfyserv: apt-get install vfyserv 2>/dev/null || which vfyserv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vfyserv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vfyserv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vfyserv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vfyserv: apt-get install vfyserv 2>/dev/null || which vfyserv"
+      },
+      "args": []
+    }
+  ]
+}

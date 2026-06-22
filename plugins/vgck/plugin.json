@@ -1,0 +1,56 @@
+{
+  "name": "vgck",
+  "version": "0.1.0",
+  "description": "CLI tool: vgck",
+  "source": "https://manpages.debian.org/vgck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgck",
+    "binary": "vgck",
+    "check": "which vgck",
+    "install_steps": [
+      "apt-get install vgck 2>/dev/null || which vgck",
+      "Verify: vgck --version",
+      "supercli plugins install ./plugins/vgck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgck: apt-get install vgck 2>/dev/null || which vgck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgck: apt-get install vgck 2>/dev/null || which vgck"
+      },
+      "args": []
+    }
+  ]
+}

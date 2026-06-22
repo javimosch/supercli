@@ -1,0 +1,56 @@
+{
+  "name": "vgexport",
+  "version": "0.1.0",
+  "description": "CLI tool: vgexport",
+  "source": "https://manpages.debian.org/vgexport",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgexport"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgexport",
+    "binary": "vgexport",
+    "check": "which vgexport",
+    "install_steps": [
+      "apt-get install vgexport 2>/dev/null || which vgexport",
+      "Verify: vgexport --version",
+      "supercli plugins install ./plugins/vgexport --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgexport",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgexport version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgexport",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgexport: apt-get install vgexport 2>/dev/null || which vgexport"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgexport",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgexport CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgexport",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgexport: apt-get install vgexport 2>/dev/null || which vgexport"
+      },
+      "args": []
+    }
+  ]
+}

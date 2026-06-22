@@ -1,0 +1,56 @@
+{
+  "name": "vboxwebsrv",
+  "version": "0.1.0",
+  "description": "CLI tool: vboxwebsrv",
+  "source": "https://manpages.debian.org/vboxwebsrv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vboxwebsrv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vboxwebsrv",
+    "binary": "vboxwebsrv",
+    "check": "which vboxwebsrv",
+    "install_steps": [
+      "apt-get install vboxwebsrv 2>/dev/null || which vboxwebsrv",
+      "Verify: vboxwebsrv --version",
+      "supercli plugins install ./plugins/vboxwebsrv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vboxwebsrv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vboxwebsrv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxwebsrv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vboxwebsrv: apt-get install vboxwebsrv 2>/dev/null || which vboxwebsrv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vboxwebsrv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vboxwebsrv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxwebsrv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vboxwebsrv: apt-get install vboxwebsrv 2>/dev/null || which vboxwebsrv"
+      },
+      "args": []
+    }
+  ]
+}

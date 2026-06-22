@@ -1,0 +1,56 @@
+{
+  "name": "vboxmanage",
+  "version": "0.1.0",
+  "description": "CLI tool: vboxmanage",
+  "source": "https://manpages.debian.org/vboxmanage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vboxmanage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vboxmanage",
+    "binary": "vboxmanage",
+    "check": "which vboxmanage",
+    "install_steps": [
+      "apt-get install vboxmanage 2>/dev/null || which vboxmanage",
+      "Verify: vboxmanage --version",
+      "supercli plugins install ./plugins/vboxmanage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vboxmanage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vboxmanage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxmanage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vboxmanage: apt-get install vboxmanage 2>/dev/null || which vboxmanage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vboxmanage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vboxmanage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxmanage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vboxmanage: apt-get install vboxmanage 2>/dev/null || which vboxmanage"
+      },
+      "args": []
+    }
+  ]
+}

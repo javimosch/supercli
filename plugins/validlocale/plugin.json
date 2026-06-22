@@ -1,0 +1,56 @@
+{
+  "name": "validlocale",
+  "version": "0.1.0",
+  "description": "CLI tool: validlocale",
+  "source": "https://manpages.debian.org/validlocale",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "validlocale"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "validlocale",
+    "binary": "validlocale",
+    "check": "which validlocale",
+    "install_steps": [
+      "apt-get install validlocale 2>/dev/null || which validlocale",
+      "Verify: validlocale --version",
+      "supercli plugins install ./plugins/validlocale --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "validlocale",
+      "resource": "self",
+      "action": "version",
+      "description": "Print validlocale version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "validlocale",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install validlocale: apt-get install validlocale 2>/dev/null || which validlocale"
+      },
+      "args": []
+    },
+    {
+      "namespace": "validlocale",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to validlocale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "validlocale",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install validlocale: apt-get install validlocale 2>/dev/null || which validlocale"
+      },
+      "args": []
+    }
+  ]
+}

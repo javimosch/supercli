@@ -1,0 +1,56 @@
+{
+  "name": "vboxbugreport",
+  "version": "0.1.0",
+  "description": "CLI tool: vboxbugreport",
+  "source": "https://manpages.debian.org/vboxbugreport",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vboxbugreport"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vboxbugreport",
+    "binary": "vboxbugreport",
+    "check": "which vboxbugreport",
+    "install_steps": [
+      "apt-get install vboxbugreport 2>/dev/null || which vboxbugreport",
+      "Verify: vboxbugreport --version",
+      "supercli plugins install ./plugins/vboxbugreport --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vboxbugreport",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vboxbugreport version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxbugreport",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vboxbugreport: apt-get install vboxbugreport 2>/dev/null || which vboxbugreport"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vboxbugreport",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vboxbugreport CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxbugreport",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vboxbugreport: apt-get install vboxbugreport 2>/dev/null || which vboxbugreport"
+      },
+      "args": []
+    }
+  ]
+}

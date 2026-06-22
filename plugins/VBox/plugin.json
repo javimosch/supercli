@@ -1,0 +1,56 @@
+{
+  "name": "VBox",
+  "version": "0.1.0",
+  "description": "CLI tool: VBox",
+  "source": "https://manpages.debian.org/VBox",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "VBox"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "VBox",
+    "binary": "VBox",
+    "check": "which VBox",
+    "install_steps": [
+      "apt-get install VBox 2>/dev/null || which VBox",
+      "Verify: VBox --version",
+      "supercli plugins install ./plugins/VBox --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "VBox",
+      "resource": "self",
+      "action": "version",
+      "description": "Print VBox version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "VBox",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install VBox: apt-get install VBox 2>/dev/null || which VBox"
+      },
+      "args": []
+    },
+    {
+      "namespace": "VBox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to VBox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "VBox",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install VBox: apt-get install VBox 2>/dev/null || which VBox"
+      },
+      "args": []
+    }
+  ]
+}

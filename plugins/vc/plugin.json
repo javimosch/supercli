@@ -1,0 +1,56 @@
+{
+  "name": "vc",
+  "version": "0.1.0",
+  "description": "CLI tool: vc",
+  "source": "https://manpages.debian.org/vc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vc",
+    "binary": "vc",
+    "check": "which vc",
+    "install_steps": [
+      "apt-get install vc 2>/dev/null || which vc",
+      "Verify: vc --version",
+      "supercli plugins install ./plugins/vc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vc: apt-get install vc 2>/dev/null || which vc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vc: apt-get install vc 2>/dev/null || which vc"
+      },
+      "args": []
+    }
+  ]
+}

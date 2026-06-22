@@ -1,0 +1,56 @@
+{
+  "name": "vboxsdl",
+  "version": "0.1.0",
+  "description": "CLI tool: vboxsdl",
+  "source": "https://manpages.debian.org/vboxsdl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vboxsdl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vboxsdl",
+    "binary": "vboxsdl",
+    "check": "which vboxsdl",
+    "install_steps": [
+      "apt-get install vboxsdl 2>/dev/null || which vboxsdl",
+      "Verify: vboxsdl --version",
+      "supercli plugins install ./plugins/vboxsdl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vboxsdl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vboxsdl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxsdl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vboxsdl: apt-get install vboxsdl 2>/dev/null || which vboxsdl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vboxsdl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vboxsdl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxsdl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vboxsdl: apt-get install vboxsdl 2>/dev/null || which vboxsdl"
+      },
+      "args": []
+    }
+  ]
+}

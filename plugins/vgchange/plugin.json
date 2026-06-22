@@ -1,0 +1,56 @@
+{
+  "name": "vgchange",
+  "version": "0.1.0",
+  "description": "CLI tool: vgchange",
+  "source": "https://manpages.debian.org/vgchange",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgchange"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgchange",
+    "binary": "vgchange",
+    "check": "which vgchange",
+    "install_steps": [
+      "apt-get install vgchange 2>/dev/null || which vgchange",
+      "Verify: vgchange --version",
+      "supercli plugins install ./plugins/vgchange --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgchange",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgchange version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgchange",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgchange: apt-get install vgchange 2>/dev/null || which vgchange"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgchange",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgchange CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgchange",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgchange: apt-get install vgchange 2>/dev/null || which vgchange"
+      },
+      "args": []
+    }
+  ]
+}

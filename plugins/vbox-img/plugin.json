@@ -1,0 +1,56 @@
+{
+  "name": "vbox-img",
+  "version": "0.1.0",
+  "description": "CLI tool: vbox-img",
+  "source": "https://manpages.debian.org/vbox-img",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vbox-img"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vbox-img",
+    "binary": "vbox-img",
+    "check": "which vbox-img",
+    "install_steps": [
+      "apt-get install vbox-img 2>/dev/null || which vbox-img",
+      "Verify: vbox-img --version",
+      "supercli plugins install ./plugins/vbox-img --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vbox-img",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vbox-img version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vbox-img",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vbox-img: apt-get install vbox-img 2>/dev/null || which vbox-img"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vbox-img",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vbox-img CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vbox-img",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vbox-img: apt-get install vbox-img 2>/dev/null || which vbox-img"
+      },
+      "args": []
+    }
+  ]
+}

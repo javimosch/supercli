@@ -1,0 +1,56 @@
+{
+  "name": "vboxheadless",
+  "version": "0.1.0",
+  "description": "CLI tool: vboxheadless",
+  "source": "https://manpages.debian.org/vboxheadless",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vboxheadless"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vboxheadless",
+    "binary": "vboxheadless",
+    "check": "which vboxheadless",
+    "install_steps": [
+      "apt-get install vboxheadless 2>/dev/null || which vboxheadless",
+      "Verify: vboxheadless --version",
+      "supercli plugins install ./plugins/vboxheadless --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vboxheadless",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vboxheadless version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxheadless",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vboxheadless: apt-get install vboxheadless 2>/dev/null || which vboxheadless"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vboxheadless",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vboxheadless CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vboxheadless",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vboxheadless: apt-get install vboxheadless 2>/dev/null || which vboxheadless"
+      },
+      "args": []
+    }
+  ]
+}

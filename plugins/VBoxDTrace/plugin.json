@@ -1,0 +1,56 @@
+{
+  "name": "VBoxDTrace",
+  "version": "0.1.0",
+  "description": "CLI tool: VBoxDTrace",
+  "source": "https://manpages.debian.org/VBoxDTrace",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "VBoxDTrace"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "VBoxDTrace",
+    "binary": "VBoxDTrace",
+    "check": "which VBoxDTrace",
+    "install_steps": [
+      "apt-get install VBoxDTrace 2>/dev/null || which VBoxDTrace",
+      "Verify: VBoxDTrace --version",
+      "supercli plugins install ./plugins/VBoxDTrace --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "VBoxDTrace",
+      "resource": "self",
+      "action": "version",
+      "description": "Print VBoxDTrace version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "VBoxDTrace",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install VBoxDTrace: apt-get install VBoxDTrace 2>/dev/null || which VBoxDTrace"
+      },
+      "args": []
+    },
+    {
+      "namespace": "VBoxDTrace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to VBoxDTrace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "VBoxDTrace",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install VBoxDTrace: apt-get install VBoxDTrace 2>/dev/null || which VBoxDTrace"
+      },
+      "args": []
+    }
+  ]
+}

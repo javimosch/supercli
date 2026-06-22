@@ -1,0 +1,56 @@
+{
+  "name": "usbreset",
+  "version": "0.1.0",
+  "description": "CLI tool: usbreset",
+  "source": "https://manpages.debian.org/usbreset",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "usbreset"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "usbreset",
+    "binary": "usbreset",
+    "check": "which usbreset",
+    "install_steps": [
+      "apt-get install usbreset 2>/dev/null || which usbreset",
+      "Verify: usbreset --version",
+      "supercli plugins install ./plugins/usbreset --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usbreset",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usbreset version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usbreset",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install usbreset: apt-get install usbreset 2>/dev/null || which usbreset"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usbreset",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usbreset CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usbreset",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usbreset: apt-get install usbreset 2>/dev/null || which usbreset"
+      },
+      "args": []
+    }
+  ]
+}

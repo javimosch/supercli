@@ -1,0 +1,56 @@
+{
+  "name": "utmpdump",
+  "version": "0.1.0",
+  "description": "CLI tool: utmpdump",
+  "source": "https://manpages.debian.org/utmpdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "utmpdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "utmpdump",
+    "binary": "utmpdump",
+    "check": "which utmpdump",
+    "install_steps": [
+      "apt-get install utmpdump 2>/dev/null || which utmpdump",
+      "Verify: utmpdump --version",
+      "supercli plugins install ./plugins/utmpdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "utmpdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print utmpdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utmpdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install utmpdump: apt-get install utmpdump 2>/dev/null || which utmpdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "utmpdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to utmpdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utmpdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install utmpdump: apt-get install utmpdump 2>/dev/null || which utmpdump"
+      },
+      "args": []
+    }
+  ]
+}

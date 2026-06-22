@@ -1,0 +1,56 @@
+{
+  "name": "vfychain",
+  "version": "0.1.0",
+  "description": "CLI tool: vfychain",
+  "source": "https://manpages.debian.org/vfychain",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vfychain"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vfychain",
+    "binary": "vfychain",
+    "check": "which vfychain",
+    "install_steps": [
+      "apt-get install vfychain 2>/dev/null || which vfychain",
+      "Verify: vfychain --version",
+      "supercli plugins install ./plugins/vfychain --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vfychain",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vfychain version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vfychain",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vfychain: apt-get install vfychain 2>/dev/null || which vfychain"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vfychain",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vfychain CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vfychain",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vfychain: apt-get install vfychain 2>/dev/null || which vfychain"
+      },
+      "args": []
+    }
+  ]
+}

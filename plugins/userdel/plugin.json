@@ -1,0 +1,56 @@
+{
+  "name": "userdel",
+  "version": "0.1.0",
+  "description": "CLI tool: userdel",
+  "source": "https://manpages.debian.org/userdel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "userdel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "userdel",
+    "binary": "userdel",
+    "check": "which userdel",
+    "install_steps": [
+      "apt-get install userdel 2>/dev/null || which userdel",
+      "Verify: userdel --version",
+      "supercli plugins install ./plugins/userdel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "userdel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print userdel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "userdel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install userdel: apt-get install userdel 2>/dev/null || which userdel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "userdel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to userdel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "userdel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install userdel: apt-get install userdel 2>/dev/null || which userdel"
+      },
+      "args": []
+    }
+  ]
+}

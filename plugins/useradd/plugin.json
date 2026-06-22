@@ -1,0 +1,56 @@
+{
+  "name": "useradd",
+  "version": "0.1.0",
+  "description": "CLI tool: useradd",
+  "source": "https://manpages.debian.org/useradd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "useradd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "useradd",
+    "binary": "useradd",
+    "check": "which useradd",
+    "install_steps": [
+      "apt-get install useradd 2>/dev/null || which useradd",
+      "Verify: useradd --version",
+      "supercli plugins install ./plugins/useradd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "useradd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print useradd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "useradd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install useradd: apt-get install useradd 2>/dev/null || which useradd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "useradd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to useradd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "useradd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install useradd: apt-get install useradd 2>/dev/null || which useradd"
+      },
+      "args": []
+    }
+  ]
+}

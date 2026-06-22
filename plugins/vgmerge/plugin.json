@@ -1,0 +1,56 @@
+{
+  "name": "vgmerge",
+  "version": "0.1.0",
+  "description": "CLI tool: vgmerge",
+  "source": "https://manpages.debian.org/vgmerge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vgmerge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vgmerge",
+    "binary": "vgmerge",
+    "check": "which vgmerge",
+    "install_steps": [
+      "apt-get install vgmerge 2>/dev/null || which vgmerge",
+      "Verify: vgmerge --version",
+      "supercli plugins install ./plugins/vgmerge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vgmerge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vgmerge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgmerge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vgmerge: apt-get install vgmerge 2>/dev/null || which vgmerge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vgmerge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vgmerge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgmerge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vgmerge: apt-get install vgmerge 2>/dev/null || which vgmerge"
+      },
+      "args": []
+    }
+  ]
+}

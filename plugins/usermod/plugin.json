@@ -1,0 +1,56 @@
+{
+  "name": "usermod",
+  "version": "0.1.0",
+  "description": "CLI tool: usermod",
+  "source": "https://manpages.debian.org/usermod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "usermod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "usermod",
+    "binary": "usermod",
+    "check": "which usermod",
+    "install_steps": [
+      "apt-get install usermod 2>/dev/null || which usermod",
+      "Verify: usermod --version",
+      "supercli plugins install ./plugins/usermod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usermod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usermod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usermod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install usermod: apt-get install usermod 2>/dev/null || which usermod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usermod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usermod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usermod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usermod: apt-get install usermod 2>/dev/null || which usermod"
+      },
+      "args": []
+    }
+  ]
+}
