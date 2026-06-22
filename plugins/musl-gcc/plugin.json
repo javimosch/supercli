@@ -1,0 +1,56 @@
+{
+  "name": "musl-gcc",
+  "version": "0.1.0",
+  "description": "CLI tool: musl-gcc",
+  "source": "https://manpages.debian.org/musl-gcc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "musl-gcc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "musl-gcc",
+    "binary": "musl-gcc",
+    "check": "which musl-gcc",
+    "install_steps": [
+      "apt-get install musl-gcc 2>/dev/null || which musl-gcc",
+      "Verify: musl-gcc --version",
+      "supercli plugins install ./plugins/musl-gcc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "musl-gcc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print musl-gcc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "musl-gcc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install musl-gcc: apt-get install musl-gcc 2>/dev/null || which musl-gcc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "musl-gcc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to musl-gcc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "musl-gcc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install musl-gcc: apt-get install musl-gcc 2>/dev/null || which musl-gcc"
+      },
+      "args": []
+    }
+  ]
+}

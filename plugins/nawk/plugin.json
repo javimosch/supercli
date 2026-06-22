@@ -1,0 +1,56 @@
+{
+  "name": "nawk",
+  "version": "0.1.0",
+  "description": "CLI tool: nawk",
+  "source": "https://manpages.debian.org/nawk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nawk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nawk",
+    "binary": "nawk",
+    "check": "which nawk",
+    "install_steps": [
+      "apt-get install nawk 2>/dev/null || which nawk",
+      "Verify: nawk --version",
+      "supercli plugins install ./plugins/nawk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nawk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nawk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nawk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nawk: apt-get install nawk 2>/dev/null || which nawk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nawk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nawk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nawk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nawk: apt-get install nawk 2>/dev/null || which nawk"
+      },
+      "args": []
+    }
+  ]
+}

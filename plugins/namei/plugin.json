@@ -1,0 +1,56 @@
+{
+  "name": "namei",
+  "version": "0.1.0",
+  "description": "CLI tool: namei",
+  "source": "https://manpages.debian.org/namei",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "namei"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "namei",
+    "binary": "namei",
+    "check": "which namei",
+    "install_steps": [
+      "apt-get install namei 2>/dev/null || which namei",
+      "Verify: namei --version",
+      "supercli plugins install ./plugins/namei --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "namei",
+      "resource": "self",
+      "action": "version",
+      "description": "Print namei version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "namei",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install namei: apt-get install namei 2>/dev/null || which namei"
+      },
+      "args": []
+    },
+    {
+      "namespace": "namei",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to namei CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "namei",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install namei: apt-get install namei 2>/dev/null || which namei"
+      },
+      "args": []
+    }
+  ]
+}

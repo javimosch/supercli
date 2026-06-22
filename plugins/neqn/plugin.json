@@ -1,0 +1,56 @@
+{
+  "name": "neqn",
+  "version": "0.1.0",
+  "description": "CLI tool: neqn",
+  "source": "https://manpages.debian.org/neqn",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "neqn"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "neqn",
+    "binary": "neqn",
+    "check": "which neqn",
+    "install_steps": [
+      "apt-get install neqn 2>/dev/null || which neqn",
+      "Verify: neqn --version",
+      "supercli plugins install ./plugins/neqn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "neqn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print neqn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neqn",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install neqn: apt-get install neqn 2>/dev/null || which neqn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "neqn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to neqn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neqn",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install neqn: apt-get install neqn 2>/dev/null || which neqn"
+      },
+      "args": []
+    }
+  ]
+}

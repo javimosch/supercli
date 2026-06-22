@@ -1,0 +1,56 @@
+{
+  "name": "NetworkManager",
+  "version": "0.1.0",
+  "description": "CLI tool: NetworkManager",
+  "source": "https://manpages.debian.org/NetworkManager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "NetworkManager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "NetworkManager",
+    "binary": "NetworkManager",
+    "check": "which NetworkManager",
+    "install_steps": [
+      "apt-get install NetworkManager 2>/dev/null || which NetworkManager",
+      "Verify: NetworkManager --version",
+      "supercli plugins install ./plugins/NetworkManager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "NetworkManager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print NetworkManager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "NetworkManager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install NetworkManager: apt-get install NetworkManager 2>/dev/null || which NetworkManager"
+      },
+      "args": []
+    },
+    {
+      "namespace": "NetworkManager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to NetworkManager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "NetworkManager",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install NetworkManager: apt-get install NetworkManager 2>/dev/null || which NetworkManager"
+      },
+      "args": []
+    }
+  ]
+}

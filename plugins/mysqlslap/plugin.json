@@ -1,0 +1,56 @@
+{
+  "name": "mysqlslap",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlslap",
+  "source": "https://manpages.debian.org/mysqlslap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlslap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlslap",
+    "binary": "mysqlslap",
+    "check": "which mysqlslap",
+    "install_steps": [
+      "apt-get install mysqlslap 2>/dev/null || which mysqlslap",
+      "Verify: mysqlslap --version",
+      "supercli plugins install ./plugins/mysqlslap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlslap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlslap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlslap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlslap: apt-get install mysqlslap 2>/dev/null || which mysqlslap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlslap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlslap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlslap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlslap: apt-get install mysqlslap 2>/dev/null || which mysqlslap"
+      },
+      "args": []
+    }
+  ]
+}

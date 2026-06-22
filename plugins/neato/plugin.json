@@ -1,0 +1,56 @@
+{
+  "name": "neato",
+  "version": "0.1.0",
+  "description": "CLI tool: neato",
+  "source": "https://manpages.debian.org/neato",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "neato"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "neato",
+    "binary": "neato",
+    "check": "which neato",
+    "install_steps": [
+      "apt-get install neato 2>/dev/null || which neato",
+      "Verify: neato --version",
+      "supercli plugins install ./plugins/neato --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "neato",
+      "resource": "self",
+      "action": "version",
+      "description": "Print neato version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neato",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install neato: apt-get install neato 2>/dev/null || which neato"
+      },
+      "args": []
+    },
+    {
+      "namespace": "neato",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to neato CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neato",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install neato: apt-get install neato 2>/dev/null || which neato"
+      },
+      "args": []
+    }
+  ]
+}

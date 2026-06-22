@@ -1,0 +1,56 @@
+{
+  "name": "neu",
+  "version": "0.1.0",
+  "description": "CLI tool: neu",
+  "source": "https://manpages.debian.org/neu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "neu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "neu",
+    "binary": "neu",
+    "check": "which neu",
+    "install_steps": [
+      "apt-get install neu 2>/dev/null || which neu",
+      "Verify: neu --version",
+      "supercli plugins install ./plugins/neu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "neu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print neu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install neu: apt-get install neu 2>/dev/null || which neu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "neu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to neu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "neu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install neu: apt-get install neu 2>/dev/null || which neu"
+      },
+      "args": []
+    }
+  ]
+}

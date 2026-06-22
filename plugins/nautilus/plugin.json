@@ -1,0 +1,56 @@
+{
+  "name": "nautilus",
+  "version": "0.1.0",
+  "description": "CLI tool: nautilus",
+  "source": "https://manpages.debian.org/nautilus",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nautilus"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nautilus",
+    "binary": "nautilus",
+    "check": "which nautilus",
+    "install_steps": [
+      "apt-get install nautilus 2>/dev/null || which nautilus",
+      "Verify: nautilus --version",
+      "supercli plugins install ./plugins/nautilus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nautilus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nautilus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nautilus",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nautilus: apt-get install nautilus 2>/dev/null || which nautilus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nautilus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nautilus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nautilus",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nautilus: apt-get install nautilus 2>/dev/null || which nautilus"
+      },
+      "args": []
+    }
+  ]
+}

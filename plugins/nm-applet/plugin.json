@@ -1,0 +1,56 @@
+{
+  "name": "nm-applet",
+  "version": "0.1.0",
+  "description": "CLI tool: nm-applet",
+  "source": "https://manpages.debian.org/nm-applet",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nm-applet"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nm-applet",
+    "binary": "nm-applet",
+    "check": "which nm-applet",
+    "install_steps": [
+      "apt-get install nm-applet 2>/dev/null || which nm-applet",
+      "Verify: nm-applet --version",
+      "supercli plugins install ./plugins/nm-applet --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nm-applet",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nm-applet version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nm-applet",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nm-applet: apt-get install nm-applet 2>/dev/null || which nm-applet"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nm-applet",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nm-applet CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nm-applet",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nm-applet: apt-get install nm-applet 2>/dev/null || which nm-applet"
+      },
+      "args": []
+    }
+  ]
+}

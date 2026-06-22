@@ -1,0 +1,56 @@
+{
+  "name": "mzip",
+  "version": "0.1.0",
+  "description": "CLI tool: mzip",
+  "source": "https://manpages.debian.org/mzip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mzip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mzip",
+    "binary": "mzip",
+    "check": "which mzip",
+    "install_steps": [
+      "apt-get install mzip 2>/dev/null || which mzip",
+      "Verify: mzip --version",
+      "supercli plugins install ./plugins/mzip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mzip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mzip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mzip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mzip: apt-get install mzip 2>/dev/null || which mzip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mzip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mzip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mzip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mzip: apt-get install mzip 2>/dev/null || which mzip"
+      },
+      "args": []
+    }
+  ]
+}

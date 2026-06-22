@@ -1,0 +1,56 @@
+{
+  "name": "mysqlrepair",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlrepair",
+  "source": "https://manpages.debian.org/mysqlrepair",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlrepair"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlrepair",
+    "binary": "mysqlrepair",
+    "check": "which mysqlrepair",
+    "install_steps": [
+      "apt-get install mysqlrepair 2>/dev/null || which mysqlrepair",
+      "Verify: mysqlrepair --version",
+      "supercli plugins install ./plugins/mysqlrepair --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlrepair",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlrepair version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlrepair",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlrepair: apt-get install mysqlrepair 2>/dev/null || which mysqlrepair"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlrepair",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlrepair CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlrepair",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlrepair: apt-get install mysqlrepair 2>/dev/null || which mysqlrepair"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mysqldumpslow",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqldumpslow",
+  "source": "https://manpages.debian.org/mysqldumpslow",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqldumpslow"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqldumpslow",
+    "binary": "mysqldumpslow",
+    "check": "which mysqldumpslow",
+    "install_steps": [
+      "apt-get install mysqldumpslow 2>/dev/null || which mysqldumpslow",
+      "Verify: mysqldumpslow --version",
+      "supercli plugins install ./plugins/mysqldumpslow --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqldumpslow",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqldumpslow version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqldumpslow",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqldumpslow: apt-get install mysqldumpslow 2>/dev/null || which mysqldumpslow"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqldumpslow",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqldumpslow CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqldumpslow",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqldumpslow: apt-get install mysqldumpslow 2>/dev/null || which mysqldumpslow"
+      },
+      "args": []
+    }
+  ]
+}

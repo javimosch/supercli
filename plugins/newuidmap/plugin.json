@@ -1,0 +1,56 @@
+{
+  "name": "newuidmap",
+  "version": "0.1.0",
+  "description": "CLI tool: newuidmap",
+  "source": "https://manpages.debian.org/newuidmap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "newuidmap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "newuidmap",
+    "binary": "newuidmap",
+    "check": "which newuidmap",
+    "install_steps": [
+      "apt-get install newuidmap 2>/dev/null || which newuidmap",
+      "Verify: newuidmap --version",
+      "supercli plugins install ./plugins/newuidmap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "newuidmap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print newuidmap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "newuidmap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install newuidmap: apt-get install newuidmap 2>/dev/null || which newuidmap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "newuidmap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to newuidmap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "newuidmap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install newuidmap: apt-get install newuidmap 2>/dev/null || which newuidmap"
+      },
+      "args": []
+    }
+  ]
+}

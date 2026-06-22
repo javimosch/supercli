@@ -1,0 +1,56 @@
+{
+  "name": "niceload",
+  "version": "0.1.0",
+  "description": "CLI tool: niceload",
+  "source": "https://manpages.debian.org/niceload",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "niceload"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "niceload",
+    "binary": "niceload",
+    "check": "which niceload",
+    "install_steps": [
+      "apt-get install niceload 2>/dev/null || which niceload",
+      "Verify: niceload --version",
+      "supercli plugins install ./plugins/niceload --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "niceload",
+      "resource": "self",
+      "action": "version",
+      "description": "Print niceload version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "niceload",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install niceload: apt-get install niceload 2>/dev/null || which niceload"
+      },
+      "args": []
+    },
+    {
+      "namespace": "niceload",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to niceload CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "niceload",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install niceload: apt-get install niceload 2>/dev/null || which niceload"
+      },
+      "args": []
+    }
+  ]
+}

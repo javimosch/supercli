@@ -1,0 +1,56 @@
+{
+  "name": "myloader",
+  "version": "0.1.0",
+  "description": "CLI tool: myloader",
+  "source": "https://manpages.debian.org/myloader",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "myloader"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "myloader",
+    "binary": "myloader",
+    "check": "which myloader",
+    "install_steps": [
+      "apt-get install myloader 2>/dev/null || which myloader",
+      "Verify: myloader --version",
+      "supercli plugins install ./plugins/myloader --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "myloader",
+      "resource": "self",
+      "action": "version",
+      "description": "Print myloader version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "myloader",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install myloader: apt-get install myloader 2>/dev/null || which myloader"
+      },
+      "args": []
+    },
+    {
+      "namespace": "myloader",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to myloader CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "myloader",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install myloader: apt-get install myloader 2>/dev/null || which myloader"
+      },
+      "args": []
+    }
+  ]
+}

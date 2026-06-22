@@ -1,0 +1,56 @@
+{
+  "name": "nft",
+  "version": "0.1.0",
+  "description": "CLI tool: nft",
+  "source": "https://manpages.debian.org/nft",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nft"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nft",
+    "binary": "nft",
+    "check": "which nft",
+    "install_steps": [
+      "apt-get install nft 2>/dev/null || which nft",
+      "Verify: nft --version",
+      "supercli plugins install ./plugins/nft --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nft",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nft version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nft",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nft: apt-get install nft 2>/dev/null || which nft"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nft",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nft CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nft",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nft: apt-get install nft 2>/dev/null || which nft"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "nameif",
+  "version": "0.1.0",
+  "description": "CLI tool: nameif",
+  "source": "https://manpages.debian.org/nameif",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nameif"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nameif",
+    "binary": "nameif",
+    "check": "which nameif",
+    "install_steps": [
+      "apt-get install nameif 2>/dev/null || which nameif",
+      "Verify: nameif --version",
+      "supercli plugins install ./plugins/nameif --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nameif",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nameif version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nameif",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nameif: apt-get install nameif 2>/dev/null || which nameif"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nameif",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nameif CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nameif",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nameif: apt-get install nameif 2>/dev/null || which nameif"
+      },
+      "args": []
+    }
+  ]
+}

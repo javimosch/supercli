@@ -1,0 +1,56 @@
+{
+  "name": "mysqlanalyze",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlanalyze",
+  "source": "https://manpages.debian.org/mysqlanalyze",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlanalyze"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlanalyze",
+    "binary": "mysqlanalyze",
+    "check": "which mysqlanalyze",
+    "install_steps": [
+      "apt-get install mysqlanalyze 2>/dev/null || which mysqlanalyze",
+      "Verify: mysqlanalyze --version",
+      "supercli plugins install ./plugins/mysqlanalyze --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlanalyze",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlanalyze version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlanalyze",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlanalyze: apt-get install mysqlanalyze 2>/dev/null || which mysqlanalyze"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlanalyze",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlanalyze CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlanalyze",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlanalyze: apt-get install mysqlanalyze 2>/dev/null || which mysqlanalyze"
+      },
+      "args": []
+    }
+  ]
+}

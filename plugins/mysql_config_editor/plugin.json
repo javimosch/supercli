@@ -1,0 +1,56 @@
+{
+  "name": "mysql_config_editor",
+  "version": "0.1.0",
+  "description": "CLI tool: mysql_config_editor",
+  "source": "https://manpages.debian.org/mysql_config_editor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysql_config_editor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysql_config_editor",
+    "binary": "mysql_config_editor",
+    "check": "which mysql_config_editor",
+    "install_steps": [
+      "apt-get install mysql_config_editor 2>/dev/null || which mysql_config_editor",
+      "Verify: mysql_config_editor --version",
+      "supercli plugins install ./plugins/mysql_config_editor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysql_config_editor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysql_config_editor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysql_config_editor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysql_config_editor: apt-get install mysql_config_editor 2>/dev/null || which mysql_config_editor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysql_config_editor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysql_config_editor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysql_config_editor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysql_config_editor: apt-get install mysql_config_editor 2>/dev/null || which mysql_config_editor"
+      },
+      "args": []
+    }
+  ]
+}

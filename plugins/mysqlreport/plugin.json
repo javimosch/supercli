@@ -1,0 +1,56 @@
+{
+  "name": "mysqlreport",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlreport",
+  "source": "https://manpages.debian.org/mysqlreport",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlreport"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlreport",
+    "binary": "mysqlreport",
+    "check": "which mysqlreport",
+    "install_steps": [
+      "apt-get install mysqlreport 2>/dev/null || which mysqlreport",
+      "Verify: mysqlreport --version",
+      "supercli plugins install ./plugins/mysqlreport --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlreport",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlreport version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlreport",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlreport: apt-get install mysqlreport 2>/dev/null || which mysqlreport"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlreport",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlreport CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlreport",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlreport: apt-get install mysqlreport 2>/dev/null || which mysqlreport"
+      },
+      "args": []
+    }
+  ]
+}

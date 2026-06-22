@@ -1,0 +1,56 @@
+{
+  "name": "nmcli",
+  "version": "0.1.0",
+  "description": "CLI tool: nmcli",
+  "source": "https://manpages.debian.org/nmcli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nmcli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nmcli",
+    "binary": "nmcli",
+    "check": "which nmcli",
+    "install_steps": [
+      "apt-get install nmcli 2>/dev/null || which nmcli",
+      "Verify: nmcli --version",
+      "supercli plugins install ./plugins/nmcli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nmcli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nmcli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nmcli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nmcli: apt-get install nmcli 2>/dev/null || which nmcli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nmcli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nmcli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nmcli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nmcli: apt-get install nmcli 2>/dev/null || which nmcli"
+      },
+      "args": []
+    }
+  ]
+}

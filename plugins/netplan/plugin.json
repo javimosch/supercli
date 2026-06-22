@@ -1,0 +1,56 @@
+{
+  "name": "netplan",
+  "version": "0.1.0",
+  "description": "CLI tool: netplan",
+  "source": "https://manpages.debian.org/netplan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "netplan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "netplan",
+    "binary": "netplan",
+    "check": "which netplan",
+    "install_steps": [
+      "apt-get install netplan 2>/dev/null || which netplan",
+      "Verify: netplan --version",
+      "supercli plugins install ./plugins/netplan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "netplan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print netplan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netplan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install netplan: apt-get install netplan 2>/dev/null || which netplan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "netplan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to netplan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "netplan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install netplan: apt-get install netplan 2>/dev/null || which netplan"
+      },
+      "args": []
+    }
+  ]
+}

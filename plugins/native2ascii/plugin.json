@@ -1,0 +1,56 @@
+{
+  "name": "native2ascii",
+  "version": "0.1.0",
+  "description": "CLI tool: native2ascii",
+  "source": "https://manpages.debian.org/native2ascii",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "native2ascii"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "native2ascii",
+    "binary": "native2ascii",
+    "check": "which native2ascii",
+    "install_steps": [
+      "apt-get install native2ascii 2>/dev/null || which native2ascii",
+      "Verify: native2ascii --version",
+      "supercli plugins install ./plugins/native2ascii --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "native2ascii",
+      "resource": "self",
+      "action": "version",
+      "description": "Print native2ascii version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "native2ascii",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install native2ascii: apt-get install native2ascii 2>/dev/null || which native2ascii"
+      },
+      "args": []
+    },
+    {
+      "namespace": "native2ascii",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to native2ascii CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "native2ascii",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install native2ascii: apt-get install native2ascii 2>/dev/null || which native2ascii"
+      },
+      "args": []
+    }
+  ]
+}

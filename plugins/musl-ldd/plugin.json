@@ -1,0 +1,56 @@
+{
+  "name": "musl-ldd",
+  "version": "0.1.0",
+  "description": "CLI tool: musl-ldd",
+  "source": "https://manpages.debian.org/musl-ldd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "musl-ldd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "musl-ldd",
+    "binary": "musl-ldd",
+    "check": "which musl-ldd",
+    "install_steps": [
+      "apt-get install musl-ldd 2>/dev/null || which musl-ldd",
+      "Verify: musl-ldd --version",
+      "supercli plugins install ./plugins/musl-ldd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "musl-ldd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print musl-ldd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "musl-ldd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install musl-ldd: apt-get install musl-ldd 2>/dev/null || which musl-ldd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "musl-ldd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to musl-ldd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "musl-ldd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install musl-ldd: apt-get install musl-ldd 2>/dev/null || which musl-ldd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mysqlcheck",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlcheck",
+  "source": "https://manpages.debian.org/mysqlcheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlcheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlcheck",
+    "binary": "mysqlcheck",
+    "check": "which mysqlcheck",
+    "install_steps": [
+      "apt-get install mysqlcheck 2>/dev/null || which mysqlcheck",
+      "Verify: mysqlcheck --version",
+      "supercli plugins install ./plugins/mysqlcheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlcheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlcheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlcheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlcheck: apt-get install mysqlcheck 2>/dev/null || which mysqlcheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlcheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlcheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlcheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlcheck: apt-get install mysqlcheck 2>/dev/null || which mysqlcheck"
+      },
+      "args": []
+    }
+  ]
+}

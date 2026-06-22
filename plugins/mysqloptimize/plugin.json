@@ -1,0 +1,56 @@
+{
+  "name": "mysqloptimize",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqloptimize",
+  "source": "https://manpages.debian.org/mysqloptimize",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqloptimize"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqloptimize",
+    "binary": "mysqloptimize",
+    "check": "which mysqloptimize",
+    "install_steps": [
+      "apt-get install mysqloptimize 2>/dev/null || which mysqloptimize",
+      "Verify: mysqloptimize --version",
+      "supercli plugins install ./plugins/mysqloptimize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqloptimize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqloptimize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqloptimize",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqloptimize: apt-get install mysqloptimize 2>/dev/null || which mysqloptimize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqloptimize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqloptimize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqloptimize",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqloptimize: apt-get install mysqloptimize 2>/dev/null || which mysqloptimize"
+      },
+      "args": []
+    }
+  ]
+}

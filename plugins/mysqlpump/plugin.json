@@ -1,0 +1,56 @@
+{
+  "name": "mysqlpump",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlpump",
+  "source": "https://manpages.debian.org/mysqlpump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlpump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlpump",
+    "binary": "mysqlpump",
+    "check": "which mysqlpump",
+    "install_steps": [
+      "apt-get install mysqlpump 2>/dev/null || which mysqlpump",
+      "Verify: mysqlpump --version",
+      "supercli plugins install ./plugins/mysqlpump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlpump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlpump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlpump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlpump: apt-get install mysqlpump 2>/dev/null || which mysqlpump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlpump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlpump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlpump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlpump: apt-get install mysqlpump 2>/dev/null || which mysqlpump"
+      },
+      "args": []
+    }
+  ]
+}

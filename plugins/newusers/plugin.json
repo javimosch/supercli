@@ -1,0 +1,56 @@
+{
+  "name": "newusers",
+  "version": "0.1.0",
+  "description": "CLI tool: newusers",
+  "source": "https://manpages.debian.org/newusers",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "newusers"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "newusers",
+    "binary": "newusers",
+    "check": "which newusers",
+    "install_steps": [
+      "apt-get install newusers 2>/dev/null || which newusers",
+      "Verify: newusers --version",
+      "supercli plugins install ./plugins/newusers --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "newusers",
+      "resource": "self",
+      "action": "version",
+      "description": "Print newusers version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "newusers",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install newusers: apt-get install newusers 2>/dev/null || which newusers"
+      },
+      "args": []
+    },
+    {
+      "namespace": "newusers",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to newusers CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "newusers",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install newusers: apt-get install newusers 2>/dev/null || which newusers"
+      },
+      "args": []
+    }
+  ]
+}

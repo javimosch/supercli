@@ -1,0 +1,56 @@
+{
+  "name": "mysqlimport",
+  "version": "0.1.0",
+  "description": "CLI tool: mysqlimport",
+  "source": "https://manpages.debian.org/mysqlimport",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mysqlimport"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mysqlimport",
+    "binary": "mysqlimport",
+    "check": "which mysqlimport",
+    "install_steps": [
+      "apt-get install mysqlimport 2>/dev/null || which mysqlimport",
+      "Verify: mysqlimport --version",
+      "supercli plugins install ./plugins/mysqlimport --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mysqlimport",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mysqlimport version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlimport",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mysqlimport: apt-get install mysqlimport 2>/dev/null || which mysqlimport"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mysqlimport",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqlimport CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqlimport",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mysqlimport: apt-get install mysqlimport 2>/dev/null || which mysqlimport"
+      },
+      "args": []
+    }
+  ]
+}

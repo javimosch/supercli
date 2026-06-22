@@ -1,0 +1,56 @@
+{
+  "name": "mydumper",
+  "version": "0.1.0",
+  "description": "CLI tool: mydumper",
+  "source": "https://manpages.debian.org/mydumper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mydumper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mydumper",
+    "binary": "mydumper",
+    "check": "which mydumper",
+    "install_steps": [
+      "apt-get install mydumper 2>/dev/null || which mydumper",
+      "Verify: mydumper --version",
+      "supercli plugins install ./plugins/mydumper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mydumper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mydumper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mydumper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mydumper: apt-get install mydumper 2>/dev/null || which mydumper"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mydumper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mydumper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mydumper",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mydumper: apt-get install mydumper 2>/dev/null || which mydumper"
+      },
+      "args": []
+    }
+  ]
+}
