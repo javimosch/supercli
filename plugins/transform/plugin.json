@@ -1,0 +1,56 @@
+{
+  "name": "transform",
+  "version": "0.1.0",
+  "description": "CLI tool: transform",
+  "source": "https://manpages.debian.org/transform",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "transform"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "transform",
+    "binary": "transform",
+    "check": "which transform",
+    "install_steps": [
+      "apt-get install transform 2>/dev/null || which transform",
+      "Verify: transform --version",
+      "supercli plugins install ./plugins/transform --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "transform",
+      "resource": "self",
+      "action": "version",
+      "description": "Print transform version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transform",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install transform: apt-get install transform 2>/dev/null || which transform"
+      },
+      "args": []
+    },
+    {
+      "namespace": "transform",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to transform CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transform",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install transform: apt-get install transform 2>/dev/null || which transform"
+      },
+      "args": []
+    }
+  ]
+}

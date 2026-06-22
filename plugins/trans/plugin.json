@@ -1,0 +1,56 @@
+{
+  "name": "trans",
+  "version": "0.1.0",
+  "description": "CLI tool: trans",
+  "source": "https://manpages.debian.org/trans",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "trans"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "trans",
+    "binary": "trans",
+    "check": "which trans",
+    "install_steps": [
+      "apt-get install trans 2>/dev/null || which trans",
+      "Verify: trans --version",
+      "supercli plugins install ./plugins/trans --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trans",
+      "resource": "self",
+      "action": "version",
+      "description": "Print trans version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install trans: apt-get install trans 2>/dev/null || which trans"
+      },
+      "args": []
+    },
+    {
+      "namespace": "trans",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trans CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trans",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install trans: apt-get install trans 2>/dev/null || which trans"
+      },
+      "args": []
+    }
+  ]
+}

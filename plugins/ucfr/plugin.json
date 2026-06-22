@@ -1,0 +1,56 @@
+{
+  "name": "ucfr",
+  "version": "0.1.0",
+  "description": "CLI tool: ucfr",
+  "source": "https://manpages.debian.org/ucfr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ucfr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ucfr",
+    "binary": "ucfr",
+    "check": "which ucfr",
+    "install_steps": [
+      "apt-get install ucfr 2>/dev/null || which ucfr",
+      "Verify: ucfr --version",
+      "supercli plugins install ./plugins/ucfr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ucfr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ucfr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ucfr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ucfr: apt-get install ucfr 2>/dev/null || which ucfr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ucfr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ucfr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ucfr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ucfr: apt-get install ucfr 2>/dev/null || which ucfr"
+      },
+      "args": []
+    }
+  ]
+}

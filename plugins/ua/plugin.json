@@ -1,0 +1,56 @@
+{
+  "name": "ua",
+  "version": "0.1.0",
+  "description": "CLI tool: ua",
+  "source": "https://manpages.debian.org/ua",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ua"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ua",
+    "binary": "ua",
+    "check": "which ua",
+    "install_steps": [
+      "apt-get install ua 2>/dev/null || which ua",
+      "Verify: ua --version",
+      "supercli plugins install ./plugins/ua --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ua",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ua version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ua",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ua: apt-get install ua 2>/dev/null || which ua"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ua",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ua CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ua",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ua: apt-get install ua 2>/dev/null || which ua"
+      },
+      "args": []
+    }
+  ]
+}

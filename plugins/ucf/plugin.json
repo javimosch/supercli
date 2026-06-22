@@ -1,0 +1,56 @@
+{
+  "name": "ucf",
+  "version": "0.1.0",
+  "description": "CLI tool: ucf",
+  "source": "https://manpages.debian.org/ucf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ucf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ucf",
+    "binary": "ucf",
+    "check": "which ucf",
+    "install_steps": [
+      "apt-get install ucf 2>/dev/null || which ucf",
+      "Verify: ucf --version",
+      "supercli plugins install ./plugins/ucf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ucf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ucf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ucf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ucf: apt-get install ucf 2>/dev/null || which ucf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ucf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ucf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ucf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ucf: apt-get install ucf 2>/dev/null || which ucf"
+      },
+      "args": []
+    }
+  ]
+}

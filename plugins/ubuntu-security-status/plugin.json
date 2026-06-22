@@ -1,0 +1,56 @@
+{
+  "name": "ubuntu-security-status",
+  "version": "0.1.0",
+  "description": "CLI tool: ubuntu-security-status",
+  "source": "https://manpages.debian.org/ubuntu-security-status",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ubuntu-security-status"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ubuntu-security-status",
+    "binary": "ubuntu-security-status",
+    "check": "which ubuntu-security-status",
+    "install_steps": [
+      "apt-get install ubuntu-security-status 2>/dev/null || which ubuntu-security-status",
+      "Verify: ubuntu-security-status --version",
+      "supercli plugins install ./plugins/ubuntu-security-status --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ubuntu-security-status",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ubuntu-security-status version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-security-status",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ubuntu-security-status: apt-get install ubuntu-security-status 2>/dev/null || which ubuntu-security-status"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ubuntu-security-status",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ubuntu-security-status CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-security-status",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ubuntu-security-status: apt-get install ubuntu-security-status 2>/dev/null || which ubuntu-security-status"
+      },
+      "args": []
+    }
+  ]
+}

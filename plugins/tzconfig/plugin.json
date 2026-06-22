@@ -1,0 +1,56 @@
+{
+  "name": "tzconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: tzconfig",
+  "source": "https://manpages.debian.org/tzconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tzconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tzconfig",
+    "binary": "tzconfig",
+    "check": "which tzconfig",
+    "install_steps": [
+      "apt-get install tzconfig 2>/dev/null || which tzconfig",
+      "Verify: tzconfig --version",
+      "supercli plugins install ./plugins/tzconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tzconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tzconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tzconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tzconfig: apt-get install tzconfig 2>/dev/null || which tzconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tzconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tzconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tzconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tzconfig: apt-get install tzconfig 2>/dev/null || which tzconfig"
+      },
+      "args": []
+    }
+  ]
+}

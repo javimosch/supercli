@@ -1,0 +1,56 @@
+{
+  "name": "ubuntu-drivers",
+  "version": "0.1.0",
+  "description": "CLI tool: ubuntu-drivers",
+  "source": "https://manpages.debian.org/ubuntu-drivers",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ubuntu-drivers"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ubuntu-drivers",
+    "binary": "ubuntu-drivers",
+    "check": "which ubuntu-drivers",
+    "install_steps": [
+      "apt-get install ubuntu-drivers 2>/dev/null || which ubuntu-drivers",
+      "Verify: ubuntu-drivers --version",
+      "supercli plugins install ./plugins/ubuntu-drivers --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ubuntu-drivers",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ubuntu-drivers version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-drivers",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ubuntu-drivers: apt-get install ubuntu-drivers 2>/dev/null || which ubuntu-drivers"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ubuntu-drivers",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ubuntu-drivers CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-drivers",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ubuntu-drivers: apt-get install ubuntu-drivers 2>/dev/null || which ubuntu-drivers"
+      },
+      "args": []
+    }
+  ]
+}

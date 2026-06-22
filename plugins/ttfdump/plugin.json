@@ -1,0 +1,56 @@
+{
+  "name": "ttfdump",
+  "version": "0.1.0",
+  "description": "CLI tool: ttfdump",
+  "source": "https://manpages.debian.org/ttfdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ttfdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ttfdump",
+    "binary": "ttfdump",
+    "check": "which ttfdump",
+    "install_steps": [
+      "apt-get install ttfdump 2>/dev/null || which ttfdump",
+      "Verify: ttfdump --version",
+      "supercli plugins install ./plugins/ttfdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ttfdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ttfdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ttfdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ttfdump: apt-get install ttfdump 2>/dev/null || which ttfdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ttfdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ttfdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ttfdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ttfdump: apt-get install ttfdump 2>/dev/null || which ttfdump"
+      },
+      "args": []
+    }
+  ]
+}

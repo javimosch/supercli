@@ -1,0 +1,56 @@
+{
+  "name": "tstclnt",
+  "version": "0.1.0",
+  "description": "CLI tool: tstclnt",
+  "source": "https://manpages.debian.org/tstclnt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tstclnt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tstclnt",
+    "binary": "tstclnt",
+    "check": "which tstclnt",
+    "install_steps": [
+      "apt-get install tstclnt 2>/dev/null || which tstclnt",
+      "Verify: tstclnt --version",
+      "supercli plugins install ./plugins/tstclnt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tstclnt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tstclnt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tstclnt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tstclnt: apt-get install tstclnt 2>/dev/null || which tstclnt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tstclnt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tstclnt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tstclnt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tstclnt: apt-get install tstclnt 2>/dev/null || which tstclnt"
+      },
+      "args": []
+    }
+  ]
+}

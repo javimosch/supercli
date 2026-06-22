@@ -1,0 +1,56 @@
+{
+  "name": "ts",
+  "version": "0.1.0",
+  "description": "CLI tool: ts",
+  "source": "https://manpages.debian.org/ts",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ts"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ts",
+    "binary": "ts",
+    "check": "which ts",
+    "install_steps": [
+      "apt-get install ts 2>/dev/null || which ts",
+      "Verify: ts --version",
+      "supercli plugins install ./plugins/ts --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ts",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ts version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ts",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ts: apt-get install ts 2>/dev/null || which ts"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ts",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ts CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ts",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ts: apt-get install ts 2>/dev/null || which ts"
+      },
+      "args": []
+    }
+  ]
+}

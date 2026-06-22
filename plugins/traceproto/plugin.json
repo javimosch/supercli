@@ -1,0 +1,56 @@
+{
+  "name": "traceproto",
+  "version": "0.1.0",
+  "description": "CLI tool: traceproto",
+  "source": "https://manpages.debian.org/traceproto",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "traceproto"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "traceproto",
+    "binary": "traceproto",
+    "check": "which traceproto",
+    "install_steps": [
+      "apt-get install traceproto 2>/dev/null || which traceproto",
+      "Verify: traceproto --version",
+      "supercli plugins install ./plugins/traceproto --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "traceproto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print traceproto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "traceproto",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install traceproto: apt-get install traceproto 2>/dev/null || which traceproto"
+      },
+      "args": []
+    },
+    {
+      "namespace": "traceproto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to traceproto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "traceproto",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install traceproto: apt-get install traceproto 2>/dev/null || which traceproto"
+      },
+      "args": []
+    }
+  ]
+}

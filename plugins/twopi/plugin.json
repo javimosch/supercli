@@ -1,0 +1,56 @@
+{
+  "name": "twopi",
+  "version": "0.1.0",
+  "description": "CLI tool: twopi",
+  "source": "https://manpages.debian.org/twopi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "twopi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "twopi",
+    "binary": "twopi",
+    "check": "which twopi",
+    "install_steps": [
+      "apt-get install twopi 2>/dev/null || which twopi",
+      "Verify: twopi --version",
+      "supercli plugins install ./plugins/twopi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "twopi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print twopi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twopi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install twopi: apt-get install twopi 2>/dev/null || which twopi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "twopi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to twopi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twopi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install twopi: apt-get install twopi 2>/dev/null || which twopi"
+      },
+      "args": []
+    }
+  ]
+}

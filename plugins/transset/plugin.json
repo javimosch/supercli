@@ -1,0 +1,56 @@
+{
+  "name": "transset",
+  "version": "0.1.0",
+  "description": "CLI tool: transset",
+  "source": "https://manpages.debian.org/transset",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "transset"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "transset",
+    "binary": "transset",
+    "check": "which transset",
+    "install_steps": [
+      "apt-get install transset 2>/dev/null || which transset",
+      "Verify: transset --version",
+      "supercli plugins install ./plugins/transset --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "transset",
+      "resource": "self",
+      "action": "version",
+      "description": "Print transset version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transset",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install transset: apt-get install transset 2>/dev/null || which transset"
+      },
+      "args": []
+    },
+    {
+      "namespace": "transset",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to transset CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transset",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install transset: apt-get install transset 2>/dev/null || which transset"
+      },
+      "args": []
+    }
+  ]
+}

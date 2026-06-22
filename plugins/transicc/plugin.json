@@ -1,0 +1,56 @@
+{
+  "name": "transicc",
+  "version": "0.1.0",
+  "description": "CLI tool: transicc",
+  "source": "https://manpages.debian.org/transicc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "transicc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "transicc",
+    "binary": "transicc",
+    "check": "which transicc",
+    "install_steps": [
+      "apt-get install transicc 2>/dev/null || which transicc",
+      "Verify: transicc --version",
+      "supercli plugins install ./plugins/transicc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "transicc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print transicc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transicc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install transicc: apt-get install transicc 2>/dev/null || which transicc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "transicc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to transicc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "transicc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install transicc: apt-get install transicc 2>/dev/null || which transicc"
+      },
+      "args": []
+    }
+  ]
+}

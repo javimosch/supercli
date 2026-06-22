@@ -1,0 +1,56 @@
+{
+  "name": "ubuntu-report",
+  "version": "0.1.0",
+  "description": "CLI tool: ubuntu-report",
+  "source": "https://manpages.debian.org/ubuntu-report",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ubuntu-report"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ubuntu-report",
+    "binary": "ubuntu-report",
+    "check": "which ubuntu-report",
+    "install_steps": [
+      "apt-get install ubuntu-report 2>/dev/null || which ubuntu-report",
+      "Verify: ubuntu-report --version",
+      "supercli plugins install ./plugins/ubuntu-report --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ubuntu-report",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ubuntu-report version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-report",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ubuntu-report: apt-get install ubuntu-report 2>/dev/null || which ubuntu-report"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ubuntu-report",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ubuntu-report CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-report",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ubuntu-report: apt-get install ubuntu-report 2>/dev/null || which ubuntu-report"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "trust",
+  "version": "0.1.0",
+  "description": "CLI tool: trust",
+  "source": "https://manpages.debian.org/trust",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "trust"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "trust",
+    "binary": "trust",
+    "check": "which trust",
+    "install_steps": [
+      "apt-get install trust 2>/dev/null || which trust",
+      "Verify: trust --version",
+      "supercli plugins install ./plugins/trust --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "trust",
+      "resource": "self",
+      "action": "version",
+      "description": "Print trust version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trust",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install trust: apt-get install trust 2>/dev/null || which trust"
+      },
+      "args": []
+    },
+    {
+      "namespace": "trust",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to trust CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "trust",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install trust: apt-get install trust 2>/dev/null || which trust"
+      },
+      "args": []
+    }
+  ]
+}

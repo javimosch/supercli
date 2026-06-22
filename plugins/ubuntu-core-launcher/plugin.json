@@ -1,0 +1,56 @@
+{
+  "name": "ubuntu-core-launcher",
+  "version": "0.1.0",
+  "description": "CLI tool: ubuntu-core-launcher",
+  "source": "https://manpages.debian.org/ubuntu-core-launcher",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ubuntu-core-launcher"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ubuntu-core-launcher",
+    "binary": "ubuntu-core-launcher",
+    "check": "which ubuntu-core-launcher",
+    "install_steps": [
+      "apt-get install ubuntu-core-launcher 2>/dev/null || which ubuntu-core-launcher",
+      "Verify: ubuntu-core-launcher --version",
+      "supercli plugins install ./plugins/ubuntu-core-launcher --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ubuntu-core-launcher",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ubuntu-core-launcher version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-core-launcher",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ubuntu-core-launcher: apt-get install ubuntu-core-launcher 2>/dev/null || which ubuntu-core-launcher"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ubuntu-core-launcher",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ubuntu-core-launcher CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-core-launcher",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ubuntu-core-launcher: apt-get install ubuntu-core-launcher 2>/dev/null || which ubuntu-core-launcher"
+      },
+      "args": []
+    }
+  ]
+}

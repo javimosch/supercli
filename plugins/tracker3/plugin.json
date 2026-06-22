@@ -1,0 +1,56 @@
+{
+  "name": "tracker3",
+  "version": "0.1.0",
+  "description": "CLI tool: tracker3",
+  "source": "https://manpages.debian.org/tracker3",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tracker3"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tracker3",
+    "binary": "tracker3",
+    "check": "which tracker3",
+    "install_steps": [
+      "apt-get install tracker3 2>/dev/null || which tracker3",
+      "Verify: tracker3 --version",
+      "supercli plugins install ./plugins/tracker3 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tracker3",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tracker3 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tracker3",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tracker3: apt-get install tracker3 2>/dev/null || which tracker3"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tracker3",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tracker3 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tracker3",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tracker3: apt-get install tracker3 2>/dev/null || which tracker3"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ubuntu-bug",
+  "version": "0.1.0",
+  "description": "CLI tool: ubuntu-bug",
+  "source": "https://manpages.debian.org/ubuntu-bug",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ubuntu-bug"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ubuntu-bug",
+    "binary": "ubuntu-bug",
+    "check": "which ubuntu-bug",
+    "install_steps": [
+      "apt-get install ubuntu-bug 2>/dev/null || which ubuntu-bug",
+      "Verify: ubuntu-bug --version",
+      "supercli plugins install ./plugins/ubuntu-bug --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ubuntu-bug",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ubuntu-bug version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-bug",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ubuntu-bug: apt-get install ubuntu-bug 2>/dev/null || which ubuntu-bug"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ubuntu-bug",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ubuntu-bug CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ubuntu-bug",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ubuntu-bug: apt-get install ubuntu-bug 2>/dev/null || which ubuntu-bug"
+      },
+      "args": []
+    }
+  ]
+}

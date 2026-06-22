@@ -1,0 +1,56 @@
+{
+  "name": "traceroute-nanog",
+  "version": "0.1.0",
+  "description": "CLI tool: traceroute-nanog",
+  "source": "https://manpages.debian.org/traceroute-nanog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "traceroute-nanog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "traceroute-nanog",
+    "binary": "traceroute-nanog",
+    "check": "which traceroute-nanog",
+    "install_steps": [
+      "apt-get install traceroute-nanog 2>/dev/null || which traceroute-nanog",
+      "Verify: traceroute-nanog --version",
+      "supercli plugins install ./plugins/traceroute-nanog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "traceroute-nanog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print traceroute-nanog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "traceroute-nanog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install traceroute-nanog: apt-get install traceroute-nanog 2>/dev/null || which traceroute-nanog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "traceroute-nanog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to traceroute-nanog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "traceroute-nanog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install traceroute-nanog: apt-get install traceroute-nanog 2>/dev/null || which traceroute-nanog"
+      },
+      "args": []
+    }
+  ]
+}

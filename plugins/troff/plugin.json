@@ -1,0 +1,56 @@
+{
+  "name": "troff",
+  "version": "0.1.0",
+  "description": "CLI tool: troff",
+  "source": "https://manpages.debian.org/troff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "troff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "troff",
+    "binary": "troff",
+    "check": "which troff",
+    "install_steps": [
+      "apt-get install troff 2>/dev/null || which troff",
+      "Verify: troff --version",
+      "supercli plugins install ./plugins/troff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "troff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print troff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "troff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install troff: apt-get install troff 2>/dev/null || which troff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "troff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to troff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "troff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install troff: apt-get install troff 2>/dev/null || which troff"
+      },
+      "args": []
+    }
+  ]
+}

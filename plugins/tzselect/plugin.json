@@ -1,0 +1,56 @@
+{
+  "name": "tzselect",
+  "version": "0.1.0",
+  "description": "CLI tool: tzselect",
+  "source": "https://manpages.debian.org/tzselect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tzselect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tzselect",
+    "binary": "tzselect",
+    "check": "which tzselect",
+    "install_steps": [
+      "apt-get install tzselect 2>/dev/null || which tzselect",
+      "Verify: tzselect --version",
+      "supercli plugins install ./plugins/tzselect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tzselect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tzselect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tzselect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tzselect: apt-get install tzselect 2>/dev/null || which tzselect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tzselect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tzselect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tzselect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tzselect: apt-get install tzselect 2>/dev/null || which tzselect"
+      },
+      "args": []
+    }
+  ]
+}

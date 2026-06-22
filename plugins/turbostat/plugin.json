@@ -1,0 +1,56 @@
+{
+  "name": "turbostat",
+  "version": "0.1.0",
+  "description": "CLI tool: turbostat",
+  "source": "https://manpages.debian.org/turbostat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "turbostat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "turbostat",
+    "binary": "turbostat",
+    "check": "which turbostat",
+    "install_steps": [
+      "apt-get install turbostat 2>/dev/null || which turbostat",
+      "Verify: turbostat --version",
+      "supercli plugins install ./plugins/turbostat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "turbostat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print turbostat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "turbostat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install turbostat: apt-get install turbostat 2>/dev/null || which turbostat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "turbostat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to turbostat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "turbostat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install turbostat: apt-get install turbostat 2>/dev/null || which turbostat"
+      },
+      "args": []
+    }
+  ]
+}

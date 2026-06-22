@@ -1,0 +1,56 @@
+{
+  "name": "ucfq",
+  "version": "0.1.0",
+  "description": "CLI tool: ucfq",
+  "source": "https://manpages.debian.org/ucfq",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ucfq"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ucfq",
+    "binary": "ucfq",
+    "check": "which ucfq",
+    "install_steps": [
+      "apt-get install ucfq 2>/dev/null || which ucfq",
+      "Verify: ucfq --version",
+      "supercli plugins install ./plugins/ucfq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ucfq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ucfq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ucfq",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ucfq: apt-get install ucfq 2>/dev/null || which ucfq"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ucfq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ucfq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ucfq",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ucfq: apt-get install ucfq 2>/dev/null || which ucfq"
+      },
+      "args": []
+    }
+  ]
+}

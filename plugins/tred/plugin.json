@@ -1,0 +1,56 @@
+{
+  "name": "tred",
+  "version": "0.1.0",
+  "description": "CLI tool: tred",
+  "source": "https://manpages.debian.org/tred",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tred"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tred",
+    "binary": "tred",
+    "check": "which tred",
+    "install_steps": [
+      "apt-get install tred 2>/dev/null || which tred",
+      "Verify: tred --version",
+      "supercli plugins install ./plugins/tred --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tred",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tred version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tred",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tred: apt-get install tred 2>/dev/null || which tred"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tred",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tred CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tred",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tred: apt-get install tred 2>/dev/null || which tred"
+      },
+      "args": []
+    }
+  ]
+}
