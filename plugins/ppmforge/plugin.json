@@ -1,0 +1,56 @@
+{
+  "name": "ppmforge",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmforge",
+  "source": "https://manpages.debian.org/ppmforge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmforge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmforge",
+    "binary": "ppmforge",
+    "check": "which ppmforge",
+    "install_steps": [
+      "apt-get install ppmforge 2>/dev/null || which ppmforge",
+      "Verify: ppmforge --version",
+      "supercli plugins install ./plugins/ppmforge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmforge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmforge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmforge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmforge: apt-get install ppmforge 2>/dev/null || which ppmforge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmforge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmforge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmforge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmforge: apt-get install ppmforge 2>/dev/null || which ppmforge"
+      },
+      "args": []
+    }
+  ]
+}

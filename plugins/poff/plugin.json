@@ -1,0 +1,56 @@
+{
+  "name": "poff",
+  "version": "0.1.0",
+  "description": "CLI tool: poff",
+  "source": "https://manpages.debian.org/poff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "poff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "poff",
+    "binary": "poff",
+    "check": "which poff",
+    "install_steps": [
+      "apt-get install poff 2>/dev/null || which poff",
+      "Verify: poff --version",
+      "supercli plugins install ./plugins/poff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "poff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print poff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install poff: apt-get install poff 2>/dev/null || which poff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "poff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to poff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install poff: apt-get install poff 2>/dev/null || which poff"
+      },
+      "args": []
+    }
+  ]
+}

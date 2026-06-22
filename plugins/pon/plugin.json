@@ -1,0 +1,56 @@
+{
+  "name": "pon",
+  "version": "0.1.0",
+  "description": "CLI tool: pon",
+  "source": "https://manpages.debian.org/pon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pon",
+    "binary": "pon",
+    "check": "which pon",
+    "install_steps": [
+      "apt-get install pon 2>/dev/null || which pon",
+      "Verify: pon --version",
+      "supercli plugins install ./plugins/pon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pon: apt-get install pon 2>/dev/null || which pon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pon: apt-get install pon 2>/dev/null || which pon"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmshift",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmshift",
+  "source": "https://manpages.debian.org/ppmshift",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmshift"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmshift",
+    "binary": "ppmshift",
+    "check": "which ppmshift",
+    "install_steps": [
+      "apt-get install ppmshift 2>/dev/null || which ppmshift",
+      "Verify: ppmshift --version",
+      "supercli plugins install ./plugins/ppmshift --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmshift",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmshift version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmshift",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmshift: apt-get install ppmshift 2>/dev/null || which ppmshift"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmshift",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmshift CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmshift",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmshift: apt-get install ppmshift 2>/dev/null || which ppmshift"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmpat",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmpat",
+  "source": "https://manpages.debian.org/ppmpat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmpat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmpat",
+    "binary": "ppmpat",
+    "check": "which ppmpat",
+    "install_steps": [
+      "apt-get install ppmpat 2>/dev/null || which ppmpat",
+      "Verify: ppmpat --version",
+      "supercli plugins install ./plugins/ppmpat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmpat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmpat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmpat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmpat: apt-get install ppmpat 2>/dev/null || which ppmpat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmpat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmpat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmpat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmpat: apt-get install ppmpat 2>/dev/null || which ppmpat"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmflash",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmflash",
+  "source": "https://manpages.debian.org/ppmflash",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmflash"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmflash",
+    "binary": "ppmflash",
+    "check": "which ppmflash",
+    "install_steps": [
+      "apt-get install ppmflash 2>/dev/null || which ppmflash",
+      "Verify: ppmflash --version",
+      "supercli plugins install ./plugins/ppmflash --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmflash",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmflash version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmflash",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmflash: apt-get install ppmflash 2>/dev/null || which ppmflash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmflash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmflash CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmflash",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmflash: apt-get install ppmflash 2>/dev/null || which ppmflash"
+      },
+      "args": []
+    }
+  ]
+}

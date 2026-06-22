@@ -1,0 +1,56 @@
+{
+  "name": "ppmdist",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmdist",
+  "source": "https://manpages.debian.org/ppmdist",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmdist"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmdist",
+    "binary": "ppmdist",
+    "check": "which ppmdist",
+    "install_steps": [
+      "apt-get install ppmdist 2>/dev/null || which ppmdist",
+      "Verify: ppmdist --version",
+      "supercli plugins install ./plugins/ppmdist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmdist",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmdist version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmdist",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmdist: apt-get install ppmdist 2>/dev/null || which ppmdist"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmdist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmdist CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmdist",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmdist: apt-get install ppmdist 2>/dev/null || which ppmdist"
+      },
+      "args": []
+    }
+  ]
+}

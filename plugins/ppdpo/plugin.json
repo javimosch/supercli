@@ -1,0 +1,56 @@
+{
+  "name": "ppdpo",
+  "version": "0.1.0",
+  "description": "CLI tool: ppdpo",
+  "source": "https://manpages.debian.org/ppdpo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppdpo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppdpo",
+    "binary": "ppdpo",
+    "check": "which ppdpo",
+    "install_steps": [
+      "apt-get install ppdpo 2>/dev/null || which ppdpo",
+      "Verify: ppdpo --version",
+      "supercli plugins install ./plugins/ppdpo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppdpo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppdpo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdpo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppdpo: apt-get install ppdpo 2>/dev/null || which ppdpo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppdpo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppdpo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdpo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppdpo: apt-get install ppdpo 2>/dev/null || which ppdpo"
+      },
+      "args": []
+    }
+  ]
+}

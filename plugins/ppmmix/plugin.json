@@ -1,0 +1,56 @@
+{
+  "name": "ppmmix",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmmix",
+  "source": "https://manpages.debian.org/ppmmix",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmmix"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmmix",
+    "binary": "ppmmix",
+    "check": "which ppmmix",
+    "install_steps": [
+      "apt-get install ppmmix 2>/dev/null || which ppmmix",
+      "Verify: ppmmix --version",
+      "supercli plugins install ./plugins/ppmmix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmmix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmmix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmmix",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmmix: apt-get install ppmmix 2>/dev/null || which ppmmix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmmix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmmix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmmix",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmmix: apt-get install ppmmix 2>/dev/null || which ppmmix"
+      },
+      "args": []
+    }
+  ]
+}

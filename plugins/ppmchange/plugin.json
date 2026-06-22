@@ -1,0 +1,56 @@
+{
+  "name": "ppmchange",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmchange",
+  "source": "https://manpages.debian.org/ppmchange",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmchange"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmchange",
+    "binary": "ppmchange",
+    "check": "which ppmchange",
+    "install_steps": [
+      "apt-get install ppmchange 2>/dev/null || which ppmchange",
+      "Verify: ppmchange --version",
+      "supercli plugins install ./plugins/ppmchange --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmchange",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmchange version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmchange",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmchange: apt-get install ppmchange 2>/dev/null || which ppmchange"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmchange",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmchange CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmchange",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmchange: apt-get install ppmchange 2>/dev/null || which ppmchange"
+      },
+      "args": []
+    }
+  ]
+}

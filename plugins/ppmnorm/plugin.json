@@ -1,0 +1,56 @@
+{
+  "name": "ppmnorm",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmnorm",
+  "source": "https://manpages.debian.org/ppmnorm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmnorm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmnorm",
+    "binary": "ppmnorm",
+    "check": "which ppmnorm",
+    "install_steps": [
+      "apt-get install ppmnorm 2>/dev/null || which ppmnorm",
+      "Verify: ppmnorm --version",
+      "supercli plugins install ./plugins/ppmnorm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmnorm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmnorm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmnorm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmnorm: apt-get install ppmnorm 2>/dev/null || which ppmnorm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmnorm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmnorm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmnorm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmnorm: apt-get install ppmnorm 2>/dev/null || which ppmnorm"
+      },
+      "args": []
+    }
+  ]
+}

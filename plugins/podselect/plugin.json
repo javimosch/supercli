@@ -1,0 +1,56 @@
+{
+  "name": "podselect",
+  "version": "0.1.0",
+  "description": "CLI tool: podselect",
+  "source": "https://manpages.debian.org/podselect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "podselect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "podselect",
+    "binary": "podselect",
+    "check": "which podselect",
+    "install_steps": [
+      "apt-get install podselect 2>/dev/null || which podselect",
+      "Verify: podselect --version",
+      "supercli plugins install ./plugins/podselect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "podselect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print podselect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "podselect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install podselect: apt-get install podselect 2>/dev/null || which podselect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "podselect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to podselect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "podselect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install podselect: apt-get install podselect 2>/dev/null || which podselect"
+      },
+      "args": []
+    }
+  ]
+}

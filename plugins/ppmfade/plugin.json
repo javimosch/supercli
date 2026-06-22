@@ -1,0 +1,56 @@
+{
+  "name": "ppmfade",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmfade",
+  "source": "https://manpages.debian.org/ppmfade",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmfade"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmfade",
+    "binary": "ppmfade",
+    "check": "which ppmfade",
+    "install_steps": [
+      "apt-get install ppmfade 2>/dev/null || which ppmfade",
+      "Verify: ppmfade --version",
+      "supercli plugins install ./plugins/ppmfade --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmfade",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmfade version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmfade",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmfade: apt-get install ppmfade 2>/dev/null || which ppmfade"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmfade",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmfade CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmfade",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmfade: apt-get install ppmfade 2>/dev/null || which ppmfade"
+      },
+      "args": []
+    }
+  ]
+}

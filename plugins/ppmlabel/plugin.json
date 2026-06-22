@@ -1,0 +1,56 @@
+{
+  "name": "ppmlabel",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmlabel",
+  "source": "https://manpages.debian.org/ppmlabel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmlabel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmlabel",
+    "binary": "ppmlabel",
+    "check": "which ppmlabel",
+    "install_steps": [
+      "apt-get install ppmlabel 2>/dev/null || which ppmlabel",
+      "Verify: ppmlabel --version",
+      "supercli plugins install ./plugins/ppmlabel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmlabel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmlabel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmlabel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmlabel: apt-get install ppmlabel 2>/dev/null || which ppmlabel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmlabel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmlabel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmlabel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmlabel: apt-get install ppmlabel 2>/dev/null || which ppmlabel"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmqvga",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmqvga",
+  "source": "https://manpages.debian.org/ppmqvga",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmqvga"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmqvga",
+    "binary": "ppmqvga",
+    "check": "which ppmqvga",
+    "install_steps": [
+      "apt-get install ppmqvga 2>/dev/null || which ppmqvga",
+      "Verify: ppmqvga --version",
+      "supercli plugins install ./plugins/ppmqvga --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmqvga",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmqvga version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmqvga",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmqvga: apt-get install ppmqvga 2>/dev/null || which ppmqvga"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmqvga",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmqvga CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmqvga",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmqvga: apt-get install ppmqvga 2>/dev/null || which ppmqvga"
+      },
+      "args": []
+    }
+  ]
+}

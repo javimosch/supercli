@@ -1,0 +1,56 @@
+{
+  "name": "popularity-contest",
+  "version": "0.1.0",
+  "description": "CLI tool: popularity-contest",
+  "source": "https://manpages.debian.org/popularity-contest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "popularity-contest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "popularity-contest",
+    "binary": "popularity-contest",
+    "check": "which popularity-contest",
+    "install_steps": [
+      "apt-get install popularity-contest 2>/dev/null || which popularity-contest",
+      "Verify: popularity-contest --version",
+      "supercli plugins install ./plugins/popularity-contest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "popularity-contest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print popularity-contest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "popularity-contest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install popularity-contest: apt-get install popularity-contest 2>/dev/null || which popularity-contest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "popularity-contest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to popularity-contest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "popularity-contest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install popularity-contest: apt-get install popularity-contest 2>/dev/null || which popularity-contest"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmdim",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmdim",
+  "source": "https://manpages.debian.org/ppmdim",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmdim"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmdim",
+    "binary": "ppmdim",
+    "check": "which ppmdim",
+    "install_steps": [
+      "apt-get install ppmdim 2>/dev/null || which ppmdim",
+      "Verify: ppmdim --version",
+      "supercli plugins install ./plugins/ppmdim --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmdim",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmdim version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmdim",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmdim: apt-get install ppmdim 2>/dev/null || which ppmdim"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmdim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmdim CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmdim",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmdim: apt-get install ppmdim 2>/dev/null || which ppmdim"
+      },
+      "args": []
+    }
+  ]
+}

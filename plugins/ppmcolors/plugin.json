@@ -1,0 +1,56 @@
+{
+  "name": "ppmcolors",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmcolors",
+  "source": "https://manpages.debian.org/ppmcolors",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmcolors"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmcolors",
+    "binary": "ppmcolors",
+    "check": "which ppmcolors",
+    "install_steps": [
+      "apt-get install ppmcolors 2>/dev/null || which ppmcolors",
+      "Verify: ppmcolors --version",
+      "supercli plugins install ./plugins/ppmcolors --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmcolors",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmcolors version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmcolors",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmcolors: apt-get install ppmcolors 2>/dev/null || which ppmcolors"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmcolors",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmcolors CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmcolors",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmcolors: apt-get install ppmcolors 2>/dev/null || which ppmcolors"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmrelief",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmrelief",
+  "source": "https://manpages.debian.org/ppmrelief",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmrelief"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmrelief",
+    "binary": "ppmrelief",
+    "check": "which ppmrelief",
+    "install_steps": [
+      "apt-get install ppmrelief 2>/dev/null || which ppmrelief",
+      "Verify: ppmrelief --version",
+      "supercli plugins install ./plugins/ppmrelief --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmrelief",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmrelief version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmrelief",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmrelief: apt-get install ppmrelief 2>/dev/null || which ppmrelief"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmrelief",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmrelief CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmrelief",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmrelief: apt-get install ppmrelief 2>/dev/null || which ppmrelief"
+      },
+      "args": []
+    }
+  ]
+}

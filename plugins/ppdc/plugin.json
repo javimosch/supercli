@@ -1,0 +1,56 @@
+{
+  "name": "ppdc",
+  "version": "0.1.0",
+  "description": "CLI tool: ppdc",
+  "source": "https://manpages.debian.org/ppdc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppdc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppdc",
+    "binary": "ppdc",
+    "check": "which ppdc",
+    "install_steps": [
+      "apt-get install ppdc 2>/dev/null || which ppdc",
+      "Verify: ppdc --version",
+      "supercli plugins install ./plugins/ppdc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppdc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppdc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppdc: apt-get install ppdc 2>/dev/null || which ppdc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppdc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppdc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppdc: apt-get install ppdc 2>/dev/null || which ppdc"
+      },
+      "args": []
+    }
+  ]
+}

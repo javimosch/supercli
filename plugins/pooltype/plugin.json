@@ -1,0 +1,56 @@
+{
+  "name": "pooltype",
+  "version": "0.1.0",
+  "description": "CLI tool: pooltype",
+  "source": "https://manpages.debian.org/pooltype",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pooltype"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pooltype",
+    "binary": "pooltype",
+    "check": "which pooltype",
+    "install_steps": [
+      "apt-get install pooltype 2>/dev/null || which pooltype",
+      "Verify: pooltype --version",
+      "supercli plugins install ./plugins/pooltype --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pooltype",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pooltype version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pooltype",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pooltype: apt-get install pooltype 2>/dev/null || which pooltype"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pooltype",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pooltype CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pooltype",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pooltype: apt-get install pooltype 2>/dev/null || which pooltype"
+      },
+      "args": []
+    }
+  ]
+}

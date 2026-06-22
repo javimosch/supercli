@@ -1,0 +1,56 @@
+{
+  "name": "powerprofilesctl",
+  "version": "0.1.0",
+  "description": "CLI tool: powerprofilesctl",
+  "source": "https://manpages.debian.org/powerprofilesctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "powerprofilesctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "powerprofilesctl",
+    "binary": "powerprofilesctl",
+    "check": "which powerprofilesctl",
+    "install_steps": [
+      "apt-get install powerprofilesctl 2>/dev/null || which powerprofilesctl",
+      "Verify: powerprofilesctl --version",
+      "supercli plugins install ./plugins/powerprofilesctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "powerprofilesctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print powerprofilesctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerprofilesctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install powerprofilesctl: apt-get install powerprofilesctl 2>/dev/null || which powerprofilesctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerprofilesctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to powerprofilesctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerprofilesctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerprofilesctl: apt-get install powerprofilesctl 2>/dev/null || which powerprofilesctl"
+      },
+      "args": []
+    }
+  ]
+}

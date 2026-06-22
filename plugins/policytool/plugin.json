@@ -1,0 +1,56 @@
+{
+  "name": "policytool",
+  "version": "0.1.0",
+  "description": "CLI tool: policytool",
+  "source": "https://manpages.debian.org/policytool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "policytool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "policytool",
+    "binary": "policytool",
+    "check": "which policytool",
+    "install_steps": [
+      "apt-get install policytool 2>/dev/null || which policytool",
+      "Verify: policytool --version",
+      "supercli plugins install ./plugins/policytool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "policytool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print policytool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "policytool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install policytool: apt-get install policytool 2>/dev/null || which policytool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "policytool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to policytool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "policytool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install policytool: apt-get install policytool 2>/dev/null || which policytool"
+      },
+      "args": []
+    }
+  ]
+}

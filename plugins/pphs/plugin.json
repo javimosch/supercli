@@ -1,0 +1,56 @@
+{
+  "name": "pphs",
+  "version": "0.1.0",
+  "description": "CLI tool: pphs",
+  "source": "https://manpages.debian.org/pphs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pphs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pphs",
+    "binary": "pphs",
+    "check": "which pphs",
+    "install_steps": [
+      "apt-get install pphs 2>/dev/null || which pphs",
+      "Verify: pphs --version",
+      "supercli plugins install ./plugins/pphs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pphs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pphs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pphs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pphs: apt-get install pphs 2>/dev/null || which pphs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pphs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pphs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pphs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pphs: apt-get install pphs 2>/dev/null || which pphs"
+      },
+      "args": []
+    }
+  ]
+}

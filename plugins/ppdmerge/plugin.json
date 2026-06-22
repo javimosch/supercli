@@ -1,0 +1,56 @@
+{
+  "name": "ppdmerge",
+  "version": "0.1.0",
+  "description": "CLI tool: ppdmerge",
+  "source": "https://manpages.debian.org/ppdmerge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppdmerge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppdmerge",
+    "binary": "ppdmerge",
+    "check": "which ppdmerge",
+    "install_steps": [
+      "apt-get install ppdmerge 2>/dev/null || which ppdmerge",
+      "Verify: ppdmerge --version",
+      "supercli plugins install ./plugins/ppdmerge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppdmerge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppdmerge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdmerge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppdmerge: apt-get install ppdmerge 2>/dev/null || which ppdmerge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppdmerge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppdmerge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdmerge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppdmerge: apt-get install ppdmerge 2>/dev/null || which ppdmerge"
+      },
+      "args": []
+    }
+  ]
+}

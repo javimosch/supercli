@@ -1,0 +1,56 @@
+{
+  "name": "ppmtobmp",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtobmp",
+  "source": "https://manpages.debian.org/ppmtobmp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtobmp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtobmp",
+    "binary": "ppmtobmp",
+    "check": "which ppmtobmp",
+    "install_steps": [
+      "apt-get install ppmtobmp 2>/dev/null || which ppmtobmp",
+      "Verify: ppmtobmp --version",
+      "supercli plugins install ./plugins/ppmtobmp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtobmp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtobmp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtobmp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtobmp: apt-get install ppmtobmp 2>/dev/null || which ppmtobmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtobmp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtobmp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtobmp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtobmp: apt-get install ppmtobmp 2>/dev/null || which ppmtobmp"
+      },
+      "args": []
+    }
+  ]
+}

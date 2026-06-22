@@ -1,0 +1,56 @@
+{
+  "name": "poweroff",
+  "version": "0.1.0",
+  "description": "CLI tool: poweroff",
+  "source": "https://manpages.debian.org/poweroff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "poweroff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "poweroff",
+    "binary": "poweroff",
+    "check": "which poweroff",
+    "install_steps": [
+      "apt-get install poweroff 2>/dev/null || which poweroff",
+      "Verify: poweroff --version",
+      "supercli plugins install ./plugins/poweroff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "poweroff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print poweroff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poweroff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install poweroff: apt-get install poweroff 2>/dev/null || which poweroff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "poweroff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to poweroff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "poweroff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install poweroff: apt-get install poweroff 2>/dev/null || which poweroff"
+      },
+      "args": []
+    }
+  ]
+}

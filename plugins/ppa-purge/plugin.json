@@ -1,0 +1,56 @@
+{
+  "name": "ppa-purge",
+  "version": "0.1.0",
+  "description": "CLI tool: ppa-purge",
+  "source": "https://manpages.debian.org/ppa-purge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppa-purge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppa-purge",
+    "binary": "ppa-purge",
+    "check": "which ppa-purge",
+    "install_steps": [
+      "apt-get install ppa-purge 2>/dev/null || which ppa-purge",
+      "Verify: ppa-purge --version",
+      "supercli plugins install ./plugins/ppa-purge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppa-purge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppa-purge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppa-purge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppa-purge: apt-get install ppa-purge 2>/dev/null || which ppa-purge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppa-purge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppa-purge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppa-purge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppa-purge: apt-get install ppa-purge 2>/dev/null || which ppa-purge"
+      },
+      "args": []
+    }
+  ]
+}

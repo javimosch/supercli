@@ -1,0 +1,56 @@
+{
+  "name": "ppmhist",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmhist",
+  "source": "https://manpages.debian.org/ppmhist",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmhist"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmhist",
+    "binary": "ppmhist",
+    "check": "which ppmhist",
+    "install_steps": [
+      "apt-get install ppmhist 2>/dev/null || which ppmhist",
+      "Verify: ppmhist --version",
+      "supercli plugins install ./plugins/ppmhist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmhist",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmhist version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmhist",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmhist: apt-get install ppmhist 2>/dev/null || which ppmhist"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmhist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmhist CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmhist",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmhist: apt-get install ppmhist 2>/dev/null || which ppmhist"
+      },
+      "args": []
+    }
+  ]
+}

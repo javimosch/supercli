@@ -1,0 +1,56 @@
+{
+  "name": "ppmntsc",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmntsc",
+  "source": "https://manpages.debian.org/ppmntsc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmntsc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmntsc",
+    "binary": "ppmntsc",
+    "check": "which ppmntsc",
+    "install_steps": [
+      "apt-get install ppmntsc 2>/dev/null || which ppmntsc",
+      "Verify: ppmntsc --version",
+      "supercli plugins install ./plugins/ppmntsc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmntsc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmntsc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmntsc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmntsc: apt-get install ppmntsc 2>/dev/null || which ppmntsc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmntsc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmntsc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmntsc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmntsc: apt-get install ppmntsc 2>/dev/null || which ppmntsc"
+      },
+      "args": []
+    }
+  ]
+}

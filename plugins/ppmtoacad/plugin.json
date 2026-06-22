@@ -1,0 +1,56 @@
+{
+  "name": "ppmtoacad",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtoacad",
+  "source": "https://manpages.debian.org/ppmtoacad",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtoacad"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtoacad",
+    "binary": "ppmtoacad",
+    "check": "which ppmtoacad",
+    "install_steps": [
+      "apt-get install ppmtoacad 2>/dev/null || which ppmtoacad",
+      "Verify: ppmtoacad --version",
+      "supercli plugins install ./plugins/ppmtoacad --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtoacad",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtoacad version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtoacad",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtoacad: apt-get install ppmtoacad 2>/dev/null || which ppmtoacad"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtoacad",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtoacad CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtoacad",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtoacad: apt-get install ppmtoacad 2>/dev/null || which ppmtoacad"
+      },
+      "args": []
+    }
+  ]
+}

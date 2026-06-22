@@ -1,0 +1,56 @@
+{
+  "name": "ppmmake",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmmake",
+  "source": "https://manpages.debian.org/ppmmake",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmmake"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmmake",
+    "binary": "ppmmake",
+    "check": "which ppmmake",
+    "install_steps": [
+      "apt-get install ppmmake 2>/dev/null || which ppmmake",
+      "Verify: ppmmake --version",
+      "supercli plugins install ./plugins/ppmmake --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmmake",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmmake version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmmake",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmmake: apt-get install ppmmake 2>/dev/null || which ppmmake"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmmake",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmmake CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmmake",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmmake: apt-get install ppmmake 2>/dev/null || which ppmmake"
+      },
+      "args": []
+    }
+  ]
+}

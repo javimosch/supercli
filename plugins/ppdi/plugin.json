@@ -1,0 +1,56 @@
+{
+  "name": "ppdi",
+  "version": "0.1.0",
+  "description": "CLI tool: ppdi",
+  "source": "https://manpages.debian.org/ppdi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppdi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppdi",
+    "binary": "ppdi",
+    "check": "which ppdi",
+    "install_steps": [
+      "apt-get install ppdi 2>/dev/null || which ppdi",
+      "Verify: ppdi --version",
+      "supercli plugins install ./plugins/ppdi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppdi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppdi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppdi: apt-get install ppdi 2>/dev/null || which ppdi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppdi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppdi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppdi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppdi: apt-get install ppdi 2>/dev/null || which ppdi"
+      },
+      "args": []
+    }
+  ]
+}

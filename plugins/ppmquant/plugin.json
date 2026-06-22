@@ -1,0 +1,56 @@
+{
+  "name": "ppmquant",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmquant",
+  "source": "https://manpages.debian.org/ppmquant",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmquant"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmquant",
+    "binary": "ppmquant",
+    "check": "which ppmquant",
+    "install_steps": [
+      "apt-get install ppmquant 2>/dev/null || which ppmquant",
+      "Verify: ppmquant --version",
+      "supercli plugins install ./plugins/ppmquant --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmquant",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmquant version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmquant",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmquant: apt-get install ppmquant 2>/dev/null || which ppmquant"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmquant",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmquant CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmquant",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmquant: apt-get install ppmquant 2>/dev/null || which ppmquant"
+      },
+      "args": []
+    }
+  ]
+}

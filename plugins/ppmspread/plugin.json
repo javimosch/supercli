@@ -1,0 +1,56 @@
+{
+  "name": "ppmspread",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmspread",
+  "source": "https://manpages.debian.org/ppmspread",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmspread"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmspread",
+    "binary": "ppmspread",
+    "check": "which ppmspread",
+    "install_steps": [
+      "apt-get install ppmspread 2>/dev/null || which ppmspread",
+      "Verify: ppmspread --version",
+      "supercli plugins install ./plugins/ppmspread --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmspread",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmspread version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmspread",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmspread: apt-get install ppmspread 2>/dev/null || which ppmspread"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmspread",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmspread CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmspread",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmspread: apt-get install ppmspread 2>/dev/null || which ppmspread"
+      },
+      "args": []
+    }
+  ]
+}
