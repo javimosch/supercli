@@ -1,0 +1,56 @@
+{
+  "name": "pwdecrypt",
+  "version": "0.1.0",
+  "description": "CLI tool: pwdecrypt",
+  "source": "https://manpages.debian.org/pwdecrypt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pwdecrypt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pwdecrypt",
+    "binary": "pwdecrypt",
+    "check": "which pwdecrypt",
+    "install_steps": [
+      "apt-get install pwdecrypt 2>/dev/null || which pwdecrypt",
+      "Verify: pwdecrypt --version",
+      "supercli plugins install ./plugins/pwdecrypt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pwdecrypt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pwdecrypt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwdecrypt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pwdecrypt: apt-get install pwdecrypt 2>/dev/null || which pwdecrypt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pwdecrypt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pwdecrypt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwdecrypt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pwdecrypt: apt-get install pwdecrypt 2>/dev/null || which pwdecrypt"
+      },
+      "args": []
+    }
+  ]
+}

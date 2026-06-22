@@ -1,0 +1,56 @@
+{
+  "name": "protonvpn",
+  "version": "0.1.0",
+  "description": "CLI tool: protonvpn",
+  "source": "https://manpages.debian.org/protonvpn",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "protonvpn"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "protonvpn",
+    "binary": "protonvpn",
+    "check": "which protonvpn",
+    "install_steps": [
+      "apt-get install protonvpn 2>/dev/null || which protonvpn",
+      "Verify: protonvpn --version",
+      "supercli plugins install ./plugins/protonvpn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "protonvpn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print protonvpn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protonvpn",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install protonvpn: apt-get install protonvpn 2>/dev/null || which protonvpn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "protonvpn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to protonvpn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "protonvpn",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install protonvpn: apt-get install protonvpn 2>/dev/null || which protonvpn"
+      },
+      "args": []
+    }
+  ]
+}

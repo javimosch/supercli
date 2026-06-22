@@ -1,0 +1,56 @@
+{
+  "name": "psresize",
+  "version": "0.1.0",
+  "description": "CLI tool: psresize",
+  "source": "https://manpages.debian.org/psresize",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psresize"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psresize",
+    "binary": "psresize",
+    "check": "which psresize",
+    "install_steps": [
+      "apt-get install psresize 2>/dev/null || which psresize",
+      "Verify: psresize --version",
+      "supercli plugins install ./plugins/psresize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psresize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psresize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psresize",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psresize: apt-get install psresize 2>/dev/null || which psresize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psresize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psresize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psresize",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psresize: apt-get install psresize 2>/dev/null || which psresize"
+      },
+      "args": []
+    }
+  ]
+}

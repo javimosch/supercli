@@ -1,0 +1,56 @@
+{
+  "name": "ps2ps",
+  "version": "0.1.0",
+  "description": "CLI tool: ps2ps",
+  "source": "https://manpages.debian.org/ps2ps",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ps2ps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ps2ps",
+    "binary": "ps2ps",
+    "check": "which ps2ps",
+    "install_steps": [
+      "apt-get install ps2ps 2>/dev/null || which ps2ps",
+      "Verify: ps2ps --version",
+      "supercli plugins install ./plugins/ps2ps --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ps2ps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ps2ps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2ps",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ps2ps: apt-get install ps2ps 2>/dev/null || which ps2ps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ps2ps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ps2ps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2ps",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ps2ps: apt-get install ps2ps 2>/dev/null || which ps2ps"
+      },
+      "args": []
+    }
+  ]
+}

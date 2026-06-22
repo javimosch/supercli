@@ -1,0 +1,56 @@
+{
+  "name": "psnup",
+  "version": "0.1.0",
+  "description": "CLI tool: psnup",
+  "source": "https://manpages.debian.org/psnup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psnup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psnup",
+    "binary": "psnup",
+    "check": "which psnup",
+    "install_steps": [
+      "apt-get install psnup 2>/dev/null || which psnup",
+      "Verify: psnup --version",
+      "supercli plugins install ./plugins/psnup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psnup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psnup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psnup",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psnup: apt-get install psnup 2>/dev/null || which psnup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psnup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psnup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psnup",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psnup: apt-get install psnup 2>/dev/null || which psnup"
+      },
+      "args": []
+    }
+  ]
+}

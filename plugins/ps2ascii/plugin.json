@@ -1,0 +1,56 @@
+{
+  "name": "ps2ascii",
+  "version": "0.1.0",
+  "description": "CLI tool: ps2ascii",
+  "source": "https://manpages.debian.org/ps2ascii",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ps2ascii"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ps2ascii",
+    "binary": "ps2ascii",
+    "check": "which ps2ascii",
+    "install_steps": [
+      "apt-get install ps2ascii 2>/dev/null || which ps2ascii",
+      "Verify: ps2ascii --version",
+      "supercli plugins install ./plugins/ps2ascii --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ps2ascii",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ps2ascii version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2ascii",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ps2ascii: apt-get install ps2ascii 2>/dev/null || which ps2ascii"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ps2ascii",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ps2ascii CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2ascii",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ps2ascii: apt-get install ps2ascii 2>/dev/null || which ps2ascii"
+      },
+      "args": []
+    }
+  ]
+}

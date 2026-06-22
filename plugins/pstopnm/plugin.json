@@ -1,0 +1,56 @@
+{
+  "name": "pstopnm",
+  "version": "0.1.0",
+  "description": "CLI tool: pstopnm",
+  "source": "https://manpages.debian.org/pstopnm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pstopnm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pstopnm",
+    "binary": "pstopnm",
+    "check": "which pstopnm",
+    "install_steps": [
+      "apt-get install pstopnm 2>/dev/null || which pstopnm",
+      "Verify: pstopnm --version",
+      "supercli plugins install ./plugins/pstopnm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pstopnm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pstopnm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pstopnm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pstopnm: apt-get install pstopnm 2>/dev/null || which pstopnm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pstopnm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pstopnm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pstopnm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pstopnm: apt-get install pstopnm 2>/dev/null || which pstopnm"
+      },
+      "args": []
+    }
+  ]
+}

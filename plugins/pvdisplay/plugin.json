@@ -1,0 +1,56 @@
+{
+  "name": "pvdisplay",
+  "version": "0.1.0",
+  "description": "CLI tool: pvdisplay",
+  "source": "https://manpages.debian.org/pvdisplay",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvdisplay"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvdisplay",
+    "binary": "pvdisplay",
+    "check": "which pvdisplay",
+    "install_steps": [
+      "apt-get install pvdisplay 2>/dev/null || which pvdisplay",
+      "Verify: pvdisplay --version",
+      "supercli plugins install ./plugins/pvdisplay --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvdisplay",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvdisplay version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvdisplay",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvdisplay: apt-get install pvdisplay 2>/dev/null || which pvdisplay"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvdisplay",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvdisplay CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvdisplay",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvdisplay: apt-get install pvdisplay 2>/dev/null || which pvdisplay"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pstops",
+  "version": "0.1.0",
+  "description": "CLI tool: pstops",
+  "source": "https://manpages.debian.org/pstops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pstops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pstops",
+    "binary": "pstops",
+    "check": "which pstops",
+    "install_steps": [
+      "apt-get install pstops 2>/dev/null || which pstops",
+      "Verify: pstops --version",
+      "supercli plugins install ./plugins/pstops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pstops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pstops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pstops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pstops: apt-get install pstops 2>/dev/null || which pstops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pstops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pstops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pstops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pstops: apt-get install pstops 2>/dev/null || which pstops"
+      },
+      "args": []
+    }
+  ]
+}

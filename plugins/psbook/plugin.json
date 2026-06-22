@@ -1,0 +1,56 @@
+{
+  "name": "psbook",
+  "version": "0.1.0",
+  "description": "CLI tool: psbook",
+  "source": "https://manpages.debian.org/psbook",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psbook"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psbook",
+    "binary": "psbook",
+    "check": "which psbook",
+    "install_steps": [
+      "apt-get install psbook 2>/dev/null || which psbook",
+      "Verify: psbook --version",
+      "supercli plugins install ./plugins/psbook --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psbook",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psbook version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psbook",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psbook: apt-get install psbook 2>/dev/null || which psbook"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psbook",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psbook CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psbook",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psbook: apt-get install psbook 2>/dev/null || which psbook"
+      },
+      "args": []
+    }
+  ]
+}

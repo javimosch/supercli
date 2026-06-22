@@ -1,0 +1,56 @@
+{
+  "name": "pvresize",
+  "version": "0.1.0",
+  "description": "CLI tool: pvresize",
+  "source": "https://manpages.debian.org/pvresize",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvresize"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvresize",
+    "binary": "pvresize",
+    "check": "which pvresize",
+    "install_steps": [
+      "apt-get install pvresize 2>/dev/null || which pvresize",
+      "Verify: pvresize --version",
+      "supercli plugins install ./plugins/pvresize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvresize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvresize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvresize",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvresize: apt-get install pvresize 2>/dev/null || which pvresize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvresize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvresize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvresize",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvresize: apt-get install pvresize 2>/dev/null || which pvresize"
+      },
+      "args": []
+    }
+  ]
+}

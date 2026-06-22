@@ -1,0 +1,56 @@
+{
+  "name": "pw-cli",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-cli",
+  "source": "https://manpages.debian.org/pw-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-cli",
+    "binary": "pw-cli",
+    "check": "which pw-cli",
+    "install_steps": [
+      "apt-get install pw-cli 2>/dev/null || which pw-cli",
+      "Verify: pw-cli --version",
+      "supercli plugins install ./plugins/pw-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-cli: apt-get install pw-cli 2>/dev/null || which pw-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-cli: apt-get install pw-cli 2>/dev/null || which pw-cli"
+      },
+      "args": []
+    }
+  ]
+}

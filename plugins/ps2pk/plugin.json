@@ -1,0 +1,56 @@
+{
+  "name": "ps2pk",
+  "version": "0.1.0",
+  "description": "CLI tool: ps2pk",
+  "source": "https://manpages.debian.org/ps2pk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ps2pk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ps2pk",
+    "binary": "ps2pk",
+    "check": "which ps2pk",
+    "install_steps": [
+      "apt-get install ps2pk 2>/dev/null || which ps2pk",
+      "Verify: ps2pk --version",
+      "supercli plugins install ./plugins/ps2pk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ps2pk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ps2pk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2pk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ps2pk: apt-get install ps2pk 2>/dev/null || which ps2pk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ps2pk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ps2pk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2pk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ps2pk: apt-get install ps2pk 2>/dev/null || which ps2pk"
+      },
+      "args": []
+    }
+  ]
+}

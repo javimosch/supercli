@@ -1,0 +1,56 @@
+{
+  "name": "psselect",
+  "version": "0.1.0",
+  "description": "CLI tool: psselect",
+  "source": "https://manpages.debian.org/psselect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psselect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psselect",
+    "binary": "psselect",
+    "check": "which psselect",
+    "install_steps": [
+      "apt-get install psselect 2>/dev/null || which psselect",
+      "Verify: psselect --version",
+      "supercli plugins install ./plugins/psselect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psselect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psselect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psselect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psselect: apt-get install psselect 2>/dev/null || which psselect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psselect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psselect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psselect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psselect: apt-get install psselect 2>/dev/null || which psselect"
+      },
+      "args": []
+    }
+  ]
+}

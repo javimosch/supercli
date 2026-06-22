@@ -1,0 +1,56 @@
+{
+  "name": "prove",
+  "version": "0.1.0",
+  "description": "CLI tool: prove",
+  "source": "https://manpages.debian.org/prove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prove",
+    "binary": "prove",
+    "check": "which prove",
+    "install_steps": [
+      "apt-get install prove 2>/dev/null || which prove",
+      "Verify: prove --version",
+      "supercli plugins install ./plugins/prove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prove: apt-get install prove 2>/dev/null || which prove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prove: apt-get install prove 2>/dev/null || which prove"
+      },
+      "args": []
+    }
+  ]
+}

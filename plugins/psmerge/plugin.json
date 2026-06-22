@@ -1,0 +1,56 @@
+{
+  "name": "psmerge",
+  "version": "0.1.0",
+  "description": "CLI tool: psmerge",
+  "source": "https://manpages.debian.org/psmerge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psmerge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psmerge",
+    "binary": "psmerge",
+    "check": "which psmerge",
+    "install_steps": [
+      "apt-get install psmerge 2>/dev/null || which psmerge",
+      "Verify: psmerge --version",
+      "supercli plugins install ./plugins/psmerge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psmerge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psmerge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psmerge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psmerge: apt-get install psmerge 2>/dev/null || which psmerge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psmerge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psmerge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psmerge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psmerge: apt-get install psmerge 2>/dev/null || which psmerge"
+      },
+      "args": []
+    }
+  ]
+}

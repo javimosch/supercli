@@ -1,0 +1,56 @@
+{
+  "name": "pw-cat",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-cat",
+  "source": "https://manpages.debian.org/pw-cat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-cat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-cat",
+    "binary": "pw-cat",
+    "check": "which pw-cat",
+    "install_steps": [
+      "apt-get install pw-cat 2>/dev/null || which pw-cat",
+      "Verify: pw-cat --version",
+      "supercli plugins install ./plugins/pw-cat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-cat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-cat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-cat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-cat: apt-get install pw-cat 2>/dev/null || which pw-cat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-cat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-cat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-cat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-cat: apt-get install pw-cat 2>/dev/null || which pw-cat"
+      },
+      "args": []
+    }
+  ]
+}

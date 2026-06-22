@@ -1,0 +1,56 @@
+{
+  "name": "pulseaudio",
+  "version": "0.1.0",
+  "description": "CLI tool: pulseaudio",
+  "source": "https://manpages.debian.org/pulseaudio",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pulseaudio"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pulseaudio",
+    "binary": "pulseaudio",
+    "check": "which pulseaudio",
+    "install_steps": [
+      "apt-get install pulseaudio 2>/dev/null || which pulseaudio",
+      "Verify: pulseaudio --version",
+      "supercli plugins install ./plugins/pulseaudio --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pulseaudio",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pulseaudio version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pulseaudio",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pulseaudio: apt-get install pulseaudio 2>/dev/null || which pulseaudio"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pulseaudio",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pulseaudio CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pulseaudio",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pulseaudio: apt-get install pulseaudio 2>/dev/null || which pulseaudio"
+      },
+      "args": []
+    }
+  ]
+}

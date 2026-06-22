@@ -1,0 +1,56 @@
+{
+  "name": "pvscan",
+  "version": "0.1.0",
+  "description": "CLI tool: pvscan",
+  "source": "https://manpages.debian.org/pvscan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvscan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvscan",
+    "binary": "pvscan",
+    "check": "which pvscan",
+    "install_steps": [
+      "apt-get install pvscan 2>/dev/null || which pvscan",
+      "Verify: pvscan --version",
+      "supercli plugins install ./plugins/pvscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvscan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvscan: apt-get install pvscan 2>/dev/null || which pvscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvscan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvscan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvscan: apt-get install pvscan 2>/dev/null || which pvscan"
+      },
+      "args": []
+    }
+  ]
+}

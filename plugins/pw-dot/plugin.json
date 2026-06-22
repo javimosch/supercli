@@ -1,0 +1,56 @@
+{
+  "name": "pw-dot",
+  "version": "0.1.0",
+  "description": "CLI tool: pw-dot",
+  "source": "https://manpages.debian.org/pw-dot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pw-dot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pw-dot",
+    "binary": "pw-dot",
+    "check": "which pw-dot",
+    "install_steps": [
+      "apt-get install pw-dot 2>/dev/null || which pw-dot",
+      "Verify: pw-dot --version",
+      "supercli plugins install ./plugins/pw-dot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pw-dot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pw-dot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-dot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pw-dot: apt-get install pw-dot 2>/dev/null || which pw-dot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pw-dot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pw-dot CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pw-dot",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pw-dot: apt-get install pw-dot 2>/dev/null || which pw-dot"
+      },
+      "args": []
+    }
+  ]
+}

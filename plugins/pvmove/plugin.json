@@ -1,0 +1,56 @@
+{
+  "name": "pvmove",
+  "version": "0.1.0",
+  "description": "CLI tool: pvmove",
+  "source": "https://manpages.debian.org/pvmove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvmove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvmove",
+    "binary": "pvmove",
+    "check": "which pvmove",
+    "install_steps": [
+      "apt-get install pvmove 2>/dev/null || which pvmove",
+      "Verify: pvmove --version",
+      "supercli plugins install ./plugins/pvmove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvmove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvmove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvmove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvmove: apt-get install pvmove 2>/dev/null || which pvmove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvmove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvmove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvmove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvmove: apt-get install pvmove 2>/dev/null || which pvmove"
+      },
+      "args": []
+    }
+  ]
+}

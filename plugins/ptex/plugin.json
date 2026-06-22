@@ -1,0 +1,56 @@
+{
+  "name": "ptex",
+  "version": "0.1.0",
+  "description": "CLI tool: ptex",
+  "source": "https://manpages.debian.org/ptex",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ptex"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ptex",
+    "binary": "ptex",
+    "check": "which ptex",
+    "install_steps": [
+      "apt-get install ptex 2>/dev/null || which ptex",
+      "Verify: ptex --version",
+      "supercli plugins install ./plugins/ptex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ptex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ptex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ptex",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ptex: apt-get install ptex 2>/dev/null || which ptex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ptex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ptex CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ptex",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ptex: apt-get install ptex 2>/dev/null || which ptex"
+      },
+      "args": []
+    }
+  ]
+}

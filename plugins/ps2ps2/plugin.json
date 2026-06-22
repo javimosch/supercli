@@ -1,0 +1,56 @@
+{
+  "name": "ps2ps2",
+  "version": "0.1.0",
+  "description": "CLI tool: ps2ps2",
+  "source": "https://manpages.debian.org/ps2ps2",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ps2ps2"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ps2ps2",
+    "binary": "ps2ps2",
+    "check": "which ps2ps2",
+    "install_steps": [
+      "apt-get install ps2ps2 2>/dev/null || which ps2ps2",
+      "Verify: ps2ps2 --version",
+      "supercli plugins install ./plugins/ps2ps2 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ps2ps2",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ps2ps2 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2ps2",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ps2ps2: apt-get install ps2ps2 2>/dev/null || which ps2ps2"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ps2ps2",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ps2ps2 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ps2ps2",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ps2ps2: apt-get install ps2ps2 2>/dev/null || which ps2ps2"
+      },
+      "args": []
+    }
+  ]
+}

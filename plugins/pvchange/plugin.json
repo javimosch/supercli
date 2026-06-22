@@ -1,0 +1,56 @@
+{
+  "name": "pvchange",
+  "version": "0.1.0",
+  "description": "CLI tool: pvchange",
+  "source": "https://manpages.debian.org/pvchange",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvchange"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvchange",
+    "binary": "pvchange",
+    "check": "which pvchange",
+    "install_steps": [
+      "apt-get install pvchange 2>/dev/null || which pvchange",
+      "Verify: pvchange --version",
+      "supercli plugins install ./plugins/pvchange --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvchange",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvchange version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvchange",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvchange: apt-get install pvchange 2>/dev/null || which pvchange"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvchange",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvchange CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvchange",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvchange: apt-get install pvchange 2>/dev/null || which pvchange"
+      },
+      "args": []
+    }
+  ]
+}

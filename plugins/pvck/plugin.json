@@ -1,0 +1,56 @@
+{
+  "name": "pvck",
+  "version": "0.1.0",
+  "description": "CLI tool: pvck",
+  "source": "https://manpages.debian.org/pvck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvck",
+    "binary": "pvck",
+    "check": "which pvck",
+    "install_steps": [
+      "apt-get install pvck 2>/dev/null || which pvck",
+      "Verify: pvck --version",
+      "supercli plugins install ./plugins/pvck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvck: apt-get install pvck 2>/dev/null || which pvck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvck: apt-get install pvck 2>/dev/null || which pvck"
+      },
+      "args": []
+    }
+  ]
+}

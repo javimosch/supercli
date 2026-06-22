@@ -1,0 +1,56 @@
+{
+  "name": "pslog",
+  "version": "0.1.0",
+  "description": "CLI tool: pslog",
+  "source": "https://manpages.debian.org/pslog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pslog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pslog",
+    "binary": "pslog",
+    "check": "which pslog",
+    "install_steps": [
+      "apt-get install pslog 2>/dev/null || which pslog",
+      "Verify: pslog --version",
+      "supercli plugins install ./plugins/pslog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pslog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pslog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pslog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pslog: apt-get install pslog 2>/dev/null || which pslog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pslog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pslog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pslog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pslog: apt-get install pslog 2>/dev/null || which pslog"
+      },
+      "args": []
+    }
+  ]
+}

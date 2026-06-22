@@ -1,0 +1,56 @@
+{
+  "name": "psicc",
+  "version": "0.1.0",
+  "description": "CLI tool: psicc",
+  "source": "https://manpages.debian.org/psicc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psicc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psicc",
+    "binary": "psicc",
+    "check": "which psicc",
+    "install_steps": [
+      "apt-get install psicc 2>/dev/null || which psicc",
+      "Verify: psicc --version",
+      "supercli plugins install ./plugins/psicc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psicc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psicc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psicc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psicc: apt-get install psicc 2>/dev/null || which psicc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psicc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psicc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psicc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psicc: apt-get install psicc 2>/dev/null || which psicc"
+      },
+      "args": []
+    }
+  ]
+}

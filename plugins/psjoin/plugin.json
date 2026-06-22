@@ -1,0 +1,56 @@
+{
+  "name": "psjoin",
+  "version": "0.1.0",
+  "description": "CLI tool: psjoin",
+  "source": "https://manpages.debian.org/psjoin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "psjoin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "psjoin",
+    "binary": "psjoin",
+    "check": "which psjoin",
+    "install_steps": [
+      "apt-get install psjoin 2>/dev/null || which psjoin",
+      "Verify: psjoin --version",
+      "supercli plugins install ./plugins/psjoin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "psjoin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print psjoin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psjoin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install psjoin: apt-get install psjoin 2>/dev/null || which psjoin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "psjoin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to psjoin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psjoin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install psjoin: apt-get install psjoin 2>/dev/null || which psjoin"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "prune",
+  "version": "0.1.0",
+  "description": "CLI tool: prune",
+  "source": "https://manpages.debian.org/prune",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prune"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prune",
+    "binary": "prune",
+    "check": "which prune",
+    "install_steps": [
+      "apt-get install prune 2>/dev/null || which prune",
+      "Verify: prune --version",
+      "supercli plugins install ./plugins/prune --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prune",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prune version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prune",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prune: apt-get install prune 2>/dev/null || which prune"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prune",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prune CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prune",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prune: apt-get install prune 2>/dev/null || which prune"
+      },
+      "args": []
+    }
+  ]
+}

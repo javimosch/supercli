@@ -1,0 +1,56 @@
+{
+  "name": "pvremove",
+  "version": "0.1.0",
+  "description": "CLI tool: pvremove",
+  "source": "https://manpages.debian.org/pvremove",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pvremove"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pvremove",
+    "binary": "pvremove",
+    "check": "which pvremove",
+    "install_steps": [
+      "apt-get install pvremove 2>/dev/null || which pvremove",
+      "Verify: pvremove --version",
+      "supercli plugins install ./plugins/pvremove --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pvremove",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pvremove version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvremove",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pvremove: apt-get install pvremove 2>/dev/null || which pvremove"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pvremove",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pvremove CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pvremove",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pvremove: apt-get install pvremove 2>/dev/null || which pvremove"
+      },
+      "args": []
+    }
+  ]
+}

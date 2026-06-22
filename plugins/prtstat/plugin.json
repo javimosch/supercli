@@ -1,0 +1,56 @@
+{
+  "name": "prtstat",
+  "version": "0.1.0",
+  "description": "CLI tool: prtstat",
+  "source": "https://manpages.debian.org/prtstat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prtstat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prtstat",
+    "binary": "prtstat",
+    "check": "which prtstat",
+    "install_steps": [
+      "apt-get install prtstat 2>/dev/null || which prtstat",
+      "Verify: prtstat --version",
+      "supercli plugins install ./plugins/prtstat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prtstat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prtstat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prtstat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prtstat: apt-get install prtstat 2>/dev/null || which prtstat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prtstat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prtstat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prtstat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prtstat: apt-get install prtstat 2>/dev/null || which prtstat"
+      },
+      "args": []
+    }
+  ]
+}
