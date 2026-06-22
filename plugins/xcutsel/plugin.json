@@ -1,0 +1,56 @@
+{
+  "name": "xcutsel",
+  "version": "0.1.0",
+  "description": "CLI tool: xcutsel",
+  "source": "https://manpages.debian.org/xcutsel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xcutsel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xcutsel",
+    "binary": "xcutsel",
+    "check": "which xcutsel",
+    "install_steps": [
+      "apt-get install xcutsel 2>/dev/null || which xcutsel",
+      "Verify: xcutsel --version",
+      "supercli plugins install ./plugins/xcutsel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xcutsel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xcutsel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xcutsel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xcutsel: apt-get install xcutsel 2>/dev/null || which xcutsel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xcutsel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xcutsel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xcutsel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xcutsel: apt-get install xcutsel 2>/dev/null || which xcutsel"
+      },
+      "args": []
+    }
+  ]
+}

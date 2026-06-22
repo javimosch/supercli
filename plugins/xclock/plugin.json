@@ -1,0 +1,56 @@
+{
+  "name": "xclock",
+  "version": "0.1.0",
+  "description": "CLI tool: xclock",
+  "source": "https://manpages.debian.org/xclock",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xclock"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xclock",
+    "binary": "xclock",
+    "check": "which xclock",
+    "install_steps": [
+      "apt-get install xclock 2>/dev/null || which xclock",
+      "Verify: xclock --version",
+      "supercli plugins install ./plugins/xclock --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xclock",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xclock version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xclock",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xclock: apt-get install xclock 2>/dev/null || which xclock"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xclock",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xclock CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xclock",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xclock: apt-get install xclock 2>/dev/null || which xclock"
+      },
+      "args": []
+    }
+  ]
+}

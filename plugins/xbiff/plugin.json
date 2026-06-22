@@ -1,0 +1,56 @@
+{
+  "name": "xbiff",
+  "version": "0.1.0",
+  "description": "CLI tool: xbiff",
+  "source": "https://manpages.debian.org/xbiff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xbiff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xbiff",
+    "binary": "xbiff",
+    "check": "which xbiff",
+    "install_steps": [
+      "apt-get install xbiff 2>/dev/null || which xbiff",
+      "Verify: xbiff --version",
+      "supercli plugins install ./plugins/xbiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xbiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xbiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xbiff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xbiff: apt-get install xbiff 2>/dev/null || which xbiff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xbiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xbiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xbiff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xbiff: apt-get install xbiff 2>/dev/null || which xbiff"
+      },
+      "args": []
+    }
+  ]
+}

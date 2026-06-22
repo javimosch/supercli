@@ -1,0 +1,56 @@
+{
+  "name": "xclipboard",
+  "version": "0.1.0",
+  "description": "CLI tool: xclipboard",
+  "source": "https://manpages.debian.org/xclipboard",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xclipboard"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xclipboard",
+    "binary": "xclipboard",
+    "check": "which xclipboard",
+    "install_steps": [
+      "apt-get install xclipboard 2>/dev/null || which xclipboard",
+      "Verify: xclipboard --version",
+      "supercli plugins install ./plugins/xclipboard --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xclipboard",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xclipboard version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xclipboard",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xclipboard: apt-get install xclipboard 2>/dev/null || which xclipboard"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xclipboard",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xclipboard CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xclipboard",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xclipboard: apt-get install xclipboard 2>/dev/null || which xclipboard"
+      },
+      "args": []
+    }
+  ]
+}

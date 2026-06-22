@@ -1,0 +1,56 @@
+{
+  "name": "xcmsdb",
+  "version": "0.1.0",
+  "description": "CLI tool: xcmsdb",
+  "source": "https://manpages.debian.org/xcmsdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xcmsdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xcmsdb",
+    "binary": "xcmsdb",
+    "check": "which xcmsdb",
+    "install_steps": [
+      "apt-get install xcmsdb 2>/dev/null || which xcmsdb",
+      "Verify: xcmsdb --version",
+      "supercli plugins install ./plugins/xcmsdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xcmsdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xcmsdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xcmsdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xcmsdb: apt-get install xcmsdb 2>/dev/null || which xcmsdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xcmsdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xcmsdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xcmsdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xcmsdb: apt-get install xcmsdb 2>/dev/null || which xcmsdb"
+      },
+      "args": []
+    }
+  ]
+}

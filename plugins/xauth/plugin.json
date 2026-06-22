@@ -1,0 +1,56 @@
+{
+  "name": "xauth",
+  "version": "0.1.0",
+  "description": "CLI tool: xauth",
+  "source": "https://manpages.debian.org/xauth",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xauth"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xauth",
+    "binary": "xauth",
+    "check": "which xauth",
+    "install_steps": [
+      "apt-get install xauth 2>/dev/null || which xauth",
+      "Verify: xauth --version",
+      "supercli plugins install ./plugins/xauth --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xauth",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xauth version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xauth",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xauth: apt-get install xauth 2>/dev/null || which xauth"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xauth",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xauth CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xauth",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xauth: apt-get install xauth 2>/dev/null || which xauth"
+      },
+      "args": []
+    }
+  ]
+}

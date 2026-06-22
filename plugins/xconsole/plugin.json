@@ -1,0 +1,56 @@
+{
+  "name": "xconsole",
+  "version": "0.1.0",
+  "description": "CLI tool: xconsole",
+  "source": "https://manpages.debian.org/xconsole",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xconsole"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xconsole",
+    "binary": "xconsole",
+    "check": "which xconsole",
+    "install_steps": [
+      "apt-get install xconsole 2>/dev/null || which xconsole",
+      "Verify: xconsole --version",
+      "supercli plugins install ./plugins/xconsole --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xconsole",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xconsole version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xconsole",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xconsole: apt-get install xconsole 2>/dev/null || which xconsole"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xconsole",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xconsole CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xconsole",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xconsole: apt-get install xconsole 2>/dev/null || which xconsole"
+      },
+      "args": []
+    }
+  ]
+}
