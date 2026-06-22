@@ -1,0 +1,56 @@
+{
+  "name": "filefrag",
+  "version": "0.1.0",
+  "description": "CLI tool: filefrag",
+  "source": "https://manpages.debian.org/filefrag",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "filefrag"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "filefrag",
+    "binary": "filefrag",
+    "check": "which filefrag",
+    "install_steps": [
+      "apt-get install filefrag 2>/dev/null || which filefrag",
+      "Verify: filefrag --version",
+      "supercli plugins install ./plugins/filefrag --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "filefrag",
+      "resource": "self",
+      "action": "version",
+      "description": "Print filefrag version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filefrag",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install filefrag: apt-get install filefrag 2>/dev/null || which filefrag"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filefrag",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to filefrag CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filefrag",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filefrag: apt-get install filefrag 2>/dev/null || which filefrag"
+      },
+      "args": []
+    }
+  ]
+}

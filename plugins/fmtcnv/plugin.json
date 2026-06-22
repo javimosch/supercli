@@ -1,0 +1,68 @@
+{
+  "name": "fmtcnv",
+  "version": "0.1.0",
+  "description": "Cross-convert between bson, csv, hjson, hocon, json, json5, jsonl, plist, ron, toml, toon, xml, and yaml formats",
+  "source": "https://github.com/pepa65/fmtcnv",
+  "checks": [
+    { "type": "binary", "name": "fmtcnv" }
+  ],
+  "install_guidance": {
+    "plugin": "fmtcnv",
+    "binary": "fmtcnv",
+    "check": "which fmtcnv",
+    "install_steps": [
+      "cargo install fmtcnv",
+      "Verify: fmtcnv --version",
+      "supercli plugins install ./plugins/fmtcnv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fmtcnv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fmtcnv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fmtcnv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install fmtcnv: cargo install fmtcnv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fmtcnv",
+      "resource": "format",
+      "action": "convert",
+      "description": "Convert data between supported formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fmtcnv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fmtcnv: cargo install fmtcnv"
+      },
+      "args": [
+        { "name": "from", "type": "string", "required": true, "description": "Source format (bson, csv, hjson, hocon, json, json5, jsonl, plist, ron, toml, toon, xml, yaml)" },
+        { "name": "to", "type": "string", "required": true, "description": "Target format (bson, csv, hjson, hocon, json, json5, jsonl, plist, ron, toml, toon, xml, yaml)" },
+        { "name": "compact", "type": "boolean", "required": false, "description": "Compact output as much as possible" }
+      ]
+    },
+    {
+      "namespace": "fmtcnv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fmtcnv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fmtcnv",
+        "passthrough": true,
+        "missingDependencyHelp": "Install fmtcnv: cargo install fmtcnv"
+      },
+      "args": []
+    }
+  ]
+}

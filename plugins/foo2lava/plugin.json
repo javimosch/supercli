@@ -1,0 +1,56 @@
+{
+  "name": "foo2lava",
+  "version": "0.1.0",
+  "description": "CLI tool: foo2lava",
+  "source": "https://manpages.debian.org/foo2lava",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "foo2lava"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "foo2lava",
+    "binary": "foo2lava",
+    "check": "which foo2lava",
+    "install_steps": [
+      "apt-get install foo2lava 2>/dev/null || which foo2lava",
+      "Verify: foo2lava --version",
+      "supercli plugins install ./plugins/foo2lava --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foo2lava",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foo2lava version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2lava",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install foo2lava: apt-get install foo2lava 2>/dev/null || which foo2lava"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foo2lava",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foo2lava CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2lava",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foo2lava: apt-get install foo2lava 2>/dev/null || which foo2lava"
+      },
+      "args": []
+    }
+  ]
+}

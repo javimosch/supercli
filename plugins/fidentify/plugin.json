@@ -1,0 +1,56 @@
+{
+  "name": "fidentify",
+  "version": "0.1.0",
+  "description": "CLI tool: fidentify",
+  "source": "https://manpages.debian.org/fidentify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fidentify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fidentify",
+    "binary": "fidentify",
+    "check": "which fidentify",
+    "install_steps": [
+      "apt-get install fidentify 2>/dev/null || which fidentify",
+      "Verify: fidentify --version",
+      "supercli plugins install ./plugins/fidentify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fidentify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fidentify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fidentify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fidentify: apt-get install fidentify 2>/dev/null || which fidentify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fidentify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fidentify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fidentify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fidentify: apt-get install fidentify 2>/dev/null || which fidentify"
+      },
+      "args": []
+    }
+  ]
+}

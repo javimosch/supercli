@@ -1,0 +1,56 @@
+{
+  "name": "fincore",
+  "version": "0.1.0",
+  "description": "CLI tool: fincore",
+  "source": "https://manpages.debian.org/fincore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fincore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fincore",
+    "binary": "fincore",
+    "check": "which fincore",
+    "install_steps": [
+      "apt-get install fincore 2>/dev/null || which fincore",
+      "Verify: fincore --version",
+      "supercli plugins install ./plugins/fincore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fincore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fincore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fincore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fincore: apt-get install fincore 2>/dev/null || which fincore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fincore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fincore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fincore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fincore: apt-get install fincore 2>/dev/null || which fincore"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "foo2hp",
+  "version": "0.1.0",
+  "description": "CLI tool: foo2hp",
+  "source": "https://manpages.debian.org/foo2hp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "foo2hp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "foo2hp",
+    "binary": "foo2hp",
+    "check": "which foo2hp",
+    "install_steps": [
+      "apt-get install foo2hp 2>/dev/null || which foo2hp",
+      "Verify: foo2hp --version",
+      "supercli plugins install ./plugins/foo2hp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foo2hp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foo2hp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2hp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install foo2hp: apt-get install foo2hp 2>/dev/null || which foo2hp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foo2hp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foo2hp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2hp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foo2hp: apt-get install foo2hp 2>/dev/null || which foo2hp"
+      },
+      "args": []
+    }
+  ]
+}

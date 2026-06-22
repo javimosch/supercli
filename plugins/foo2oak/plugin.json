@@ -1,0 +1,56 @@
+{
+  "name": "foo2oak",
+  "version": "0.1.0",
+  "description": "CLI tool: foo2oak",
+  "source": "https://manpages.debian.org/foo2oak",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "foo2oak"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "foo2oak",
+    "binary": "foo2oak",
+    "check": "which foo2oak",
+    "install_steps": [
+      "apt-get install foo2oak 2>/dev/null || which foo2oak",
+      "Verify: foo2oak --version",
+      "supercli plugins install ./plugins/foo2oak --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foo2oak",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foo2oak version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2oak",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install foo2oak: apt-get install foo2oak 2>/dev/null || which foo2oak"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foo2oak",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foo2oak CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2oak",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foo2oak: apt-get install foo2oak 2>/dev/null || which foo2oak"
+      },
+      "args": []
+    }
+  ]
+}

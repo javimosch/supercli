@@ -1,0 +1,56 @@
+{
+  "name": "foo2oak-wrapper",
+  "version": "0.1.0",
+  "description": "CLI tool: foo2oak-wrapper",
+  "source": "https://manpages.debian.org/foo2oak-wrapper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "foo2oak-wrapper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "foo2oak-wrapper",
+    "binary": "foo2oak-wrapper",
+    "check": "which foo2oak-wrapper",
+    "install_steps": [
+      "apt-get install foo2oak-wrapper 2>/dev/null || which foo2oak-wrapper",
+      "Verify: foo2oak-wrapper --version",
+      "supercli plugins install ./plugins/foo2oak-wrapper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foo2oak-wrapper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foo2oak-wrapper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2oak-wrapper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install foo2oak-wrapper: apt-get install foo2oak-wrapper 2>/dev/null || which foo2oak-wrapper"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foo2oak-wrapper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foo2oak-wrapper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2oak-wrapper",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foo2oak-wrapper: apt-get install foo2oak-wrapper 2>/dev/null || which foo2oak-wrapper"
+      },
+      "args": []
+    }
+  ]
+}

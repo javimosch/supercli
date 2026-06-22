@@ -1,0 +1,56 @@
+{
+  "name": "fixparts",
+  "version": "0.1.0",
+  "description": "CLI tool: fixparts",
+  "source": "https://manpages.debian.org/fixparts",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fixparts"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fixparts",
+    "binary": "fixparts",
+    "check": "which fixparts",
+    "install_steps": [
+      "apt-get install fixparts 2>/dev/null || which fixparts",
+      "Verify: fixparts --version",
+      "supercli plugins install ./plugins/fixparts --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fixparts",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fixparts version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fixparts",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fixparts: apt-get install fixparts 2>/dev/null || which fixparts"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fixparts",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fixparts CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fixparts",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fixparts: apt-get install fixparts 2>/dev/null || which fixparts"
+      },
+      "args": []
+    }
+  ]
+}

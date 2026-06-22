@@ -1,0 +1,56 @@
+{
+  "name": "fdp",
+  "version": "0.1.0",
+  "description": "CLI tool: fdp",
+  "source": "https://manpages.debian.org/fdp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fdp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fdp",
+    "binary": "fdp",
+    "check": "which fdp",
+    "install_steps": [
+      "apt-get install fdp 2>/dev/null || which fdp",
+      "Verify: fdp --version",
+      "supercli plugins install ./plugins/fdp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fdp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fdp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fdp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fdp: apt-get install fdp 2>/dev/null || which fdp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fdp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fdp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fdp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fdp: apt-get install fdp 2>/dev/null || which fdp"
+      },
+      "args": []
+    }
+  ]
+}

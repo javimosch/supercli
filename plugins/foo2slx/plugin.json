@@ -1,0 +1,56 @@
+{
+  "name": "foo2slx",
+  "version": "0.1.0",
+  "description": "CLI tool: foo2slx",
+  "source": "https://manpages.debian.org/foo2slx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "foo2slx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "foo2slx",
+    "binary": "foo2slx",
+    "check": "which foo2slx",
+    "install_steps": [
+      "apt-get install foo2slx 2>/dev/null || which foo2slx",
+      "Verify: foo2slx --version",
+      "supercli plugins install ./plugins/foo2slx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foo2slx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foo2slx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2slx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install foo2slx: apt-get install foo2slx 2>/dev/null || which foo2slx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foo2slx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foo2slx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2slx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foo2slx: apt-get install foo2slx 2>/dev/null || which foo2slx"
+      },
+      "args": []
+    }
+  ]
+}

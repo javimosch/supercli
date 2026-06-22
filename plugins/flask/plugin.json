@@ -1,0 +1,56 @@
+{
+  "name": "flask",
+  "version": "0.1.0",
+  "description": "CLI tool: flask",
+  "source": "https://manpages.debian.org/flask",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "flask"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "flask",
+    "binary": "flask",
+    "check": "which flask",
+    "install_steps": [
+      "apt-get install flask 2>/dev/null || which flask",
+      "Verify: flask --version",
+      "supercli plugins install ./plugins/flask --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "flask",
+      "resource": "self",
+      "action": "version",
+      "description": "Print flask version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flask",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install flask: apt-get install flask 2>/dev/null || which flask"
+      },
+      "args": []
+    },
+    {
+      "namespace": "flask",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to flask CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flask",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install flask: apt-get install flask 2>/dev/null || which flask"
+      },
+      "args": []
+    }
+  ]
+}

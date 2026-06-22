@@ -1,0 +1,56 @@
+{
+  "name": "focus",
+  "version": "0.1.0",
+  "description": "CLI tool: focus",
+  "source": "https://manpages.debian.org/focus",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "focus"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "focus",
+    "binary": "focus",
+    "check": "which focus",
+    "install_steps": [
+      "apt-get install focus 2>/dev/null || which focus",
+      "Verify: focus --version",
+      "supercli plugins install ./plugins/focus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "focus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print focus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "focus",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install focus: apt-get install focus 2>/dev/null || which focus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "focus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to focus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "focus",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install focus: apt-get install focus 2>/dev/null || which focus"
+      },
+      "args": []
+    }
+  ]
+}

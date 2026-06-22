@@ -1,0 +1,56 @@
+{
+  "name": "file2brl",
+  "version": "0.1.0",
+  "description": "CLI tool: file2brl",
+  "source": "https://manpages.debian.org/file2brl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "file2brl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "file2brl",
+    "binary": "file2brl",
+    "check": "which file2brl",
+    "install_steps": [
+      "apt-get install file2brl 2>/dev/null || which file2brl",
+      "Verify: file2brl --version",
+      "supercli plugins install ./plugins/file2brl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "file2brl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print file2brl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "file2brl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install file2brl: apt-get install file2brl 2>/dev/null || which file2brl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "file2brl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to file2brl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "file2brl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install file2brl: apt-get install file2brl 2>/dev/null || which file2brl"
+      },
+      "args": []
+    }
+  ]
+}

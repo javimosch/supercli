@@ -1,0 +1,56 @@
+{
+  "name": "filan",
+  "version": "0.1.0",
+  "description": "CLI tool: filan",
+  "source": "https://manpages.debian.org/filan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "filan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "filan",
+    "binary": "filan",
+    "check": "which filan",
+    "install_steps": [
+      "apt-get install filan 2>/dev/null || which filan",
+      "Verify: filan --version",
+      "supercli plugins install ./plugins/filan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "filan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print filan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install filan: apt-get install filan 2>/dev/null || which filan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to filan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filan: apt-get install filan 2>/dev/null || which filan"
+      },
+      "args": []
+    }
+  ]
+}

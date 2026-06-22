@@ -1,0 +1,56 @@
+{
+  "name": "foo2ddst",
+  "version": "0.1.0",
+  "description": "CLI tool: foo2ddst",
+  "source": "https://manpages.debian.org/foo2ddst",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "foo2ddst"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "foo2ddst",
+    "binary": "foo2ddst",
+    "check": "which foo2ddst",
+    "install_steps": [
+      "apt-get install foo2ddst 2>/dev/null || which foo2ddst",
+      "Verify: foo2ddst --version",
+      "supercli plugins install ./plugins/foo2ddst --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "foo2ddst",
+      "resource": "self",
+      "action": "version",
+      "description": "Print foo2ddst version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2ddst",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install foo2ddst: apt-get install foo2ddst 2>/dev/null || which foo2ddst"
+      },
+      "args": []
+    },
+    {
+      "namespace": "foo2ddst",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to foo2ddst CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "foo2ddst",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install foo2ddst: apt-get install foo2ddst 2>/dev/null || which foo2ddst"
+      },
+      "args": []
+    }
+  ]
+}
