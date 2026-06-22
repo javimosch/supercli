@@ -1,0 +1,56 @@
+{
+  "name": "fprintd-verify",
+  "version": "0.1.0",
+  "description": "CLI tool: fprintd-verify",
+  "source": "https://manpages.debian.org/fprintd-verify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fprintd-verify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fprintd-verify",
+    "binary": "fprintd-verify",
+    "check": "which fprintd-verify",
+    "install_steps": [
+      "apt-get install fprintd-verify 2>/dev/null || which fprintd-verify",
+      "Verify: fprintd-verify --version",
+      "supercli plugins install ./plugins/fprintd-verify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fprintd-verify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fprintd-verify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fprintd-verify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fprintd-verify: apt-get install fprintd-verify 2>/dev/null || which fprintd-verify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fprintd-verify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fprintd-verify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fprintd-verify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fprintd-verify: apt-get install fprintd-verify 2>/dev/null || which fprintd-verify"
+      },
+      "args": []
+    }
+  ]
+}

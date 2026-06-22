@@ -1,0 +1,56 @@
+{
+  "name": "fsck.minix",
+  "version": "0.1.0",
+  "description": "CLI tool: fsck.minix",
+  "source": "https://manpages.debian.org/fsck.minix",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fsck.minix"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fsck.minix",
+    "binary": "fsck.minix",
+    "check": "which fsck.minix",
+    "install_steps": [
+      "apt-get install fsck.minix 2>/dev/null || which fsck.minix",
+      "Verify: fsck.minix --version",
+      "supercli plugins install ./plugins/fsck.minix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fsck.minix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fsck.minix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fsck.minix",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fsck.minix: apt-get install fsck.minix 2>/dev/null || which fsck.minix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fsck.minix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fsck.minix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fsck.minix",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fsck.minix: apt-get install fsck.minix 2>/dev/null || which fsck.minix"
+      },
+      "args": []
+    }
+  ]
+}

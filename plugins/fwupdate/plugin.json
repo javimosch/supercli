@@ -1,0 +1,56 @@
+{
+  "name": "fwupdate",
+  "version": "0.1.0",
+  "description": "CLI tool: fwupdate",
+  "source": "https://manpages.debian.org/fwupdate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fwupdate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fwupdate",
+    "binary": "fwupdate",
+    "check": "which fwupdate",
+    "install_steps": [
+      "apt-get install fwupdate 2>/dev/null || which fwupdate",
+      "Verify: fwupdate --version",
+      "supercli plugins install ./plugins/fwupdate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fwupdate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fwupdate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fwupdate: apt-get install fwupdate 2>/dev/null || which fwupdate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fwupdate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fwupdate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fwupdate: apt-get install fwupdate 2>/dev/null || which fwupdate"
+      },
+      "args": []
+    }
+  ]
+}

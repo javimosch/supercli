@@ -1,0 +1,56 @@
+{
+  "name": "gatttool",
+  "version": "0.1.0",
+  "description": "CLI tool: gatttool",
+  "source": "https://manpages.debian.org/gatttool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gatttool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gatttool",
+    "binary": "gatttool",
+    "check": "which gatttool",
+    "install_steps": [
+      "apt-get install gatttool 2>/dev/null || which gatttool",
+      "Verify: gatttool --version",
+      "supercli plugins install ./plugins/gatttool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gatttool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gatttool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gatttool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gatttool: apt-get install gatttool 2>/dev/null || which gatttool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gatttool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gatttool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gatttool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gatttool: apt-get install gatttool 2>/dev/null || which gatttool"
+      },
+      "args": []
+    }
+  ]
+}

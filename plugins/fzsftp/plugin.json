@@ -1,0 +1,56 @@
+{
+  "name": "fzsftp",
+  "version": "0.1.0",
+  "description": "CLI tool: fzsftp",
+  "source": "https://manpages.debian.org/fzsftp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fzsftp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fzsftp",
+    "binary": "fzsftp",
+    "check": "which fzsftp",
+    "install_steps": [
+      "apt-get install fzsftp 2>/dev/null || which fzsftp",
+      "Verify: fzsftp --version",
+      "supercli plugins install ./plugins/fzsftp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fzsftp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fzsftp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fzsftp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fzsftp: apt-get install fzsftp 2>/dev/null || which fzsftp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fzsftp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fzsftp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fzsftp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fzsftp: apt-get install fzsftp 2>/dev/null || which fzsftp"
+      },
+      "args": []
+    }
+  ]
+}

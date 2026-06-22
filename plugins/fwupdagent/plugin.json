@@ -1,0 +1,56 @@
+{
+  "name": "fwupdagent",
+  "version": "0.1.0",
+  "description": "CLI tool: fwupdagent",
+  "source": "https://manpages.debian.org/fwupdagent",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fwupdagent"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fwupdagent",
+    "binary": "fwupdagent",
+    "check": "which fwupdagent",
+    "install_steps": [
+      "apt-get install fwupdagent 2>/dev/null || which fwupdagent",
+      "Verify: fwupdagent --version",
+      "supercli plugins install ./plugins/fwupdagent --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fwupdagent",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fwupdagent version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdagent",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fwupdagent: apt-get install fwupdagent 2>/dev/null || which fwupdagent"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fwupdagent",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fwupdagent CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdagent",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fwupdagent: apt-get install fwupdagent 2>/dev/null || which fwupdagent"
+      },
+      "args": []
+    }
+  ]
+}

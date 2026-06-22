@@ -1,0 +1,56 @@
+{
+  "name": "fsadm",
+  "version": "0.1.0",
+  "description": "CLI tool: fsadm",
+  "source": "https://manpages.debian.org/fsadm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fsadm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fsadm",
+    "binary": "fsadm",
+    "check": "which fsadm",
+    "install_steps": [
+      "apt-get install fsadm 2>/dev/null || which fsadm",
+      "Verify: fsadm --version",
+      "supercli plugins install ./plugins/fsadm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fsadm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fsadm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fsadm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fsadm: apt-get install fsadm 2>/dev/null || which fsadm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fsadm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fsadm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fsadm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fsadm: apt-get install fsadm 2>/dev/null || which fsadm"
+      },
+      "args": []
+    }
+  ]
+}

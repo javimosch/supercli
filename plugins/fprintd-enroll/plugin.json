@@ -1,0 +1,56 @@
+{
+  "name": "fprintd-enroll",
+  "version": "0.1.0",
+  "description": "CLI tool: fprintd-enroll",
+  "source": "https://manpages.debian.org/fprintd-enroll",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fprintd-enroll"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fprintd-enroll",
+    "binary": "fprintd-enroll",
+    "check": "which fprintd-enroll",
+    "install_steps": [
+      "apt-get install fprintd-enroll 2>/dev/null || which fprintd-enroll",
+      "Verify: fprintd-enroll --version",
+      "supercli plugins install ./plugins/fprintd-enroll --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fprintd-enroll",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fprintd-enroll version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fprintd-enroll",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fprintd-enroll: apt-get install fprintd-enroll 2>/dev/null || which fprintd-enroll"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fprintd-enroll",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fprintd-enroll CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fprintd-enroll",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fprintd-enroll: apt-get install fprintd-enroll 2>/dev/null || which fprintd-enroll"
+      },
+      "args": []
+    }
+  ]
+}

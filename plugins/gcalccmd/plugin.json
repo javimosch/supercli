@@ -1,0 +1,56 @@
+{
+  "name": "gcalccmd",
+  "version": "0.1.0",
+  "description": "CLI tool: gcalccmd",
+  "source": "https://manpages.debian.org/gcalccmd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gcalccmd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gcalccmd",
+    "binary": "gcalccmd",
+    "check": "which gcalccmd",
+    "install_steps": [
+      "apt-get install gcalccmd 2>/dev/null || which gcalccmd",
+      "Verify: gcalccmd --version",
+      "supercli plugins install ./plugins/gcalccmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gcalccmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gcalccmd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcalccmd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gcalccmd: apt-get install gcalccmd 2>/dev/null || which gcalccmd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gcalccmd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gcalccmd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gcalccmd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gcalccmd: apt-get install gcalccmd 2>/dev/null || which gcalccmd"
+      },
+      "args": []
+    }
+  ]
+}

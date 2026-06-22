@@ -1,0 +1,56 @@
+{
+  "name": "fwupdmgr",
+  "version": "0.1.0",
+  "description": "CLI tool: fwupdmgr",
+  "source": "https://manpages.debian.org/fwupdmgr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fwupdmgr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fwupdmgr",
+    "binary": "fwupdmgr",
+    "check": "which fwupdmgr",
+    "install_steps": [
+      "apt-get install fwupdmgr 2>/dev/null || which fwupdmgr",
+      "Verify: fwupdmgr --version",
+      "supercli plugins install ./plugins/fwupdmgr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fwupdmgr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fwupdmgr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdmgr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fwupdmgr: apt-get install fwupdmgr 2>/dev/null || which fwupdmgr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fwupdmgr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fwupdmgr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdmgr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fwupdmgr: apt-get install fwupdmgr 2>/dev/null || which fwupdmgr"
+      },
+      "args": []
+    }
+  ]
+}

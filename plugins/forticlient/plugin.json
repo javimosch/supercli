@@ -1,0 +1,56 @@
+{
+  "name": "forticlient",
+  "version": "0.1.0",
+  "description": "CLI tool: forticlient",
+  "source": "https://manpages.debian.org/forticlient",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "forticlient"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "forticlient",
+    "binary": "forticlient",
+    "check": "which forticlient",
+    "install_steps": [
+      "apt-get install forticlient 2>/dev/null || which forticlient",
+      "Verify: forticlient --version",
+      "supercli plugins install ./plugins/forticlient --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "forticlient",
+      "resource": "self",
+      "action": "version",
+      "description": "Print forticlient version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "forticlient",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install forticlient: apt-get install forticlient 2>/dev/null || which forticlient"
+      },
+      "args": []
+    },
+    {
+      "namespace": "forticlient",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to forticlient CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "forticlient",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install forticlient: apt-get install forticlient 2>/dev/null || which forticlient"
+      },
+      "args": []
+    }
+  ]
+}

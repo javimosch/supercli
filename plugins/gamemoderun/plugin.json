@@ -1,0 +1,56 @@
+{
+  "name": "gamemoderun",
+  "version": "0.1.0",
+  "description": "CLI tool: gamemoderun",
+  "source": "https://manpages.debian.org/gamemoderun",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gamemoderun"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gamemoderun",
+    "binary": "gamemoderun",
+    "check": "which gamemoderun",
+    "install_steps": [
+      "apt-get install gamemoderun 2>/dev/null || which gamemoderun",
+      "Verify: gamemoderun --version",
+      "supercli plugins install ./plugins/gamemoderun --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gamemoderun",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gamemoderun version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gamemoderun",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gamemoderun: apt-get install gamemoderun 2>/dev/null || which gamemoderun"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gamemoderun",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gamemoderun CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gamemoderun",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gamemoderun: apt-get install gamemoderun 2>/dev/null || which gamemoderun"
+      },
+      "args": []
+    }
+  ]
+}

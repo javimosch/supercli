@@ -1,0 +1,56 @@
+{
+  "name": "gc",
+  "version": "0.1.0",
+  "description": "CLI tool: gc",
+  "source": "https://manpages.debian.org/gc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gc",
+    "binary": "gc",
+    "check": "which gc",
+    "install_steps": [
+      "apt-get install gc 2>/dev/null || which gc",
+      "Verify: gc --version",
+      "supercli plugins install ./plugins/gc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gc: apt-get install gc 2>/dev/null || which gc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gc: apt-get install gc 2>/dev/null || which gc"
+      },
+      "args": []
+    }
+  ]
+}

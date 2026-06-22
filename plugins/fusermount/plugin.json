@@ -1,0 +1,56 @@
+{
+  "name": "fusermount",
+  "version": "0.1.0",
+  "description": "CLI tool: fusermount",
+  "source": "https://manpages.debian.org/fusermount",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fusermount"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fusermount",
+    "binary": "fusermount",
+    "check": "which fusermount",
+    "install_steps": [
+      "apt-get install fusermount 2>/dev/null || which fusermount",
+      "Verify: fusermount --version",
+      "supercli plugins install ./plugins/fusermount --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fusermount",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fusermount version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fusermount",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fusermount: apt-get install fusermount 2>/dev/null || which fusermount"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fusermount",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fusermount CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fusermount",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fusermount: apt-get install fusermount 2>/dev/null || which fusermount"
+      },
+      "args": []
+    }
+  ]
+}

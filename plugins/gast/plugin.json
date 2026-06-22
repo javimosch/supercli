@@ -1,0 +1,56 @@
+{
+  "name": "gast",
+  "version": "0.1.0",
+  "description": "CLI tool: gast",
+  "source": "https://manpages.debian.org/gast",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gast"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gast",
+    "binary": "gast",
+    "check": "which gast",
+    "install_steps": [
+      "apt-get install gast 2>/dev/null || which gast",
+      "Verify: gast --version",
+      "supercli plugins install ./plugins/gast --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gast",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gast version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gast",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gast: apt-get install gast 2>/dev/null || which gast"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gast",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gast CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gast",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gast: apt-get install gast 2>/dev/null || which gast"
+      },
+      "args": []
+    }
+  ]
+}

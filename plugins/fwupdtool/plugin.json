@@ -1,0 +1,56 @@
+{
+  "name": "fwupdtool",
+  "version": "0.1.0",
+  "description": "CLI tool: fwupdtool",
+  "source": "https://manpages.debian.org/fwupdtool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fwupdtool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fwupdtool",
+    "binary": "fwupdtool",
+    "check": "which fwupdtool",
+    "install_steps": [
+      "apt-get install fwupdtool 2>/dev/null || which fwupdtool",
+      "Verify: fwupdtool --version",
+      "supercli plugins install ./plugins/fwupdtool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fwupdtool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fwupdtool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdtool",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fwupdtool: apt-get install fwupdtool 2>/dev/null || which fwupdtool"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fwupdtool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fwupdtool CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fwupdtool",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fwupdtool: apt-get install fwupdtool 2>/dev/null || which fwupdtool"
+      },
+      "args": []
+    }
+  ]
+}

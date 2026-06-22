@@ -1,0 +1,56 @@
+{
+  "name": "funzip",
+  "version": "0.1.0",
+  "description": "CLI tool: funzip",
+  "source": "https://manpages.debian.org/funzip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "funzip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "funzip",
+    "binary": "funzip",
+    "check": "which funzip",
+    "install_steps": [
+      "apt-get install funzip 2>/dev/null || which funzip",
+      "Verify: funzip --version",
+      "supercli plugins install ./plugins/funzip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "funzip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print funzip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "funzip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install funzip: apt-get install funzip 2>/dev/null || which funzip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "funzip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to funzip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "funzip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install funzip: apt-get install funzip 2>/dev/null || which funzip"
+      },
+      "args": []
+    }
+  ]
+}

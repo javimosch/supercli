@@ -1,0 +1,56 @@
+{
+  "name": "gamemoded",
+  "version": "0.1.0",
+  "description": "CLI tool: gamemoded",
+  "source": "https://manpages.debian.org/gamemoded",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gamemoded"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gamemoded",
+    "binary": "gamemoded",
+    "check": "which gamemoded",
+    "install_steps": [
+      "apt-get install gamemoded 2>/dev/null || which gamemoded",
+      "Verify: gamemoded --version",
+      "supercli plugins install ./plugins/gamemoded --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gamemoded",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gamemoded version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gamemoded",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gamemoded: apt-get install gamemoded 2>/dev/null || which gamemoded"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gamemoded",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gamemoded CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gamemoded",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gamemoded: apt-get install gamemoded 2>/dev/null || which gamemoded"
+      },
+      "args": []
+    }
+  ]
+}

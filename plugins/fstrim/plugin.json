@@ -1,0 +1,56 @@
+{
+  "name": "fstrim",
+  "version": "0.1.0",
+  "description": "CLI tool: fstrim",
+  "source": "https://manpages.debian.org/fstrim",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fstrim"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fstrim",
+    "binary": "fstrim",
+    "check": "which fstrim",
+    "install_steps": [
+      "apt-get install fstrim 2>/dev/null || which fstrim",
+      "Verify: fstrim --version",
+      "supercli plugins install ./plugins/fstrim --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fstrim",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fstrim version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fstrim",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fstrim: apt-get install fstrim 2>/dev/null || which fstrim"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fstrim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fstrim CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fstrim",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fstrim: apt-get install fstrim 2>/dev/null || which fstrim"
+      },
+      "args": []
+    }
+  ]
+}

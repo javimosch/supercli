@@ -1,0 +1,56 @@
+{
+  "name": "fprintd-list",
+  "version": "0.1.0",
+  "description": "CLI tool: fprintd-list",
+  "source": "https://manpages.debian.org/fprintd-list",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fprintd-list"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fprintd-list",
+    "binary": "fprintd-list",
+    "check": "which fprintd-list",
+    "install_steps": [
+      "apt-get install fprintd-list 2>/dev/null || which fprintd-list",
+      "Verify: fprintd-list --version",
+      "supercli plugins install ./plugins/fprintd-list --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fprintd-list",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fprintd-list version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fprintd-list",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fprintd-list: apt-get install fprintd-list 2>/dev/null || which fprintd-list"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fprintd-list",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fprintd-list CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fprintd-list",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fprintd-list: apt-get install fprintd-list 2>/dev/null || which fprintd-list"
+      },
+      "args": []
+    }
+  ]
+}
