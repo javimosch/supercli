@@ -1,0 +1,56 @@
+{
+  "name": "groups",
+  "version": "0.1.0",
+  "description": "CLI tool: groups",
+  "source": "https://manpages.debian.org/groups",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "groups"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "groups",
+    "binary": "groups",
+    "check": "which groups",
+    "install_steps": [
+      "apt-get install groups 2>/dev/null || which groups",
+      "Verify: groups --version",
+      "supercli plugins install ./plugins/groups --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "groups",
+      "resource": "self",
+      "action": "version",
+      "description": "Print groups version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groups",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install groups: apt-get install groups 2>/dev/null || which groups"
+      },
+      "args": []
+    },
+    {
+      "namespace": "groups",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to groups CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groups",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install groups: apt-get install groups 2>/dev/null || which groups"
+      },
+      "args": []
+    }
+  ]
+}

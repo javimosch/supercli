@@ -1,0 +1,56 @@
+{
+  "name": "gpinyin",
+  "version": "0.1.0",
+  "description": "CLI tool: gpinyin",
+  "source": "https://manpages.debian.org/gpinyin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpinyin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpinyin",
+    "binary": "gpinyin",
+    "check": "which gpinyin",
+    "install_steps": [
+      "apt-get install gpinyin 2>/dev/null || which gpinyin",
+      "Verify: gpinyin --version",
+      "supercli plugins install ./plugins/gpinyin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpinyin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpinyin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpinyin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpinyin: apt-get install gpinyin 2>/dev/null || which gpinyin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpinyin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpinyin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpinyin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpinyin: apt-get install gpinyin 2>/dev/null || which gpinyin"
+      },
+      "args": []
+    }
+  ]
+}

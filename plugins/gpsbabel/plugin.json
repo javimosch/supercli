@@ -1,0 +1,56 @@
+{
+  "name": "gpsbabel",
+  "version": "0.1.0",
+  "description": "CLI tool: gpsbabel",
+  "source": "https://manpages.debian.org/gpsbabel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpsbabel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpsbabel",
+    "binary": "gpsbabel",
+    "check": "which gpsbabel",
+    "install_steps": [
+      "apt-get install gpsbabel 2>/dev/null || which gpsbabel",
+      "Verify: gpsbabel --version",
+      "supercli plugins install ./plugins/gpsbabel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpsbabel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpsbabel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpsbabel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpsbabel: apt-get install gpsbabel 2>/dev/null || which gpsbabel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpsbabel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpsbabel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpsbabel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpsbabel: apt-get install gpsbabel 2>/dev/null || which gpsbabel"
+      },
+      "args": []
+    }
+  ]
+}

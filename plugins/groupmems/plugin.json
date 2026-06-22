@@ -1,0 +1,56 @@
+{
+  "name": "groupmems",
+  "version": "0.1.0",
+  "description": "CLI tool: groupmems",
+  "source": "https://manpages.debian.org/groupmems",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "groupmems"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "groupmems",
+    "binary": "groupmems",
+    "check": "which groupmems",
+    "install_steps": [
+      "apt-get install groupmems 2>/dev/null || which groupmems",
+      "Verify: groupmems --version",
+      "supercli plugins install ./plugins/groupmems --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "groupmems",
+      "resource": "self",
+      "action": "version",
+      "description": "Print groupmems version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groupmems",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install groupmems: apt-get install groupmems 2>/dev/null || which groupmems"
+      },
+      "args": []
+    },
+    {
+      "namespace": "groupmems",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to groupmems CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groupmems",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install groupmems: apt-get install groupmems 2>/dev/null || which groupmems"
+      },
+      "args": []
+    }
+  ]
+}

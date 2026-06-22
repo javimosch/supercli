@@ -1,0 +1,56 @@
+{
+  "name": "gpgv",
+  "version": "0.1.0",
+  "description": "CLI tool: gpgv",
+  "source": "https://manpages.debian.org/gpgv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpgv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpgv",
+    "binary": "gpgv",
+    "check": "which gpgv",
+    "install_steps": [
+      "apt-get install gpgv 2>/dev/null || which gpgv",
+      "Verify: gpgv --version",
+      "supercli plugins install ./plugins/gpgv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpgv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpgv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpgv: apt-get install gpgv 2>/dev/null || which gpgv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpgv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpgv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpgv: apt-get install gpgv 2>/dev/null || which gpgv"
+      },
+      "args": []
+    }
+  ]
+}

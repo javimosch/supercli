@@ -1,0 +1,56 @@
+{
+  "name": "grpconv",
+  "version": "0.1.0",
+  "description": "CLI tool: grpconv",
+  "source": "https://manpages.debian.org/grpconv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grpconv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grpconv",
+    "binary": "grpconv",
+    "check": "which grpconv",
+    "install_steps": [
+      "apt-get install grpconv 2>/dev/null || which grpconv",
+      "Verify: grpconv --version",
+      "supercli plugins install ./plugins/grpconv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grpconv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grpconv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpconv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grpconv: apt-get install grpconv 2>/dev/null || which grpconv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grpconv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grpconv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpconv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grpconv: apt-get install grpconv 2>/dev/null || which grpconv"
+      },
+      "args": []
+    }
+  ]
+}

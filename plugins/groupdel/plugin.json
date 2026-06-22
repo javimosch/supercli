@@ -1,0 +1,56 @@
+{
+  "name": "groupdel",
+  "version": "0.1.0",
+  "description": "CLI tool: groupdel",
+  "source": "https://manpages.debian.org/groupdel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "groupdel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "groupdel",
+    "binary": "groupdel",
+    "check": "which groupdel",
+    "install_steps": [
+      "apt-get install groupdel 2>/dev/null || which groupdel",
+      "Verify: groupdel --version",
+      "supercli plugins install ./plugins/groupdel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "groupdel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print groupdel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groupdel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install groupdel: apt-get install groupdel 2>/dev/null || which groupdel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "groupdel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to groupdel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groupdel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install groupdel: apt-get install groupdel 2>/dev/null || which groupdel"
+      },
+      "args": []
+    }
+  ]
+}

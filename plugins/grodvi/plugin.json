@@ -1,0 +1,56 @@
+{
+  "name": "grodvi",
+  "version": "0.1.0",
+  "description": "CLI tool: grodvi",
+  "source": "https://manpages.debian.org/grodvi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grodvi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grodvi",
+    "binary": "grodvi",
+    "check": "which grodvi",
+    "install_steps": [
+      "apt-get install grodvi 2>/dev/null || which grodvi",
+      "Verify: grodvi --version",
+      "supercli plugins install ./plugins/grodvi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grodvi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grodvi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grodvi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grodvi: apt-get install grodvi 2>/dev/null || which grodvi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grodvi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grodvi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grodvi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grodvi: apt-get install grodvi 2>/dev/null || which grodvi"
+      },
+      "args": []
+    }
+  ]
+}

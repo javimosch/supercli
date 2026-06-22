@@ -1,0 +1,56 @@
+{
+  "name": "grpck",
+  "version": "0.1.0",
+  "description": "CLI tool: grpck",
+  "source": "https://manpages.debian.org/grpck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grpck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grpck",
+    "binary": "grpck",
+    "check": "which grpck",
+    "install_steps": [
+      "apt-get install grpck 2>/dev/null || which grpck",
+      "Verify: grpck --version",
+      "supercli plugins install ./plugins/grpck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grpck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grpck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grpck: apt-get install grpck 2>/dev/null || which grpck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grpck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grpck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grpck: apt-get install grpck 2>/dev/null || which grpck"
+      },
+      "args": []
+    }
+  ]
+}

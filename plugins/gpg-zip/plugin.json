@@ -1,0 +1,56 @@
+{
+  "name": "gpg-zip",
+  "version": "0.1.0",
+  "description": "CLI tool: gpg-zip",
+  "source": "https://manpages.debian.org/gpg-zip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpg-zip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpg-zip",
+    "binary": "gpg-zip",
+    "check": "which gpg-zip",
+    "install_steps": [
+      "apt-get install gpg-zip 2>/dev/null || which gpg-zip",
+      "Verify: gpg-zip --version",
+      "supercli plugins install ./plugins/gpg-zip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpg-zip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpg-zip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpg-zip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpg-zip: apt-get install gpg-zip 2>/dev/null || which gpg-zip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpg-zip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpg-zip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpg-zip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpg-zip: apt-get install gpg-zip 2>/dev/null || which gpg-zip"
+      },
+      "args": []
+    }
+  ]
+}

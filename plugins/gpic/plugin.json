@@ -1,0 +1,56 @@
+{
+  "name": "gpic",
+  "version": "0.1.0",
+  "description": "CLI tool: gpic",
+  "source": "https://manpages.debian.org/gpic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpic",
+    "binary": "gpic",
+    "check": "which gpic",
+    "install_steps": [
+      "apt-get install gpic 2>/dev/null || which gpic",
+      "Verify: gpic --version",
+      "supercli plugins install ./plugins/gpic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpic: apt-get install gpic 2>/dev/null || which gpic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpic: apt-get install gpic 2>/dev/null || which gpic"
+      },
+      "args": []
+    }
+  ]
+}

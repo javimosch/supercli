@@ -1,0 +1,56 @@
+{
+  "name": "groupadd",
+  "version": "0.1.0",
+  "description": "CLI tool: groupadd",
+  "source": "https://manpages.debian.org/groupadd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "groupadd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "groupadd",
+    "binary": "groupadd",
+    "check": "which groupadd",
+    "install_steps": [
+      "apt-get install groupadd 2>/dev/null || which groupadd",
+      "Verify: groupadd --version",
+      "supercli plugins install ./plugins/groupadd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "groupadd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print groupadd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groupadd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install groupadd: apt-get install groupadd 2>/dev/null || which groupadd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "groupadd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to groupadd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groupadd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install groupadd: apt-get install groupadd 2>/dev/null || which groupadd"
+      },
+      "args": []
+    }
+  ]
+}

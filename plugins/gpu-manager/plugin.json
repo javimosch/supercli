@@ -1,0 +1,56 @@
+{
+  "name": "gpu-manager",
+  "version": "0.1.0",
+  "description": "CLI tool: gpu-manager",
+  "source": "https://manpages.debian.org/gpu-manager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpu-manager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpu-manager",
+    "binary": "gpu-manager",
+    "check": "which gpu-manager",
+    "install_steps": [
+      "apt-get install gpu-manager 2>/dev/null || which gpu-manager",
+      "Verify: gpu-manager --version",
+      "supercli plugins install ./plugins/gpu-manager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpu-manager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpu-manager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpu-manager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpu-manager: apt-get install gpu-manager 2>/dev/null || which gpu-manager"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpu-manager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpu-manager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpu-manager",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpu-manager: apt-get install gpu-manager 2>/dev/null || which gpu-manager"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "grub-fstest",
+  "version": "0.1.0",
+  "description": "CLI tool: grub-fstest",
+  "source": "https://manpages.debian.org/grub-fstest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grub-fstest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grub-fstest",
+    "binary": "grub-fstest",
+    "check": "which grub-fstest",
+    "install_steps": [
+      "apt-get install grub-fstest 2>/dev/null || which grub-fstest",
+      "Verify: grub-fstest --version",
+      "supercli plugins install ./plugins/grub-fstest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grub-fstest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grub-fstest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-fstest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grub-fstest: apt-get install grub-fstest 2>/dev/null || which grub-fstest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grub-fstest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grub-fstest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-fstest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grub-fstest: apt-get install grub-fstest 2>/dev/null || which grub-fstest"
+      },
+      "args": []
+    }
+  ]
+}

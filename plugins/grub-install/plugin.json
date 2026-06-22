@@ -1,0 +1,56 @@
+{
+  "name": "grub-install",
+  "version": "0.1.0",
+  "description": "CLI tool: grub-install",
+  "source": "https://manpages.debian.org/grub-install",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grub-install"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grub-install",
+    "binary": "grub-install",
+    "check": "which grub-install",
+    "install_steps": [
+      "apt-get install grub-install 2>/dev/null || which grub-install",
+      "Verify: grub-install --version",
+      "supercli plugins install ./plugins/grub-install --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grub-install",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grub-install version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-install",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grub-install: apt-get install grub-install 2>/dev/null || which grub-install"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grub-install",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grub-install CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-install",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grub-install: apt-get install grub-install 2>/dev/null || which grub-install"
+      },
+      "args": []
+    }
+  ]
+}

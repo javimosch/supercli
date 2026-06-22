@@ -1,0 +1,56 @@
+{
+  "name": "gropdf",
+  "version": "0.1.0",
+  "description": "CLI tool: gropdf",
+  "source": "https://manpages.debian.org/gropdf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gropdf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gropdf",
+    "binary": "gropdf",
+    "check": "which gropdf",
+    "install_steps": [
+      "apt-get install gropdf 2>/dev/null || which gropdf",
+      "Verify: gropdf --version",
+      "supercli plugins install ./plugins/gropdf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gropdf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gropdf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gropdf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gropdf: apt-get install gropdf 2>/dev/null || which gropdf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gropdf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gropdf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gropdf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gropdf: apt-get install gropdf 2>/dev/null || which gropdf"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "groff",
+  "version": "0.1.0",
+  "description": "CLI tool: groff",
+  "source": "https://manpages.debian.org/groff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "groff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "groff",
+    "binary": "groff",
+    "check": "which groff",
+    "install_steps": [
+      "apt-get install groff 2>/dev/null || which groff",
+      "Verify: groff --version",
+      "supercli plugins install ./plugins/groff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "groff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print groff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install groff: apt-get install groff 2>/dev/null || which groff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "groff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to groff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install groff: apt-get install groff 2>/dev/null || which groff"
+      },
+      "args": []
+    }
+  ]
+}

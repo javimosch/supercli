@@ -1,0 +1,56 @@
+{
+  "name": "grog",
+  "version": "0.1.0",
+  "description": "CLI tool: grog",
+  "source": "https://manpages.debian.org/grog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grog"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grog",
+    "binary": "grog",
+    "check": "which grog",
+    "install_steps": [
+      "apt-get install grog 2>/dev/null || which grog",
+      "Verify: grog --version",
+      "supercli plugins install ./plugins/grog --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grog",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grog: apt-get install grog 2>/dev/null || which grog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grog: apt-get install grog 2>/dev/null || which grog"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "grops",
+  "version": "0.1.0",
+  "description": "CLI tool: grops",
+  "source": "https://manpages.debian.org/grops",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grops"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grops",
+    "binary": "grops",
+    "check": "which grops",
+    "install_steps": [
+      "apt-get install grops 2>/dev/null || which grops",
+      "Verify: grops --version",
+      "supercli plugins install ./plugins/grops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grops",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grops: apt-get install grops 2>/dev/null || which grops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grops CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grops",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grops: apt-get install grops 2>/dev/null || which grops"
+      },
+      "args": []
+    }
+  ]
+}

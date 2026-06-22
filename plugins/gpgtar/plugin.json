@@ -1,0 +1,56 @@
+{
+  "name": "gpgtar",
+  "version": "0.1.0",
+  "description": "CLI tool: gpgtar",
+  "source": "https://manpages.debian.org/gpgtar",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gpgtar"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gpgtar",
+    "binary": "gpgtar",
+    "check": "which gpgtar",
+    "install_steps": [
+      "apt-get install gpgtar 2>/dev/null || which gpgtar",
+      "Verify: gpgtar --version",
+      "supercli plugins install ./plugins/gpgtar --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gpgtar",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gpgtar version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgtar",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gpgtar: apt-get install gpgtar 2>/dev/null || which gpgtar"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gpgtar",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gpgtar CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gpgtar",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gpgtar: apt-get install gpgtar 2>/dev/null || which gpgtar"
+      },
+      "args": []
+    }
+  ]
+}

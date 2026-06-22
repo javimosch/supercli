@@ -1,0 +1,56 @@
+{
+  "name": "grub-mkimage",
+  "version": "0.1.0",
+  "description": "CLI tool: grub-mkimage",
+  "source": "https://manpages.debian.org/grub-mkimage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grub-mkimage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grub-mkimage",
+    "binary": "grub-mkimage",
+    "check": "which grub-mkimage",
+    "install_steps": [
+      "apt-get install grub-mkimage 2>/dev/null || which grub-mkimage",
+      "Verify: grub-mkimage --version",
+      "supercli plugins install ./plugins/grub-mkimage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grub-mkimage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grub-mkimage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-mkimage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grub-mkimage: apt-get install grub-mkimage 2>/dev/null || which grub-mkimage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grub-mkimage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grub-mkimage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grub-mkimage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grub-mkimage: apt-get install grub-mkimage 2>/dev/null || which grub-mkimage"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "grdctl",
+  "version": "0.1.0",
+  "description": "CLI tool: grdctl",
+  "source": "https://manpages.debian.org/grdctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grdctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grdctl",
+    "binary": "grdctl",
+    "check": "which grdctl",
+    "install_steps": [
+      "apt-get install grdctl 2>/dev/null || which grdctl",
+      "Verify: grdctl --version",
+      "supercli plugins install ./plugins/grdctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grdctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grdctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grdctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grdctl: apt-get install grdctl 2>/dev/null || which grdctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grdctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grdctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grdctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grdctl: apt-get install grdctl 2>/dev/null || which grdctl"
+      },
+      "args": []
+    }
+  ]
+}

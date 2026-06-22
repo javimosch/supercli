@@ -1,0 +1,56 @@
+{
+  "name": "grn",
+  "version": "0.1.0",
+  "description": "CLI tool: grn",
+  "source": "https://manpages.debian.org/grn",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grn"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grn",
+    "binary": "grn",
+    "check": "which grn",
+    "install_steps": [
+      "apt-get install grn 2>/dev/null || which grn",
+      "Verify: grn --version",
+      "supercli plugins install ./plugins/grn --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grn",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grn version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grn",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grn: apt-get install grn 2>/dev/null || which grn"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grn",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grn CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grn",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grn: apt-get install grn 2>/dev/null || which grn"
+      },
+      "args": []
+    }
+  ]
+}

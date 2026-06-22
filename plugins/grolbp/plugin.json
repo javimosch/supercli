@@ -1,0 +1,56 @@
+{
+  "name": "grolbp",
+  "version": "0.1.0",
+  "description": "CLI tool: grolbp",
+  "source": "https://manpages.debian.org/grolbp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grolbp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grolbp",
+    "binary": "grolbp",
+    "check": "which grolbp",
+    "install_steps": [
+      "apt-get install grolbp 2>/dev/null || which grolbp",
+      "Verify: grolbp --version",
+      "supercli plugins install ./plugins/grolbp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grolbp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grolbp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grolbp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grolbp: apt-get install grolbp 2>/dev/null || which grolbp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grolbp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grolbp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grolbp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grolbp: apt-get install grolbp 2>/dev/null || which grolbp"
+      },
+      "args": []
+    }
+  ]
+}

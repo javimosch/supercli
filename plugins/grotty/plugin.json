@@ -1,0 +1,56 @@
+{
+  "name": "grotty",
+  "version": "0.1.0",
+  "description": "CLI tool: grotty",
+  "source": "https://manpages.debian.org/grotty",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grotty"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grotty",
+    "binary": "grotty",
+    "check": "which grotty",
+    "install_steps": [
+      "apt-get install grotty 2>/dev/null || which grotty",
+      "Verify: grotty --version",
+      "supercli plugins install ./plugins/grotty --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grotty",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grotty version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grotty",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grotty: apt-get install grotty 2>/dev/null || which grotty"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grotty",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grotty CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grotty",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grotty: apt-get install grotty 2>/dev/null || which grotty"
+      },
+      "args": []
+    }
+  ]
+}

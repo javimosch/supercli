@@ -1,0 +1,56 @@
+{
+  "name": "groffer",
+  "version": "0.1.0",
+  "description": "CLI tool: groffer",
+  "source": "https://manpages.debian.org/groffer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "groffer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "groffer",
+    "binary": "groffer",
+    "check": "which groffer",
+    "install_steps": [
+      "apt-get install groffer 2>/dev/null || which groffer",
+      "Verify: groffer --version",
+      "supercli plugins install ./plugins/groffer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "groffer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print groffer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groffer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install groffer: apt-get install groffer 2>/dev/null || which groffer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "groffer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to groffer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "groffer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install groffer: apt-get install groffer 2>/dev/null || which groffer"
+      },
+      "args": []
+    }
+  ]
+}

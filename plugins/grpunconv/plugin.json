@@ -1,0 +1,56 @@
+{
+  "name": "grpunconv",
+  "version": "0.1.0",
+  "description": "CLI tool: grpunconv",
+  "source": "https://manpages.debian.org/grpunconv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "grpunconv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "grpunconv",
+    "binary": "grpunconv",
+    "check": "which grpunconv",
+    "install_steps": [
+      "apt-get install grpunconv 2>/dev/null || which grpunconv",
+      "Verify: grpunconv --version",
+      "supercli plugins install ./plugins/grpunconv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "grpunconv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print grpunconv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpunconv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install grpunconv: apt-get install grpunconv 2>/dev/null || which grpunconv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "grpunconv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to grpunconv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "grpunconv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install grpunconv: apt-get install grpunconv 2>/dev/null || which grpunconv"
+      },
+      "args": []
+    }
+  ]
+}

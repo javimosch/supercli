@@ -1,0 +1,56 @@
+{
+  "name": "gregorio",
+  "version": "0.1.0",
+  "description": "CLI tool: gregorio",
+  "source": "https://manpages.debian.org/gregorio",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gregorio"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gregorio",
+    "binary": "gregorio",
+    "check": "which gregorio",
+    "install_steps": [
+      "apt-get install gregorio 2>/dev/null || which gregorio",
+      "Verify: gregorio --version",
+      "supercli plugins install ./plugins/gregorio --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gregorio",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gregorio version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gregorio",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gregorio: apt-get install gregorio 2>/dev/null || which gregorio"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gregorio",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gregorio CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gregorio",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gregorio: apt-get install gregorio 2>/dev/null || which gregorio"
+      },
+      "args": []
+    }
+  ]
+}
