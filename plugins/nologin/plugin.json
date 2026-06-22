@@ -1,0 +1,56 @@
+{
+  "name": "nologin",
+  "version": "0.1.0",
+  "description": "CLI tool: nologin",
+  "source": "https://manpages.debian.org/nologin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nologin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nologin",
+    "binary": "nologin",
+    "check": "which nologin",
+    "install_steps": [
+      "apt-get install nologin 2>/dev/null || which nologin",
+      "Verify: nologin --version",
+      "supercli plugins install ./plugins/nologin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nologin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nologin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nologin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nologin: apt-get install nologin 2>/dev/null || which nologin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nologin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nologin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nologin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nologin: apt-get install nologin 2>/dev/null || which nologin"
+      },
+      "args": []
+    }
+  ]
+}

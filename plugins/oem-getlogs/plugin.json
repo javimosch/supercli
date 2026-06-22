@@ -1,0 +1,56 @@
+{
+  "name": "oem-getlogs",
+  "version": "0.1.0",
+  "description": "CLI tool: oem-getlogs",
+  "source": "https://manpages.debian.org/oem-getlogs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "oem-getlogs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "oem-getlogs",
+    "binary": "oem-getlogs",
+    "check": "which oem-getlogs",
+    "install_steps": [
+      "apt-get install oem-getlogs 2>/dev/null || which oem-getlogs",
+      "Verify: oem-getlogs --version",
+      "supercli plugins install ./plugins/oem-getlogs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oem-getlogs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oem-getlogs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oem-getlogs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install oem-getlogs: apt-get install oem-getlogs 2>/dev/null || which oem-getlogs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oem-getlogs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oem-getlogs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oem-getlogs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oem-getlogs: apt-get install oem-getlogs 2>/dev/null || which oem-getlogs"
+      },
+      "args": []
+    }
+  ]
+}

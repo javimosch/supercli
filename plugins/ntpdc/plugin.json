@@ -1,0 +1,56 @@
+{
+  "name": "ntpdc",
+  "version": "0.1.0",
+  "description": "CLI tool: ntpdc",
+  "source": "https://manpages.debian.org/ntpdc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntpdc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntpdc",
+    "binary": "ntpdc",
+    "check": "which ntpdc",
+    "install_steps": [
+      "apt-get install ntpdc 2>/dev/null || which ntpdc",
+      "Verify: ntpdc --version",
+      "supercli plugins install ./plugins/ntpdc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntpdc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntpdc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpdc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntpdc: apt-get install ntpdc 2>/dev/null || which ntpdc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntpdc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntpdc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpdc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntpdc: apt-get install ntpdc 2>/dev/null || which ntpdc"
+      },
+      "args": []
+    }
+  ]
+}

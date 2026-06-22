@@ -1,0 +1,56 @@
+{
+  "name": "ntp-keygen",
+  "version": "0.1.0",
+  "description": "CLI tool: ntp-keygen",
+  "source": "https://manpages.debian.org/ntp-keygen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntp-keygen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntp-keygen",
+    "binary": "ntp-keygen",
+    "check": "which ntp-keygen",
+    "install_steps": [
+      "apt-get install ntp-keygen 2>/dev/null || which ntp-keygen",
+      "Verify: ntp-keygen --version",
+      "supercli plugins install ./plugins/ntp-keygen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntp-keygen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntp-keygen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntp-keygen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntp-keygen: apt-get install ntp-keygen 2>/dev/null || which ntp-keygen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntp-keygen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntp-keygen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntp-keygen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntp-keygen: apt-get install ntp-keygen 2>/dev/null || which ntp-keygen"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ntptime",
+  "version": "0.1.0",
+  "description": "CLI tool: ntptime",
+  "source": "https://manpages.debian.org/ntptime",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntptime"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntptime",
+    "binary": "ntptime",
+    "check": "which ntptime",
+    "install_steps": [
+      "apt-get install ntptime 2>/dev/null || which ntptime",
+      "Verify: ntptime --version",
+      "supercli plugins install ./plugins/ntptime --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntptime",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntptime version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntptime",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntptime: apt-get install ntptime 2>/dev/null || which ntptime"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntptime",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntptime CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntptime",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntptime: apt-get install ntptime 2>/dev/null || which ntptime"
+      },
+      "args": []
+    }
+  ]
+}

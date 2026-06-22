@@ -1,0 +1,56 @@
+{
+  "name": "normalizer",
+  "version": "0.1.0",
+  "description": "CLI tool: normalizer",
+  "source": "https://manpages.debian.org/normalizer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "normalizer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "normalizer",
+    "binary": "normalizer",
+    "check": "which normalizer",
+    "install_steps": [
+      "apt-get install normalizer 2>/dev/null || which normalizer",
+      "Verify: normalizer --version",
+      "supercli plugins install ./plugins/normalizer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "normalizer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print normalizer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "normalizer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install normalizer: apt-get install normalizer 2>/dev/null || which normalizer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "normalizer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to normalizer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "normalizer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install normalizer: apt-get install normalizer 2>/dev/null || which normalizer"
+      },
+      "args": []
+    }
+  ]
+}

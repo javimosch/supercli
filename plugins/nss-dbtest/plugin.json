@@ -1,0 +1,56 @@
+{
+  "name": "nss-dbtest",
+  "version": "0.1.0",
+  "description": "CLI tool: nss-dbtest",
+  "source": "https://manpages.debian.org/nss-dbtest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nss-dbtest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nss-dbtest",
+    "binary": "nss-dbtest",
+    "check": "which nss-dbtest",
+    "install_steps": [
+      "apt-get install nss-dbtest 2>/dev/null || which nss-dbtest",
+      "Verify: nss-dbtest --version",
+      "supercli plugins install ./plugins/nss-dbtest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nss-dbtest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nss-dbtest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nss-dbtest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nss-dbtest: apt-get install nss-dbtest 2>/dev/null || which nss-dbtest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nss-dbtest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nss-dbtest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nss-dbtest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nss-dbtest: apt-get install nss-dbtest 2>/dev/null || which nss-dbtest"
+      },
+      "args": []
+    }
+  ]
+}

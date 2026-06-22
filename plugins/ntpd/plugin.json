@@ -1,0 +1,56 @@
+{
+  "name": "ntpd",
+  "version": "0.1.0",
+  "description": "CLI tool: ntpd",
+  "source": "https://manpages.debian.org/ntpd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntpd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntpd",
+    "binary": "ntpd",
+    "check": "which ntpd",
+    "install_steps": [
+      "apt-get install ntpd 2>/dev/null || which ntpd",
+      "Verify: ntpd --version",
+      "supercli plugins install ./plugins/ntpd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntpd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntpd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntpd: apt-get install ntpd 2>/dev/null || which ntpd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntpd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntpd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntpd: apt-get install ntpd 2>/dev/null || which ntpd"
+      },
+      "args": []
+    }
+  ]
+}

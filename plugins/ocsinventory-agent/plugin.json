@@ -1,0 +1,56 @@
+{
+  "name": "ocsinventory-agent",
+  "version": "0.1.0",
+  "description": "CLI tool: ocsinventory-agent",
+  "source": "https://manpages.debian.org/ocsinventory-agent",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ocsinventory-agent"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ocsinventory-agent",
+    "binary": "ocsinventory-agent",
+    "check": "which ocsinventory-agent",
+    "install_steps": [
+      "apt-get install ocsinventory-agent 2>/dev/null || which ocsinventory-agent",
+      "Verify: ocsinventory-agent --version",
+      "supercli plugins install ./plugins/ocsinventory-agent --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ocsinventory-agent",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ocsinventory-agent version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ocsinventory-agent",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ocsinventory-agent: apt-get install ocsinventory-agent 2>/dev/null || which ocsinventory-agent"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ocsinventory-agent",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ocsinventory-agent CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ocsinventory-agent",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ocsinventory-agent: apt-get install ocsinventory-agent 2>/dev/null || which ocsinventory-agent"
+      },
+      "args": []
+    }
+  ]
+}

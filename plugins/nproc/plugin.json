@@ -1,0 +1,56 @@
+{
+  "name": "nproc",
+  "version": "0.1.0",
+  "description": "CLI tool: nproc",
+  "source": "https://manpages.debian.org/nproc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nproc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nproc",
+    "binary": "nproc",
+    "check": "which nproc",
+    "install_steps": [
+      "apt-get install nproc 2>/dev/null || which nproc",
+      "Verify: nproc --version",
+      "supercli plugins install ./plugins/nproc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nproc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nproc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nproc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nproc: apt-get install nproc 2>/dev/null || which nproc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nproc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nproc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nproc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nproc: apt-get install nproc 2>/dev/null || which nproc"
+      },
+      "args": []
+    }
+  ]
+}

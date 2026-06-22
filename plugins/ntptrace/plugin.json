@@ -1,0 +1,56 @@
+{
+  "name": "ntptrace",
+  "version": "0.1.0",
+  "description": "CLI tool: ntptrace",
+  "source": "https://manpages.debian.org/ntptrace",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntptrace"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntptrace",
+    "binary": "ntptrace",
+    "check": "which ntptrace",
+    "install_steps": [
+      "apt-get install ntptrace 2>/dev/null || which ntptrace",
+      "Verify: ntptrace --version",
+      "supercli plugins install ./plugins/ntptrace --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntptrace",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntptrace version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntptrace",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntptrace: apt-get install ntptrace 2>/dev/null || which ntptrace"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntptrace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntptrace CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntptrace",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntptrace: apt-get install ntptrace 2>/dev/null || which ntptrace"
+      },
+      "args": []
+    }
+  ]
+}

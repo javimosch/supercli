@@ -1,0 +1,56 @@
+{
+  "name": "nop",
+  "version": "0.1.0",
+  "description": "CLI tool: nop",
+  "source": "https://manpages.debian.org/nop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nop",
+    "binary": "nop",
+    "check": "which nop",
+    "install_steps": [
+      "apt-get install nop 2>/dev/null || which nop",
+      "Verify: nop --version",
+      "supercli plugins install ./plugins/nop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nop",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nop: apt-get install nop 2>/dev/null || which nop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nop",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nop: apt-get install nop 2>/dev/null || which nop"
+      },
+      "args": []
+    }
+  ]
+}

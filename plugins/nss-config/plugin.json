@@ -1,0 +1,56 @@
+{
+  "name": "nss-config",
+  "version": "0.1.0",
+  "description": "CLI tool: nss-config",
+  "source": "https://manpages.debian.org/nss-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nss-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nss-config",
+    "binary": "nss-config",
+    "check": "which nss-config",
+    "install_steps": [
+      "apt-get install nss-config 2>/dev/null || which nss-config",
+      "Verify: nss-config --version",
+      "supercli plugins install ./plugins/nss-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nss-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nss-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nss-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nss-config: apt-get install nss-config 2>/dev/null || which nss-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nss-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nss-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nss-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nss-config: apt-get install nss-config 2>/dev/null || which nss-config"
+      },
+      "args": []
+    }
+  ]
+}

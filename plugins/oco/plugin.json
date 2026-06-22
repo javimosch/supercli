@@ -1,0 +1,56 @@
+{
+  "name": "oco",
+  "version": "0.1.0",
+  "description": "CLI tool: oco",
+  "source": "https://manpages.debian.org/oco",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "oco"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "oco",
+    "binary": "oco",
+    "check": "which oco",
+    "install_steps": [
+      "apt-get install oco 2>/dev/null || which oco",
+      "Verify: oco --version",
+      "supercli plugins install ./plugins/oco --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oco",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oco version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oco",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install oco: apt-get install oco 2>/dev/null || which oco"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oco",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oco CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oco",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oco: apt-get install oco 2>/dev/null || which oco"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "nvidia-detector",
+  "version": "0.1.0",
+  "description": "CLI tool: nvidia-detector",
+  "source": "https://manpages.debian.org/nvidia-detector",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nvidia-detector"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nvidia-detector",
+    "binary": "nvidia-detector",
+    "check": "which nvidia-detector",
+    "install_steps": [
+      "apt-get install nvidia-detector 2>/dev/null || which nvidia-detector",
+      "Verify: nvidia-detector --version",
+      "supercli plugins install ./plugins/nvidia-detector --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nvidia-detector",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nvidia-detector version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nvidia-detector",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nvidia-detector: apt-get install nvidia-detector 2>/dev/null || which nvidia-detector"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nvidia-detector",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nvidia-detector CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nvidia-detector",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nvidia-detector: apt-get install nvidia-detector 2>/dev/null || which nvidia-detector"
+      },
+      "args": []
+    }
+  ]
+}

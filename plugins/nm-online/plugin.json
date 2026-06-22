@@ -1,0 +1,56 @@
+{
+  "name": "nm-online",
+  "version": "0.1.0",
+  "description": "CLI tool: nm-online",
+  "source": "https://manpages.debian.org/nm-online",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nm-online"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nm-online",
+    "binary": "nm-online",
+    "check": "which nm-online",
+    "install_steps": [
+      "apt-get install nm-online 2>/dev/null || which nm-online",
+      "Verify: nm-online --version",
+      "supercli plugins install ./plugins/nm-online --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nm-online",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nm-online version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nm-online",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nm-online: apt-get install nm-online 2>/dev/null || which nm-online"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nm-online",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nm-online CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nm-online",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nm-online: apt-get install nm-online 2>/dev/null || which nm-online"
+      },
+      "args": []
+    }
+  ]
+}

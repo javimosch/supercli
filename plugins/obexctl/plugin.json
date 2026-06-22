@@ -1,0 +1,56 @@
+{
+  "name": "obexctl",
+  "version": "0.1.0",
+  "description": "CLI tool: obexctl",
+  "source": "https://manpages.debian.org/obexctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "obexctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "obexctl",
+    "binary": "obexctl",
+    "check": "which obexctl",
+    "install_steps": [
+      "apt-get install obexctl 2>/dev/null || which obexctl",
+      "Verify: obexctl --version",
+      "supercli plugins install ./plugins/obexctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "obexctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print obexctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "obexctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install obexctl: apt-get install obexctl 2>/dev/null || which obexctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "obexctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to obexctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "obexctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install obexctl: apt-get install obexctl 2>/dev/null || which obexctl"
+      },
+      "args": []
+    }
+  ]
+}

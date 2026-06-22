@@ -1,0 +1,56 @@
+{
+  "name": "oclock",
+  "version": "0.1.0",
+  "description": "CLI tool: oclock",
+  "source": "https://manpages.debian.org/oclock",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "oclock"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "oclock",
+    "binary": "oclock",
+    "check": "which oclock",
+    "install_steps": [
+      "apt-get install oclock 2>/dev/null || which oclock",
+      "Verify: oclock --version",
+      "supercli plugins install ./plugins/oclock --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oclock",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oclock version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oclock",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install oclock: apt-get install oclock 2>/dev/null || which oclock"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oclock",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oclock CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oclock",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oclock: apt-get install oclock 2>/dev/null || which oclock"
+      },
+      "args": []
+    }
+  ]
+}

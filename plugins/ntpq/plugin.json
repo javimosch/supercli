@@ -1,0 +1,56 @@
+{
+  "name": "ntpq",
+  "version": "0.1.0",
+  "description": "CLI tool: ntpq",
+  "source": "https://manpages.debian.org/ntpq",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntpq"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntpq",
+    "binary": "ntpq",
+    "check": "which ntpq",
+    "install_steps": [
+      "apt-get install ntpq 2>/dev/null || which ntpq",
+      "Verify: ntpq --version",
+      "supercli plugins install ./plugins/ntpq --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntpq",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntpq version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpq",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntpq: apt-get install ntpq 2>/dev/null || which ntpq"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntpq",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntpq CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpq",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntpq: apt-get install ntpq 2>/dev/null || which ntpq"
+      },
+      "args": []
+    }
+  ]
+}

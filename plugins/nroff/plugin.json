@@ -1,0 +1,56 @@
+{
+  "name": "nroff",
+  "version": "0.1.0",
+  "description": "CLI tool: nroff",
+  "source": "https://manpages.debian.org/nroff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nroff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nroff",
+    "binary": "nroff",
+    "check": "which nroff",
+    "install_steps": [
+      "apt-get install nroff 2>/dev/null || which nroff",
+      "Verify: nroff --version",
+      "supercli plugins install ./plugins/nroff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nroff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nroff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nroff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nroff: apt-get install nroff 2>/dev/null || which nroff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nroff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nroff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nroff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nroff: apt-get install nroff 2>/dev/null || which nroff"
+      },
+      "args": []
+    }
+  ]
+}

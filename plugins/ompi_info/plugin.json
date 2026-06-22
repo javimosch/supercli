@@ -1,0 +1,56 @@
+{
+  "name": "ompi_info",
+  "version": "0.1.0",
+  "description": "CLI tool: ompi_info",
+  "source": "https://manpages.debian.org/ompi_info",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ompi_info"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ompi_info",
+    "binary": "ompi_info",
+    "check": "which ompi_info",
+    "install_steps": [
+      "apt-get install ompi_info 2>/dev/null || which ompi_info",
+      "Verify: ompi_info --version",
+      "supercli plugins install ./plugins/ompi_info --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ompi_info",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ompi_info version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ompi_info",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ompi_info: apt-get install ompi_info 2>/dev/null || which ompi_info"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ompi_info",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ompi_info CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ompi_info",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ompi_info: apt-get install ompi_info 2>/dev/null || which ompi_info"
+      },
+      "args": []
+    }
+  ]
+}

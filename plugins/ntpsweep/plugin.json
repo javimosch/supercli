@@ -1,0 +1,56 @@
+{
+  "name": "ntpsweep",
+  "version": "0.1.0",
+  "description": "CLI tool: ntpsweep",
+  "source": "https://manpages.debian.org/ntpsweep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntpsweep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntpsweep",
+    "binary": "ntpsweep",
+    "check": "which ntpsweep",
+    "install_steps": [
+      "apt-get install ntpsweep 2>/dev/null || which ntpsweep",
+      "Verify: ntpsweep --version",
+      "supercli plugins install ./plugins/ntpsweep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntpsweep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntpsweep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpsweep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntpsweep: apt-get install ntpsweep 2>/dev/null || which ntpsweep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntpsweep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntpsweep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntpsweep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntpsweep: apt-get install ntpsweep 2>/dev/null || which ntpsweep"
+      },
+      "args": []
+    }
+  ]
+}

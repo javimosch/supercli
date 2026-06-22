@@ -1,0 +1,56 @@
+{
+  "name": "ocspclnt",
+  "version": "0.1.0",
+  "description": "CLI tool: ocspclnt",
+  "source": "https://manpages.debian.org/ocspclnt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ocspclnt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ocspclnt",
+    "binary": "ocspclnt",
+    "check": "which ocspclnt",
+    "install_steps": [
+      "apt-get install ocspclnt 2>/dev/null || which ocspclnt",
+      "Verify: ocspclnt --version",
+      "supercli plugins install ./plugins/ocspclnt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ocspclnt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ocspclnt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ocspclnt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ocspclnt: apt-get install ocspclnt 2>/dev/null || which ocspclnt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ocspclnt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ocspclnt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ocspclnt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ocspclnt: apt-get install ocspclnt 2>/dev/null || which ocspclnt"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "nodeenv",
+  "version": "0.1.0",
+  "description": "CLI tool: nodeenv",
+  "source": "https://manpages.debian.org/nodeenv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nodeenv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nodeenv",
+    "binary": "nodeenv",
+    "check": "which nodeenv",
+    "install_steps": [
+      "apt-get install nodeenv 2>/dev/null || which nodeenv",
+      "Verify: nodeenv --version",
+      "supercli plugins install ./plugins/nodeenv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nodeenv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nodeenv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodeenv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nodeenv: apt-get install nodeenv 2>/dev/null || which nodeenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nodeenv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nodeenv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodeenv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nodeenv: apt-get install nodeenv 2>/dev/null || which nodeenv"
+      },
+      "args": []
+    }
+  ]
+}

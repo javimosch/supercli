@@ -1,0 +1,56 @@
+{
+  "name": "nsupdate",
+  "version": "0.1.0",
+  "description": "CLI tool: nsupdate",
+  "source": "https://manpages.debian.org/nsupdate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nsupdate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nsupdate",
+    "binary": "nsupdate",
+    "check": "which nsupdate",
+    "install_steps": [
+      "apt-get install nsupdate 2>/dev/null || which nsupdate",
+      "Verify: nsupdate --version",
+      "supercli plugins install ./plugins/nsupdate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nsupdate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nsupdate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nsupdate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nsupdate: apt-get install nsupdate 2>/dev/null || which nsupdate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nsupdate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nsupdate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nsupdate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nsupdate: apt-get install nsupdate 2>/dev/null || which nsupdate"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "nspr-config",
+  "version": "0.1.0",
+  "description": "CLI tool: nspr-config",
+  "source": "https://manpages.debian.org/nspr-config",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nspr-config"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nspr-config",
+    "binary": "nspr-config",
+    "check": "which nspr-config",
+    "install_steps": [
+      "apt-get install nspr-config 2>/dev/null || which nspr-config",
+      "Verify: nspr-config --version",
+      "supercli plugins install ./plugins/nspr-config --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nspr-config",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nspr-config version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nspr-config",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nspr-config: apt-get install nspr-config 2>/dev/null || which nspr-config"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nspr-config",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nspr-config CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nspr-config",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nspr-config: apt-get install nspr-config 2>/dev/null || which nspr-config"
+      },
+      "args": []
+    }
+  ]
+}

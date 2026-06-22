@@ -1,0 +1,56 @@
+{
+  "name": "nping",
+  "version": "0.1.0",
+  "description": "CLI tool: nping",
+  "source": "https://manpages.debian.org/nping",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nping"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nping",
+    "binary": "nping",
+    "check": "which nping",
+    "install_steps": [
+      "apt-get install nping 2>/dev/null || which nping",
+      "Verify: nping --version",
+      "supercli plugins install ./plugins/nping --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nping",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nping version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nping",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nping: apt-get install nping 2>/dev/null || which nping"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nping",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nping CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nping",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nping: apt-get install nping 2>/dev/null || which nping"
+      },
+      "args": []
+    }
+  ]
+}

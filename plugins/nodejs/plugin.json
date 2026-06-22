@@ -1,0 +1,56 @@
+{
+  "name": "nodejs",
+  "version": "0.1.0",
+  "description": "CLI tool: nodejs",
+  "source": "https://manpages.debian.org/nodejs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "nodejs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "nodejs",
+    "binary": "nodejs",
+    "check": "which nodejs",
+    "install_steps": [
+      "apt-get install nodejs 2>/dev/null || which nodejs",
+      "Verify: nodejs --version",
+      "supercli plugins install ./plugins/nodejs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nodejs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nodejs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodejs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install nodejs: apt-get install nodejs 2>/dev/null || which nodejs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nodejs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nodejs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nodejs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nodejs: apt-get install nodejs 2>/dev/null || which nodejs"
+      },
+      "args": []
+    }
+  ]
+}

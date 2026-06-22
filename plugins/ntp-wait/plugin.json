@@ -1,0 +1,56 @@
+{
+  "name": "ntp-wait",
+  "version": "0.1.0",
+  "description": "CLI tool: ntp-wait",
+  "source": "https://manpages.debian.org/ntp-wait",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ntp-wait"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ntp-wait",
+    "binary": "ntp-wait",
+    "check": "which ntp-wait",
+    "install_steps": [
+      "apt-get install ntp-wait 2>/dev/null || which ntp-wait",
+      "Verify: ntp-wait --version",
+      "supercli plugins install ./plugins/ntp-wait --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ntp-wait",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ntp-wait version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntp-wait",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ntp-wait: apt-get install ntp-wait 2>/dev/null || which ntp-wait"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ntp-wait",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ntp-wait CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ntp-wait",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ntp-wait: apt-get install ntp-wait 2>/dev/null || which ntp-wait"
+      },
+      "args": []
+    }
+  ]
+}
