@@ -1,0 +1,56 @@
+{
+  "name": "hp-probe",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-probe",
+  "source": "https://manpages.debian.org/hp-probe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-probe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-probe",
+    "binary": "hp-probe",
+    "check": "which hp-probe",
+    "install_steps": [
+      "apt-get install hp-probe 2>/dev/null || which hp-probe",
+      "Verify: hp-probe --version",
+      "supercli plugins install ./plugins/hp-probe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-probe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-probe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-probe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-probe: apt-get install hp-probe 2>/dev/null || which hp-probe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-probe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-probe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-probe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-probe: apt-get install hp-probe 2>/dev/null || which hp-probe"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "hp-plugin-ubuntu",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-plugin-ubuntu",
+  "source": "https://manpages.debian.org/hp-plugin-ubuntu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-plugin-ubuntu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-plugin-ubuntu",
+    "binary": "hp-plugin-ubuntu",
+    "check": "which hp-plugin-ubuntu",
+    "install_steps": [
+      "apt-get install hp-plugin-ubuntu 2>/dev/null || which hp-plugin-ubuntu",
+      "Verify: hp-plugin-ubuntu --version",
+      "supercli plugins install ./plugins/hp-plugin-ubuntu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-plugin-ubuntu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-plugin-ubuntu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-plugin-ubuntu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-plugin-ubuntu: apt-get install hp-plugin-ubuntu 2>/dev/null || which hp-plugin-ubuntu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-plugin-ubuntu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-plugin-ubuntu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-plugin-ubuntu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-plugin-ubuntu: apt-get install hp-plugin-ubuntu 2>/dev/null || which hp-plugin-ubuntu"
+      },
+      "args": []
+    }
+  ]
+}

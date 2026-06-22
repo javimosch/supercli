@@ -1,0 +1,56 @@
+{
+  "name": "hp-clean",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-clean",
+  "source": "https://manpages.debian.org/hp-clean",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-clean"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-clean",
+    "binary": "hp-clean",
+    "check": "which hp-clean",
+    "install_steps": [
+      "apt-get install hp-clean 2>/dev/null || which hp-clean",
+      "Verify: hp-clean --version",
+      "supercli plugins install ./plugins/hp-clean --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-clean",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-clean version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-clean",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-clean: apt-get install hp-clean 2>/dev/null || which hp-clean"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-clean",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-clean CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-clean",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-clean: apt-get install hp-clean 2>/dev/null || which hp-clean"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "hp-query",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-query",
+  "source": "https://manpages.debian.org/hp-query",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-query"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-query",
+    "binary": "hp-query",
+    "check": "which hp-query",
+    "install_steps": [
+      "apt-get install hp-query 2>/dev/null || which hp-query",
+      "Verify: hp-query --version",
+      "supercli plugins install ./plugins/hp-query --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-query",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-query version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-query",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-query: apt-get install hp-query 2>/dev/null || which hp-query"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-query",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-query CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-query",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-query: apt-get install hp-query 2>/dev/null || which hp-query"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "iceauth",
+  "version": "0.1.0",
+  "description": "CLI tool: iceauth",
+  "source": "https://manpages.debian.org/iceauth",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "iceauth"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "iceauth",
+    "binary": "iceauth",
+    "check": "which iceauth",
+    "install_steps": [
+      "apt-get install iceauth 2>/dev/null || which iceauth",
+      "Verify: iceauth --version",
+      "supercli plugins install ./plugins/iceauth --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "iceauth",
+      "resource": "self",
+      "action": "version",
+      "description": "Print iceauth version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iceauth",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install iceauth: apt-get install iceauth 2>/dev/null || which iceauth"
+      },
+      "args": []
+    },
+    {
+      "namespace": "iceauth",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to iceauth CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "iceauth",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install iceauth: apt-get install iceauth 2>/dev/null || which iceauth"
+      },
+      "args": []
+    }
+  ]
+}

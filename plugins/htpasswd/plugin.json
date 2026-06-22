@@ -1,0 +1,56 @@
+{
+  "name": "htpasswd",
+  "version": "0.1.0",
+  "description": "CLI tool: htpasswd",
+  "source": "https://manpages.debian.org/htpasswd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "htpasswd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "htpasswd",
+    "binary": "htpasswd",
+    "check": "which htpasswd",
+    "install_steps": [
+      "apt-get install htpasswd 2>/dev/null || which htpasswd",
+      "Verify: htpasswd --version",
+      "supercli plugins install ./plugins/htpasswd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "htpasswd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print htpasswd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htpasswd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install htpasswd: apt-get install htpasswd 2>/dev/null || which htpasswd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "htpasswd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to htpasswd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htpasswd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install htpasswd: apt-get install htpasswd 2>/dev/null || which htpasswd"
+      },
+      "args": []
+    }
+  ]
+}

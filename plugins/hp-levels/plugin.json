@@ -1,0 +1,56 @@
+{
+  "name": "hp-levels",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-levels",
+  "source": "https://manpages.debian.org/hp-levels",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-levels"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-levels",
+    "binary": "hp-levels",
+    "check": "which hp-levels",
+    "install_steps": [
+      "apt-get install hp-levels 2>/dev/null || which hp-levels",
+      "Verify: hp-levels --version",
+      "supercli plugins install ./plugins/hp-levels --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-levels",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-levels version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-levels",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-levels: apt-get install hp-levels 2>/dev/null || which hp-levels"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-levels",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-levels CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-levels",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-levels: apt-get install hp-levels 2>/dev/null || which hp-levels"
+      },
+      "args": []
+    }
+  ]
+}

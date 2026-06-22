@@ -1,0 +1,56 @@
+{
+  "name": "hp-pkservice",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-pkservice",
+  "source": "https://manpages.debian.org/hp-pkservice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-pkservice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-pkservice",
+    "binary": "hp-pkservice",
+    "check": "which hp-pkservice",
+    "install_steps": [
+      "apt-get install hp-pkservice 2>/dev/null || which hp-pkservice",
+      "Verify: hp-pkservice --version",
+      "supercli plugins install ./plugins/hp-pkservice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-pkservice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-pkservice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-pkservice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-pkservice: apt-get install hp-pkservice 2>/dev/null || which hp-pkservice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-pkservice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-pkservice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-pkservice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-pkservice: apt-get install hp-pkservice 2>/dev/null || which hp-pkservice"
+      },
+      "args": []
+    }
+  ]
+}

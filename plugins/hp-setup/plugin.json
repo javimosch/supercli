@@ -1,0 +1,56 @@
+{
+  "name": "hp-setup",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-setup",
+  "source": "https://manpages.debian.org/hp-setup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-setup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-setup",
+    "binary": "hp-setup",
+    "check": "which hp-setup",
+    "install_steps": [
+      "apt-get install hp-setup 2>/dev/null || which hp-setup",
+      "Verify: hp-setup --version",
+      "supercli plugins install ./plugins/hp-setup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-setup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-setup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-setup",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-setup: apt-get install hp-setup 2>/dev/null || which hp-setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-setup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-setup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-setup",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-setup: apt-get install hp-setup 2>/dev/null || which hp-setup"
+      },
+      "args": []
+    }
+  ]
+}

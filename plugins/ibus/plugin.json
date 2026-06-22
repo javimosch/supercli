@@ -1,0 +1,56 @@
+{
+  "name": "ibus",
+  "version": "0.1.0",
+  "description": "CLI tool: ibus",
+  "source": "https://manpages.debian.org/ibus",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ibus"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ibus",
+    "binary": "ibus",
+    "check": "which ibus",
+    "install_steps": [
+      "apt-get install ibus 2>/dev/null || which ibus",
+      "Verify: ibus --version",
+      "supercli plugins install ./plugins/ibus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ibus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ibus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ibus",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ibus: apt-get install ibus 2>/dev/null || which ibus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ibus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ibus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ibus",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ibus: apt-get install ibus 2>/dev/null || which ibus"
+      },
+      "args": []
+    }
+  ]
+}

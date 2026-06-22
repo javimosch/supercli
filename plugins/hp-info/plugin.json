@@ -1,0 +1,56 @@
+{
+  "name": "hp-info",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-info",
+  "source": "https://manpages.debian.org/hp-info",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-info"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-info",
+    "binary": "hp-info",
+    "check": "which hp-info",
+    "install_steps": [
+      "apt-get install hp-info 2>/dev/null || which hp-info",
+      "Verify: hp-info --version",
+      "supercli plugins install ./plugins/hp-info --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-info",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-info version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-info",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-info: apt-get install hp-info 2>/dev/null || which hp-info"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-info",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-info CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-info",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-info: apt-get install hp-info 2>/dev/null || which hp-info"
+      },
+      "args": []
+    }
+  ]
+}

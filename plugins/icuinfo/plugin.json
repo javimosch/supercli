@@ -1,0 +1,56 @@
+{
+  "name": "icuinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: icuinfo",
+  "source": "https://manpages.debian.org/icuinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "icuinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "icuinfo",
+    "binary": "icuinfo",
+    "check": "which icuinfo",
+    "install_steps": [
+      "apt-get install icuinfo 2>/dev/null || which icuinfo",
+      "Verify: icuinfo --version",
+      "supercli plugins install ./plugins/icuinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "icuinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print icuinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "icuinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install icuinfo: apt-get install icuinfo 2>/dev/null || which icuinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "icuinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to icuinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "icuinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install icuinfo: apt-get install icuinfo 2>/dev/null || which icuinfo"
+      },
+      "args": []
+    }
+  ]
+}

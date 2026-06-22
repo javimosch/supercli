@@ -1,0 +1,56 @@
+{
+  "name": "hotify-cli",
+  "version": "0.1.0",
+  "description": "CLI tool: hotify-cli",
+  "source": "https://manpages.debian.org/hotify-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hotify-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hotify-cli",
+    "binary": "hotify-cli",
+    "check": "which hotify-cli",
+    "install_steps": [
+      "apt-get install hotify-cli 2>/dev/null || which hotify-cli",
+      "Verify: hotify-cli --version",
+      "supercli plugins install ./plugins/hotify-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hotify-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hotify-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hotify-cli: apt-get install hotify-cli 2>/dev/null || which hotify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hotify-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hotify-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hotify-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hotify-cli: apt-get install hotify-cli 2>/dev/null || which hotify-cli"
+      },
+      "args": []
+    }
+  ]
+}

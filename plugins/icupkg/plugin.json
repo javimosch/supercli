@@ -1,0 +1,56 @@
+{
+  "name": "icupkg",
+  "version": "0.1.0",
+  "description": "CLI tool: icupkg",
+  "source": "https://manpages.debian.org/icupkg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "icupkg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "icupkg",
+    "binary": "icupkg",
+    "check": "which icupkg",
+    "install_steps": [
+      "apt-get install icupkg 2>/dev/null || which icupkg",
+      "Verify: icupkg --version",
+      "supercli plugins install ./plugins/icupkg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "icupkg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print icupkg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "icupkg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install icupkg: apt-get install icupkg 2>/dev/null || which icupkg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "icupkg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to icupkg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "icupkg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install icupkg: apt-get install icupkg 2>/dev/null || which icupkg"
+      },
+      "args": []
+    }
+  ]
+}

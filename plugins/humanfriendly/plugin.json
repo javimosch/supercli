@@ -1,0 +1,56 @@
+{
+  "name": "humanfriendly",
+  "version": "0.1.0",
+  "description": "CLI tool: humanfriendly",
+  "source": "https://manpages.debian.org/humanfriendly",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "humanfriendly"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "humanfriendly",
+    "binary": "humanfriendly",
+    "check": "which humanfriendly",
+    "install_steps": [
+      "apt-get install humanfriendly 2>/dev/null || which humanfriendly",
+      "Verify: humanfriendly --version",
+      "supercli plugins install ./plugins/humanfriendly --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "humanfriendly",
+      "resource": "self",
+      "action": "version",
+      "description": "Print humanfriendly version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "humanfriendly",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install humanfriendly: apt-get install humanfriendly 2>/dev/null || which humanfriendly"
+      },
+      "args": []
+    },
+    {
+      "namespace": "humanfriendly",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to humanfriendly CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "humanfriendly",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install humanfriendly: apt-get install humanfriendly 2>/dev/null || which humanfriendly"
+      },
+      "args": []
+    }
+  ]
+}

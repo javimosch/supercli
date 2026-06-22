@@ -1,0 +1,56 @@
+{
+  "name": "hp-doctor",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-doctor",
+  "source": "https://manpages.debian.org/hp-doctor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-doctor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-doctor",
+    "binary": "hp-doctor",
+    "check": "which hp-doctor",
+    "install_steps": [
+      "apt-get install hp-doctor 2>/dev/null || which hp-doctor",
+      "Verify: hp-doctor --version",
+      "supercli plugins install ./plugins/hp-doctor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-doctor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-doctor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-doctor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-doctor: apt-get install hp-doctor 2>/dev/null || which hp-doctor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-doctor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-doctor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-doctor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-doctor: apt-get install hp-doctor 2>/dev/null || which hp-doctor"
+      },
+      "args": []
+    }
+  ]
+}

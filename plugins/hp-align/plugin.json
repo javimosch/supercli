@@ -1,0 +1,56 @@
+{
+  "name": "hp-align",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-align",
+  "source": "https://manpages.debian.org/hp-align",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-align"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-align",
+    "binary": "hp-align",
+    "check": "which hp-align",
+    "install_steps": [
+      "apt-get install hp-align 2>/dev/null || which hp-align",
+      "Verify: hp-align --version",
+      "supercli plugins install ./plugins/hp-align --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-align",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-align version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-align",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-align: apt-get install hp-align 2>/dev/null || which hp-align"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-align",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-align CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-align",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-align: apt-get install hp-align 2>/dev/null || which hp-align"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "hp-firmware",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-firmware",
+  "source": "https://manpages.debian.org/hp-firmware",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-firmware"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-firmware",
+    "binary": "hp-firmware",
+    "check": "which hp-firmware",
+    "install_steps": [
+      "apt-get install hp-firmware 2>/dev/null || which hp-firmware",
+      "Verify: hp-firmware --version",
+      "supercli plugins install ./plugins/hp-firmware --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-firmware",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-firmware version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-firmware",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-firmware: apt-get install hp-firmware 2>/dev/null || which hp-firmware"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-firmware",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-firmware CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-firmware",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-firmware: apt-get install hp-firmware 2>/dev/null || which hp-firmware"
+      },
+      "args": []
+    }
+  ]
+}

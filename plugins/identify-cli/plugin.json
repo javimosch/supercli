@@ -1,0 +1,56 @@
+{
+  "name": "identify-cli",
+  "version": "0.1.0",
+  "description": "CLI tool: identify-cli",
+  "source": "https://manpages.debian.org/identify-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "identify-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "identify-cli",
+    "binary": "identify-cli",
+    "check": "which identify-cli",
+    "install_steps": [
+      "apt-get install identify-cli 2>/dev/null || which identify-cli",
+      "Verify: identify-cli --version",
+      "supercli plugins install ./plugins/identify-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "identify-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print identify-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "identify-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install identify-cli: apt-get install identify-cli 2>/dev/null || which identify-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "identify-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to identify-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "identify-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install identify-cli: apt-get install identify-cli 2>/dev/null || which identify-cli"
+      },
+      "args": []
+    }
+  ]
+}

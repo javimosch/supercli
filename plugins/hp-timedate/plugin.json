@@ -1,0 +1,56 @@
+{
+  "name": "hp-timedate",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-timedate",
+  "source": "https://manpages.debian.org/hp-timedate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-timedate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-timedate",
+    "binary": "hp-timedate",
+    "check": "which hp-timedate",
+    "install_steps": [
+      "apt-get install hp-timedate 2>/dev/null || which hp-timedate",
+      "Verify: hp-timedate --version",
+      "supercli plugins install ./plugins/hp-timedate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-timedate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-timedate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-timedate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-timedate: apt-get install hp-timedate 2>/dev/null || which hp-timedate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-timedate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-timedate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-timedate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-timedate: apt-get install hp-timedate 2>/dev/null || which hp-timedate"
+      },
+      "args": []
+    }
+  ]
+}

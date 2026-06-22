@@ -1,0 +1,56 @@
+{
+  "name": "hp-scan",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-scan",
+  "source": "https://manpages.debian.org/hp-scan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-scan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-scan",
+    "binary": "hp-scan",
+    "check": "which hp-scan",
+    "install_steps": [
+      "apt-get install hp-scan 2>/dev/null || which hp-scan",
+      "Verify: hp-scan --version",
+      "supercli plugins install ./plugins/hp-scan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-scan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-scan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-scan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-scan: apt-get install hp-scan 2>/dev/null || which hp-scan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-scan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-scan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-scan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-scan: apt-get install hp-scan 2>/dev/null || which hp-scan"
+      },
+      "args": []
+    }
+  ]
+}

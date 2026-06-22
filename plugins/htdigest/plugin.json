@@ -1,0 +1,56 @@
+{
+  "name": "htdigest",
+  "version": "0.1.0",
+  "description": "CLI tool: htdigest",
+  "source": "https://manpages.debian.org/htdigest",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "htdigest"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "htdigest",
+    "binary": "htdigest",
+    "check": "which htdigest",
+    "install_steps": [
+      "apt-get install htdigest 2>/dev/null || which htdigest",
+      "Verify: htdigest --version",
+      "supercli plugins install ./plugins/htdigest --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "htdigest",
+      "resource": "self",
+      "action": "version",
+      "description": "Print htdigest version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htdigest",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install htdigest: apt-get install htdigest 2>/dev/null || which htdigest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "htdigest",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to htdigest CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htdigest",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install htdigest: apt-get install htdigest 2>/dev/null || which htdigest"
+      },
+      "args": []
+    }
+  ]
+}

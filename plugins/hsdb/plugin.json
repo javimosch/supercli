@@ -1,0 +1,56 @@
+{
+  "name": "hsdb",
+  "version": "0.1.0",
+  "description": "CLI tool: hsdb",
+  "source": "https://manpages.debian.org/hsdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hsdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hsdb",
+    "binary": "hsdb",
+    "check": "which hsdb",
+    "install_steps": [
+      "apt-get install hsdb 2>/dev/null || which hsdb",
+      "Verify: hsdb --version",
+      "supercli plugins install ./plugins/hsdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hsdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hsdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hsdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hsdb: apt-get install hsdb 2>/dev/null || which hsdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hsdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hsdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hsdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hsdb: apt-get install hsdb 2>/dev/null || which hsdb"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ico",
+  "version": "0.1.0",
+  "description": "CLI tool: ico",
+  "source": "https://manpages.debian.org/ico",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ico"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ico",
+    "binary": "ico",
+    "check": "which ico",
+    "install_steps": [
+      "apt-get install ico 2>/dev/null || which ico",
+      "Verify: ico --version",
+      "supercli plugins install ./plugins/ico --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ico",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ico version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ico",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ico: apt-get install ico 2>/dev/null || which ico"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ico",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ico CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ico",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ico: apt-get install ico 2>/dev/null || which ico"
+      },
+      "args": []
+    }
+  ]
+}

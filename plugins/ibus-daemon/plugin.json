@@ -1,0 +1,56 @@
+{
+  "name": "ibus-daemon",
+  "version": "0.1.0",
+  "description": "CLI tool: ibus-daemon",
+  "source": "https://manpages.debian.org/ibus-daemon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ibus-daemon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ibus-daemon",
+    "binary": "ibus-daemon",
+    "check": "which ibus-daemon",
+    "install_steps": [
+      "apt-get install ibus-daemon 2>/dev/null || which ibus-daemon",
+      "Verify: ibus-daemon --version",
+      "supercli plugins install ./plugins/ibus-daemon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ibus-daemon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ibus-daemon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ibus-daemon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ibus-daemon: apt-get install ibus-daemon 2>/dev/null || which ibus-daemon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ibus-daemon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ibus-daemon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ibus-daemon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ibus-daemon: apt-get install ibus-daemon 2>/dev/null || which ibus-daemon"
+      },
+      "args": []
+    }
+  ]
+}

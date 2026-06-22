@@ -1,0 +1,56 @@
+{
+  "name": "hp-plugin",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-plugin",
+  "source": "https://manpages.debian.org/hp-plugin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-plugin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-plugin",
+    "binary": "hp-plugin",
+    "check": "which hp-plugin",
+    "install_steps": [
+      "apt-get install hp-plugin 2>/dev/null || which hp-plugin",
+      "Verify: hp-plugin --version",
+      "supercli plugins install ./plugins/hp-plugin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-plugin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-plugin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-plugin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-plugin: apt-get install hp-plugin 2>/dev/null || which hp-plugin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-plugin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-plugin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-plugin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-plugin: apt-get install hp-plugin 2>/dev/null || which hp-plugin"
+      },
+      "args": []
+    }
+  ]
+}

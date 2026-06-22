@@ -1,0 +1,56 @@
+{
+  "name": "hp-colorcal",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-colorcal",
+  "source": "https://manpages.debian.org/hp-colorcal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-colorcal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-colorcal",
+    "binary": "hp-colorcal",
+    "check": "which hp-colorcal",
+    "install_steps": [
+      "apt-get install hp-colorcal 2>/dev/null || which hp-colorcal",
+      "Verify: hp-colorcal --version",
+      "supercli plugins install ./plugins/hp-colorcal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-colorcal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-colorcal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-colorcal",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-colorcal: apt-get install hp-colorcal 2>/dev/null || which hp-colorcal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-colorcal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-colorcal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-colorcal",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-colorcal: apt-get install hp-colorcal 2>/dev/null || which hp-colorcal"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "hp-check",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-check",
+  "source": "https://manpages.debian.org/hp-check",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-check"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-check",
+    "binary": "hp-check",
+    "check": "which hp-check",
+    "install_steps": [
+      "apt-get install hp-check 2>/dev/null || which hp-check",
+      "Verify: hp-check --version",
+      "supercli plugins install ./plugins/hp-check --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-check",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-check version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-check",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-check: apt-get install hp-check 2>/dev/null || which hp-check"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-check",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-check CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-check",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-check: apt-get install hp-check 2>/dev/null || which hp-check"
+      },
+      "args": []
+    }
+  ]
+}

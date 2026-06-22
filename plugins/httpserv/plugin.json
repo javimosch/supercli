@@ -1,0 +1,56 @@
+{
+  "name": "httpserv",
+  "version": "0.1.0",
+  "description": "CLI tool: httpserv",
+  "source": "https://manpages.debian.org/httpserv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "httpserv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "httpserv",
+    "binary": "httpserv",
+    "check": "which httpserv",
+    "install_steps": [
+      "apt-get install httpserv 2>/dev/null || which httpserv",
+      "Verify: httpserv --version",
+      "supercli plugins install ./plugins/httpserv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "httpserv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print httpserv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpserv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install httpserv: apt-get install httpserv 2>/dev/null || which httpserv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "httpserv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to httpserv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httpserv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install httpserv: apt-get install httpserv 2>/dev/null || which httpserv"
+      },
+      "args": []
+    }
+  ]
+}

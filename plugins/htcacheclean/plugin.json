@@ -1,0 +1,56 @@
+{
+  "name": "htcacheclean",
+  "version": "0.1.0",
+  "description": "CLI tool: htcacheclean",
+  "source": "https://manpages.debian.org/htcacheclean",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "htcacheclean"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "htcacheclean",
+    "binary": "htcacheclean",
+    "check": "which htcacheclean",
+    "install_steps": [
+      "apt-get install htcacheclean 2>/dev/null || which htcacheclean",
+      "Verify: htcacheclean --version",
+      "supercli plugins install ./plugins/htcacheclean --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "htcacheclean",
+      "resource": "self",
+      "action": "version",
+      "description": "Print htcacheclean version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htcacheclean",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install htcacheclean: apt-get install htcacheclean 2>/dev/null || which htcacheclean"
+      },
+      "args": []
+    },
+    {
+      "namespace": "htcacheclean",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to htcacheclean CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htcacheclean",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install htcacheclean: apt-get install htcacheclean 2>/dev/null || which htcacheclean"
+      },
+      "args": []
+    }
+  ]
+}

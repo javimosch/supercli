@@ -1,0 +1,56 @@
+{
+  "name": "hostnamectl",
+  "version": "0.1.0",
+  "description": "CLI tool: hostnamectl",
+  "source": "https://manpages.debian.org/hostnamectl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hostnamectl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hostnamectl",
+    "binary": "hostnamectl",
+    "check": "which hostnamectl",
+    "install_steps": [
+      "apt-get install hostnamectl 2>/dev/null || which hostnamectl",
+      "Verify: hostnamectl --version",
+      "supercli plugins install ./plugins/hostnamectl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hostnamectl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hostnamectl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostnamectl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hostnamectl: apt-get install hostnamectl 2>/dev/null || which hostnamectl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hostnamectl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hostnamectl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostnamectl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hostnamectl: apt-get install hostnamectl 2>/dev/null || which hostnamectl"
+      },
+      "args": []
+    }
+  ]
+}

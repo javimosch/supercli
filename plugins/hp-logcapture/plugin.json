@@ -1,0 +1,56 @@
+{
+  "name": "hp-logcapture",
+  "version": "0.1.0",
+  "description": "CLI tool: hp-logcapture",
+  "source": "https://manpages.debian.org/hp-logcapture",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "hp-logcapture"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "hp-logcapture",
+    "binary": "hp-logcapture",
+    "check": "which hp-logcapture",
+    "install_steps": [
+      "apt-get install hp-logcapture 2>/dev/null || which hp-logcapture",
+      "Verify: hp-logcapture --version",
+      "supercli plugins install ./plugins/hp-logcapture --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hp-logcapture",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hp-logcapture version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-logcapture",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install hp-logcapture: apt-get install hp-logcapture 2>/dev/null || which hp-logcapture"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hp-logcapture",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hp-logcapture CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hp-logcapture",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hp-logcapture: apt-get install hp-logcapture 2>/dev/null || which hp-logcapture"
+      },
+      "args": []
+    }
+  ]
+}

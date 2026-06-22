@@ -1,0 +1,56 @@
+{
+  "name": "htdbm",
+  "version": "0.1.0",
+  "description": "CLI tool: htdbm",
+  "source": "https://manpages.debian.org/htdbm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "htdbm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "htdbm",
+    "binary": "htdbm",
+    "check": "which htdbm",
+    "install_steps": [
+      "apt-get install htdbm 2>/dev/null || which htdbm",
+      "Verify: htdbm --version",
+      "supercli plugins install ./plugins/htdbm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "htdbm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print htdbm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htdbm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install htdbm: apt-get install htdbm 2>/dev/null || which htdbm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "htdbm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to htdbm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "htdbm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install htdbm: apt-get install htdbm 2>/dev/null || which htdbm"
+      },
+      "args": []
+    }
+  ]
+}

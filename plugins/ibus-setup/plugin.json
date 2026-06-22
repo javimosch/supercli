@@ -1,0 +1,56 @@
+{
+  "name": "ibus-setup",
+  "version": "0.1.0",
+  "description": "CLI tool: ibus-setup",
+  "source": "https://manpages.debian.org/ibus-setup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ibus-setup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ibus-setup",
+    "binary": "ibus-setup",
+    "check": "which ibus-setup",
+    "install_steps": [
+      "apt-get install ibus-setup 2>/dev/null || which ibus-setup",
+      "Verify: ibus-setup --version",
+      "supercli plugins install ./plugins/ibus-setup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ibus-setup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ibus-setup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ibus-setup",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ibus-setup: apt-get install ibus-setup 2>/dev/null || which ibus-setup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ibus-setup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ibus-setup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ibus-setup",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ibus-setup: apt-get install ibus-setup 2>/dev/null || which ibus-setup"
+      },
+      "args": []
+    }
+  ]
+}
