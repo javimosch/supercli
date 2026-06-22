@@ -1,0 +1,56 @@
+{
+  "name": "tailscaled",
+  "version": "0.1.0",
+  "description": "CLI tool: tailscaled",
+  "source": "https://manpages.debian.org/tailscaled",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tailscaled"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tailscaled",
+    "binary": "tailscaled",
+    "check": "which tailscaled",
+    "install_steps": [
+      "apt-get install tailscaled 2>/dev/null || which tailscaled",
+      "Verify: tailscaled --version",
+      "supercli plugins install ./plugins/tailscaled --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tailscaled",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tailscaled version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tailscaled",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tailscaled: apt-get install tailscaled 2>/dev/null || which tailscaled"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tailscaled",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tailscaled CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tailscaled",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tailscaled: apt-get install tailscaled 2>/dev/null || which tailscaled"
+      },
+      "args": []
+    }
+  ]
+}

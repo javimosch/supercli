@@ -1,0 +1,56 @@
+{
+  "name": "systemd-cgtop",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-cgtop",
+  "source": "https://manpages.debian.org/systemd-cgtop",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-cgtop"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-cgtop",
+    "binary": "systemd-cgtop",
+    "check": "which systemd-cgtop",
+    "install_steps": [
+      "apt-get install systemd-cgtop 2>/dev/null || which systemd-cgtop",
+      "Verify: systemd-cgtop --version",
+      "supercli plugins install ./plugins/systemd-cgtop --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-cgtop",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-cgtop version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cgtop",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-cgtop: apt-get install systemd-cgtop 2>/dev/null || which systemd-cgtop"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-cgtop",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-cgtop CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cgtop",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-cgtop: apt-get install systemd-cgtop 2>/dev/null || which systemd-cgtop"
+      },
+      "args": []
+    }
+  ]
+}

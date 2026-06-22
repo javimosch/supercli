@@ -1,0 +1,56 @@
+{
+  "name": "systemd-cat",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-cat",
+  "source": "https://manpages.debian.org/systemd-cat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-cat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-cat",
+    "binary": "systemd-cat",
+    "check": "which systemd-cat",
+    "install_steps": [
+      "apt-get install systemd-cat 2>/dev/null || which systemd-cat",
+      "Verify: systemd-cat --version",
+      "supercli plugins install ./plugins/systemd-cat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-cat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-cat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-cat: apt-get install systemd-cat 2>/dev/null || which systemd-cat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-cat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-cat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-cat: apt-get install systemd-cat 2>/dev/null || which systemd-cat"
+      },
+      "args": []
+    }
+  ]
+}

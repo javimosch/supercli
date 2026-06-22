@@ -1,0 +1,56 @@
+{
+  "name": "systemd-tmpfiles",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-tmpfiles",
+  "source": "https://manpages.debian.org/systemd-tmpfiles",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-tmpfiles"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-tmpfiles",
+    "binary": "systemd-tmpfiles",
+    "check": "which systemd-tmpfiles",
+    "install_steps": [
+      "apt-get install systemd-tmpfiles 2>/dev/null || which systemd-tmpfiles",
+      "Verify: systemd-tmpfiles --version",
+      "supercli plugins install ./plugins/systemd-tmpfiles --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-tmpfiles",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-tmpfiles version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-tmpfiles",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-tmpfiles: apt-get install systemd-tmpfiles 2>/dev/null || which systemd-tmpfiles"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-tmpfiles",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-tmpfiles CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-tmpfiles",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-tmpfiles: apt-get install systemd-tmpfiles 2>/dev/null || which systemd-tmpfiles"
+      },
+      "args": []
+    }
+  ]
+}

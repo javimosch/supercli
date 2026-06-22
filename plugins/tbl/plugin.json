@@ -1,0 +1,56 @@
+{
+  "name": "tbl",
+  "version": "0.1.0",
+  "description": "CLI tool: tbl",
+  "source": "https://manpages.debian.org/tbl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tbl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tbl",
+    "binary": "tbl",
+    "check": "which tbl",
+    "install_steps": [
+      "apt-get install tbl 2>/dev/null || which tbl",
+      "Verify: tbl --version",
+      "supercli plugins install ./plugins/tbl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tbl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tbl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tbl: apt-get install tbl 2>/dev/null || which tbl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tbl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tbl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tbl: apt-get install tbl 2>/dev/null || which tbl"
+      },
+      "args": []
+    }
+  ]
+}

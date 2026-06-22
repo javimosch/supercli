@@ -1,0 +1,56 @@
+{
+  "name": "teams-notify",
+  "version": "0.1.0",
+  "description": "CLI tool: teams-notify",
+  "source": "https://manpages.debian.org/teams-notify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "teams-notify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "teams-notify",
+    "binary": "teams-notify",
+    "check": "which teams-notify",
+    "install_steps": [
+      "apt-get install teams-notify 2>/dev/null || which teams-notify",
+      "Verify: teams-notify --version",
+      "supercli plugins install ./plugins/teams-notify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "teams-notify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print teams-notify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "teams-notify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install teams-notify: apt-get install teams-notify 2>/dev/null || which teams-notify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "teams-notify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to teams-notify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "teams-notify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install teams-notify: apt-get install teams-notify 2>/dev/null || which teams-notify"
+      },
+      "args": []
+    }
+  ]
+}

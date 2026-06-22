@@ -1,0 +1,56 @@
+{
+  "name": "tapestat",
+  "version": "0.1.0",
+  "description": "CLI tool: tapestat",
+  "source": "https://manpages.debian.org/tapestat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tapestat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tapestat",
+    "binary": "tapestat",
+    "check": "which tapestat",
+    "install_steps": [
+      "apt-get install tapestat 2>/dev/null || which tapestat",
+      "Verify: tapestat --version",
+      "supercli plugins install ./plugins/tapestat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tapestat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tapestat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tapestat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tapestat: apt-get install tapestat 2>/dev/null || which tapestat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tapestat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tapestat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tapestat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tapestat: apt-get install tapestat 2>/dev/null || which tapestat"
+      },
+      "args": []
+    }
+  ]
+}

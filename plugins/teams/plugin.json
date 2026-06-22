@@ -1,0 +1,56 @@
+{
+  "name": "teams",
+  "version": "0.1.0",
+  "description": "CLI tool: teams",
+  "source": "https://manpages.debian.org/teams",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "teams"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "teams",
+    "binary": "teams",
+    "check": "which teams",
+    "install_steps": [
+      "apt-get install teams 2>/dev/null || which teams",
+      "Verify: teams --version",
+      "supercli plugins install ./plugins/teams --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "teams",
+      "resource": "self",
+      "action": "version",
+      "description": "Print teams version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "teams",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install teams: apt-get install teams 2>/dev/null || which teams"
+      },
+      "args": []
+    },
+    {
+      "namespace": "teams",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to teams CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "teams",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install teams: apt-get install teams 2>/dev/null || which teams"
+      },
+      "args": []
+    }
+  ]
+}

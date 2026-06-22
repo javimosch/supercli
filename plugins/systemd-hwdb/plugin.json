@@ -1,0 +1,56 @@
+{
+  "name": "systemd-hwdb",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-hwdb",
+  "source": "https://manpages.debian.org/systemd-hwdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-hwdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-hwdb",
+    "binary": "systemd-hwdb",
+    "check": "which systemd-hwdb",
+    "install_steps": [
+      "apt-get install systemd-hwdb 2>/dev/null || which systemd-hwdb",
+      "Verify: systemd-hwdb --version",
+      "supercli plugins install ./plugins/systemd-hwdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-hwdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-hwdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-hwdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-hwdb: apt-get install systemd-hwdb 2>/dev/null || which systemd-hwdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-hwdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-hwdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-hwdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-hwdb: apt-get install systemd-hwdb 2>/dev/null || which systemd-hwdb"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "systemd-umount",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-umount",
+  "source": "https://manpages.debian.org/systemd-umount",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-umount"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-umount",
+    "binary": "systemd-umount",
+    "check": "which systemd-umount",
+    "install_steps": [
+      "apt-get install systemd-umount 2>/dev/null || which systemd-umount",
+      "Verify: systemd-umount --version",
+      "supercli plugins install ./plugins/systemd-umount --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-umount",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-umount version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-umount",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-umount: apt-get install systemd-umount 2>/dev/null || which systemd-umount"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-umount",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-umount CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-umount",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-umount: apt-get install systemd-umount 2>/dev/null || which systemd-umount"
+      },
+      "args": []
+    }
+  ]
+}

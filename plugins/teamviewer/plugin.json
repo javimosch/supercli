@@ -1,0 +1,56 @@
+{
+  "name": "teamviewer",
+  "version": "0.1.0",
+  "description": "CLI tool: teamviewer",
+  "source": "https://manpages.debian.org/teamviewer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "teamviewer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "teamviewer",
+    "binary": "teamviewer",
+    "check": "which teamviewer",
+    "install_steps": [
+      "apt-get install teamviewer 2>/dev/null || which teamviewer",
+      "Verify: teamviewer --version",
+      "supercli plugins install ./plugins/teamviewer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "teamviewer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print teamviewer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "teamviewer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install teamviewer: apt-get install teamviewer 2>/dev/null || which teamviewer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "teamviewer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to teamviewer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "teamviewer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install teamviewer: apt-get install teamviewer 2>/dev/null || which teamviewer"
+      },
+      "args": []
+    }
+  ]
+}

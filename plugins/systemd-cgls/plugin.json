@@ -1,0 +1,56 @@
+{
+  "name": "systemd-cgls",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-cgls",
+  "source": "https://manpages.debian.org/systemd-cgls",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-cgls"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-cgls",
+    "binary": "systemd-cgls",
+    "check": "which systemd-cgls",
+    "install_steps": [
+      "apt-get install systemd-cgls 2>/dev/null || which systemd-cgls",
+      "Verify: systemd-cgls --version",
+      "supercli plugins install ./plugins/systemd-cgls --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-cgls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-cgls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cgls",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-cgls: apt-get install systemd-cgls 2>/dev/null || which systemd-cgls"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-cgls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-cgls CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cgls",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-cgls: apt-get install systemd-cgls 2>/dev/null || which systemd-cgls"
+      },
+      "args": []
+    }
+  ]
+}

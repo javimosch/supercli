@@ -1,0 +1,56 @@
+{
+  "name": "systemd-cryptenroll",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-cryptenroll",
+  "source": "https://manpages.debian.org/systemd-cryptenroll",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-cryptenroll"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-cryptenroll",
+    "binary": "systemd-cryptenroll",
+    "check": "which systemd-cryptenroll",
+    "install_steps": [
+      "apt-get install systemd-cryptenroll 2>/dev/null || which systemd-cryptenroll",
+      "Verify: systemd-cryptenroll --version",
+      "supercli plugins install ./plugins/systemd-cryptenroll --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-cryptenroll",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-cryptenroll version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cryptenroll",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-cryptenroll: apt-get install systemd-cryptenroll 2>/dev/null || which systemd-cryptenroll"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-cryptenroll",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-cryptenroll CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-cryptenroll",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-cryptenroll: apt-get install systemd-cryptenroll 2>/dev/null || which systemd-cryptenroll"
+      },
+      "args": []
+    }
+  ]
+}

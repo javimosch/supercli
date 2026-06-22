@@ -1,0 +1,56 @@
+{
+  "name": "tasksel",
+  "version": "0.1.0",
+  "description": "CLI tool: tasksel",
+  "source": "https://manpages.debian.org/tasksel",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tasksel"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tasksel",
+    "binary": "tasksel",
+    "check": "which tasksel",
+    "install_steps": [
+      "apt-get install tasksel 2>/dev/null || which tasksel",
+      "Verify: tasksel --version",
+      "supercli plugins install ./plugins/tasksel --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tasksel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tasksel version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tasksel",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tasksel: apt-get install tasksel 2>/dev/null || which tasksel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tasksel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tasksel CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tasksel",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tasksel: apt-get install tasksel 2>/dev/null || which tasksel"
+      },
+      "args": []
+    }
+  ]
+}

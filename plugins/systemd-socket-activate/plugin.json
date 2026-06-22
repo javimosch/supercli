@@ -1,0 +1,56 @@
+{
+  "name": "systemd-socket-activate",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-socket-activate",
+  "source": "https://manpages.debian.org/systemd-socket-activate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-socket-activate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-socket-activate",
+    "binary": "systemd-socket-activate",
+    "check": "which systemd-socket-activate",
+    "install_steps": [
+      "apt-get install systemd-socket-activate 2>/dev/null || which systemd-socket-activate",
+      "Verify: systemd-socket-activate --version",
+      "supercli plugins install ./plugins/systemd-socket-activate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-socket-activate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-socket-activate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-socket-activate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-socket-activate: apt-get install systemd-socket-activate 2>/dev/null || which systemd-socket-activate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-socket-activate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-socket-activate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-socket-activate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-socket-activate: apt-get install systemd-socket-activate 2>/dev/null || which systemd-socket-activate"
+      },
+      "args": []
+    }
+  ]
+}

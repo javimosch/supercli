@@ -1,0 +1,56 @@
+{
+  "name": "systemd-resolve",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-resolve",
+  "source": "https://manpages.debian.org/systemd-resolve",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-resolve"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-resolve",
+    "binary": "systemd-resolve",
+    "check": "which systemd-resolve",
+    "install_steps": [
+      "apt-get install systemd-resolve 2>/dev/null || which systemd-resolve",
+      "Verify: systemd-resolve --version",
+      "supercli plugins install ./plugins/systemd-resolve --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-resolve",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-resolve version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-resolve",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-resolve: apt-get install systemd-resolve 2>/dev/null || which systemd-resolve"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-resolve",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-resolve CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-resolve",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-resolve: apt-get install systemd-resolve 2>/dev/null || which systemd-resolve"
+      },
+      "args": []
+    }
+  ]
+}

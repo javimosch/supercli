@@ -1,0 +1,56 @@
+{
+  "name": "systemd-mount",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-mount",
+  "source": "https://manpages.debian.org/systemd-mount",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-mount"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-mount",
+    "binary": "systemd-mount",
+    "check": "which systemd-mount",
+    "install_steps": [
+      "apt-get install systemd-mount 2>/dev/null || which systemd-mount",
+      "Verify: systemd-mount --version",
+      "supercli plugins install ./plugins/systemd-mount --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-mount",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-mount version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-mount",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-mount: apt-get install systemd-mount 2>/dev/null || which systemd-mount"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-mount",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-mount CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-mount",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-mount: apt-get install systemd-mount 2>/dev/null || which systemd-mount"
+      },
+      "args": []
+    }
+  ]
+}

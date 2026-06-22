@@ -1,0 +1,56 @@
+{
+  "name": "t1mac",
+  "version": "0.1.0",
+  "description": "CLI tool: t1mac",
+  "source": "https://manpages.debian.org/t1mac",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "t1mac"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "t1mac",
+    "binary": "t1mac",
+    "check": "which t1mac",
+    "install_steps": [
+      "apt-get install t1mac 2>/dev/null || which t1mac",
+      "Verify: t1mac --version",
+      "supercli plugins install ./plugins/t1mac --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "t1mac",
+      "resource": "self",
+      "action": "version",
+      "description": "Print t1mac version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1mac",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install t1mac: apt-get install t1mac 2>/dev/null || which t1mac"
+      },
+      "args": []
+    },
+    {
+      "namespace": "t1mac",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to t1mac CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1mac",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install t1mac: apt-get install t1mac 2>/dev/null || which t1mac"
+      },
+      "args": []
+    }
+  ]
+}

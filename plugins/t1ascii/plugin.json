@@ -1,0 +1,56 @@
+{
+  "name": "t1ascii",
+  "version": "0.1.0",
+  "description": "CLI tool: t1ascii",
+  "source": "https://manpages.debian.org/t1ascii",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "t1ascii"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "t1ascii",
+    "binary": "t1ascii",
+    "check": "which t1ascii",
+    "install_steps": [
+      "apt-get install t1ascii 2>/dev/null || which t1ascii",
+      "Verify: t1ascii --version",
+      "supercli plugins install ./plugins/t1ascii --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "t1ascii",
+      "resource": "self",
+      "action": "version",
+      "description": "Print t1ascii version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1ascii",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install t1ascii: apt-get install t1ascii 2>/dev/null || which t1ascii"
+      },
+      "args": []
+    },
+    {
+      "namespace": "t1ascii",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to t1ascii CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1ascii",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install t1ascii: apt-get install t1ascii 2>/dev/null || which t1ascii"
+      },
+      "args": []
+    }
+  ]
+}

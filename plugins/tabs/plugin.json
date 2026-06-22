@@ -1,0 +1,56 @@
+{
+  "name": "tabs",
+  "version": "0.1.0",
+  "description": "CLI tool: tabs",
+  "source": "https://manpages.debian.org/tabs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tabs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tabs",
+    "binary": "tabs",
+    "check": "which tabs",
+    "install_steps": [
+      "apt-get install tabs 2>/dev/null || which tabs",
+      "Verify: tabs --version",
+      "supercli plugins install ./plugins/tabs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tabs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tabs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tabs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tabs: apt-get install tabs 2>/dev/null || which tabs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tabs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tabs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tabs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tabs: apt-get install tabs 2>/dev/null || which tabs"
+      },
+      "args": []
+    }
+  ]
+}

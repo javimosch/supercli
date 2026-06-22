@@ -1,0 +1,56 @@
+{
+  "name": "terminator",
+  "version": "0.1.0",
+  "description": "CLI tool: terminator",
+  "source": "https://manpages.debian.org/terminator",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "terminator"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "terminator",
+    "binary": "terminator",
+    "check": "which terminator",
+    "install_steps": [
+      "apt-get install terminator 2>/dev/null || which terminator",
+      "Verify: terminator --version",
+      "supercli plugins install ./plugins/terminator --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "terminator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print terminator version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terminator",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install terminator: apt-get install terminator 2>/dev/null || which terminator"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terminator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to terminator CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terminator",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terminator: apt-get install terminator 2>/dev/null || which terminator"
+      },
+      "args": []
+    }
+  ]
+}

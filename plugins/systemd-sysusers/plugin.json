@@ -1,0 +1,56 @@
+{
+  "name": "systemd-sysusers",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-sysusers",
+  "source": "https://manpages.debian.org/systemd-sysusers",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-sysusers"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-sysusers",
+    "binary": "systemd-sysusers",
+    "check": "which systemd-sysusers",
+    "install_steps": [
+      "apt-get install systemd-sysusers 2>/dev/null || which systemd-sysusers",
+      "Verify: systemd-sysusers --version",
+      "supercli plugins install ./plugins/systemd-sysusers --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-sysusers",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-sysusers version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-sysusers",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-sysusers: apt-get install systemd-sysusers 2>/dev/null || which systemd-sysusers"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-sysusers",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-sysusers CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-sysusers",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-sysusers: apt-get install systemd-sysusers 2>/dev/null || which systemd-sysusers"
+      },
+      "args": []
+    }
+  ]
+}

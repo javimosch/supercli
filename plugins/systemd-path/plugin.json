@@ -1,0 +1,56 @@
+{
+  "name": "systemd-path",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-path",
+  "source": "https://manpages.debian.org/systemd-path",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-path"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-path",
+    "binary": "systemd-path",
+    "check": "which systemd-path",
+    "install_steps": [
+      "apt-get install systemd-path 2>/dev/null || which systemd-path",
+      "Verify: systemd-path --version",
+      "supercli plugins install ./plugins/systemd-path --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-path",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-path version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-path",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-path: apt-get install systemd-path 2>/dev/null || which systemd-path"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-path",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-path CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-path",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-path: apt-get install systemd-path 2>/dev/null || which systemd-path"
+      },
+      "args": []
+    }
+  ]
+}

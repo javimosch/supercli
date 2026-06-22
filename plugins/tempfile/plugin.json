@@ -1,0 +1,56 @@
+{
+  "name": "tempfile",
+  "version": "0.1.0",
+  "description": "CLI tool: tempfile",
+  "source": "https://manpages.debian.org/tempfile",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tempfile"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tempfile",
+    "binary": "tempfile",
+    "check": "which tempfile",
+    "install_steps": [
+      "apt-get install tempfile 2>/dev/null || which tempfile",
+      "Verify: tempfile --version",
+      "supercli plugins install ./plugins/tempfile --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tempfile",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tempfile version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tempfile",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tempfile: apt-get install tempfile 2>/dev/null || which tempfile"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tempfile",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tempfile CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tempfile",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tempfile: apt-get install tempfile 2>/dev/null || which tempfile"
+      },
+      "args": []
+    }
+  ]
+}

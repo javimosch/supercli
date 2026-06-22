@@ -1,0 +1,56 @@
+{
+  "name": "t1disasm",
+  "version": "0.1.0",
+  "description": "CLI tool: t1disasm",
+  "source": "https://manpages.debian.org/t1disasm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "t1disasm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "t1disasm",
+    "binary": "t1disasm",
+    "check": "which t1disasm",
+    "install_steps": [
+      "apt-get install t1disasm 2>/dev/null || which t1disasm",
+      "Verify: t1disasm --version",
+      "supercli plugins install ./plugins/t1disasm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "t1disasm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print t1disasm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1disasm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install t1disasm: apt-get install t1disasm 2>/dev/null || which t1disasm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "t1disasm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to t1disasm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1disasm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install t1disasm: apt-get install t1disasm 2>/dev/null || which t1disasm"
+      },
+      "args": []
+    }
+  ]
+}

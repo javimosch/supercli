@@ -1,0 +1,56 @@
+{
+  "name": "systemd-sysext",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-sysext",
+  "source": "https://manpages.debian.org/systemd-sysext",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-sysext"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-sysext",
+    "binary": "systemd-sysext",
+    "check": "which systemd-sysext",
+    "install_steps": [
+      "apt-get install systemd-sysext 2>/dev/null || which systemd-sysext",
+      "Verify: systemd-sysext --version",
+      "supercli plugins install ./plugins/systemd-sysext --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-sysext",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-sysext version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-sysext",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-sysext: apt-get install systemd-sysext 2>/dev/null || which systemd-sysext"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-sysext",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-sysext CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-sysext",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-sysext: apt-get install systemd-sysext 2>/dev/null || which systemd-sysext"
+      },
+      "args": []
+    }
+  ]
+}

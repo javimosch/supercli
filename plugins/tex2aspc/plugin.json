@@ -1,0 +1,56 @@
+{
+  "name": "tex2aspc",
+  "version": "0.1.0",
+  "description": "CLI tool: tex2aspc",
+  "source": "https://manpages.debian.org/tex2aspc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tex2aspc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tex2aspc",
+    "binary": "tex2aspc",
+    "check": "which tex2aspc",
+    "install_steps": [
+      "apt-get install tex2aspc 2>/dev/null || which tex2aspc",
+      "Verify: tex2aspc --version",
+      "supercli plugins install ./plugins/tex2aspc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tex2aspc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tex2aspc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tex2aspc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tex2aspc: apt-get install tex2aspc 2>/dev/null || which tex2aspc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tex2aspc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tex2aspc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tex2aspc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tex2aspc: apt-get install tex2aspc 2>/dev/null || which tex2aspc"
+      },
+      "args": []
+    }
+  ]
+}

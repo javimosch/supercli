@@ -1,0 +1,56 @@
+{
+  "name": "systemd-detect-virt",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-detect-virt",
+  "source": "https://manpages.debian.org/systemd-detect-virt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-detect-virt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-detect-virt",
+    "binary": "systemd-detect-virt",
+    "check": "which systemd-detect-virt",
+    "install_steps": [
+      "apt-get install systemd-detect-virt 2>/dev/null || which systemd-detect-virt",
+      "Verify: systemd-detect-virt --version",
+      "supercli plugins install ./plugins/systemd-detect-virt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-detect-virt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-detect-virt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-detect-virt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-detect-virt: apt-get install systemd-detect-virt 2>/dev/null || which systemd-detect-virt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-detect-virt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-detect-virt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-detect-virt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-detect-virt: apt-get install systemd-detect-virt 2>/dev/null || which systemd-detect-virt"
+      },
+      "args": []
+    }
+  ]
+}

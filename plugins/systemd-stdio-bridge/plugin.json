@@ -1,0 +1,56 @@
+{
+  "name": "systemd-stdio-bridge",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-stdio-bridge",
+  "source": "https://manpages.debian.org/systemd-stdio-bridge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-stdio-bridge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-stdio-bridge",
+    "binary": "systemd-stdio-bridge",
+    "check": "which systemd-stdio-bridge",
+    "install_steps": [
+      "apt-get install systemd-stdio-bridge 2>/dev/null || which systemd-stdio-bridge",
+      "Verify: systemd-stdio-bridge --version",
+      "supercli plugins install ./plugins/systemd-stdio-bridge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-stdio-bridge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-stdio-bridge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-stdio-bridge",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-stdio-bridge: apt-get install systemd-stdio-bridge 2>/dev/null || which systemd-stdio-bridge"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-stdio-bridge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-stdio-bridge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-stdio-bridge",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-stdio-bridge: apt-get install systemd-stdio-bridge 2>/dev/null || which systemd-stdio-bridge"
+      },
+      "args": []
+    }
+  ]
+}

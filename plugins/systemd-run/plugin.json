@@ -1,0 +1,56 @@
+{
+  "name": "systemd-run",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-run",
+  "source": "https://manpages.debian.org/systemd-run",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-run"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-run",
+    "binary": "systemd-run",
+    "check": "which systemd-run",
+    "install_steps": [
+      "apt-get install systemd-run 2>/dev/null || which systemd-run",
+      "Verify: systemd-run --version",
+      "supercli plugins install ./plugins/systemd-run --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-run",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-run version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-run",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-run: apt-get install systemd-run 2>/dev/null || which systemd-run"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-run",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-run CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-run",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-run: apt-get install systemd-run 2>/dev/null || which systemd-run"
+      },
+      "args": []
+    }
+  ]
+}

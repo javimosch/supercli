@@ -1,0 +1,56 @@
+{
+  "name": "systemd-inhibit",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-inhibit",
+  "source": "https://manpages.debian.org/systemd-inhibit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-inhibit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-inhibit",
+    "binary": "systemd-inhibit",
+    "check": "which systemd-inhibit",
+    "install_steps": [
+      "apt-get install systemd-inhibit 2>/dev/null || which systemd-inhibit",
+      "Verify: systemd-inhibit --version",
+      "supercli plugins install ./plugins/systemd-inhibit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-inhibit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-inhibit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-inhibit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-inhibit: apt-get install systemd-inhibit 2>/dev/null || which systemd-inhibit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-inhibit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-inhibit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-inhibit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-inhibit: apt-get install systemd-inhibit 2>/dev/null || which systemd-inhibit"
+      },
+      "args": []
+    }
+  ]
+}

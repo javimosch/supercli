@@ -1,0 +1,56 @@
+{
+  "name": "tangle",
+  "version": "0.1.0",
+  "description": "CLI tool: tangle",
+  "source": "https://manpages.debian.org/tangle",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tangle"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tangle",
+    "binary": "tangle",
+    "check": "which tangle",
+    "install_steps": [
+      "apt-get install tangle 2>/dev/null || which tangle",
+      "Verify: tangle --version",
+      "supercli plugins install ./plugins/tangle --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tangle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tangle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tangle",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tangle: apt-get install tangle 2>/dev/null || which tangle"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tangle",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tangle CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tangle",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tangle: apt-get install tangle 2>/dev/null || which tangle"
+      },
+      "args": []
+    }
+  ]
+}

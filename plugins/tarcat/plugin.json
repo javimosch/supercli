@@ -1,0 +1,56 @@
+{
+  "name": "tarcat",
+  "version": "0.1.0",
+  "description": "CLI tool: tarcat",
+  "source": "https://manpages.debian.org/tarcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tarcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tarcat",
+    "binary": "tarcat",
+    "check": "which tarcat",
+    "install_steps": [
+      "apt-get install tarcat 2>/dev/null || which tarcat",
+      "Verify: tarcat --version",
+      "supercli plugins install ./plugins/tarcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tarcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tarcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tarcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tarcat: apt-get install tarcat 2>/dev/null || which tarcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tarcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tarcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tarcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tarcat: apt-get install tarcat 2>/dev/null || which tarcat"
+      },
+      "args": []
+    }
+  ]
+}

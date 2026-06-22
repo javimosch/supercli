@@ -1,0 +1,56 @@
+{
+  "name": "systemd-delta",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-delta",
+  "source": "https://manpages.debian.org/systemd-delta",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-delta"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-delta",
+    "binary": "systemd-delta",
+    "check": "which systemd-delta",
+    "install_steps": [
+      "apt-get install systemd-delta 2>/dev/null || which systemd-delta",
+      "Verify: systemd-delta --version",
+      "supercli plugins install ./plugins/systemd-delta --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-delta",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-delta version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-delta",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-delta: apt-get install systemd-delta 2>/dev/null || which systemd-delta"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-delta",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-delta CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-delta",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-delta: apt-get install systemd-delta 2>/dev/null || which systemd-delta"
+      },
+      "args": []
+    }
+  ]
+}

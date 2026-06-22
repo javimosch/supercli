@@ -1,0 +1,56 @@
+{
+  "name": "t1asm",
+  "version": "0.1.0",
+  "description": "CLI tool: t1asm",
+  "source": "https://manpages.debian.org/t1asm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "t1asm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "t1asm",
+    "binary": "t1asm",
+    "check": "which t1asm",
+    "install_steps": [
+      "apt-get install t1asm 2>/dev/null || which t1asm",
+      "Verify: t1asm --version",
+      "supercli plugins install ./plugins/t1asm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "t1asm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print t1asm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1asm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install t1asm: apt-get install t1asm 2>/dev/null || which t1asm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "t1asm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to t1asm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "t1asm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install t1asm: apt-get install t1asm 2>/dev/null || which t1asm"
+      },
+      "args": []
+    }
+  ]
+}

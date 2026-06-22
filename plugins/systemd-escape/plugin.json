@@ -1,0 +1,56 @@
+{
+  "name": "systemd-escape",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-escape",
+  "source": "https://manpages.debian.org/systemd-escape",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-escape"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-escape",
+    "binary": "systemd-escape",
+    "check": "which systemd-escape",
+    "install_steps": [
+      "apt-get install systemd-escape 2>/dev/null || which systemd-escape",
+      "Verify: systemd-escape --version",
+      "supercli plugins install ./plugins/systemd-escape --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-escape",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-escape version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-escape",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-escape: apt-get install systemd-escape 2>/dev/null || which systemd-escape"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-escape",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-escape CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-escape",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-escape: apt-get install systemd-escape 2>/dev/null || which systemd-escape"
+      },
+      "args": []
+    }
+  ]
+}

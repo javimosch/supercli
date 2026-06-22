@@ -1,0 +1,56 @@
+{
+  "name": "systemd-notify",
+  "version": "0.1.0",
+  "description": "CLI tool: systemd-notify",
+  "source": "https://manpages.debian.org/systemd-notify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "systemd-notify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "systemd-notify",
+    "binary": "systemd-notify",
+    "check": "which systemd-notify",
+    "install_steps": [
+      "apt-get install systemd-notify 2>/dev/null || which systemd-notify",
+      "Verify: systemd-notify --version",
+      "supercli plugins install ./plugins/systemd-notify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemd-notify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemd-notify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-notify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install systemd-notify: apt-get install systemd-notify 2>/dev/null || which systemd-notify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemd-notify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemd-notify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemd-notify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemd-notify: apt-get install systemd-notify 2>/dev/null || which systemd-notify"
+      },
+      "args": []
+    }
+  ]
+}
