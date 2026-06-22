@@ -1,1 +1,0 @@
----\nname: libheif\ndescription: HEIC/HEIF image format tools\n---\n# libheif Plugin\nHEIC/HEIF image format tools
