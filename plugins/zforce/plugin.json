@@ -1,0 +1,56 @@
+{
+  "name": "zforce",
+  "version": "0.1.0",
+  "description": "CLI tool: zforce",
+  "source": "https://manpages.debian.org/zforce",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zforce"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zforce",
+    "binary": "zforce",
+    "check": "which zforce",
+    "install_steps": [
+      "apt-get install zforce 2>/dev/null || which zforce",
+      "Verify: zforce --version",
+      "supercli plugins install ./plugins/zforce --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zforce",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zforce version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zforce",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zforce: apt-get install zforce 2>/dev/null || which zforce"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zforce",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zforce CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zforce",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zforce: apt-get install zforce 2>/dev/null || which zforce"
+      },
+      "args": []
+    }
+  ]
+}

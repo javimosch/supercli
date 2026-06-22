@@ -1,0 +1,56 @@
+{
+  "name": "zipsplit",
+  "version": "0.1.0",
+  "description": "CLI tool: zipsplit",
+  "source": "https://manpages.debian.org/zipsplit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zipsplit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zipsplit",
+    "binary": "zipsplit",
+    "check": "which zipsplit",
+    "install_steps": [
+      "apt-get install zipsplit 2>/dev/null || which zipsplit",
+      "Verify: zipsplit --version",
+      "supercli plugins install ./plugins/zipsplit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zipsplit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zipsplit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipsplit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zipsplit: apt-get install zipsplit 2>/dev/null || which zipsplit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zipsplit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zipsplit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipsplit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zipsplit: apt-get install zipsplit 2>/dev/null || which zipsplit"
+      },
+      "args": []
+    }
+  ]
+}

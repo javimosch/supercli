@@ -1,0 +1,56 @@
+{
+  "name": "zipgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: zipgrep",
+  "source": "https://manpages.debian.org/zipgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zipgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zipgrep",
+    "binary": "zipgrep",
+    "check": "which zipgrep",
+    "install_steps": [
+      "apt-get install zipgrep 2>/dev/null || which zipgrep",
+      "Verify: zipgrep --version",
+      "supercli plugins install ./plugins/zipgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zipgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zipgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zipgrep: apt-get install zipgrep 2>/dev/null || which zipgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zipgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zipgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zipgrep: apt-get install zipgrep 2>/dev/null || which zipgrep"
+      },
+      "args": []
+    }
+  ]
+}

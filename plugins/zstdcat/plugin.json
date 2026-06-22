@@ -1,0 +1,56 @@
+{
+  "name": "zstdcat",
+  "version": "0.1.0",
+  "description": "CLI tool: zstdcat",
+  "source": "https://manpages.debian.org/zstdcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zstdcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zstdcat",
+    "binary": "zstdcat",
+    "check": "which zstdcat",
+    "install_steps": [
+      "apt-get install zstdcat 2>/dev/null || which zstdcat",
+      "Verify: zstdcat --version",
+      "supercli plugins install ./plugins/zstdcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zstdcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zstdcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zstdcat: apt-get install zstdcat 2>/dev/null || which zstdcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zstdcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zstdcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zstdcat: apt-get install zstdcat 2>/dev/null || which zstdcat"
+      },
+      "args": []
+    }
+  ]
+}

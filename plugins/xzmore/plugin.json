@@ -1,0 +1,56 @@
+{
+  "name": "xzmore",
+  "version": "0.1.0",
+  "description": "CLI tool: xzmore",
+  "source": "https://manpages.debian.org/xzmore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzmore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzmore",
+    "binary": "xzmore",
+    "check": "which xzmore",
+    "install_steps": [
+      "apt-get install xzmore 2>/dev/null || which xzmore",
+      "Verify: xzmore --version",
+      "supercli plugins install ./plugins/xzmore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzmore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzmore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzmore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzmore: apt-get install xzmore 2>/dev/null || which xzmore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzmore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzmore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzmore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzmore: apt-get install xzmore 2>/dev/null || which xzmore"
+      },
+      "args": []
+    }
+  ]
+}

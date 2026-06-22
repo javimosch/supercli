@@ -1,0 +1,56 @@
+{
+  "name": "zic",
+  "version": "0.1.0",
+  "description": "CLI tool: zic",
+  "source": "https://manpages.debian.org/zic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zic",
+    "binary": "zic",
+    "check": "which zic",
+    "install_steps": [
+      "apt-get install zic 2>/dev/null || which zic",
+      "Verify: zic --version",
+      "supercli plugins install ./plugins/zic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zic: apt-get install zic 2>/dev/null || which zic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zic: apt-get install zic 2>/dev/null || which zic"
+      },
+      "args": []
+    }
+  ]
+}

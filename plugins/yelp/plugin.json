@@ -1,0 +1,56 @@
+{
+  "name": "yelp",
+  "version": "0.1.0",
+  "description": "CLI tool: yelp",
+  "source": "https://manpages.debian.org/yelp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "yelp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "yelp",
+    "binary": "yelp",
+    "check": "which yelp",
+    "install_steps": [
+      "apt-get install yelp 2>/dev/null || which yelp",
+      "Verify: yelp --version",
+      "supercli plugins install ./plugins/yelp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yelp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print yelp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yelp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install yelp: apt-get install yelp 2>/dev/null || which yelp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yelp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yelp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yelp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install yelp: apt-get install yelp 2>/dev/null || which yelp"
+      },
+      "args": []
+    }
+  ]
+}

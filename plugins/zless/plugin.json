@@ -1,0 +1,56 @@
+{
+  "name": "zless",
+  "version": "0.1.0",
+  "description": "CLI tool: zless",
+  "source": "https://manpages.debian.org/zless",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zless"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zless",
+    "binary": "zless",
+    "check": "which zless",
+    "install_steps": [
+      "apt-get install zless 2>/dev/null || which zless",
+      "Verify: zless --version",
+      "supercli plugins install ./plugins/zless --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zless",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zless version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zless",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zless: apt-get install zless 2>/dev/null || which zless"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zless",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zless CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zless",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zless: apt-get install zless 2>/dev/null || which zless"
+      },
+      "args": []
+    }
+  ]
+}

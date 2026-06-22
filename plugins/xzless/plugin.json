@@ -1,0 +1,56 @@
+{
+  "name": "xzless",
+  "version": "0.1.0",
+  "description": "CLI tool: xzless",
+  "source": "https://manpages.debian.org/xzless",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzless"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzless",
+    "binary": "xzless",
+    "check": "which xzless",
+    "install_steps": [
+      "apt-get install xzless 2>/dev/null || which xzless",
+      "Verify: xzless --version",
+      "supercli plugins install ./plugins/xzless --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzless",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzless version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzless",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzless: apt-get install xzless 2>/dev/null || which xzless"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzless",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzless CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzless",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzless: apt-get install xzless 2>/dev/null || which xzless"
+      },
+      "args": []
+    }
+  ]
+}

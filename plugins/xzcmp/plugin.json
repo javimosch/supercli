@@ -1,0 +1,56 @@
+{
+  "name": "xzcmp",
+  "version": "0.1.0",
+  "description": "CLI tool: xzcmp",
+  "source": "https://manpages.debian.org/xzcmp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzcmp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzcmp",
+    "binary": "xzcmp",
+    "check": "which xzcmp",
+    "install_steps": [
+      "apt-get install xzcmp 2>/dev/null || which xzcmp",
+      "Verify: xzcmp --version",
+      "supercli plugins install ./plugins/xzcmp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzcmp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzcmp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzcmp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzcmp: apt-get install xzcmp 2>/dev/null || which xzcmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzcmp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzcmp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzcmp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzcmp: apt-get install xzcmp 2>/dev/null || which xzcmp"
+      },
+      "args": []
+    }
+  ]
+}

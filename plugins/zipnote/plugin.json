@@ -1,0 +1,56 @@
+{
+  "name": "zipnote",
+  "version": "0.1.0",
+  "description": "CLI tool: zipnote",
+  "source": "https://manpages.debian.org/zipnote",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zipnote"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zipnote",
+    "binary": "zipnote",
+    "check": "which zipnote",
+    "install_steps": [
+      "apt-get install zipnote 2>/dev/null || which zipnote",
+      "Verify: zipnote --version",
+      "supercli plugins install ./plugins/zipnote --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zipnote",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zipnote version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipnote",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zipnote: apt-get install zipnote 2>/dev/null || which zipnote"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zipnote",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zipnote CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipnote",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zipnote: apt-get install zipnote 2>/dev/null || which zipnote"
+      },
+      "args": []
+    }
+  ]
+}

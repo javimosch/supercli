@@ -1,0 +1,56 @@
+{
+  "name": "zramctl",
+  "version": "0.1.0",
+  "description": "CLI tool: zramctl",
+  "source": "https://manpages.debian.org/zramctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zramctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zramctl",
+    "binary": "zramctl",
+    "check": "which zramctl",
+    "install_steps": [
+      "apt-get install zramctl 2>/dev/null || which zramctl",
+      "Verify: zramctl --version",
+      "supercli plugins install ./plugins/zramctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zramctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zramctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zramctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zramctl: apt-get install zramctl 2>/dev/null || which zramctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zramctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zramctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zramctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zramctl: apt-get install zramctl 2>/dev/null || which zramctl"
+      },
+      "args": []
+    }
+  ]
+}

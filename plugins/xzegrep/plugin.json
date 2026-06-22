@@ -1,0 +1,56 @@
+{
+  "name": "xzegrep",
+  "version": "0.1.0",
+  "description": "CLI tool: xzegrep",
+  "source": "https://manpages.debian.org/xzegrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzegrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzegrep",
+    "binary": "xzegrep",
+    "check": "which xzegrep",
+    "install_steps": [
+      "apt-get install xzegrep 2>/dev/null || which xzegrep",
+      "Verify: xzegrep --version",
+      "supercli plugins install ./plugins/xzegrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzegrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzegrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzegrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzegrep: apt-get install xzegrep 2>/dev/null || which xzegrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzegrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzegrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzegrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzegrep: apt-get install xzegrep 2>/dev/null || which xzegrep"
+      },
+      "args": []
+    }
+  ]
+}

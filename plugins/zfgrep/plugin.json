@@ -1,0 +1,56 @@
+{
+  "name": "zfgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: zfgrep",
+  "source": "https://manpages.debian.org/zfgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zfgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zfgrep",
+    "binary": "zfgrep",
+    "check": "which zfgrep",
+    "install_steps": [
+      "apt-get install zfgrep 2>/dev/null || which zfgrep",
+      "Verify: zfgrep --version",
+      "supercli plugins install ./plugins/zfgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zfgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zfgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zfgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zfgrep: apt-get install zfgrep 2>/dev/null || which zfgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zfgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zfgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zfgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zfgrep: apt-get install zfgrep 2>/dev/null || which zfgrep"
+      },
+      "args": []
+    }
+  ]
+}

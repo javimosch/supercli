@@ -1,0 +1,56 @@
+{
+  "name": "xzdiff",
+  "version": "0.1.0",
+  "description": "CLI tool: xzdiff",
+  "source": "https://manpages.debian.org/xzdiff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzdiff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzdiff",
+    "binary": "xzdiff",
+    "check": "which xzdiff",
+    "install_steps": [
+      "apt-get install xzdiff 2>/dev/null || which xzdiff",
+      "Verify: xzdiff --version",
+      "supercli plugins install ./plugins/xzdiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzdiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzdiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzdiff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzdiff: apt-get install xzdiff 2>/dev/null || which xzdiff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzdiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzdiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzdiff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzdiff: apt-get install xzdiff 2>/dev/null || which xzdiff"
+      },
+      "args": []
+    }
+  ]
+}

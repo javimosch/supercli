@@ -1,0 +1,56 @@
+{
+  "name": "zipinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: zipinfo",
+  "source": "https://manpages.debian.org/zipinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zipinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zipinfo",
+    "binary": "zipinfo",
+    "check": "which zipinfo",
+    "install_steps": [
+      "apt-get install zipinfo 2>/dev/null || which zipinfo",
+      "Verify: zipinfo --version",
+      "supercli plugins install ./plugins/zipinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zipinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zipinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zipinfo: apt-get install zipinfo 2>/dev/null || which zipinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zipinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zipinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zipinfo: apt-get install zipinfo 2>/dev/null || which zipinfo"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "zipcloak",
+  "version": "0.1.0",
+  "description": "CLI tool: zipcloak",
+  "source": "https://manpages.debian.org/zipcloak",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zipcloak"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zipcloak",
+    "binary": "zipcloak",
+    "check": "which zipcloak",
+    "install_steps": [
+      "apt-get install zipcloak 2>/dev/null || which zipcloak",
+      "Verify: zipcloak --version",
+      "supercli plugins install ./plugins/zipcloak --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zipcloak",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zipcloak version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipcloak",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zipcloak: apt-get install zipcloak 2>/dev/null || which zipcloak"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zipcloak",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zipcloak CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipcloak",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zipcloak: apt-get install zipcloak 2>/dev/null || which zipcloak"
+      },
+      "args": []
+    }
+  ]
+}

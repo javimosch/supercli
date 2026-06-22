@@ -1,0 +1,56 @@
+{
+  "name": "zcmp",
+  "version": "0.1.0",
+  "description": "CLI tool: zcmp",
+  "source": "https://manpages.debian.org/zcmp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zcmp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zcmp",
+    "binary": "zcmp",
+    "check": "which zcmp",
+    "install_steps": [
+      "apt-get install zcmp 2>/dev/null || which zcmp",
+      "Verify: zcmp --version",
+      "supercli plugins install ./plugins/zcmp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zcmp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zcmp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zcmp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zcmp: apt-get install zcmp 2>/dev/null || which zcmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zcmp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zcmp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zcmp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zcmp: apt-get install zcmp 2>/dev/null || which zcmp"
+      },
+      "args": []
+    }
+  ]
+}

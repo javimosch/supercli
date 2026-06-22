@@ -1,0 +1,56 @@
+{
+  "name": "zrun",
+  "version": "0.1.0",
+  "description": "CLI tool: zrun",
+  "source": "https://manpages.debian.org/zrun",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zrun"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zrun",
+    "binary": "zrun",
+    "check": "which zrun",
+    "install_steps": [
+      "apt-get install zrun 2>/dev/null || which zrun",
+      "Verify: zrun --version",
+      "supercli plugins install ./plugins/zrun --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zrun",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zrun version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrun",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zrun: apt-get install zrun 2>/dev/null || which zrun"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zrun",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zrun CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrun",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zrun: apt-get install zrun 2>/dev/null || which zrun"
+      },
+      "args": []
+    }
+  ]
+}

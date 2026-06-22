@@ -1,0 +1,56 @@
+{
+  "name": "znew",
+  "version": "0.1.0",
+  "description": "CLI tool: znew",
+  "source": "https://manpages.debian.org/znew",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "znew"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "znew",
+    "binary": "znew",
+    "check": "which znew",
+    "install_steps": [
+      "apt-get install znew 2>/dev/null || which znew",
+      "Verify: znew --version",
+      "supercli plugins install ./plugins/znew --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "znew",
+      "resource": "self",
+      "action": "version",
+      "description": "Print znew version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "znew",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install znew: apt-get install znew 2>/dev/null || which znew"
+      },
+      "args": []
+    },
+    {
+      "namespace": "znew",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to znew CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "znew",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install znew: apt-get install znew 2>/dev/null || which znew"
+      },
+      "args": []
+    }
+  ]
+}

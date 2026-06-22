@@ -1,0 +1,56 @@
+{
+  "name": "zstdgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: zstdgrep",
+  "source": "https://manpages.debian.org/zstdgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zstdgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zstdgrep",
+    "binary": "zstdgrep",
+    "check": "which zstdgrep",
+    "install_steps": [
+      "apt-get install zstdgrep 2>/dev/null || which zstdgrep",
+      "Verify: zstdgrep --version",
+      "supercli plugins install ./plugins/zstdgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zstdgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zstdgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zstdgrep: apt-get install zstdgrep 2>/dev/null || which zstdgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zstdgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zstdgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zstdgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zstdgrep: apt-get install zstdgrep 2>/dev/null || which zstdgrep"
+      },
+      "args": []
+    }
+  ]
+}

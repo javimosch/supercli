@@ -1,0 +1,56 @@
+{
+  "name": "zegrep",
+  "version": "0.1.0",
+  "description": "CLI tool: zegrep",
+  "source": "https://manpages.debian.org/zegrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zegrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zegrep",
+    "binary": "zegrep",
+    "check": "which zegrep",
+    "install_steps": [
+      "apt-get install zegrep 2>/dev/null || which zegrep",
+      "Verify: zegrep --version",
+      "supercli plugins install ./plugins/zegrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zegrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zegrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zegrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zegrep: apt-get install zegrep 2>/dev/null || which zegrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zegrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zegrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zegrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zegrep: apt-get install zegrep 2>/dev/null || which zegrep"
+      },
+      "args": []
+    }
+  ]
+}

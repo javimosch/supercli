@@ -1,0 +1,56 @@
+{
+  "name": "zoom",
+  "version": "0.1.0",
+  "description": "CLI tool: zoom",
+  "source": "https://manpages.debian.org/zoom",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zoom"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zoom",
+    "binary": "zoom",
+    "check": "which zoom",
+    "install_steps": [
+      "apt-get install zoom 2>/dev/null || which zoom",
+      "Verify: zoom --version",
+      "supercli plugins install ./plugins/zoom --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zoom",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zoom version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zoom",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zoom: apt-get install zoom 2>/dev/null || which zoom"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zoom",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zoom CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zoom",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zoom: apt-get install zoom 2>/dev/null || which zoom"
+      },
+      "args": []
+    }
+  ]
+}

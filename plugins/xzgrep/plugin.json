@@ -1,0 +1,56 @@
+{
+  "name": "xzgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: xzgrep",
+  "source": "https://manpages.debian.org/xzgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzgrep",
+    "binary": "xzgrep",
+    "check": "which xzgrep",
+    "install_steps": [
+      "apt-get install xzgrep 2>/dev/null || which xzgrep",
+      "Verify: xzgrep --version",
+      "supercli plugins install ./plugins/xzgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzgrep: apt-get install xzgrep 2>/dev/null || which xzgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzgrep: apt-get install xzgrep 2>/dev/null || which xzgrep"
+      },
+      "args": []
+    }
+  ]
+}

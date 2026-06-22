@@ -1,0 +1,56 @@
+{
+  "name": "zdump",
+  "version": "0.1.0",
+  "description": "CLI tool: zdump",
+  "source": "https://manpages.debian.org/zdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zdump",
+    "binary": "zdump",
+    "check": "which zdump",
+    "install_steps": [
+      "apt-get install zdump 2>/dev/null || which zdump",
+      "Verify: zdump --version",
+      "supercli plugins install ./plugins/zdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zdump: apt-get install zdump 2>/dev/null || which zdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zdump: apt-get install zdump 2>/dev/null || which zdump"
+      },
+      "args": []
+    }
+  ]
+}

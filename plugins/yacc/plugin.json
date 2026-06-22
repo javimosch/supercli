@@ -1,0 +1,56 @@
+{
+  "name": "yacc",
+  "version": "0.1.0",
+  "description": "CLI tool: yacc",
+  "source": "https://manpages.debian.org/yacc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "yacc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "yacc",
+    "binary": "yacc",
+    "check": "which yacc",
+    "install_steps": [
+      "apt-get install yacc 2>/dev/null || which yacc",
+      "Verify: yacc --version",
+      "supercli plugins install ./plugins/yacc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yacc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print yacc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yacc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install yacc: apt-get install yacc 2>/dev/null || which yacc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yacc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yacc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yacc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install yacc: apt-get install yacc 2>/dev/null || which yacc"
+      },
+      "args": []
+    }
+  ]
+}

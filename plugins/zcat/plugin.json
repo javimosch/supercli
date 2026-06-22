@@ -1,0 +1,56 @@
+{
+  "name": "zcat",
+  "version": "0.1.0",
+  "description": "CLI tool: zcat",
+  "source": "https://manpages.debian.org/zcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zcat",
+    "binary": "zcat",
+    "check": "which zcat",
+    "install_steps": [
+      "apt-get install zcat 2>/dev/null || which zcat",
+      "Verify: zcat --version",
+      "supercli plugins install ./plugins/zcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zcat: apt-get install zcat 2>/dev/null || which zcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zcat: apt-get install zcat 2>/dev/null || which zcat"
+      },
+      "args": []
+    }
+  ]
+}

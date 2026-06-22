@@ -1,0 +1,56 @@
+{
+  "name": "xzcat",
+  "version": "0.1.0",
+  "description": "CLI tool: xzcat",
+  "source": "https://manpages.debian.org/xzcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xzcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xzcat",
+    "binary": "xzcat",
+    "check": "which xzcat",
+    "install_steps": [
+      "apt-get install xzcat 2>/dev/null || which xzcat",
+      "Verify: xzcat --version",
+      "supercli plugins install ./plugins/xzcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xzcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xzcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xzcat: apt-get install xzcat 2>/dev/null || which xzcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xzcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xzcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xzcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xzcat: apt-get install xzcat 2>/dev/null || which xzcat"
+      },
+      "args": []
+    }
+  ]
+}

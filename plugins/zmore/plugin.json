@@ -1,0 +1,56 @@
+{
+  "name": "zmore",
+  "version": "0.1.0",
+  "description": "CLI tool: zmore",
+  "source": "https://manpages.debian.org/zmore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zmore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zmore",
+    "binary": "zmore",
+    "check": "which zmore",
+    "install_steps": [
+      "apt-get install zmore 2>/dev/null || which zmore",
+      "Verify: zmore --version",
+      "supercli plugins install ./plugins/zmore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zmore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zmore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zmore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zmore: apt-get install zmore 2>/dev/null || which zmore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zmore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zmore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zmore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zmore: apt-get install zmore 2>/dev/null || which zmore"
+      },
+      "args": []
+    }
+  ]
+}

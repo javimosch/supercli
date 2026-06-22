@@ -1,0 +1,56 @@
+{
+  "name": "zdiff",
+  "version": "0.1.0",
+  "description": "CLI tool: zdiff",
+  "source": "https://manpages.debian.org/zdiff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zdiff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zdiff",
+    "binary": "zdiff",
+    "check": "which zdiff",
+    "install_steps": [
+      "apt-get install zdiff 2>/dev/null || which zdiff",
+      "Verify: zdiff --version",
+      "supercli plugins install ./plugins/zdiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zdiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zdiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zdiff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zdiff: apt-get install zdiff 2>/dev/null || which zdiff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zdiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zdiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zdiff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zdiff: apt-get install zdiff 2>/dev/null || which zdiff"
+      },
+      "args": []
+    }
+  ]
+}

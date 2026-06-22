@@ -1,0 +1,56 @@
+{
+  "name": "zipdetails",
+  "version": "0.1.0",
+  "description": "CLI tool: zipdetails",
+  "source": "https://manpages.debian.org/zipdetails",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "zipdetails"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "zipdetails",
+    "binary": "zipdetails",
+    "check": "which zipdetails",
+    "install_steps": [
+      "apt-get install zipdetails 2>/dev/null || which zipdetails",
+      "Verify: zipdetails --version",
+      "supercli plugins install ./plugins/zipdetails --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zipdetails",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zipdetails version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipdetails",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install zipdetails: apt-get install zipdetails 2>/dev/null || which zipdetails"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zipdetails",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zipdetails CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zipdetails",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install zipdetails: apt-get install zipdetails 2>/dev/null || which zipdetails"
+      },
+      "args": []
+    }
+  ]
+}

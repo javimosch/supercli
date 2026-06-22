@@ -1,0 +1,56 @@
+{
+  "name": "xvidtune",
+  "version": "0.1.0",
+  "description": "CLI tool: xvidtune",
+  "source": "https://manpages.debian.org/xvidtune",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xvidtune"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xvidtune",
+    "binary": "xvidtune",
+    "check": "which xvidtune",
+    "install_steps": [
+      "apt-get install xvidtune 2>/dev/null || which xvidtune",
+      "Verify: xvidtune --version",
+      "supercli plugins install ./plugins/xvidtune --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xvidtune",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xvidtune version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xvidtune",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xvidtune: apt-get install xvidtune 2>/dev/null || which xvidtune"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xvidtune",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xvidtune CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xvidtune",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xvidtune: apt-get install xvidtune 2>/dev/null || which xvidtune"
+      },
+      "args": []
+    }
+  ]
+}

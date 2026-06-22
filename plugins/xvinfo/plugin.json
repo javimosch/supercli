@@ -1,0 +1,56 @@
+{
+  "name": "xvinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: xvinfo",
+  "source": "https://manpages.debian.org/xvinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xvinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xvinfo",
+    "binary": "xvinfo",
+    "check": "which xvinfo",
+    "install_steps": [
+      "apt-get install xvinfo 2>/dev/null || which xvinfo",
+      "Verify: xvinfo --version",
+      "supercli plugins install ./plugins/xvinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xvinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xvinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xvinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xvinfo: apt-get install xvinfo 2>/dev/null || which xvinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xvinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xvinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xvinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xvinfo: apt-get install xvinfo 2>/dev/null || which xvinfo"
+      },
+      "args": []
+    }
+  ]
+}
