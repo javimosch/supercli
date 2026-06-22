@@ -1,0 +1,56 @@
+{
+  "name": "gnome-boxes",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-boxes",
+  "source": "https://manpages.debian.org/gnome-boxes",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-boxes"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-boxes",
+    "binary": "gnome-boxes",
+    "check": "which gnome-boxes",
+    "install_steps": [
+      "apt-get install gnome-boxes 2>/dev/null || which gnome-boxes",
+      "Verify: gnome-boxes --version",
+      "supercli plugins install ./plugins/gnome-boxes --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-boxes",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-boxes version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-boxes",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-boxes: apt-get install gnome-boxes 2>/dev/null || which gnome-boxes"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-boxes",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-boxes CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-boxes",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-boxes: apt-get install gnome-boxes 2>/dev/null || which gnome-boxes"
+      },
+      "args": []
+    }
+  ]
+}

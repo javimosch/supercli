@@ -1,0 +1,56 @@
+{
+  "name": "ghostscript",
+  "version": "0.1.0",
+  "description": "CLI tool: ghostscript",
+  "source": "https://manpages.debian.org/ghostscript",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ghostscript"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ghostscript",
+    "binary": "ghostscript",
+    "check": "which ghostscript",
+    "install_steps": [
+      "apt-get install ghostscript 2>/dev/null || which ghostscript",
+      "Verify: ghostscript --version",
+      "supercli plugins install ./plugins/ghostscript --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ghostscript",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ghostscript version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghostscript",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ghostscript: apt-get install ghostscript 2>/dev/null || which ghostscript"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghostscript",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ghostscript CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghostscript",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ghostscript: apt-get install ghostscript 2>/dev/null || which ghostscript"
+      },
+      "args": []
+    }
+  ]
+}

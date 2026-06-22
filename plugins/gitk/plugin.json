@@ -1,0 +1,56 @@
+{
+  "name": "gitk",
+  "version": "0.1.0",
+  "description": "CLI tool: gitk",
+  "source": "https://manpages.debian.org/gitk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gitk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gitk",
+    "binary": "gitk",
+    "check": "which gitk",
+    "install_steps": [
+      "apt-get install gitk 2>/dev/null || which gitk",
+      "Verify: gitk --version",
+      "supercli plugins install ./plugins/gitk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gitk: apt-get install gitk 2>/dev/null || which gitk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitk: apt-get install gitk 2>/dev/null || which gitk"
+      },
+      "args": []
+    }
+  ]
+}

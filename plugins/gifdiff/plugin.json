@@ -1,0 +1,56 @@
+{
+  "name": "gifdiff",
+  "version": "0.1.0",
+  "description": "CLI tool: gifdiff",
+  "source": "https://manpages.debian.org/gifdiff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gifdiff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gifdiff",
+    "binary": "gifdiff",
+    "check": "which gifdiff",
+    "install_steps": [
+      "apt-get install gifdiff 2>/dev/null || which gifdiff",
+      "Verify: gifdiff --version",
+      "supercli plugins install ./plugins/gifdiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gifdiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gifdiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gifdiff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gifdiff: apt-get install gifdiff 2>/dev/null || which gifdiff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gifdiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gifdiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gifdiff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gifdiff: apt-get install gifdiff 2>/dev/null || which gifdiff"
+      },
+      "args": []
+    }
+  ]
+}

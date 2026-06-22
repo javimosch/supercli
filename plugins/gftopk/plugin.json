@@ -1,0 +1,56 @@
+{
+  "name": "gftopk",
+  "version": "0.1.0",
+  "description": "CLI tool: gftopk",
+  "source": "https://manpages.debian.org/gftopk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gftopk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gftopk",
+    "binary": "gftopk",
+    "check": "which gftopk",
+    "install_steps": [
+      "apt-get install gftopk 2>/dev/null || which gftopk",
+      "Verify: gftopk --version",
+      "supercli plugins install ./plugins/gftopk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gftopk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gftopk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gftopk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gftopk: apt-get install gftopk 2>/dev/null || which gftopk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gftopk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gftopk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gftopk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gftopk: apt-get install gftopk 2>/dev/null || which gftopk"
+      },
+      "args": []
+    }
+  ]
+}

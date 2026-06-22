@@ -1,0 +1,56 @@
+{
+  "name": "gnome-keyring",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-keyring",
+  "source": "https://manpages.debian.org/gnome-keyring",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-keyring"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-keyring",
+    "binary": "gnome-keyring",
+    "check": "which gnome-keyring",
+    "install_steps": [
+      "apt-get install gnome-keyring 2>/dev/null || which gnome-keyring",
+      "Verify: gnome-keyring --version",
+      "supercli plugins install ./plugins/gnome-keyring --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-keyring",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-keyring version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-keyring",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-keyring: apt-get install gnome-keyring 2>/dev/null || which gnome-keyring"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-keyring",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-keyring CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-keyring",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-keyring: apt-get install gnome-keyring 2>/dev/null || which gnome-keyring"
+      },
+      "args": []
+    }
+  ]
+}

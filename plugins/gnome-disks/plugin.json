@@ -1,0 +1,56 @@
+{
+  "name": "gnome-disks",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-disks",
+  "source": "https://manpages.debian.org/gnome-disks",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-disks"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-disks",
+    "binary": "gnome-disks",
+    "check": "which gnome-disks",
+    "install_steps": [
+      "apt-get install gnome-disks 2>/dev/null || which gnome-disks",
+      "Verify: gnome-disks --version",
+      "supercli plugins install ./plugins/gnome-disks --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-disks",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-disks version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-disks",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-disks: apt-get install gnome-disks 2>/dev/null || which gnome-disks"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-disks",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-disks CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-disks",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-disks: apt-get install gnome-disks 2>/dev/null || which gnome-disks"
+      },
+      "args": []
+    }
+  ]
+}

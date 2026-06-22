@@ -1,0 +1,56 @@
+{
+  "name": "gio",
+  "version": "0.1.0",
+  "description": "CLI tool: gio",
+  "source": "https://manpages.debian.org/gio",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gio"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gio",
+    "binary": "gio",
+    "check": "which gio",
+    "install_steps": [
+      "apt-get install gio 2>/dev/null || which gio",
+      "Verify: gio --version",
+      "supercli plugins install ./plugins/gio --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gio",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gio version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gio",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gio: apt-get install gio 2>/dev/null || which gio"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gio",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gio CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gio",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gio: apt-get install gio 2>/dev/null || which gio"
+      },
+      "args": []
+    }
+  ]
+}

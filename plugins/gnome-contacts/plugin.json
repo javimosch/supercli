@@ -1,0 +1,56 @@
+{
+  "name": "gnome-contacts",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-contacts",
+  "source": "https://manpages.debian.org/gnome-contacts",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-contacts"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-contacts",
+    "binary": "gnome-contacts",
+    "check": "which gnome-contacts",
+    "install_steps": [
+      "apt-get install gnome-contacts 2>/dev/null || which gnome-contacts",
+      "Verify: gnome-contacts --version",
+      "supercli plugins install ./plugins/gnome-contacts --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-contacts",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-contacts version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-contacts",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-contacts: apt-get install gnome-contacts 2>/dev/null || which gnome-contacts"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-contacts",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-contacts CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-contacts",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-contacts: apt-get install gnome-contacts 2>/dev/null || which gnome-contacts"
+      },
+      "args": []
+    }
+  ]
+}

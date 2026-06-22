@@ -1,0 +1,56 @@
+{
+  "name": "gifview",
+  "version": "0.1.0",
+  "description": "CLI tool: gifview",
+  "source": "https://manpages.debian.org/gifview",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gifview"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gifview",
+    "binary": "gifview",
+    "check": "which gifview",
+    "install_steps": [
+      "apt-get install gifview 2>/dev/null || which gifview",
+      "Verify: gifview --version",
+      "supercli plugins install ./plugins/gifview --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gifview",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gifview version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gifview",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gifview: apt-get install gifview 2>/dev/null || which gifview"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gifview",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gifview CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gifview",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gifview: apt-get install gifview 2>/dev/null || which gifview"
+      },
+      "args": []
+    }
+  ]
+}

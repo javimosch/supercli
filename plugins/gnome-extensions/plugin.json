@@ -1,0 +1,56 @@
+{
+  "name": "gnome-extensions",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-extensions",
+  "source": "https://manpages.debian.org/gnome-extensions",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-extensions"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-extensions",
+    "binary": "gnome-extensions",
+    "check": "which gnome-extensions",
+    "install_steps": [
+      "apt-get install gnome-extensions 2>/dev/null || which gnome-extensions",
+      "Verify: gnome-extensions --version",
+      "supercli plugins install ./plugins/gnome-extensions --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-extensions",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-extensions version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-extensions",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-extensions: apt-get install gnome-extensions 2>/dev/null || which gnome-extensions"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-extensions",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-extensions CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-extensions",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-extensions: apt-get install gnome-extensions 2>/dev/null || which gnome-extensions"
+      },
+      "args": []
+    }
+  ]
+}

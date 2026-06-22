@@ -1,0 +1,56 @@
+{
+  "name": "gimp-console",
+  "version": "0.1.0",
+  "description": "CLI tool: gimp-console",
+  "source": "https://manpages.debian.org/gimp-console",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gimp-console"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gimp-console",
+    "binary": "gimp-console",
+    "check": "which gimp-console",
+    "install_steps": [
+      "apt-get install gimp-console 2>/dev/null || which gimp-console",
+      "Verify: gimp-console --version",
+      "supercli plugins install ./plugins/gimp-console --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gimp-console",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gimp-console version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gimp-console",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gimp-console: apt-get install gimp-console 2>/dev/null || which gimp-console"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gimp-console",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gimp-console CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gimp-console",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gimp-console: apt-get install gimp-console 2>/dev/null || which gimp-console"
+      },
+      "args": []
+    }
+  ]
+}

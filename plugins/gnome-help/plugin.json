@@ -1,0 +1,56 @@
+{
+  "name": "gnome-help",
+  "version": "0.1.0",
+  "description": "CLI tool: gnome-help",
+  "source": "https://manpages.debian.org/gnome-help",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gnome-help"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gnome-help",
+    "binary": "gnome-help",
+    "check": "which gnome-help",
+    "install_steps": [
+      "apt-get install gnome-help 2>/dev/null || which gnome-help",
+      "Verify: gnome-help --version",
+      "supercli plugins install ./plugins/gnome-help --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gnome-help",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gnome-help version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-help",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gnome-help: apt-get install gnome-help 2>/dev/null || which gnome-help"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gnome-help",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gnome-help CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gnome-help",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gnome-help: apt-get install gnome-help 2>/dev/null || which gnome-help"
+      },
+      "args": []
+    }
+  ]
+}

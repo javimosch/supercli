@@ -1,0 +1,56 @@
+{
+  "name": "gftodvi",
+  "version": "0.1.0",
+  "description": "CLI tool: gftodvi",
+  "source": "https://manpages.debian.org/gftodvi",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gftodvi"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gftodvi",
+    "binary": "gftodvi",
+    "check": "which gftodvi",
+    "install_steps": [
+      "apt-get install gftodvi 2>/dev/null || which gftodvi",
+      "Verify: gftodvi --version",
+      "supercli plugins install ./plugins/gftodvi --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gftodvi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gftodvi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gftodvi",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gftodvi: apt-get install gftodvi 2>/dev/null || which gftodvi"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gftodvi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gftodvi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gftodvi",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gftodvi: apt-get install gftodvi 2>/dev/null || which gftodvi"
+      },
+      "args": []
+    }
+  ]
+}

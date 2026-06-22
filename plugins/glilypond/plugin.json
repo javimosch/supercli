@@ -1,0 +1,56 @@
+{
+  "name": "glilypond",
+  "version": "0.1.0",
+  "description": "CLI tool: glilypond",
+  "source": "https://manpages.debian.org/glilypond",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "glilypond"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "glilypond",
+    "binary": "glilypond",
+    "check": "which glilypond",
+    "install_steps": [
+      "apt-get install glilypond 2>/dev/null || which glilypond",
+      "Verify: glilypond --version",
+      "supercli plugins install ./plugins/glilypond --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "glilypond",
+      "resource": "self",
+      "action": "version",
+      "description": "Print glilypond version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glilypond",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install glilypond: apt-get install glilypond 2>/dev/null || which glilypond"
+      },
+      "args": []
+    },
+    {
+      "namespace": "glilypond",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to glilypond CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "glilypond",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install glilypond: apt-get install glilypond 2>/dev/null || which glilypond"
+      },
+      "args": []
+    }
+  ]
+}
