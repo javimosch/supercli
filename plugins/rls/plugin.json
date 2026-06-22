@@ -1,0 +1,56 @@
+{
+  "name": "rls",
+  "version": "0.1.0",
+  "description": "CLI tool: rls",
+  "source": "https://manpages.debian.org/rls",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rls"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rls",
+    "binary": "rls",
+    "check": "which rls",
+    "install_steps": [
+      "apt-get install rls 2>/dev/null || which rls",
+      "Verify: rls --version",
+      "supercli plugins install ./plugins/rls --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rls",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rls: apt-get install rls 2>/dev/null || which rls"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rls CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rls",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rls: apt-get install rls 2>/dev/null || which rls"
+      },
+      "args": []
+    }
+  ]
+}

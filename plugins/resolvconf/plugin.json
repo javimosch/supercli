@@ -1,0 +1,56 @@
+{
+  "name": "resolvconf",
+  "version": "0.1.0",
+  "description": "CLI tool: resolvconf",
+  "source": "https://manpages.debian.org/resolvconf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "resolvconf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "resolvconf",
+    "binary": "resolvconf",
+    "check": "which resolvconf",
+    "install_steps": [
+      "apt-get install resolvconf 2>/dev/null || which resolvconf",
+      "Verify: resolvconf --version",
+      "supercli plugins install ./plugins/resolvconf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "resolvconf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print resolvconf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resolvconf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install resolvconf: apt-get install resolvconf 2>/dev/null || which resolvconf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "resolvconf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to resolvconf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resolvconf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install resolvconf: apt-get install resolvconf 2>/dev/null || which resolvconf"
+      },
+      "args": []
+    }
+  ]
+}

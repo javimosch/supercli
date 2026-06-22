@@ -1,0 +1,56 @@
+{
+  "name": "rst2man",
+  "version": "0.1.0",
+  "description": "CLI tool: rst2man",
+  "source": "https://manpages.debian.org/rst2man",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rst2man"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rst2man",
+    "binary": "rst2man",
+    "check": "which rst2man",
+    "install_steps": [
+      "apt-get install rst2man 2>/dev/null || which rst2man",
+      "Verify: rst2man --version",
+      "supercli plugins install ./plugins/rst2man --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rst2man",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rst2man version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rst2man",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rst2man: apt-get install rst2man 2>/dev/null || which rst2man"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rst2man",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rst2man CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rst2man",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rst2man: apt-get install rst2man 2>/dev/null || which rst2man"
+      },
+      "args": []
+    }
+  ]
+}

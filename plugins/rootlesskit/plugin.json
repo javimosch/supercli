@@ -1,0 +1,56 @@
+{
+  "name": "rootlesskit",
+  "version": "0.1.0",
+  "description": "CLI tool: rootlesskit",
+  "source": "https://manpages.debian.org/rootlesskit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rootlesskit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rootlesskit",
+    "binary": "rootlesskit",
+    "check": "which rootlesskit",
+    "install_steps": [
+      "apt-get install rootlesskit 2>/dev/null || which rootlesskit",
+      "Verify: rootlesskit --version",
+      "supercli plugins install ./plugins/rootlesskit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rootlesskit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rootlesskit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rootlesskit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rootlesskit: apt-get install rootlesskit 2>/dev/null || which rootlesskit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rootlesskit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rootlesskit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rootlesskit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rootlesskit: apt-get install rootlesskit 2>/dev/null || which rootlesskit"
+      },
+      "args": []
+    }
+  ]
+}

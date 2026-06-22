@@ -1,0 +1,56 @@
+{
+  "name": "roff2ps",
+  "version": "0.1.0",
+  "description": "CLI tool: roff2ps",
+  "source": "https://manpages.debian.org/roff2ps",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "roff2ps"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "roff2ps",
+    "binary": "roff2ps",
+    "check": "which roff2ps",
+    "install_steps": [
+      "apt-get install roff2ps 2>/dev/null || which roff2ps",
+      "Verify: roff2ps --version",
+      "supercli plugins install ./plugins/roff2ps --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "roff2ps",
+      "resource": "self",
+      "action": "version",
+      "description": "Print roff2ps version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "roff2ps",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install roff2ps: apt-get install roff2ps 2>/dev/null || which roff2ps"
+      },
+      "args": []
+    },
+    {
+      "namespace": "roff2ps",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to roff2ps CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "roff2ps",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install roff2ps: apt-get install roff2ps 2>/dev/null || which roff2ps"
+      },
+      "args": []
+    }
+  ]
+}

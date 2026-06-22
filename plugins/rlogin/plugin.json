@@ -1,0 +1,56 @@
+{
+  "name": "rlogin",
+  "version": "0.1.0",
+  "description": "CLI tool: rlogin",
+  "source": "https://manpages.debian.org/rlogin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rlogin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rlogin",
+    "binary": "rlogin",
+    "check": "which rlogin",
+    "install_steps": [
+      "apt-get install rlogin 2>/dev/null || which rlogin",
+      "Verify: rlogin --version",
+      "supercli plugins install ./plugins/rlogin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rlogin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rlogin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rlogin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rlogin: apt-get install rlogin 2>/dev/null || which rlogin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rlogin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rlogin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rlogin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rlogin: apt-get install rlogin 2>/dev/null || which rlogin"
+      },
+      "args": []
+    }
+  ]
+}

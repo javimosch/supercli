@@ -1,0 +1,56 @@
+{
+  "name": "reindexdb",
+  "version": "0.1.0",
+  "description": "CLI tool: reindexdb",
+  "source": "https://manpages.debian.org/reindexdb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "reindexdb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "reindexdb",
+    "binary": "reindexdb",
+    "check": "which reindexdb",
+    "install_steps": [
+      "apt-get install reindexdb 2>/dev/null || which reindexdb",
+      "Verify: reindexdb --version",
+      "supercli plugins install ./plugins/reindexdb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "reindexdb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print reindexdb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reindexdb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install reindexdb: apt-get install reindexdb 2>/dev/null || which reindexdb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "reindexdb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to reindexdb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "reindexdb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install reindexdb: apt-get install reindexdb 2>/dev/null || which reindexdb"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "routef",
+  "version": "0.1.0",
+  "description": "CLI tool: routef",
+  "source": "https://manpages.debian.org/routef",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "routef"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "routef",
+    "binary": "routef",
+    "check": "which routef",
+    "install_steps": [
+      "apt-get install routef 2>/dev/null || which routef",
+      "Verify: routef --version",
+      "supercli plugins install ./plugins/routef --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "routef",
+      "resource": "self",
+      "action": "version",
+      "description": "Print routef version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "routef",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install routef: apt-get install routef 2>/dev/null || which routef"
+      },
+      "args": []
+    },
+    {
+      "namespace": "routef",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to routef CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "routef",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install routef: apt-get install routef 2>/dev/null || which routef"
+      },
+      "args": []
+    }
+  ]
+}

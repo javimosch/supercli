@@ -1,0 +1,56 @@
+{
+  "name": "remotecmd-cli",
+  "version": "0.1.0",
+  "description": "CLI tool: remotecmd-cli",
+  "source": "https://manpages.debian.org/remotecmd-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "remotecmd-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "remotecmd-cli",
+    "binary": "remotecmd-cli",
+    "check": "which remotecmd-cli",
+    "install_steps": [
+      "apt-get install remotecmd-cli 2>/dev/null || which remotecmd-cli",
+      "Verify: remotecmd-cli --version",
+      "supercli plugins install ./plugins/remotecmd-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "remotecmd-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print remotecmd-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install remotecmd-cli: apt-get install remotecmd-cli 2>/dev/null || which remotecmd-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotecmd-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to remotecmd-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotecmd-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install remotecmd-cli: apt-get install remotecmd-cli 2>/dev/null || which remotecmd-cli"
+      },
+      "args": []
+    }
+  ]
+}

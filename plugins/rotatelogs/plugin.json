@@ -1,0 +1,56 @@
+{
+  "name": "rotatelogs",
+  "version": "0.1.0",
+  "description": "CLI tool: rotatelogs",
+  "source": "https://manpages.debian.org/rotatelogs",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rotatelogs"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rotatelogs",
+    "binary": "rotatelogs",
+    "check": "which rotatelogs",
+    "install_steps": [
+      "apt-get install rotatelogs 2>/dev/null || which rotatelogs",
+      "Verify: rotatelogs --version",
+      "supercli plugins install ./plugins/rotatelogs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rotatelogs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rotatelogs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rotatelogs",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rotatelogs: apt-get install rotatelogs 2>/dev/null || which rotatelogs"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rotatelogs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rotatelogs CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rotatelogs",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rotatelogs: apt-get install rotatelogs 2>/dev/null || which rotatelogs"
+      },
+      "args": []
+    }
+  ]
+}

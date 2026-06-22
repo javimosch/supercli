@@ -1,0 +1,56 @@
+{
+  "name": "rhythmbox",
+  "version": "0.1.0",
+  "description": "CLI tool: rhythmbox",
+  "source": "https://manpages.debian.org/rhythmbox",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rhythmbox"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rhythmbox",
+    "binary": "rhythmbox",
+    "check": "which rhythmbox",
+    "install_steps": [
+      "apt-get install rhythmbox 2>/dev/null || which rhythmbox",
+      "Verify: rhythmbox --version",
+      "supercli plugins install ./plugins/rhythmbox --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rhythmbox",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rhythmbox version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rhythmbox",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rhythmbox: apt-get install rhythmbox 2>/dev/null || which rhythmbox"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rhythmbox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rhythmbox CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rhythmbox",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rhythmbox: apt-get install rhythmbox 2>/dev/null || which rhythmbox"
+      },
+      "args": []
+    }
+  ]
+}

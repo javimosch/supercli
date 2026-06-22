@@ -1,0 +1,56 @@
+{
+  "name": "resizecons",
+  "version": "0.1.0",
+  "description": "CLI tool: resizecons",
+  "source": "https://manpages.debian.org/resizecons",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "resizecons"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "resizecons",
+    "binary": "resizecons",
+    "check": "which resizecons",
+    "install_steps": [
+      "apt-get install resizecons 2>/dev/null || which resizecons",
+      "Verify: resizecons --version",
+      "supercli plugins install ./plugins/resizecons --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "resizecons",
+      "resource": "self",
+      "action": "version",
+      "description": "Print resizecons version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resizecons",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install resizecons: apt-get install resizecons 2>/dev/null || which resizecons"
+      },
+      "args": []
+    },
+    {
+      "namespace": "resizecons",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to resizecons CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resizecons",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install resizecons: apt-get install resizecons 2>/dev/null || which resizecons"
+      },
+      "args": []
+    }
+  ]
+}

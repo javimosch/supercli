@@ -1,0 +1,56 @@
+{
+  "name": "remmina",
+  "version": "0.1.0",
+  "description": "CLI tool: remmina",
+  "source": "https://manpages.debian.org/remmina",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "remmina"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "remmina",
+    "binary": "remmina",
+    "check": "which remmina",
+    "install_steps": [
+      "apt-get install remmina 2>/dev/null || which remmina",
+      "Verify: remmina --version",
+      "supercli plugins install ./plugins/remmina --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "remmina",
+      "resource": "self",
+      "action": "version",
+      "description": "Print remmina version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remmina",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install remmina: apt-get install remmina 2>/dev/null || which remmina"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remmina",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to remmina CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remmina",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install remmina: apt-get install remmina 2>/dev/null || which remmina"
+      },
+      "args": []
+    }
+  ]
+}

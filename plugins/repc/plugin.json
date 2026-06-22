@@ -1,0 +1,56 @@
+{
+  "name": "repc",
+  "version": "0.1.0",
+  "description": "CLI tool: repc",
+  "source": "https://manpages.debian.org/repc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "repc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "repc",
+    "binary": "repc",
+    "check": "which repc",
+    "install_steps": [
+      "apt-get install repc 2>/dev/null || which repc",
+      "Verify: repc --version",
+      "supercli plugins install ./plugins/repc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "repc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print repc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "repc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install repc: apt-get install repc 2>/dev/null || which repc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "repc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to repc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "repc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install repc: apt-get install repc 2>/dev/null || which repc"
+      },
+      "args": []
+    }
+  ]
+}

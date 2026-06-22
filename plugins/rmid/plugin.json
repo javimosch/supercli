@@ -1,0 +1,56 @@
+{
+  "name": "rmid",
+  "version": "0.1.0",
+  "description": "CLI tool: rmid",
+  "source": "https://manpages.debian.org/rmid",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rmid"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rmid",
+    "binary": "rmid",
+    "check": "which rmid",
+    "install_steps": [
+      "apt-get install rmid 2>/dev/null || which rmid",
+      "Verify: rmid --version",
+      "supercli plugins install ./plugins/rmid --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rmid",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rmid version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmid",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rmid: apt-get install rmid 2>/dev/null || which rmid"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rmid",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rmid CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmid",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rmid: apt-get install rmid 2>/dev/null || which rmid"
+      },
+      "args": []
+    }
+  ]
+}

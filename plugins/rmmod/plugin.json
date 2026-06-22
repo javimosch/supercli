@@ -1,0 +1,56 @@
+{
+  "name": "rmmod",
+  "version": "0.1.0",
+  "description": "CLI tool: rmmod",
+  "source": "https://manpages.debian.org/rmmod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rmmod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rmmod",
+    "binary": "rmmod",
+    "check": "which rmmod",
+    "install_steps": [
+      "apt-get install rmmod 2>/dev/null || which rmmod",
+      "Verify: rmmod --version",
+      "supercli plugins install ./plugins/rmmod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rmmod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rmmod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmmod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rmmod: apt-get install rmmod 2>/dev/null || which rmmod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rmmod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rmmod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmmod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rmmod: apt-get install rmmod 2>/dev/null || which rmmod"
+      },
+      "args": []
+    }
+  ]
+}

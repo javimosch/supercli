@@ -1,0 +1,56 @@
+{
+  "name": "rmic",
+  "version": "0.1.0",
+  "description": "CLI tool: rmic",
+  "source": "https://manpages.debian.org/rmic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rmic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rmic",
+    "binary": "rmic",
+    "check": "which rmic",
+    "install_steps": [
+      "apt-get install rmic 2>/dev/null || which rmic",
+      "Verify: rmic --version",
+      "supercli plugins install ./plugins/rmic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rmic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rmic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rmic: apt-get install rmic 2>/dev/null || which rmic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rmic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rmic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rmic: apt-get install rmic 2>/dev/null || which rmic"
+      },
+      "args": []
+    }
+  ]
+}

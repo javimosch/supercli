@@ -1,0 +1,56 @@
+{
+  "name": "rendercheck",
+  "version": "0.1.0",
+  "description": "CLI tool: rendercheck",
+  "source": "https://manpages.debian.org/rendercheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rendercheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rendercheck",
+    "binary": "rendercheck",
+    "check": "which rendercheck",
+    "install_steps": [
+      "apt-get install rendercheck 2>/dev/null || which rendercheck",
+      "Verify: rendercheck --version",
+      "supercli plugins install ./plugins/rendercheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rendercheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rendercheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rendercheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rendercheck: apt-get install rendercheck 2>/dev/null || which rendercheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rendercheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rendercheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rendercheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rendercheck: apt-get install rendercheck 2>/dev/null || which rendercheck"
+      },
+      "args": []
+    }
+  ]
+}

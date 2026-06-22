@@ -1,0 +1,56 @@
+{
+  "name": "rscreen",
+  "version": "0.1.0",
+  "description": "CLI tool: rscreen",
+  "source": "https://manpages.debian.org/rscreen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rscreen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rscreen",
+    "binary": "rscreen",
+    "check": "which rscreen",
+    "install_steps": [
+      "apt-get install rscreen 2>/dev/null || which rscreen",
+      "Verify: rscreen --version",
+      "supercli plugins install ./plugins/rscreen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rscreen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rscreen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rscreen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rscreen: apt-get install rscreen 2>/dev/null || which rscreen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rscreen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rscreen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rscreen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rscreen: apt-get install rscreen 2>/dev/null || which rscreen"
+      },
+      "args": []
+    }
+  ]
+}

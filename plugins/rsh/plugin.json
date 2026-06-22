@@ -1,0 +1,56 @@
+{
+  "name": "rsh",
+  "version": "0.1.0",
+  "description": "CLI tool: rsh",
+  "source": "https://manpages.debian.org/rsh",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rsh"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rsh",
+    "binary": "rsh",
+    "check": "which rsh",
+    "install_steps": [
+      "apt-get install rsh 2>/dev/null || which rsh",
+      "Verify: rsh --version",
+      "supercli plugins install ./plugins/rsh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rsh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rsh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsh",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rsh: apt-get install rsh 2>/dev/null || which rsh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rsh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rsh CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsh",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rsh: apt-get install rsh 2>/dev/null || which rsh"
+      },
+      "args": []
+    }
+  ]
+}

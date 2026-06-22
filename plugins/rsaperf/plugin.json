@@ -1,0 +1,56 @@
+{
+  "name": "rsaperf",
+  "version": "0.1.0",
+  "description": "CLI tool: rsaperf",
+  "source": "https://manpages.debian.org/rsaperf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rsaperf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rsaperf",
+    "binary": "rsaperf",
+    "check": "which rsaperf",
+    "install_steps": [
+      "apt-get install rsaperf 2>/dev/null || which rsaperf",
+      "Verify: rsaperf --version",
+      "supercli plugins install ./plugins/rsaperf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rsaperf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rsaperf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsaperf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rsaperf: apt-get install rsaperf 2>/dev/null || which rsaperf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rsaperf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rsaperf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rsaperf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rsaperf: apt-get install rsaperf 2>/dev/null || which rsaperf"
+      },
+      "args": []
+    }
+  ]
+}

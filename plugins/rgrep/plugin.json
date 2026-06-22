@@ -1,0 +1,56 @@
+{
+  "name": "rgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: rgrep",
+  "source": "https://manpages.debian.org/rgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rgrep",
+    "binary": "rgrep",
+    "check": "which rgrep",
+    "install_steps": [
+      "apt-get install rgrep 2>/dev/null || which rgrep",
+      "Verify: rgrep --version",
+      "supercli plugins install ./plugins/rgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rgrep: apt-get install rgrep 2>/dev/null || which rgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rgrep: apt-get install rgrep 2>/dev/null || which rgrep"
+      },
+      "args": []
+    }
+  ]
+}

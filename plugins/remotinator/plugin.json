@@ -1,0 +1,56 @@
+{
+  "name": "remotinator",
+  "version": "0.1.0",
+  "description": "CLI tool: remotinator",
+  "source": "https://manpages.debian.org/remotinator",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "remotinator"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "remotinator",
+    "binary": "remotinator",
+    "check": "which remotinator",
+    "install_steps": [
+      "apt-get install remotinator 2>/dev/null || which remotinator",
+      "Verify: remotinator --version",
+      "supercli plugins install ./plugins/remotinator --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "remotinator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print remotinator version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotinator",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install remotinator: apt-get install remotinator 2>/dev/null || which remotinator"
+      },
+      "args": []
+    },
+    {
+      "namespace": "remotinator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to remotinator CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "remotinator",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install remotinator: apt-get install remotinator 2>/dev/null || which remotinator"
+      },
+      "args": []
+    }
+  ]
+}

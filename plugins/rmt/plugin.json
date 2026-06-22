@@ -1,0 +1,56 @@
+{
+  "name": "rmt",
+  "version": "0.1.0",
+  "description": "CLI tool: rmt",
+  "source": "https://manpages.debian.org/rmt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rmt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rmt",
+    "binary": "rmt",
+    "check": "which rmt",
+    "install_steps": [
+      "apt-get install rmt 2>/dev/null || which rmt",
+      "Verify: rmt --version",
+      "supercli plugins install ./plugins/rmt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rmt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rmt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rmt: apt-get install rmt 2>/dev/null || which rmt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rmt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rmt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rmt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rmt: apt-get install rmt 2>/dev/null || which rmt"
+      },
+      "args": []
+    }
+  ]
+}
