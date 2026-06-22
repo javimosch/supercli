@@ -1,0 +1,53 @@
+{
+  "name": "actions-up",
+  "version": "0.1.0",
+  "description": "Tool to update GitHub Actions to latest versions with SHA pinning",
+  "source": "https://github.com/azat-io/actions-up",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "actions-up"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "actions-up",
+    "binary": "actions-up",
+    "check": "which actions-up",
+    "install_steps": [
+      "brew install actions-up",
+      "Verify: actions-up --version",
+      "supercli plugins install ./plugins/actions-up --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "actions-up",
+      "resource": "self",
+      "action": "version",
+      "description": "Print actions-up version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "actions-up",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install actions-up: brew install actions-up"
+      },
+      "args": []
+    },
+    {
+      "namespace": "actions-up",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to actions-up CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "actions-up",
+        "passthrough": true,
+        "missingDependencyHelp": "Install actions-up"
+      },
+      "args": []
+    }
+  ]
+}

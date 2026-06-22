@@ -1,0 +1,53 @@
+{
+  "name": "asroute",
+  "version": "0.1.0",
+  "description": "CLI to interpret traceroute -a output to show AS names traversed",
+  "source": "https://github.com/stevenpack/asroute",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "asroute"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "asroute",
+    "binary": "asroute",
+    "check": "which asroute",
+    "install_steps": [
+      "brew install asroute",
+      "Verify: asroute --version",
+      "supercli plugins install ./plugins/asroute --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "asroute",
+      "resource": "self",
+      "action": "version",
+      "description": "Print asroute version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asroute",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install asroute: brew install asroute"
+      },
+      "args": []
+    },
+    {
+      "namespace": "asroute",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to asroute CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "asroute",
+        "passthrough": true,
+        "missingDependencyHelp": "Install asroute"
+      },
+      "args": []
+    }
+  ]
+}

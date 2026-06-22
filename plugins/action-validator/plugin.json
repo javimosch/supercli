@@ -1,0 +1,53 @@
+{
+  "name": "action-validator",
+  "version": "0.1.0",
+  "description": "Tool to validate GitHub Action and Workflow YAML files",
+  "source": "https://github.com/mpalmer/action-validator",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "action-validator"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "action-validator",
+    "binary": "action-validator",
+    "check": "which action-validator",
+    "install_steps": [
+      "cargo install action-validator",
+      "Verify: action-validator --version",
+      "supercli plugins install ./plugins/action-validator --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "action-validator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print action-validator version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "action-validator",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install action-validator: cargo install action-validator"
+      },
+      "args": []
+    },
+    {
+      "namespace": "action-validator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to action-validator CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "action-validator",
+        "passthrough": true,
+        "missingDependencyHelp": "Install action-validator"
+      },
+      "args": []
+    }
+  ]
+}
