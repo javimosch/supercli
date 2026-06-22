@@ -1,0 +1,52 @@
+{
+  "name": "ca-certificates",
+  "version": "0.1.0",
+  "description": "Mozilla CA certificate store",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ca-certificates"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ca-certificates",
+    "binary": "ca-certificates",
+    "check": "which ca-certificates",
+    "install_steps": [
+      "brew install ca-certificates",
+      "Verify: ca-certificates --version",
+      "supercli plugins install ./plugins/ca-certificates --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "ca-certificates",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ca-certificates version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ca-certificates",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ca-certificates: brew install ca-certificates"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ca-certificates",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ca-certificates CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ca-certificates",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ca-certificates"
+      },
+      "args": []
+    }
+  ]
+}

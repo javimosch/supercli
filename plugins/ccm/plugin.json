@@ -1,0 +1,53 @@
+{
+  "name": "ccm",
+  "version": "0.1.0",
+  "description": "Create and destroy an Apache Cassandra cluster on localhost",
+  "source": "https://github.com/apache/cassandra-ccm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ccm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ccm",
+    "binary": "ccm",
+    "check": "which ccm",
+    "install_steps": [
+      "brew install ccm",
+      "Verify: ccm --version",
+      "supercli plugins install ./plugins/ccm --on-conflict replace --json"
+    ],
+    "note": "Install from package manager"
+  },
+  "commands": [
+    {
+      "namespace": "ccm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ccm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ccm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ccm: brew install ccm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ccm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ccm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ccm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ccm"
+      },
+      "args": []
+    }
+  ]
+}
