@@ -1,0 +1,56 @@
+{
+  "name": "qemu-storage-daemon",
+  "version": "0.1.0",
+  "description": "CLI tool: qemu-storage-daemon",
+  "source": "https://manpages.debian.org/qemu-storage-daemon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qemu-storage-daemon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qemu-storage-daemon",
+    "binary": "qemu-storage-daemon",
+    "check": "which qemu-storage-daemon",
+    "install_steps": [
+      "apt-get install qemu-storage-daemon 2>/dev/null || which qemu-storage-daemon",
+      "Verify: qemu-storage-daemon --version",
+      "supercli plugins install ./plugins/qemu-storage-daemon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qemu-storage-daemon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qemu-storage-daemon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-storage-daemon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qemu-storage-daemon: apt-get install qemu-storage-daemon 2>/dev/null || which qemu-storage-daemon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qemu-storage-daemon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qemu-storage-daemon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-storage-daemon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qemu-storage-daemon: apt-get install qemu-storage-daemon 2>/dev/null || which qemu-storage-daemon"
+      },
+      "args": []
+    }
+  ]
+}

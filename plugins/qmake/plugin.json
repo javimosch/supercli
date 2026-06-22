@@ -1,0 +1,56 @@
+{
+  "name": "qmake",
+  "version": "0.1.0",
+  "description": "CLI tool: qmake",
+  "source": "https://manpages.debian.org/qmake",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qmake"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qmake",
+    "binary": "qmake",
+    "check": "which qmake",
+    "install_steps": [
+      "apt-get install qmake 2>/dev/null || which qmake",
+      "Verify: qmake --version",
+      "supercli plugins install ./plugins/qmake --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qmake",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qmake version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qmake",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qmake: apt-get install qmake 2>/dev/null || which qmake"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qmake",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qmake CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qmake",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qmake: apt-get install qmake 2>/dev/null || which qmake"
+      },
+      "args": []
+    }
+  ]
+}

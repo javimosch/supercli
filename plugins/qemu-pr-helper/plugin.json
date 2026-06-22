@@ -1,0 +1,56 @@
+{
+  "name": "qemu-pr-helper",
+  "version": "0.1.0",
+  "description": "CLI tool: qemu-pr-helper",
+  "source": "https://manpages.debian.org/qemu-pr-helper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qemu-pr-helper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qemu-pr-helper",
+    "binary": "qemu-pr-helper",
+    "check": "which qemu-pr-helper",
+    "install_steps": [
+      "apt-get install qemu-pr-helper 2>/dev/null || which qemu-pr-helper",
+      "Verify: qemu-pr-helper --version",
+      "supercli plugins install ./plugins/qemu-pr-helper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qemu-pr-helper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qemu-pr-helper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-pr-helper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qemu-pr-helper: apt-get install qemu-pr-helper 2>/dev/null || which qemu-pr-helper"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qemu-pr-helper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qemu-pr-helper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-pr-helper",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qemu-pr-helper: apt-get install qemu-pr-helper 2>/dev/null || which qemu-pr-helper"
+      },
+      "args": []
+    }
+  ]
+}

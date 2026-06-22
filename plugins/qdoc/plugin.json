@@ -1,0 +1,56 @@
+{
+  "name": "qdoc",
+  "version": "0.1.0",
+  "description": "CLI tool: qdoc",
+  "source": "https://manpages.debian.org/qdoc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qdoc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qdoc",
+    "binary": "qdoc",
+    "check": "which qdoc",
+    "install_steps": [
+      "apt-get install qdoc 2>/dev/null || which qdoc",
+      "Verify: qdoc --version",
+      "supercli plugins install ./plugins/qdoc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qdoc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qdoc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qdoc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qdoc: apt-get install qdoc 2>/dev/null || which qdoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qdoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qdoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qdoc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qdoc: apt-get install qdoc 2>/dev/null || which qdoc"
+      },
+      "args": []
+    }
+  ]
+}

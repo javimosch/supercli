@@ -1,0 +1,56 @@
+{
+  "name": "qemu-io",
+  "version": "0.1.0",
+  "description": "CLI tool: qemu-io",
+  "source": "https://manpages.debian.org/qemu-io",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qemu-io"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qemu-io",
+    "binary": "qemu-io",
+    "check": "which qemu-io",
+    "install_steps": [
+      "apt-get install qemu-io 2>/dev/null || which qemu-io",
+      "Verify: qemu-io --version",
+      "supercli plugins install ./plugins/qemu-io --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qemu-io",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qemu-io version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-io",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qemu-io: apt-get install qemu-io 2>/dev/null || which qemu-io"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qemu-io",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qemu-io CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-io",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qemu-io: apt-get install qemu-io 2>/dev/null || which qemu-io"
+      },
+      "args": []
+    }
+  ]
+}

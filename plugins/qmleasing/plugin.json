@@ -1,0 +1,56 @@
+{
+  "name": "qmleasing",
+  "version": "0.1.0",
+  "description": "CLI tool: qmleasing",
+  "source": "https://manpages.debian.org/qmleasing",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qmleasing"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qmleasing",
+    "binary": "qmleasing",
+    "check": "which qmleasing",
+    "install_steps": [
+      "apt-get install qmleasing 2>/dev/null || which qmleasing",
+      "Verify: qmleasing --version",
+      "supercli plugins install ./plugins/qmleasing --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qmleasing",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qmleasing version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qmleasing",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qmleasing: apt-get install qmleasing 2>/dev/null || which qmleasing"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qmleasing",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qmleasing CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qmleasing",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qmleasing: apt-get install qmleasing 2>/dev/null || which qmleasing"
+      },
+      "args": []
+    }
+  ]
+}

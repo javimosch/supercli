@@ -1,0 +1,56 @@
+{
+  "name": "qdbus",
+  "version": "0.1.0",
+  "description": "CLI tool: qdbus",
+  "source": "https://manpages.debian.org/qdbus",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qdbus"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qdbus",
+    "binary": "qdbus",
+    "check": "which qdbus",
+    "install_steps": [
+      "apt-get install qdbus 2>/dev/null || which qdbus",
+      "Verify: qdbus --version",
+      "supercli plugins install ./plugins/qdbus --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qdbus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qdbus version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qdbus",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qdbus: apt-get install qdbus 2>/dev/null || which qdbus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qdbus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qdbus CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qdbus",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qdbus: apt-get install qdbus 2>/dev/null || which qdbus"
+      },
+      "args": []
+    }
+  ]
+}

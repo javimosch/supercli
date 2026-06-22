@@ -1,0 +1,56 @@
+{
+  "name": "qdbusviewer",
+  "version": "0.1.0",
+  "description": "CLI tool: qdbusviewer",
+  "source": "https://manpages.debian.org/qdbusviewer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qdbusviewer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qdbusviewer",
+    "binary": "qdbusviewer",
+    "check": "which qdbusviewer",
+    "install_steps": [
+      "apt-get install qdbusviewer 2>/dev/null || which qdbusviewer",
+      "Verify: qdbusviewer --version",
+      "supercli plugins install ./plugins/qdbusviewer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qdbusviewer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qdbusviewer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qdbusviewer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qdbusviewer: apt-get install qdbusviewer 2>/dev/null || which qdbusviewer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qdbusviewer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qdbusviewer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qdbusviewer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qdbusviewer: apt-get install qdbusviewer 2>/dev/null || which qdbusviewer"
+      },
+      "args": []
+    }
+  ]
+}

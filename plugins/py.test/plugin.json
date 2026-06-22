@@ -1,0 +1,56 @@
+{
+  "name": "py.test",
+  "version": "0.1.0",
+  "description": "CLI tool: py.test",
+  "source": "https://manpages.debian.org/py.test",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "py.test"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "py.test",
+    "binary": "py.test",
+    "check": "which py.test",
+    "install_steps": [
+      "apt-get install py.test 2>/dev/null || which py.test",
+      "Verify: py.test --version",
+      "supercli plugins install ./plugins/py.test --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "py.test",
+      "resource": "self",
+      "action": "version",
+      "description": "Print py.test version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "py.test",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install py.test: apt-get install py.test 2>/dev/null || which py.test"
+      },
+      "args": []
+    },
+    {
+      "namespace": "py.test",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to py.test CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "py.test",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install py.test: apt-get install py.test 2>/dev/null || which py.test"
+      },
+      "args": []
+    }
+  ]
+}

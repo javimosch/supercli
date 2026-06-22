@@ -1,0 +1,56 @@
+{
+  "name": "qmlmin",
+  "version": "0.1.0",
+  "description": "CLI tool: qmlmin",
+  "source": "https://manpages.debian.org/qmlmin",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qmlmin"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qmlmin",
+    "binary": "qmlmin",
+    "check": "which qmlmin",
+    "install_steps": [
+      "apt-get install qmlmin 2>/dev/null || which qmlmin",
+      "Verify: qmlmin --version",
+      "supercli plugins install ./plugins/qmlmin --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qmlmin",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qmlmin version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qmlmin",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qmlmin: apt-get install qmlmin 2>/dev/null || which qmlmin"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qmlmin",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qmlmin CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qmlmin",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qmlmin: apt-get install qmlmin 2>/dev/null || which qmlmin"
+      },
+      "args": []
+    }
+  ]
+}

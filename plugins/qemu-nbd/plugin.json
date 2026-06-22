@@ -1,0 +1,56 @@
+{
+  "name": "qemu-nbd",
+  "version": "0.1.0",
+  "description": "CLI tool: qemu-nbd",
+  "source": "https://manpages.debian.org/qemu-nbd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qemu-nbd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qemu-nbd",
+    "binary": "qemu-nbd",
+    "check": "which qemu-nbd",
+    "install_steps": [
+      "apt-get install qemu-nbd 2>/dev/null || which qemu-nbd",
+      "Verify: qemu-nbd --version",
+      "supercli plugins install ./plugins/qemu-nbd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qemu-nbd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qemu-nbd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-nbd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qemu-nbd: apt-get install qemu-nbd 2>/dev/null || which qemu-nbd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qemu-nbd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qemu-nbd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-nbd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qemu-nbd: apt-get install qemu-nbd 2>/dev/null || which qemu-nbd"
+      },
+      "args": []
+    }
+  ]
+}

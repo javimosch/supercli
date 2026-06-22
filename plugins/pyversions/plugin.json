@@ -1,0 +1,56 @@
+{
+  "name": "pyversions",
+  "version": "0.1.0",
+  "description": "CLI tool: pyversions",
+  "source": "https://manpages.debian.org/pyversions",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pyversions"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pyversions",
+    "binary": "pyversions",
+    "check": "which pyversions",
+    "install_steps": [
+      "apt-get install pyversions 2>/dev/null || which pyversions",
+      "Verify: pyversions --version",
+      "supercli plugins install ./plugins/pyversions --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pyversions",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pyversions version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyversions",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pyversions: apt-get install pyversions 2>/dev/null || which pyversions"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pyversions",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pyversions CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pyversions",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pyversions: apt-get install pyversions 2>/dev/null || which pyversions"
+      },
+      "args": []
+    }
+  ]
+}

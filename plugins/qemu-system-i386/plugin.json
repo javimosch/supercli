@@ -1,0 +1,56 @@
+{
+  "name": "qemu-system-i386",
+  "version": "0.1.0",
+  "description": "CLI tool: qemu-system-i386",
+  "source": "https://manpages.debian.org/qemu-system-i386",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qemu-system-i386"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qemu-system-i386",
+    "binary": "qemu-system-i386",
+    "check": "which qemu-system-i386",
+    "install_steps": [
+      "apt-get install qemu-system-i386 2>/dev/null || which qemu-system-i386",
+      "Verify: qemu-system-i386 --version",
+      "supercli plugins install ./plugins/qemu-system-i386 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qemu-system-i386",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qemu-system-i386 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-system-i386",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qemu-system-i386: apt-get install qemu-system-i386 2>/dev/null || which qemu-system-i386"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qemu-system-i386",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qemu-system-i386 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-system-i386",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qemu-system-i386: apt-get install qemu-system-i386 2>/dev/null || which qemu-system-i386"
+      },
+      "args": []
+    }
+  ]
+}

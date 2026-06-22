@@ -1,0 +1,56 @@
+{
+  "name": "qemu-img",
+  "version": "0.1.0",
+  "description": "CLI tool: qemu-img",
+  "source": "https://manpages.debian.org/qemu-img",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "qemu-img"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "qemu-img",
+    "binary": "qemu-img",
+    "check": "which qemu-img",
+    "install_steps": [
+      "apt-get install qemu-img 2>/dev/null || which qemu-img",
+      "Verify: qemu-img --version",
+      "supercli plugins install ./plugins/qemu-img --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qemu-img",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qemu-img version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-img",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install qemu-img: apt-get install qemu-img 2>/dev/null || which qemu-img"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qemu-img",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qemu-img CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qemu-img",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qemu-img: apt-get install qemu-img 2>/dev/null || which qemu-img"
+      },
+      "args": []
+    }
+  ]
+}
