@@ -1,0 +1,56 @@
+{
+  "name": "xsm",
+  "version": "0.1.0",
+  "description": "CLI tool: xsm",
+  "source": "https://manpages.debian.org/xsm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xsm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xsm",
+    "binary": "xsm",
+    "check": "which xsm",
+    "install_steps": [
+      "apt-get install xsm 2>/dev/null || which xsm",
+      "Verify: xsm --version",
+      "supercli plugins install ./plugins/xsm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xsm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xsm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xsm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xsm: apt-get install xsm 2>/dev/null || which xsm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xsm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xsm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xsm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xsm: apt-get install xsm 2>/dev/null || which xsm"
+      },
+      "args": []
+    }
+  ]
+}

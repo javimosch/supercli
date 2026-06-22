@@ -1,0 +1,56 @@
+{
+  "name": "xmag",
+  "version": "0.1.0",
+  "description": "CLI tool: xmag",
+  "source": "https://manpages.debian.org/xmag",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xmag"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xmag",
+    "binary": "xmag",
+    "check": "which xmag",
+    "install_steps": [
+      "apt-get install xmag 2>/dev/null || which xmag",
+      "Verify: xmag --version",
+      "supercli plugins install ./plugins/xmag --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xmag",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xmag version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmag",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xmag: apt-get install xmag 2>/dev/null || which xmag"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xmag",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xmag CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmag",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xmag: apt-get install xmag 2>/dev/null || which xmag"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "xvfb-run",
+  "version": "0.1.0",
+  "description": "CLI tool: xvfb-run",
+  "source": "https://manpages.debian.org/xvfb-run",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xvfb-run"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xvfb-run",
+    "binary": "xvfb-run",
+    "check": "which xvfb-run",
+    "install_steps": [
+      "apt-get install xvfb-run 2>/dev/null || which xvfb-run",
+      "Verify: xvfb-run --version",
+      "supercli plugins install ./plugins/xvfb-run --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xvfb-run",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xvfb-run version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xvfb-run",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xvfb-run: apt-get install xvfb-run 2>/dev/null || which xvfb-run"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xvfb-run",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xvfb-run CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xvfb-run",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xvfb-run: apt-get install xvfb-run 2>/dev/null || which xvfb-run"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "xkill",
+  "version": "0.1.0",
+  "description": "CLI tool: xkill",
+  "source": "https://manpages.debian.org/xkill",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xkill"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xkill",
+    "binary": "xkill",
+    "check": "which xkill",
+    "install_steps": [
+      "apt-get install xkill 2>/dev/null || which xkill",
+      "Verify: xkill --version",
+      "supercli plugins install ./plugins/xkill --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xkill",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xkill version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xkill",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xkill: apt-get install xkill 2>/dev/null || which xkill"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xkill",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xkill CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xkill",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xkill: apt-get install xkill 2>/dev/null || which xkill"
+      },
+      "args": []
+    }
+  ]
+}

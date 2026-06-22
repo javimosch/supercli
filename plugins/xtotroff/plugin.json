@@ -1,0 +1,56 @@
+{
+  "name": "xtotroff",
+  "version": "0.1.0",
+  "description": "CLI tool: xtotroff",
+  "source": "https://manpages.debian.org/xtotroff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xtotroff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xtotroff",
+    "binary": "xtotroff",
+    "check": "which xtotroff",
+    "install_steps": [
+      "apt-get install xtotroff 2>/dev/null || which xtotroff",
+      "Verify: xtotroff --version",
+      "supercli plugins install ./plugins/xtotroff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xtotroff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xtotroff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xtotroff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xtotroff: apt-get install xtotroff 2>/dev/null || which xtotroff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xtotroff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xtotroff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xtotroff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xtotroff: apt-get install xtotroff 2>/dev/null || which xtotroff"
+      },
+      "args": []
+    }
+  ]
+}

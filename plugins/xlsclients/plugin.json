@@ -1,0 +1,56 @@
+{
+  "name": "xlsclients",
+  "version": "0.1.0",
+  "description": "CLI tool: xlsclients",
+  "source": "https://manpages.debian.org/xlsclients",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xlsclients"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xlsclients",
+    "binary": "xlsclients",
+    "check": "which xlsclients",
+    "install_steps": [
+      "apt-get install xlsclients 2>/dev/null || which xlsclients",
+      "Verify: xlsclients --version",
+      "supercli plugins install ./plugins/xlsclients --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xlsclients",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xlsclients version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xlsclients",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xlsclients: apt-get install xlsclients 2>/dev/null || which xlsclients"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xlsclients",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xlsclients CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xlsclients",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xlsclients: apt-get install xlsclients 2>/dev/null || which xlsclients"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "x-session-manager",
+  "version": "0.1.0",
+  "description": "CLI tool: x-session-manager",
+  "source": "https://manpages.debian.org/x-session-manager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "x-session-manager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "x-session-manager",
+    "binary": "x-session-manager",
+    "check": "which x-session-manager",
+    "install_steps": [
+      "apt-get install x-session-manager 2>/dev/null || which x-session-manager",
+      "Verify: x-session-manager --version",
+      "supercli plugins install ./plugins/x-session-manager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "x-session-manager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print x-session-manager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x-session-manager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install x-session-manager: apt-get install x-session-manager 2>/dev/null || which x-session-manager"
+      },
+      "args": []
+    },
+    {
+      "namespace": "x-session-manager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to x-session-manager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "x-session-manager",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install x-session-manager: apt-get install x-session-manager 2>/dev/null || which x-session-manager"
+      },
+      "args": []
+    }
+  ]
+}

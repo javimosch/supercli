@@ -1,0 +1,56 @@
+{
+  "name": "xload",
+  "version": "0.1.0",
+  "description": "CLI tool: xload",
+  "source": "https://manpages.debian.org/xload",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xload"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xload",
+    "binary": "xload",
+    "check": "which xload",
+    "install_steps": [
+      "apt-get install xload 2>/dev/null || which xload",
+      "Verify: xload --version",
+      "supercli plugins install ./plugins/xload --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xload",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xload version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xload",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xload: apt-get install xload 2>/dev/null || which xload"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xload",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xload CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xload",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xload: apt-get install xload 2>/dev/null || which xload"
+      },
+      "args": []
+    }
+  ]
+}

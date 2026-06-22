@@ -1,0 +1,56 @@
+{
+  "name": "xinit",
+  "version": "0.1.0",
+  "description": "CLI tool: xinit",
+  "source": "https://manpages.debian.org/xinit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xinit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xinit",
+    "binary": "xinit",
+    "check": "which xinit",
+    "install_steps": [
+      "apt-get install xinit 2>/dev/null || which xinit",
+      "Verify: xinit --version",
+      "supercli plugins install ./plugins/xinit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xinit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xinit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xinit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xinit: apt-get install xinit 2>/dev/null || which xinit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xinit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xinit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xinit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xinit: apt-get install xinit 2>/dev/null || which xinit"
+      },
+      "args": []
+    }
+  ]
+}

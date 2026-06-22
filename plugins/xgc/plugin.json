@@ -1,0 +1,56 @@
+{
+  "name": "xgc",
+  "version": "0.1.0",
+  "description": "CLI tool: xgc",
+  "source": "https://manpages.debian.org/xgc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xgc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xgc",
+    "binary": "xgc",
+    "check": "which xgc",
+    "install_steps": [
+      "apt-get install xgc 2>/dev/null || which xgc",
+      "Verify: xgc --version",
+      "supercli plugins install ./plugins/xgc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xgc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xgc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xgc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xgc: apt-get install xgc 2>/dev/null || which xgc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xgc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xgc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xgc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xgc: apt-get install xgc 2>/dev/null || which xgc"
+      },
+      "args": []
+    }
+  ]
+}

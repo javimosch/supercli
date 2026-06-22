@@ -1,0 +1,56 @@
+{
+  "name": "xiccd",
+  "version": "0.1.0",
+  "description": "CLI tool: xiccd",
+  "source": "https://manpages.debian.org/xiccd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xiccd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xiccd",
+    "binary": "xiccd",
+    "check": "which xiccd",
+    "install_steps": [
+      "apt-get install xiccd 2>/dev/null || which xiccd",
+      "Verify: xiccd --version",
+      "supercli plugins install ./plugins/xiccd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xiccd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xiccd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xiccd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xiccd: apt-get install xiccd 2>/dev/null || which xiccd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xiccd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xiccd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xiccd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xiccd: apt-get install xiccd 2>/dev/null || which xiccd"
+      },
+      "args": []
+    }
+  ]
+}

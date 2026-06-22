@@ -1,0 +1,56 @@
+{
+  "name": "xsetwacom",
+  "version": "0.1.0",
+  "description": "CLI tool: xsetwacom",
+  "source": "https://manpages.debian.org/xsetwacom",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xsetwacom"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xsetwacom",
+    "binary": "xsetwacom",
+    "check": "which xsetwacom",
+    "install_steps": [
+      "apt-get install xsetwacom 2>/dev/null || which xsetwacom",
+      "Verify: xsetwacom --version",
+      "supercli plugins install ./plugins/xsetwacom --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xsetwacom",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xsetwacom version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xsetwacom",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xsetwacom: apt-get install xsetwacom 2>/dev/null || which xsetwacom"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xsetwacom",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xsetwacom CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xsetwacom",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xsetwacom: apt-get install xsetwacom 2>/dev/null || which xsetwacom"
+      },
+      "args": []
+    }
+  ]
+}

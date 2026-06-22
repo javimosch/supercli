@@ -1,0 +1,56 @@
+{
+  "name": "xmllint",
+  "version": "0.1.0",
+  "description": "CLI tool: xmllint",
+  "source": "https://manpages.debian.org/xmllint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xmllint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xmllint",
+    "binary": "xmllint",
+    "check": "which xmllint",
+    "install_steps": [
+      "apt-get install xmllint 2>/dev/null || which xmllint",
+      "Verify: xmllint --version",
+      "supercli plugins install ./plugins/xmllint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xmllint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xmllint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmllint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xmllint: apt-get install xmllint 2>/dev/null || which xmllint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xmllint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xmllint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xmllint",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xmllint: apt-get install xmllint 2>/dev/null || which xmllint"
+      },
+      "args": []
+    }
+  ]
+}

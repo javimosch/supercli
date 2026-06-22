@@ -1,0 +1,56 @@
+{
+  "name": "xfreerdp",
+  "version": "0.1.0",
+  "description": "CLI tool: xfreerdp",
+  "source": "https://manpages.debian.org/xfreerdp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xfreerdp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xfreerdp",
+    "binary": "xfreerdp",
+    "check": "which xfreerdp",
+    "install_steps": [
+      "apt-get install xfreerdp 2>/dev/null || which xfreerdp",
+      "Verify: xfreerdp --version",
+      "supercli plugins install ./plugins/xfreerdp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xfreerdp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xfreerdp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfreerdp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xfreerdp: apt-get install xfreerdp 2>/dev/null || which xfreerdp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xfreerdp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xfreerdp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xfreerdp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xfreerdp: apt-get install xfreerdp 2>/dev/null || which xfreerdp"
+      },
+      "args": []
+    }
+  ]
+}

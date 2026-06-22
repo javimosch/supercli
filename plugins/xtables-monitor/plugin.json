@@ -1,0 +1,56 @@
+{
+  "name": "xtables-monitor",
+  "version": "0.1.0",
+  "description": "CLI tool: xtables-monitor",
+  "source": "https://manpages.debian.org/xtables-monitor",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "xtables-monitor"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "xtables-monitor",
+    "binary": "xtables-monitor",
+    "check": "which xtables-monitor",
+    "install_steps": [
+      "apt-get install xtables-monitor 2>/dev/null || which xtables-monitor",
+      "Verify: xtables-monitor --version",
+      "supercli plugins install ./plugins/xtables-monitor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "xtables-monitor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print xtables-monitor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xtables-monitor",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install xtables-monitor: apt-get install xtables-monitor 2>/dev/null || which xtables-monitor"
+      },
+      "args": []
+    },
+    {
+      "namespace": "xtables-monitor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xtables-monitor CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xtables-monitor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install xtables-monitor: apt-get install xtables-monitor 2>/dev/null || which xtables-monitor"
+      },
+      "args": []
+    }
+  ]
+}
