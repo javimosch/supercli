@@ -1,0 +1,56 @@
+{
+  "name": "pbmclean",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmclean",
+  "source": "https://manpages.debian.org/pbmclean",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmclean"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmclean",
+    "binary": "pbmclean",
+    "check": "which pbmclean",
+    "install_steps": [
+      "apt-get install pbmclean 2>/dev/null || which pbmclean",
+      "Verify: pbmclean --version",
+      "supercli plugins install ./plugins/pbmclean --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmclean",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmclean version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmclean",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmclean: apt-get install pbmclean 2>/dev/null || which pbmclean"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmclean",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmclean CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmclean",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmclean: apt-get install pbmclean 2>/dev/null || which pbmclean"
+      },
+      "args": []
+    }
+  ]
+}

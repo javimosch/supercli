@@ -1,0 +1,56 @@
+{
+  "name": "pavucontrol",
+  "version": "0.1.0",
+  "description": "CLI tool: pavucontrol",
+  "source": "https://manpages.debian.org/pavucontrol",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pavucontrol"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pavucontrol",
+    "binary": "pavucontrol",
+    "check": "which pavucontrol",
+    "install_steps": [
+      "apt-get install pavucontrol 2>/dev/null || which pavucontrol",
+      "Verify: pavucontrol --version",
+      "supercli plugins install ./plugins/pavucontrol --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pavucontrol",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pavucontrol version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pavucontrol",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pavucontrol: apt-get install pavucontrol 2>/dev/null || which pavucontrol"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pavucontrol",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pavucontrol CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pavucontrol",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pavucontrol: apt-get install pavucontrol 2>/dev/null || which pavucontrol"
+      },
+      "args": []
+    }
+  ]
+}

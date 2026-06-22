@@ -1,0 +1,56 @@
+{
+  "name": "pamfile",
+  "version": "0.1.0",
+  "description": "CLI tool: pamfile",
+  "source": "https://manpages.debian.org/pamfile",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamfile"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamfile",
+    "binary": "pamfile",
+    "check": "which pamfile",
+    "install_steps": [
+      "apt-get install pamfile 2>/dev/null || which pamfile",
+      "Verify: pamfile --version",
+      "supercli plugins install ./plugins/pamfile --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamfile",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamfile version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamfile",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamfile: apt-get install pamfile 2>/dev/null || which pamfile"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamfile",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamfile CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamfile",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamfile: apt-get install pamfile 2>/dev/null || which pamfile"
+      },
+      "args": []
+    }
+  ]
+}

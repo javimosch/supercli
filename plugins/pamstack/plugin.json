@@ -1,0 +1,56 @@
+{
+  "name": "pamstack",
+  "version": "0.1.0",
+  "description": "CLI tool: pamstack",
+  "source": "https://manpages.debian.org/pamstack",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamstack"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamstack",
+    "binary": "pamstack",
+    "check": "which pamstack",
+    "install_steps": [
+      "apt-get install pamstack 2>/dev/null || which pamstack",
+      "Verify: pamstack --version",
+      "supercli plugins install ./plugins/pamstack --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamstack",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamstack version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamstack",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamstack: apt-get install pamstack 2>/dev/null || which pamstack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamstack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamstack CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamstack",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamstack: apt-get install pamstack 2>/dev/null || which pamstack"
+      },
+      "args": []
+    }
+  ]
+}

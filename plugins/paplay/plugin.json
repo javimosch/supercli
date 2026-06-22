@@ -1,0 +1,56 @@
+{
+  "name": "paplay",
+  "version": "0.1.0",
+  "description": "CLI tool: paplay",
+  "source": "https://manpages.debian.org/paplay",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "paplay"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "paplay",
+    "binary": "paplay",
+    "check": "which paplay",
+    "install_steps": [
+      "apt-get install paplay 2>/dev/null || which paplay",
+      "Verify: paplay --version",
+      "supercli plugins install ./plugins/paplay --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "paplay",
+      "resource": "self",
+      "action": "version",
+      "description": "Print paplay version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paplay",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install paplay: apt-get install paplay 2>/dev/null || which paplay"
+      },
+      "args": []
+    },
+    {
+      "namespace": "paplay",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to paplay CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paplay",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install paplay: apt-get install paplay 2>/dev/null || which paplay"
+      },
+      "args": []
+    }
+  ]
+}

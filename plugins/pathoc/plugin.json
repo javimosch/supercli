@@ -1,0 +1,56 @@
+{
+  "name": "pathoc",
+  "version": "0.1.0",
+  "description": "CLI tool: pathoc",
+  "source": "https://manpages.debian.org/pathoc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pathoc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pathoc",
+    "binary": "pathoc",
+    "check": "which pathoc",
+    "install_steps": [
+      "apt-get install pathoc 2>/dev/null || which pathoc",
+      "Verify: pathoc --version",
+      "supercli plugins install ./plugins/pathoc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pathoc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pathoc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pathoc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pathoc: apt-get install pathoc 2>/dev/null || which pathoc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pathoc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pathoc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pathoc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pathoc: apt-get install pathoc 2>/dev/null || which pathoc"
+      },
+      "args": []
+    }
+  ]
+}

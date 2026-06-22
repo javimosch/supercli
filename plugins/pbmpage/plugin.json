@@ -1,0 +1,56 @@
+{
+  "name": "pbmpage",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmpage",
+  "source": "https://manpages.debian.org/pbmpage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmpage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmpage",
+    "binary": "pbmpage",
+    "check": "which pbmpage",
+    "install_steps": [
+      "apt-get install pbmpage 2>/dev/null || which pbmpage",
+      "Verify: pbmpage --version",
+      "supercli plugins install ./plugins/pbmpage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmpage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmpage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmpage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmpage: apt-get install pbmpage 2>/dev/null || which pbmpage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmpage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmpage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmpage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmpage: apt-get install pbmpage 2>/dev/null || which pbmpage"
+      },
+      "args": []
+    }
+  ]
+}

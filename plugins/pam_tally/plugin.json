@@ -1,0 +1,56 @@
+{
+  "name": "pam_tally",
+  "version": "0.1.0",
+  "description": "CLI tool: pam_tally",
+  "source": "https://manpages.debian.org/pam_tally",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pam_tally"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pam_tally",
+    "binary": "pam_tally",
+    "check": "which pam_tally",
+    "install_steps": [
+      "apt-get install pam_tally 2>/dev/null || which pam_tally",
+      "Verify: pam_tally --version",
+      "supercli plugins install ./plugins/pam_tally --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pam_tally",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pam_tally version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pam_tally",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pam_tally: apt-get install pam_tally 2>/dev/null || which pam_tally"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pam_tally",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pam_tally CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pam_tally",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pam_tally: apt-get install pam_tally 2>/dev/null || which pam_tally"
+      },
+      "args": []
+    }
+  ]
+}

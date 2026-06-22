@@ -1,0 +1,56 @@
+{
+  "name": "pamstretch",
+  "version": "0.1.0",
+  "description": "CLI tool: pamstretch",
+  "source": "https://manpages.debian.org/pamstretch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamstretch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamstretch",
+    "binary": "pamstretch",
+    "check": "which pamstretch",
+    "install_steps": [
+      "apt-get install pamstretch 2>/dev/null || which pamstretch",
+      "Verify: pamstretch --version",
+      "supercli plugins install ./plugins/pamstretch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamstretch",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamstretch version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamstretch",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamstretch: apt-get install pamstretch 2>/dev/null || which pamstretch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamstretch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamstretch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamstretch",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamstretch: apt-get install pamstretch 2>/dev/null || which pamstretch"
+      },
+      "args": []
+    }
+  ]
+}

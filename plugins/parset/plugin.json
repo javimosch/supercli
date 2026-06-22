@@ -1,0 +1,56 @@
+{
+  "name": "parset",
+  "version": "0.1.0",
+  "description": "CLI tool: parset",
+  "source": "https://manpages.debian.org/parset",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "parset"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "parset",
+    "binary": "parset",
+    "check": "which parset",
+    "install_steps": [
+      "apt-get install parset 2>/dev/null || which parset",
+      "Verify: parset --version",
+      "supercli plugins install ./plugins/parset --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parset",
+      "resource": "self",
+      "action": "version",
+      "description": "Print parset version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parset",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install parset: apt-get install parset 2>/dev/null || which parset"
+      },
+      "args": []
+    },
+    {
+      "namespace": "parset",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to parset CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parset",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install parset: apt-get install parset 2>/dev/null || which parset"
+      },
+      "args": []
+    }
+  ]
+}

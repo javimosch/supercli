@@ -1,0 +1,56 @@
+{
+  "name": "pathy",
+  "version": "0.1.0",
+  "description": "CLI tool: pathy",
+  "source": "https://manpages.debian.org/pathy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pathy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pathy",
+    "binary": "pathy",
+    "check": "which pathy",
+    "install_steps": [
+      "apt-get install pathy 2>/dev/null || which pathy",
+      "Verify: pathy --version",
+      "supercli plugins install ./plugins/pathy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pathy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pathy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pathy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pathy: apt-get install pathy 2>/dev/null || which pathy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pathy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pathy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pathy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pathy: apt-get install pathy 2>/dev/null || which pathy"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "patchwork",
+  "version": "0.1.0",
+  "description": "CLI tool: patchwork",
+  "source": "https://manpages.debian.org/patchwork",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "patchwork"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "patchwork",
+    "binary": "patchwork",
+    "check": "which patchwork",
+    "install_steps": [
+      "apt-get install patchwork 2>/dev/null || which patchwork",
+      "Verify: patchwork --version",
+      "supercli plugins install ./plugins/patchwork --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "patchwork",
+      "resource": "self",
+      "action": "version",
+      "description": "Print patchwork version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patchwork",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install patchwork: apt-get install patchwork 2>/dev/null || which patchwork"
+      },
+      "args": []
+    },
+    {
+      "namespace": "patchwork",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to patchwork CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patchwork",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install patchwork: apt-get install patchwork 2>/dev/null || which patchwork"
+      },
+      "args": []
+    }
+  ]
+}

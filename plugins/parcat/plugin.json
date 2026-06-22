@@ -1,0 +1,56 @@
+{
+  "name": "parcat",
+  "version": "0.1.0",
+  "description": "CLI tool: parcat",
+  "source": "https://manpages.debian.org/parcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "parcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "parcat",
+    "binary": "parcat",
+    "check": "which parcat",
+    "install_steps": [
+      "apt-get install parcat 2>/dev/null || which parcat",
+      "Verify: parcat --version",
+      "supercli plugins install ./plugins/parcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print parcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install parcat: apt-get install parcat 2>/dev/null || which parcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "parcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to parcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install parcat: apt-get install parcat 2>/dev/null || which parcat"
+      },
+      "args": []
+    }
+  ]
+}

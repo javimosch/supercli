@@ -1,0 +1,56 @@
+{
+  "name": "parec",
+  "version": "0.1.0",
+  "description": "CLI tool: parec",
+  "source": "https://manpages.debian.org/parec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "parec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "parec",
+    "binary": "parec",
+    "check": "which parec",
+    "install_steps": [
+      "apt-get install parec 2>/dev/null || which parec",
+      "Verify: parec --version",
+      "supercli plugins install ./plugins/parec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print parec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install parec: apt-get install parec 2>/dev/null || which parec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "parec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to parec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install parec: apt-get install parec 2>/dev/null || which parec"
+      },
+      "args": []
+    }
+  ]
+}

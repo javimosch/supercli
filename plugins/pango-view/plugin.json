@@ -1,0 +1,56 @@
+{
+  "name": "pango-view",
+  "version": "0.1.0",
+  "description": "CLI tool: pango-view",
+  "source": "https://manpages.debian.org/pango-view",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pango-view"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pango-view",
+    "binary": "pango-view",
+    "check": "which pango-view",
+    "install_steps": [
+      "apt-get install pango-view 2>/dev/null || which pango-view",
+      "Verify: pango-view --version",
+      "supercli plugins install ./plugins/pango-view --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pango-view",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pango-view version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pango-view",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pango-view: apt-get install pango-view 2>/dev/null || which pango-view"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pango-view",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pango-view CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pango-view",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pango-view: apt-get install pango-view 2>/dev/null || which pango-view"
+      },
+      "args": []
+    }
+  ]
+}

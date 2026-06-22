@@ -1,0 +1,56 @@
+{
+  "name": "parsort",
+  "version": "0.1.0",
+  "description": "CLI tool: parsort",
+  "source": "https://manpages.debian.org/parsort",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "parsort"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "parsort",
+    "binary": "parsort",
+    "check": "which parsort",
+    "install_steps": [
+      "apt-get install parsort 2>/dev/null || which parsort",
+      "Verify: parsort --version",
+      "supercli plugins install ./plugins/parsort --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parsort",
+      "resource": "self",
+      "action": "version",
+      "description": "Print parsort version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parsort",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install parsort: apt-get install parsort 2>/dev/null || which parsort"
+      },
+      "args": []
+    },
+    {
+      "namespace": "parsort",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to parsort CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parsort",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install parsort: apt-get install parsort 2>/dev/null || which parsort"
+      },
+      "args": []
+    }
+  ]
+}

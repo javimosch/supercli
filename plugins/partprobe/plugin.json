@@ -1,0 +1,56 @@
+{
+  "name": "partprobe",
+  "version": "0.1.0",
+  "description": "CLI tool: partprobe",
+  "source": "https://manpages.debian.org/partprobe",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "partprobe"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "partprobe",
+    "binary": "partprobe",
+    "check": "which partprobe",
+    "install_steps": [
+      "apt-get install partprobe 2>/dev/null || which partprobe",
+      "Verify: partprobe --version",
+      "supercli plugins install ./plugins/partprobe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "partprobe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print partprobe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "partprobe",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install partprobe: apt-get install partprobe 2>/dev/null || which partprobe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "partprobe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to partprobe CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "partprobe",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install partprobe: apt-get install partprobe 2>/dev/null || which partprobe"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "patgen",
+  "version": "0.1.0",
+  "description": "CLI tool: patgen",
+  "source": "https://manpages.debian.org/patgen",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "patgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "patgen",
+    "binary": "patgen",
+    "check": "which patgen",
+    "install_steps": [
+      "apt-get install patgen 2>/dev/null || which patgen",
+      "Verify: patgen --version",
+      "supercli plugins install ./plugins/patgen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "patgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print patgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install patgen: apt-get install patgen 2>/dev/null || which patgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "patgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to patgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install patgen: apt-get install patgen 2>/dev/null || which patgen"
+      },
+      "args": []
+    }
+  ]
+}

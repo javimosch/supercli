@@ -1,0 +1,56 @@
+{
+  "name": "pango-list",
+  "version": "0.1.0",
+  "description": "CLI tool: pango-list",
+  "source": "https://manpages.debian.org/pango-list",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pango-list"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pango-list",
+    "binary": "pango-list",
+    "check": "which pango-list",
+    "install_steps": [
+      "apt-get install pango-list 2>/dev/null || which pango-list",
+      "Verify: pango-list --version",
+      "supercli plugins install ./plugins/pango-list --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pango-list",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pango-list version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pango-list",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pango-list: apt-get install pango-list 2>/dev/null || which pango-list"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pango-list",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pango-list CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pango-list",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pango-list: apt-get install pango-list 2>/dev/null || which pango-list"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "parler",
+  "version": "0.1.0",
+  "description": "CLI tool: parler",
+  "source": "https://manpages.debian.org/parler",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "parler"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "parler",
+    "binary": "parler",
+    "check": "which parler",
+    "install_steps": [
+      "apt-get install parler 2>/dev/null || which parler",
+      "Verify: parler --version",
+      "supercli plugins install ./plugins/parler --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parler",
+      "resource": "self",
+      "action": "version",
+      "description": "Print parler version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parler",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install parler: apt-get install parler 2>/dev/null || which parler"
+      },
+      "args": []
+    },
+    {
+      "namespace": "parler",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to parler CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parler",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install parler: apt-get install parler 2>/dev/null || which parler"
+      },
+      "args": []
+    }
+  ]
+}

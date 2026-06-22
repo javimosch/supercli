@@ -1,0 +1,56 @@
+{
+  "name": "pasuspender",
+  "version": "0.1.0",
+  "description": "CLI tool: pasuspender",
+  "source": "https://manpages.debian.org/pasuspender",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pasuspender"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pasuspender",
+    "binary": "pasuspender",
+    "check": "which pasuspender",
+    "install_steps": [
+      "apt-get install pasuspender 2>/dev/null || which pasuspender",
+      "Verify: pasuspender --version",
+      "supercli plugins install ./plugins/pasuspender --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pasuspender",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pasuspender version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pasuspender",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pasuspender: apt-get install pasuspender 2>/dev/null || which pasuspender"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pasuspender",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pasuspender CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pasuspender",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pasuspender: apt-get install pasuspender 2>/dev/null || which pasuspender"
+      },
+      "args": []
+    }
+  ]
+}

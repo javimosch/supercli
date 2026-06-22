@@ -1,0 +1,56 @@
+{
+  "name": "pbmlife",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmlife",
+  "source": "https://manpages.debian.org/pbmlife",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmlife"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmlife",
+    "binary": "pbmlife",
+    "check": "which pbmlife",
+    "install_steps": [
+      "apt-get install pbmlife 2>/dev/null || which pbmlife",
+      "Verify: pbmlife --version",
+      "supercli plugins install ./plugins/pbmlife --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmlife",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmlife version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmlife",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmlife: apt-get install pbmlife 2>/dev/null || which pbmlife"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmlife",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmlife CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmlife",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmlife: apt-get install pbmlife 2>/dev/null || which pbmlife"
+      },
+      "args": []
+    }
+  ]
+}

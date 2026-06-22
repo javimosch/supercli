@@ -1,0 +1,56 @@
+{
+  "name": "pbmreduce",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmreduce",
+  "source": "https://manpages.debian.org/pbmreduce",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmreduce"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmreduce",
+    "binary": "pbmreduce",
+    "check": "which pbmreduce",
+    "install_steps": [
+      "apt-get install pbmreduce 2>/dev/null || which pbmreduce",
+      "Verify: pbmreduce --version",
+      "supercli plugins install ./plugins/pbmreduce --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmreduce",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmreduce version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmreduce",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmreduce: apt-get install pbmreduce 2>/dev/null || which pbmreduce"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmreduce",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmreduce CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmreduce",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmreduce: apt-get install pbmreduce 2>/dev/null || which pbmreduce"
+      },
+      "args": []
+    }
+  ]
+}

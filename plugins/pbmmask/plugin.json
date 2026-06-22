@@ -1,0 +1,56 @@
+{
+  "name": "pbmmask",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmmask",
+  "source": "https://manpages.debian.org/pbmmask",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmmask"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmmask",
+    "binary": "pbmmask",
+    "check": "which pbmmask",
+    "install_steps": [
+      "apt-get install pbmmask 2>/dev/null || which pbmmask",
+      "Verify: pbmmask --version",
+      "supercli plugins install ./plugins/pbmmask --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmmask",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmmask version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmmask",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmmask: apt-get install pbmmask 2>/dev/null || which pbmmask"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmmask",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmmask CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmmask",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmmask: apt-get install pbmmask 2>/dev/null || which pbmmask"
+      },
+      "args": []
+    }
+  ]
+}

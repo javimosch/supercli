@@ -1,0 +1,56 @@
+{
+  "name": "patchright",
+  "version": "0.1.0",
+  "description": "CLI tool: patchright",
+  "source": "https://manpages.debian.org/patchright",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "patchright"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "patchright",
+    "binary": "patchright",
+    "check": "which patchright",
+    "install_steps": [
+      "apt-get install patchright 2>/dev/null || which patchright",
+      "Verify: patchright --version",
+      "supercli plugins install ./plugins/patchright --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "patchright",
+      "resource": "self",
+      "action": "version",
+      "description": "Print patchright version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patchright",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install patchright: apt-get install patchright 2>/dev/null || which patchright"
+      },
+      "args": []
+    },
+    {
+      "namespace": "patchright",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to patchright CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patchright",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install patchright: apt-get install patchright 2>/dev/null || which patchright"
+      },
+      "args": []
+    }
+  ]
+}

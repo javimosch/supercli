@@ -1,0 +1,56 @@
+{
+  "name": "pamon",
+  "version": "0.1.0",
+  "description": "CLI tool: pamon",
+  "source": "https://manpages.debian.org/pamon",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamon"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamon",
+    "binary": "pamon",
+    "check": "which pamon",
+    "install_steps": [
+      "apt-get install pamon 2>/dev/null || which pamon",
+      "Verify: pamon --version",
+      "supercli plugins install ./plugins/pamon --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamon",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamon version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamon",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamon: apt-get install pamon 2>/dev/null || which pamon"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamon",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamon CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamon",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamon: apt-get install pamon 2>/dev/null || which pamon"
+      },
+      "args": []
+    }
+  ]
+}

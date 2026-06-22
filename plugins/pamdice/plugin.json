@@ -1,0 +1,56 @@
+{
+  "name": "pamdice",
+  "version": "0.1.0",
+  "description": "CLI tool: pamdice",
+  "source": "https://manpages.debian.org/pamdice",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamdice"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamdice",
+    "binary": "pamdice",
+    "check": "which pamdice",
+    "install_steps": [
+      "apt-get install pamdice 2>/dev/null || which pamdice",
+      "Verify: pamdice --version",
+      "supercli plugins install ./plugins/pamdice --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamdice",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamdice version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamdice",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamdice: apt-get install pamdice 2>/dev/null || which pamdice"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamdice",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamdice CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamdice",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamdice: apt-get install pamdice 2>/dev/null || which pamdice"
+      },
+      "args": []
+    }
+  ]
+}

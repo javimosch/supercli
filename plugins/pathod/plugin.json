@@ -1,0 +1,56 @@
+{
+  "name": "pathod",
+  "version": "0.1.0",
+  "description": "CLI tool: pathod",
+  "source": "https://manpages.debian.org/pathod",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pathod"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pathod",
+    "binary": "pathod",
+    "check": "which pathod",
+    "install_steps": [
+      "apt-get install pathod 2>/dev/null || which pathod",
+      "Verify: pathod --version",
+      "supercli plugins install ./plugins/pathod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pathod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pathod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pathod",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pathod: apt-get install pathod 2>/dev/null || which pathod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pathod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pathod CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pathod",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pathod: apt-get install pathod 2>/dev/null || which pathod"
+      },
+      "args": []
+    }
+  ]
+}

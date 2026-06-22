@@ -1,0 +1,56 @@
+{
+  "name": "pbmtext",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtext",
+  "source": "https://manpages.debian.org/pbmtext",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtext"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtext",
+    "binary": "pbmtext",
+    "check": "which pbmtext",
+    "install_steps": [
+      "apt-get install pbmtext 2>/dev/null || which pbmtext",
+      "Verify: pbmtext --version",
+      "supercli plugins install ./plugins/pbmtext --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtext",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtext version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtext",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtext: apt-get install pbmtext 2>/dev/null || which pbmtext"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtext",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtext CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtext",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtext: apt-get install pbmtext 2>/dev/null || which pbmtext"
+      },
+      "args": []
+    }
+  ]
+}

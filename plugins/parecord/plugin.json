@@ -1,0 +1,56 @@
+{
+  "name": "parecord",
+  "version": "0.1.0",
+  "description": "CLI tool: parecord",
+  "source": "https://manpages.debian.org/parecord",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "parecord"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "parecord",
+    "binary": "parecord",
+    "check": "which parecord",
+    "install_steps": [
+      "apt-get install parecord 2>/dev/null || which parecord",
+      "Verify: parecord --version",
+      "supercli plugins install ./plugins/parecord --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "parecord",
+      "resource": "self",
+      "action": "version",
+      "description": "Print parecord version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parecord",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install parecord: apt-get install parecord 2>/dev/null || which parecord"
+      },
+      "args": []
+    },
+    {
+      "namespace": "parecord",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to parecord CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "parecord",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install parecord: apt-get install parecord 2>/dev/null || which parecord"
+      },
+      "args": []
+    }
+  ]
+}

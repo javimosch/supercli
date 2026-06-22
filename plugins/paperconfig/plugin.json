@@ -1,0 +1,56 @@
+{
+  "name": "paperconfig",
+  "version": "0.1.0",
+  "description": "CLI tool: paperconfig",
+  "source": "https://manpages.debian.org/paperconfig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "paperconfig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "paperconfig",
+    "binary": "paperconfig",
+    "check": "which paperconfig",
+    "install_steps": [
+      "apt-get install paperconfig 2>/dev/null || which paperconfig",
+      "Verify: paperconfig --version",
+      "supercli plugins install ./plugins/paperconfig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "paperconfig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print paperconfig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paperconfig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install paperconfig: apt-get install paperconfig 2>/dev/null || which paperconfig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "paperconfig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to paperconfig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "paperconfig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install paperconfig: apt-get install paperconfig 2>/dev/null || which paperconfig"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pasteurize",
+  "version": "0.1.0",
+  "description": "CLI tool: pasteurize",
+  "source": "https://manpages.debian.org/pasteurize",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pasteurize"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pasteurize",
+    "binary": "pasteurize",
+    "check": "which pasteurize",
+    "install_steps": [
+      "apt-get install pasteurize 2>/dev/null || which pasteurize",
+      "Verify: pasteurize --version",
+      "supercli plugins install ./plugins/pasteurize --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pasteurize",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pasteurize version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pasteurize",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pasteurize: apt-get install pasteurize 2>/dev/null || which pasteurize"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pasteurize",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pasteurize CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pasteurize",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pasteurize: apt-get install pasteurize 2>/dev/null || which pasteurize"
+      },
+      "args": []
+    }
+  ]
+}

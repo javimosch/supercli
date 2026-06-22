@@ -1,0 +1,56 @@
+{
+  "name": "pamoil",
+  "version": "0.1.0",
+  "description": "CLI tool: pamoil",
+  "source": "https://manpages.debian.org/pamoil",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamoil"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamoil",
+    "binary": "pamoil",
+    "check": "which pamoil",
+    "install_steps": [
+      "apt-get install pamoil 2>/dev/null || which pamoil",
+      "Verify: pamoil --version",
+      "supercli plugins install ./plugins/pamoil --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamoil",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamoil version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamoil",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamoil: apt-get install pamoil 2>/dev/null || which pamoil"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamoil",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamoil CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamoil",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamoil: apt-get install pamoil 2>/dev/null || which pamoil"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pbmpscale",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmpscale",
+  "source": "https://manpages.debian.org/pbmpscale",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmpscale"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmpscale",
+    "binary": "pbmpscale",
+    "check": "which pbmpscale",
+    "install_steps": [
+      "apt-get install pbmpscale 2>/dev/null || which pbmpscale",
+      "Verify: pbmpscale --version",
+      "supercli plugins install ./plugins/pbmpscale --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmpscale",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmpscale version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmpscale",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmpscale: apt-get install pbmpscale 2>/dev/null || which pbmpscale"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmpscale",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmpscale CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmpscale",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmpscale: apt-get install pbmpscale 2>/dev/null || which pbmpscale"
+      },
+      "args": []
+    }
+  ]
+}

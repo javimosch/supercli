@@ -1,0 +1,56 @@
+{
+  "name": "pbmtoatk",
+  "version": "0.1.0",
+  "description": "CLI tool: pbmtoatk",
+  "source": "https://manpages.debian.org/pbmtoatk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pbmtoatk"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pbmtoatk",
+    "binary": "pbmtoatk",
+    "check": "which pbmtoatk",
+    "install_steps": [
+      "apt-get install pbmtoatk 2>/dev/null || which pbmtoatk",
+      "Verify: pbmtoatk --version",
+      "supercli plugins install ./plugins/pbmtoatk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pbmtoatk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pbmtoatk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtoatk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pbmtoatk: apt-get install pbmtoatk 2>/dev/null || which pbmtoatk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pbmtoatk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pbmtoatk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pbmtoatk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pbmtoatk: apt-get install pbmtoatk 2>/dev/null || which pbmtoatk"
+      },
+      "args": []
+    }
+  ]
+}
