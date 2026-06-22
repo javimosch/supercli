@@ -1,0 +1,56 @@
+{
+  "name": "lzfgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: lzfgrep",
+  "source": "https://manpages.debian.org/lzfgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzfgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzfgrep",
+    "binary": "lzfgrep",
+    "check": "which lzfgrep",
+    "install_steps": [
+      "apt-get install lzfgrep 2>/dev/null || which lzfgrep",
+      "Verify: lzfgrep --version",
+      "supercli plugins install ./plugins/lzfgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzfgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzfgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzfgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzfgrep: apt-get install lzfgrep 2>/dev/null || which lzfgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzfgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzfgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzfgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzfgrep: apt-get install lzfgrep 2>/dev/null || which lzfgrep"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mag",
+  "version": "0.1.0",
+  "description": "CLI tool: mag",
+  "source": "https://manpages.debian.org/mag",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mag"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mag",
+    "binary": "mag",
+    "check": "which mag",
+    "install_steps": [
+      "apt-get install mag 2>/dev/null || which mag",
+      "Verify: mag --version",
+      "supercli plugins install ./plugins/mag --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mag",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mag version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mag",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mag: apt-get install mag 2>/dev/null || which mag"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mag",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mag CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mag",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mag: apt-get install mag 2>/dev/null || which mag"
+      },
+      "args": []
+    }
+  ]
+}

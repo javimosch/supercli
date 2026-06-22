@@ -1,0 +1,56 @@
+{
+  "name": "man-recode",
+  "version": "0.1.0",
+  "description": "CLI tool: man-recode",
+  "source": "https://manpages.debian.org/man-recode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "man-recode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "man-recode",
+    "binary": "man-recode",
+    "check": "which man-recode",
+    "install_steps": [
+      "apt-get install man-recode 2>/dev/null || which man-recode",
+      "Verify: man-recode --version",
+      "supercli plugins install ./plugins/man-recode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "man-recode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print man-recode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "man-recode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install man-recode: apt-get install man-recode 2>/dev/null || which man-recode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "man-recode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to man-recode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "man-recode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install man-recode: apt-get install man-recode 2>/dev/null || which man-recode"
+      },
+      "args": []
+    }
+  ]
+}

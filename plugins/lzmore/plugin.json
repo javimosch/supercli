@@ -1,0 +1,56 @@
+{
+  "name": "lzmore",
+  "version": "0.1.0",
+  "description": "CLI tool: lzmore",
+  "source": "https://manpages.debian.org/lzmore",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzmore"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzmore",
+    "binary": "lzmore",
+    "check": "which lzmore",
+    "install_steps": [
+      "apt-get install lzmore 2>/dev/null || which lzmore",
+      "Verify: lzmore --version",
+      "supercli plugins install ./plugins/lzmore --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzmore",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzmore version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzmore",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzmore: apt-get install lzmore 2>/dev/null || which lzmore"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzmore",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzmore CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzmore",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzmore: apt-get install lzmore 2>/dev/null || which lzmore"
+      },
+      "args": []
+    }
+  ]
+}

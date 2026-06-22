@@ -1,0 +1,56 @@
+{
+  "name": "mcomp",
+  "version": "0.1.0",
+  "description": "CLI tool: mcomp",
+  "source": "https://manpages.debian.org/mcomp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mcomp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mcomp",
+    "binary": "mcomp",
+    "check": "which mcomp",
+    "install_steps": [
+      "apt-get install mcomp 2>/dev/null || which mcomp",
+      "Verify: mcomp --version",
+      "supercli plugins install ./plugins/mcomp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcomp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcomp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcomp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mcomp: apt-get install mcomp 2>/dev/null || which mcomp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcomp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcomp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcomp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcomp: apt-get install mcomp 2>/dev/null || which mcomp"
+      },
+      "args": []
+    }
+  ]
+}

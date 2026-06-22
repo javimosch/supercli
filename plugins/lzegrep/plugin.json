@@ -1,0 +1,56 @@
+{
+  "name": "lzegrep",
+  "version": "0.1.0",
+  "description": "CLI tool: lzegrep",
+  "source": "https://manpages.debian.org/lzegrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzegrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzegrep",
+    "binary": "lzegrep",
+    "check": "which lzegrep",
+    "install_steps": [
+      "apt-get install lzegrep 2>/dev/null || which lzegrep",
+      "Verify: lzegrep --version",
+      "supercli plugins install ./plugins/lzegrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzegrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzegrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzegrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzegrep: apt-get install lzegrep 2>/dev/null || which lzegrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzegrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzegrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzegrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzegrep: apt-get install lzegrep 2>/dev/null || which lzegrep"
+      },
+      "args": []
+    }
+  ]
+}

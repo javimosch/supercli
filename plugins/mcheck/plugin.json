@@ -1,0 +1,56 @@
+{
+  "name": "mcheck",
+  "version": "0.1.0",
+  "description": "CLI tool: mcheck",
+  "source": "https://manpages.debian.org/mcheck",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mcheck"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mcheck",
+    "binary": "mcheck",
+    "check": "which mcheck",
+    "install_steps": [
+      "apt-get install mcheck 2>/dev/null || which mcheck",
+      "Verify: mcheck --version",
+      "supercli plugins install ./plugins/mcheck --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcheck",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcheck version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcheck",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mcheck: apt-get install mcheck 2>/dev/null || which mcheck"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcheck",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcheck CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcheck",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcheck: apt-get install mcheck 2>/dev/null || which mcheck"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "lzcmp",
+  "version": "0.1.0",
+  "description": "CLI tool: lzcmp",
+  "source": "https://manpages.debian.org/lzcmp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzcmp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzcmp",
+    "binary": "lzcmp",
+    "check": "which lzcmp",
+    "install_steps": [
+      "apt-get install lzcmp 2>/dev/null || which lzcmp",
+      "Verify: lzcmp --version",
+      "supercli plugins install ./plugins/lzcmp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzcmp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzcmp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzcmp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzcmp: apt-get install lzcmp 2>/dev/null || which lzcmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzcmp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzcmp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzcmp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzcmp: apt-get install lzcmp 2>/dev/null || which lzcmp"
+      },
+      "args": []
+    }
+  ]
+}

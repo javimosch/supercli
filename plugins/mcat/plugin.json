@@ -1,0 +1,56 @@
+{
+  "name": "mcat",
+  "version": "0.1.0",
+  "description": "CLI tool: mcat",
+  "source": "https://manpages.debian.org/mcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mcat",
+    "binary": "mcat",
+    "check": "which mcat",
+    "install_steps": [
+      "apt-get install mcat 2>/dev/null || which mcat",
+      "Verify: mcat --version",
+      "supercli plugins install ./plugins/mcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mcat: apt-get install mcat 2>/dev/null || which mcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcat: apt-get install mcat 2>/dev/null || which mcat"
+      },
+      "args": []
+    }
+  ]
+}

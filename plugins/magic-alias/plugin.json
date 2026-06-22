@@ -1,0 +1,56 @@
+{
+  "name": "magic-alias",
+  "version": "0.1.0",
+  "description": "CLI tool: magic-alias",
+  "source": "https://manpages.debian.org/magic-alias",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "magic-alias"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "magic-alias",
+    "binary": "magic-alias",
+    "check": "which magic-alias",
+    "install_steps": [
+      "apt-get install magic-alias 2>/dev/null || which magic-alias",
+      "Verify: magic-alias --version",
+      "supercli plugins install ./plugins/magic-alias --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "magic-alias",
+      "resource": "self",
+      "action": "version",
+      "description": "Print magic-alias version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic-alias",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install magic-alias: apt-get install magic-alias 2>/dev/null || which magic-alias"
+      },
+      "args": []
+    },
+    {
+      "namespace": "magic-alias",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to magic-alias CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic-alias",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install magic-alias: apt-get install magic-alias 2>/dev/null || which magic-alias"
+      },
+      "args": []
+    }
+  ]
+}

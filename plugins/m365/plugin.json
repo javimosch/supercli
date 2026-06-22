@@ -1,0 +1,56 @@
+{
+  "name": "m365",
+  "version": "0.1.0",
+  "description": "CLI tool: m365",
+  "source": "https://manpages.debian.org/m365",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "m365"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "m365",
+    "binary": "m365",
+    "check": "which m365",
+    "install_steps": [
+      "apt-get install m365 2>/dev/null || which m365",
+      "Verify: m365 --version",
+      "supercli plugins install ./plugins/m365 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "m365",
+      "resource": "self",
+      "action": "version",
+      "description": "Print m365 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "m365",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install m365: apt-get install m365 2>/dev/null || which m365"
+      },
+      "args": []
+    },
+    {
+      "namespace": "m365",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to m365 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "m365",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install m365: apt-get install m365 2>/dev/null || which m365"
+      },
+      "args": []
+    }
+  ]
+}

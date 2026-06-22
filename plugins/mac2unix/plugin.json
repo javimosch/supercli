@@ -1,0 +1,56 @@
+{
+  "name": "mac2unix",
+  "version": "0.1.0",
+  "description": "CLI tool: mac2unix",
+  "source": "https://manpages.debian.org/mac2unix",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mac2unix"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mac2unix",
+    "binary": "mac2unix",
+    "check": "which mac2unix",
+    "install_steps": [
+      "apt-get install mac2unix 2>/dev/null || which mac2unix",
+      "Verify: mac2unix --version",
+      "supercli plugins install ./plugins/mac2unix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mac2unix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mac2unix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mac2unix",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mac2unix: apt-get install mac2unix 2>/dev/null || which mac2unix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mac2unix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mac2unix CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mac2unix",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mac2unix: apt-get install mac2unix 2>/dev/null || which mac2unix"
+      },
+      "args": []
+    }
+  ]
+}

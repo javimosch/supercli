@@ -1,0 +1,56 @@
+{
+  "name": "makeconv",
+  "version": "0.1.0",
+  "description": "CLI tool: makeconv",
+  "source": "https://manpages.debian.org/makeconv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "makeconv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "makeconv",
+    "binary": "makeconv",
+    "check": "which makeconv",
+    "install_steps": [
+      "apt-get install makeconv 2>/dev/null || which makeconv",
+      "Verify: makeconv --version",
+      "supercli plugins install ./plugins/makeconv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "makeconv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print makeconv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "makeconv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install makeconv: apt-get install makeconv 2>/dev/null || which makeconv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "makeconv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to makeconv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "makeconv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install makeconv: apt-get install makeconv 2>/dev/null || which makeconv"
+      },
+      "args": []
+    }
+  ]
+}

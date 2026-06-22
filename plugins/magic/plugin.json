@@ -1,0 +1,56 @@
+{
+  "name": "magic",
+  "version": "0.1.0",
+  "description": "CLI tool: magic",
+  "source": "https://manpages.debian.org/magic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "magic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "magic",
+    "binary": "magic",
+    "check": "which magic",
+    "install_steps": [
+      "apt-get install magic 2>/dev/null || which magic",
+      "Verify: magic --version",
+      "supercli plugins install ./plugins/magic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "magic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print magic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install magic: apt-get install magic 2>/dev/null || which magic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "magic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to magic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install magic: apt-get install magic 2>/dev/null || which magic"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mcd",
+  "version": "0.1.0",
+  "description": "CLI tool: mcd",
+  "source": "https://manpages.debian.org/mcd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mcd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mcd",
+    "binary": "mcd",
+    "check": "which mcd",
+    "install_steps": [
+      "apt-get install mcd 2>/dev/null || which mcd",
+      "Verify: mcd --version",
+      "supercli plugins install ./plugins/mcd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mcd: apt-get install mcd 2>/dev/null || which mcd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcd: apt-get install mcd 2>/dev/null || which mcd"
+      },
+      "args": []
+    }
+  ]
+}

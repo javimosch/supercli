@@ -1,0 +1,56 @@
+{
+  "name": "mattrib",
+  "version": "0.1.0",
+  "description": "CLI tool: mattrib",
+  "source": "https://manpages.debian.org/mattrib",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mattrib"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mattrib",
+    "binary": "mattrib",
+    "check": "which mattrib",
+    "install_steps": [
+      "apt-get install mattrib 2>/dev/null || which mattrib",
+      "Verify: mattrib --version",
+      "supercli plugins install ./plugins/mattrib --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mattrib",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mattrib version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mattrib",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mattrib: apt-get install mattrib 2>/dev/null || which mattrib"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mattrib",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mattrib CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mattrib",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mattrib: apt-get install mattrib 2>/dev/null || which mattrib"
+      },
+      "args": []
+    }
+  ]
+}

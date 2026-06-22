@@ -1,0 +1,56 @@
+{
+  "name": "lz",
+  "version": "0.1.0",
+  "description": "CLI tool: lz",
+  "source": "https://manpages.debian.org/lz",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lz"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lz",
+    "binary": "lz",
+    "check": "which lz",
+    "install_steps": [
+      "apt-get install lz 2>/dev/null || which lz",
+      "Verify: lz --version",
+      "supercli plugins install ./plugins/lz --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lz version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lz",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lz: apt-get install lz 2>/dev/null || which lz"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lz CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lz",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lz: apt-get install lz 2>/dev/null || which lz"
+      },
+      "args": []
+    }
+  ]
+}

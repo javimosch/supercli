@@ -1,0 +1,56 @@
+{
+  "name": "mcookie",
+  "version": "0.1.0",
+  "description": "CLI tool: mcookie",
+  "source": "https://manpages.debian.org/mcookie",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mcookie"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mcookie",
+    "binary": "mcookie",
+    "check": "which mcookie",
+    "install_steps": [
+      "apt-get install mcookie 2>/dev/null || which mcookie",
+      "Verify: mcookie --version",
+      "supercli plugins install ./plugins/mcookie --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcookie",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcookie version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcookie",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mcookie: apt-get install mcookie 2>/dev/null || which mcookie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcookie",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcookie CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcookie",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcookie: apt-get install mcookie 2>/dev/null || which mcookie"
+      },
+      "args": []
+    }
+  ]
+}

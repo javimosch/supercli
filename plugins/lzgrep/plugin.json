@@ -1,0 +1,56 @@
+{
+  "name": "lzgrep",
+  "version": "0.1.0",
+  "description": "CLI tool: lzgrep",
+  "source": "https://manpages.debian.org/lzgrep",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzgrep"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzgrep",
+    "binary": "lzgrep",
+    "check": "which lzgrep",
+    "install_steps": [
+      "apt-get install lzgrep 2>/dev/null || which lzgrep",
+      "Verify: lzgrep --version",
+      "supercli plugins install ./plugins/lzgrep --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzgrep",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzgrep version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzgrep",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzgrep: apt-get install lzgrep 2>/dev/null || which lzgrep"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzgrep",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzgrep CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzgrep",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzgrep: apt-get install lzgrep 2>/dev/null || which lzgrep"
+      },
+      "args": []
+    }
+  ]
+}

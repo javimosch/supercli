@@ -1,0 +1,56 @@
+{
+  "name": "lzdiff",
+  "version": "0.1.0",
+  "description": "CLI tool: lzdiff",
+  "source": "https://manpages.debian.org/lzdiff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzdiff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzdiff",
+    "binary": "lzdiff",
+    "check": "which lzdiff",
+    "install_steps": [
+      "apt-get install lzdiff 2>/dev/null || which lzdiff",
+      "Verify: lzdiff --version",
+      "supercli plugins install ./plugins/lzdiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzdiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzdiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzdiff",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzdiff: apt-get install lzdiff 2>/dev/null || which lzdiff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzdiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzdiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzdiff",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzdiff: apt-get install lzdiff 2>/dev/null || which lzdiff"
+      },
+      "args": []
+    }
+  ]
+}

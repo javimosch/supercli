@@ -1,0 +1,56 @@
+{
+  "name": "magic-new",
+  "version": "0.1.0",
+  "description": "CLI tool: magic-new",
+  "source": "https://manpages.debian.org/magic-new",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "magic-new"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "magic-new",
+    "binary": "magic-new",
+    "check": "which magic-new",
+    "install_steps": [
+      "apt-get install magic-new 2>/dev/null || which magic-new",
+      "Verify: magic-new --version",
+      "supercli plugins install ./plugins/magic-new --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "magic-new",
+      "resource": "self",
+      "action": "version",
+      "description": "Print magic-new version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic-new",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install magic-new: apt-get install magic-new 2>/dev/null || which magic-new"
+      },
+      "args": []
+    },
+    {
+      "namespace": "magic-new",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to magic-new CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic-new",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install magic-new: apt-get install magic-new 2>/dev/null || which magic-new"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mandb",
+  "version": "0.1.0",
+  "description": "CLI tool: mandb",
+  "source": "https://manpages.debian.org/mandb",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mandb"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mandb",
+    "binary": "mandb",
+    "check": "which mandb",
+    "install_steps": [
+      "apt-get install mandb 2>/dev/null || which mandb",
+      "Verify: mandb --version",
+      "supercli plugins install ./plugins/mandb --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mandb",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mandb version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mandb",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mandb: apt-get install mandb 2>/dev/null || which mandb"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mandb",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mandb CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mandb",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mandb: apt-get install mandb 2>/dev/null || which mandb"
+      },
+      "args": []
+    }
+  ]
+}

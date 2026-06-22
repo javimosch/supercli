@@ -1,0 +1,56 @@
+{
+  "name": "manpath",
+  "version": "0.1.0",
+  "description": "CLI tool: manpath",
+  "source": "https://manpages.debian.org/manpath",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "manpath"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "manpath",
+    "binary": "manpath",
+    "check": "which manpath",
+    "install_steps": [
+      "apt-get install manpath 2>/dev/null || which manpath",
+      "Verify: manpath --version",
+      "supercli plugins install ./plugins/manpath --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "manpath",
+      "resource": "self",
+      "action": "version",
+      "description": "Print manpath version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "manpath",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install manpath: apt-get install manpath 2>/dev/null || which manpath"
+      },
+      "args": []
+    },
+    {
+      "namespace": "manpath",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to manpath CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "manpath",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install manpath: apt-get install manpath 2>/dev/null || which manpath"
+      },
+      "args": []
+    }
+  ]
+}

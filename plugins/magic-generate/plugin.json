@@ -1,0 +1,56 @@
+{
+  "name": "magic-generate",
+  "version": "0.1.0",
+  "description": "CLI tool: magic-generate",
+  "source": "https://manpages.debian.org/magic-generate",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "magic-generate"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "magic-generate",
+    "binary": "magic-generate",
+    "check": "which magic-generate",
+    "install_steps": [
+      "apt-get install magic-generate 2>/dev/null || which magic-generate",
+      "Verify: magic-generate --version",
+      "supercli plugins install ./plugins/magic-generate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "magic-generate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print magic-generate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic-generate",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install magic-generate: apt-get install magic-generate 2>/dev/null || which magic-generate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "magic-generate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to magic-generate CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "magic-generate",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install magic-generate: apt-get install magic-generate 2>/dev/null || which magic-generate"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "mcopy",
+  "version": "0.1.0",
+  "description": "CLI tool: mcopy",
+  "source": "https://manpages.debian.org/mcopy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mcopy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mcopy",
+    "binary": "mcopy",
+    "check": "which mcopy",
+    "install_steps": [
+      "apt-get install mcopy 2>/dev/null || which mcopy",
+      "Verify: mcopy --version",
+      "supercli plugins install ./plugins/mcopy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcopy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcopy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcopy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mcopy: apt-get install mcopy 2>/dev/null || which mcopy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcopy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcopy CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcopy",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcopy: apt-get install mcopy 2>/dev/null || which mcopy"
+      },
+      "args": []
+    }
+  ]
+}

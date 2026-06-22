@@ -1,0 +1,56 @@
+{
+  "name": "mbadblocks",
+  "version": "0.1.0",
+  "description": "CLI tool: mbadblocks",
+  "source": "https://manpages.debian.org/mbadblocks",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mbadblocks"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mbadblocks",
+    "binary": "mbadblocks",
+    "check": "which mbadblocks",
+    "install_steps": [
+      "apt-get install mbadblocks 2>/dev/null || which mbadblocks",
+      "Verify: mbadblocks --version",
+      "supercli plugins install ./plugins/mbadblocks --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mbadblocks",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mbadblocks version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mbadblocks",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mbadblocks: apt-get install mbadblocks 2>/dev/null || which mbadblocks"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mbadblocks",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mbadblocks CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mbadblocks",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mbadblocks: apt-get install mbadblocks 2>/dev/null || which mbadblocks"
+      },
+      "args": []
+    }
+  ]
+}

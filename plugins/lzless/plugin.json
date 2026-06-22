@@ -1,0 +1,56 @@
+{
+  "name": "lzless",
+  "version": "0.1.0",
+  "description": "CLI tool: lzless",
+  "source": "https://manpages.debian.org/lzless",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzless"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzless",
+    "binary": "lzless",
+    "check": "which lzless",
+    "install_steps": [
+      "apt-get install lzless 2>/dev/null || which lzless",
+      "Verify: lzless --version",
+      "supercli plugins install ./plugins/lzless --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzless",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzless version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzless",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzless: apt-get install lzless 2>/dev/null || which lzless"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzless",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzless CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzless",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzless: apt-get install lzless 2>/dev/null || which lzless"
+      },
+      "args": []
+    }
+  ]
+}

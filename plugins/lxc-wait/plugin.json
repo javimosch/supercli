@@ -1,0 +1,56 @@
+{
+  "name": "lxc-wait",
+  "version": "0.1.0",
+  "description": "CLI tool: lxc-wait",
+  "source": "https://manpages.debian.org/lxc-wait",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lxc-wait"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lxc-wait",
+    "binary": "lxc-wait",
+    "check": "which lxc-wait",
+    "install_steps": [
+      "apt-get install lxc-wait 2>/dev/null || which lxc-wait",
+      "Verify: lxc-wait --version",
+      "supercli plugins install ./plugins/lxc-wait --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lxc-wait",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lxc-wait version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-wait",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lxc-wait: apt-get install lxc-wait 2>/dev/null || which lxc-wait"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lxc-wait",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lxc-wait CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lxc-wait",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lxc-wait: apt-get install lxc-wait 2>/dev/null || which lxc-wait"
+      },
+      "args": []
+    }
+  ]
+}

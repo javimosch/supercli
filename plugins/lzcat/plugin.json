@@ -1,0 +1,56 @@
+{
+  "name": "lzcat",
+  "version": "0.1.0",
+  "description": "CLI tool: lzcat",
+  "source": "https://manpages.debian.org/lzcat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "lzcat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "lzcat",
+    "binary": "lzcat",
+    "check": "which lzcat",
+    "install_steps": [
+      "apt-get install lzcat 2>/dev/null || which lzcat",
+      "Verify: lzcat --version",
+      "supercli plugins install ./plugins/lzcat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lzcat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lzcat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzcat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install lzcat: apt-get install lzcat 2>/dev/null || which lzcat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lzcat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lzcat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lzcat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lzcat: apt-get install lzcat 2>/dev/null || which lzcat"
+      },
+      "args": []
+    }
+  ]
+}
