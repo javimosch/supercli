@@ -1,0 +1,53 @@
+{
+  "name": "discord-cli",
+  "version": "0.1.0",
+  "description": "Discord messaging from the command line",
+  "source": "https://github.com/psy/discord-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "discord-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "discord-cli",
+    "binary": "discord-cli",
+    "check": "which discord-cli",
+    "install_steps": [
+      "npm install -g discord-cli",
+      "Verify: discord-cli --version",
+      "supercli plugins install ./plugins/discord-cli --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "discord-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print discord-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "discord-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install discord-cli: npm install -g discord-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "discord-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to discord-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "discord-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install discord-cli: npm install -g discord-cli"
+      },
+      "args": []
+    }
+  ]
+}
