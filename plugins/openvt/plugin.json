@@ -1,0 +1,56 @@
+{
+  "name": "openvt",
+  "version": "0.1.0",
+  "description": "CLI tool: openvt",
+  "source": "https://manpages.debian.org/openvt",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "openvt"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "openvt",
+    "binary": "openvt",
+    "check": "which openvt",
+    "install_steps": [
+      "apt-get install openvt 2>/dev/null || which openvt",
+      "Verify: openvt --version",
+      "supercli plugins install ./plugins/openvt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "openvt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print openvt version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openvt",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install openvt: apt-get install openvt 2>/dev/null || which openvt"
+      },
+      "args": []
+    },
+    {
+      "namespace": "openvt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to openvt CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openvt",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openvt: apt-get install openvt 2>/dev/null || which openvt"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "outocp",
+  "version": "0.1.0",
+  "description": "CLI tool: outocp",
+  "source": "https://manpages.debian.org/outocp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "outocp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "outocp",
+    "binary": "outocp",
+    "check": "which outocp",
+    "install_steps": [
+      "apt-get install outocp 2>/dev/null || which outocp",
+      "Verify: outocp --version",
+      "supercli plugins install ./plugins/outocp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "outocp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print outocp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "outocp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install outocp: apt-get install outocp 2>/dev/null || which outocp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "outocp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to outocp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "outocp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install outocp: apt-get install outocp 2>/dev/null || which outocp"
+      },
+      "args": []
+    }
+  ]
+}

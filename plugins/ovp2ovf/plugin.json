@@ -1,0 +1,56 @@
+{
+  "name": "ovp2ovf",
+  "version": "0.1.0",
+  "description": "CLI tool: ovp2ovf",
+  "source": "https://manpages.debian.org/ovp2ovf",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ovp2ovf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ovp2ovf",
+    "binary": "ovp2ovf",
+    "check": "which ovp2ovf",
+    "install_steps": [
+      "apt-get install ovp2ovf 2>/dev/null || which ovp2ovf",
+      "Verify: ovp2ovf --version",
+      "supercli plugins install ./plugins/ovp2ovf --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ovp2ovf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ovp2ovf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ovp2ovf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ovp2ovf: apt-get install ovp2ovf 2>/dev/null || which ovp2ovf"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ovp2ovf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ovp2ovf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ovp2ovf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ovp2ovf: apt-get install ovp2ovf 2>/dev/null || which ovp2ovf"
+      },
+      "args": []
+    }
+  ]
+}

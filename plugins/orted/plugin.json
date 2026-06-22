@@ -1,0 +1,56 @@
+{
+  "name": "orted",
+  "version": "0.1.0",
+  "description": "CLI tool: orted",
+  "source": "https://manpages.debian.org/orted",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "orted"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "orted",
+    "binary": "orted",
+    "check": "which orted",
+    "install_steps": [
+      "apt-get install orted 2>/dev/null || which orted",
+      "Verify: orted --version",
+      "supercli plugins install ./plugins/orted --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "orted",
+      "resource": "self",
+      "action": "version",
+      "description": "Print orted version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orted",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install orted: apt-get install orted 2>/dev/null || which orted"
+      },
+      "args": []
+    },
+    {
+      "namespace": "orted",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to orted CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orted",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install orted: apt-get install orted 2>/dev/null || which orted"
+      },
+      "args": []
+    }
+  ]
+}

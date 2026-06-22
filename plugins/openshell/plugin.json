@@ -1,0 +1,56 @@
+{
+  "name": "openshell",
+  "version": "0.1.0",
+  "description": "CLI tool: openshell",
+  "source": "https://manpages.debian.org/openshell",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "openshell"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "openshell",
+    "binary": "openshell",
+    "check": "which openshell",
+    "install_steps": [
+      "apt-get install openshell 2>/dev/null || which openshell",
+      "Verify: openshell --version",
+      "supercli plugins install ./plugins/openshell --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "openshell",
+      "resource": "self",
+      "action": "version",
+      "description": "Print openshell version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openshell",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install openshell: apt-get install openshell 2>/dev/null || which openshell"
+      },
+      "args": []
+    },
+    {
+      "namespace": "openshell",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to openshell CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openshell",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openshell: apt-get install openshell 2>/dev/null || which openshell"
+      },
+      "args": []
+    }
+  ]
+}

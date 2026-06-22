@@ -1,0 +1,56 @@
+{
+  "name": "p7sign",
+  "version": "0.1.0",
+  "description": "CLI tool: p7sign",
+  "source": "https://manpages.debian.org/p7sign",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "p7sign"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "p7sign",
+    "binary": "p7sign",
+    "check": "which p7sign",
+    "install_steps": [
+      "apt-get install p7sign 2>/dev/null || which p7sign",
+      "Verify: p7sign --version",
+      "supercli plugins install ./plugins/p7sign --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "p7sign",
+      "resource": "self",
+      "action": "version",
+      "description": "Print p7sign version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p7sign",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install p7sign: apt-get install p7sign 2>/dev/null || which p7sign"
+      },
+      "args": []
+    },
+    {
+      "namespace": "p7sign",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to p7sign CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p7sign",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install p7sign: apt-get install p7sign 2>/dev/null || which p7sign"
+      },
+      "args": []
+    }
+  ]
+}

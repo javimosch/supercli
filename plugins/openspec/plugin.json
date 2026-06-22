@@ -1,0 +1,56 @@
+{
+  "name": "openspec",
+  "version": "0.1.0",
+  "description": "CLI tool: openspec",
+  "source": "https://manpages.debian.org/openspec",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "openspec"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "openspec",
+    "binary": "openspec",
+    "check": "which openspec",
+    "install_steps": [
+      "apt-get install openspec 2>/dev/null || which openspec",
+      "Verify: openspec --version",
+      "supercli plugins install ./plugins/openspec --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "openspec",
+      "resource": "self",
+      "action": "version",
+      "description": "Print openspec version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openspec",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install openspec: apt-get install openspec 2>/dev/null || which openspec"
+      },
+      "args": []
+    },
+    {
+      "namespace": "openspec",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to openspec CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openspec",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openspec: apt-get install openspec 2>/dev/null || which openspec"
+      },
+      "args": []
+    }
+  ]
+}

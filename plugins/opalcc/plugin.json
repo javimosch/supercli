@@ -1,0 +1,56 @@
+{
+  "name": "opalcc",
+  "version": "0.1.0",
+  "description": "CLI tool: opalcc",
+  "source": "https://manpages.debian.org/opalcc",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "opalcc"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "opalcc",
+    "binary": "opalcc",
+    "check": "which opalcc",
+    "install_steps": [
+      "apt-get install opalcc 2>/dev/null || which opalcc",
+      "Verify: opalcc --version",
+      "supercli plugins install ./plugins/opalcc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "opalcc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print opalcc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opalcc",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install opalcc: apt-get install opalcc 2>/dev/null || which opalcc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opalcc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to opalcc CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opalcc",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install opalcc: apt-get install opalcc 2>/dev/null || which opalcc"
+      },
+      "args": []
+    }
+  ]
+}

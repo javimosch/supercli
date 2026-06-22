@@ -1,0 +1,56 @@
+{
+  "name": "openconnect",
+  "version": "0.1.0",
+  "description": "CLI tool: openconnect",
+  "source": "https://manpages.debian.org/openconnect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "openconnect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "openconnect",
+    "binary": "openconnect",
+    "check": "which openconnect",
+    "install_steps": [
+      "apt-get install openconnect 2>/dev/null || which openconnect",
+      "Verify: openconnect --version",
+      "supercli plugins install ./plugins/openconnect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "openconnect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print openconnect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openconnect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install openconnect: apt-get install openconnect 2>/dev/null || which openconnect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "openconnect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to openconnect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "openconnect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openconnect: apt-get install openconnect 2>/dev/null || which openconnect"
+      },
+      "args": []
+    }
+  ]
+}

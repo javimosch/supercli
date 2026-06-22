@@ -1,0 +1,56 @@
+{
+  "name": "pacmd",
+  "version": "0.1.0",
+  "description": "CLI tool: pacmd",
+  "source": "https://manpages.debian.org/pacmd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pacmd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pacmd",
+    "binary": "pacmd",
+    "check": "which pacmd",
+    "install_steps": [
+      "apt-get install pacmd 2>/dev/null || which pacmd",
+      "Verify: pacmd --version",
+      "supercli plugins install ./plugins/pacmd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pacmd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pacmd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pacmd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pacmd: apt-get install pacmd 2>/dev/null || which pacmd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pacmd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pacmd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pacmd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pacmd: apt-get install pacmd 2>/dev/null || which pacmd"
+      },
+      "args": []
+    }
+  ]
+}

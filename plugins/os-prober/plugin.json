@@ -1,0 +1,56 @@
+{
+  "name": "os-prober",
+  "version": "0.1.0",
+  "description": "CLI tool: os-prober",
+  "source": "https://manpages.debian.org/os-prober",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "os-prober"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "os-prober",
+    "binary": "os-prober",
+    "check": "which os-prober",
+    "install_steps": [
+      "apt-get install os-prober 2>/dev/null || which os-prober",
+      "Verify: os-prober --version",
+      "supercli plugins install ./plugins/os-prober --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "os-prober",
+      "resource": "self",
+      "action": "version",
+      "description": "Print os-prober version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "os-prober",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install os-prober: apt-get install os-prober 2>/dev/null || which os-prober"
+      },
+      "args": []
+    },
+    {
+      "namespace": "os-prober",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to os-prober CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "os-prober",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install os-prober: apt-get install os-prober 2>/dev/null || which os-prober"
+      },
+      "args": []
+    }
+  ]
+}

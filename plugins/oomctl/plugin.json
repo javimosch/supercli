@@ -1,0 +1,56 @@
+{
+  "name": "oomctl",
+  "version": "0.1.0",
+  "description": "CLI tool: oomctl",
+  "source": "https://manpages.debian.org/oomctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "oomctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "oomctl",
+    "binary": "oomctl",
+    "check": "which oomctl",
+    "install_steps": [
+      "apt-get install oomctl 2>/dev/null || which oomctl",
+      "Verify: oomctl --version",
+      "supercli plugins install ./plugins/oomctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oomctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oomctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oomctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install oomctl: apt-get install oomctl 2>/dev/null || which oomctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oomctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oomctl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oomctl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oomctl: apt-get install oomctl 2>/dev/null || which oomctl"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "p11-kit",
+  "version": "0.1.0",
+  "description": "CLI tool: p11-kit",
+  "source": "https://manpages.debian.org/p11-kit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "p11-kit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "p11-kit",
+    "binary": "p11-kit",
+    "check": "which p11-kit",
+    "install_steps": [
+      "apt-get install p11-kit 2>/dev/null || which p11-kit",
+      "Verify: p11-kit --version",
+      "supercli plugins install ./plugins/p11-kit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "p11-kit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print p11-kit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p11-kit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install p11-kit: apt-get install p11-kit 2>/dev/null || which p11-kit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "p11-kit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to p11-kit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p11-kit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install p11-kit: apt-get install p11-kit 2>/dev/null || which p11-kit"
+      },
+      "args": []
+    }
+  ]
+}

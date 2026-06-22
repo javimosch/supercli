@@ -1,0 +1,56 @@
+{
+  "name": "pa-info",
+  "version": "0.1.0",
+  "description": "CLI tool: pa-info",
+  "source": "https://manpages.debian.org/pa-info",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pa-info"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pa-info",
+    "binary": "pa-info",
+    "check": "which pa-info",
+    "install_steps": [
+      "apt-get install pa-info 2>/dev/null || which pa-info",
+      "Verify: pa-info --version",
+      "supercli plugins install ./plugins/pa-info --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pa-info",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pa-info version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pa-info",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pa-info: apt-get install pa-info 2>/dev/null || which pa-info"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pa-info",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pa-info CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pa-info",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pa-info: apt-get install pa-info 2>/dev/null || which pa-info"
+      },
+      "args": []
+    }
+  ]
+}

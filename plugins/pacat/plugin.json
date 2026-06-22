@@ -1,0 +1,56 @@
+{
+  "name": "pacat",
+  "version": "0.1.0",
+  "description": "CLI tool: pacat",
+  "source": "https://manpages.debian.org/pacat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pacat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pacat",
+    "binary": "pacat",
+    "check": "which pacat",
+    "install_steps": [
+      "apt-get install pacat 2>/dev/null || which pacat",
+      "Verify: pacat --version",
+      "supercli plugins install ./plugins/pacat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pacat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pacat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pacat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pacat: apt-get install pacat 2>/dev/null || which pacat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pacat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pacat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pacat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pacat: apt-get install pacat 2>/dev/null || which pacat"
+      },
+      "args": []
+    }
+  ]
+}

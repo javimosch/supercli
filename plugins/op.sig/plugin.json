@@ -1,0 +1,56 @@
+{
+  "name": "op.sig",
+  "version": "0.1.0",
+  "description": "CLI tool: op.sig",
+  "source": "https://manpages.debian.org/op.sig",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "op.sig"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "op.sig",
+    "binary": "op.sig",
+    "check": "which op.sig",
+    "install_steps": [
+      "apt-get install op.sig 2>/dev/null || which op.sig",
+      "Verify: op.sig --version",
+      "supercli plugins install ./plugins/op.sig --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "op.sig",
+      "resource": "self",
+      "action": "version",
+      "description": "Print op.sig version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op.sig",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install op.sig: apt-get install op.sig 2>/dev/null || which op.sig"
+      },
+      "args": []
+    },
+    {
+      "namespace": "op.sig",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to op.sig CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "op.sig",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install op.sig: apt-get install op.sig 2>/dev/null || which op.sig"
+      },
+      "args": []
+    }
+  ]
+}

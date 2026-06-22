@@ -1,0 +1,56 @@
+{
+  "name": "otp2ocp",
+  "version": "0.1.0",
+  "description": "CLI tool: otp2ocp",
+  "source": "https://manpages.debian.org/otp2ocp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "otp2ocp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "otp2ocp",
+    "binary": "otp2ocp",
+    "check": "which otp2ocp",
+    "install_steps": [
+      "apt-get install otp2ocp 2>/dev/null || which otp2ocp",
+      "Verify: otp2ocp --version",
+      "supercli plugins install ./plugins/otp2ocp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "otp2ocp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print otp2ocp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "otp2ocp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install otp2ocp: apt-get install otp2ocp 2>/dev/null || which otp2ocp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "otp2ocp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to otp2ocp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "otp2ocp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install otp2ocp: apt-get install otp2ocp 2>/dev/null || which otp2ocp"
+      },
+      "args": []
+    }
+  ]
+}

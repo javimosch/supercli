@@ -1,0 +1,56 @@
+{
+  "name": "opencode-cli",
+  "version": "0.1.0",
+  "description": "CLI tool: opencode-cli",
+  "source": "https://manpages.debian.org/opencode-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "opencode-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "opencode-cli",
+    "binary": "opencode-cli",
+    "check": "which opencode-cli",
+    "install_steps": [
+      "apt-get install opencode-cli 2>/dev/null || which opencode-cli",
+      "Verify: opencode-cli --version",
+      "supercli plugins install ./plugins/opencode-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "opencode-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print opencode-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install opencode-cli: apt-get install opencode-cli 2>/dev/null || which opencode-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to opencode-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install opencode-cli: apt-get install opencode-cli 2>/dev/null || which opencode-cli"
+      },
+      "args": []
+    }
+  ]
+}

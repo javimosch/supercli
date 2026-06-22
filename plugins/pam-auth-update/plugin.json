@@ -1,0 +1,56 @@
+{
+  "name": "pam-auth-update",
+  "version": "0.1.0",
+  "description": "CLI tool: pam-auth-update",
+  "source": "https://manpages.debian.org/pam-auth-update",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pam-auth-update"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pam-auth-update",
+    "binary": "pam-auth-update",
+    "check": "which pam-auth-update",
+    "install_steps": [
+      "apt-get install pam-auth-update 2>/dev/null || which pam-auth-update",
+      "Verify: pam-auth-update --version",
+      "supercli plugins install ./plugins/pam-auth-update --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pam-auth-update",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pam-auth-update version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pam-auth-update",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pam-auth-update: apt-get install pam-auth-update 2>/dev/null || which pam-auth-update"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pam-auth-update",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pam-auth-update CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pam-auth-update",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pam-auth-update: apt-get install pam-auth-update 2>/dev/null || which pam-auth-update"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "orte-server",
+  "version": "0.1.0",
+  "description": "CLI tool: orte-server",
+  "source": "https://manpages.debian.org/orte-server",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "orte-server"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "orte-server",
+    "binary": "orte-server",
+    "check": "which orte-server",
+    "install_steps": [
+      "apt-get install orte-server 2>/dev/null || which orte-server",
+      "Verify: orte-server --version",
+      "supercli plugins install ./plugins/orte-server --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "orte-server",
+      "resource": "self",
+      "action": "version",
+      "description": "Print orte-server version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orte-server",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install orte-server: apt-get install orte-server 2>/dev/null || which orte-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "orte-server",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to orte-server CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orte-server",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install orte-server: apt-get install orte-server 2>/dev/null || which orte-server"
+      },
+      "args": []
+    }
+  ]
+}

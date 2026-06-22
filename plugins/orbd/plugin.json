@@ -1,0 +1,56 @@
+{
+  "name": "orbd",
+  "version": "0.1.0",
+  "description": "CLI tool: orbd",
+  "source": "https://manpages.debian.org/orbd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "orbd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "orbd",
+    "binary": "orbd",
+    "check": "which orbd",
+    "install_steps": [
+      "apt-get install orbd 2>/dev/null || which orbd",
+      "Verify: orbd --version",
+      "supercli plugins install ./plugins/orbd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "orbd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print orbd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orbd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install orbd: apt-get install orbd 2>/dev/null || which orbd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "orbd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to orbd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orbd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install orbd: apt-get install orbd 2>/dev/null || which orbd"
+      },
+      "args": []
+    }
+  ]
+}

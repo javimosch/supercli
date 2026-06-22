@@ -1,0 +1,56 @@
+{
+  "name": "pamcut",
+  "version": "0.1.0",
+  "description": "CLI tool: pamcut",
+  "source": "https://manpages.debian.org/pamcut",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pamcut"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pamcut",
+    "binary": "pamcut",
+    "check": "which pamcut",
+    "install_steps": [
+      "apt-get install pamcut 2>/dev/null || which pamcut",
+      "Verify: pamcut --version",
+      "supercli plugins install ./plugins/pamcut --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pamcut",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pamcut version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamcut",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pamcut: apt-get install pamcut 2>/dev/null || which pamcut"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pamcut",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pamcut CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pamcut",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pamcut: apt-get install pamcut 2>/dev/null || which pamcut"
+      },
+      "args": []
+    }
+  ]
+}

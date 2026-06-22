@@ -1,0 +1,56 @@
+{
+  "name": "osage",
+  "version": "0.1.0",
+  "description": "CLI tool: osage",
+  "source": "https://manpages.debian.org/osage",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "osage"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "osage",
+    "binary": "osage",
+    "check": "which osage",
+    "install_steps": [
+      "apt-get install osage 2>/dev/null || which osage",
+      "Verify: osage --version",
+      "supercli plugins install ./plugins/osage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "osage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print osage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osage",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install osage: apt-get install osage 2>/dev/null || which osage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to osage CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osage: apt-get install osage 2>/dev/null || which osage"
+      },
+      "args": []
+    }
+  ]
+}

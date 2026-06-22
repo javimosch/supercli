@@ -1,0 +1,56 @@
+{
+  "name": "opldecode",
+  "version": "0.1.0",
+  "description": "CLI tool: opldecode",
+  "source": "https://manpages.debian.org/opldecode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "opldecode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "opldecode",
+    "binary": "opldecode",
+    "check": "which opldecode",
+    "install_steps": [
+      "apt-get install opldecode 2>/dev/null || which opldecode",
+      "Verify: opldecode --version",
+      "supercli plugins install ./plugins/opldecode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "opldecode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print opldecode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opldecode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install opldecode: apt-get install opldecode 2>/dev/null || which opldecode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opldecode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to opldecode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opldecode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install opldecode: apt-get install opldecode 2>/dev/null || which opldecode"
+      },
+      "args": []
+    }
+  ]
+}

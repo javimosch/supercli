@@ -1,0 +1,56 @@
+{
+  "name": "opcode",
+  "version": "0.1.0",
+  "description": "CLI tool: opcode",
+  "source": "https://manpages.debian.org/opcode",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "opcode"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "opcode",
+    "binary": "opcode",
+    "check": "which opcode",
+    "install_steps": [
+      "apt-get install opcode 2>/dev/null || which opcode",
+      "Verify: opcode --version",
+      "supercli plugins install ./plugins/opcode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "opcode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print opcode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opcode",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install opcode: apt-get install opcode 2>/dev/null || which opcode"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opcode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to opcode CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opcode",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install opcode: apt-get install opcode 2>/dev/null || which opcode"
+      },
+      "args": []
+    }
+  ]
+}

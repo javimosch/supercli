@@ -1,0 +1,56 @@
+{
+  "name": "osinfo-query",
+  "version": "0.1.0",
+  "description": "CLI tool: osinfo-query",
+  "source": "https://manpages.debian.org/osinfo-query",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "osinfo-query"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "osinfo-query",
+    "binary": "osinfo-query",
+    "check": "which osinfo-query",
+    "install_steps": [
+      "apt-get install osinfo-query 2>/dev/null || which osinfo-query",
+      "Verify: osinfo-query --version",
+      "supercli plugins install ./plugins/osinfo-query --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "osinfo-query",
+      "resource": "self",
+      "action": "version",
+      "description": "Print osinfo-query version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osinfo-query",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install osinfo-query: apt-get install osinfo-query 2>/dev/null || which osinfo-query"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osinfo-query",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to osinfo-query CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osinfo-query",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osinfo-query: apt-get install osinfo-query 2>/dev/null || which osinfo-query"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "p7env",
+  "version": "0.1.0",
+  "description": "CLI tool: p7env",
+  "source": "https://manpages.debian.org/p7env",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "p7env"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "p7env",
+    "binary": "p7env",
+    "check": "which p7env",
+    "install_steps": [
+      "apt-get install p7env 2>/dev/null || which p7env",
+      "Verify: p7env --version",
+      "supercli plugins install ./plugins/p7env --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "p7env",
+      "resource": "self",
+      "action": "version",
+      "description": "Print p7env version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p7env",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install p7env: apt-get install p7env 2>/dev/null || which p7env"
+      },
+      "args": []
+    },
+    {
+      "namespace": "p7env",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to p7env CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p7env",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install p7env: apt-get install p7env 2>/dev/null || which p7env"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ownership",
+  "version": "0.1.0",
+  "description": "CLI tool: ownership",
+  "source": "https://manpages.debian.org/ownership",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ownership"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ownership",
+    "binary": "ownership",
+    "check": "which ownership",
+    "install_steps": [
+      "apt-get install ownership 2>/dev/null || which ownership",
+      "Verify: ownership --version",
+      "supercli plugins install ./plugins/ownership --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ownership",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ownership version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ownership",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ownership: apt-get install ownership 2>/dev/null || which ownership"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ownership",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ownership CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ownership",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ownership: apt-get install ownership 2>/dev/null || which ownership"
+      },
+      "args": []
+    }
+  ]
+}

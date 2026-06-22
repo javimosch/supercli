@@ -1,0 +1,56 @@
+{
+  "name": "otangle",
+  "version": "0.1.0",
+  "description": "CLI tool: otangle",
+  "source": "https://manpages.debian.org/otangle",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "otangle"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "otangle",
+    "binary": "otangle",
+    "check": "which otangle",
+    "install_steps": [
+      "apt-get install otangle 2>/dev/null || which otangle",
+      "Verify: otangle --version",
+      "supercli plugins install ./plugins/otangle --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "otangle",
+      "resource": "self",
+      "action": "version",
+      "description": "Print otangle version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "otangle",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install otangle: apt-get install otangle 2>/dev/null || which otangle"
+      },
+      "args": []
+    },
+    {
+      "namespace": "otangle",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to otangle CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "otangle",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install otangle: apt-get install otangle 2>/dev/null || which otangle"
+      },
+      "args": []
+    }
+  ]
+}

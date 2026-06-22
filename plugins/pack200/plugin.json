@@ -1,0 +1,56 @@
+{
+  "name": "pack200",
+  "version": "0.1.0",
+  "description": "CLI tool: pack200",
+  "source": "https://manpages.debian.org/pack200",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pack200"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pack200",
+    "binary": "pack200",
+    "check": "which pack200",
+    "install_steps": [
+      "apt-get install pack200 2>/dev/null || which pack200",
+      "Verify: pack200 --version",
+      "supercli plugins install ./plugins/pack200 --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pack200",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pack200 version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack200",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pack200: apt-get install pack200 2>/dev/null || which pack200"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pack200",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pack200 CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack200",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pack200: apt-get install pack200 2>/dev/null || which pack200"
+      },
+      "args": []
+    }
+  ]
+}

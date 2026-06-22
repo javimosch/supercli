@@ -1,0 +1,56 @@
+{
+  "name": "padsp",
+  "version": "0.1.0",
+  "description": "CLI tool: padsp",
+  "source": "https://manpages.debian.org/padsp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "padsp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "padsp",
+    "binary": "padsp",
+    "check": "which padsp",
+    "install_steps": [
+      "apt-get install padsp 2>/dev/null || which padsp",
+      "Verify: padsp --version",
+      "supercli plugins install ./plugins/padsp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "padsp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print padsp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "padsp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install padsp: apt-get install padsp 2>/dev/null || which padsp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "padsp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to padsp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "padsp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install padsp: apt-get install padsp 2>/dev/null || which padsp"
+      },
+      "args": []
+    }
+  ]
+}

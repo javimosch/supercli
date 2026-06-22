@@ -1,0 +1,56 @@
+{
+  "name": "orterun",
+  "version": "0.1.0",
+  "description": "CLI tool: orterun",
+  "source": "https://manpages.debian.org/orterun",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "orterun"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "orterun",
+    "binary": "orterun",
+    "check": "which orterun",
+    "install_steps": [
+      "apt-get install orterun 2>/dev/null || which orterun",
+      "Verify: orterun --version",
+      "supercli plugins install ./plugins/orterun --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "orterun",
+      "resource": "self",
+      "action": "version",
+      "description": "Print orterun version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orterun",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install orterun: apt-get install orterun 2>/dev/null || which orterun"
+      },
+      "args": []
+    },
+    {
+      "namespace": "orterun",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to orterun CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orterun",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install orterun: apt-get install orterun 2>/dev/null || which orterun"
+      },
+      "args": []
+    }
+  ]
+}

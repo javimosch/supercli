@@ -1,0 +1,56 @@
+{
+  "name": "ompi-server",
+  "version": "0.1.0",
+  "description": "CLI tool: ompi-server",
+  "source": "https://manpages.debian.org/ompi-server",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ompi-server"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ompi-server",
+    "binary": "ompi-server",
+    "check": "which ompi-server",
+    "install_steps": [
+      "apt-get install ompi-server 2>/dev/null || which ompi-server",
+      "Verify: ompi-server --version",
+      "supercli plugins install ./plugins/ompi-server --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ompi-server",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ompi-server version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ompi-server",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ompi-server: apt-get install ompi-server 2>/dev/null || which ompi-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ompi-server",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ompi-server CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ompi-server",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ompi-server: apt-get install ompi-server 2>/dev/null || which ompi-server"
+      },
+      "args": []
+    }
+  ]
+}

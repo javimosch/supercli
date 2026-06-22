@@ -1,0 +1,56 @@
+{
+  "name": "orca",
+  "version": "0.1.0",
+  "description": "CLI tool: orca",
+  "source": "https://manpages.debian.org/orca",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "orca"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "orca",
+    "binary": "orca",
+    "check": "which orca",
+    "install_steps": [
+      "apt-get install orca 2>/dev/null || which orca",
+      "Verify: orca --version",
+      "supercli plugins install ./plugins/orca --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "orca",
+      "resource": "self",
+      "action": "version",
+      "description": "Print orca version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orca",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install orca: apt-get install orca 2>/dev/null || which orca"
+      },
+      "args": []
+    },
+    {
+      "namespace": "orca",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to orca CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "orca",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install orca: apt-get install orca 2>/dev/null || which orca"
+      },
+      "args": []
+    }
+  ]
+}

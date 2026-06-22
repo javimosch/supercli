@@ -1,0 +1,56 @@
+{
+  "name": "osinfo-detect",
+  "version": "0.1.0",
+  "description": "CLI tool: osinfo-detect",
+  "source": "https://manpages.debian.org/osinfo-detect",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "osinfo-detect"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "osinfo-detect",
+    "binary": "osinfo-detect",
+    "check": "which osinfo-detect",
+    "install_steps": [
+      "apt-get install osinfo-detect 2>/dev/null || which osinfo-detect",
+      "Verify: osinfo-detect --version",
+      "supercli plugins install ./plugins/osinfo-detect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "osinfo-detect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print osinfo-detect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osinfo-detect",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install osinfo-detect: apt-get install osinfo-detect 2>/dev/null || which osinfo-detect"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osinfo-detect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to osinfo-detect CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osinfo-detect",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osinfo-detect: apt-get install osinfo-detect 2>/dev/null || which osinfo-detect"
+      },
+      "args": []
+    }
+  ]
+}

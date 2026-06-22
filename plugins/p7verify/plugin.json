@@ -1,0 +1,56 @@
+{
+  "name": "p7verify",
+  "version": "0.1.0",
+  "description": "CLI tool: p7verify",
+  "source": "https://manpages.debian.org/p7verify",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "p7verify"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "p7verify",
+    "binary": "p7verify",
+    "check": "which p7verify",
+    "install_steps": [
+      "apt-get install p7verify 2>/dev/null || which p7verify",
+      "Verify: p7verify --version",
+      "supercli plugins install ./plugins/p7verify --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "p7verify",
+      "resource": "self",
+      "action": "version",
+      "description": "Print p7verify version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p7verify",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install p7verify: apt-get install p7verify 2>/dev/null || which p7verify"
+      },
+      "args": []
+    },
+    {
+      "namespace": "p7verify",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to p7verify CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "p7verify",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install p7verify: apt-get install p7verify 2>/dev/null || which p7verify"
+      },
+      "args": []
+    }
+  ]
+}

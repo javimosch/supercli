@@ -1,0 +1,56 @@
+{
+  "name": "pactl",
+  "version": "0.1.0",
+  "description": "CLI tool: pactl",
+  "source": "https://manpages.debian.org/pactl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pactl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pactl",
+    "binary": "pactl",
+    "check": "which pactl",
+    "install_steps": [
+      "apt-get install pactl 2>/dev/null || which pactl",
+      "Verify: pactl --version",
+      "supercli plugins install ./plugins/pactl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pactl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pactl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pactl",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pactl: apt-get install pactl 2>/dev/null || which pactl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pactl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pactl CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pactl",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pactl: apt-get install pactl 2>/dev/null || which pactl"
+      },
+      "args": []
+    }
+  ]
+}

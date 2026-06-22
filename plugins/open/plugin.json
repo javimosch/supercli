@@ -1,0 +1,56 @@
+{
+  "name": "open",
+  "version": "0.1.0",
+  "description": "CLI tool: open",
+  "source": "https://manpages.debian.org/open",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "open"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "open",
+    "binary": "open",
+    "check": "which open",
+    "install_steps": [
+      "apt-get install open 2>/dev/null || which open",
+      "Verify: open --version",
+      "supercli plugins install ./plugins/open --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "open",
+      "resource": "self",
+      "action": "version",
+      "description": "Print open version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "open",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install open: apt-get install open 2>/dev/null || which open"
+      },
+      "args": []
+    },
+    {
+      "namespace": "open",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to open CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "open",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install open: apt-get install open 2>/dev/null || which open"
+      },
+      "args": []
+    }
+  ]
+}
