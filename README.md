@@ -17,7 +17,7 @@
   ⭐ <b>Like supercli? <a href="https://github.com/javimosch/supercli">Star it on GitHub</a></b> — one click, makes a huge difference.
 </p>
 
-> Think: "Stripe API for CLIs and tools"
+> **10,000 tools. One command. Zero friction.**
 
 ## ⚡ TL;DR
 
