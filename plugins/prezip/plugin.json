@@ -1,0 +1,56 @@
+{
+  "name": "prezip",
+  "version": "0.1.0",
+  "description": "CLI tool: prezip",
+  "source": "https://manpages.debian.org/prezip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prezip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prezip",
+    "binary": "prezip",
+    "check": "which prezip",
+    "install_steps": [
+      "apt-get install prezip 2>/dev/null || which prezip",
+      "Verify: prezip --version",
+      "supercli plugins install ./plugins/prezip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prezip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prezip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prezip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prezip: apt-get install prezip 2>/dev/null || which prezip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prezip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prezip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prezip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prezip: apt-get install prezip 2>/dev/null || which prezip"
+      },
+      "args": []
+    }
+  ]
+}

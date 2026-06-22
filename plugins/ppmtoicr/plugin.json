@@ -1,0 +1,56 @@
+{
+  "name": "ppmtoicr",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtoicr",
+  "source": "https://manpages.debian.org/ppmtoicr",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtoicr"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtoicr",
+    "binary": "ppmtoicr",
+    "check": "which ppmtoicr",
+    "install_steps": [
+      "apt-get install ppmtoicr 2>/dev/null || which ppmtoicr",
+      "Verify: ppmtoicr --version",
+      "supercli plugins install ./plugins/ppmtoicr --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtoicr",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtoicr version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtoicr",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtoicr: apt-get install ppmtoicr 2>/dev/null || which ppmtoicr"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtoicr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtoicr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtoicr",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtoicr: apt-get install ppmtoicr 2>/dev/null || which ppmtoicr"
+      },
+      "args": []
+    }
+  ]
+}

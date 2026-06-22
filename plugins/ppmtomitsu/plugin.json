@@ -1,0 +1,56 @@
+{
+  "name": "ppmtomitsu",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtomitsu",
+  "source": "https://manpages.debian.org/ppmtomitsu",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtomitsu"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtomitsu",
+    "binary": "ppmtomitsu",
+    "check": "which ppmtomitsu",
+    "install_steps": [
+      "apt-get install ppmtomitsu 2>/dev/null || which ppmtomitsu",
+      "Verify: ppmtomitsu --version",
+      "supercli plugins install ./plugins/ppmtomitsu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtomitsu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtomitsu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtomitsu",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtomitsu: apt-get install ppmtomitsu 2>/dev/null || which ppmtomitsu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtomitsu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtomitsu CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtomitsu",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtomitsu: apt-get install ppmtomitsu 2>/dev/null || which ppmtomitsu"
+      },
+      "args": []
+    }
+  ]
+}

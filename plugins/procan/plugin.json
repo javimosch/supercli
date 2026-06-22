@@ -1,0 +1,56 @@
+{
+  "name": "procan",
+  "version": "0.1.0",
+  "description": "CLI tool: procan",
+  "source": "https://manpages.debian.org/procan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "procan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "procan",
+    "binary": "procan",
+    "check": "which procan",
+    "install_steps": [
+      "apt-get install procan 2>/dev/null || which procan",
+      "Verify: procan --version",
+      "supercli plugins install ./plugins/procan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "procan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print procan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "procan",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install procan: apt-get install procan 2>/dev/null || which procan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "procan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to procan CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "procan",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install procan: apt-get install procan 2>/dev/null || which procan"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "pppdump",
+  "version": "0.1.0",
+  "description": "CLI tool: pppdump",
+  "source": "https://manpages.debian.org/pppdump",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pppdump"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pppdump",
+    "binary": "pppdump",
+    "check": "which pppdump",
+    "install_steps": [
+      "apt-get install pppdump 2>/dev/null || which pppdump",
+      "Verify: pppdump --version",
+      "supercli plugins install ./plugins/pppdump --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pppdump",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pppdump version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pppdump",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pppdump: apt-get install pppdump 2>/dev/null || which pppdump"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pppdump",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pppdump CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pppdump",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pppdump: apt-get install pppdump 2>/dev/null || which pppdump"
+      },
+      "args": []
+    }
+  ]
+}

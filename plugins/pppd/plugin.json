@@ -1,0 +1,56 @@
+{
+  "name": "pppd",
+  "version": "0.1.0",
+  "description": "CLI tool: pppd",
+  "source": "https://manpages.debian.org/pppd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pppd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pppd",
+    "binary": "pppd",
+    "check": "which pppd",
+    "install_steps": [
+      "apt-get install pppd 2>/dev/null || which pppd",
+      "Verify: pppd --version",
+      "supercli plugins install ./plugins/pppd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pppd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pppd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pppd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pppd: apt-get install pppd 2>/dev/null || which pppd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pppd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pppd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pppd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pppd: apt-get install pppd 2>/dev/null || which pppd"
+      },
+      "args": []
+    }
+  ]
+}

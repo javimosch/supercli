@@ -1,0 +1,56 @@
+{
+  "name": "pptpsetup",
+  "version": "0.1.0",
+  "description": "CLI tool: pptpsetup",
+  "source": "https://manpages.debian.org/pptpsetup",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pptpsetup"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pptpsetup",
+    "binary": "pptpsetup",
+    "check": "which pptpsetup",
+    "install_steps": [
+      "apt-get install pptpsetup 2>/dev/null || which pptpsetup",
+      "Verify: pptpsetup --version",
+      "supercli plugins install ./plugins/pptpsetup --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pptpsetup",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pptpsetup version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pptpsetup",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pptpsetup: apt-get install pptpsetup 2>/dev/null || which pptpsetup"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pptpsetup",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pptpsetup CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pptpsetup",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pptpsetup: apt-get install pptpsetup 2>/dev/null || which pptpsetup"
+      },
+      "args": []
+    }
+  ]
+}

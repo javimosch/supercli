@@ -1,0 +1,56 @@
+{
+  "name": "prepmx",
+  "version": "0.1.0",
+  "description": "CLI tool: prepmx",
+  "source": "https://manpages.debian.org/prepmx",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prepmx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prepmx",
+    "binary": "prepmx",
+    "check": "which prepmx",
+    "install_steps": [
+      "apt-get install prepmx 2>/dev/null || which prepmx",
+      "Verify: prepmx --version",
+      "supercli plugins install ./plugins/prepmx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prepmx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prepmx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prepmx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prepmx: apt-get install prepmx 2>/dev/null || which prepmx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prepmx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prepmx CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prepmx",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prepmx: apt-get install prepmx 2>/dev/null || which prepmx"
+      },
+      "args": []
+    }
+  ]
+}

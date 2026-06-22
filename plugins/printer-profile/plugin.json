@@ -1,0 +1,56 @@
+{
+  "name": "printer-profile",
+  "version": "0.1.0",
+  "description": "CLI tool: printer-profile",
+  "source": "https://manpages.debian.org/printer-profile",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "printer-profile"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "printer-profile",
+    "binary": "printer-profile",
+    "check": "which printer-profile",
+    "install_steps": [
+      "apt-get install printer-profile 2>/dev/null || which printer-profile",
+      "Verify: printer-profile --version",
+      "supercli plugins install ./plugins/printer-profile --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "printer-profile",
+      "resource": "self",
+      "action": "version",
+      "description": "Print printer-profile version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "printer-profile",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install printer-profile: apt-get install printer-profile 2>/dev/null || which printer-profile"
+      },
+      "args": []
+    },
+    {
+      "namespace": "printer-profile",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to printer-profile CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "printer-profile",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install printer-profile: apt-get install printer-profile 2>/dev/null || which printer-profile"
+      },
+      "args": []
+    }
+  ]
+}

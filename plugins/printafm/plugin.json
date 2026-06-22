@@ -1,0 +1,56 @@
+{
+  "name": "printafm",
+  "version": "0.1.0",
+  "description": "CLI tool: printafm",
+  "source": "https://manpages.debian.org/printafm",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "printafm"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "printafm",
+    "binary": "printafm",
+    "check": "which printafm",
+    "install_steps": [
+      "apt-get install printafm 2>/dev/null || which printafm",
+      "Verify: printafm --version",
+      "supercli plugins install ./plugins/printafm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "printafm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print printafm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "printafm",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install printafm: apt-get install printafm 2>/dev/null || which printafm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "printafm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to printafm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "printafm",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install printafm: apt-get install printafm 2>/dev/null || which printafm"
+      },
+      "args": []
+    }
+  ]
+}

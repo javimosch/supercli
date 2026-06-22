@@ -1,0 +1,56 @@
+{
+  "name": "prlimit",
+  "version": "0.1.0",
+  "description": "CLI tool: prlimit",
+  "source": "https://manpages.debian.org/prlimit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prlimit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prlimit",
+    "binary": "prlimit",
+    "check": "which prlimit",
+    "install_steps": [
+      "apt-get install prlimit 2>/dev/null || which prlimit",
+      "Verify: prlimit --version",
+      "supercli plugins install ./plugins/prlimit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prlimit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prlimit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prlimit",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prlimit: apt-get install prlimit 2>/dev/null || which prlimit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prlimit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prlimit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prlimit",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prlimit: apt-get install prlimit 2>/dev/null || which prlimit"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "preunzip",
+  "version": "0.1.0",
+  "description": "CLI tool: preunzip",
+  "source": "https://manpages.debian.org/preunzip",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "preunzip"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "preunzip",
+    "binary": "preunzip",
+    "check": "which preunzip",
+    "install_steps": [
+      "apt-get install preunzip 2>/dev/null || which preunzip",
+      "Verify: preunzip --version",
+      "supercli plugins install ./plugins/preunzip --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "preunzip",
+      "resource": "self",
+      "action": "version",
+      "description": "Print preunzip version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "preunzip",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install preunzip: apt-get install preunzip 2>/dev/null || which preunzip"
+      },
+      "args": []
+    },
+    {
+      "namespace": "preunzip",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to preunzip CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "preunzip",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install preunzip: apt-get install preunzip 2>/dev/null || which preunzip"
+      },
+      "args": []
+    }
+  ]
+}

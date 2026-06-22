@@ -1,0 +1,56 @@
+{
+  "name": "pptp",
+  "version": "0.1.0",
+  "description": "CLI tool: pptp",
+  "source": "https://manpages.debian.org/pptp",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pptp"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pptp",
+    "binary": "pptp",
+    "check": "which pptp",
+    "install_steps": [
+      "apt-get install pptp 2>/dev/null || which pptp",
+      "Verify: pptp --version",
+      "supercli plugins install ./plugins/pptp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pptp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pptp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pptp",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pptp: apt-get install pptp 2>/dev/null || which pptp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pptp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pptp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pptp",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pptp: apt-get install pptp 2>/dev/null || which pptp"
+      },
+      "args": []
+    }
+  ]
+}

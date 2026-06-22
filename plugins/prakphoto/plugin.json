@@ -1,0 +1,56 @@
+{
+  "name": "prakphoto",
+  "version": "0.1.0",
+  "description": "CLI tool: prakphoto",
+  "source": "https://manpages.debian.org/prakphoto",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prakphoto"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prakphoto",
+    "binary": "prakphoto",
+    "check": "which prakphoto",
+    "install_steps": [
+      "apt-get install prakphoto 2>/dev/null || which prakphoto",
+      "Verify: prakphoto --version",
+      "supercli plugins install ./plugins/prakphoto --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "prakphoto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prakphoto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prakphoto",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install prakphoto: apt-get install prakphoto 2>/dev/null || which prakphoto"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prakphoto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prakphoto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prakphoto",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prakphoto: apt-get install prakphoto 2>/dev/null || which prakphoto"
+      },
+      "args": []
+    }
+  ]
+}

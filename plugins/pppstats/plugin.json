@@ -1,0 +1,56 @@
+{
+  "name": "pppstats",
+  "version": "0.1.0",
+  "description": "CLI tool: pppstats",
+  "source": "https://manpages.debian.org/pppstats",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pppstats"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pppstats",
+    "binary": "pppstats",
+    "check": "which pppstats",
+    "install_steps": [
+      "apt-get install pppstats 2>/dev/null || which pppstats",
+      "Verify: pppstats --version",
+      "supercli plugins install ./plugins/pppstats --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pppstats",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pppstats version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pppstats",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pppstats: apt-get install pppstats 2>/dev/null || which pppstats"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pppstats",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pppstats CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pppstats",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pppstats: apt-get install pppstats 2>/dev/null || which pppstats"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "name": "ppmtopuzz",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtopuzz",
+  "source": "https://manpages.debian.org/ppmtopuzz",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtopuzz"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtopuzz",
+    "binary": "ppmtopuzz",
+    "check": "which ppmtopuzz",
+    "install_steps": [
+      "apt-get install ppmtopuzz 2>/dev/null || which ppmtopuzz",
+      "Verify: ppmtopuzz --version",
+      "supercli plugins install ./plugins/ppmtopuzz --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtopuzz",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtopuzz version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtopuzz",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtopuzz: apt-get install ppmtopuzz 2>/dev/null || which ppmtopuzz"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtopuzz",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtopuzz CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtopuzz",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtopuzz: apt-get install ppmtopuzz 2>/dev/null || which ppmtopuzz"
+      },
+      "args": []
+    }
+  ]
+}

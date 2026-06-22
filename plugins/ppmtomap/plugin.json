@@ -1,0 +1,56 @@
+{
+  "name": "ppmtomap",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtomap",
+  "source": "https://manpages.debian.org/ppmtomap",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtomap"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtomap",
+    "binary": "ppmtomap",
+    "check": "which ppmtomap",
+    "install_steps": [
+      "apt-get install ppmtomap 2>/dev/null || which ppmtomap",
+      "Verify: ppmtomap --version",
+      "supercli plugins install ./plugins/ppmtomap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtomap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtomap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtomap",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtomap: apt-get install ppmtomap 2>/dev/null || which ppmtomap"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtomap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtomap CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtomap",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtomap: apt-get install ppmtomap 2>/dev/null || which ppmtomap"
+      },
+      "args": []
+    }
+  ]
+}

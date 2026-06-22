@@ -1,0 +1,56 @@
+{
+  "name": "preconv",
+  "version": "0.1.0",
+  "description": "CLI tool: preconv",
+  "source": "https://manpages.debian.org/preconv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "preconv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "preconv",
+    "binary": "preconv",
+    "check": "which preconv",
+    "install_steps": [
+      "apt-get install preconv 2>/dev/null || which preconv",
+      "Verify: preconv --version",
+      "supercli plugins install ./plugins/preconv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "preconv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print preconv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "preconv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install preconv: apt-get install preconv 2>/dev/null || which preconv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "preconv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to preconv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "preconv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install preconv: apt-get install preconv 2>/dev/null || which preconv"
+      },
+      "args": []
+    }
+  ]
+}

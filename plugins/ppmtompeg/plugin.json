@@ -1,0 +1,56 @@
+{
+  "name": "ppmtompeg",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtompeg",
+  "source": "https://manpages.debian.org/ppmtompeg",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtompeg"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtompeg",
+    "binary": "ppmtompeg",
+    "check": "which ppmtompeg",
+    "install_steps": [
+      "apt-get install ppmtompeg 2>/dev/null || which ppmtompeg",
+      "Verify: ppmtompeg --version",
+      "supercli plugins install ./plugins/ppmtompeg --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtompeg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtompeg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtompeg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtompeg: apt-get install ppmtompeg 2>/dev/null || which ppmtompeg"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtompeg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtompeg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtompeg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtompeg: apt-get install ppmtompeg 2>/dev/null || which ppmtompeg"
+      },
+      "args": []
+    }
+  ]
+}

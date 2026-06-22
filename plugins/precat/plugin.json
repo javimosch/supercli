@@ -1,0 +1,56 @@
+{
+  "name": "precat",
+  "version": "0.1.0",
+  "description": "CLI tool: precat",
+  "source": "https://manpages.debian.org/precat",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "precat"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "precat",
+    "binary": "precat",
+    "check": "which precat",
+    "install_steps": [
+      "apt-get install precat 2>/dev/null || which precat",
+      "Verify: precat --version",
+      "supercli plugins install ./plugins/precat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "precat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print precat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "precat",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install precat: apt-get install precat 2>/dev/null || which precat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "precat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to precat CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "precat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install precat: apt-get install precat 2>/dev/null || which precat"
+      },
+      "args": []
+    }
+  ]
+}

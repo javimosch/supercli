@@ -1,0 +1,56 @@
+{
+  "name": "ppmtopict",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtopict",
+  "source": "https://manpages.debian.org/ppmtopict",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtopict"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtopict",
+    "binary": "ppmtopict",
+    "check": "which ppmtopict",
+    "install_steps": [
+      "apt-get install ppmtopict 2>/dev/null || which ppmtopict",
+      "Verify: ppmtopict --version",
+      "supercli plugins install ./plugins/ppmtopict --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtopict",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtopict version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtopict",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtopict: apt-get install ppmtopict 2>/dev/null || which ppmtopict"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtopict",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtopict CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtopict",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtopict: apt-get install ppmtopict 2>/dev/null || which ppmtopict"
+      },
+      "args": []
+    }
+  ]
+}

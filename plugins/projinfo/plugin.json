@@ -1,0 +1,56 @@
+{
+  "name": "projinfo",
+  "version": "0.1.0",
+  "description": "CLI tool: projinfo",
+  "source": "https://manpages.debian.org/projinfo",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "projinfo"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "projinfo",
+    "binary": "projinfo",
+    "check": "which projinfo",
+    "install_steps": [
+      "apt-get install projinfo 2>/dev/null || which projinfo",
+      "Verify: projinfo --version",
+      "supercli plugins install ./plugins/projinfo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "projinfo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print projinfo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "projinfo",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install projinfo: apt-get install projinfo 2>/dev/null || which projinfo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "projinfo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to projinfo CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "projinfo",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install projinfo: apt-get install projinfo 2>/dev/null || which projinfo"
+      },
+      "args": []
+    }
+  ]
+}

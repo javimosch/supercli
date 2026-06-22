@@ -1,0 +1,56 @@
+{
+  "name": "projsync",
+  "version": "0.1.0",
+  "description": "CLI tool: projsync",
+  "source": "https://manpages.debian.org/projsync",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "projsync"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "projsync",
+    "binary": "projsync",
+    "check": "which projsync",
+    "install_steps": [
+      "apt-get install projsync 2>/dev/null || which projsync",
+      "Verify: projsync --version",
+      "supercli plugins install ./plugins/projsync --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "projsync",
+      "resource": "self",
+      "action": "version",
+      "description": "Print projsync version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "projsync",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install projsync: apt-get install projsync 2>/dev/null || which projsync"
+      },
+      "args": []
+    },
+    {
+      "namespace": "projsync",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to projsync CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "projsync",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install projsync: apt-get install projsync 2>/dev/null || which projsync"
+      },
+      "args": []
+    }
+  ]
+}

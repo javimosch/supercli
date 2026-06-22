@@ -1,0 +1,56 @@
+{
+  "name": "ppmtv",
+  "version": "0.1.0",
+  "description": "CLI tool: ppmtv",
+  "source": "https://manpages.debian.org/ppmtv",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ppmtv"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ppmtv",
+    "binary": "ppmtv",
+    "check": "which ppmtv",
+    "install_steps": [
+      "apt-get install ppmtv 2>/dev/null || which ppmtv",
+      "Verify: ppmtv --version",
+      "supercli plugins install ./plugins/ppmtv --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ppmtv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ppmtv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtv",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ppmtv: apt-get install ppmtv 2>/dev/null || which ppmtv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ppmtv",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ppmtv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ppmtv",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ppmtv: apt-get install ppmtv 2>/dev/null || which ppmtv"
+      },
+      "args": []
+    }
+  ]
+}

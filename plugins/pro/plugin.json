@@ -1,0 +1,56 @@
+{
+  "name": "pro",
+  "version": "0.1.0",
+  "description": "CLI tool: pro",
+  "source": "https://manpages.debian.org/pro",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "pro"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "pro",
+    "binary": "pro",
+    "check": "which pro",
+    "install_steps": [
+      "apt-get install pro 2>/dev/null || which pro",
+      "Verify: pro --version",
+      "supercli plugins install ./plugins/pro --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pro",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pro version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pro",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install pro: apt-get install pro 2>/dev/null || which pro"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pro",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pro CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pro",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pro: apt-get install pro 2>/dev/null || which pro"
+      },
+      "args": []
+    }
+  ]
+}

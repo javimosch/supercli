@@ -1,0 +1,56 @@
+{
+  "name": "print",
+  "version": "0.1.0",
+  "description": "CLI tool: print",
+  "source": "https://manpages.debian.org/print",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "print"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "print",
+    "binary": "print",
+    "check": "which print",
+    "install_steps": [
+      "apt-get install print 2>/dev/null || which print",
+      "Verify: print --version",
+      "supercli plugins install ./plugins/print --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "print",
+      "resource": "self",
+      "action": "version",
+      "description": "Print print version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "print",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install print: apt-get install print 2>/dev/null || which print"
+      },
+      "args": []
+    },
+    {
+      "namespace": "print",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to print CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "print",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install print: apt-get install print 2>/dev/null || which print"
+      },
+      "args": []
+    }
+  ]
+}
