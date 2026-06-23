@@ -1,0 +1,97 @@
+{
+  "name": "flit",
+  "version": "0.1.0",
+  "description": "flit — simple way to build and publish Python packages to PyPI",
+  "source": "https://github.com/pypa/flit",
+  "checks": [
+    { "type": "binary", "name": "flit" }
+  ],
+  "install_guidance": {
+    "plugin": "flit",
+    "binary": "flit",
+    "check": "which flit",
+    "install_steps": [
+      "pip install flit",
+      "Verify: flit --version",
+      "supercli plugins install ./plugins/flit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "flit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print flit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install flit: pip install flit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "flit",
+      "resource": "build",
+      "action": "run",
+      "description": "Build a Python package from the current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flit",
+        "baseArgs": ["build"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install flit: pip install flit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "flit",
+      "resource": "publish",
+      "action": "run",
+      "description": "Build and publish a Python package to PyPI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flit",
+        "baseArgs": ["publish"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install flit: pip install flit"
+      },
+      "args": [
+        { "name": "repository", "type": "string", "required": false, "description": "PyPI repository to publish to" }
+      ]
+    },
+    {
+      "namespace": "flit",
+      "resource": "init",
+      "action": "run",
+      "description": "Initialize a new Python package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flit",
+        "baseArgs": ["init"],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install flit: pip install flit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "flit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to flit CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "flit",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install flit"
+      },
+      "args": []
+    }
+  ]
+}

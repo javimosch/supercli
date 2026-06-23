@@ -1,0 +1,103 @@
+{
+  "name": "memray",
+  "version": "0.1.0",
+  "description": "memray — memory profiler for Python applications with live flame graphs and reports",
+  "source": "https://github.com/bloomberg/memray",
+  "checks": [
+    { "type": "binary", "name": "memray" }
+  ],
+  "install_guidance": {
+    "plugin": "memray",
+    "binary": "memray",
+    "check": "which memray",
+    "install_steps": [
+      "pip install memray",
+      "Verify: memray --version",
+      "supercli plugins install ./plugins/memray --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "memray",
+      "resource": "self",
+      "action": "version",
+      "description": "Print memray version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memray",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install memray: pip install memray"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memray",
+      "resource": "run",
+      "action": "profile",
+      "description": "Profile a Python script and generate memory reports",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memray",
+        "baseArgs": ["run"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install memray: pip install memray"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Python script to profile" }
+      ]
+    },
+    {
+      "namespace": "memray",
+      "resource": "flamegraph",
+      "action": "generate",
+      "description": "Generate a flame graph from a memray snapshot file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memray",
+        "baseArgs": ["flamegraph"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memray: pip install memray"
+      },
+      "args": [
+        { "name": "snapshot", "type": "string", "required": true, "description": "Memray snapshot file (.bin)" }
+      ]
+    },
+    {
+      "namespace": "memray",
+      "resource": "table",
+      "action": "generate",
+      "description": "Generate a table report from a memray snapshot file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memray",
+        "baseArgs": ["table"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memray: pip install memray"
+      },
+      "args": [
+        { "name": "snapshot", "type": "string", "required": true, "description": "Memray snapshot file (.bin)" }
+      ]
+    },
+    {
+      "namespace": "memray",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to memray CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memray",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install memray"
+      },
+      "args": []
+    }
+  ]
+}
