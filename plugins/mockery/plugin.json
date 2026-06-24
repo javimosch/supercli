@@ -1,0 +1,80 @@
+{
+  "name": "mockery",
+  "version": "0.1.0",
+  "description": "mockery — Go mock code generator. Automatically generates mock implementations from Go interface definitions with support for testify, mockgen compatibility, and in-package mocks.",
+  "source": "https://github.com/vektra/mockery",
+  "checks": [
+    { "type": "binary", "name": "mockery" }
+  ],
+  "install_guidance": {
+    "plugin": "mockery",
+    "binary": "mockery",
+    "check": "mockery --version",
+    "install_steps": [
+      "go install github.com/vektra/mockery/v2@latest",
+      "Verify: mockery --version",
+      "supercli plugins install ./plugins/mockery --on-conflict replace --json"
+    ],
+    "note": "Requires Go 1.20+. Alternatively install via brew: brew install mockery"
+  },
+  "commands": [
+    {
+      "namespace": "mockery",
+      "resource": "mock",
+      "action": "generate",
+      "description": "Generate mock for a Go interface by name",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mockery",
+        "baseArgs": ["--name"],
+        "positionalArgs": ["name"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mockery: go install github.com/vektra/mockery/v2@latest"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Interface name to mock" },
+        { "name": "--srcpkg", "type": "string", "required": false, "description": "Source package path" },
+        { "name": "--dir", "type": "string", "required": false, "description": "Directory to search for interfaces" },
+        { "name": "--output", "type": "string", "required": false, "description": "Output directory for mocks" },
+        { "name": "--testonly", "type": "boolean", "required": false, "description": "Generate mocks in _test.go files" },
+        { "name": "--inpackage", "type": "boolean", "required": false, "description": "Generate mock inside the source package" },
+        { "name": "--all", "type": "boolean", "required": false, "description": "Generate mocks for all interfaces found" },
+        { "name": "--recursive", "type": "boolean", "required": false, "description": "Search directories recursively" }
+      ]
+    },
+    {
+      "namespace": "mockery",
+      "resource": "mock",
+      "action": "all",
+      "description": "Generate mocks for all interfaces in a package",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mockery",
+        "baseArgs": ["--all"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mockery: go install github.com/vektra/mockery/v2@latest"
+      },
+      "args": [
+        { "name": "--dir", "type": "string", "required": false, "description": "Root directory to search" },
+        { "name": "--recursive", "type": "boolean", "required": false, "description": "Search recursively" },
+        { "name": "--output", "type": "string", "required": false, "description": "Output directory" },
+        { "name": "--inpackage", "type": "boolean", "required": false, "description": "In-package mocks" },
+        { "name": "--testonly", "type": "boolean", "required": false, "description": "Test-only mocks" }
+      ]
+    },
+    {
+      "namespace": "mockery",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mockery for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mockery",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mockery: go install github.com/vektra/mockery/v2@latest"
+      },
+      "args": []
+    }
+  ]
+}

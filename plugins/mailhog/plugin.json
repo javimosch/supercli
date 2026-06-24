@@ -1,0 +1,86 @@
+{
+  "name": "mailhog",
+  "version": "0.1.0",
+  "description": "MailHog — Web and API-based SMTP testing tool. Catch and view test emails in a local web UI during development with JSON API access and auto-reload.",
+  "source": "https://github.com/mailhog/MailHog",
+  "checks": [
+    { "type": "binary", "name": "mailhog" },
+    { "type": "binary", "name": "mhsendmail" }
+  ],
+  "install_guidance": {
+    "plugin": "mailhog",
+    "binary": "mailhog",
+    "check": "mailhog version",
+    "install_steps": [
+      "brew install mailhog",
+      "Or download from https://github.com/mailhog/MailHog/releases",
+      "Run: mailhog (starts SMTP on :1025, web UI on :8025)",
+      "supercli plugins install ./plugins/mailhog --on-conflict replace --json"
+    ],
+    "note": "Also install mhsendmail to redirect PHP sendmail to MailHog: go install github.com/mailhog/mhsendmail@latest"
+  },
+  "commands": [
+    {
+      "namespace": "mailhog",
+      "resource": "server",
+      "action": "start",
+      "description": "Start MailHog SMTP test server (default :1025 SMTP, :8025 HTTP)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailhog",
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install mailhog: brew install mailhog"
+      },
+      "args": [
+        { "name": "--smtp-bind-addr", "type": "string", "required": false, "description": "SMTP bind address (default 0.0.0.0:1025)" },
+        { "name": "--api-bind-addr", "type": "string", "required": false, "description": "API bind address (default 0.0.0.0:8025)" },
+        { "name": "--ui-bind-addr", "type": "string", "required": false, "description": "Web UI bind address (default 0.0.0.0:8025)" },
+        { "name": "--storage", "type": "string", "required": false, "description": "Storage type: memory or mongodb (default memory)" }
+      ]
+    },
+    {
+      "namespace": "mailhog",
+      "resource": "api",
+      "action": "messages",
+      "description": "List captured messages via MailHog API",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "curl",
+        "baseArgs": ["-s", "http://localhost:8025/api/v2/messages"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Start MailHog first: mailhog"
+      },
+      "args": [
+        { "name": "--limit", "type": "number", "required": false, "description": "Limit results (default 50)" },
+        { "name": "--start", "type": "number", "required": false, "description": "Start offset" }
+      ]
+    },
+    {
+      "namespace": "mailhog",
+      "resource": "api",
+      "action": "delete",
+      "description": "Delete all captured messages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "curl",
+        "baseArgs": ["-s", "-X", "DELETE", "http://localhost:8025/api/v1/messages"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Start MailHog first: mailhog"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mailhog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mailhog for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailhog",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mailhog: brew install mailhog"
+      },
+      "args": []
+    }
+  ]
+}
