@@ -1,0 +1,79 @@
+{
+  "name": "madge",
+  "version": "0.1.0",
+  "description": "madge — generate module dependency graphs for JavaScript/TypeScript projects",
+  "source": "https://github.com/pahen/madge",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "madge"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "madge",
+    "binary": "madge",
+    "check": "which madge",
+    "install_steps": [
+      "npm install -g madge",
+      "Verify: madge --version",
+      "supercli plugins install ./plugins/madge --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "madge",
+      "resource": "self",
+      "action": "version",
+      "description": "Print madge version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "madge",
+        "missingDependencyHelp": "Install madge: npm install -g madge",
+        "baseArgs": [
+          "--version"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "madge",
+      "resource": "graph",
+      "action": "generate",
+      "description": "Generate a dependency graph for a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "madge",
+        "missingDependencyHelp": "Install madge: npm install -g madge",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": [
+        {
+          "name": "args",
+          "type": "string",
+          "required": false,
+          "description": "Additional arguments"
+        }
+      ]
+    },
+    {
+      "namespace": "madge",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to madge CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "madge",
+        "missingDependencyHelp": "Install madge: npm install -g madge",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}
