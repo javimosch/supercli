@@ -1,0 +1,68 @@
+{
+  "name": "go-task",
+  "version": "0.1.0",
+  "description": "Task — a task runner / build tool that aims to be simpler and easier to use than Make",
+  "source": "https://github.com/go-task/task",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "task"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "go-task",
+    "binary": "task",
+    "check": "task --version",
+    "install_steps": [
+      "brew install go-task",
+      "Verify: task --version",
+      "supercli plugins install ./plugins/go-task --on-conflict replace --json"
+    ],
+    "note": "Install from package manager. Also via: go install github.com/go-task/task/v3/cmd/task@latest"
+  },
+  "commands": [
+    {
+      "namespace": "task",
+      "resource": "self",
+      "action": "version",
+      "description": "Print task version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install go-task: brew install go-task"
+      },
+      "args": []
+    },
+    {
+      "namespace": "task",
+      "resource": "--list",
+      "action": "list",
+      "description": "List tasks in the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "baseArgs": [
+          "--list"
+        ],
+        "missingDependencyHelp": "Install go-task: brew install go-task"
+      },
+      "args": []
+    },
+    {
+      "namespace": "task",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to task CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "task",
+        "passthrough": true,
+        "missingDependencyHelp": "Install go-task"
+      },
+      "args": []
+    }
+  ]
+}

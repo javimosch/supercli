@@ -1,0 +1,53 @@
+{
+  "name": "cfn-lint",
+  "version": "0.1.0",
+  "description": "CFN-Lint — AWS CloudFormation Linter, validates CloudFormation templates against best practices",
+  "source": "https://github.com/aws-cloudformation/cfn-lint",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cfn-lint"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "cfn-lint",
+    "binary": "cfn-lint",
+    "check": "which cfn-lint",
+    "install_steps": [
+      "pip install cfn-lint",
+      "Verify: cfn-lint --version",
+      "supercli plugins install ./plugins/cfn-lint --on-conflict replace --json"
+    ],
+    "note": "Python tool. Install via pip or pipx: pipx install cfn-lint"
+  },
+  "commands": [
+    {
+      "namespace": "cfn-lint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cfn-lint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cfn-lint",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install cfn-lint: pip install cfn-lint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cfn-lint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cfn-lint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cfn-lint",
+        "passthrough": true,
+        "missingDependencyHelp": "Install cfn-lint"
+      },
+      "args": []
+    }
+  ]
+}
