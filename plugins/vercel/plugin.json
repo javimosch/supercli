@@ -1,0 +1,114 @@
+{
+  "name": "vercel",
+  "version": "0.1.0",
+  "description": "vercel — Vercel CLI for deployment, environment management, logs, domains, and project configuration. Deploy frontends, serverless functions, and full-stack apps with zero configuration. Integrates with Git for automatic preview deployments. Supports monorepos, environment variables, custom domains, and team collaboration.",
+  "source": "https://github.com/vercel/vercel",
+  "checks": [
+    { "type": "binary", "name": "vercel" }
+  ],
+  "install_guidance": {
+    "plugin": "vercel",
+    "binary": "vercel",
+    "check": "vercel --version",
+    "install_steps": [
+      "npm install -g vercel",
+      "Verify: vercel --version",
+      "Authenticate: vercel login",
+      "supercli plugins install ./plugins/vercel --on-conflict replace --json"
+    ],
+    "note": "Requires Node.js 18+. Run 'vercel login' to authenticate. Deploy with 'vercel deploy' or just 'vercel' in a project directory."
+  },
+  "commands": [
+    {
+      "namespace": "vercel",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vercel CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vercel",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install vercel: npm install -g vercel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vercel",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy project to Vercel",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vercel",
+        "baseArgs": ["deploy"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install vercel: npm install -g vercel"
+      },
+      "args": [
+        { "name": "--prod", "type": "boolean", "required": false, "description": "Deploy to production" },
+        { "name": "--yes", "type": "boolean", "required": false, "description": "Skip confirmation prompts" },
+        { "name": "--name", "type": "string", "required": false, "description": "Project name" },
+        { "name": "--scope", "type": "string", "required": false, "description": "Team scope" }
+      ]
+    },
+    {
+      "namespace": "vercel",
+      "resource": "env",
+      "action": "list",
+      "description": "List environment variables for a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vercel",
+        "baseArgs": ["env", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install vercel: npm install -g vercel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vercel",
+      "resource": "logs",
+      "action": "tail",
+      "description": "Tail deployment logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vercel",
+        "baseArgs": ["logs"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install vercel: npm install -g vercel"
+      },
+      "args": [
+        { "name": "deployment-url", "type": "string", "required": false, "description": "Deployment URL or ID" }
+      ]
+    },
+    {
+      "namespace": "vercel",
+      "resource": "domains",
+      "action": "list",
+      "description": "List custom domains for a project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vercel",
+        "baseArgs": ["domains", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install vercel: npm install -g vercel"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vercel",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vercel CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vercel",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vercel: npm install -g vercel. Authenticate: vercel login"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "name": "kamal",
+  "version": "0.1.0",
+  "description": "kamal — deploy web apps anywhere from raw Docker images. Zero-downtime deployments with rolling updates, asset bridging, logging, and SSH-based access. Uses Traefik for routing and runs on any Linux host. From 37signals (Basecamp). Ideal for self-hosted deployments without Kubernetes.",
+  "source": "https://github.com/basecamp/kamal",
+  "checks": [
+    { "type": "binary", "name": "kamal" }
+  ],
+  "install_guidance": {
+    "plugin": "kamal",
+    "binary": "kamal",
+    "check": "kamal version",
+    "install_steps": [
+      "gem install kamal",
+      "Verify: kamal version",
+      "Configure: kamal init (creates config/deploy.yml)",
+      "supercli plugins install ./plugins/kamal --on-conflict replace --json"
+    ],
+    "note": "Requires Ruby 3.0+, Docker on the deployment target, and SSH access to servers. Uses Traefik for ingress routing. See https://kamal-deploy.org for docs."
+  },
+  "commands": [
+    {
+      "namespace": "kamal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kamal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kamal",
+      "resource": "deploy",
+      "action": "run",
+      "description": "Deploy the application with zero-downtime rolling update",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["deploy"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": [
+        { "name": "--version", "type": "string", "required": false, "description": "Specific version tag to deploy" },
+        { "name": "--skip-push", "type": "boolean", "required": false, "description": "Skip Docker image push" }
+      ]
+    },
+    {
+      "namespace": "kamal",
+      "resource": "rollback",
+      "action": "run",
+      "description": "Rollback to a previous deployment version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["rollback"],
+        "positionalArgs": ["version"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": [
+        { "name": "version", "type": "string", "required": true, "description": "Version tag to rollback to" }
+      ]
+    },
+    {
+      "namespace": "kamal",
+      "resource": "app",
+      "action": "logs",
+      "description": "Show application logs from servers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["app", "logs"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": [
+        { "name": "--since", "type": "string", "required": false, "description": "Show logs since timestamp (e.g., '5m', '2h')" },
+        { "name": "--lines", "type": "number", "required": false, "description": "Number of lines to show" }
+      ]
+    },
+    {
+      "namespace": "kamal",
+      "resource": "app",
+      "action": "details",
+      "description": "Show application details and status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["app", "details"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kamal",
+      "resource": "server",
+      "action": "bootstrap",
+      "description": "Bootstrap servers with Docker and dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["server", "bootstrap"],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kamal",
+      "resource": "config",
+      "action": "show",
+      "description": "Show the Kamal configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "baseArgs": ["config"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kamal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kamal CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kamal",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kamal: gem install kamal"
+      },
+      "args": []
+    }
+  ]
+}

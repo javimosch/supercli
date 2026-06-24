@@ -1,0 +1,140 @@
+{
+  "name": "directus",
+  "version": "0.1.0",
+  "description": "directus — CLI for the Directus headless CMS. Manage projects, collections, items, users, roles, files, webhooks, and schema migrations. Extensible with flows and custom endpoints. Ideal for content management automation, CI/CD pipelines, and AI agent integration with JSON output support.",
+  "source": "https://github.com/directus/directus",
+  "checks": [
+    { "type": "binary", "name": "directus" }
+  ],
+  "install_guidance": {
+    "plugin": "directus",
+    "binary": "directus",
+    "check": "directus --version",
+    "install_steps": [
+      "npm install -g directus",
+      "Verify: directus --version",
+      "supercli plugins install ./plugins/directus --on-conflict replace --json"
+    ],
+    "note": "Requires Node.js 18+. Configure via DIRECTUS_URL and DIRECTUS_TOKEN environment variables or .env file."
+  },
+  "commands": [
+    {
+      "namespace": "directus",
+      "resource": "self",
+      "action": "version",
+      "description": "Print directus CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "directus",
+      "resource": "project",
+      "action": "list",
+      "description": "List Directus projects",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["projects", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "directus",
+      "resource": "collection",
+      "action": "list",
+      "description": "List all collections in the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["collection", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "directus",
+      "resource": "user",
+      "action": "list",
+      "description": "List users in the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["user", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "directus",
+      "resource": "schema",
+      "action": "snapshot",
+      "description": "Export schema snapshot for version control",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["schema", "snapshot"],
+        "positionalArgs": ["output"],
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": [
+        { "name": "output", "type": "string", "required": true, "description": "Output file path (e.g., schema.yaml)" },
+        { "name": "--yes", "type": "boolean", "required": false, "description": "Skip confirmation" }
+      ]
+    },
+    {
+      "namespace": "directus",
+      "resource": "schema",
+      "action": "apply",
+      "description": "Apply schema snapshot to the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["schema", "apply"],
+        "positionalArgs": ["input"],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": [
+        { "name": "input", "type": "string", "required": true, "description": "Schema file path to apply" },
+        { "name": "--yes", "type": "boolean", "required": false, "description": "Skip confirmation" }
+      ]
+    },
+    {
+      "namespace": "directus",
+      "resource": "role",
+      "action": "list",
+      "description": "List user roles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "baseArgs": ["roles", "list"],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": []
+    },
+    {
+      "namespace": "directus",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to directus CLI for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "directus",
+        "passthrough": true,
+        "missingDependencyHelp": "Install directus: npm install -g directus"
+      },
+      "args": []
+    }
+  ]
+}
