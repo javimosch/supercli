@@ -125,8 +125,8 @@ async function syncServerPlugins(server) {
     const checksumUnchanged = previous && previous.checksum === plugin.checksum;
     if (checksumUnchanged) { nextInstalled[plugin.name] = previous; diagnostics.unchanged.push(plugin.name); continue; }
     const pluginDir = ensurePluginDir(pluginRoot, plugin.name, plugin.version);
+    const manifest = plugin.manifest || null;
     try {
-      const manifest = plugin.manifest || null;
       if (!manifest || typeof manifest !== "object") {
         throw Object.assign(new Error(`Server plugin '${plugin.name}' is missing manifest`), {
           code: 105,
