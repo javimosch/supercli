@@ -11,10 +11,13 @@ Claude Code sessions (`~/.claude/projects/*/*.jsonl`) grow unbounded. Once a ses
 
 ### 🔍 One-command health check (safe)
 ```bash
-sc plugins install claude-session-optimizer
+# First-time: sync latest plugins, install, and run health check
+sc plugins update && sc plugins install claude-session-optimizer
 sc claude-session-optimizer self auto
 ```
 The `auto` command auto-installs the optimizer (cached), scans all sessions, reports oversized ones, and tells you how to compress. **Never modifies files** — safe to run anytime.
+
+> **Note for npx users:** Replace `sc` with `npx superacli`. The `plugins update` command fetches the latest plugin catalog directly from GitHub — no npm publish needed.
 
 ### Manual commands
 ```bash
