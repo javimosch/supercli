@@ -7,6 +7,7 @@ const { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listM
 const { handleMcpRegistryCommand } = require("./mcp-local");
 const { handlePluginsCommand } = require("./plugins-command");
 const { handleServerCommand } = require("./server-command");
+const { handleRunCommand } = require("./run");
 const { handleHarnessOnboard, handleHarnessOffboard } = require("./harness-onboard");
 const { handleAskCommand } = require("./ask");
 const { handleSkillsCommand } = require("./skills");
@@ -97,6 +98,7 @@ async function main() {
           capabilities: {
             discover: { type: "deterministic", description: "Keyword matching against plugin metadata", llm: false },
             ask: { type: "llm_suggestions", description: "Natural language to command suggestions (no execution)", llm: true },
+            run: { type: "one-shot", description: "Sync catalog, install plugin, execute command" },
             skills: { type: "documentation", description: "Agent-facing skill documents" },
             plugins: { type: "discovery", description: "Plugin management and discovery" },
             commands: { type: "query", description: "Query available commands" },
@@ -104,6 +106,7 @@ async function main() {
             plan: { type: "preview", description: "Preview execution steps" },
           },
           first_steps: [
+            { command: "supercli run <plugin> <resource> <action>", purpose: "One-shot: sync catalog, install plugin, execute command" },
             { command: "supercli --version", purpose: "Check supercli version and implementation language" },
             { command: "supercli --help-json", purpose: "View full CLI reference with exit codes and output formats" },
             { command: "supercli onboard --detect", purpose: "Install supercli skill into your AI harness directory" },
@@ -167,6 +170,11 @@ async function main() {
 
     if (positional[0] === "discover") {
       output(discoverPluginsByIntent(flags.intent ? String(flags.intent) : "", { limit: flags.limit }));
+      return;
+    }
+
+    if (positional[0] === "run") {
+      await handleRunCommand({ positional, flags, humanMode, output, outputError });
       return;
     }
 
