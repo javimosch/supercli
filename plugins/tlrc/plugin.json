@@ -1,0 +1,86 @@
+{
+  "name": "tlrc",
+  "version": "0.1.0",
+  "description": "Official tldr client written in Rust — simplified man pages with practical examples for CLI commands. Fast, colorful, and community-driven.",
+  "source": "https://github.com/tldr-pages/tlrc",
+  "checks": [
+    { "type": "binary", "name": "tldr" }
+  ],
+  "install_guidance": {
+    "plugin": "tlrc",
+    "binary": "tldr",
+    "check": "which tldr || echo 'tldr (tlrc) not installed'",
+    "install_steps": [
+      "brew install tlrc",
+      "Verify: tldr --version",
+      "supercli plugins install ./plugins/tlrc --on-conflict replace --json"
+    ],
+    "note": "Alternative: cargo install tlrc --locked or download release binaries from GitHub."
+  },
+  "commands": [
+    {
+      "namespace": "tldr",
+      "resource": "page",
+      "action": "show",
+      "description": "Show tlrc page for a command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "positionalArgs": ["command"],
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "command", "type": "string", "required": true, "description": "Command name to look up" },
+        { "name": "--platform", "type": "string", "description": "Platform filter (linux, osx, windows, sunos)", "default": "" },
+        { "name": "--language", "type": "string", "description": "Language code (e.g. en, de, es)", "default": "" },
+        { "name": "--update", "type": "boolean", "description": "Update the local cache", "default": false }
+      ]
+    },
+    {
+      "namespace": "tldr",
+      "resource": "cache",
+      "action": "list",
+      "description": "List all cached command pages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--list"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tldr",
+      "resource": "self",
+      "action": "version",
+      "description": "Show tldr client version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tldr",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tldr CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tldr",
+        "passthrough": true,
+        "parseJson": false,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    }
+  ]
+}

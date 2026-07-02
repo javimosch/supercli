@@ -1,0 +1,42 @@
+{
+  "name": "httprobe",
+  "version": "0.1.0",
+  "description": "Domain probing tool — probe a list of domains for working HTTP and HTTPS servers. Useful for security research and asset discovery.",
+  "source": "https://github.com/tomnomnom/httprobe",
+  "checks": [
+    { "type": "binary", "name": "httprobe" }
+  ],
+  "install_guidance": {
+    "plugin": "httprobe",
+    "binary": "httprobe",
+    "check": "which httprobe || echo 'httprobe not installed'",
+    "install_steps": [
+      "go install github.com/tomnomnom/httprobe@latest",
+      "Verify: httprobe -h",
+      "supercli plugins install ./plugins/httprobe --on-conflict replace --json"
+    ],
+    "note": "Requires Go. Reads line-delimited domains from stdin and probes for HTTP and HTTPS."
+  },
+  "commands": [
+    {
+      "namespace": "httprobe",
+      "resource": "domain",
+      "action": "probe",
+      "description": "Probe domains stdin for working HTTP/HTTPS servers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "httprobe",
+        "baseArgs": [],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "--prefer-https", "type": "boolean", "description": "Only show HTTP if HTTPS is not working", "default": false },
+        { "name": "-c", "type": "integer", "description": "Concurrency level", "default": 20 },
+        { "name": "-t", "type": "integer", "description": "Timeout in milliseconds", "default": 10000 },
+        { "name": "-s", "type": "boolean", "description": "Skip default probes", "default": false }
+      ]
+    }
+  ]
+}

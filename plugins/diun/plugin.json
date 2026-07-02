@@ -1,0 +1,86 @@
+{
+  "name": "diun",
+  "version": "0.1.0",
+  "description": "Docker image update notifier — watch container registries and receive notifications when an image is updated. Supports multiple notification channels.",
+  "source": "https://github.com/crazy-max/diun",
+  "checks": [
+    { "type": "binary", "name": "diun" }
+  ],
+  "install_guidance": {
+    "plugin": "diun",
+    "binary": "diun",
+    "check": "which diun || echo 'diun not installed'",
+    "install_steps": [
+      "Download from https://github.com/crazy-max/diun/releases/latest",
+      "or: docker run -d --name diun crazymax/diun",
+      "supercli plugins install ./plugins/diun --on-conflict replace --json"
+    ],
+    "note": "Diun can run as a standalone binary or as a Docker container. Configuration via diun.yml or environment variables."
+  },
+  "commands": [
+    {
+      "namespace": "diun",
+      "resource": "self",
+      "action": "version",
+      "description": "Show diun version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diun",
+        "baseArgs": ["version"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "diun",
+      "resource": "self",
+      "action": "serve",
+      "description": "Start diun in serve mode (watches registries and sends notifications)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diun",
+        "baseArgs": ["serve"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "description": "Path to diun configuration file", "default": "diun.yml" },
+        { "name": "--no-notif", "type": "boolean", "description": "Disable notifications", "default": false }
+      ]
+    },
+    {
+      "namespace": "diun",
+      "resource": "self",
+      "action": "check-config",
+      "description": "Validate the configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diun",
+        "baseArgs": ["check-config"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "description": "Path to diun configuration file", "default": "diun.yml" }
+      ]
+    },
+    {
+      "namespace": "diun",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to diun CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "diun",
+        "passthrough": true,
+        "parseJson": false,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    }
+  ]
+}

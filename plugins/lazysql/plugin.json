@@ -1,0 +1,69 @@
+{
+  "name": "lazysql",
+  "version": "0.1.0",
+  "description": "Cross-platform TUI database management tool — browse tables, execute SQL, edit records, and manage connections for MySQL, PostgreSQL, SQLite, and more.",
+  "source": "https://github.com/jorgerojas26/lazysql",
+  "checks": [
+    { "type": "binary", "name": "lazysql" }
+  ],
+  "install_guidance": {
+    "plugin": "lazysql",
+    "binary": "lazysql",
+    "check": "which lazysql || echo 'lazysql not installed'",
+    "install_steps": [
+      "brew install lazysql",
+      "Verify: lazysql --help",
+      "supercli plugins install ./plugins/lazysql --on-conflict replace --json"
+    ],
+    "note": "Also available via: go install github.com/jorgerojas26/lazysql@latest"
+  },
+  "commands": [
+    {
+      "namespace": "lazysql",
+      "resource": "connection",
+      "action": "open",
+      "description": "Open lazysql TUI with optional connection URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazysql",
+        "positionalArgs": ["url"],
+        "parseJson": false,
+        "timeout_ms": 10000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": false, "description": "Database connection URL (e.g. postgres://user:pass@localhost/db)" },
+        { "name": "--read-only", "type": "boolean", "description": "Launch in read-only mode", "default": false }
+      ]
+    },
+    {
+      "namespace": "lazysql",
+      "resource": "self",
+      "action": "version",
+      "description": "Show lazysql version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazysql",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lazysql",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lazysql CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazysql",
+        "passthrough": true,
+        "parseJson": false,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    }
+  ]
+}
