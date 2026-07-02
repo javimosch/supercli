@@ -1,0 +1,76 @@
+{
+  "name": "hermit",
+  "version": "0.1.0",
+  "description": "hermit — per-project tool manager. Manages isolated sets of CLI tools per project for consistent environments across teams and CI",
+  "source": "https://github.com/cashapp/hermit",
+  "checks": [
+    { "type": "binary", "name": "hermit" }
+  ],
+  "install_guidance": {
+    "plugin": "hermit",
+    "binary": "hermit",
+    "check": "which hermit",
+    "install_steps": [
+      "curl -fsSL https://github.com/cashapp/hermit/releases/download/stable/get-hermit.sh | sh",
+      "Verify: hermit --version",
+      "supercli plugins install ./plugins/hermit --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "hermit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hermit version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hermit",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hermit: curl -fsSL https://github.com/cashapp/hermit/releases/download/stable/get-hermit.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hermit",
+      "resource": "env",
+      "action": "init",
+      "description": "Initialize hermit in the current project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hermit",
+        "baseArgs": ["init"],
+        "missingDependencyHelp": "Install hermit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hermit",
+      "resource": "binary",
+      "action": "install",
+      "description": "Install a tool into the hermit-managed project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hermit",
+        "baseArgs": ["install"],
+        "positionalArgs": ["name"],
+        "missingDependencyHelp": "Install hermit"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Tool name to install" }
+      ]
+    },
+    {
+      "namespace": "hermit",
+      "resource": "binary",
+      "action": "list",
+      "description": "List installed hermit-managed tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hermit",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install hermit"
+      },
+      "args": []
+    }
+  ]
+}
