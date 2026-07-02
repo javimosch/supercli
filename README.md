@@ -8,6 +8,8 @@
 
 <h1 align="center">supercli ⎯ 10,000+ CLI Tools, One Command — and growing daily</h1>
 
+<p align="center"><i>The universal launcher for every CLI tool — no installs, JSON-first, one command.</i></p>
+
 <p align="center">
   <b>Zero install.</b> Run any CLI tool with <code>npx supercli</code>.<br>
   <b>JSON-first by default.</b> Use <code>--human</code> for readable output.
