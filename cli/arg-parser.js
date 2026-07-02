@@ -1,6 +1,6 @@
 "use strict";
 
-const CLI_VERSION = "1.31.4";
+const CLI_VERSION = "1.31.5";
 
 const RESERVED_FLAGS = [
   "human", "json", "compact", "schema", "help-json", "help",
