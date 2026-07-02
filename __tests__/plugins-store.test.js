@@ -9,11 +9,17 @@ jest.mock("os", () => ({
 const {
   SUPERCLI_PLUGINS_DIR,
   SUPERCLI_LOCAL_LOCK_FILE,
+  SUPERCLI_SERVER_LOCK_FILE,
   LEGACY_PLUGINS_FILE,
   readPluginsLock,
   writePluginsLock,
+  readServerPluginsLock,
+  writeServerPluginsLock,
   listInstalledPlugins,
+  listServerInstalledPlugins,
+  getPlugin,
   getInstalledPluginCommands,
+  getServerPluginCommands,
   getEffectivePluginCommands,
 } = require("../cli/plugins-store")
 const path = require("path")
@@ -145,6 +151,107 @@ describe("plugins-store", () => {
 
       const commands = getEffectivePluginCommands()
       expect(commands).toEqual([{ id: "local" }, { id: "server" }])
+    })
+  })
+
+  describe("readServerPluginsLock (readLockFile edge cases)", () => {
+    test("returns empty lock if server lock file does not exist", () => {
+      fs.existsSync.mockReturnValue(false)
+      const lock = readServerPluginsLock()
+      expect(lock).toEqual({ version: 1, installed: {} })
+    })
+
+    test("returns parsed server lock if file exists", () => {
+      fs.existsSync.mockReturnValue(true)
+      const mockLock = { version: 1, installed: { s1: { name: "s1" } } }
+      fs.readFileSync.mockReturnValue(JSON.stringify(mockLock))
+      const lock = readServerPluginsLock()
+      expect(lock).toEqual(mockLock)
+    })
+
+    test("returns empty lock if server lock file contains invalid JSON", () => {
+      fs.existsSync.mockReturnValue(true)
+      fs.readFileSync.mockReturnValue("{broken")
+      const lock = readServerPluginsLock()
+      expect(lock).toEqual({ version: 1, installed: {} })
+    })
+
+    test("resets installed to {} when installed is null", () => {
+      fs.existsSync.mockReturnValue(true)
+      fs.readFileSync.mockReturnValue(JSON.stringify({ version: 2, installed: null }))
+      const lock = readServerPluginsLock()
+      expect(lock.installed).toEqual({})
+    })
+
+    test("resets installed to {} when installed is a string", () => {
+      fs.existsSync.mockReturnValue(true)
+      fs.readFileSync.mockReturnValue(JSON.stringify({ version: 2, installed: "bad" }))
+      const lock = readServerPluginsLock()
+      expect(lock.installed).toEqual({})
+    })
+  })
+
+  describe("writeServerPluginsLock", () => {
+    test("writes server lock file and ensures plugins dir exists", () => {
+      fs.existsSync.mockReturnValue(false)
+      const lock = { version: 1, installed: { s1: { name: "s1" } } }
+      const result = writeServerPluginsLock(lock)
+      expect(fs.mkdirSync).toHaveBeenCalledWith(SUPERCLI_PLUGINS_DIR, { recursive: true })
+      expect(fs.writeFileSync).toHaveBeenCalledWith(
+        SUPERCLI_SERVER_LOCK_FILE,
+        expect.stringContaining('"name": "s1"')
+      )
+      expect(result).toEqual(lock)
+    })
+  })
+
+  describe("listServerInstalledPlugins", () => {
+    test("returns array of server-installed plugins", () => {
+      fs.existsSync.mockReturnValue(true)
+      const s1 = { name: "s1" }
+      fs.readFileSync.mockReturnValue(JSON.stringify({ installed: { s1 } }))
+      expect(listServerInstalledPlugins()).toEqual([s1])
+    })
+
+    test("returns empty array when server lock has no plugins", () => {
+      fs.existsSync.mockReturnValue(false)
+      expect(listServerInstalledPlugins()).toEqual([])
+    })
+  })
+
+  describe("getPlugin", () => {
+    test("returns plugin by name when it exists", () => {
+      fs.existsSync.mockReturnValue(true)
+      const p1 = { name: "p1", version: "1.0.0" }
+      fs.readFileSync.mockReturnValue(JSON.stringify({ installed: { p1 } }))
+      expect(getPlugin("p1")).toEqual(p1)
+    })
+
+    test("returns null when plugin does not exist", () => {
+      fs.existsSync.mockReturnValue(true)
+      fs.readFileSync.mockReturnValue(JSON.stringify({ installed: {} }))
+      expect(getPlugin("missing")).toBeNull()
+    })
+
+    test("returns null when lock file is absent", () => {
+      fs.existsSync.mockReturnValue(false)
+      expect(getPlugin("any")).toBeNull()
+    })
+  })
+
+  describe("getServerPluginCommands", () => {
+    test("returns flattened commands from server plugins", () => {
+      fs.existsSync.mockReturnValue(true)
+      const c1 = { id: "sc1" }
+      fs.readFileSync.mockReturnValue(JSON.stringify({
+        installed: { s1: { name: "s1", commands: [c1] } }
+      }))
+      expect(getServerPluginCommands()).toEqual([c1])
+    })
+
+    test("returns empty array when server lock is empty", () => {
+      fs.existsSync.mockReturnValue(false)
+      expect(getServerPluginCommands()).toEqual([])
     })
   })
 })
