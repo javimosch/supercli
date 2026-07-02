@@ -1,0 +1,80 @@
+{
+  "name": "chsrc",
+  "version": "0.1.0",
+  "description": "chsrc — cross-platform universal source mirror changer. Switches software sources for various package managers and tools",
+  "source": "https://github.com/RubyMetric/chsrc",
+  "checks": [
+    { "type": "binary", "name": "chsrc" }
+  ],
+  "install_guidance": {
+    "plugin": "chsrc",
+    "binary": "chsrc",
+    "check": "which chsrc",
+    "install_steps": [
+      "brew install chsrc",
+      "or: curl -L https://github.com/RubyMetric/chsrc/releases/latest/download/chsrc-x64-linux -o /usr/local/bin/chsrc && chmod +x /usr/local/bin/chsrc",
+      "Verify: chsrc --version",
+      "supercli plugins install ./plugins/chsrc --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "chsrc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print chsrc version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chsrc",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install chsrc: brew install chsrc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chsrc",
+      "resource": "source",
+      "action": "list",
+      "description": "List available source mirrors",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chsrc",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install chsrc"
+      },
+      "args": []
+    },
+    {
+      "namespace": "chsrc",
+      "resource": "source",
+      "action": "set",
+      "description": "Set a source mirror for a tool",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chsrc",
+        "baseArgs": ["set"],
+        "positionalArgs": ["tool"],
+        "missingDependencyHelp": "Install chsrc"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool/package manager to set mirror for (e.g., brew, pip, npm)" }
+      ]
+    },
+    {
+      "namespace": "chsrc",
+      "resource": "source",
+      "action": "reset",
+      "description": "Reset source mirrors to default",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "chsrc",
+        "baseArgs": ["reset"],
+        "positionalArgs": ["tool"],
+        "missingDependencyHelp": "Install chsrc"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool to reset mirrors for" }
+      ]
+    }
+  ]
+}

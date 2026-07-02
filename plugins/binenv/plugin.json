@@ -1,0 +1,80 @@
+{
+  "name": "binenv",
+  "version": "0.1.0",
+  "description": "binenv — binary version manager. Installs and manages versions of CLI binaries with shims and a lock file",
+  "source": "https://github.com/devops-works/binenv",
+  "checks": [
+    { "type": "binary", "name": "binenv" }
+  ],
+  "install_guidance": {
+    "plugin": "binenv",
+    "binary": "binenv",
+    "check": "which binenv",
+    "install_steps": [
+      "go install github.com/devops-works/binenv@latest",
+      "Verify: binenv --version",
+      "supercli plugins install ./plugins/binenv --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "binenv",
+      "resource": "self",
+      "action": "version",
+      "description": "Print binenv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binenv",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install binenv: go install github.com/devops-works/binenv@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "binenv",
+      "resource": "binary",
+      "action": "install",
+      "description": "Install a specific binary version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binenv",
+        "baseArgs": ["install"],
+        "positionalArgs": ["name", "version"],
+        "missingDependencyHelp": "Install binenv"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Binary name to install" },
+        { "name": "version", "type": "string", "required": false, "description": "Version to install (default: latest)" }
+      ]
+    },
+    {
+      "namespace": "binenv",
+      "resource": "binary",
+      "action": "list",
+      "description": "List installed binaries and versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binenv",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install binenv"
+      },
+      "args": []
+    },
+    {
+      "namespace": "binenv",
+      "resource": "binary",
+      "action": "available",
+      "description": "List available versions for a binary",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binenv",
+        "baseArgs": ["available"],
+        "positionalArgs": ["name"],
+        "missingDependencyHelp": "Install binenv"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Binary name" }
+      ]
+    }
+  ]
+}

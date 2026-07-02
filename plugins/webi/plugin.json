@@ -1,0 +1,62 @@
+{
+  "name": "webi",
+  "version": "0.1.0",
+  "description": "webi — web-based installer for developer tools. Installs tools via easy-to-remember URLs without sudo or a package manager",
+  "source": "https://github.com/webinstall/webi-installers",
+  "checks": [
+    { "type": "binary", "name": "webi" }
+  ],
+  "install_guidance": {
+    "plugin": "webi",
+    "binary": "webi",
+    "check": "which webi",
+    "install_steps": [
+      "curl -sS https://webi.sh/webi | sh",
+      "Verify: webi --version",
+      "supercli plugins install ./plugins/webi --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "webi",
+      "resource": "self",
+      "action": "version",
+      "description": "Print webi version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webi",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install webi: curl -sS https://webi.sh/webi | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "webi",
+      "resource": "install",
+      "action": "run",
+      "description": "Install a tool via webi URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webi",
+        "passthrough": true,
+        "missingDependencyHelp": "Install webi: curl -sS https://webi.sh/webi | sh"
+      },
+      "args": [
+        { "name": "tool", "type": "string", "required": true, "description": "Tool name or webi URL to install" }
+      ]
+    },
+    {
+      "namespace": "webi",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to webi CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "webi",
+        "passthrough": true,
+        "missingDependencyHelp": "Install webi: curl -sS https://webi.sh/webi | sh"
+      },
+      "args": []
+    }
+  ]
+}
