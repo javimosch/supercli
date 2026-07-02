@@ -1,0 +1,56 @@
+{
+  "name": "xcaddy",
+  "version": "0.1.0",
+  "description": "xcaddy — Build Caddy with custom plugins. Compile a custom Caddy binary with specific modules and versions using a simple command-line interface.",
+  "source": "https://github.com/caddyserver/xcaddy",
+  "checks": [
+    { "type": "binary", "name": "xcaddy" }
+  ],
+  "install_guidance": {
+    "plugin": "xcaddy",
+    "binary": "xcaddy",
+    "check": "xcaddy version",
+    "install_steps": [
+      "go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest",
+      "Verify: xcaddy version",
+      "Build Caddy with plugins: xcaddy build --with github.com/caddyserver/nginx-adapter",
+      "supercli plugins install ./plugins/xcaddy --on-conflict replace --json"
+    ],
+    "note": "Requires Go 1.20+. Alternatively install via brew: brew install xcaddy"
+  },
+  "commands": [
+    {
+      "namespace": "xcaddy",
+      "resource": "build",
+      "action": "caddy",
+      "description": "Build Caddy with specified plugins",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xcaddy",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install xcaddy: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest"
+      },
+      "args": [
+        { "name": "version", "type": "string", "required": false, "description": "Caddy version to build (default latest)" },
+        { "name": "--with", "type": "string", "required": false, "description": "Plugin to include (can repeat: --with foo --with bar)" },
+        { "name": "--output", "type": "string", "required": false, "description": "Output binary path" },
+        { "name": "--replace", "type": "string", "required": false, "description": "Go module replacement directive" }
+      ]
+    },
+    {
+      "namespace": "xcaddy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to xcaddy for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "xcaddy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install xcaddy: go install github.com/caddyserver/xcaddy/cmd/xcaddy@latest"
+      },
+      "args": []
+    }
+  ]
+}

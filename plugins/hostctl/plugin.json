@@ -1,0 +1,169 @@
+{
+  "name": "hostctl",
+  "version": "0.1.0",
+  "description": "hostctl — Manage /etc/hosts with profiles. Organize host entries into named profiles, switch between them, and maintain a clean hosts file with simple CLI commands.",
+  "source": "https://github.com/guumaster/hostctl",
+  "checks": [
+    { "type": "binary", "name": "hostctl" }
+  ],
+  "install_guidance": {
+    "plugin": "hostctl",
+    "binary": "hostctl",
+    "check": "hostctl version",
+    "install_steps": [
+      "go install github.com/guumaster/hostctl@latest",
+      "Verify: hostctl version",
+      "Add profile: hostctl profile add myprofile",
+      "supercli plugins install ./plugins/hostctl --on-conflict replace --json"
+    ],
+    "note": "Requires Go 1.18+. Also available via Homebrew: brew tap guumaster/tap && brew install hostctl"
+  },
+  "commands": [
+    {
+      "namespace": "hostctl",
+      "resource": "profile",
+      "action": "list",
+      "description": "List all host profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["profile", "list"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "profile",
+      "action": "add",
+      "description": "Add a new host profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["profile", "add"],
+        "positionalArgs": ["name"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Profile name" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "profile",
+      "action": "remove",
+      "description": "Remove a host profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["profile", "remove"],
+        "positionalArgs": ["name"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Profile name" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "host",
+      "action": "add",
+      "description": "Add a host entry to a profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["host", "add"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": [
+        { "name": "--profile", "type": "string", "required": true, "description": "Profile name" },
+        { "name": "--ip", "type": "string", "required": true, "description": "IP address" },
+        { "name": "--hostname", "type": "string", "required": true, "description": "Hostname" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "host",
+      "action": "remove",
+      "description": "Remove a host entry from a profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["host", "remove"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": [
+        { "name": "--profile", "type": "string", "required": true, "description": "Profile name" },
+        { "name": "--hostname", "type": "string", "required": true, "description": "Hostname" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "host",
+      "action": "list",
+      "description": "List hosts in a profile",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["host", "list"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": [
+        { "name": "--profile", "type": "string", "required": true, "description": "Profile name" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "host",
+      "action": "enable",
+      "description": "Enable a profile (activate hosts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["host", "enable"],
+        "positionalArgs": ["profile"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl"
+      },
+      "args": [
+        { "name": "profile", "type": "string", "required": true, "description": "Profile name to enable" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "host",
+      "action": "disable",
+      "description": "Disable a profile (deactivate hosts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "baseArgs": ["host", "disable"],
+        "positionalArgs": ["profile"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install hostctl"
+      },
+      "args": [
+        { "name": "profile", "type": "string", "required": true, "description": "Profile name to disable" }
+      ]
+    },
+    {
+      "namespace": "hostctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hostctl for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hostctl",
+        "passthrough": true,
+        "missingDependencyHelp": "Install hostctl: go install github.com/guumaster/hostctl@latest"
+      },
+      "args": []
+    }
+  ]
+}

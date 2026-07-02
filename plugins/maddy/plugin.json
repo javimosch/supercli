@@ -1,0 +1,86 @@
+{
+  "name": "maddy",
+  "version": "0.1.0",
+  "description": "maddy — Composable all-in-one mail server. Replace Postfix, Dovecot, OpenDKIM, OpenSPF, OpenDMARC with a single daemon with SMTP, IMAP, JMAP, and submission support.",
+  "source": "https://github.com/foxcpp/maddy",
+  "checks": [
+    { "type": "binary", "name": "maddy" }
+  ],
+  "install_guidance": {
+    "plugin": "maddy",
+    "binary": "maddy",
+    "check": "maddy --version",
+    "install_steps": [
+      "Download from https://github.com/foxcpp/maddy/releases",
+      "Or use distribution packages: https://maddy.email/",
+      "Configure: edit /etc/maddy/maddy.conf",
+      "Run: maddy run",
+      "supercli plugins install ./plugins/maddy --on-conflict replace --json"
+    ],
+    "note": "Replaces multiple mail server components with a single binary. See https://maddy.email/ for configuration guide."
+  },
+  "commands": [
+    {
+      "namespace": "maddy",
+      "resource": "server",
+      "action": "run",
+      "description": "Start maddy mail server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "maddy",
+        "baseArgs": ["run"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install maddy from https://github.com/foxcpp/maddy/releases"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "required": false, "description": "Config file path" }
+      ]
+    },
+    {
+      "namespace": "maddy",
+      "resource": "server",
+      "action": "test",
+      "description": "Test maddy configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "maddy",
+        "baseArgs": ["test"],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install maddy"
+      },
+      "args": [
+        { "name": "--config", "type": "string", "required": false, "description": "Config file to test" }
+      ]
+    },
+    {
+      "namespace": "maddy",
+      "resource": "creds",
+      "action": "hash",
+      "description": "Hash a password for maddy authentication",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "maddy",
+        "baseArgs": ["hash"],
+        "positionalArgs": ["password"],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install maddy"
+      },
+      "args": [
+        { "name": "password", "type": "string", "required": true, "description": "Password to hash" }
+      ]
+    },
+    {
+      "namespace": "maddy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to maddy for any command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "maddy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install maddy from https://github.com/foxcpp/maddy/releases"
+      },
+      "args": []
+    }
+  ]
+}
