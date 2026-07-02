@@ -245,4 +245,7 @@ module.exports = {
   removePlugin,
   getPlugin,
   listInstalledPlugins,
+  parsePostInstallResult,
+  resolveHookScriptPath,
+  serializeHook,
 };
