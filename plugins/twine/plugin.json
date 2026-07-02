@@ -1,0 +1,85 @@
+{
+  "name": "twine",
+  "version": "0.1.0",
+  "description": "twine — securely upload Python packages to PyPI with verified HTTPS connections",
+  "source": "https://github.com/pypa/twine",
+  "checks": [
+    { "type": "binary", "name": "twine" }
+  ],
+  "install_guidance": {
+    "plugin": "twine",
+    "binary": "twine",
+    "check": "which twine",
+    "install_steps": [
+      "pip install twine",
+      "Verify: twine --version",
+      "supercli plugins install ./plugins/twine --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "twine",
+      "resource": "self",
+      "action": "version",
+      "description": "Print twine version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twine",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install twine: pip install twine"
+      },
+      "args": []
+    },
+    {
+      "namespace": "twine",
+      "resource": "upload",
+      "action": "run",
+      "description": "Upload distribution packages to PyPI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twine",
+        "baseArgs": ["upload"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install twine: pip install twine"
+      },
+      "args": [
+        { "name": "dist", "type": "string", "required": true, "description": "Distribution file(s) to upload (glob pattern)" }
+      ]
+    },
+    {
+      "namespace": "twine",
+      "resource": "upload",
+      "action": "check",
+      "description": "Check distribution packages for common issues",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twine",
+        "baseArgs": ["check"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install twine: pip install twine"
+      },
+      "args": [
+        { "name": "dist", "type": "string", "required": true, "description": "Distribution file(s) to check (glob pattern)" }
+      ]
+    },
+    {
+      "namespace": "twine",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to twine CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "twine",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install twine"
+      },
+      "args": []
+    }
+  ]
+}

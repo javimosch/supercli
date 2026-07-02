@@ -1,0 +1,68 @@
+{
+  "name": "deptry",
+  "version": "0.1.0",
+  "description": "deptry — find unused, missing, and obsolete dependencies in Python projects",
+  "source": "https://github.com/fpgmaas/deptry",
+  "checks": [
+    { "type": "binary", "name": "deptry" }
+  ],
+  "install_guidance": {
+    "plugin": "deptry",
+    "binary": "deptry",
+    "check": "which deptry",
+    "install_steps": [
+      "pip install deptry",
+      "Verify: deptry --version",
+      "supercli plugins install ./plugins/deptry --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "deptry",
+      "resource": "self",
+      "action": "version",
+      "description": "Print deptry version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deptry",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install deptry: pip install deptry"
+      },
+      "args": []
+    },
+    {
+      "namespace": "deptry",
+      "resource": "project",
+      "action": "check",
+      "description": "Check Python project for unused, missing, or obsolete dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deptry",
+        "baseArgs": ["."],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install deptry: pip install deptry"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Path to project directory" }
+      ]
+    },
+    {
+      "namespace": "deptry",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to deptry CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "deptry",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install deptry"
+      },
+      "args": []
+    }
+  ]
+}

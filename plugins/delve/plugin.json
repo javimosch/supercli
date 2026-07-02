@@ -1,0 +1,139 @@
+{
+  "name": "delve",
+  "version": "0.1.0",
+  "description": "delve (dlv) — debugger for the Go programming language with full runtime inspection",
+  "source": "https://github.com/go-delve/delve",
+  "checks": [
+    { "type": "binary", "name": "dlv" }
+  ],
+  "install_guidance": {
+    "plugin": "delve",
+    "binary": "dlv",
+    "check": "which dlv",
+    "install_steps": [
+      "go install github.com/go-delve/delve/cmd/dlv@latest",
+      "Verify: dlv version",
+      "supercli plugins install ./plugins/delve --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "delve",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dlv version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install delve: go install github.com/go-delve/delve/cmd/dlv@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "delve",
+      "resource": "debug",
+      "action": "run",
+      "description": "Compile and begin debugging a Go program",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "baseArgs": ["debug"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install delve"
+      },
+      "args": [
+        { "name": "args", "type": "string", "required": false, "description": "Arguments to pass to the debugged program" }
+      ]
+    },
+    {
+      "namespace": "delve",
+      "resource": "exec",
+      "action": "run",
+      "description": "Debug a precompiled Go binary",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "baseArgs": ["exec"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install delve"
+      },
+      "args": [
+        { "name": "binary", "type": "string", "required": true, "description": "Path to the Go binary" }
+      ]
+    },
+    {
+      "namespace": "delve",
+      "resource": "test",
+      "action": "run",
+      "description": "Debug Go tests",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "baseArgs": ["test"],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install delve"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": false, "description": "Package to test" }
+      ]
+    },
+    {
+      "namespace": "delve",
+      "resource": "connect",
+      "action": "run",
+      "description": "Connect to a headless debugger server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "baseArgs": ["connect"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install delve"
+      },
+      "args": [
+        { "name": "addr", "type": "string", "required": true, "description": "Debug server address (host:port)" }
+      ]
+    },
+    {
+      "namespace": "delve",
+      "resource": "dap",
+      "action": "run",
+      "description": "Start a DAP (Debug Adapter Protocol) server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "baseArgs": ["dap"],
+        "cwd": "invoke_cwd",
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install delve"
+      },
+      "args": [
+        { "name": "port", "type": "string", "required": false, "description": "Port to listen on" }
+      ]
+    },
+    {
+      "namespace": "delve",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dlv CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dlv",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install delve"
+      },
+      "args": []
+    }
+  ]
+}
