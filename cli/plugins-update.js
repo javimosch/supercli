@@ -201,4 +201,11 @@ async function updatePlugins(options = {}) {
   return result
 }
 
-module.exports = { updatePlugins }
+module.exports = {
+  updatePlugins,
+  diffCatalogs,
+  readLocalCatalog,
+  writeLocalCatalog,
+  downloadTarball,
+  extractPluginsFromTarball,
+}
