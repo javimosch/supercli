@@ -1,0 +1,63 @@
+{
+  "name": "frawk",
+  "version": "0.1.0",
+  "description": "frawk — fast AWK-like language for processing text and CSV/TSV data with parallel execution",
+  "source": "https://github.com/ezrosent/frawk",
+  "checks": [
+    { "type": "binary", "name": "frawk" }
+  ],
+  "install_guidance": {
+    "plugin": "frawk",
+    "binary": "frawk",
+    "check": "which frawk",
+    "install_steps": [
+      "cargo install frawk",
+      "Verify: frawk --version",
+      "supercli plugins install ./plugins/frawk --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "frawk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print frawk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frawk",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install frawk: cargo install frawk"
+      },
+      "args": []
+    },
+    {
+      "namespace": "frawk",
+      "resource": "program",
+      "action": "run",
+      "description": "Run a frawk program against input files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frawk",
+        "passthrough": true,
+        "missingDependencyHelp": "Install frawk: cargo install frawk"
+      },
+      "args": [
+        { "name": "program", "type": "string", "required": true, "description": "frawk program text" },
+        { "name": "files", "type": "string", "required": false, "description": "Input files to process" }
+      ]
+    },
+    {
+      "namespace": "frawk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to frawk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "frawk",
+        "passthrough": true,
+        "missingDependencyHelp": "Install frawk: cargo install frawk"
+      },
+      "args": []
+    }
+  ]
+}

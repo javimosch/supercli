@@ -1,24 +1,20 @@
 {
   "name": "vgrep",
   "version": "0.1.0",
-  "description": "User-friendly pager for grep.",
+  "description": "vgrep — user-friendly pager for grep/git-grep results with interactive navigation to matches",
   "source": "https://github.com/vrothberg/vgrep",
   "checks": [
-    {
-      "type": "binary",
-      "name": "vgrep"
-    }
+    { "type": "binary", "name": "vgrep" }
   ],
   "install_guidance": {
     "plugin": "vgrep",
     "binary": "vgrep",
     "check": "which vgrep",
     "install_steps": [
-      "brew install vgrep",
+      "go install github.com/vrothberg/vgrep@latest",
       "Verify: vgrep --version",
       "supercli plugins install ./plugins/vgrep --on-conflict replace --json"
-    ],
-    "note": "Install from package manager"
+    ]
   },
   "commands": [
     {
@@ -29,12 +25,26 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "vgrep",
-        "baseArgs": [
-          "--version"
-        ],
-        "missingDependencyHelp": "Install vgrep: brew install vgrep"
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install vgrep: go install github.com/vrothberg/vgrep@latest"
       },
       "args": []
+    },
+    {
+      "namespace": "vgrep",
+      "resource": "search",
+      "action": "run",
+      "description": "Search for a pattern and browse results interactively",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vgrep",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vgrep: go install github.com/vrothberg/vgrep@latest"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": false, "description": "Pattern to search for" }
+      ]
     },
     {
       "namespace": "vgrep",
@@ -44,8 +54,9 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "vgrep",
+        "cwd": "invoke_cwd",
         "passthrough": true,
-        "missingDependencyHelp": "Install vgrep"
+        "missingDependencyHelp": "Install vgrep: go install github.com/vrothberg/vgrep@latest"
       },
       "args": []
     }

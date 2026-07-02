@@ -1,0 +1,64 @@
+{
+  "name": "zenith",
+  "version": "0.1.0",
+  "description": "zenith — terminal system resource monitor with zoomable charts for CPU, memory, network, and disk",
+  "source": "https://github.com/bvaisvil/zenith",
+  "checks": [
+    { "type": "binary", "name": "zenith" }
+  ],
+  "install_guidance": {
+    "plugin": "zenith",
+    "binary": "zenith",
+    "check": "which zenith",
+    "install_steps": [
+      "cargo install zenith",
+      "Verify: zenith --version",
+      "supercli plugins install ./plugins/zenith --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "zenith",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zenith version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zenith",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install zenith: cargo install zenith"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zenith",
+      "resource": "monitor",
+      "action": "run",
+      "description": "Launch the zenith system monitor TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zenith",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zenith: cargo install zenith"
+      },
+      "args": [
+        { "name": "--disk-height", "type": "string", "required": false, "description": "Height of the disk chart" },
+        { "name": "--cpu-height", "type": "string", "required": false, "description": "Height of the CPU chart" },
+        { "name": "--refresh-rate", "type": "string", "required": false, "description": "Refresh rate in milliseconds" }
+      ]
+    },
+    {
+      "namespace": "zenith",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zenith CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zenith",
+        "passthrough": true,
+        "missingDependencyHelp": "Install zenith: cargo install zenith"
+      },
+      "args": []
+    }
+  ]
+}
