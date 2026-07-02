@@ -1,0 +1,133 @@
+{
+  "name": "slim",
+  "version": "0.1.0",
+  "description": "Container image optimizer — minify Docker images by up to 30x, analyze layers, lint Dockerfiles, and debug running containers. CNCF sandbox project.",
+  "source": "https://github.com/slimtoolkit/slim",
+  "checks": [
+    { "type": "binary", "name": "slim" }
+  ],
+  "install_guidance": {
+    "plugin": "slim",
+    "binary": "slim",
+    "check": "which slim || echo 'slim not installed'",
+    "install_steps": [
+      "brew install docker-slim",
+      "Verify: slim version",
+      "supercli plugins install ./plugins/slim --on-conflict replace --json"
+    ],
+    "note": "Also available via: curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -"
+  },
+  "commands": [
+    {
+      "namespace": "slim",
+      "resource": "image",
+      "action": "build",
+      "description": "Analyze, profile and optimize a container image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slim",
+        "baseArgs": ["build"],
+        "positionalArgs": ["target"],
+        "parseJson": false,
+        "timeout_ms": 300000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target container image name or ID" },
+        { "name": "--tag", "type": "string", "description": "Custom tag for the optimized image" },
+        { "name": "--pull", "type": "boolean", "description": "Try pulling target if not available locally", "default": false },
+        { "name": "--http-probe", "type": "boolean", "description": "Enable HTTP probing", "default": true },
+        { "name": "--include-path", "type": "string", "description": "Include directory or file from image" },
+        { "name": "--entrypoint", "type": "string", "description": "Override ENTRYPOINT" }
+      ]
+    },
+    {
+      "namespace": "slim",
+      "resource": "image",
+      "action": "xray",
+      "description": "Perform static analysis on a container image",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slim",
+        "baseArgs": ["xray"],
+        "positionalArgs": ["target"],
+        "parseJson": false,
+        "timeout_ms": 180000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target container image name or ID" },
+        { "name": "--changes", "type": "string", "description": "Show layer change details (none, all, delete, modify, add)", "default": "all" },
+        { "name": "--detect-duplicates", "type": "boolean", "description": "Detect duplicate files", "default": true },
+        { "name": "--show-plogs", "type": "boolean", "description": "Show image pull logs", "default": false }
+      ]
+    },
+    {
+      "namespace": "slim",
+      "resource": "dockerfile",
+      "action": "lint",
+      "description": "Lint a Dockerfile for best practices",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slim",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["target"],
+        "parseJson": false,
+        "timeout_ms": 60000,
+        "safetyLevel": "safe"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Dockerfile path" },
+        { "name": "--target-type", "type": "string", "description": "Target type (dockerfile, image)", "default": "dockerfile" },
+        { "name": "--list-checks", "type": "boolean", "description": "List available checks", "default": false }
+      ]
+    },
+    {
+      "namespace": "slim",
+      "resource": "container",
+      "action": "debug",
+      "description": "Debug a running container",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slim",
+        "baseArgs": ["debug"],
+        "positionalArgs": ["target"],
+        "parseJson": false,
+        "timeout_ms": 120000,
+        "safetyLevel": "guarded"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "Target running container ID or name" }
+      ]
+    },
+    {
+      "namespace": "slim",
+      "resource": "self",
+      "action": "version",
+      "description": "Show slim version information",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slim",
+        "baseArgs": ["version"],
+        "parseJson": false,
+        "timeout_ms": 5000,
+        "safetyLevel": "safe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "slim",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to slim CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "slim",
+        "passthrough": true,
+        "parseJson": false,
+        "safetyLevel": "guarded"
+      },
+      "args": []
+    }
+  ]
+}
