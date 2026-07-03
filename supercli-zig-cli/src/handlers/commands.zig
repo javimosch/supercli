@@ -13,6 +13,9 @@ pub fn handleCommands(
     defer gpa.free(cmds);
 
     const query = flags.get("query") orelse flags.get("q") orelse "";
+    const ns_filter = flags.get("namespace") orelse flags.get("ns") orelse "";
+    const res_filter = flags.get("resource") orelse flags.get("res") orelse "";
+    const act_filter = flags.get("action") orelse flags.get("act") orelse "";
     const query_lower = try std.ascii.allocLowerString(gpa, query);
     defer gpa.free(query_lower);
 
@@ -29,8 +32,17 @@ pub fn handleCommands(
         };
     };
 
+    const offset: usize = blk: {
+        const offset_str = flags.get("offset") orelse "";
+        if (offset_str.len == 0) break :blk 0;
+        break :blk std.fmt.parseInt(usize, offset_str, 10) catch 0;
+    };
+
     var filtered: std.ArrayList(config.Command) = .empty;
     for (cmds) |cmd| {
+        if (ns_filter.len > 0 and !std.mem.eql(u8, cmd.namespace, ns_filter)) continue;
+        if (res_filter.len > 0 and !std.mem.eql(u8, cmd.resource, res_filter)) continue;
+        if (act_filter.len > 0 and !std.mem.eql(u8, cmd.action, act_filter)) continue;
         if (query_lower.len > 0) {
             const haystack_raw = try std.fmt.allocPrint(gpa, "{s} {s} {s} {s} {s}", .{
                 cmd.namespace, cmd.resource, cmd.action, cmd.description, cmd.adapter,
@@ -44,11 +56,13 @@ pub fn handleCommands(
     }
 
     const total = filtered.items.len;
-    const returned_count = if (limit > 0) @min(limit, total) else total;
+    const start = @min(offset, total);
+    const available = total - start;
+    const returned_count = if (limit > 0) @min(limit, available) else available;
 
     if (mode == .human) {
         output.writeLine("\n  Commands\n");
-        for (filtered.items[0..returned_count]) |cmd| {
+        for (filtered.items[start .. start + returned_count]) |cmd| {
             var buf: [512]u8 = undefined;
             const line = std.fmt.bufPrint(&buf, "  {s} {s} {s}  [{s}]  {s}\n", .{
                 cmd.namespace, cmd.resource, cmd.action, cmd.adapter, cmd.description,
@@ -56,7 +70,7 @@ pub fn handleCommands(
             output.writeRaw(line);
         }
         var buf2: [64]u8 = undefined;
-        const summary = std.fmt.bufPrint(&buf2, "  Returned: {d}/{d}\n\n", .{ returned_count, total }) catch "";
+        const summary = std.fmt.bufPrint(&buf2, "  Returned: {d}/{d} (offset: {d})\n\n", .{ returned_count, total, start }) catch "";
         output.writeRaw(summary);
         return;
     }
@@ -71,9 +85,15 @@ pub fn handleCommands(
     jw.write(total) catch return;
     jw.objectField("returned") catch return;
     jw.write(returned_count) catch return;
+    jw.objectField("offset") catch return;
+    jw.write(start) catch return;
+    if (limit == 0 and total > 50) {
+        jw.objectField("_warning") catch return;
+        jw.write("Large result set. Use --limit to cap output.") catch return;
+    }
     jw.objectField("commands") catch return;
     jw.beginArray() catch return;
-    for (filtered.items[0..returned_count]) |cmd| {
+    for (filtered.items[start .. start + returned_count]) |cmd| {
         jw.beginObject() catch return;
         jw.objectField("command") catch return;
         const cmd_str = try std.fmt.allocPrint(gpa, "{s} {s} {s}", .{ cmd.namespace, cmd.resource, cmd.action });
@@ -89,6 +109,9 @@ pub fn handleCommands(
         jw.write(cmd.description) catch return;
         jw.objectField("adapter") catch return;
         jw.write(cmd.adapter) catch return;
+        jw.objectField("args") catch return;
+        if (cmd.args_raw) |ar| jw.write(ar) catch return else jw.beginArray() catch return;
+        if (cmd.args_raw == null) jw.endArray() catch return;
         jw.endObject() catch return;
     }
     jw.endArray() catch return;

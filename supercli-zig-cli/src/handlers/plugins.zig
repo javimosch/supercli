@@ -1,10 +1,11 @@
 // plugins.zig — bundledPluginsDir, handlePluginsList, handlePluginsUpdate,
-//               handlePluginsExplore, handlePluginsInstall
+//               handlePluginsExplore, handlePluginsRemove, handlePluginsShow
 const std = @import("std");
 const output = @import("../output.zig");
 const config = @import("../config.zig");
 const registry = @import("../registry.zig");
 const update = @import("../update.zig");
+const lockfile = @import("../lockfile.zig");
 
 /// Resolve the bundled plugins catalog directory.
 /// Primary: ~/.supercli/plugins/bundled/
@@ -159,6 +160,9 @@ pub fn handlePluginsExplore(
     const name_query = flags.get("name") orelse "";
     const tags_query = flags.get("tags") orelse "";
     const installed_only = flags.contains("installed");
+    const has_learn_only = flags.contains("has-learn");
+    const name_only = flags.contains("name-only");
+    const source_filter = flags.get("source") orelse "";
 
     var lock = try config.readLock(io, home, gpa);
     defer lock.deinit();
@@ -176,6 +180,20 @@ pub fn handlePluginsExplore(
         }
     }
     if (installed_only) {
+        var inst_list: std.ArrayList(registry.RegistryPlugin) = .empty;
+        for (filtered) |p| {
+            if (installed_set.contains(p.name)) try inst_list.append(gpa, p);
+        }
+        filtered = try inst_list.toOwnedSlice(gpa);
+    }
+    if (has_learn_only) {
+        var learn_list: std.ArrayList(registry.RegistryPlugin) = .empty;
+        for (filtered) |p| {
+            if (p.has_learn) try learn_list.append(gpa, p);
+        }
+        filtered = try learn_list.toOwnedSlice(gpa);
+    }
+    if (source_filter.len > 0 and std.mem.eql(u8, source_filter, "installed")) {
         var inst_list: std.ArrayList(registry.RegistryPlugin) = .empty;
         for (filtered) |p| {
             if (installed_set.contains(p.name)) try inst_list.append(gpa, p);
@@ -229,18 +247,30 @@ pub fn handlePluginsExplore(
             });
         };
     };
-    const returned_count = if (limit > 0) @min(limit, filtered.len) else filtered.len;
+    const offset: usize = blk: {
+        const offset_str = flags.get("offset") orelse "0";
+        break :blk std.fmt.parseInt(usize, offset_str, 10) catch 0;
+    };
+    const start = @min(offset, filtered.len);
+    const available = filtered.len - start;
+    const returned_count = if (limit > 0) @min(limit, available) else available;
 
     if (mode == .human) {
         output.writeLine("\n  Plugins\n");
-        for (filtered[0..returned_count]) |p| {
+        for (filtered[start .. start + returned_count]) |p| {
             const inst_str = if (installed_set.contains(p.name)) "[installed]" else "";
-            var buf: [512]u8 = undefined;
-            const line = std.fmt.bufPrint(&buf, "  {s}  {s}  {s}\n", .{ p.name, inst_str, p.description }) catch continue;
-            output.writeRaw(line);
+            if (name_only) {
+                var buf: [256]u8 = undefined;
+                const line = std.fmt.bufPrint(&buf, "  {s}\n", .{p.name}) catch continue;
+                output.writeRaw(line);
+            } else {
+                var buf: [512]u8 = undefined;
+                const line = std.fmt.bufPrint(&buf, "  {s}  {s}  {s}\n", .{ p.name, inst_str, p.description }) catch continue;
+                output.writeRaw(line);
+            }
         }
         var buf2: [64]u8 = undefined;
-        const summary = std.fmt.bufPrint(&buf2, "  Returned: {d}/{d}\n\n", .{ returned_count, filtered.len }) catch "";
+        const summary = std.fmt.bufPrint(&buf2, "  Returned: {d}/{d}  (offset: {d})\n\n", .{ returned_count, filtered.len, start }) catch "";
         output.writeRaw(summary);
         return;
     }
@@ -255,18 +285,24 @@ pub fn handlePluginsExplore(
     jw.write(filtered.len) catch return;
     jw.objectField("returned") catch return;
     jw.write(returned_count) catch return;
+    if (limit == 0 and filtered.len > 50) {
+        jw.objectField("_warning") catch return;
+        jw.write("Large result set. Use --limit to cap output.") catch return;
+    }
     jw.objectField("plugins") catch return;
     jw.beginArray() catch return;
-    for (filtered[0..returned_count]) |p| {
+    for (filtered[start .. start + returned_count]) |p| {
         jw.beginObject() catch return;
         jw.objectField("name") catch return;
         jw.write(p.name) catch return;
-        jw.objectField("description") catch return;
-        jw.write(p.description) catch return;
-        jw.objectField("has_learn") catch return;
-        jw.write(p.has_learn) catch return;
-        jw.objectField("installed") catch return;
-        jw.write(installed_set.contains(p.name)) catch return;
+        if (!name_only) {
+            jw.objectField("description") catch return;
+            jw.write(p.description) catch return;
+            jw.objectField("has_learn") catch return;
+            jw.write(p.has_learn) catch return;
+            jw.objectField("installed") catch return;
+            jw.write(installed_set.contains(p.name)) catch return;
+        }
         jw.endObject() catch return;
     }
     jw.endArray() catch return;
@@ -276,60 +312,155 @@ pub fn handlePluginsExplore(
     jw.write(name_query) catch return;
     jw.objectField("tags") catch return;
     jw.write(tags_query) catch return;
+    jw.objectField("offset") catch return;
+    jw.write(start) catch return;
     jw.endObject() catch return;
     jw.endObject() catch return;
     output.writeRaw(out.written());
     output.writeRaw("\n");
 }
 
-pub fn handlePluginsInstall(
+pub fn handlePluginsRemove(
     io: std.Io,
     gpa: std.mem.Allocator,
     mode: output.Mode,
     plugin_name: []const u8,
-) void {
+    home: []const u8,
+) !void {
     if (plugin_name.len == 0) {
         output.exitWithError(gpa, mode, .{
             .code = 85,
             .err_type = "invalid_argument",
-            .message = "Usage: sc-zig plugins install <name>",
+            .message = "Usage: sc-zig plugins remove <name>",
             .recoverable = false,
-            .suggestions = &.{"Run: sc-zig plugins explore --name <query>"},
         });
     }
-    const sc_cmd = [_][]const u8{ "sc", "plugins", "install", plugin_name };
-    const result = std.process.run(gpa, io, .{
-        .argv = &sc_cmd,
-        .cwd = .inherit,
-        .stdout_limit = .unlimited,
-        .stderr_limit = .unlimited,
-    }) catch {
+
+    var arena = std.heap.ArenaAllocator.init(gpa);
+    defer arena.deinit();
+    const arena_alloc = arena.allocator();
+
+    var lock_raw = lockfile.readLockRaw(io, arena_alloc, home) catch {
         output.exitWithError(gpa, mode, .{
-            .code = 105,
-            .err_type = "integration_error",
-            .message = "Failed to run 'sc plugins install'. Is Node.js sc installed?",
-            .recoverable = true,
-            .suggestions = &.{"Install Node.js version: npm install -g superacli"},
-        });
-    };
-    const exit_code: u8 = switch (result.term) {
-        .exited => |c| c,
-        else => 1,
-    };
-    if (exit_code != 0) {
-        const msg = if (result.stderr.len > 0)
-            gpa.dupe(u8, std.mem.trim(u8, result.stderr, "\n\r ")) catch plugin_name
-        else
-            std.fmt.allocPrint(gpa, "Plugin install failed (exit {d})", .{exit_code}) catch plugin_name;
-        output.exitWithError(gpa, mode, .{
-            .code = 105,
-            .err_type = "integration_error",
-            .message = msg,
+            .code = 110,
+            .err_type = "internal_error",
+            .message = "Failed to read lockfile",
             .recoverable = true,
         });
+    };
+
+    const removed = lockfile.removePluginEntry(arena_alloc, &lock_raw, plugin_name) catch false;
+    if (!removed) {
+        output.exitWithError(gpa, mode, .{
+            .code = 92,
+            .err_type = "resource_not_found",
+            .message = "Plugin not installed",
+            .recoverable = false,
+            .suggestions = &.{"Run: sc-zig plugins list"},
+        });
     }
-    output.writeRaw(result.stdout);
-    if (result.stdout.len > 0 and result.stdout[result.stdout.len - 1] != '\n') {
-        output.writeRaw("\n");
+
+    try lockfile.writeLockRaw(io, gpa, home, lock_raw);
+
+    if (mode == .human) {
+        output.writeLine("  Plugin removed");
+        return;
     }
+
+    var out: std.Io.Writer.Allocating = .init(gpa);
+    defer out.deinit();
+    var jw: std.json.Stringify = .{ .writer = &out.writer };
+    jw.beginObject() catch return;
+    jw.objectField("ok") catch return;
+    jw.write(true) catch return;
+    jw.objectField("removed") catch return;
+    jw.write(plugin_name) catch return;
+    jw.endObject() catch return;
+    output.writeRaw(out.written());
+    output.writeRaw("\n");
+}
+
+pub fn handlePluginsShow(
+    io: std.Io,
+    gpa: std.mem.Allocator,
+    mode: output.Mode,
+    plugin_name: []const u8,
+    home: []const u8,
+) !void {
+    if (plugin_name.len == 0) {
+        output.exitWithError(gpa, mode, .{
+            .code = 85,
+            .err_type = "invalid_argument",
+            .message = "Usage: sc-zig plugins show <name>",
+            .recoverable = false,
+        });
+    }
+
+    var arena = std.heap.ArenaAllocator.init(gpa);
+    defer arena.deinit();
+    const arena_alloc = arena.allocator();
+
+    const lock_raw = lockfile.readLockRaw(io, arena_alloc, home) catch {
+        output.exitWithError(gpa, mode, .{
+            .code = 110,
+            .err_type = "internal_error",
+            .message = "Failed to read lockfile",
+            .recoverable = true,
+        });
+    };
+
+    const entry = lockfile.getPluginEntry(lock_raw, plugin_name) orelse {
+        output.exitWithError(gpa, mode, .{
+            .code = 92,
+            .err_type = "resource_not_found",
+            .message = "Plugin not installed",
+            .recoverable = false,
+            .suggestions = &.{"Run: sc-zig plugins list"},
+        });
+    };
+
+    if (mode == .human) {
+        const obj = switch (entry) {
+            .object => |o| o,
+            else => return,
+        };
+        const name = if (obj.get("name")) |v| switch (v) { .string => |s| s, else => plugin_name } else plugin_name;
+        const version = if (obj.get("version")) |v| switch (v) { .string => |s| s, else => "?" } else "?";
+        const desc = if (obj.get("description")) |v| switch (v) { .string => |s| s, else => "" } else "";
+
+        var buf: [256]u8 = undefined;
+        const header = std.fmt.bufPrint(&buf, "\n  {s} v{s}\n  {s}\n\n", .{ name, version, desc }) catch "";
+        output.writeRaw(header);
+
+        if (obj.get("commands")) |cmds| switch (cmds) {
+            .array => |arr| {
+                output.writeLine("  Commands:");
+                for (arr.items) |cmd| switch (cmd) {
+                    .object => |cmd_obj| {
+                        const ns = if (cmd_obj.get("namespace")) |v| switch (v) { .string => |s| s, else => "?" } else "?";
+                        const res = if (cmd_obj.get("resource")) |v| switch (v) { .string => |s| s, else => "?" } else "?";
+                        const act = if (cmd_obj.get("action")) |v| switch (v) { .string => |s| s, else => "?" } else "?";
+                        var cbuf: [256]u8 = undefined;
+                        const line = std.fmt.bufPrint(&cbuf, "    {s} {s} {s}\n", .{ ns, res, act }) catch continue;
+                        output.writeRaw(line);
+                    },
+                    else => {},
+                };
+                output.writeLine("");
+            },
+            else => {},
+        };
+        return;
+    }
+
+    // JSON mode — output the raw plugin entry
+    var out: std.Io.Writer.Allocating = .init(gpa);
+    defer out.deinit();
+    var jw: std.json.Stringify = .{ .writer = &out.writer };
+    jw.beginObject() catch return;
+    jw.objectField("plugin") catch return;
+    jw.write(entry) catch return;
+    jw.endObject() catch return;
+    output.writeRaw(out.written());
+    output.writeRaw("\n");
 }

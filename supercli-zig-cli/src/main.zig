@@ -9,6 +9,16 @@ const bootstrap = @import("handlers/bootstrap.zig");
 const commands = @import("handlers/commands.zig");
 const plugins = @import("handlers/plugins.zig");
 const execute = @import("handlers/execute.zig");
+const learn = @import("handlers/learn.zig");
+const install = @import("handlers/install.zig");
+const discover = @import("handlers/discover.zig");
+const help = @import("handlers/help.zig");
+const skills = @import("handlers/skills.zig");
+const run = @import("handlers/run.zig");
+const doctor = @import("handlers/doctor.zig");
+const onboard = @import("handlers/onboard.zig");
+const misc = @import("handlers/misc.zig");
+const daemon = @import("handlers/daemon.zig");
 
 pub fn main(init: std.process.Init) !void {
     const gpa = init.gpa;
@@ -40,11 +50,22 @@ pub fn main(init: std.process.Init) !void {
 
     const home = init.environ_map.get("HOME") orelse init.environ_map.get("USERPROFILE") orelse "/tmp";
 
+    // ----- help / --help / --help-json -----
+    if (parsed.flags.get("help-json") != null) {
+        help.handleHelpJson(gpa);
+        return;
+    }
+    if (parsed.flags.get("help") != null) {
+        help.handleHelp(gpa, mode);
+        return;
+    }
+    if (pos.len > 0 and std.mem.eql(u8, pos[0], "help")) {
+        help.handleHelp(gpa, mode);
+        return;
+    }
+
     // ----- No args → bootstrap -----
     if (pos.len == 0) { bootstrap.handleBootstrap(gpa, mode); return; }
-
-    // ----- help -----
-    if (std.mem.eql(u8, pos[0], "help")) { bootstrap.handleBootstrap(gpa, mode); return; }
 
     // ----- install-as-sc -----
     if (std.mem.eql(u8, pos[0], "install-as-sc")) { bootstrap.handleInstallAsSc(io, gpa, mode); return; }
@@ -93,15 +114,90 @@ pub fn main(init: std.process.Init) !void {
         }
         if (std.mem.eql(u8, sub, "install")) {
             const plugin_name = if (pos.len > 2) pos[2] else "";
-            plugins.handlePluginsInstall(io, gpa, mode, plugin_name);
+            const on_conflict = if (parsed.flags.get("on-conflict")) |v| v else "fail";
+            try install.handlePluginsInstallNative(io, gpa, mode, plugin_name, home, on_conflict);
+            return;
+        }
+        if (std.mem.eql(u8, sub, "remove") or std.mem.eql(u8, sub, "uninstall")) {
+            const plugin_name = if (pos.len > 2) pos[2] else "";
+            try plugins.handlePluginsRemove(io, gpa, mode, plugin_name, home);
+            return;
+        }
+        if (std.mem.eql(u8, sub, "show")) {
+            const plugin_name = if (pos.len > 2) pos[2] else "";
+            try plugins.handlePluginsShow(io, gpa, mode, plugin_name, home);
+            return;
+        }
+        if (std.mem.eql(u8, sub, "learn")) {
+            const plugin_name = if (pos.len > 2) pos[2] else "";
+            try learn.handlePluginsLearn(io, gpa, mode, plugin_name, home);
+            return;
+        }
+        if (std.mem.eql(u8, sub, "doctor")) {
+            try doctor.handlePluginsDoctor(io, gpa, mode, pos, home);
             return;
         }
         output.exitWithError(gpa, mode, .{
             .code = 85,
             .err_type = "invalid_argument",
-            .message = "Unknown plugins subcommand. Use: list | explore | install | update",
+            .message = "Unknown plugins subcommand. Use: list | explore | install | remove | show | learn | doctor | update",
             .recoverable = false,
         });
+    }
+
+    // ----- skills <sub> -----
+    if (std.mem.eql(u8, pos[0], "skills")) {
+        try skills.handleSkills(io, gpa, mode, pos, parsed.flags, home);
+        return;
+    }
+
+    // ----- run <plugin> <res> <act> -----
+    if (std.mem.eql(u8, pos[0], "run")) {
+        try run.handleRun(io, gpa, mode, pos, parsed.flags, raw_argv, home);
+        return;
+    }
+
+    // ----- plan <ns> <res> <act> -----
+    if (std.mem.eql(u8, pos[0], "plan")) {
+        try misc.handlePlan(io, gpa, mode, pos, home);
+        return;
+    }
+
+    // ----- config show -----
+    if (std.mem.eql(u8, pos[0], "config")) {
+        const sub = if (pos.len > 1) pos[1] else "";
+        if (std.mem.eql(u8, sub, "show")) {
+            try misc.handleConfigShow(io, gpa, mode, home);
+            return;
+        }
+        output.exitWithError(gpa, mode, .{
+            .code = 85,
+            .err_type = "invalid_argument",
+            .message = "Usage: sc-zig config show",
+            .recoverable = false,
+        });
+    }
+
+    // ----- onboard / offboard -----
+    if (std.mem.eql(u8, pos[0], "onboard")) {
+        try onboard.handleOnboard(io, gpa, mode, parsed.flags);
+        return;
+    }
+    if (std.mem.eql(u8, pos[0], "offboard")) {
+        try onboard.handleOffboard(io, gpa, mode, parsed.flags);
+        return;
+    }
+
+    // ----- daemon <start|stop|status> -----
+    if (std.mem.eql(u8, pos[0], "daemon")) {
+        try daemon.handleDaemon(io, gpa, mode, pos, home);
+        return;
+    }
+
+    // ----- discover --intent -----
+    if (std.mem.eql(u8, pos[0], "discover")) {
+        try discover.handleDiscover(io, gpa, mode, parsed.flags, home);
+        return;
     }
 
     // ----- Namespace dispatch -----
@@ -109,10 +205,30 @@ pub fn main(init: std.process.Init) !void {
     defer lock.deinit();
 
     const ns = pos[0];
-    const res = if (pos.len > 1) pos[1] else "_";
-    const act = if (pos.len > 2) pos[2] else "_";
 
-    var passthrough_args: [][]const u8 = if (pos.len > 1) raw_argv[1..] else raw_argv[0..0];
+    // Namespace browse: 1 positional → list resources/actions under namespace
+    // 2 positionals → list actions under namespace.resource
+    if (pos.len <= 2) {
+        // First check if there's a passthrough command for this namespace
+        if (config.findPassthrough(&lock, ns)) |cmd| {
+            const passthrough_args: [][]const u8 = if (pos.len > 1) raw_argv[1..] else raw_argv[0..0];
+            try execute.handleExecuteCommand(io, gpa, mode, cmd, parsed.flags, passthrough_args, true);
+            return;
+        }
+        try handleNamespaceBrowse(gpa, &lock, mode, ns, if (pos.len > 1) pos[1] else null);
+        return;
+    }
+
+    const res = pos[1];
+    const act = pos[2];
+
+    // --schema flag: output command schema instead of executing
+    if (parsed.flags.contains("schema")) {
+        commands.handleInspect(gpa, &lock, mode, ns, res, act);
+        return;
+    }
+
+    var passthrough_args: [][]const u8 = raw_argv[1..];
     _ = &passthrough_args;        // Exact ns.res.act match
         if (config.findCommand(&lock, ns, res, act)) |cmd| {
             const user_passthrough = std.mem.eql(u8, res, "_") and std.mem.eql(u8, act, "_");
@@ -167,8 +283,111 @@ pub fn main(init: std.process.Init) !void {
             .recoverable = false,
             .suggestions = &.{
                 "Run: sc-zig plugins list",
-                "Run: sc plugins install <name>",
+                "Run: sc-zig plugins install <name>",
             },
         });
     }
+}
+
+fn handleNamespaceBrowse(
+    gpa: std.mem.Allocator,
+    lock: *const config.Lock,
+    mode: output.Mode,
+    ns: []const u8,
+    maybe_res: ?[]const u8,
+) !void {
+    // Collect matching commands
+    var cmds: std.ArrayList(config.Command) = .empty;
+    for (lock.plugins) |p| {
+        for (p.commands) |cmd| {
+            if (!std.mem.eql(u8, cmd.namespace, ns)) continue;
+            if (maybe_res) |res| {
+                if (!std.mem.eql(u8, cmd.resource, res)) continue;
+            }
+            try cmds.append(gpa, cmd);
+        }
+    }
+
+    if (cmds.items.len == 0) {
+        // Check if namespace exists at all
+        var ns_found = false;
+        for (lock.plugins) |p| {
+            for (p.commands) |cmd| {
+                if (std.mem.eql(u8, cmd.namespace, ns)) { ns_found = true; break; }
+            }
+            if (ns_found) break;
+        }
+        if (ns_found and maybe_res != null) {
+            output.exitWithError(gpa, mode, .{
+                .code = 92,
+                .err_type = "resource_not_found",
+                .message = "Resource not found in this namespace",
+                .recoverable = false,
+                .suggestions = &.{"Run: sc-zig commands --namespace <ns>"},
+            });
+        }
+        output.exitWithError(gpa, mode, .{
+            .code = 92,
+            .err_type = "resource_not_found",
+            .message = "Namespace not found. Is the plugin installed?",
+            .recoverable = false,
+            .suggestions = &.{
+                "Run: sc-zig plugins list",
+                "Run: sc-zig plugins install <name>",
+            },
+        });
+    }
+
+    if (mode == .human) {
+        if (maybe_res) |res| {
+            var buf: [256]u8 = undefined;
+            const header = std.fmt.bufPrint(&buf, "\n  {s}.{s}\n\n", .{ ns, res }) catch "";
+            output.writeRaw(header);
+        } else {
+            var buf: [256]u8 = undefined;
+            const header = std.fmt.bufPrint(&buf, "\n  Namespace: {s}\n\n", .{ns}) catch "";
+            output.writeRaw(header);
+        }
+        for (cmds.items) |cmd| {
+            var buf: [512]u8 = undefined;
+            const line = std.fmt.bufPrint(&buf, "  {s} {s} {s}  [{s}]  {s}\n", .{
+                cmd.namespace, cmd.resource, cmd.action, cmd.adapter, cmd.description,
+            }) catch continue;
+            output.writeRaw(line);
+        }
+        output.writeLine("");
+        return;
+    }
+
+    // JSON output
+    var out: std.Io.Writer.Allocating = .init(gpa);
+    defer out.deinit();
+    var jw: std.json.Stringify = .{ .writer = &out.writer };
+    jw.beginObject() catch return;
+    jw.objectField("namespace") catch return;
+    jw.write(ns) catch return;
+    if (maybe_res) |res| {
+        jw.objectField("resource") catch return;
+        jw.write(res) catch return;
+    }
+    jw.objectField("commands") catch return;
+    jw.beginArray() catch return;
+    for (cmds.items) |cmd| {
+        jw.beginObject() catch return;
+        jw.objectField("namespace") catch return;
+        jw.write(cmd.namespace) catch return;
+        jw.objectField("resource") catch return;
+        jw.write(cmd.resource) catch return;
+        jw.objectField("action") catch return;
+        jw.write(cmd.action) catch return;
+        jw.objectField("description") catch return;
+        jw.write(cmd.description) catch return;
+        jw.objectField("adapter") catch return;
+        jw.write(cmd.adapter) catch return;
+        jw.endObject() catch return;
+    }
+    jw.endArray() catch return;
+    jw.endObject() catch return;
+    output.writeRaw(out.written());
+    output.writeRaw("\n");
 }

@@ -2,7 +2,7 @@
 const std = @import("std");
 const output = @import("output.zig");
 
-pub const RESERVED_FLAGS = [_][]const u8{ "json", "human", "compact", "schema", "help", "no-color", "format" };
+pub const RESERVED_FLAGS = [_][]const u8{ "json", "human", "compact", "schema", "help", "help-json", "no-color", "format" };
 pub const BOOL_FLAGS = [_][]const u8{ "json", "human", "compact", "replace", "check", "force", "installed" };
 
 /// Parsed command-line state.
