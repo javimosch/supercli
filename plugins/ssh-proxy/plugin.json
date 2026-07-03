@@ -1,0 +1,55 @@
+{
+  "name": "ssh-proxy",
+  "version": "0.1.0",
+  "description": "SSH proxy CLI — manage SSH tunnels and port forwarding with JSON status output",
+  "source": "https://github.com/ssh-proxy/ssh-proxy",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ssh-proxy"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ssh-proxy",
+    "binary": "ssh-proxy",
+    "check": "which ssh-proxy",
+    "install_steps": [
+      "go install github.com/ssh-proxy/ssh-proxy@latest",
+      "Verify: ssh-proxy --version",
+      "supercli plugins install ./plugins/ssh-proxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ssh-proxy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ssh-proxy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssh-proxy",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install: go install github.com/ssh-proxy/ssh-proxy@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ssh-proxy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ssh-proxy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssh-proxy",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: go install github.com/ssh-proxy/ssh-proxy@latest"
+      },
+      "args": []
+    }
+  ]
+}

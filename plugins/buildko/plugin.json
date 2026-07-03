@@ -1,0 +1,55 @@
+{
+  "name": "buildko",
+  "version": "0.1.0",
+  "description": "Build Go containers without Docker — reproducible OCI images from source",
+  "source": "https://github.com/buildko/buildko",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "buildko"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "buildko",
+    "binary": "buildko",
+    "check": "which buildko",
+    "install_steps": [
+      "go install github.com/buildko/buildko@latest",
+      "Verify: buildko --version",
+      "supercli plugins install ./plugins/buildko --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "buildko",
+      "resource": "self",
+      "action": "version",
+      "description": "Print buildko version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildko",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install buildko: go install github.com/buildko/buildko@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "buildko",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to buildko CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildko",
+        "passthrough": true,
+        "missingDependencyHelp": "Install buildko: go install github.com/buildko/buildko@latest"
+      },
+      "args": []
+    }
+  ]
+}

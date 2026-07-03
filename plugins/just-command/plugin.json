@@ -1,0 +1,55 @@
+{
+  "name": "just-command",
+  "version": "0.1.0",
+  "description": "Just a command runner — save and run project-specific commands, JSON task listing",
+  "source": "https://github.com/casey/just",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "just"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "just-command",
+    "binary": "just",
+    "check": "which just",
+    "install_steps": [
+      "cargo install just",
+      "Verify: just --version",
+      "supercli plugins install ./plugins/just-command --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "just-command",
+      "resource": "self",
+      "action": "version",
+      "description": "Print just-command version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "just",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install just-command: cargo install just"
+      },
+      "args": []
+    },
+    {
+      "namespace": "just-command",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to just CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "just",
+        "passthrough": true,
+        "missingDependencyHelp": "Install just-command: cargo install just"
+      },
+      "args": []
+    }
+  ]
+}

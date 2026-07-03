@@ -1,0 +1,55 @@
+{
+  "name": "portfwd",
+  "version": "0.1.0",
+  "description": "Port forwarding CLI — manage local and remote port forwards with JSON config",
+  "source": "https://github.com/portfwd/portfwd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "portfwd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "portfwd",
+    "binary": "portfwd",
+    "check": "which portfwd",
+    "install_steps": [
+      "go install github.com/portfwd/portfwd@latest",
+      "Verify: portfwd --version",
+      "supercli plugins install ./plugins/portfwd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "portfwd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print portfwd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "portfwd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install: go install github.com/portfwd/portfwd@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "portfwd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to portfwd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "portfwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: go install github.com/portfwd/portfwd@latest"
+      },
+      "args": []
+    }
+  ]
+}

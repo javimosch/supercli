@@ -1,0 +1,55 @@
+{
+  "name": "ghinst",
+  "version": "0.1.0",
+  "description": "Install binaries from GitHub releases to ~/.local/bin with checksum verification",
+  "source": "https://github.com/tebeka/ghinst",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ghinst"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ghinst",
+    "binary": "ghinst",
+    "check": "which ghinst",
+    "install_steps": [
+      "go install github.com/tebeka/ghinst@latest",
+      "Verify: ghinst --version",
+      "supercli plugins install ./plugins/ghinst --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ghinst",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ghinst version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghinst",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ghinst: go install github.com/tebeka/ghinst@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ghinst",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ghinst CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ghinst",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ghinst: go install github.com/tebeka/ghinst@latest"
+      },
+      "args": []
+    }
+  ]
+}
