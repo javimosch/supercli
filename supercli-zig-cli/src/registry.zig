@@ -9,7 +9,53 @@ pub const RegistryPlugin = struct {
     tags: [][]const u8 = &.{},
     has_learn: bool = false,
     manifest_path: []const u8 = "",
+    quality: []const u8 = "", // "recommended", "good", "average", "bad", or ""
 };
+
+/// Load quality classifications from quality-classifications.json.
+/// Returns a map of plugin name -> quality rating string.
+/// Caller owns the returned hashmap.
+pub fn loadQualityClassifications(
+    io: std.Io,
+    gpa: std.mem.Allocator,
+    plugins_dir_path: []const u8,
+) !std.StringHashMap([]const u8) {
+    var map = std.StringHashMap([]const u8).init(gpa);
+    // Try the quality-classifications.json in the plugins dir
+    const cls_path = try std.fmt.allocPrint(gpa, "{s}/quality-classifications.json", .{plugins_dir_path});
+    defer gpa.free(cls_path);
+    const content = blk: {
+        if (std.Io.Dir.cwd().readFileAlloc(io, cls_path, gpa, .unlimited)) |c| break :blk c else |_| {}
+        // Fallback: try adjacent plugins/ dir (dev mode)
+        const fallback = try std.fmt.allocPrint(gpa, "plugins/quality-classifications.json", .{});
+        defer gpa.free(fallback);
+        if (std.Io.Dir.cwd().readFileAlloc(io, fallback, gpa, .unlimited)) |c| break :blk c else |_| {}
+        break :blk ""; // No quality file found
+    };
+    if (content.len == 0) return map;
+    const parsed = std.json.parseFromSliceLeaky(std.json.Value, gpa, content, .{}) catch return map;
+    const obj = switch (parsed) {
+        .object => |o| o,
+        else => return map,
+    };
+    var it = obj.iterator();
+    while (it.next()) |entry| {
+        const plugin_name = try gpa.dupe(u8, entry.key_ptr.*);
+        const rating = blk: {
+            const plugin_obj = switch (entry.value_ptr.*) {
+                .object => |po| po,
+                else => break :blk "",
+            };
+            const rating_val = plugin_obj.get("rating") orelse break :blk "";
+            break :blk switch (rating_val) {
+                .string => |s| try gpa.dupe(u8, s),
+                else => "",
+            };
+        };
+        try map.put(plugin_name, rating);
+    }
+    return map;
+}
 
 // Read and return all plugins from a plugins directory.
 // The caller owns the returned slice (arena-allocated).
@@ -19,6 +65,10 @@ pub fn discoverPluginsInDir(
     plugins_dir_path: []const u8,
 ) ![]RegistryPlugin {
     var list: std.ArrayList(RegistryPlugin) = .empty;
+
+    // Load quality classifications if available
+    var quality_map: ?std.StringHashMap([]const u8) = loadQualityClassifications(io, gpa, plugins_dir_path) catch null;
+    defer if (quality_map) |*qm| qm.deinit();
 
     var dir = std.Io.Dir.cwd().openDir(io, plugins_dir_path, .{ .iterate = true }) catch return list.toOwnedSlice(gpa);
     defer dir.close(io);
@@ -90,12 +140,16 @@ pub fn discoverPluginsInDir(
             has_learn = manifest_obj.get("learn") != null;
         }
 
+        // Look up quality rating
+        const quality = if (quality_map) |qm| (qm.get(name) orelse "") else "";
+
         try list.append(gpa, RegistryPlugin{
             .name = name,
             .description = description,
             .tags = tags,
             .has_learn = has_learn,
             .manifest_path = manifest_path,
+            .quality = if (quality.len > 0) try gpa.dupe(u8, quality) else "",
         });
     }
 
@@ -259,6 +313,28 @@ pub fn filterByTag(plugins: []const RegistryPlugin, tag: []const u8, gpa: std.me
             const ptag_lower = try std.ascii.allocLowerString(gpa, ptag);
             defer gpa.free(ptag_lower);
             if (std.mem.eql(u8, ptag_lower, t_lower)) {
+                try list.append(gpa, p);
+                break;
+            }
+        }
+    }
+    return list.toOwnedSlice(gpa);
+}
+
+// Filter registry plugins by quality rating.
+// Supports comma-separated values: "recommended,good"
+pub fn filterByQuality(plugins: []const RegistryPlugin, quality_query: []const u8, gpa: std.mem.Allocator) ![]RegistryPlugin {
+    var list: std.ArrayList(RegistryPlugin) = .empty;
+    var iter = std.mem.splitScalar(u8, quality_query, ',');
+    var qualities: std.ArrayList([]const u8) = .empty;
+    while (iter.next()) |q| {
+        const trimmed = std.mem.trim(u8, q, " ");
+        if (trimmed.len > 0) try qualities.append(gpa, trimmed);
+    }
+    for (plugins) |p| {
+        if (p.quality.len == 0) continue;
+        for (qualities.items) |q| {
+            if (std.ascii.eqlIgnoreCase(p.quality, q)) {
                 try list.append(gpa, p);
                 break;
             }

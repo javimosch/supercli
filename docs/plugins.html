@@ -152,8 +152,19 @@
                 </div>
                 <div class="flex flex-wrap gap-2" id="tagFilters">
                 </div>
+                <div class="flex flex-wrap gap-2 mt-3" id="qualityFilters">
+                  <button class="tag px-3 py-1" data-quality="recommended" onclick="toggleQuality('recommended')" title="Well-specified, agent-friendly CLI tools with --json and structured commands">recommended</button>
+                  <button class="tag px-3 py-1" data-quality="good" onclick="toggleQuality('good')" title="Real CLI tools with decent plugin specs">good</button>
+                  <button class="tag px-3 py-1" data-quality="average" onclick="toggleQuality('average')" title="Minimal or auto-generated plugins">average</button>
+                  <button class="tag px-3 py-1" data-quality="bad" onclick="toggleQuality('bad')" title="Invalid or non-CLI plugins">bad</button>
+                </div>
               </div>
-              <p class="text-sm text-[#787774] mt-3"><span id="pluginCount">0</span> plugins</p>
+              <div class="flex items-center justify-between mt-3">
+                <p class="text-sm text-[#787774]"><span id="pluginCount">0</span> plugins</p>
+                <label class="flex items-center gap-2 text-sm text-[#787774] cursor-pointer">
+                  <input type="checkbox" id="sortByQuality" class="accent-[#111111]" /> Sort by quality
+                </label>
+              </div>
             </div>
           </section>
 
@@ -193,6 +204,8 @@
     <script>
       let allPlugins = [];
       let activeTags = new Set();
+      let activeQuality = new Set();
+      const qualityOrder = { recommended: 0, good: 1, average: 2, bad: 3, undefined: 4 };
 
       async function loadPlugins() {
         try {
@@ -258,10 +271,30 @@
         filterPlugins();
       }
 
+      function toggleQuality(q) {
+        if (activeQuality.has(q)) {
+          activeQuality.delete(q);
+        } else {
+          activeQuality.add(q);
+        }
+        document.querySelectorAll('#qualityFilters button').forEach(btn => {
+          btn.classList.toggle('active', activeQuality.has(btn.dataset.quality));
+        });
+        filterPlugins();
+      }
+
+      const qualityColors = {
+        recommended: { bg: '#059669', text: '#FFFFFF', label: 'recommended' },
+        good: { bg: '#2563EB', text: '#FFFFFF', label: 'good' },
+        average: { bg: '#F59E0B', text: '#FFFFFF', label: 'average' },
+        bad: { bg: '#DC2626', text: '#FFFFFF', label: 'bad' }
+      };
+
       function filterPlugins() {
         const query = document.getElementById('searchInput').value.toLowerCase();
+        const sortByQual = document.getElementById('sortByQuality')?.checked;
         
-        const filtered = allPlugins.filter(p => {
+        let filtered = allPlugins.filter(p => {
           const matchesSearch = !query || 
             p.name.toLowerCase().includes(query) ||
             p.description.toLowerCase().includes(query) ||
@@ -270,8 +303,20 @@
           const matchesTags = activeTags.size === 0 || 
             [...activeTags].every(tag => p.tags.includes(tag));
           
-          return matchesSearch && matchesTags;
+          const matchesQuality = activeQuality.size === 0 || 
+            activeQuality.has(p.quality);
+          
+          return matchesSearch && matchesTags && matchesQuality;
         });
+        
+        if (sortByQual) {
+          filtered.sort((a, b) => {
+            const qa = qualityOrder[a.quality] ?? 4;
+            const qb = qualityOrder[b.quality] ?? 4;
+            if (qa !== qb) return qa - qb;
+            return (b.stars || 0) - (a.stars || 0);
+          });
+        }
         
         document.getElementById('pluginCount').textContent = filtered.length;
         document.getElementById('noResults').classList.toggle('hidden', filtered.length > 0);
@@ -282,6 +327,8 @@
             <div class="flex items-start justify-between mb-4">
               <h3 class="text-lg font-semibold text-[#111111]">${p.name}</h3>
               <div class="flex items-center gap-2">
+                ${p.quality ? (() => { const qc = qualityColors[p.quality]; return `<span class="px-2 py-0.5 rounded-full text-xs font-semibold" style="background:${qc.bg};color:${qc.text}" title="${p.quality_reason || p.quality}">${qc.label}</span>`; })() : ''}
+                ${p.stars ? `<span class="px-2 py-0.5 bg-[#F7F6F3] text-[#787774] rounded-full text-xs font-semibold" title="GitHub stars">★ ${p.stars.toLocaleString()}</span>` : ''}
                 ${p.score ? `<span class="px-2 py-0.5 bg-[#EDF3EC] text-[#346538] rounded-full text-xs font-semibold" title="Plugin quality score (out of 12)">${p.score.value}/12</span>` : ''}
                 ${p.has_learn ? '<span class="tag px-2 py-0.5 text-[10px]" title="Has quickstart skill guide">learn</span>' : ''}
                 <button class="copy-btn p-2 text-[#787774] hover:text-[#111111] transition-colors" 
@@ -336,6 +383,7 @@
       }
 
       document.getElementById('searchInput').addEventListener('input', filterPlugins);
+      document.getElementById('sortByQuality')?.addEventListener('change', filterPlugins);
 
       const sidebar = document.getElementById('sidebar');
       const mobileDrawer = document.getElementById('mobileDrawer');

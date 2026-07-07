@@ -31,7 +31,7 @@ pub fn handleHelpJson(gpa: std.mem.Allocator) void {
     jw.write("sc-zig plugins remove <name>     # Remove a plugin") catch return;
     jw.write("sc-zig plugins show <name>       # Show plugin details") catch return;
     jw.write("sc-zig plugins learn <name>      # Show plugin learn content") catch return;
-    jw.write("sc-zig plugins explore [--name <q>] [--tags <t>]  # Browse registry") catch return;
+    jw.write("sc-zig plugins explore [--name <q>] [--tags <t>] [--quality <q>]  # Browse registry") catch return;
     jw.write("sc-zig plugins update [--check]   # Update bundled plugins") catch return;
     jw.endArray() catch return;
 
@@ -108,7 +108,7 @@ pub fn handleHelpHuman() void {
     output.writeLine("    sc-zig plugins remove <name>     # Remove a plugin");
     output.writeLine("    sc-zig plugins show <name>       # Show plugin details");
     output.writeLine("    sc-zig plugins learn <name>      # Show plugin learn content");
-    output.writeLine("    sc-zig plugins explore           # Browse plugin registry");
+    output.writeLine("    sc-zig plugins explore [--name <q>] [--tags <t>] [--quality <q>]  # Browse registry");
     output.writeLine("    sc-zig plugins update [--check]   # Update bundled plugins");
     output.writeLine("");
     output.writeLine("  DISCOVERY:");

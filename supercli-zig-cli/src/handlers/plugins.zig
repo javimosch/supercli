@@ -159,6 +159,7 @@ pub fn handlePluginsExplore(
 
     const name_query = flags.get("name") orelse "";
     const tags_query = flags.get("tags") orelse "";
+    const quality_query = flags.get("quality") orelse "";
     const installed_only = flags.contains("installed");
     const has_learn_only = flags.contains("has-learn");
     const name_only = flags.contains("name-only");
@@ -178,6 +179,9 @@ pub fn handlePluginsExplore(
             const t = std.mem.trim(u8, tag, " ");
             if (t.len > 0) filtered = try registry.filterByTag(filtered, t, gpa);
         }
+    }
+    if (quality_query.len > 0) {
+        filtered = try registry.filterByQuality(filtered, quality_query, gpa);
     }
     if (installed_only) {
         var inst_list: std.ArrayList(registry.RegistryPlugin) = .empty;
@@ -265,7 +269,8 @@ pub fn handlePluginsExplore(
                 output.writeRaw(line);
             } else {
                 var buf: [512]u8 = undefined;
-                const line = std.fmt.bufPrint(&buf, "  {s}  {s}  {s}\n", .{ p.name, inst_str, p.description }) catch continue;
+                const q_str = if (p.quality.len > 0) p.quality else "-";
+                const line = std.fmt.bufPrint(&buf, "  {s}  [{s}]  {s}  {s}\n", .{ p.name, q_str, inst_str, p.description }) catch continue;
                 output.writeRaw(line);
             }
         }
@@ -302,6 +307,10 @@ pub fn handlePluginsExplore(
             jw.write(p.has_learn) catch return;
             jw.objectField("installed") catch return;
             jw.write(installed_set.contains(p.name)) catch return;
+            if (p.quality.len > 0) {
+                jw.objectField("quality") catch return;
+                jw.write(p.quality) catch return;
+            }
         }
         jw.endObject() catch return;
     }
@@ -312,6 +321,8 @@ pub fn handlePluginsExplore(
     jw.write(name_query) catch return;
     jw.objectField("tags") catch return;
     jw.write(tags_query) catch return;
+    jw.objectField("quality") catch return;
+    jw.write(quality_query) catch return;
     jw.objectField("offset") catch return;
     jw.write(start) catch return;
     jw.endObject() catch return;
