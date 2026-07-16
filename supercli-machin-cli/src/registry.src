@@ -68,24 +68,30 @@ func read_registry_entry(dir, name) (entry, found) {
     }
 }
 
+// tag_matches uses AND semantics: every wanted tag must be present in the
+// plugin's tags (case-insensitive). This matches sc-zig's sequential-filter
+// behavior: --tags cli,utility means "has BOTH cli AND utility".
 func tag_matches(tags, wanted) (out) {
-    out = false
-    i := 0
-    n := len(tags)
-    for i < n {
-        j := 0
-        wn := len(wanted)
-        for j < wn {
-            if to_lower(tags[i]) == wanted[j] { out = true  return }
-            j = j + 1
+    out = true
+    j := 0
+    wn := len(wanted)
+    for j < wn {
+        hit := false
+        i := 0
+        n := len(tags)
+        for i < n {
+            if to_lower(tags[i]) == wanted[j] { hit = true }
+            i = i + 1
         }
-        i = i + 1
+        if hit == false { out = false  return }
+        j = j + 1
     }
 }
 
 // explore_plugins scans dir for entries matching name_query (substring,
 // case-insensitive, matched against the directory name) and/or tags_query
-// (comma-separated, matches any). Empty queries match everything.
+// (comma-separated, AND semantics — must match every specified tag).
+// Empty queries match everything.
 func explore_plugins(dir, name_query, tags_query, installed) (results) {
     results = []RegistryEntry{}
     entries := list_dir(dir)

@@ -73,14 +73,14 @@ func join_shell_quoted(parts) (out) {
 }
 
 // str_slice_json renders []string as a JSON array of strings.
+// Uses join() to avoid O(n²) string concatenation in a loop.
 func str_slice_json(xs) (out) {
-    out = "["
+    parts := []string{}
     i := 0
     n := len(xs)
     for i < n {
-        if i > 0 { out = out + "," }
-        out = out + json_str(xs[i])
+        parts = append(parts, json_str(xs[i]))
         i = i + 1
     }
-    out = out + "]"
+    out = "[" + join(parts, ",") + "]"
 }

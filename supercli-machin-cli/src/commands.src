@@ -49,30 +49,27 @@ func render_commands_human(results) {
 }
 
 func render_commands_json(results) {
-    out := "{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"commands\":["
+    parts := []string{}
     i := 0
     n := len(results)
     for i < n {
         r := results[i]
-        if i > 0 { out = out + "," }
-        out = out + "{\"namespace\":" + json_str(r.namespace) + ",\"resource\":" + json_str(r.resource) + ",\"action\":" + json_str(r.action) + ",\"plugin\":" + json_str(r.plugin) + ",\"description\":" + json_str(r.description) + "}"
+        parts = append(parts, "{\"namespace\":" + json_str(r.namespace) + ",\"resource\":" + json_str(r.resource) + ",\"action\":" + json_str(r.action) + ",\"plugin\":" + json_str(r.plugin) + ",\"description\":" + json_str(r.description) + "}")
         i = i + 1
     }
-    out = out + "]}"
-    println(out)
+    println("{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"commands\":[" + join(parts, ",") + "]}")
 }
 
 func render_args_json(args) (out) {
-    out = "["
+    parts := []string{}
     i := 0
     n := len(args)
     for i < n {
         a := args[i]
-        if i > 0 { out = out + "," }
-        out = out + "{\"name\":" + json_str(a.name) + ",\"required\":" + json_bool(a.required) + ",\"positional\":" + json_bool(a.positional) + ",\"description\":" + json_str(a.description) + "}"
+        parts = append(parts, "{\"name\":" + json_str(a.name) + ",\"required\":" + json_bool(a.required) + ",\"positional\":" + json_bool(a.positional) + ",\"description\":" + json_str(a.description) + "}")
         i = i + 1
     }
-    out = out + "]"
+    out = "[" + join(parts, ",") + "]"
 }
 
 func render_inspect_json(cmd, plugin_name) {

@@ -20,17 +20,15 @@ func render_plugins_list_human(lock) {
 
 func render_plugins_list_json(lock) {
     names := plugin_names(lock)
-    out := "{\"version\":\"1.0\",\"total\":" + str(len(names)) + ",\"plugins\":["
+    parts := []string{}
     i := 0
     n := len(names)
     for i < n {
         p := lock.installed[names[i]]
-        if i > 0 { out = out + "," }
-        out = out + "{\"name\":" + json_str(p.name) + ",\"version\":" + json_str(p.version) + ",\"description\":" + json_str(p.description) + ",\"commands\":" + str(len(p.commands)) + "}"
+        parts = append(parts, "{\"name\":" + json_str(p.name) + ",\"version\":" + json_str(p.version) + ",\"description\":" + json_str(p.description) + ",\"commands\":" + str(len(p.commands)) + "}")
         i = i + 1
     }
-    out = out + "]}"
-    println(out)
+    println("{\"version\":\"1.0\",\"total\":" + str(len(names)) + ",\"plugins\":[" + join(parts, ",") + "]}")
 }
 
 func render_explore_human(results) {
@@ -51,17 +49,15 @@ func render_explore_human(results) {
 }
 
 func render_explore_json(results) {
-    out := "{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"plugins\":["
+    parts := []string{}
     i := 0
     n := len(results)
     for i < n {
         r := results[i]
-        if i > 0 { out = out + "," }
-        out = out + "{\"name\":" + json_str(r.name) + ",\"description\":" + json_str(r.description) + ",\"tags\":" + str_slice_json(r.tags) + ",\"has_learn\":" + json_bool(r.has_learn) + ",\"installed\":" + json_bool(r.installed) + "}"
+        parts = append(parts, "{\"name\":" + json_str(r.name) + ",\"description\":" + json_str(r.description) + ",\"tags\":" + str_slice_json(r.tags) + ",\"has_learn\":" + json_bool(r.has_learn) + ",\"installed\":" + json_bool(r.installed) + "}")
         i = i + 1
     }
-    out = out + "]}"
-    println(out)
+    println("{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"plugins\":[" + join(parts, ",") + "]}")
 }
 
 // install_plugin delegates to `sc plugins install <name>` — Node.js sc
