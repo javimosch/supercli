@@ -118,10 +118,14 @@ machin test src/strutil.src src/pathutil.src src/lockfile.src src/argv.src src/e
 - **Named-flag ordering across a command line is unspecified** (map
   iteration order), same limitation as the Node.js and Zig CLIs.
 
-## A machin gotcha found while building this
+## Requires machin >= 0.108.0
 
-Combining an array bounds guard and the indexed access in the same `&&`
-expression — `if i+1 < n && has_prefix(argv[i+1], "--") { ... }` — panicked
-under `--safe` (`index out of range`) and segfaulted in a release build,
-even though `&&` is documented as short-circuiting. Nesting the index
-access inside its own guarded `if` avoids it; see the note in `src/argv.src`.
+`argv.src` combines an array bounds guard and the indexed access in the
+same `&&` expression (`if i+1 < n && has_prefix(argv[i+1], "--") { ... }`).
+On machin <= v0.107.0 this panicked under `--safe` and segfaulted in a
+release build — `&&`/`||` failed to short-circuit
+([machin#437](https://github.com/javimosch/machin/issues/437), fixed in
+v0.108.0). The code nests the index access inside its own guarded `if`
+instead, which is correct on every version, so `sc-machin` builds fine
+either way — but build with `machin >= 0.108.0` if you hit anything else
+that smells like this.

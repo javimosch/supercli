@@ -33,12 +33,12 @@ func parse_argv(argv, start) (out) {
                 i = i + 1
                 continue
             }
-            // NOTE: deliberately nested (not `i+1<n && has_prefix(argv[i+1],...)`)
-            // — combining a bounds guard with an index in the same && appears
-            // to evaluate both operands regardless of short-circuiting in the
-            // current machin compiler and panics under --safe / segfaults
-            // otherwise. Filed as a machin-learn gotcha; work around by
-            // nesting the index access inside its own guarded if.
+            // NOTE: kept nested (rather than `i+1<n && has_prefix(argv[i+1],...)`)
+            // for portability: `&&`/`||` failed to short-circuit on machin
+            // <= v0.107.0 (panicked under --safe / segfaulted otherwise) —
+            // see https://github.com/javimosch/machin/issues/437, fixed in
+            // v0.108.0. Nesting the index inside its own guarded if works on
+            // every version, so it stays even now that the root cause is fixed.
             if i + 1 < n {
                 if has_prefix(argv[i+1], "--") == false {
                     if has(out.flag_vals, body) == false { out.flag_keys = append(out.flag_keys, body) }
