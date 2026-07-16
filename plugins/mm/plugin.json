@@ -1,0 +1,197 @@
+{
+  "name": "mm",
+  "version": "0.1.0",
+  "description": "Multimodal UNIX CLI tools (find, grep, cat, peek, wc, sql) for images, video, audio, PDFs — Rust core, Python dev-ex",
+  "source": "https://github.com/vlm-run/mm",
+  "checks": [
+    { "type": "binary", "name": "mm" }
+  ],
+  "install_guidance": {
+    "plugin": "mm",
+    "binary": "mm",
+    "check": "which mm",
+    "install_steps": [
+      "pip install mm-ctx",
+      "Verify: mm --version",
+      "supercli plugins install ./plugins/mm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mm",
+      "resource": "find",
+      "action": "list",
+      "description": "Find/list files with multimodal metadata (tree, tabular, schema, JSON)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["find"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory to scan" },
+        { "name": "kind", "type": "string", "required": false, "description": "Filter by kind (image, video, audio, document, code, text)" },
+        { "name": "tree", "type": "boolean", "required": false, "description": "Show hierarchical tree view" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format (rich, json, tsv, csv)" }
+      ]
+    },
+    {
+      "namespace": "mm",
+      "resource": "cat",
+      "action": "extract",
+      "description": "Extract content from files (PDF text, image captions, video descriptions, audio transcripts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["cat"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File path to extract content from" },
+        { "name": "mode", "type": "string", "required": false, "description": "Extraction mode: fast (default) or accurate (full LLM pipeline)" },
+        { "name": "lines", "type": "number", "required": false, "description": "Number of lines to show (head)" }
+      ]
+    },
+    {
+      "namespace": "mm",
+      "resource": "peek",
+      "action": "metadata",
+      "description": "Show raw file metadata (dimensions, EXIF, codec, duration, mime, hash)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["peek"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File path(s) to inspect" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format (rich, json, pretty-json, tsv, csv)" },
+        { "name": "full", "type": "boolean", "required": false, "description": "Include document author/title/subject/page count" }
+      ]
+    },
+    {
+      "namespace": "mm",
+      "resource": "grep",
+      "action": "search",
+      "description": "Search file contents (text + semantic search across multimodal files)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["grep"],
+        "positionalArgs": ["pattern", "path"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": [
+        { "name": "pattern", "type": "string", "required": true, "description": "Search pattern" },
+        { "name": "path", "type": "string", "required": true, "description": "Directory or file to search" },
+        { "name": "semantic", "type": "boolean", "required": false, "description": "Enable semantic (vector) search" },
+        { "name": "kind", "type": "string", "required": false, "description": "Filter by file kind" }
+      ]
+    },
+    {
+      "namespace": "mm",
+      "resource": "wc",
+      "action": "count",
+      "description": "Count files, bytes, lines (est.), tokens (est.) by kind",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["wc"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Directory to count" },
+        { "name": "by_kind", "type": "boolean", "required": false, "description": "Group counts by file kind" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format (rich, json)" }
+      ]
+    },
+    {
+      "namespace": "mm",
+      "resource": "sql",
+      "action": "query",
+      "description": "Run SQL queries on file metadata and extractions (SQLite-backed)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["sql"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "SQL query against files/extractions/chunks tables" },
+        { "name": "dir", "type": "string", "required": false, "description": "Directory to query" }
+      ]
+    },
+    {
+      "namespace": "mm",
+      "resource": "config",
+      "action": "show",
+      "description": "Show mm configuration and diagnostics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["config", "show"],
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mm",
+      "resource": "profile",
+      "action": "list",
+      "description": "List configured LLM provider profiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "baseArgs": ["profile", "list"],
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mm",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mm: pip install mm-ctx"
+      },
+      "args": []
+    }
+  ]
+}
