@@ -1,0 +1,88 @@
+// tests — machin test src/tests.src (composed with framework/test.src ahead
+// of it). Covers the logic most likely to regress silently: shell quoting,
+// argv parsing edge cases, and exec command assembly.
+
+func test_shell_quote() {
+    assert_eq_str(shell_quote("hello"), "'hello'", "shell_quote plain")
+    assert_eq_str(shell_quote("it's"), "'it'\\''s'", "shell_quote embedded single-quote")
+    assert_eq_str(shell_quote(""), "''", "shell_quote empty")
+    assert_eq_str(shell_quote("a b"), "'a b'", "shell_quote space")
+}
+
+func test_json_str() {
+    assert_eq_str(json_str("hi"), "\"hi\"", "json_str plain")
+    assert_eq_str(json_str("a\"b"), "\"a\\\"b\"", "json_str embedded quote")
+    assert_eq_str(json_str("a\nb"), "\"a\\nb\"", "json_str embedded newline")
+}
+
+func test_looks_like_json() {
+    assert_eq_int(bool_to_int(looks_like_json("{\"a\":1}")), 1, "looks_like_json object")
+    assert_eq_int(bool_to_int(looks_like_json("  [1,2]")), 1, "looks_like_json array with leading space")
+    assert_eq_int(bool_to_int(looks_like_json("plain text")), 0, "looks_like_json plain text")
+}
+
+func bool_to_int(b) (v) {
+    v = 0
+    if b { v = 1 }
+}
+
+func test_parse_argv_basic() {
+    argv := []string{"prog", "commands", "--query", "memory", "--json"}
+    pa := parse_argv(argv, 1)
+    assert_eq_int(len(pa.positional), 1, "parse_argv positional count")
+    assert_eq_str(pa.positional[0], "commands", "parse_argv positional[0]")
+    assert_eq_str(pa_flag(pa, "query"), "memory", "parse_argv --query value")
+    assert_eq_int(bool_to_int(pa_flag_on(pa, "json")), 1, "parse_argv bare --json is true")
+}
+
+func test_parse_argv_inline_and_dashdash() {
+    argv := []string{"prog", "explore", "--name=mm", "--", "--literal-positional"}
+    pa := parse_argv(argv, 1)
+    assert_eq_str(pa_flag(pa, "name"), "mm", "parse_argv --name=val inline")
+    assert_eq_int(len(pa.positional), 2, "parse_argv -- ends option parsing")
+    assert_eq_str(pa.positional[1], "--literal-positional", "parse_argv literal positional after --")
+}
+
+func test_parse_argv_trailing_bool_flag() {
+    // A bool flag as the very last token (no following value) must not
+    // index past the end of argv (regression: see argv.src's nested-if note).
+    argv := []string{"prog", "--version"}
+    pa := parse_argv(argv, 1)
+    assert_eq_int(bool_to_int(pa_flag_on(pa, "version")), 1, "trailing bool flag parses without panicking")
+}
+
+func test_build_exec_command_positional_and_flags() {
+    cfg := AdapterCfg{command: "fmtcnv", baseArgs: []string{"format", "convert"}, positionalArgs: []string{"from", "to"}}
+    flags := make(map[string]string)
+    flags["from"] = "yaml"
+    flags["to"] = "json"
+    flags["verbose"] = "true"
+    line := build_exec_command(cfg, flags)
+    assert(contains(line, "'fmtcnv'"), "build_exec_command includes quoted binary")
+    assert(contains(line, "'yaml'"), "build_exec_command includes positional from value")
+    assert(contains(line, "'--verbose'"), "build_exec_command includes bool flag")
+    assert(contains(line, "'from'") == false, "build_exec_command does not leak the flag NAME for positional args")
+}
+
+func test_build_exec_command_reserved_flags_stripped() {
+    cfg := AdapterCfg{command: "tool"}
+    flags := make(map[string]string)
+    flags["json"] = "true"
+    flags["human"] = "true"
+    flags["real"] = "value"
+    line := build_exec_command(cfg, flags)
+    assert(contains(line, "--json") == false, "build_exec_command strips reserved --json")
+    assert(contains(line, "--real"), "build_exec_command keeps non-reserved flags")
+}
+
+func main() {
+    test_shell_quote()
+    test_json_str()
+    test_looks_like_json()
+    test_parse_argv_basic()
+    test_parse_argv_inline_and_dashdash()
+    test_parse_argv_trailing_bool_flag()
+    test_build_exec_command_positional_and_flags()
+    test_build_exec_command_reserved_flags_stripped()
+    test_summary()
+}

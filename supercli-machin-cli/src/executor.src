@@ -1,0 +1,123 @@
+// executor — process adapter: build a safe shell command line from a
+// CommandDef.adapterConfig + user-supplied flags, then run it via
+// exec() (capture) or system() (passthrough, inherits stdio).
+// Mirrors cli/adapters/process.js.
+
+// RESERVED_FLAGS are supercli's own top-level flags — never forwarded to
+// the wrapped binary. Matches cli/arg-parser.js's RESERVED_FLAGS.
+func is_reserved_flag(key) (out) {
+    reserved := []string{"human", "json", "compact", "schema", "help-json", "help", "version", "no-color", "show-dag", "format", "on-conflict"}
+    out = false
+    i := 0
+    n := len(reserved)
+    for i < n {
+        if reserved[i] == key { out = true  return }
+        i = i + 1
+    }
+}
+
+// build_exec_command assembles the full shell-quoted command line:
+// command + baseArgs, then positionalArgs (in declared order, pulled from
+// flags), then remaining flags as --key [value]. cwd (a real path, not the
+// invoke_cwd/plugin_dir sentinels) is applied via a leading `cd`.
+func build_exec_command(cfg, flags) (cmdline) {
+    parts := []string{}
+    parts = append(parts, cfg.command)
+    i := 0
+    n := len(cfg.baseArgs)
+    for i < n {
+        parts = append(parts, cfg.baseArgs[i])
+        i = i + 1
+    }
+
+    used := make(map[string]bool)
+    j := 0
+    pn := len(cfg.positionalArgs)
+    for j < pn {
+        name := cfg.positionalArgs[j]
+        if has(flags, name) {
+            v := flags[name]
+            if len(v) > 0 && v != "true" && v != "false" {
+                parts = append(parts, v)
+            }
+            used[name] = true
+        }
+        j = j + 1
+    }
+
+    ks := keys(flags)
+    k := 0
+    kn := len(ks)
+    for k < kn {
+        key := ks[k]
+        if has(used, key) == false && is_reserved_flag(key) == false {
+            v := flags[key]
+            if v == "true" {
+                parts = append(parts, "--" + key)
+            } else if len(v) > 0 && v != "false" {
+                parts = append(parts, "--" + key)
+                parts = append(parts, v)
+            }
+        }
+        k = k + 1
+    }
+
+    cmdline = join_shell_quoted(parts)
+    if len(cfg.cwd) > 0 && cfg.cwd != "invoke_cwd" && cfg.cwd != "plugin_dir" {
+        cmdline = "cd " + shell_quote(cfg.cwd) + " && " + cmdline
+    }
+}
+
+// ExecOutcome carries everything the caller needs to render either a JSON
+// envelope or a human passthrough of a completed (non-passthrough) run.
+type ExecOutcome struct {
+    exit_code int
+    stdout string
+    stderr string
+    ran_passthrough bool
+}
+
+// run_command executes cfg with flags. Passthrough commands inherit stdio
+// (nothing is captured — the child already wrote directly to the
+// terminal); captured commands return their stdout/stderr for the caller
+// to render.
+func run_command(cfg, flags) (result) {
+    cmdline := build_exec_command(cfg, flags)
+    if cfg.passthrough {
+        code := system(cmdline)
+        result = ExecOutcome{exit_code: code, ran_passthrough: true}
+        return
+    }
+    code, out, errout := exec(cmdline)
+    result = ExecOutcome{exit_code: code, stdout: out, stderr: errout, ran_passthrough: false}
+}
+
+// render_exec_json prints the JSON envelope for a captured (non-
+// passthrough) run: {"ok":true,"exit_code":0,"data":<raw-json-or-string>}
+// or {"ok":false,"exit_code":N,"error":"..."}.
+func render_exec_json(result) {
+    if result.exit_code == 0 {
+        trimmed := trim(result.stdout)
+        data := "null"
+        if len(trimmed) > 0 {
+            if looks_like_json(trimmed) {
+                data = trimmed
+            } else {
+                data = json_str(trimmed)
+            }
+        }
+        println("{\"ok\":true,\"exit_code\":0,\"data\":" + data + "}")
+    } else {
+        msg := trim(result.stderr)
+        if len(msg) == 0 { msg = trim(result.stdout) }
+        if len(msg) == 0 { msg = "Process exited with code " + str(result.exit_code) }
+        println("{\"ok\":false,\"exit_code\":" + str(result.exit_code) + ",\"error\":" + json_str(msg) + "}")
+    }
+}
+
+// render_exec_human prints raw stdout to stdout and raw stderr to fd 2 —
+// exactly what the wrapped tool itself would have printed.
+func render_exec_human(result) {
+    if len(result.stdout) > 0 { print(result.stdout) }
+    if len(result.stderr) > 0 { write(2, result.stderr) }
+}

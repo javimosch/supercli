@@ -1,0 +1,80 @@
+// plugins — `plugins list|explore|install|update`.
+// install/update are delegated to the Node.js `sc` (system() inherits
+// stdio, so sc's own output/exit code pass straight through) — same
+// division of labor as supercli-zig-cli ("Plugin install (delegates to sc)").
+
+func render_plugins_list_human(lock) {
+    names := plugin_names(lock)
+    println("")
+    println("  Installed Plugins")
+    println("")
+    i := 0
+    n := len(names)
+    for i < n {
+        p := lock.installed[names[i]]
+        println("  " + p.name + "  v" + p.version + "  " + p.description)
+        i = i + 1
+    }
+    println("")
+}
+
+func render_plugins_list_json(lock) {
+    names := plugin_names(lock)
+    out := "{\"version\":\"1.0\",\"total\":" + str(len(names)) + ",\"plugins\":["
+    i := 0
+    n := len(names)
+    for i < n {
+        p := lock.installed[names[i]]
+        if i > 0 { out = out + "," }
+        out = out + "{\"name\":" + json_str(p.name) + ",\"version\":" + json_str(p.version) + ",\"description\":" + json_str(p.description) + ",\"commands\":" + str(len(p.commands)) + "}"
+        i = i + 1
+    }
+    out = out + "]}"
+    println(out)
+}
+
+func render_explore_human(results) {
+    println("")
+    println("  Plugin Explorer (" + str(len(results)) + " matches)")
+    println("")
+    i := 0
+    n := len(results)
+    for i < n {
+        r := results[i]
+        mark := "  "
+        if r.installed { mark = "* " }
+        println(mark + r.name + "  " + r.description)
+        i = i + 1
+    }
+    println("")
+    println("  Install: sc-machin plugins install <name>")
+}
+
+func render_explore_json(results) {
+    out := "{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"plugins\":["
+    i := 0
+    n := len(results)
+    for i < n {
+        r := results[i]
+        if i > 0 { out = out + "," }
+        out = out + "{\"name\":" + json_str(r.name) + ",\"description\":" + json_str(r.description) + ",\"tags\":" + str_slice_json(r.tags) + ",\"has_learn\":" + json_bool(r.has_learn) + ",\"installed\":" + json_bool(r.installed) + "}"
+        i = i + 1
+    }
+    out = out + "]}"
+    println(out)
+}
+
+// install_plugin delegates to `sc plugins install <name>` — Node.js sc
+// owns registry resolution, download, and lockfile writes. Requires sc on
+// PATH; if missing, the shell reports "command not found" (exit 127) and
+// that propagates straight through, which is an honest enough error for v1.
+func install_plugin(name) (exit_code) {
+    cmd := "sc plugins install " + shell_quote(name) + " --on-conflict replace --json"
+    exit_code = system(cmd)
+}
+
+func update_plugins(check_only) (exit_code) {
+    cmd := "sc plugins update --json"
+    if check_only { cmd = cmd + " --check" }
+    exit_code = system(cmd)
+}

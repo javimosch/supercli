@@ -1,0 +1,120 @@
+// registry — discover bundled plugins for `plugins explore`.
+// Mirrors cli/plugins-registry.js / supercli-zig-cli/src/registry.zig:
+// scan ~/.supercli/plugins/bundled/<name>/{meta.json,plugin.json}.
+
+type RegistryMeta struct {
+    description string
+    tags []string
+    has_learn bool
+}
+
+type PluginManifestMin struct {
+    description string
+    source string
+}
+
+type RegistryEntry struct {
+    name string
+    description string
+    tags []string
+    has_learn bool
+    installed bool
+}
+
+// bundled_dir resolves the plugin catalog directory: primary
+// ~/.supercli/plugins/bundled, falling back to a plugins/ dir near the
+// running binary (dev builds run from the supercli monorepo).
+func bundled_dir() (dir) {
+    home := env("HOME")
+    primary := home + "/.supercli/plugins/bundled"
+    dir = primary
+    if len(list_dir(primary)) > 0 { return }
+
+    exe_dir := path_dirname(args()[0])
+    candidates := []string{
+        exe_dir + "/../plugins",
+        exe_dir + "/../../plugins",
+        exe_dir + "/../../../plugins",
+    }
+    i := 0
+    n := len(candidates)
+    for i < n {
+        if len(list_dir(candidates[i])) > 0 {
+            dir = candidates[i]
+            return
+        }
+        i = i + 1
+    }
+}
+
+// read_registry_entry loads one plugin's metadata by directory name.
+// found is false if the directory has neither meta.json nor plugin.json
+// (i.e. it isn't a plugin directory at all).
+func read_registry_entry(dir, name) (entry, found) {
+    found = false
+    meta_raw := read_file(dir + "/" + name + "/meta.json")
+    if len(meta_raw) > 0 {
+        m := parse(meta_raw, RegistryMeta{})
+        entry = RegistryEntry{name: name, description: m.description, tags: m.tags, has_learn: m.has_learn}
+        found = true
+        return
+    }
+    manifest_raw := read_file(dir + "/" + name + "/plugin.json")
+    if len(manifest_raw) > 0 {
+        pm := parse(manifest_raw, PluginManifestMin{})
+        entry = RegistryEntry{name: name, description: pm.description}
+        found = true
+        return
+    }
+}
+
+func tag_matches(tags, wanted) (out) {
+    out = false
+    i := 0
+    n := len(tags)
+    for i < n {
+        j := 0
+        wn := len(wanted)
+        for j < wn {
+            if to_lower(tags[i]) == wanted[j] { out = true  return }
+            j = j + 1
+        }
+        i = i + 1
+    }
+}
+
+// explore_plugins scans dir for entries matching name_query (substring,
+// case-insensitive, matched against the directory name) and/or tags_query
+// (comma-separated, matches any). Empty queries match everything.
+func explore_plugins(dir, name_query, tags_query, installed) (results) {
+    results = []RegistryEntry{}
+    entries := list_dir(dir)
+    nq := to_lower(trim(name_query))
+
+    wanted := []string{}
+    tq := trim(tags_query)
+    if len(tq) > 0 {
+        raw_tags := split(to_lower(tq), ",")
+        i := 0
+        n := len(raw_tags)
+        for i < n {
+            wanted = append(wanted, trim(raw_tags[i]))
+            i = i + 1
+        }
+    }
+
+    i := 0
+    n := len(entries)
+    for i < n {
+        name := entries[i]
+        i = i + 1
+        if len(nq) > 0 && contains(to_lower(name), nq) == false { continue }
+
+        entry, found := read_registry_entry(dir, name)
+        if found == false { continue }
+        if len(wanted) > 0 && tag_matches(entry.tags, wanted) == false { continue }
+
+        entry.installed = has(installed, name)
+        results = append(results, entry)
+    }
+}

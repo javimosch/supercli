@@ -1,0 +1,100 @@
+// lockfile — structs + parse() for ~/.supercli/plugins/plugins.lock.json.
+// Mirrors the schema read by cli/plugins-store.js / supercli-zig-cli/src/config.zig.
+//
+// NOTE: the JSON key "type" (on each arg) cannot be a struct field name in
+// MFL (it's a language keyword), so ArgDef intentionally omits it — name,
+// description, required, and positional (the fields actually needed to
+// build a command line) are all present.
+
+type ArgDef struct {
+    name string
+    description string
+    required bool
+    positional bool
+}
+
+type AdapterCfg struct {
+    command string
+    baseArgs []string
+    positionalArgs []string
+    passthrough bool
+    parseJson bool
+    cwd string
+    missingDependencyHelp string
+    requiresInteractive bool
+    interactiveFlags []string
+}
+
+type CommandDef struct {
+    namespace string
+    resource string
+    action string
+    description string
+    adapter string
+    adapterConfig AdapterCfg
+    args []ArgDef
+}
+
+type PluginEntry struct {
+    name string
+    version string
+    description string
+    source string
+    commands []CommandDef
+}
+
+type LockFile struct {
+    version int
+    installed map[string]PluginEntry
+}
+
+// lock_path resolves ~/.supercli/plugins/plugins.lock.json.
+func lock_path() (p) {
+    home := env("HOME")
+    p = home + "/.supercli/plugins/plugins.lock.json"
+}
+
+// load_lock reads and parses the lock file. ok is false if the file is
+// missing or empty (a fresh install with nothing installed yet) — never a
+// hard error, matching the Node/Zig CLIs' "empty lock is not an error"
+// behavior.
+func load_lock(path) (lock, ok) {
+    raw := read_file(path)
+    lock = LockFile{version: 1, installed: make(map[string]PluginEntry)}
+    ok = false
+    if len(raw) == 0 { return }
+    lock = parse(raw, LockFile{})
+    ok = true
+}
+
+// plugin_names returns installed plugin names, sorted is NOT guaranteed
+// (map order) — callers that need stable output should sort explicitly.
+func plugin_names(lock) (names) {
+    names = keys(lock.installed)
+}
+
+// find_command looks up a single ns/res/act triple across all installed
+// plugins. found is false if no match exists.
+func find_command(lock, ns, res, act) (cmd, plugin_name, found) {
+    found = false
+    names := keys(lock.installed)
+    i := 0
+    n := len(names)
+    for i < n {
+        pname := names[i]
+        p := lock.installed[pname]
+        j := 0
+        cn := len(p.commands)
+        for j < cn {
+            c := p.commands[j]
+            if c.namespace == ns && c.resource == res && c.action == act {
+                cmd = c
+                plugin_name = pname
+                found = true
+                return
+            }
+            j = j + 1
+        }
+        i = i + 1
+    }
+}

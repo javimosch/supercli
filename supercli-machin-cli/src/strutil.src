@@ -1,0 +1,86 @@
+// strutil — small string helpers shared across the CLI: JSON string
+// escaping (for hand-built JSON envelopes) and POSIX shell single-quoting
+// (for building safe exec()/system() command lines).
+
+func json_str(s) (out) {
+    out = "\""
+    i := 0
+    n := len(s)
+    for i < n {
+        c := charat(s, i)
+        if c == "\"" {
+            out = out + "\\\""
+        } else if c == "\\" {
+            out = out + "\\\\"
+        } else if c == "\n" {
+            out = out + "\\n"
+        } else if c == "\r" {
+            out = out + "\\r"
+        } else if c == "\t" {
+            out = out + "\\t"
+        } else {
+            out = out + c
+        }
+        i = i + 1
+    }
+    out = out + "\""
+}
+
+func json_bool(b) (out) {
+    out = "false"
+    if b { out = "true" }
+}
+
+// looks_like_json is a cheap heuristic (not a validator): trimmed text that
+// starts with { or [ is assumed to already be a JSON document and is
+// embedded raw rather than re-escaped as a string.
+func looks_like_json(s) (out) {
+    t := trim(s)
+    out = has_prefix(t, "{") || has_prefix(t, "[")
+}
+
+// shell_quote wraps s in single quotes, escaping embedded single quotes as
+// '\'' — the standard POSIX-safe quoting trick. Every token handed to
+// exec()/system() goes through this so plugin args can never break out of
+// the intended argv shape.
+func shell_quote(s) (out) {
+    out = "'"
+    i := 0
+    n := len(s)
+    for i < n {
+        c := charat(s, i)
+        if c == "'" {
+            out = out + "'\\''"
+        } else {
+            out = out + c
+        }
+        i = i + 1
+    }
+    out = out + "'"
+}
+
+// join_shell_quoted builds a shell command line from raw argv-style parts,
+// quoting every part.
+func join_shell_quoted(parts) (out) {
+    out = ""
+    i := 0
+    n := len(parts)
+    for i < n {
+        if i > 0 { out = out + " " }
+        out = out + shell_quote(parts[i])
+        i = i + 1
+    }
+}
+
+// str_slice_json renders []string as a JSON array of strings.
+func str_slice_json(xs) (out) {
+    out = "["
+    i := 0
+    n := len(xs)
+    for i < n {
+        if i > 0 { out = out + "," }
+        out = out + json_str(xs[i])
+        i = i + 1
+    }
+    out = out + "]"
+}

@@ -267,7 +267,7 @@ The plugin system keeps capabilities organized and discoverable:
 
 - Each plugin bundles a manifest (`plugin.json`) with metadata, checksums, commands, and dependency requirements
 - Installed plugins register in `~/.supercli/plugins/plugins.lock.json`
-- Both the Zig binary (`sc-zig`) and the Node.js runtime (`sc`) read the same plugin storage — they co-exist and share state
+- The Zig binary (`sc-zig`), the machin binary (`sc-machin`), and the Node.js runtime (`sc`) all read the same plugin storage — they co-exist and share state
 - The remote registry at `plugins/catalog.json` tracks 10,000+ community plugins with checksum-verified updates
 - Every capability includes description, tags, argument schemas, and install guidance
 
@@ -427,7 +427,7 @@ For detailed debugging: `supercli` returns the full schema (JSON by default). Us
 
 | Layer | Technology |
 |-------|-----------|
-| Runtime | Node.js (sc), Zig (sc-zig) — co-exist, share plugin state |
+| Runtime | Node.js (sc), Zig (sc-zig), machin/MFL (sc-machin) — co-exist, share plugin state |
 | Router | Custom capability graph with sub-millisecond cache |
 | Plugins | 10,000+ bundled — each `plugin.json` + `meta.json` |
 | MCP | Built-in MCP server adapter (`supercli mcp add <name>`) |

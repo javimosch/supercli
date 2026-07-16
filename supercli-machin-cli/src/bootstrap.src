@@ -1,0 +1,59 @@
+// bootstrap — agent bootstrap envelope + --version/--info. Field names and
+// shape intentionally match supercli-zig-cli's bootstrap.zig so any
+// agent/skill that already parses `sc-zig --json` output works unmodified
+// against `sc-machin --json`.
+
+func sc_machin_version() (v) { v = "0.1.0" }
+
+func render_bootstrap_human() {
+    println("")
+    println("  SuperCLI (machin) v" + sc_machin_version())
+    println("  Single-binary implementation of the SuperCLI core, written in MFL.")
+    println("  Reads ~/.supercli/plugins/plugins.lock.json")
+    println("")
+    println("  Usage: sc-machin <namespace> <resource> <action> [--flags]")
+    println("  Flags:  --json | --human")
+    println("  Cmds:   commands | inspect | plugins list|explore|install|update")
+    println("")
+    println("  Quick start:")
+    println("    sc-machin plugins explore --name memory   # find memory plugins")
+    println("    sc-machin plugins install agentmemory-cli # install (delegates to Node.js sc)")
+    println("    sc-machin commands --query memory         # list commands")
+    println("    sc-machin inspect <ns> <res> <act>        # inspect a command")
+    println("")
+}
+
+func render_bootstrap_json() {
+    out := "{"
+    out = out + "\"version\":\"1.0\","
+    out = out + "\"mode\":\"agent_bootstrap\","
+    out = out + "\"name\":\"supercli-machin\","
+    out = out + "\"machin_binary_version\":" + json_str(sc_machin_version()) + ","
+    out = out + "\"what_is_this\":\"Single-binary SuperCLI core written in machin (MFL). Reads ~/.supercli/plugins/plugins.lock.json. Plugin install/update delegates to Node.js sc.\","
+    out = out + "\"workflow\":\"discover -> inspect -> execute\","
+    out = out + "\"first_steps\":["
+    out = out + "\"sc-machin plugins explore --name <topic>  # find plugins by keyword\","
+    out = out + "\"sc-machin plugins install <name>           # install plugin (needs Node.js sc)\","
+    out = out + "\"sc-machin commands --query <keyword>       # list matching commands\","
+    out = out + "\"sc-machin inspect <ns> <res> <act>         # inspect command schema\","
+    out = out + "\"sc-machin <ns> <res> <act> --flag val      # execute command\""
+    out = out + "],"
+    out = out + "\"feature_notes\":["
+    out = out + "\"plugins explore: searches ~/.supercli/plugins/bundled/ catalog\","
+    out = out + "\"plugins install/update: delegates to Node.js sc (system() passthrough)\","
+    out = out + "\"plugins list: shows installed plugins from plugins.lock.json\","
+    out = out + "\"no per-command timeout enforcement yet (known gap, see README)\""
+    out = out + "]"
+    out = out + "}"
+    println(out)
+}
+
+func render_version_human() {
+    println("SuperCLI (machin) v" + sc_machin_version())
+    println("Implementation: machin (MFL)")
+    println("Binary: sc-machin")
+}
+
+func render_version_json() {
+    println("{\"name\":\"SuperCLI\",\"implementation\":\"machin\",\"version\":" + json_str(sc_machin_version()) + ",\"binary_name\":\"sc-machin\"}")
+}

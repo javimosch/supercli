@@ -1,0 +1,109 @@
+// commands — `commands [--query=<q>]` and `inspect <ns> <res> <act>`.
+
+type CommandListItem struct {
+    namespace string
+    resource string
+    action string
+    description string
+    plugin string
+}
+
+func command_matches(c, query) (out) {
+    if len(query) == 0 { out = true  return }
+    q := to_lower(query)
+    out = contains(to_lower(c.namespace), q) || contains(to_lower(c.resource), q) || contains(to_lower(c.action), q) || contains(to_lower(c.description), q)
+}
+
+func list_commands(lock, query) (results) {
+    results = []CommandListItem{}
+    names := keys(lock.installed)
+    i := 0
+    n := len(names)
+    for i < n {
+        p := lock.installed[names[i]]
+        j := 0
+        cn := len(p.commands)
+        for j < cn {
+            c := p.commands[j]
+            if command_matches(c, query) {
+                results = append(results, CommandListItem{namespace: c.namespace, resource: c.resource, action: c.action, description: c.description, plugin: p.name})
+            }
+            j = j + 1
+        }
+        i = i + 1
+    }
+}
+
+func render_commands_human(results) {
+    println("")
+    println("  Commands (" + str(len(results)) + ")")
+    println("")
+    i := 0
+    n := len(results)
+    for i < n {
+        r := results[i]
+        println("  " + r.namespace + " " + r.resource + " " + r.action + "  [" + r.plugin + "]  " + r.description)
+        i = i + 1
+    }
+    println("")
+}
+
+func render_commands_json(results) {
+    out := "{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"commands\":["
+    i := 0
+    n := len(results)
+    for i < n {
+        r := results[i]
+        if i > 0 { out = out + "," }
+        out = out + "{\"namespace\":" + json_str(r.namespace) + ",\"resource\":" + json_str(r.resource) + ",\"action\":" + json_str(r.action) + ",\"plugin\":" + json_str(r.plugin) + ",\"description\":" + json_str(r.description) + "}"
+        i = i + 1
+    }
+    out = out + "]}"
+    println(out)
+}
+
+func render_args_json(args) (out) {
+    out = "["
+    i := 0
+    n := len(args)
+    for i < n {
+        a := args[i]
+        if i > 0 { out = out + "," }
+        out = out + "{\"name\":" + json_str(a.name) + ",\"required\":" + json_bool(a.required) + ",\"positional\":" + json_bool(a.positional) + ",\"description\":" + json_str(a.description) + "}"
+        i = i + 1
+    }
+    out = out + "]"
+}
+
+func render_inspect_json(cmd, plugin_name) {
+    out := "{\"ok\":true,\"plugin\":" + json_str(plugin_name)
+    out = out + ",\"namespace\":" + json_str(cmd.namespace)
+    out = out + ",\"resource\":" + json_str(cmd.resource)
+    out = out + ",\"action\":" + json_str(cmd.action)
+    out = out + ",\"description\":" + json_str(cmd.description)
+    out = out + ",\"adapter\":" + json_str(cmd.adapter)
+    out = out + ",\"passthrough\":" + json_bool(cmd.adapterConfig.passthrough)
+    out = out + ",\"args\":" + render_args_json(cmd.args)
+    out = out + "}"
+    println(out)
+}
+
+func render_inspect_human(cmd, plugin_name) {
+    println("")
+    println("  " + cmd.namespace + " " + cmd.resource + " " + cmd.action + "  [" + plugin_name + "]")
+    println("  " + cmd.description)
+    println("")
+    println("  Args:")
+    i := 0
+    n := len(cmd.args)
+    for i < n {
+        a := cmd.args[i]
+        req := ""
+        if a.required { req = " (required)" }
+        pos := ""
+        if a.positional { pos = " [positional]" }
+        println("    --" + a.name + req + pos + "  " + a.description)
+        i = i + 1
+    }
+    println("")
+}

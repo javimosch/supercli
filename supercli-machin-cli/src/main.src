@@ -1,0 +1,143 @@
+// main — sc-machin entry point. Thin router; all logic lives in the
+// sibling modules (bootstrap/lockfile/registry/plugins/commands/executor).
+// Co-habits with `sc` (Node.js) and `sc-zig` (Zig): same lockfile, same
+// command surface, same JSON envelope shapes.
+
+func print_help() {
+    println("")
+    println("  sc-machin — SuperCLI core, written in machin (MFL)")
+    println("")
+    println("  Usage:")
+    println("    sc-machin                                  agent bootstrap (JSON)")
+    println("    sc-machin --version | --info")
+    println("    sc-machin commands [--query=<q>]")
+    println("    sc-machin inspect <ns> <res> <act>")
+    println("    sc-machin plugins list")
+    println("    sc-machin plugins explore [--name=<q>] [--tags=<a,b>]")
+    println("    sc-machin plugins install <name>           (delegates to Node.js sc)")
+    println("    sc-machin plugins update [--check]         (delegates to Node.js sc)")
+    println("    sc-machin install-as-sc")
+    println("    sc-machin <ns> <res> <act> [--flags]       execute a plugin command")
+    println("")
+    println("  Flags: --json forces machine-readable output; default is human.")
+    println("")
+}
+
+func main() {
+    argv := args()
+    pa := parse_argv(argv, 1)
+    want_json := pa_flag_on(pa, "json")
+
+    if pa_flag_on(pa, "version") || pa_flag_on(pa, "info") {
+        if want_json { render_version_json() } else { render_version_human() }
+        return
+    }
+
+    if len(pa.positional) == 0 {
+        render_bootstrap_json()
+        return
+    }
+
+    if pa.positional[0] == "help" || pa_flag_on(pa, "help") {
+        print_help()
+        return
+    }
+
+    if pa.positional[0] == "install-as-sc" {
+        println("Manual install (machin has no reliable self-locate from argv[0]):")
+        println("  1. which sc-machin        # confirm its real path")
+        println("  2. sudo ln -sf \"$(which sc-machin)\" /usr/local/bin/sc")
+        return
+    }
+
+    lock, lock_ok := load_lock(lock_path())
+    if lock_ok == false {
+        lock = LockFile{version: 1, installed: make(map[string]PluginEntry)}
+    }
+
+    if pa.positional[0] == "commands" {
+        query := pa_flag(pa, "query")
+        cmd_results := list_commands(lock, query)
+        if want_json { render_commands_json(cmd_results) } else { render_commands_human(cmd_results) }
+        return
+    }
+
+    if pa.positional[0] == "inspect" {
+        if len(pa.positional) < 4 {
+            println("{\"ok\":false,\"error\":\"usage: sc-machin inspect <namespace> <resource> <action>\"}")
+            exit(80)
+        }
+        cmd, plugin_name, found := find_command(lock, pa.positional[1], pa.positional[2], pa.positional[3])
+        if found == false {
+            println("{\"ok\":false,\"error\":\"command not found\"}")
+            exit(90)
+        }
+        if want_json { render_inspect_json(cmd, plugin_name) } else { render_inspect_human(cmd, plugin_name) }
+        return
+    }
+
+    if pa.positional[0] == "plugins" {
+        sub := ""
+        if len(pa.positional) > 1 { sub = pa.positional[1] }
+
+        if sub == "list" {
+            if want_json { render_plugins_list_json(lock) } else { render_plugins_list_human(lock) }
+            return
+        }
+        if sub == "explore" {
+            dir := bundled_dir()
+            installed := make(map[string]bool)
+            names := plugin_names(lock)
+            i := 0
+            n := len(names)
+            for i < n { installed[names[i]] = true  i = i + 1 }
+            explore_results := explore_plugins(dir, pa_flag(pa, "name"), pa_flag(pa, "tags"), installed)
+            if want_json { render_explore_json(explore_results) } else { render_explore_human(explore_results) }
+            return
+        }
+        if sub == "install" {
+            if len(pa.positional) < 3 {
+                println("{\"ok\":false,\"error\":\"usage: sc-machin plugins install <name>\"}")
+                exit(80)
+            }
+            code := install_plugin(pa.positional[2])
+            exit(code)
+        }
+        if sub == "update" {
+            code := update_plugins(pa_flag_on(pa, "check"))
+            exit(code)
+        }
+
+        println("{\"ok\":false,\"error\":\"unknown plugins subcommand (use list|explore|install|update)\"}")
+        exit(80)
+    }
+
+    // Otherwise: dispatch <namespace> <resource> <action> to a real plugin.
+    if len(pa.positional) < 3 {
+        println("{\"ok\":false,\"error\":\"unrecognized command; run `sc-machin help`\"}")
+        exit(80)
+    }
+    ns := pa.positional[0]
+    res := pa.positional[1]
+    act := pa.positional[2]
+    cmd, plugin_name, found := find_command(lock, ns, res, act)
+    if found == false {
+        println("{\"ok\":false,\"error\":\"no such command: " + ns + " " + res + " " + act + "\"}")
+        exit(90)
+    }
+    if len(plugin_name) == 0 {
+        // silence "unused" concerns in future refactors; plugin_name is
+        // informational only for this dispatch path today.
+    }
+
+    result := run_command(cmd.adapterConfig, pa.flag_vals)
+    if result.ran_passthrough {
+        exit(result.exit_code)
+    }
+    if want_json {
+        render_exec_json(result)
+    } else {
+        render_exec_human(result)
+    }
+    exit(result.exit_code)
+}

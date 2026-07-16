@@ -1,0 +1,62 @@
+// argv — top-level CLI argument parsing. Deliberately mirrors
+// cli/arg-parser.js's parseArgs 1:1 (same --key/--key=val/--key(bool)/`--`
+// end-of-options rules) so `sc-machin` accepts exactly what `sc`/`sc-zig`
+// accept, including arbitrary un-declared flags for passthrough to a
+// wrapped plugin binary.
+
+type ParsedArgs struct {
+    positional []string
+    flag_keys []string
+    flag_vals map[string]string
+}
+
+func parse_argv(argv, start) (out) {
+    out = ParsedArgs{positional: []string{}, flag_keys: []string{}, flag_vals: make(map[string]string)}
+    end_of_options := false
+    i := start
+    n := len(argv)
+    for i < n {
+        a := argv[i]
+        if has_prefix(a, "--") && end_of_options == false {
+            body := substr(a, 2, len(a))
+            if len(body) == 0 {
+                end_of_options = true
+                i = i + 1
+                continue
+            }
+            eq := index(body, "=")
+            if eq >= 0 {
+                key := substr(body, 0, eq)
+                val := substr(body, eq + 1, len(body))
+                if has(out.flag_vals, key) == false { out.flag_keys = append(out.flag_keys, key) }
+                out.flag_vals[key] = val
+                i = i + 1
+                continue
+            }
+            // NOTE: deliberately nested (not `i+1<n && has_prefix(argv[i+1],...)`)
+            // — combining a bounds guard with an index in the same && appears
+            // to evaluate both operands regardless of short-circuiting in the
+            // current machin compiler and panics under --safe / segfaults
+            // otherwise. Filed as a machin-learn gotcha; work around by
+            // nesting the index access inside its own guarded if.
+            if i + 1 < n {
+                if has_prefix(argv[i+1], "--") == false {
+                    if has(out.flag_vals, body) == false { out.flag_keys = append(out.flag_keys, body) }
+                    out.flag_vals[body] = argv[i+1]
+                    i = i + 2
+                    continue
+                }
+            }
+            if has(out.flag_vals, body) == false { out.flag_keys = append(out.flag_keys, body) }
+            out.flag_vals[body] = "true"
+            i = i + 1
+            continue
+        }
+        out.positional = append(out.positional, a)
+        i = i + 1
+    }
+}
+
+func pa_flag(pa, key) (v) { v = pa.flag_vals[key] }
+func pa_flag_on(pa, key) (b) { b = pa.flag_vals[key] == "true" }
+func pa_has_flag(pa, key) (b) { b = has(pa.flag_vals, key) }
