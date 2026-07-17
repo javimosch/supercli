@@ -5,7 +5,7 @@
 # cross-compile grid like sc-zig's).
 set -e
 
-VERSION="${SC_MACHIN_VERSION:-v0.1.0-machin}"
+VERSION="${SC_MACHIN_VERSION:-v0.2.0-machin}"
 REPO="javimosch/supercli"
 REPLACE_SC=false
 CUSTOM_PATH=""
