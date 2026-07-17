@@ -150,7 +150,7 @@ func test_handle_list_tools() {
 func test_handle_call_tool_not_found() {
     lock := fake_lock()
     line := "{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"no.such.cmd\",\"arguments\":{}}}"
-    resp := handle_call_tool("3", line, lock)
+    resp := handle_call_tool("3", line, lock, "")
     assert(contains(resp, "\"id\":3"), "call_tool not_found echoes id")
     assert(contains(resp, "\"error\""), "call_tool not_found returns error")
     assert(contains(resp, "-32601"), "call_tool not_found is method-not-found code")
@@ -159,7 +159,7 @@ func test_handle_call_tool_not_found() {
 func test_handle_call_tool_bad_name() {
     lock := fake_lock()
     line := "{\"jsonrpc\":\"2.0\",\"id\":4,\"method\":\"tools/call\",\"params\":{\"name\":\"no-dots\",\"arguments\":{}}}"
-    resp := handle_call_tool("4", line, lock)
+    resp := handle_call_tool("4", line, lock, "")
     assert(contains(resp, "-32602"), "call_tool bad_name is invalid-params code")
 }
 
@@ -170,7 +170,7 @@ func test_handle_call_tool_runs() {
     // Use a command that produces predictable output.
     lock.installed["demo"].commands[0].adapterConfig = AdapterCfg{command: "echo", baseArgs: []string{"hello-from-mcp"}, passthrough: false}
     line := "{\"jsonrpc\":\"2.0\",\"id\":5,\"method\":\"tools/call\",\"params\":{\"name\":\"demo.thing.list\",\"arguments\":{}}}"
-    resp := handle_call_tool("5", line, lock)
+    resp := handle_call_tool("5", line, lock, "")
     assert(contains(resp, "\"id\":5"), "call_tool runs echoes id")
     assert(contains(resp, "\"content\":[{\"type\":\"text\""), "call_tool runs returns text content")
     assert(contains(resp, "hello-from-mcp"), "call_tool runs includes captured stdout")

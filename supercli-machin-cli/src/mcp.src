@@ -104,7 +104,7 @@ func handle_list_tools(id_raw, lock) (out) {
 // handle_call_tool parses {name, arguments} from params, resolves the
 // command, runs it, and wraps the outcome in the MCP result shape:
 // {content:[{type:"text",text:...}], isError:<exit_code != 0>}.
-func handle_call_tool(id_raw, line, lock) (out) {
+func handle_call_tool(id_raw, line, lock, path_prefix) (out) {
     params_raw, perr := json_get(line, ".params")
     if len(perr) > 0 {
         out = mcp_error(id_raw, -32602, "Invalid params")
@@ -163,7 +163,7 @@ func handle_call_tool(id_raw, line, lock) (out) {
     // For passthrough commands with __rawArgs, build the cmdline directly
     // (command + baseArgs + raw split args) rather than going through
     // build_exec_command (which would try to forward __rawArgs as a flag).
-    result := run_command_mcp(cmd.adapterConfig, flags)
+    result := run_command_mcp(cmd.adapterConfig, flags, path_prefix)
     text := trim(result.stdout)
     if len(text) == 0 { text = trim(result.stderr) }
     if len(text) == 0 { text = "Process exited with code " + str(result.exit_code) }
@@ -177,9 +177,31 @@ func mcp_error(id_raw, code, message) (out) {
     out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"error\":{\"code\":" + str(code) + ",\"message\":" + json_str(message) + "}}"
 }
 
+// mcp_ensure_path returns a PATH prefix string that includes ~/.local/bin.
+// MCP clients (Claude Code, Claude Desktop) spawn the server with a
+// sanitized environment that often omits user-level bin directories
+// (e.g. ~/.local/bin, where SuperCLI plugins like rtk are installed).
+// Without this, `rtk ls` via tools/call fails with "rtk: not found" even
+// though rtk is installed and works from a login shell.
+//
+// Since MFL has env() (read) but no setenv() (write), the prefix is
+// prepended to each command line as `PATH=<prefix>:$PATH cmd...` — the
+// shell (/bin/sh -c) evaluates it before running the command.
+func mcp_ensure_path() (prefix) {
+    home := env("HOME")
+    local_bin := home + "/.local/bin"
+    current := env("PATH")
+    if contains(current, local_bin) == false {
+        prefix = "PATH=" + shell_quote(local_bin + ":" + current) + " "
+        return
+    }
+    prefix = ""
+}
+
 // mcp_serve is the stdio loop. Reads one JSON-RPC message per line,
 // dispatches, prints the response, flushes. Exits on EOF (empty input()).
 func mcp_serve(lock) {
+    path_prefix := mcp_ensure_path()
     running := true
     for running {
         line := input()
@@ -201,7 +223,7 @@ func mcp_serve(lock) {
         } else if method == "tools/list" {
             if is_notification == false { println(handle_list_tools(id_raw, lock)) }
         } else if method == "tools/call" {
-            if is_notification == false { println(handle_call_tool(id_raw, line, lock)) }
+            if is_notification == false { println(handle_call_tool(id_raw, line, lock, path_prefix)) }
         } else {
             if is_notification == false { println(mcp_error(id_raw, -32601, "Method not found")) }
         }

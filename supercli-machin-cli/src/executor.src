@@ -126,8 +126,10 @@ func render_exec_human(result) {
 // a __rawArgs pseudo-flag (set by the MCP server for `rtk._._`-style
 // passthrough tools), it splits the raw args string and appends each word
 // as a bare positional arg. For all other commands, it delegates to
-// run_command unchanged.
-func run_command_mcp(cfg, flags) (result) {
+// run_command unchanged. path_prefix (from mcp_ensure_path) is prepended
+// to the command line so the child process can find binaries in
+// ~/.local/bin even when the MCP client passed a sanitized PATH.
+func run_command_mcp(cfg, flags, path_prefix) (result) {
     has_raw := has(flags, "__rawArgs")
     if cfg.passthrough && has_raw {
         raw := flags["__rawArgs"]
@@ -152,10 +154,27 @@ func run_command_mcp(cfg, flags) (result) {
         if len(cfg.cwd) > 0 && cfg.cwd != "invoke_cwd" && cfg.cwd != "plugin_dir" {
             cmdline = "cd " + shell_quote(cfg.cwd) + " && " + cmdline
         }
+        cmdline = path_prefix + cmdline
         // For MCP, always capture (even for passthrough commands) so the
         // result can be wrapped in the JSON-RPC response. The MCP server
         // never inherits the client's stdio — it's a subprocess with its
         // own pipe.
+        code, out, errout := exec(cmdline)
+        result = ExecOutcome{exit_code: code, stdout: out, stderr: errout, ran_passthrough: false}
+        return
+    }
+    // For non-passthrough MCP calls, still prepend the PATH prefix so
+    // plugin binaries in ~/.local/bin are found.
+    if len(path_prefix) > 0 {
+        // Build the command normally, then prepend the PATH assignment.
+        // We use a temporary flags copy to avoid mutating the caller's map.
+        cmdline := build_exec_command(cfg, flags)
+        cmdline = path_prefix + cmdline
+        if cfg.passthrough {
+            code := system(cmdline)
+            result = ExecOutcome{exit_code: code, ran_passthrough: true}
+            return
+        }
         code, out, errout := exec(cmdline)
         result = ExecOutcome{exit_code: code, stdout: out, stderr: errout, ran_passthrough: false}
         return
