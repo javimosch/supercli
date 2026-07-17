@@ -35,21 +35,14 @@ jobs:
         id: version
         run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
-      - name: Install machin (Linux)
-        if: matrix.os == 'linux'
+      - name: Install machin
         run: |
           MACHIN_VERSION="v0.108.0"
-          curl -fsSL "https://github.com/javimosch/machin/releases/download/${MACHIN_VERSION}/machin-${MACHIN_VERSION}-${{ matrix.os }}-${{ matrix.arch }}" -o /usr/local/bin/machin
-          chmod +x /usr/local/bin/machin
-          machin --version
-
-      - name: Install machin (macOS)
-        if: matrix.os == 'darwin'
-        run: |
-          MACHIN_VERSION="v0.108.0"
-          curl -fsSL "https://github.com/javimosch/machin/releases/download/${MACHIN_VERSION}/machin-${MACHIN_VERSION}-${{ matrix.os }}-${{ matrix.arch }}" -o /usr/local/bin/machin
-          chmod +x /usr/local/bin/machin
-          machin --version
+          mkdir -p "$HOME/.local/bin"
+          curl -fsSL "https://github.com/javimosch/machin/releases/download/${MACHIN_VERSION}/machin-${MACHIN_VERSION}-${{ matrix.os }}-${{ matrix.arch }}" -o "$HOME/.local/bin/machin"
+          chmod +x "$HOME/.local/bin/machin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/machin" --version
 
       - name: Build sc-machin
         working-directory: ./supercli-machin-cli
