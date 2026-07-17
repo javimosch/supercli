@@ -145,6 +145,7 @@ func test_handle_list_tools() {
     assert(contains(resp, "\"tools\":["), "list_tools has tools array")
     assert(contains(resp, "demo.thing.list"), "list_tools includes dotted tool name")
     assert(contains(resp, "\"inputSchema\""), "list_tools includes inputSchema")
+    assert(contains(resp, "skills.match"), "list_tools includes built-in skills.match tool")
 }
 
 func test_handle_call_tool_not_found() {
@@ -184,6 +185,40 @@ func test_mcp_error() {
     assert(contains(e, "Method not found"), "mcp_error includes message")
 }
 
+func test_build_builtin_tool_skills_match() {
+    tool := build_builtin_tool_skills_match()
+    assert(contains(tool, "\"name\":\"skills.match\""), "builtin tool has correct name")
+    assert(contains(tool, "\"task\""), "builtin tool has task property in inputSchema")
+    assert(contains(tool, "\"required\":[\"task\"]"), "builtin tool marks task as required")
+}
+
+func test_handle_skills_match() {
+    resp := handle_skills_match("10", "reduce token consumption", "")
+    assert(contains(resp, "\"id\":10"), "skills_match echoes id")
+    assert(contains(resp, "\"content\""), "skills_match returns content")
+    assert(contains(resp, "\"isError\":false"), "skills_match is not an error")
+    assert(contains(resp, "rtk"), "skills_match finds rtk for token reduction query")
+}
+
+func test_handle_skills_match_empty_task() {
+    resp := handle_skills_match("11", "", "")
+    assert(contains(resp, "\"id\":11"), "skills_match empty_task echoes id")
+    assert(contains(resp, "\"content\""), "skills_match empty_task returns content")
+}
+
+func test_skills_dir_list() {
+    dirs := skills_dir_list()
+    assert(len(dirs) >= 4, "skills_dir_list returns at least 4 directories")
+    found_agents := false
+    i := 0
+    n := len(dirs)
+    for i < n {
+        if contains(dirs[i], ".agents/skills") { found_agents = true }
+        i = i + 1
+    }
+    assert(found_agents, "skills_dir_list includes .agents/skills")
+}
+
 func test_parse_tool_name_three_parts() {
     // names with dots inside parts are NOT supported (split on first two dots);
     // this is the documented contract — tool parts must be dot-free.
@@ -214,5 +249,9 @@ func main() {
     test_handle_call_tool_bad_name()
     test_handle_call_tool_runs()
     test_mcp_error()
+    test_build_builtin_tool_skills_match()
+    test_handle_skills_match()
+    test_handle_skills_match_empty_task()
+    test_skills_dir_list()
     test_summary()
 }

@@ -81,8 +81,9 @@ func handle_initialize(id_raw) (out) {
     out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"protocolVersion\":" + json_str(mcp_protocol_version()) + ",\"capabilities\":{\"tools\":{}},\"serverInfo\":{\"name\":" + json_str(mcp_server_name()) + ",\"version\":" + json_str(mcp_server_version()) + "}}}"
 }
 
-// handle_list_tools returns every installed command as an MCP tool.
-// Uses array+join() to avoid the O(n^2) string-concat trap (see gotcha #15b).
+// handle_list_tools returns every installed command as an MCP tool, plus
+// any built-in MCP tools (skills.match). Uses array+join() to avoid the
+// O(n^2) string-concat trap (see gotcha #15b).
 func handle_list_tools(id_raw, lock) (out) {
     tool_parts := []string{}
     names := keys(lock.installed)
@@ -98,6 +99,8 @@ func handle_list_tools(id_raw, lock) (out) {
         }
         i = i + 1
     }
+    // Append built-in MCP tools (not from the lockfile).
+    tool_parts = append(tool_parts, build_builtin_tool_skills_match())
     out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"tools\":[" + join(tool_parts, ",") + "]}}"
 }
 
@@ -116,6 +119,20 @@ func handle_call_tool(id_raw, line, lock, path_prefix) (out) {
         return
     }
     name := strip_quotes(name_raw)
+
+    // Built-in MCP tools (not from the lockfile) are intercepted here,
+    // before the dotted-name parse + lockfile lookup.
+    if name == "skills.match" {
+        task_raw, terr := json_get(params_raw, ".arguments.task")
+        if len(terr) > 0 {
+            out = mcp_error(id_raw, -32602, "Missing 'task' argument for skills.match")
+            return
+        }
+        task := strip_quotes(task_raw)
+        out = handle_skills_match(id_raw, task, path_prefix)
+        return
+    }
+
     ns, res, act, found := parse_tool_name(name)
     if found == false {
         out = mcp_error(id_raw, -32602, "Invalid tool name: " + name)
@@ -170,6 +187,120 @@ func handle_call_tool(id_raw, line, lock, path_prefix) (out) {
     is_err := "false"
     if result.exit_code != 0 { is_err = "true" }
     out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"content\":[{\"type\":\"text\",\"text\":" + json_str(text) + "}],\"isError\":" + is_err + "}}"
+}
+
+// build_builtin_tool_skills_match returns the MCP tool object for the
+// built-in skills.match tool. This tool is not from the lockfile — it's
+// a native MCP server feature that searches all known skill directories
+// for SKILL.md files matching a task description.
+func build_builtin_tool_skills_match() (out) {
+    out = "{\"name\":\"skills.match\",\"description\":\"Find agent skills matching a task description. Searches ~/.agents/skills, ~/.claude/skills, ~/.config/devin/skills, ~/.codeium/windsurf/skills, and project-level .agents/skills and .claude/skills directories. Returns top 5 matches with paths and descriptions. Call this BEFORE starting any non-trivial task to discover accumulated knowledge from prior sessions.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"task\":{\"type\":\"string\",\"description\":\"Task description to match (e.g. \\\"generate a changelog from git history\\\")\"}},\"required\":[\"task\"]}}"
+}
+
+// skills_dir_list returns the list of skill directories to scan.
+// Includes both absolute (HOME-based) and relative (project-level) paths.
+func skills_dir_list() (dirs) {
+    home := env("HOME")
+    dirs = []string{
+        home + "/.agents/skills",
+        home + "/.claude/skills",
+        home + "/.config/devin/skills",
+        home + "/.codeium/windsurf/skills",
+        ".agents/skills",
+        ".claude/skills",
+    }
+}
+
+// handle_skills_match scans all known skill directories for SKILL.md
+// files, scores them against the task description by keyword overlap,
+// and returns the top 5 matches as a text block. The scoring is done
+// by a shell script (find + grep) to avoid MFL's list_dir segfault on
+// non-existent directories and to leverage shell's case-insensitive
+// matching. The output is a human-readable text block with paths and
+// descriptions, so the agent can read the best match's SKILL.md.
+func handle_skills_match(id_raw, task, path_prefix) (out) {
+    dirs := skills_dir_list()
+
+    // Build a find command that searches all skill directories for
+    // SKILL.md files (maxdepth 2: dir/SKILL.md). Non-existent dirs are
+    // silently skipped via 2>/dev/null. Also find flat *.md files at
+    // maxdepth 1 (some skills are single files, not directories).
+    dir_args := []string{}
+    i := 0
+    n := len(dirs)
+    for i < n {
+        dir_args = append(dir_args, shell_quote(dirs[i]))
+        i = i + 1
+    }
+    find_paths := join(dir_args, " ")
+
+    // The shell script does:
+    // 1. find all SKILL.md files across all skill dirs
+    // 2. for each, extract name + description from YAML frontmatter
+    // 3. score: count task words (lowercased) that appear in name+desc
+    // 4. sort by score descending, output top 5 as: score|path|name|desc
+    script := "task_lower=$(echo " + shell_quote(task) + " | tr 'A-Z' 'a-z')\n"
+    script = script + "find -L " + find_paths + " -maxdepth 2 -name SKILL.md 2>/dev/null | while IFS= read -r f; do\n"
+    // Resolve symlinks to deduplicate (same skill may appear in multiple dirs)
+    script = script + "  real=$(readlink -f \"$f\")\n"
+    script = script + "  name=$(grep -m1 '^name:' \"$f\" 2>/dev/null | sed 's/.*name:[[:space:]]*//' | tr -d '\"' | head -c 60)\n"
+    script = script + "  desc=$(grep -m1 '^description:' \"$f\" 2>/dev/null | sed 's/.*description:[[:space:]]*//' | tr -d '\"' | head -c 120)\n"
+    script = script + "  combined=$(echo \"$name $desc\" | tr 'A-Z' 'a-z')\n"
+    script = script + "  score=0\n"
+    script = script + "  for word in $task_lower; do\n"
+    // Skip common stop words that match too many skills
+    script = script + "    case \"$word\" in a|the|from|for|to|is|in|on|with|and|of|or|an|this|that) continue;; esac\n"
+    script = script + "    case \"$combined\" in *\"$word\"*) score=$((score+1));; esac\n"
+    script = script + "  done\n"
+    script = script + "  echo \"$score|$real|$name|$desc\"\n"
+    script = script + "done | sort -t'|' -k1 -rn -k2,2 | uniq -s 2 | head -5\n"
+
+    // Run the script via exec(). The path_prefix ensures any binaries
+    // in ~/.local/bin are found (though find/grep/sort are in /usr/bin).
+    cmdline := path_prefix + "sh -c " + shell_quote(script)
+    code, stdout, stderr := exec(cmdline)
+
+    if code != 0 && len(stdout) == 0 {
+        text := "skills.match error: " + trim(stderr)
+        out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"content\":[{\"type\":\"text\",\"text\":" + json_str(text) + "}],\"isError\":true}}"
+        return
+    }
+
+    // Parse the pipe-delimited output and build a readable result.
+    lines := split(stdout, "\n")
+    parts := []string{}
+    parts = append(parts, "Top matching skills for \"" + task + "\":\n")
+    j := 0
+    ln := len(lines)
+    for j < ln {
+        line := trim(lines[j])
+        if len(line) == 0 { j = j + 1  continue }
+        // Parse score|path|name|desc
+        p1 := index(line, "|")
+        if p1 < 0 { j = j + 1  continue }
+        p2 := index(substr(line, p1 + 1, len(line)), "|")
+        if p2 < 0 { j = j + 1  continue }
+        p2 = p1 + 1 + p2
+        p3 := index(substr(line, p2 + 1, len(line)), "|")
+        if p3 < 0 { j = j + 1  continue }
+        p3 = p2 + 1 + p3
+        score_str := substr(line, 0, p1)
+        path := substr(line, p1 + 1, p2)
+        sname := substr(line, p2 + 1, p3)
+        sdesc := substr(line, p3 + 1, len(line))
+        rank := str(j + 1)
+        entry := rank + ". " + sname + " (score: " + score_str + ")\n   Path: " + path + "\n   " + sdesc + "\n"
+        parts = append(parts, entry)
+        j = j + 1
+    }
+
+    if len(parts) == 1 {
+        parts = append(parts, "No matching skills found.")
+    }
+
+    parts = append(parts, "\nRead the top match's SKILL.md for detailed instructions.")
+    text := join(parts, "\n")
+    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"content\":[{\"type\":\"text\",\"text\":" + json_str(text) + "}],\"isError\":false}}"
 }
 
 // mcp_error renders a JSON-RPC error response.
