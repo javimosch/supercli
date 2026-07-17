@@ -1,0 +1,185 @@
+// mcp — MCP server over stdio (JSON-RPC 2.0, JSONL transport).
+// Exposes every installed SuperCLI command as an MCP tool, so any MCP
+// client (Claude Code, Claude Desktop, any LLM agent) that spawns
+// `sc-machin mcp serve` gets the full SuperCLI tool graph: discover via
+// tools/list, execute via tools/call. This is the first implementation of
+// SuperCLI's "MCP-native runtime" roadmap item (Phase I, Q4 2026) — and
+// the first sc-machin feature that runs a long-running stdio loop, which
+// is the dogfooding point: input()/flush()/json_get()/parse() under load.
+//
+// Transport: JSONL — one JSON-RPC message per line on stdin/stdout.
+// Protocol version: 2025-06-18 (matches what the Node.js MCP client sends).
+//
+// Tool naming: <ns>.<res>.<act> (dotted — matches the Node.js
+// `mcp bind --as <ns.res.act>` convention). tools/call {name} splits on
+// "." to recover the (ns, res, act) triple and dispatches through the
+// existing executor.
+
+// MCP_PROTOCOL_VERSION is the version advertised in the initialize
+// response. Matches the Node.js MCP client (cli/mcp-stdio-jsonrpc.js).
+func mcp_protocol_version() (v) { v = "2025-06-18" }
+func mcp_server_name() (n) { n = "supercli-machin" }
+func mcp_server_version() (v) { v = "0.1.0" }
+
+// tool_name encodes an (ns, res, act) triple as a dotted MCP tool name.
+func tool_name(ns, res, act) (n) { n = ns + "." + res + "." + act }
+
+// parse_tool_name splits a dotted tool name back into (ns, res, act).
+// found is false if the name doesn't have exactly two dots.
+func parse_tool_name(name) (ns, res, act, found) {
+    found = false
+    d1 := index(name, ".")
+    if d1 < 0 { return }
+    d2 := index(substr(name, d1 + 1, len(name)), ".")
+    if d2 < 0 { return }
+    d2 = d1 + 1 + d2
+    ns = substr(name, 0, d1)
+    res = substr(name, d1 + 1, d2)
+    act = substr(name, d2 + 1, len(name))
+    if len(ns) == 0 || len(res) == 0 || len(act) == 0 { return }
+    found = true
+}
+
+// build_input_schema turns a CommandDef's args []ArgDef into an MCP
+// inputSchema object string: {type:"object", properties:{...}, required:[...]}.
+// ArgDef omits the JSON "type" field (MFL keyword), so every arg is
+// surfaced as type "string" — the safe default MCP clients accept.
+func build_input_schema(args) (out) {
+    prop_parts := []string{}
+    req_parts := []string{}
+    i := 0
+    n := len(args)
+    for i < n {
+        a := args[i]
+        prop_parts = append(prop_parts, json_str(a.name) + ":{\"type\":\"string\",\"description\":" + json_str(a.description) + "}")
+        if a.required { req_parts = append(req_parts, json_str(a.name)) }
+        i = i + 1
+    }
+    req := "[]"
+    if len(req_parts) > 0 { req = "[" + join(req_parts, ",") + "]" }
+    out = "{\"type\":\"object\",\"properties\":{" + join(prop_parts, ",") + "},\"required\":" + req + "}"
+}
+
+// build_tool_object renders one command as an MCP tool object.
+func build_tool_object(cmd) (out) {
+    out = "{\"name\":" + json_str(tool_name(cmd.namespace, cmd.resource, cmd.action)) + ",\"description\":" + json_str(cmd.description) + ",\"inputSchema\":" + build_input_schema(cmd.args) + "}"
+}
+
+// handle_initialize returns the initialize result envelope.
+func handle_initialize(id_raw) (out) {
+    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"protocolVersion\":" + json_str(mcp_protocol_version()) + ",\"capabilities\":{\"tools\":{}},\"serverInfo\":{\"name\":" + json_str(mcp_server_name()) + ",\"version\":" + json_str(mcp_server_version()) + "}}}"
+}
+
+// handle_list_tools returns every installed command as an MCP tool.
+// Uses array+join() to avoid the O(n^2) string-concat trap (see gotcha #15b).
+func handle_list_tools(id_raw, lock) (out) {
+    tool_parts := []string{}
+    names := keys(lock.installed)
+    i := 0
+    n := len(names)
+    for i < n {
+        p := lock.installed[names[i]]
+        j := 0
+        cn := len(p.commands)
+        for j < cn {
+            tool_parts = append(tool_parts, build_tool_object(p.commands[j]))
+            j = j + 1
+        }
+        i = i + 1
+    }
+    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"tools\":[" + join(tool_parts, ",") + "]}}"
+}
+
+// handle_call_tool parses {name, arguments} from params, resolves the
+// command, runs it, and wraps the outcome in the MCP result shape:
+// {content:[{type:"text",text:...}], isError:<exit_code != 0>}.
+func handle_call_tool(id_raw, line, lock) (out) {
+    params_raw, perr := json_get(line, ".params")
+    if len(perr) > 0 {
+        out = mcp_error(id_raw, -32602, "Invalid params")
+        return
+    }
+    name_raw, nerr := json_get(params_raw, ".name")
+    if len(nerr) > 0 {
+        out = mcp_error(id_raw, -32602, "Missing tool name")
+        return
+    }
+    name := strip_quotes(name_raw)
+    ns, res, act, found := parse_tool_name(name)
+    if found == false {
+        out = mcp_error(id_raw, -32602, "Invalid tool name: " + name)
+        return
+    }
+    cmd, plugin_name, cfound := find_command(lock, ns, res, act)
+    if cfound == false {
+        out = mcp_error(id_raw, -32601, "No such command: " + name)
+        return
+    }
+    if len(plugin_name) == 0 {
+        // plugin_name is informational only; silence unused-var concerns.
+    }
+
+    // Build the flags map from the MCP arguments object. Each argument
+    // value is a JSON string (MCP clients send strings for our string-typed
+    // schema); we extract with json_get per key from the args list so we
+    // only forward declared args (not arbitrary client-injected keys).
+    flags := make(map[string]string)
+    args_raw, aerr := json_get(params_raw, ".arguments")
+    if len(aerr) == 0 {
+        i := 0
+        n := len(cmd.args)
+        for i < n {
+            an := cmd.args[i].name
+            vraw, verr := json_get(args_raw, "." + an)
+            if len(verr) == 0 {
+                flags[an] = strip_quotes(vraw)
+            }
+            i = i + 1
+        }
+    }
+
+    result := run_command(cmd.adapterConfig, flags)
+    text := trim(result.stdout)
+    if len(text) == 0 { text = trim(result.stderr) }
+    if len(text) == 0 { text = "Process exited with code " + str(result.exit_code) }
+    is_err := "false"
+    if result.exit_code != 0 { is_err = "true" }
+    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"content\":[{\"type\":\"text\",\"text\":" + json_str(text) + "}],\"isError\":" + is_err + "}}"
+}
+
+// mcp_error renders a JSON-RPC error response.
+func mcp_error(id_raw, code, message) (out) {
+    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"error\":{\"code\":" + str(code) + ",\"message\":" + json_str(message) + "}}"
+}
+
+// mcp_serve is the stdio loop. Reads one JSON-RPC message per line,
+// dispatches, prints the response, flushes. Exits on EOF (empty input()).
+func mcp_serve(lock) {
+    running := true
+    for running {
+        line := input()
+        if len(line) == 0 { running = false  return }
+
+        method_raw, merr := json_get(line, ".method")
+        if len(merr) > 0 { continue }
+        method := strip_quotes(method_raw)
+
+        id_raw, ierr := json_get(line, ".id")
+        is_notification := len(ierr) > 0
+
+        if method == "initialize" {
+            if is_notification == false { println(handle_initialize(id_raw)) }
+        } else if method == "notifications/initialized" {
+            // notification — no response
+        } else if method == "ping" {
+            if is_notification == false { println("{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{}}") }
+        } else if method == "tools/list" {
+            if is_notification == false { println(handle_list_tools(id_raw, lock)) }
+        } else if method == "tools/call" {
+            if is_notification == false { println(handle_call_tool(id_raw, line, lock)) }
+        } else {
+            if is_notification == false { println(mcp_error(id_raw, -32601, "Method not found")) }
+        }
+        flush()
+    }
+}

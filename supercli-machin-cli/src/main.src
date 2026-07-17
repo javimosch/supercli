@@ -16,6 +16,7 @@ func print_help() {
     println("    sc-machin plugins explore [--name=<q>] [--tags=<a,b>]")
     println("    sc-machin plugins install <name>           (delegates to Node.js sc)")
     println("    sc-machin plugins update [--check]         (delegates to Node.js sc)")
+    println("    sc-machin mcp serve                        MCP server over stdio (JSON-RPC 2.0)")
     println("    sc-machin install-as-sc")
     println("    sc-machin <ns> <res> <act> [--flags]       execute a plugin command")
     println("")
@@ -109,6 +110,17 @@ func main() {
         }
 
         println("{\"ok\":false,\"error\":\"unknown plugins subcommand (use list|explore|install|update)\"}")
+        exit(80)
+    }
+
+    if pa.positional[0] == "mcp" {
+        sub := ""
+        if len(pa.positional) > 1 { sub = pa.positional[1] }
+        if sub == "serve" {
+            mcp_serve(lock)
+            return
+        }
+        println("{\"ok\":false,\"error\":\"unknown mcp subcommand (use serve)\"}")
         exit(80)
     }
 

@@ -55,6 +55,7 @@ sc-machin plugins list
 sc-machin plugins explore [--name=<q>] [--tags=<a,b>]
 sc-machin plugins install <name>           (delegates to Node.js `sc`)
 sc-machin plugins update [--check]         (delegates to Node.js `sc`)
+sc-machin mcp serve                        MCP server over stdio (JSON-RPC 2.0)
 sc-machin <ns> <res> <act> [--flags]       execute a plugin command
 ```
 
@@ -80,8 +81,9 @@ src/
 ├── plugins.src      `plugins list/explore/install/update` rendering
 ├── commands.src     `commands` / `inspect` rendering
 ├── bootstrap.src     agent bootstrap envelope + --version/--info
+├── mcp.src          MCP server over stdio (JSON-RPC 2.0, JSONL transport)
 ├── main.src         thin router tying the above together
-└── tests.src        machin test unit tests (shell_quote, argv parsing, ...)
+└── tests.src        machin test unit tests (shell_quote, argv parsing, MCP, ...)
 ```
 
 `plugins.lock.json`'s `{ version, installed: { <name>: {...} } }` shape
@@ -93,10 +95,57 @@ One JSON key can't be represented directly: an arg's `"type"` field is
 omitted from `ArgDef` because `type` is an MFL keyword. `inspect` still
 shows every other field (name/required/positional/description).
 
+## MCP server (`mcp serve`)
+
+`sc-machin mcp serve` is the first implementation of SuperCLI's
+"MCP-native runtime" roadmap item (Phase I, Q4 2026) — and the first
+`sc-machin` feature that runs a long-running stdio loop, which is the
+dogfooding point: `input()`/`flush()`/`json_get()`/`parse()` under load.
+
+It exposes every installed SuperCLI command as an MCP tool over JSON-RPC
+2.0 (JSONL transport, protocol version `2025-06-18`). Any MCP client
+(Claude Code, Claude Desktop, any LLM agent) that spawns `sc-machin mcp
+serve` gets the full SuperCLI tool graph: discover via `tools/list`,
+execute via `tools/call`.
+
+### Register with Claude Code
+
+```bash
+claude mcp add supercli-machin -- /path/to/sc-machin mcp serve
+claude mcp get supercli-machin   # verify: Status: Connected
+```
+
+### Protocol surface
+
+| Method | Behavior |
+|--------|----------|
+| `initialize` | Returns server info + `tools` capability |
+| `notifications/initialized` | Notification — no response |
+| `ping` | Empty result (health check) |
+| `tools/list` | All installed commands as MCP tools |
+| `tools/call` | Execute the named command, return result |
+| anything else | `-32601 Method not found` |
+
+### Tool naming
+
+Each command is exposed as `<ns>.<res>.<act>` (dotted — matches the
+Node.js `mcp bind --as <ns.res.act>` convention). `tools/call {name}`
+splits on `.` to recover the triple and dispatches through the existing
+executor — no new execution code.
+
+### Scope (v1)
+
+- **JSONL transport only** (no LSP `Content-Length` framing)
+- **stdio only** (no SSE/HTTP transport)
+- **No daemon** — each MCP client gets a fresh process
+- **No `resources` or `prompts`** — tools only (the valuable one)
+- **No pagination** on `tools/list` — returns all tools (with the
+  `join()`-based rendering fix, 852 tools serialize in ~1ms)
+
 ## Testing
 
 ```bash
-machin test src/strutil.src src/pathutil.src src/lockfile.src src/argv.src src/executor.src src/tests.src
+machin test src/strutil.src src/pathutil.src src/lockfile.src src/argv.src src/executor.src src/mcp.src src/tests.src
 ```
 
 (`./build.sh` runs this automatically.)
@@ -113,8 +162,10 @@ machin test src/strutil.src src/pathutil.src src/lockfile.src src/argv.src src/e
   Zig's `std.process.executablePathAlloc`), so a reliable self-locate/copy
   isn't possible from `argv[0]` alone; it prints the two commands to run
   instead.
-- **No MCP server / HTTP adapter / daemon mode.** Same scope-cut as
-  `sc-zig` — those stay Node.js-only.
+- **No MCP client adapter / HTTP adapter / daemon mode.** `sc-machin`
+  implements the MCP **server** side (`mcp serve`); the Node.js-only
+  client adapter (consuming external MCP servers), HTTP adapter, and
+  stateful daemon stay Node.js-only — same scope cut as `sc-zig`.
 - **Named-flag ordering across a command line is unspecified** (map
   iteration order), same limitation as the Node.js and Zig CLIs.
 

@@ -75,6 +75,125 @@ func test_build_exec_command_reserved_flags_stripped() {
     assert(contains(line, "--real"), "build_exec_command keeps non-reserved flags")
 }
 
+// --- MCP tests ---
+
+func test_tool_name_roundtrip() {
+    n := tool_name("agentmemory-cli", "memory", "search")
+    assert_eq_str(n, "agentmemory-cli.memory.search", "tool_name encodes triple")
+    ns, res, act, found := parse_tool_name(n)
+    assert_eq_int(bool_to_int(found), 1, "parse_tool_name found")
+    assert_eq_str(ns, "agentmemory-cli", "parse_tool_name ns")
+    assert_eq_str(res, "memory", "parse_tool_name res")
+    assert_eq_str(act, "search", "parse_tool_name act")
+}
+
+func test_parse_tool_name_invalid() {
+    _, _, _, found := parse_tool_name("no-dots")
+    assert_eq_int(bool_to_int(found), 0, "parse_tool_name rejects no dots")
+    _, _, _, found2 := parse_tool_name("one.two")
+    assert_eq_int(bool_to_int(found2), 0, "parse_tool_name rejects one dot")
+    _, _, _, found3 := parse_tool_name("a..c")
+    assert_eq_int(bool_to_int(found3), 0, "parse_tool_name rejects empty middle")
+}
+
+func test_build_input_schema() {
+    args := []ArgDef{}
+    args = append(args, ArgDef{name: "query", description: "search term", required: true, positional: true})
+    args = append(args, ArgDef{name: "limit", description: "max results", required: false, positional: false})
+    schema := build_input_schema(args)
+    assert(contains(schema, "\"query\""), "build_input_schema includes query property")
+    assert(contains(schema, "\"limit\""), "build_input_schema includes limit property")
+    assert(contains(schema, "\"required\":[\"query\"]"), "build_input_schema required array has query")
+    assert(contains(schema, "\"type\":\"object\""), "build_input_schema is object type")
+}
+
+func test_build_input_schema_empty() {
+    schema := build_input_schema([]ArgDef{})
+    assert(contains(schema, "\"required\":[]"), "build_input_schema empty has empty required")
+}
+
+func test_handle_initialize() {
+    resp := handle_initialize("1")
+    assert(contains(resp, "\"id\":1"), "initialize echoes id")
+    assert(contains(resp, "\"protocolVersion\":\"2025-06-18\""), "initialize advertises protocol version")
+    assert(contains(resp, "\"supercli-machin\""), "initialize advertises server name")
+    assert(contains(resp, "\"capabilities\":{\"tools\":{}}"), "initialize advertises tools capability")
+}
+
+func fake_lock() (lock) {
+    lock = LockFile{version: 1, installed: make(map[string]PluginEntry)}
+    args := []ArgDef{}
+    args = append(args, ArgDef{name: "filter", description: "filter term", required: false, positional: false})
+    cmds := []CommandDef{}
+    cmds = append(cmds, CommandDef{
+        namespace: "demo", resource: "thing", action: "list",
+        description: "list things",
+        adapter: "process",
+        adapterConfig: AdapterCfg{command: "echo", passthrough: false},
+        args: args,
+    })
+    lock.installed["demo"] = PluginEntry{
+        name: "demo", version: "1.0.0", description: "demo plugin",
+        commands: cmds,
+    }
+}
+
+func test_handle_list_tools() {
+    lock := fake_lock()
+    resp := handle_list_tools("2", lock)
+    assert(contains(resp, "\"id\":2"), "list_tools echoes id")
+    assert(contains(resp, "\"tools\":["), "list_tools has tools array")
+    assert(contains(resp, "demo.thing.list"), "list_tools includes dotted tool name")
+    assert(contains(resp, "\"inputSchema\""), "list_tools includes inputSchema")
+}
+
+func test_handle_call_tool_not_found() {
+    lock := fake_lock()
+    line := "{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"tools/call\",\"params\":{\"name\":\"no.such.cmd\",\"arguments\":{}}}"
+    resp := handle_call_tool("3", line, lock)
+    assert(contains(resp, "\"id\":3"), "call_tool not_found echoes id")
+    assert(contains(resp, "\"error\""), "call_tool not_found returns error")
+    assert(contains(resp, "-32601"), "call_tool not_found is method-not-found code")
+}
+
+func test_handle_call_tool_bad_name() {
+    lock := fake_lock()
+    line := "{\"jsonrpc\":\"2.0\",\"id\":4,\"method\":\"tools/call\",\"params\":{\"name\":\"no-dots\",\"arguments\":{}}}"
+    resp := handle_call_tool("4", line, lock)
+    assert(contains(resp, "-32602"), "call_tool bad_name is invalid-params code")
+}
+
+func test_handle_call_tool_runs() {
+    lock := fake_lock()
+    // demo.thing.list -> echo with no args -> stdout "thing list" (echo prints its baseArgs)
+    // Actually AdapterCfg{command:"echo"} with no baseArgs -> echo prints empty line.
+    // Use a command that produces predictable output.
+    lock.installed["demo"].commands[0].adapterConfig = AdapterCfg{command: "echo", baseArgs: []string{"hello-from-mcp"}, passthrough: false}
+    line := "{\"jsonrpc\":\"2.0\",\"id\":5,\"method\":\"tools/call\",\"params\":{\"name\":\"demo.thing.list\",\"arguments\":{}}}"
+    resp := handle_call_tool("5", line, lock)
+    assert(contains(resp, "\"id\":5"), "call_tool runs echoes id")
+    assert(contains(resp, "\"content\":[{\"type\":\"text\""), "call_tool runs returns text content")
+    assert(contains(resp, "hello-from-mcp"), "call_tool runs includes captured stdout")
+    assert(contains(resp, "\"isError\":false"), "call_tool runs isError false on exit 0")
+}
+
+func test_mcp_error() {
+    e := mcp_error("9", -32601, "Method not found")
+    assert(contains(e, "\"id\":9"), "mcp_error echoes id")
+    assert(contains(e, "\"code\":-32601"), "mcp_error includes code")
+    assert(contains(e, "Method not found"), "mcp_error includes message")
+}
+
+func test_parse_tool_name_three_parts() {
+    // names with dots inside parts are NOT supported (split on first two dots);
+    // this is the documented contract — tool parts must be dot-free.
+    ns, res, act, found := parse_tool_name("a.b.c")
+    assert_eq_int(bool_to_int(found), 1, "three-part name parses")
+    assert_eq_str(ns, "a", "three-part ns")
+    assert_eq_str(res, "b", "three-part res")
+    assert_eq_str(act, "c", "three-part act")
+}
+
 func main() {
     test_shell_quote()
     test_json_str()
@@ -84,5 +203,16 @@ func main() {
     test_parse_argv_trailing_bool_flag()
     test_build_exec_command_positional_and_flags()
     test_build_exec_command_reserved_flags_stripped()
+    test_tool_name_roundtrip()
+    test_parse_tool_name_invalid()
+    test_parse_tool_name_three_parts()
+    test_build_input_schema()
+    test_build_input_schema_empty()
+    test_handle_initialize()
+    test_handle_list_tools()
+    test_handle_call_tool_not_found()
+    test_handle_call_tool_bad_name()
+    test_handle_call_tool_runs()
+    test_mcp_error()
     test_summary()
 }
