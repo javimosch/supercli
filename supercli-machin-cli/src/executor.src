@@ -121,3 +121,44 @@ func render_exec_human(result) {
     if len(result.stdout) > 0 { print(result.stdout) }
     if len(result.stderr) > 0 { write(2, result.stderr) }
 }
+
+// run_command_mcp is the MCP dispatch path. For passthrough commands with
+// a __rawArgs pseudo-flag (set by the MCP server for `rtk._._`-style
+// passthrough tools), it splits the raw args string and appends each word
+// as a bare positional arg. For all other commands, it delegates to
+// run_command unchanged.
+func run_command_mcp(cfg, flags) (result) {
+    has_raw := has(flags, "__rawArgs")
+    if cfg.passthrough && has_raw {
+        raw := flags["__rawArgs"]
+        parts := []string{}
+        parts = append(parts, cfg.command)
+        i := 0
+        n := len(cfg.baseArgs)
+        for i < n {
+            parts = append(parts, cfg.baseArgs[i])
+            i = i + 1
+        }
+        // Split raw args by spaces and append each as a shell-quoted word.
+        words := split(raw, " ")
+        j := 0
+        wn := len(words)
+        for j < wn {
+            w := trim(words[j])
+            if len(w) > 0 { parts = append(parts, w) }
+            j = j + 1
+        }
+        cmdline := join_shell_quoted(parts)
+        if len(cfg.cwd) > 0 && cfg.cwd != "invoke_cwd" && cfg.cwd != "plugin_dir" {
+            cmdline = "cd " + shell_quote(cfg.cwd) + " && " + cmdline
+        }
+        // For MCP, always capture (even for passthrough commands) so the
+        // result can be wrapped in the JSON-RPC response. The MCP server
+        // never inherits the client's stdio — it's a subprocess with its
+        // own pipe.
+        code, out, errout := exec(cmdline)
+        result = ExecOutcome{exit_code: code, stdout: out, stderr: errout, ran_passthrough: false}
+        return
+    }
+    result = run_command(cfg, flags)
+}

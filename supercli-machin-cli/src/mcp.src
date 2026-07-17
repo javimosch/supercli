@@ -60,9 +60,20 @@ func build_input_schema(args) (out) {
     out = "{\"type\":\"object\",\"properties\":{" + join(prop_parts, ",") + "},\"required\":" + req + "}"
 }
 
-// build_tool_object renders one command as an MCP tool object.
+// build_tool_object renders one command as an MCP tool object. For
+// passthrough commands (adapterConfig.passthrough == true) with no
+// declared args, a synthetic _args field is added to the inputSchema so
+// the MCP client can send the subcommand string (e.g. "analytics gain"
+// for `rtk _ _ analytics gain`).
 func build_tool_object(cmd) (out) {
-    out = "{\"name\":" + json_str(tool_name(cmd.namespace, cmd.resource, cmd.action)) + ",\"description\":" + json_str(cmd.description) + ",\"inputSchema\":" + build_input_schema(cmd.args) + "}"
+    schema := build_input_schema(cmd.args)
+    if cmd.adapterConfig.passthrough && len(cmd.args) == 0 {
+        // Inject _args into the properties map. build_input_schema with
+        // empty args produces {"properties":{},"required":[]} — we splice
+        // _args into the properties object.
+        schema = "{\"type\":\"object\",\"properties\":{\"_args\":{\"type\":\"string\",\"description\":\"Raw subcommand args forwarded to the wrapped binary (e.g. \\\"analytics gain\\\")\"}},\"required\":[]}"
+    }
+    out = "{\"name\":" + json_str(tool_name(cmd.namespace, cmd.resource, cmd.action)) + ",\"description\":" + json_str(cmd.description) + ",\"inputSchema\":" + schema + "}"
 }
 
 // handle_initialize returns the initialize result envelope.
@@ -136,9 +147,23 @@ func handle_call_tool(id_raw, line, lock) (out) {
             }
             i = i + 1
         }
+        // For passthrough commands with no declared args, extract the
+        // synthetic _args field and split it into individual words that
+        // get appended as raw positional args via a __rawArgs pseudo-flag.
+        // The executor's build_exec_command doesn't know about __rawArgs,
+        // so for passthrough we bypass it and build the cmdline directly.
+        if cmd.adapterConfig.passthrough && len(cmd.args) == 0 {
+            raw_args_raw, rerr := json_get(args_raw, "._args")
+            if len(rerr) == 0 {
+                flags["__rawArgs"] = strip_quotes(raw_args_raw)
+            }
+        }
     }
 
-    result := run_command(cmd.adapterConfig, flags)
+    // For passthrough commands with __rawArgs, build the cmdline directly
+    // (command + baseArgs + raw split args) rather than going through
+    // build_exec_command (which would try to forward __rawArgs as a flag).
+    result := run_command_mcp(cmd.adapterConfig, flags)
     text := trim(result.stdout)
     if len(text) == 0 { text = trim(result.stderr) }
     if len(text) == 0 { text = "Process exited with code " + str(result.exit_code) }
