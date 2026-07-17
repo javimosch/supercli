@@ -2,21 +2,44 @@
 
 ## Choosing the right sc binary
 
-There are two implementations of `sc`. Prefer the Zig version (`sc-zig`) when available — it is faster and a single binary. Fall back to the Node.js version for plugin installs.
+There are three implementations of `sc`. Pick the one that fits your use case:
 
-| Feature | `sc-zig` | `sc` (Node.js) |
-|---|---|---|
-| Plugin discover / explore | ✅ | ✅ |
-| Execute plugin commands | ✅ | ✅ |
-| Plugin install | ✅ (delegates to `sc`) | ✅ native |
-| MCP server | ❌ | ✅ |
-| HTTP adapter | ❌ | ✅ |
+| Feature | `sc-zig` | `sc` (Node.js) | `sc-machin` |
+|---|---|---|---|
+| Language | Zig | Node.js | MFL (machin) |
+| Plugin discover / explore | ✅ | ✅ | ✅ |
+| Execute plugin commands | ✅ | ✅ | ✅ |
+| Plugin install | ✅ (delegates to `sc`) | ✅ native | ✅ (delegates to `sc`) |
+| MCP server (`mcp serve`) | ❌ | ✅ | ✅ |
+| MCP client adapter | ❌ | ✅ | ❌ |
+| HTTP adapter | ❌ | ✅ | ❌ |
+| Built-in `skills.match` tool | ❌ | ❌ | ✅ |
+| Built-in `rtk` passthrough | ❌ | ❌ | ✅ |
+| Single binary, no runtime | ✅ | ❌ (needs Node.js) | ✅ |
+| Startup speed | fastest | moderate | fast |
+
+**When to use which:**
+- **`sc-zig`** — default for plugin discovery and command execution. Fastest, single binary, no runtime needed.
+- **`sc` (Node.js)** — when you need MCP client adapter, HTTP adapter, or plugin installs (sc-zig delegates to it).
+- **`sc-machin`** — when you need an MCP **server** exposing all SuperCLI commands to AI agents (Claude Code, Claude Desktop). Also has built-in `skills.match` (semantic skill discovery) and `rtk` passthrough (token-reduced directory/git ops). See skill: `sc-machin-mcp`.
+
+**If stuck on one implementation, try another:**
+- `sc-zig` crashes or missing feature → fall back to `sc` (Node.js), the reference implementation
+- `sc` too slow for repeated calls → switch to `sc-zig`
+- Need to expose SuperCLI to an MCP client → use `sc-machin mcp serve`
+- `sc-machin` missing a feature → fall back to `sc` (Node.js), which has the full adapter set
 
 **Agent install (no sudo required):**
 ```bash
+# sc-zig (recommended default)
 curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --path ~/.local/bin
 # or manual:
 curl -sL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/sc-zig-linux-amd64 -o ~/.local/bin/sc-zig && chmod +x ~/.local/bin/sc-zig
+
+# sc-machin (MCP server)
+cd supercli-machin-cli && bash build.sh
+# Then register with Claude Code:
+# claude mcp add supercli -s user -- "$(pwd)/sc-machin" mcp serve
 ```
 
 ## Using SuperCLI (for agents)

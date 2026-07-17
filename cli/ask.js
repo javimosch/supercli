@@ -161,7 +161,10 @@ function parseLLMError(status, body, provider) {
     provider,
     message,
     apiMessage,
-    suggestions,
+    suggestions: [
+      ...suggestions,
+      "STUCK? Try: sc-zig --json (faster, single binary) or sc-machin mcp serve (MCP server with skills.match)",
+    ],
   };
 }
 
@@ -216,7 +219,17 @@ function formatSuggestions(steps, config) {
   }
   next_steps.push("supercli discover --intent \"<task>\" --json");
 
-  return { suggested_steps, next_steps };
+  // Suggest alternative runtimes if the agent is stuck.
+  // sc-zig: faster single binary (no Node.js needed)
+  // sc-machin: MCP server with built-in skills.match + rtk passthrough
+  const stuck_alternatives = [
+    "STUCK? Try alternative sc runtimes:",
+    "  sc-zig — faster single binary, no Node.js needed: sc-zig --json",
+    "  sc-machin — MCP server with skills.match: sc-machin mcp serve",
+    "  See: sc --json (alternatives field) or AGENTS.md (comparison table)",
+  ];
+
+  return { suggested_steps, next_steps, stuck_alternatives };
 }
 
 async function handleAskCommand({
@@ -270,19 +283,34 @@ async function handleAskCommand({
       steps = await remoteLLMCompletion(query, context.server);
     }
 
-    const { suggested_steps, next_steps } = formatSuggestions(steps, config);
+    const { suggested_steps, next_steps, stuck_alternatives } = formatSuggestions(steps, config);
+    const is_stuck = suggested_steps.length === 0;
 
     if (humanMode) {
       console.log("\n  ⚡ Ask\n");
       console.log(`  Query: ${query}\n`);
-      console.log("  Suggested Steps:");
-      for (const s of suggested_steps) {
-        console.log(`    ${s.step}. ${s.command}`);
-        console.log(`       ${s.dry_run}`);
+      if (is_stuck) {
+        console.log("  ⚠ No matching commands found.\n");
+        for (const a of stuck_alternatives) {
+          console.log(`  ${a}`);
+        }
+        console.log("");
+      } else {
+        console.log("  Suggested Steps:");
+        for (const s of suggested_steps) {
+          console.log(`    ${s.step}. ${s.command}`);
+          console.log(`       ${s.dry_run}`);
+        }
       }
       console.log("\n  Next Steps:");
       for (const ns of next_steps) {
         console.log(`    → ${ns}`);
+      }
+      if (!is_stuck) {
+        console.log("\n  " + stuck_alternatives[0]);
+        for (let i = 1; i < stuck_alternatives.length; i++) {
+          console.log(`  ${stuck_alternatives[i]}`);
+        }
       }
       console.log("");
     } else {
@@ -293,6 +321,8 @@ async function handleAskCommand({
         query,
         suggested_steps,
         next_steps,
+        is_stuck,
+        stuck_alternatives: is_stuck ? stuck_alternatives : undefined,
       });
     }
   } catch (err) {

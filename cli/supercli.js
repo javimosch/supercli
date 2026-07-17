@@ -127,6 +127,10 @@ async function main() {
             context_mode: "Use supercli MCP context-mode for large command outputs.",
             quick_start: "supercli mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '{\"commands\":[{\"label\":\"Commands\",\"command\":\"supercli commands --json\"}],\"queries\":[\"<terms>\"]}' --json",
           },
+          alternatives: [
+            { name: "sc-zig", binary: "sc-zig", language: "Zig", strengths: ["faster startup", "single binary", "no Node.js runtime needed"], install: "curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --path ~/.local/bin", note: "Use when you need speed or lack Node.js. Delegates plugin installs to Node.js sc." },
+            { name: "sc-machin", binary: "sc-machin", language: "MFL (machin)", strengths: ["MCP server (mcp serve)", "single binary", "built-in skills.match tool", "built-in rtk passthrough"], install: "cd supercli-machin-cli && bash build.sh", note: "Use when you need an MCP server exposing all SuperCLI commands to AI agents. See skill: sc-machin-mcp" },
+          ],
         });
         return;
       }
