@@ -62,6 +62,11 @@ pub fn handleBootstrap(gpa: std.mem.Allocator, mode: output.Mode) void {
     jw.write("positional args: schema-defined positional args are passed correctly") catch return;
     jw.write("--key value: flags passed as separate args for broadest binary compat") catch return;
     jw.endArray() catch return;
+    jw.objectField("alternatives") catch return;
+    jw.beginArray() catch return;
+    jw.write("sc (Node.js) — reference implementation. Use when you need MCP client adapter, HTTP adapter, or plugin installs. Install: npm install -g supercli") catch return;
+    jw.write("sc-machin (MFL/machin) — MCP server with built-in skills.match (semantic skill discovery) and rtk passthrough (token-reduced git/ls ops). Use when you need to expose SuperCLI to AI agents via MCP. Install: cd supercli-machin-cli && bash build.sh") catch return;
+    jw.endArray() catch return;
     jw.endObject() catch return;
     output.writeRaw(out.written());
     output.writeRaw("\n");
