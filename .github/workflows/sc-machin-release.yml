@@ -1,0 +1,166 @@
+name: Release sc-machin
+
+on:
+  push:
+    tags:
+      - 'v*-machin'  # Trigger on tags like v0.2.0-machin, v0.3.0-machin, etc.
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-latest
+            os: linux
+            arch: amd64
+          - runner: ubuntu-24.04-arm
+            os: linux
+            arch: arm64
+          - runner: macos-13
+            os: darwin
+            arch: amd64
+          - runner: macos-14
+            os: darwin
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Install machin (Linux)
+        if: matrix.os == 'linux'
+        run: |
+          MACHIN_VERSION="v0.108.0"
+          curl -fsSL "https://github.com/javimosch/machin/releases/download/${MACHIN_VERSION}/machin-${MACHIN_VERSION}-${{ matrix.os }}-${{ matrix.arch }}" -o /usr/local/bin/machin
+          chmod +x /usr/local/bin/machin
+          machin --version
+
+      - name: Install machin (macOS)
+        if: matrix.os == 'darwin'
+        run: |
+          MACHIN_VERSION="v0.108.0"
+          curl -fsSL "https://github.com/javimosch/machin/releases/download/${MACHIN_VERSION}/machin-${MACHIN_VERSION}-${{ matrix.os }}-${{ matrix.arch }}" -o /usr/local/bin/machin
+          chmod +x /usr/local/bin/machin
+          machin --version
+
+      - name: Build sc-machin
+        working-directory: ./supercli-machin-cli
+        run: |
+          bash build.sh
+          mv sc-machin "sc-machin-${{ matrix.os }}-${{ matrix.arch }}"
+          ls -lh "sc-machin-${{ matrix.os }}-${{ matrix.arch }}"
+
+      - name: Verify binary
+        working-directory: ./supercli-machin-cli
+        run: |
+          BINARY="sc-machin-${{ matrix.os }}-${{ matrix.arch }}"
+          if [ ! -f "$BINARY" ] || [ ! -s "$BINARY" ]; then
+            echo "✗ Binary missing or empty: $BINARY"
+            exit 1
+          fi
+          ./"$BINARY" --version || { echo "✗ Binary failed to run"; exit 1; }
+          echo "✓ Binary verified: $BINARY"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sc-machin-${{ matrix.os }}-${{ matrix.arch }}
+          path: supercli-machin-cli/sc-machin-${{ matrix.os }}-${{ matrix.arch }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Validate tag format
+        run: |
+          VERSION="${{ steps.version.outputs.VERSION }}"
+          if [[ ! "$VERSION" =~ ^v[0-9]+\.[0-9]+\.[0-9]+-machin$ ]]; then
+            echo "Error: Tag format must be vX.Y.Z-machin (e.g., v0.2.0-machin)"
+            echo "Got: $VERSION"
+            exit 1
+          fi
+          echo "✓ Tag format validated: $VERSION"
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: false
+
+      - name: Stage release files
+        run: |
+          mkdir -p release
+          find artifacts -name "sc-machin-*" -type f -exec cp {} release/ \;
+          cp supercli-machin-cli/install.sh release/
+          chmod +x release/sc-machin-*
+          ls -lh release/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.version.outputs.VERSION }}
+          name: SuperCLI Machin ${{ steps.version.outputs.VERSION }}
+          body: |
+            ## SuperCLI Machin ${{ steps.version.outputs.VERSION }}
+
+            Single-binary SuperCLI implementation in machin (MFL) for AI agents.
+
+            ### Installation
+
+            ```bash
+            curl -sSL https://github.com/javimosch/supercli/releases/download/${{ steps.version.outputs.VERSION }}/install.sh | bash
+            ```
+
+            Installs as `sc-machin` (co-exists with `sc` / `sc-zig`). The install script auto-detects your OS and architecture.
+
+            ### Assets
+
+            - `sc-machin-linux-amd64` - Linux x86_64
+            - `sc-machin-linux-arm64` - Linux ARM64
+            - `sc-machin-darwin-amd64` - macOS Intel
+            - `sc-machin-darwin-arm64` - macOS Apple Silicon
+            - `install.sh` - Installation script (auto-detects platform)
+
+            ### Features
+
+            - Single binary (~71KB)
+            - No Node.js, no runtime dependencies
+            - MCP server (`mcp serve`) — JSON-RPC 2.0 over stdio
+            - `skills.match` built-in tool — semantic skill discovery
+            - `rtk` passthrough — token-reduced git/ls ops
+            - Cross-runtime alternatives in `--json` bootstrap
+
+            See [README](https://github.com/javimosch/supercli/blob/master/supercli-machin-cli/README.md) for details.
+          files: |
+            release/sc-machin-linux-amd64
+            release/sc-machin-linux-arm64
+            release/sc-machin-darwin-amd64
+            release/sc-machin-darwin-arm64
+            release/install.sh
+          draft: false
+          prerelease: false
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Release summary
+        if: success()
+        run: |
+          echo "✅ Release ${{ steps.version.outputs.VERSION }} created successfully!"
+          echo "Assets: 4 binaries + install.sh"
+          echo "Platforms: linux-amd64, linux-arm64, darwin-amd64, darwin-arm64"
