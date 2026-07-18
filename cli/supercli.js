@@ -10,6 +10,7 @@ const { handleServerCommand } = require("./server-command");
 const { handleRunCommand } = require("./run");
 const { handleHarnessOnboard, handleHarnessOffboard } = require("./harness-onboard");
 const { handleAskCommand } = require("./ask");
+const { handlePlanIntentCommand } = require("./plan-intent");
 const { handleSkillsCommand } = require("./skills");
 const { findNamespacePassthrough } = require("./namespace-passthrough");
 const { discoverPluginsByIntent } = require("./discover");
@@ -103,7 +104,7 @@ async function main() {
             plugins: { type: "discovery", description: "Plugin management and discovery" },
             commands: { type: "query", description: "Query available commands" },
             inspect: { type: "introspection", description: "View command schema" },
-            plan: { type: "preview", description: "Preview execution steps" },
+            plan: { type: "workflow_or_preview", description: "Intent-level workflow plan: sc plan \"<intent>\" returns a DAG of commands with dependencies. Or single-command preview: sc plan <ns> <res> <act>" },
           },
           first_steps: [
             { command: "supercli run <plugin> <resource> <action>", purpose: "One-shot: sync catalog, install plugin, execute command" },
@@ -210,8 +211,15 @@ async function main() {
     }
 
     if (positional[0] === "plan") {
+      // Dual-mode: `sc plan "<intent>"` (1 positional) = intent-level workflow plan
+      //             `sc plan <ns> <res> <act>` (3+ positionals) = single-command preview
+      if (positional.length === 2) {
+        const config = await loadConfig(SERVER);
+        await handlePlanIntentCommand({ positional, config, flags, context: { server: SERVER || "", config }, humanMode, output, outputError });
+        return;
+      }
       if (positional.length < 4) {
-        outputError({ code: 85, type: "invalid_argument", message: "Usage: supercli plan <namespace> <resource> <action> [--args]", recoverable: false });
+        outputError({ code: 85, type: "invalid_argument", message: 'Usage: supercli plan "<intent>"  OR  supercli plan <namespace> <resource> <action> [--args]', recoverable: false });
         return;
       }
       const config = await loadConfig(SERVER);
