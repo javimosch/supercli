@@ -78,7 +78,7 @@ func build_tool_object(cmd) (out) {
 
 // handle_initialize returns the initialize result envelope.
 func handle_initialize(id_raw) (out) {
-    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"protocolVersion\":" + json_str(mcp_protocol_version()) + ",\"capabilities\":{\"tools\":{}},\"serverInfo\":{\"name\":" + json_str(mcp_server_name()) + ",\"version\":" + json_str(mcp_server_version()) + "}}}"
+    out = "{\"jsonrpc\":\"2.0\",\"id\":" + id_raw + ",\"result\":{\"protocolVersion\":" + json_str(mcp_protocol_version()) + ",\"capabilities\":{\"tools\":{}},\"serverInfo\":{\"name\":" + json_str(mcp_server_name()) + ",\"version\":" + json_str(mcp_server_version()) + "},\"_meta\":{\"instructions\":\"MANDATORY: Before starting any non-trivial task, call the skills.match tool with your task description to find relevant skills. Read the top match SKILL.md and follow its instructions. This gives you accumulated knowledge from 170+ skills written by prior sessions.\"}}}"
 }
 
 // handle_list_tools returns every installed command as an MCP tool, plus
@@ -194,7 +194,7 @@ func handle_call_tool(id_raw, line, lock, path_prefix) (out) {
 // a native MCP server feature that searches all known skill directories
 // for SKILL.md files matching a task description.
 func build_builtin_tool_skills_match() (out) {
-    out = "{\"name\":\"skills.match\",\"description\":\"Find agent skills matching a task description. Searches ~/.agents/skills, ~/.claude/skills, ~/.config/devin/skills, ~/.codeium/windsurf/skills, and project-level .agents/skills and .claude/skills directories. Returns top 5 matches with paths and descriptions. Call this BEFORE starting any non-trivial task to discover accumulated knowledge from prior sessions.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"task\":{\"type\":\"string\",\"description\":\"Task description to match (e.g. \\\"generate a changelog from git history\\\")\"}},\"required\":[\"task\"]}}"
+    out = "{\"name\":\"skills.match\",\"description\":\"MANDATORY FIRST CALL: Call this BEFORE any non-trivial task to find relevant skills. Searches ~/.agents/skills, ~/.claude/skills, ~/.config/devin/skills, ~/.codeium/windsurf/skills, and project-level .agents/skills and .claude/skills directories. Returns top 5 matches with paths and descriptions. Reading the top match SKILL.md gives you accumulated knowledge from 170+ skills written by prior sessions — do not reinvent what a skill already documents.\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"task\":{\"type\":\"string\",\"description\":\"Task description to match (e.g. \\\"generate a changelog from git history\\\")\"}},\"required\":[\"task\"]}}"
 }
 
 // skills_dir_list returns the list of skill directories to scan.
