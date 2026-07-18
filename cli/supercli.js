@@ -12,6 +12,7 @@ const { handleHarnessOnboard, handleHarnessOffboard } = require("./harness-onboa
 const { handleAskCommand } = require("./ask");
 const { handlePlanIntentCommand } = require("./plan-intent");
 const { handleActCommand } = require("./act");
+const { handleReviewCommand } = require("./review");
 const { handleSkillsCommand } = require("./skills");
 const { findNamespacePassthrough } = require("./namespace-passthrough");
 const { discoverPluginsByIntent } = require("./discover");
@@ -107,6 +108,7 @@ async function main() {
             inspect: { type: "introspection", description: "View command schema" },
             plan: { type: "workflow_or_preview", description: "Intent-level workflow plan: sc plan \"<intent>\" returns a DAG of commands with dependencies. Or single-command preview: sc plan <ns> <res> <act>" },
             act: { type: "execution", description: "Execute a plan from sc plan: sc act --file plan.json | cat plan.json | sc act | sc act '<json>'" },
+            review: { type: "audit", description: "Review results from sc act: audit trail, failure analysis, rollback audit, optional LLM-powered fix suggestions" },
           },
           first_steps: [
             { command: "supercli run <plugin> <resource> <action>", purpose: "One-shot: sync catalog, install plugin, execute command" },
@@ -234,6 +236,11 @@ async function main() {
     if (positional[0] === "act") {
       const config = await loadConfig(SERVER);
       await handleActCommand({ positional, flags, context: { server: SERVER || "", config }, humanMode, output, outputError });
+      return;
+    }
+
+    if (positional[0] === "review") {
+      await handleReviewCommand({ positional, flags, context: { server: SERVER || "" }, humanMode, output, outputError });
       return;
     }
 
