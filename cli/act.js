@@ -87,6 +87,15 @@ function getReadySteps(steps, completed) {
 }
 
 async function executeStep(step, config, server, context) {
+  if (!step.command) {
+    return {
+      step_id: step.id,
+      command: step.command,
+      status: "error",
+      error: "Step missing 'command' field",
+      exit_code: 85,
+    };
+  }
   const parts = step.command.split(".");
   if (parts.length < 3) {
     return {
@@ -152,7 +161,7 @@ async function executeVerify(verifyCommand, config, server, context) {
   );
 
   if (!cmd) {
-    return { status: "skipped", reason: "verify command not found" };
+    return { status: "failed", error: "verify command not found" };
   }
 
   try {
