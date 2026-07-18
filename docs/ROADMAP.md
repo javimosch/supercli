@@ -5,6 +5,11 @@ subtitle: "From OSS Swiss Army Knife → Cloud AI Layer → French Unicorn"
 
 # SuperCLI Roadmap 2026–2028
 
+> **Read [`VISION.md`](./VISION.md) first.** It's the north star — the bet, the
+> direction, and the rule for deciding what to build next. This roadmap is the
+> *plan* (phases, KPIs, the trajectory). The vision tells you *why*; this tells
+> you *when*.
+
 **Current state (mid-2026):** 6,000+ plugins, 8,000+ commands, 130k+ LOC. A config-driven, AI-friendly dynamic CLI — the largest open-source CLI ecosystem in the world.
 
 SuperCLI has already won the *distribution* game. Every tool an agent needs is one `sc <namespace>` away. The roadmap below turns that distribution monopoly into a platform, a network, and eventually a generational company.
