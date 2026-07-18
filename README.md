@@ -363,7 +363,7 @@ curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.0-machin/
 npx supercli skills list
 
 # Install globally
-npm install -g supercli
+npm install -g superacli
 ```
 
 - ✅ Full feature parity (MCP client, HTTP adapter, plugin installs)
