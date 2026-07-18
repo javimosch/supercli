@@ -20,10 +20,7 @@ jobs:
           - runner: ubuntu-24.04-arm
             os: linux
             arch: arm64
-          - runner: macos-13
-            os: darwin
-            arch: amd64
-          - runner: macos-14
+          - runner: macos-latest
             os: darwin
             arch: arm64
     runs-on: ${{ matrix.runner }}
@@ -127,9 +124,10 @@ jobs:
 
             - `sc-machin-linux-amd64` - Linux x86_64
             - `sc-machin-linux-arm64` - Linux ARM64
-            - `sc-machin-darwin-amd64` - macOS Intel
             - `sc-machin-darwin-arm64` - macOS Apple Silicon
             - `install.sh` - Installation script (auto-detects platform)
+
+            **Note:** macOS Intel (darwin-amd64) is not prebuilt — build from source if needed.
 
             ### Features
 
@@ -144,7 +142,6 @@ jobs:
           files: |
             release/sc-machin-linux-amd64
             release/sc-machin-linux-arm64
-            release/sc-machin-darwin-amd64
             release/sc-machin-darwin-arm64
             release/install.sh
           draft: false
@@ -157,5 +154,5 @@ jobs:
         if: success()
         run: |
           echo "✅ Release ${{ steps.version.outputs.VERSION }} created successfully!"
-          echo "Assets: 4 binaries + install.sh"
-          echo "Platforms: linux-amd64, linux-arm64, darwin-amd64, darwin-arm64"
+          echo "Assets: 3 binaries + install.sh"
+          echo "Platforms: linux-amd64, linux-arm64, darwin-arm64"

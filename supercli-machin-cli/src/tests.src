@@ -197,7 +197,17 @@ func test_handle_skills_match() {
     assert(contains(resp, "\"id\":10"), "skills_match echoes id")
     assert(contains(resp, "\"content\""), "skills_match returns content")
     assert(contains(resp, "\"isError\":false"), "skills_match is not an error")
-    assert(contains(resp, "rtk"), "skills_match finds rtk for token reduction query")
+    // The rtk skill only exists where javimosch has ~/.agents/skills installed.
+    // On CI runners (empty home), skills.match returns no matches — skip the
+    // content assertion if no skill dirs are present.
+    home := env("HOME")
+    has_skills := false
+    if len(list_dir(home + "/.agents/skills")) > 0 { has_skills = true }
+    if len(list_dir(home + "/.claude/skills")) > 0 { has_skills = true }
+    if len(list_dir(home + "/.config/devin/skills")) > 0 { has_skills = true }
+    if has_skills {
+        assert(contains(resp, "rtk"), "skills_match finds rtk for token reduction query")
+    }
 }
 
 func test_handle_skills_match_empty_task() {
