@@ -68,10 +68,28 @@
 - [x] Step referencing unknown command → `status: error`, `exit_code: 92`
 - [x] Verify command that fails (nonexistent) → step `status: verify_failed` (fixed: was returning "skipped" for not-found verify commands, changed to "failed")
 
+## Category 8: `sc review` — Audit & Failure Analysis
+
+> Uses results from `sc act` execution (mixed plan: 1 success, 1 failure, 1 rollback).
+
+- [x] `sc --json` lists `review` capability with `audit` type
+- [x] `sc review --file results.json --json` → `mode: review`
+- [x] Health assessment: `degraded` for completed_with_errors, `healthy` for all-success
+- [x] Success rate calculated: 67% for 2/3 succeeded
+- [x] Failure groups categorized: `command_not_found` with suggested fix
+- [x] Audit trail has all steps with ✓/✗/⚠/⊘ icons
+- [x] Rollback audit shows rollback status
+- [x] `--save` writes review to file
+- [x] No input → error code 85
+- [x] Positional JSON works (`sc review "$RESULTS" --json`)
+- [x] `--human` mode shows icons (✓/✗)
+- [x] `--llm-analyze` with mock LLM returns fix suggestions
+- [x] Healthy plan (all success) → `health: healthy`, `success_rate: 100`
+
 ## Test Results Summary
 
-**Total Tests:** 28
-**Passed:** 28
+**Total Tests:** 41
+**Passed:** 41
 **Failed:** 0
 **Skipped:** 0
 
@@ -83,6 +101,7 @@
 - Category 5 (Live execution): 5/5 passed
 - Category 6 (Parallel execution): 2/2 passed
 - Category 7 (Edge cases): 4/4 passed (2 bugs found and fixed)
+- Category 8 (Review): 13/13 passed
 
 ## Issues Found
 
