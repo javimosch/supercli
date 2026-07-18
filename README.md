@@ -332,30 +332,44 @@ All five modes return JSON by default. Add `--human` for readable display. Agent
 
 ## 📦 Install
 
-### Option 1: Zig Version (Fast, Single Binary)
+Three implementations, all co-exist and share plugin storage at `~/.supercli/plugins/plugins.lock.json`. Pick one (or more):
+
+### Option 1: Zig Version (Fastest, Single Binary)
 
 ```bash
 curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
 ```
 
 - ✅ Single static binary (~250KB), no Node.js required
-- ✅ Faster startup, native performance
+- ✅ Fastest startup, native performance
 - ✅ Reads same `~/.supercli/plugins/plugins.lock.json`
 
-### Option 2: Node.js Version (npx/npm)
+### Option 2: Machin Version (MCP Server, Single Binary)
+
+```bash
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.0-machin/install.sh | bash
+```
+
+- ✅ Single binary (~71KB), no Node.js required
+- ✅ Built-in MCP server (`sc-machin mcp serve`) — expose all commands to AI agents
+- ✅ `skills.match` built-in tool — semantic skill discovery across all skill dirs
+- ✅ `rtk` passthrough — token-reduced git/ls ops via MCP
+- ✅ Auto-detects OS/arch (linux-amd64, linux-arm64, darwin-arm64)
+
+### Option 3: Node.js Version (npx/npm)
 
 ```bash
 # Run immediately — no install needed
 npx supercli skills list
 
 # Install globally
-npm install -g superacli
+npm install -g supercli
 ```
 
-- ✅ Full feature parity (MCP, server, HTTP adapter)
+- ✅ Full feature parity (MCP client, HTTP adapter, plugin installs)
 - ✅ Plugin installation from registry
 
-Both versions co-exist and share plugin storage at `~/.supercli/plugins/plugins.lock.json`. Install either (or both) — they read and write the same configuration, so switching between them is seamless. The Zig version is recommended for daily use (faster startup), while the Node.js version provides full MCP and HTTP adapter support.
+**Which to choose?** `sc-zig` for daily use (fastest startup), `sc-machin` to expose SuperCLI to AI agents via MCP, `sc` (Node.js) for the reference implementation with full feature parity. All three share the same plugin state — install one, two, or all three.
 
 ---
 
