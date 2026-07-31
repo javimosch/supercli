@@ -1,0 +1,124 @@
+{
+  "name": "inbox-watch",
+  "version": "1.0.0",
+  "description": "Tell me only when a human actually replied \u2014 poll GitHub/IMAP/Resend inbound, classify DMARC vs autoreply vs reply, exit 10 when something real arrived",
+  "source": "https://github.com/javimosch/inbox-watch",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "inbox-watch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "inbox-watch",
+    "binary": "inbox-watch",
+    "check": "which inbox-watch",
+    "install_steps": [
+      "git clone https://github.com/javimosch/inbox-watch /tmp/inbox-watch",
+      "install -m755 /tmp/inbox-watch/inbox-watch ~/.local/bin/inbox-watch",
+      "mkdir -p ~/.inbox-watch && cp /tmp/inbox-watch/config.example.json ~/.inbox-watch/config.json",
+      "Edit ~/.inbox-watch/config.json (what to watch); secrets go in env vars",
+      "Verify: inbox-watch help-json",
+      "supercli plugins install ./plugins/inbox-watch --on-conflict replace --json"
+    ],
+    "note": "Single Python 3 file, no dependencies. Config holds what to watch; env vars hold every secret (INBOX_TOKEN / RESEND_API_KEY / ZOHO_IMAP_PASS)."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "inbox-watch",
+      "resource": "inbox",
+      "action": "check",
+      "description": "Poll every configured channel and print items new since the last run. Exit 10 if any. CONSUMES the cursor \u2014 use inbox_peek to diagnose.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inbox-watch",
+        "baseArgs": [
+          "--exit-zero"
+        ],
+        "missingDependencyHelp": "Install: see https://github.com/javimosch/inbox-watch",
+        "note": "--exit-zero because a non-zero exit is treated as failure by the process adapter, and inbox-watch's exit 10 means 'new items' \u2014 a success. Read data.count instead."
+      },
+      "args": []
+    },
+    {
+      "namespace": "inbox-watch",
+      "resource": "inbox",
+      "action": "peek",
+      "description": "Same report WITHOUT marking items seen. Use this for any diagnostic run: a normal run consumes the alert your cron would have sent.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inbox-watch",
+        "baseArgs": [
+          "--peek",
+          "--exit-zero"
+        ],
+        "missingDependencyHelp": "Install: see https://github.com/javimosch/inbox-watch",
+        "note": "--exit-zero because a non-zero exit is treated as failure by the process adapter, and inbox-watch's exit 10 means 'new items' \u2014 a success. Read data.count instead."
+      },
+      "args": []
+    },
+    {
+      "namespace": "inbox-watch",
+      "resource": "inbox",
+      "action": "seed",
+      "description": "Mark everything currently pending as seen, reporting nothing. Run once when adding a new consumer, or it alerts on the whole backlog.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inbox-watch",
+        "baseArgs": [
+          "--seed",
+          "--exit-zero"
+        ],
+        "missingDependencyHelp": "Install: see https://github.com/javimosch/inbox-watch",
+        "note": "--exit-zero because a non-zero exit is treated as failure by the process adapter, and inbox-watch's exit 10 means 'new items' \u2014 a success. Read data.count instead."
+      },
+      "args": []
+    },
+    {
+      "namespace": "inbox-watch",
+      "resource": "self",
+      "action": "guide",
+      "description": "Embedded operator manual: the model, the loop, and the gotchas",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inbox-watch",
+        "baseArgs": [
+          "guide"
+        ],
+        "missingDependencyHelp": "Install: see https://github.com/javimosch/inbox-watch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inbox-watch",
+      "resource": "self",
+      "action": "help-json",
+      "description": "Machine-readable command catalog (cli-output-spec)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inbox-watch",
+        "baseArgs": [
+          "help-json"
+        ],
+        "missingDependencyHelp": "Install: see https://github.com/javimosch/inbox-watch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inbox-watch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to the inbox-watch CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "inbox-watch",
+        "passthrough": true,
+        "missingDependencyHelp": "Install: see https://github.com/javimosch/inbox-watch"
+      },
+      "args": []
+    }
+  ]
+}
