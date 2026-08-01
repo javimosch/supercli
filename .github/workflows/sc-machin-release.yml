@@ -46,7 +46,12 @@ jobs:
       - name: Build sc-machin
         working-directory: ./supercli-machin-cli
         run: |
-          bash build.sh
+          if [ "${{ matrix.os }}" = "linux" ]; then
+            sudo apt-get update && sudo apt-get install -y musl-tools
+            CC=musl-gcc bash build.sh --static
+          else
+            bash build.sh
+          fi
           mv sc-machin "sc-machin-${{ matrix.os }}-${{ matrix.arch }}"
           ls -lh "sc-machin-${{ matrix.os }}-${{ matrix.arch }}"
 
@@ -59,6 +64,10 @@ jobs:
             exit 1
           fi
           ./"$BINARY" --version || { echo "✗ Binary failed to run"; exit 1; }
+          if [ "${{ matrix.os }}" = "linux" ] && ! file "$BINARY" | grep -q "statically linked"; then
+            echo "✗ Linux binary is not statically linked"
+            exit 1
+          fi
           echo "✓ Binary verified: $BINARY"
 
       - name: Upload artifact
