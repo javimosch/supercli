@@ -7,11 +7,34 @@
  * Designed for first-time / npx users — a single tweetable command.
  */
 
+const fs = require("fs");
 const { updatePlugins } = require("./plugins-update");
 const { installPlugin, getPlugin } = require("./plugins-install");
 const { loadConfig } = require("./config");
 const { execute } = require("./executor");
-const { makeOutput, makeOutputError, makeStreamEmitter } = require("./output");
+const { makeStreamEmitter } = require("./output");
+const { REMOTE_CATALOG_FILE } = require("./plugins-store");
+const { listRegistryPlugins } = require("./plugins-registry");
+
+const CATALOG_FRESH_MS = 60 * 60 * 1000; // 1 hour
+
+function catalogIsFresh(filePath = REMOTE_CATALOG_FILE, now = Date.now()) {
+  try {
+    if (!fs.existsSync(filePath)) return false;
+    const st = fs.statSync(filePath);
+    const age = now - st.mtimeMs;
+    return age < CATALOG_FRESH_MS;
+  } catch {
+    return false;
+  }
+}
+
+function findSuggestions(pluginName) {
+  const exact = listRegistryPlugins({ name: pluginName, nameOnly: true }).slice(0, 5);
+  if (exact.length > 0) return exact.map((p) => p.name);
+  const fuzzy = listRegistryPlugins({ name: pluginName }).slice(0, 5);
+  return fuzzy.map((p) => p.name);
+}
 
 async function handleRunCommand({ positional, flags, humanMode, output, outputError }) {
   const pluginName = positional[1];
@@ -40,16 +63,25 @@ async function handleRunCommand({ positional, flags, humanMode, output, outputEr
     return;
   }
 
-  // ── Step 1: Sync plugin catalog from GitHub ──────────────────────────
-  try {
-    if (humanMode) process.stderr.write("Syncing plugin catalog...\n");
-    const updateResult = await updatePlugins({ check: false });
-    if (humanMode && updateResult.added + updateResult.changed > 0) {
-      process.stderr.write(`  → ${updateResult.added} new, ${updateResult.changed} changed\n`);
+  const fullCommand = `${pluginName}.${resource}.${action}`;
+  const fresh = catalogIsFresh();
+  let updated = false;
+
+  // ── Step 1: Sync plugin catalog from GitHub if stale or missing ────────
+  if (!fresh) {
+    try {
+      if (humanMode) process.stderr.write("Syncing plugin catalog...\n");
+      const updateResult = await updatePlugins({ check: false });
+      updated = true;
+      if (humanMode && updateResult.added + updateResult.changed > 0) {
+        process.stderr.write(`  → ${updateResult.added} new, ${updateResult.changed} changed\n`);
+      }
+    } catch (err) {
+      // Non-fatal: if update fails, try anyway with local catalog
+      if (humanMode) process.stderr.write(`  ⚠ Catalog sync failed (${err.message}), continuing with local catalog\n`);
     }
-  } catch (err) {
-    // Non-fatal: if update fails, try anyway with local catalog
-    if (humanMode) process.stderr.write(`  ⚠ Catalog sync failed (${err.message}), continuing with local catalog\n`);
+  } else if (humanMode) {
+    process.stderr.write("Using fresh local catalog.\n");
   }
 
   // ── Step 2: Install plugin if not already ─────────────────────────────
@@ -64,23 +96,27 @@ async function handleRunCommand({ positional, flags, humanMode, output, outputEr
       });
       if (humanMode) process.stderr.write(`  → ${result.installed_commands} commands registered\n`);
     } catch (err) {
+      const available = findSuggestions(pluginName);
+      const suggestions = ["Check the plugin name and try again"];
+      if (available.length > 0) {
+        suggestions.unshift(`Available plugins: ${available.join(", ")}`);
+      }
+      suggestions.push("Run: supercli plugins explore --json");
       outputError({
         code: 92,
         type: "resource_not_found",
-        message: `Plugin '${pluginName}' not found after catalog sync.`,
-        suggestions: [
-          "Check the plugin name and try again",
-          "Run: supercli plugins explore --json",
-        ],
+        message: `Plugin '${pluginName}' not found${updated ? " after catalog sync" : " in the local catalog"}.`,
+        suggestions,
         recoverable: false,
       });
       return;
     }
+  } else if (humanMode) {
+    process.stderr.write(`Plugin already installed: ${pluginName}\n`);
   }
 
   // ── Step 3: Reload config and execute ────────────────────────────────
   const config = await loadConfig();
-  const fullCommand = `${pluginName}.${resource}.${action}`;
   const cmd = config.commands.find(
     (c) => c.namespace === pluginName && c.resource === resource && c.action === action
   );
@@ -122,6 +158,8 @@ async function handleRunCommand({ positional, flags, humanMode, output, outputEr
   const start = Date.now();
   try {
     const result = await execute(cmd, cmdFlags, {
+      server: process.env.SUPERCLI_SERVER || "",
+      config,
       onStreamEvent: cmd.adapterConfig?.stream === "jsonl"
         ? makeStreamEmitter(`${pluginName}.run`, { humanMode, output }) : null,
     });
@@ -146,4 +184,4 @@ async function handleRunCommand({ positional, flags, humanMode, output, outputEr
   }
 }
 
-module.exports = { handleRunCommand };
+module.exports = { handleRunCommand, catalogIsFresh, findSuggestions };

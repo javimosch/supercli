@@ -9,6 +9,7 @@ function buildCapabilities(config, hasServer) {
     mcp: { subcommands: ["list", "add", "tools", "call", "bind", "doctor", "remove"], description: "Manage local MCP server registry and invoke MCP tools" },
     commands: { description: "List all commands" },
     inspect: { description: "Inspect command details", usage: "supercli inspect <ns> <res> <act>" },
+    run: { description: "Sync catalog, install plugin, and execute a command", usage: "supercli run <plugin> <resource> <action> [--args]" },
     plan: { description: "Create execution plan", usage: "supercli plan <ns> <res> <act> [--args]" },
     execute: { description: "Execute a stored plan", usage: "supercli execute <plan_id>" },
     skills: {
