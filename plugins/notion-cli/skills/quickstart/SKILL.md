@@ -59,10 +59,16 @@ export NOTION_TOKEN=ntn_xxxxx
 ## Installation
 
 ```bash
+go install github.com/4ier/notion-cli@latest
+```
+
+Or install with Homebrew:
+
+```bash
 brew install 4ier/tap/notion-cli
 ```
 
-Or download binary from [GitHub Releases](https://github.com/4ier/notion-cli/releases).
+Or download a binary from [GitHub Releases](https://github.com/4ier/notion-cli/releases).
 
 ## Key Features
 - **Agent-friendly**: JSON output auto-detected when piped, schema-aware, URL or ID support
