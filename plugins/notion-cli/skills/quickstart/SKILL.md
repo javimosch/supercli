@@ -58,11 +58,26 @@ export NOTION_TOKEN=ntn_xxxxx
 
 ## Installation
 
+`go install` builds the binary as `notion-cli`; symlink it as `notion` so the plugin commands work:
+
+```bash
+go install github.com/4ier/notion-cli@latest
+GOBIN=$(go env GOBIN); GOPATH=$(go env GOPATH); ln -sf "${GOBIN:-$GOPATH/bin}/notion-cli" "${GOBIN:-$GOPATH/bin}/notion"
+```
+
+Or install with Homebrew:
+
 ```bash
 brew install 4ier/tap/notion-cli
 ```
 
-Or download binary from [GitHub Releases](https://github.com/4ier/notion-cli/releases).
+Or install with npm:
+
+```bash
+npm install -g @4ier/notion-cli
+```
+
+Or download a binary from [GitHub Releases](https://github.com/4ier/notion-cli/releases).
 
 ## Key Features
 - **Agent-friendly**: JSON output auto-detected when piped, schema-aware, URL or ID support
