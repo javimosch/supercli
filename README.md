@@ -347,7 +347,7 @@ curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/ins
 ### Option 2: Machin Version (MCP Server, Single Binary)
 
 ```bash
-curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.0-machin/install.sh | bash
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.1-machin/install.sh | bash
 ```
 
 - ✅ Single binary (~71KB), no Node.js required

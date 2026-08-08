@@ -24,7 +24,7 @@ orchestration, no cgo).
 ### Quick install (curl)
 
 ```bash
-curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.0-machin/install.sh | bash
+curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.1-machin/install.sh | bash
 ```
 
 Installs as `sc-machin` (co-exists with `sc` / `sc-zig`). Add `--replace`
