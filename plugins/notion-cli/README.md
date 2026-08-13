@@ -1,6 +1,6 @@
 # Notion CLI Plugin Harness
 
-This plugin integrates [4ier/notion-cli](https://github.com/4ier/notion-cli) into dcli. It wraps the most agent-friendly Notion commands and provides a full namespace passthrough for the upstream CLI.
+This plugin integrates [4ier/notion-cli](https://github.com/4ier/notion-cli) into SuperCLI. It wraps the most agent-friendly Notion commands and provides a full namespace passthrough for the upstream CLI.
 
 ## Prerequisites
 
@@ -34,53 +34,53 @@ Other install methods include Homebrew (`brew install 4ier/tap/notion-cli`), npm
 ### Version
 
 ```bash
-dcli notion self version --json
+supercli notion self version --json
 ```
 
 ### Auth
 
 ```bash
-dcli notion auth status --json
+supercli notion auth status --json
 ```
 
 ### Search
 
 ```bash
-dcli notion search run "meeting notes" --json
+supercli notion search run "meeting notes" --json
 ```
 
 ### Pages
 
 ```bash
-dcli notion page list --json
-dcli notion page view <pageId> --json
-dcli notion page create <dbId> --db "Name=Task" --db "Status=Todo" --json
+supercli notion page list --json
+supercli notion page view <pageId> --json
+supercli notion page create <dbId> --db "Name=Task" --db "Status=Todo" --json
 ```
 
 ### Databases
 
 ```bash
-dcli notion db list --json
-dcli notion db query <dbId> --filter "Status=Done" --sort "Date:desc" --json
+supercli notion db list --json
+supercli notion db query <dbId> --filter "Status=Done" --sort "Date:desc" --json
 ```
 
 ### Blocks
 
 ```bash
-dcli notion block list <pageId> --md --depth 3 --json
-dcli notion block append <pageId> --file document.md --json
+supercli notion block list <pageId> --md --depth 3 --json
+supercli notion block append <pageId> --file document.md --json
 ```
 
 ### Users
 
 ```bash
-dcli notion user list --json
+supercli notion user list --json
 ```
 
 ### Raw API Requests
 
 ```bash
-dcli notion api request GET /v1/users/me --json
+supercli notion api request GET /v1/users/me --json
 ```
 
 ### Full Passthrough
@@ -88,12 +88,12 @@ dcli notion api request GET /v1/users/me --json
 Run any upstream notion command through the `notion` namespace:
 
 ```bash
-dcli notion _ _ -- --help
+supercli notion _ _ -- --help
 ```
 
 ## Output
 
-Wrapped commands return a dcli JSON envelope when `--json` is used. The upstream CLI auto-detects JSON output when piped.
+Wrapped commands return a SuperCLI JSON envelope when `--json` is used. The upstream CLI auto-detects JSON output when piped.
 
 ## Key Features
 
