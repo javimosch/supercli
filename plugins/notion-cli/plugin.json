@@ -4,7 +4,10 @@
   "description": "notion-cli — full-featured Notion CLI with 39 commands for pages, databases, blocks, and the full Notion API",
   "source": "https://github.com/4ier/notion-cli",
   "checks": [
-    { "type": "binary", "name": "notion" }
+    {
+      "type": "binary",
+      "name": "notion"
+    }
   ],
   "install_guidance": {
     "plugin": "notion-cli",
@@ -15,6 +18,7 @@
       "GOBIN=$(go env GOBIN); GOPATH=$(go env GOPATH); ln -sf \"${GOBIN:-$GOPATH/bin}/notion-cli\" \"${GOBIN:-$GOPATH/bin}/notion\"",
       "Verify: notion --version",
       "Authenticate: echo 'ntn_xxxxx' | notion auth login --with-token",
+      "Alternative auth: export NOTION_TOKEN=ntn_xxxxx",
       "supercli plugins install ./plugins/notion-cli --on-conflict replace --json"
     ],
     "note": "Primary install is `go install github.com/4ier/notion-cli@latest`, which builds a binary named `notion-cli`. Link or rename it to `notion` before the `Verify` step. Also available via Homebrew (`brew install 4ier/tap/notion-cli`), npm (`npm install -g @4ier/notion-cli`), GitHub Releases (https://github.com/4ier/notion-cli/releases), or Scoop on Windows. Token stored in ~/.config/notion-cli/config.json (mode 0600). Auto-detects JSON output when piped to another command."
@@ -31,7 +35,10 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["--version"],
+        "baseArgs": [
+          "--version"
+        ],
+        "timeout_ms": 5000,
         "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli"
       },
       "args": []
@@ -44,9 +51,46 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["auth", "status"],
+        "baseArgs": [
+          "auth",
+          "status"
+        ],
         "timeout_ms": 5000,
-        "missingDependencyHelp": "Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": []
+    },
+    {
+      "namespace": "notion",
+      "resource": "auth",
+      "action": "logout",
+      "description": "Log out of Notion",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "auth",
+          "logout"
+        ],
+        "timeout_ms": 5000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": []
+    },
+    {
+      "namespace": "notion",
+      "resource": "auth",
+      "action": "doctor",
+      "description": "Check authentication and API connectivity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "auth",
+          "doctor"
+        ],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": []
     },
@@ -58,13 +102,46 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["search"],
-        "positionalArgs": ["query"],
+        "baseArgs": [
+          "search"
+        ],
+        "positionalArgs": [
+          "query"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": [
-        { "name": "query", "type": "string", "required": true, "description": "Search query text" }
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Search query text"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "Filter by type: page, database"
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum results per page"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        }
       ]
     },
     {
@@ -75,32 +152,23 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["page", "view"],
-        "positionalArgs": ["pageId"],
+        "baseArgs": [
+          "page",
+          "view"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": [
-        { "name": "pageId", "type": "string", "required": true, "description": "Page ID or full Notion URL" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "page",
-      "action": "create",
-      "description": "Create a new page in a Notion database",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["page", "create"],
-        "positionalArgs": ["dbId"],
-        "passthrough": true,
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "dbId", "type": "string", "required": true, "description": "Database ID or URL" },
-        { "name": "--db", "type": "string", "required": false, "description": "Database properties in 'Name=Value' format (e.g., 'Name=Task', 'Status=Done')" }
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        }
       ]
     },
     {
@@ -111,31 +179,323 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["page", "list"],
+        "baseArgs": [
+          "page",
+          "list"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
-      "args": []
+      "args": [
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum results per page"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        }
+      ]
     },
     {
       "namespace": "notion",
-      "resource": "db",
-      "action": "query",
-      "description": "Query a Notion database with filters and sorting",
+      "resource": "page",
+      "action": "create",
+      "description": "Create a new page under a parent page or database",
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["db", "query"],
-        "positionalArgs": ["dbId"],
-        "passthrough": true,
+        "baseArgs": [
+          "page",
+          "create"
+        ],
+        "positionalArgs": [
+          "parentId"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": [
-        { "name": "dbId", "type": "string", "required": true, "description": "Database ID or URL" },
-        { "name": "--filter", "type": "string", "required": false, "description": "Filter by property (e.g., 'Status=Done', 'Priority=High')" },
-        { "name": "--filter-json", "type": "string", "required": false, "description": "Complex filter in JSON (for OR/nesting)" },
-        { "name": "--sort", "type": "string", "required": false, "description": "Sort by property (e.g., 'Date:desc')" }
+        {
+          "name": "parentId",
+          "type": "string",
+          "required": true,
+          "description": "Parent page or database ID/URL"
+        },
+        {
+          "name": "db",
+          "type": "boolean",
+          "required": false,
+          "description": "Create under a database (properties as key=value args)"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Page title (required when parent is a page)"
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "required": false,
+          "description": "Page body text"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "archive",
+      "description": "Archive (soft-delete) a Notion page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "archive"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "restore",
+      "description": "Restore an archived Notion page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "restore"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "move",
+      "description": "Move a page to a new parent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "move"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "required": true,
+          "description": "Target parent page or database ID/URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "open",
+      "description": "Open a page in the browser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "open"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "set",
+      "description": "Set one or more page properties as key=value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "set"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "props",
+      "description": "Show all page properties or a specific property value",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "props"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "link",
+      "description": "Add a relation link between two pages",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "link"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        },
+        {
+          "name": "prop",
+          "type": "string",
+          "required": true,
+          "description": "Relation property name"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "required": true,
+          "description": "Target page ID or URL to link"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "page",
+      "action": "unlink",
+      "description": "Remove a relation link from a page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "page",
+          "unlink"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page ID or full Notion URL"
+        },
+        {
+          "name": "prop",
+          "type": "string",
+          "required": true,
+          "description": "Relation property name"
+        },
+        {
+          "name": "from",
+          "type": "string",
+          "required": true,
+          "description": "Target page ID or URL to unlink"
+        }
       ]
     },
     {
@@ -146,50 +506,947 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["db", "list"],
+        "baseArgs": [
+          "db",
+          "list"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
-      "args": []
+      "args": [
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum results per page"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "view",
+      "description": "Show database schema",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "view"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "query",
+      "description": "Query a database with filters and sorting",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "query"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        },
+        {
+          "name": "filter",
+          "type": "string",
+          "required": false,
+          "description": "Filter expression (e.g., 'Status=Done')"
+        },
+        {
+          "name": "filter-json",
+          "type": "string",
+          "required": false,
+          "description": "Complex filter in JSON (for OR/nesting)"
+        },
+        {
+          "name": "sort",
+          "type": "string",
+          "required": false,
+          "description": "Sort expression (e.g., 'Date:desc')"
+        },
+        {
+          "name": "limit",
+          "type": "number",
+          "required": false,
+          "description": "Maximum results per page"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "add",
+      "description": "Add a new row (page) to a database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "add"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "add-bulk",
+      "description": "Bulk add rows to a database from a JSON file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "add-bulk"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "JSON file with rows to create"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "create",
+      "description": "Create a new database under a parent page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "create"
+        ],
+        "positionalArgs": [
+          "parentId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "parentId",
+          "type": "string",
+          "required": true,
+          "description": "Parent page ID or URL"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Database title"
+        },
+        {
+          "name": "props",
+          "type": "string",
+          "required": false,
+          "description": "Additional properties as name:type,... (e.g., Status:select,Date:date)"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "update",
+      "description": "Update a database title or properties",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "update"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "New database title"
+        },
+        {
+          "name": "add-prop",
+          "type": "string",
+          "required": false,
+          "description": "Property to add as name:type"
+        },
+        {
+          "name": "remove-prop",
+          "type": "string",
+          "required": false,
+          "description": "Property name to remove"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "open",
+      "description": "Open a database in the browser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "open"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "db",
+      "action": "export",
+      "description": "Export database rows to CSV, JSON, or Markdown",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "db",
+          "export"
+        ],
+        "positionalArgs": [
+          "dbId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "dbId",
+          "type": "string",
+          "required": true,
+          "description": "Database ID or URL"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "Output format: csv, json, md (default csv)"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": false,
+          "description": "Output file path"
+        }
+      ]
     },
     {
       "namespace": "notion",
       "resource": "block",
       "action": "list",
-      "description": "List blocks (content) of a Notion page as Markdown",
+      "description": "List child blocks of a page or block as Markdown",
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["block", "list"],
-        "positionalArgs": ["pageId"],
-        "passthrough": true,
+        "baseArgs": [
+          "block",
+          "list"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": [
-        { "name": "pageId", "type": "string", "required": true, "description": "Page ID or URL" },
-        { "name": "--depth", "type": "number", "required": false, "description": "Recursion depth for nested blocks (default 1)" },
-        { "name": "--md", "type": "boolean", "required": false, "description": "Output as Markdown" }
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page or block ID/URL"
+        },
+        {
+          "name": "depth",
+          "type": "number",
+          "required": false,
+          "description": "Recursion depth for nested blocks (default 1)"
+        },
+        {
+          "name": "md",
+          "type": "boolean",
+          "required": false,
+          "description": "Output as Markdown"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "block",
+      "action": "get",
+      "description": "Get a specific block by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "block",
+          "get"
+        ],
+        "positionalArgs": [
+          "blockId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "blockId",
+          "type": "string",
+          "required": true,
+          "description": "Block ID or URL"
+        }
       ]
     },
     {
       "namespace": "notion",
       "resource": "block",
       "action": "append",
-      "description": "Append Markdown content to a Notion page",
+      "description": "Append Markdown or blocks to a Notion page or block",
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["block", "append"],
-        "positionalArgs": ["pageId"],
-        "passthrough": true,
+        "baseArgs": [
+          "block",
+          "append"
+        ],
+        "positionalArgs": [
+          "parentId"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": [
-        { "name": "pageId", "type": "string", "required": true, "description": "Page ID or URL" },
-        { "name": "--file", "type": "string", "required": false, "description": "Markdown file to append" }
+        {
+          "name": "parentId",
+          "type": "string",
+          "required": true,
+          "description": "Page or block ID/URL"
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Markdown file to append"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "Block type: paragraph, h1, h2, h3, todo, bullet, numbered, quote, code, callout, divider"
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "required": false,
+          "description": "Language for code blocks (e.g., go, python, bash)"
+        },
+        {
+          "name": "on-oversize",
+          "type": "string",
+          "required": false,
+          "description": "Behavior for rich_text >2000 chars: split|truncate|fail"
+        },
+        {
+          "name": "caption",
+          "type": "string",
+          "required": false,
+          "description": "Caption for media blocks"
+        },
+        {
+          "name": "image-url",
+          "type": "string",
+          "required": false,
+          "description": "External image URL"
+        },
+        {
+          "name": "image-file",
+          "type": "string",
+          "required": false,
+          "description": "Local image file to upload and embed"
+        },
+        {
+          "name": "image-upload",
+          "type": "string",
+          "required": false,
+          "description": "Existing file_upload ID to embed as image"
+        },
+        {
+          "name": "file-url",
+          "type": "string",
+          "required": false,
+          "description": "External file URL"
+        },
+        {
+          "name": "file-file",
+          "type": "string",
+          "required": false,
+          "description": "Local file to upload and embed"
+        },
+        {
+          "name": "file-upload",
+          "type": "string",
+          "required": false,
+          "description": "Existing file_upload ID to embed as file"
+        },
+        {
+          "name": "pdf-url",
+          "type": "string",
+          "required": false,
+          "description": "External PDF URL"
+        },
+        {
+          "name": "pdf-file",
+          "type": "string",
+          "required": false,
+          "description": "Local PDF file to upload and embed"
+        },
+        {
+          "name": "pdf-upload",
+          "type": "string",
+          "required": false,
+          "description": "Existing file_upload ID to embed as PDF"
+        },
+        {
+          "name": "audio-url",
+          "type": "string",
+          "required": false,
+          "description": "External audio URL"
+        },
+        {
+          "name": "audio-file",
+          "type": "string",
+          "required": false,
+          "description": "Local audio file to upload and embed"
+        },
+        {
+          "name": "audio-upload",
+          "type": "string",
+          "required": false,
+          "description": "Existing file_upload ID to embed as audio"
+        },
+        {
+          "name": "video-url",
+          "type": "string",
+          "required": false,
+          "description": "External video URL"
+        },
+        {
+          "name": "video-file",
+          "type": "string",
+          "required": false,
+          "description": "Local video file to upload and embed"
+        },
+        {
+          "name": "video-upload",
+          "type": "string",
+          "required": false,
+          "description": "Existing file_upload ID to embed as video"
+        }
       ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "block",
+      "action": "insert",
+      "description": "Insert content after a specific child block",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "block",
+          "insert"
+        ],
+        "positionalArgs": [
+          "parentId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "parentId",
+          "type": "string",
+          "required": true,
+          "description": "Page or block ID/URL"
+        },
+        {
+          "name": "after",
+          "type": "string",
+          "required": true,
+          "description": "Block ID to position after"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "Block type: paragraph, h1, h2, h3, todo, bullet, numbered, quote, code, callout, divider"
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "required": false,
+          "description": "Language for code blocks"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "block",
+      "action": "update",
+      "description": "Update a block's content in place",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "block",
+          "update"
+        ],
+        "positionalArgs": [
+          "blockId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "blockId",
+          "type": "string",
+          "required": true,
+          "description": "Block ID or URL"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "description": "New text content"
+        },
+        {
+          "name": "file",
+          "type": "string",
+          "required": false,
+          "description": "Read markdown from file"
+        },
+        {
+          "name": "markdown",
+          "type": "boolean",
+          "required": false,
+          "description": "Parse --text as markdown"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "description": "Block type"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "block",
+      "action": "delete",
+      "description": "Delete one or more blocks by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "block",
+          "delete"
+        ],
+        "positionalArgs": [
+          "blockId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "blockId",
+          "type": "string",
+          "required": true,
+          "description": "Block ID or URL"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "block",
+      "action": "move",
+      "description": "Move a block within its parent or to a different parent",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "block",
+          "move"
+        ],
+        "positionalArgs": [
+          "blockId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "blockId",
+          "type": "string",
+          "required": true,
+          "description": "Block ID or URL"
+        },
+        {
+          "name": "after",
+          "type": "string",
+          "required": false,
+          "description": "Block ID to position after"
+        },
+        {
+          "name": "before",
+          "type": "string",
+          "required": false,
+          "description": "Block ID to position before"
+        },
+        {
+          "name": "parent",
+          "type": "string",
+          "required": false,
+          "description": "New parent block/page ID to move to"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "comment",
+      "action": "list",
+      "description": "List comments on a Notion page or block",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "comment",
+          "list"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page or block ID/URL"
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "comment",
+      "action": "add",
+      "description": "Add a comment to a Notion page",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "comment",
+          "add"
+        ],
+        "positionalArgs": [
+          "pageId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "pageId",
+          "type": "string",
+          "required": true,
+          "description": "Page or block ID/URL"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "description": "Comment text"
+        },
+        {
+          "name": "mention-user",
+          "type": "string",
+          "required": false,
+          "description": "Mention a Notion user by ID (repeatable; pass multiple with --mention-user u1 --mention-user u2)"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "comment",
+      "action": "get",
+      "description": "Get a comment by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "comment",
+          "get"
+        ],
+        "positionalArgs": [
+          "commentId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "commentId",
+          "type": "string",
+          "required": true,
+          "description": "Comment ID"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "comment",
+      "action": "reply",
+      "description": "Reply to a comment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "comment",
+          "reply"
+        ],
+        "positionalArgs": [
+          "commentId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "commentId",
+          "type": "string",
+          "required": true,
+          "description": "Comment ID"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "description": "Reply text"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "comment",
+      "action": "update",
+      "description": "Update a comment",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "comment",
+          "update"
+        ],
+        "positionalArgs": [
+          "commentId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "commentId",
+          "type": "string",
+          "required": true,
+          "description": "Comment ID"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": false,
+          "description": "New comment text"
+        },
+        {
+          "name": "mention-user",
+          "type": "string",
+          "required": false,
+          "description": "Mention a Notion user by ID"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "comment",
+      "action": "delete",
+      "description": "Delete one or more comments by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "comment",
+          "delete"
+        ],
+        "positionalArgs": [
+          "commentId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "commentId",
+          "type": "string",
+          "required": true,
+          "description": "Comment ID"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "user",
+      "action": "me",
+      "description": "Show current bot user",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "user",
+          "me"
+        ],
+        "timeout_ms": 10000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": []
     },
     {
       "namespace": "notion",
@@ -199,11 +1456,137 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["user", "list"],
+        "baseArgs": [
+          "user",
+          "list"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Fetch all pages of results"
+        },
+        {
+          "name": "cursor",
+          "type": "string",
+          "required": false,
+          "description": "Pagination cursor from previous results"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "user",
+      "action": "get",
+      "description": "Get a user by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "user",
+          "get"
+        ],
+        "positionalArgs": [
+          "userId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "userId",
+          "type": "string",
+          "required": true,
+          "description": "User ID"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "file",
+      "action": "list",
+      "description": "List file uploads",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "file",
+          "list"
+        ],
         "timeout_ms": 10000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": []
+    },
+    {
+      "namespace": "notion",
+      "resource": "file",
+      "action": "upload",
+      "description": "Upload a file to Notion",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "file",
+          "upload"
+        ],
+        "positionalArgs": [
+          "source"
+        ],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "source",
+          "type": "string",
+          "required": true,
+          "description": "Local path, http(s) URL, or - for stdin"
+        },
+        {
+          "name": "to",
+          "type": "string",
+          "required": false,
+          "description": "Target page ID to attach file to"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "Override filename (required for stdin/URL)"
+        }
+      ]
+    },
+    {
+      "namespace": "notion",
+      "resource": "file",
+      "action": "get",
+      "description": "Get a file upload by ID",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "notion",
+        "baseArgs": [
+          "file",
+          "get"
+        ],
+        "positionalArgs": [
+          "uploadId"
+        ],
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
+      },
+      "args": [
+        {
+          "name": "uploadId",
+          "type": "string",
+          "required": true,
+          "description": "File upload ID"
+        }
+      ]
     },
     {
       "namespace": "notion",
@@ -213,14 +1596,35 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
-        "baseArgs": ["api"],
-        "positionalArgs": ["method", "path"],
+        "baseArgs": [
+          "api"
+        ],
+        "positionalArgs": [
+          "method",
+          "path"
+        ],
         "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
+        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": [
-        { "name": "method", "type": "string", "required": true, "description": "HTTP method (GET, POST, PATCH, DELETE)" },
-        { "name": "path", "type": "string", "required": true, "description": "API path (e.g., /v1/users/me)" }
+        {
+          "name": "method",
+          "type": "string",
+          "required": true,
+          "description": "HTTP method (GET, POST, PATCH, DELETE)"
+        },
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "API path (e.g., /v1/users/me)"
+        },
+        {
+          "name": "body",
+          "type": "string",
+          "required": false,
+          "description": "JSON request body. Use @<file> to read from file, or - for stdin"
+        }
       ]
     },
     {
@@ -231,7 +1635,9 @@
       "adapter": "process",
       "adapterConfig": {
         "command": "notion",
+        "baseArgs": [],
         "passthrough": true,
+        "timeout_ms": 30000,
         "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
       },
       "args": []
