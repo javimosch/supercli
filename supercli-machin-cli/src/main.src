@@ -44,6 +44,24 @@ func main() {
         return
     }
 
+    // ----- cli-spec positional commands (help-json, guide, version) -----
+    if pa.positional[0] == "help-json" {
+        render_help_json_catalog()
+        return
+    }
+    if pa.positional[0] == "guide" {
+        if pa_flag_on(pa, "human") {
+            render_guide_human()
+        } else {
+            render_guide_json()
+        }
+        return
+    }
+    if pa.positional[0] == "version" {
+        if want_json { render_version_json() } else { render_version_human() }
+        return
+    }
+
     if pa.positional[0] == "install-as-sc" {
         println("Manual install (machin has no reliable self-locate from argv[0]):")
         println("  1. which sc-machin        # confirm its real path")
@@ -65,13 +83,11 @@ func main() {
 
     if pa.positional[0] == "inspect" {
         if len(pa.positional) < 4 {
-            println("{\"ok\":false,\"error\":\"usage: sc-machin inspect <namespace> <resource> <action>\"}")
-            exit(80)
+            typed_error(85, "invalid_argument", "usage: sc-machin inspect <namespace> <resource> <action>", false)
         }
         cmd, plugin_name, found := find_command(lock, pa.positional[1], pa.positional[2], pa.positional[3])
         if found == false {
-            println("{\"ok\":false,\"error\":\"command not found\"}")
-            exit(90)
+            typed_error(90, "resource_not_found", "command not found", false)
         }
         if want_json { render_inspect_json(cmd, plugin_name) } else { render_inspect_human(cmd, plugin_name) }
         return
@@ -98,8 +114,7 @@ func main() {
         }
         if sub == "install" {
             if len(pa.positional) < 3 {
-                println("{\"ok\":false,\"error\":\"usage: sc-machin plugins install <name>\"}")
-                exit(80)
+                typed_error(85, "invalid_argument", "usage: sc-machin plugins install <name>", false)
             }
             code := install_plugin(pa.positional[2])
             exit(code)
@@ -109,8 +124,7 @@ func main() {
             exit(code)
         }
 
-        println("{\"ok\":false,\"error\":\"unknown plugins subcommand (use list|explore|install|update)\"}")
-        exit(80)
+        typed_error(85, "invalid_argument", "unknown plugins subcommand (use list|explore|install|update)", false)
     }
 
     if pa.positional[0] == "mcp" {
@@ -120,22 +134,19 @@ func main() {
             mcp_serve(lock)
             return
         }
-        println("{\"ok\":false,\"error\":\"unknown mcp subcommand (use serve)\"}")
-        exit(80)
+        typed_error(85, "invalid_argument", "unknown mcp subcommand (use serve)", false)
     }
 
     // Otherwise: dispatch <namespace> <resource> <action> to a real plugin.
     if len(pa.positional) < 3 {
-        println("{\"ok\":false,\"error\":\"unrecognized command; run `sc-machin help`\"}")
-        exit(80)
+        typed_error(85, "invalid_argument", "unrecognized command; run `sc-machin help`", false)
     }
     ns := pa.positional[0]
     res := pa.positional[1]
     act := pa.positional[2]
     cmd, plugin_name, found := find_command(lock, ns, res, act)
     if found == false {
-        println("{\"ok\":false,\"error\":\"no such command: " + ns + " " + res + " " + act + "\"}")
-        exit(90)
+        typed_error(90, "resource_not_found", "no such command: " + ns + " " + res + " " + act, false)
     }
     if len(plugin_name) == 0 {
         // silence "unused" concerns in future refactors; plugin_name is

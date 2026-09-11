@@ -19,6 +19,7 @@ const doctor = @import("handlers/doctor.zig");
 const onboard = @import("handlers/onboard.zig");
 const misc = @import("handlers/misc.zig");
 const daemon = @import("handlers/daemon.zig");
+const guide = @import("handlers/guide.zig");
 
 pub fn main(init: std.process.Init) !void {
     const gpa = init.gpa;
@@ -61,6 +62,20 @@ pub fn main(init: std.process.Init) !void {
     }
     if (pos.len > 0 and std.mem.eql(u8, pos[0], "help")) {
         help.handleHelp(gpa, mode);
+        return;
+    }
+
+    // ----- cli-spec commands (help-json, guide, version as positional commands) -----
+    if (pos.len > 0 and std.mem.eql(u8, pos[0], "help-json")) {
+        help.handleHelpJson(gpa);
+        return;
+    }
+    if (pos.len > 0 and std.mem.eql(u8, pos[0], "guide")) {
+        guide.handleGuide(gpa, mode);
+        return;
+    }
+    if (pos.len > 0 and std.mem.eql(u8, pos[0], "version")) {
+        bootstrap.handleVersionInfo(gpa, mode);
         return;
     }
 
@@ -277,8 +292,8 @@ pub fn main(init: std.process.Init) !void {
         });
     } else {
         output.exitWithError(gpa, mode, .{
-            .code = 92,
-            .err_type = "resource_not_found",
+            .code = 85,
+            .err_type = "invalid_argument",
             .message = "Namespace not found. Is the plugin installed?",
             .recoverable = false,
             .suggestions = &.{
@@ -327,8 +342,8 @@ fn handleNamespaceBrowse(
             });
         }
         output.exitWithError(gpa, mode, .{
-            .code = 92,
-            .err_type = "resource_not_found",
+            .code = 85,
+            .err_type = "invalid_argument",
             .message = "Namespace not found. Is the plugin installed?",
             .recoverable = false,
             .suggestions = &.{
@@ -390,4 +405,32 @@ fn handleNamespaceBrowse(
     jw.endObject() catch return;
     output.writeRaw(out.written());
     output.writeRaw("\n");
+}
+
+// Reference all modules + external test files so `zig build test` includes their tests.
+test {
+    _ = @import("output.zig");
+    _ = @import("config.zig");
+    _ = @import("executor.zig");
+    _ = @import("args.zig");
+    _ = @import("lockfile.zig");
+    _ = @import("skills_catalog.zig");
+    _ = @import("registry.zig");
+    _ = @import("update.zig");
+    _ = @import("handlers/bootstrap.zig");
+    _ = @import("handlers/commands.zig");
+    _ = @import("handlers/plugins.zig");
+    _ = @import("handlers/execute.zig");
+    _ = @import("handlers/learn.zig");
+    _ = @import("handlers/install.zig");
+    _ = @import("handlers/discover.zig");
+    _ = @import("handlers/help.zig");
+    _ = @import("handlers/skills.zig");
+    _ = @import("handlers/run.zig");
+    _ = @import("handlers/doctor.zig");
+    _ = @import("handlers/onboard.zig");
+    _ = @import("handlers/misc.zig");
+    _ = @import("handlers/daemon.zig");
+    _ = @import("handlers/guide.zig");
+    _ = @import("tests/all_tests.zig");
 }

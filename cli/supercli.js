@@ -24,6 +24,7 @@ const { makeOutput, makeOutputError, outputHumanTable, makeStreamEmitter } = req
 const { displayJsonHelp, displayComprehensiveHelp, renderTopLevelHelp } = require("./help");
 const { handleCommandsQuery, handleInspect, handleSchema, handleNamespaceBrowse } = require("./commands-handler");
 const { handleExecute, handlePlan, handleExecutePlan } = require("./execute-handler");
+const { buildGuide, buildGuideHuman } = require("./guide");
 
 const SERVER = process.env.SUPERCLI_SERVER;
 const hasServer = !!SERVER;
@@ -150,6 +151,31 @@ async function main() {
       return;
     }
 
+    // ----- cli-spec positional commands (help-json, guide, version) -----
+    if (positional[0] === "help-json") {
+      const config = await loadConfig(SERVER);
+      output(buildCapabilities(config, hasServer));
+      return;
+    }
+    if (positional[0] === "guide") {
+      if (humanMode) {
+        console.log(buildGuideHuman());
+      } else {
+        output(buildGuide());
+      }
+      return;
+    }
+    if (positional[0] === "version") {
+      if (humanMode) {
+        console.log(`SuperCLI v${CLI_VERSION}`);
+        console.log("Implementation: JavaScript (Node.js)");
+        console.log("Binary: supercli");
+      } else {
+        output({ name: "SuperCLI", implementation: "JavaScript", version: CLI_VERSION, node_version: process.version, binary_name: "supercli" });
+      }
+      return;
+    }
+
     if (positional[0] === "config") {
       if (positional[1] === "show") { output(await showConfig()); return; }
       outputError({ code: 85, type: "invalid_argument", message: "Unknown config subcommand. Use: show", recoverable: false });
@@ -262,8 +288,15 @@ async function main() {
     const config = await loadConfig(SERVER);
     const cmd = config.commands.find((c) => c.namespace === namespace && c.resource === resource && c.action === action);
     if (!cmd) {
-      outputError({ code: 92, type: "resource_not_found", message: `Command ${namespace}.${resource}.${action} not found`,
-        suggestions: ["Run: supercli commands", `Run: supercli ${namespace} ${resource}`, `Run: supercli discover --intent "${namespace} ${resource} ${action}" --json`, `Run: supercli plugins explore --name ${resource} --json`] });
+      // Check if namespace exists at all — if not, it's an input error (85), not resource (92)
+      const nsExists = (config.commands || []).some(c => c.namespace === namespace);
+      if (!nsExists) {
+        outputError({ code: 85, type: "invalid_argument", message: `Namespace '${namespace}' not found`,
+          suggestions: ["Run: supercli commands", "Run: supercli plugins explore --name " + namespace] });
+      } else {
+        outputError({ code: 92, type: "resource_not_found", message: `Command ${namespace}.${resource}.${action} not found`,
+          suggestions: ["Run: supercli commands", `Run: supercli ${namespace} ${resource}`, `Run: supercli discover --intent "${namespace} ${resource} ${action}" --json`, `Run: supercli plugins explore --name ${resource} --json`] });
+      }
       return;
     }
 

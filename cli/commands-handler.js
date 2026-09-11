@@ -138,7 +138,7 @@ function handleNamespaceBrowse(config, positional, { humanMode, output, outputEr
     const cmds = config.commands.filter((c) => c.namespace === positional[0]);
     const resources = [...new Set(cmds.map((c) => c.resource))];
     if (resources.length === 0) {
-      outputError({ code: 92, type: "resource_not_found", message: `Namespace '${positional[0]}' not found`, suggestions: ["Run: supercli help"] });
+      outputError({ code: 85, type: "invalid_argument", message: `Namespace '${positional[0]}' not found`, suggestions: ["Run: supercli help"] });
       return;
     }
     if (humanMode) {

@@ -1,0 +1,105 @@
+"use strict";
+
+const CLI_VERSION = "1.0";
+
+function buildGuide() {
+  return {
+    version: CLI_VERSION,
+    one_liner: "Capability router that wraps external CLIs behind namespace.resource.action commands — discover, inspect, plan, execute",
+    model: "SuperCLI is a deterministic capability router, not an LLM. It wraps external CLIs behind a uniform namespace.resource.action interface. Plugins declare their commands in plugin.json manifests; the Node.js sc reads ~/.supercli/ config and a remote server (SUPERCLI_SERVER) to discover and dispatch them. No inference, no guessing — the agent discovers commands, inspects their schema, plans execution, then runs. Three implementations exist (sc-zig, sc Node.js, sc-machin) sharing the same lockfile and JSON envelope shapes. The Node.js sc is the reference implementation with the full adapter set (MCP client, HTTP adapter, plugin install).",
+    loop: [
+      "sc plugins explore --name <topic>  # find plugins by keyword",
+      "sc plugins install <name>           # install a plugin",
+      "sc commands --query <keyword>       # list matching commands",
+      "sc inspect <ns> <res> <act>         # inspect command schema",
+      "sc plan <ns> <res> <act>            # preview execution plan",
+      "sc <ns> <res> <act> --flag val      # execute command",
+    ],
+    concepts: {
+      plugin: "A directory under plugins/ with plugin.json (manifest + commands) and meta.json (description + tags). Each command has namespace, resource, action, adapter, adapterConfig, and args.",
+      lockfile: "~/.supercli/plugins/plugins.lock.json — the installed-plugin registry. sc reads this to discover commands. With SUPERCLI_SERVER set, sc also syncs remote plugins.",
+      adapter: "The execution backend for a command. 'process' runs an external binary. 'mcp' calls an MCP server tool. 'http' calls an HTTP endpoint. The adapter config includes the binary name, base args, and missingDependencyHelp.",
+      namespace_browse: "sc <ns> with no resource/action lists all commands in that namespace. sc <ns> <res> lists actions under that resource.",
+      passthrough: "A plugin can declare a passthrough command (resource='_', action='_') that forwards all args to the underlying binary verbatim.",
+      server: "SUPERCLI_SERVER env var points to a remote supercli server for centralized plugin management, MCP registry, and CLI adapters. Optional — sc works fully offline with local plugins.",
+    },
+    commands: {
+      "help-json": "Print the machine-readable command catalog with exit codes",
+      "guide": "Print this agent guide (JSON by default, --human for markdown)",
+      "version": "Print version info as JSON",
+      "commands": "List all available commands, optionally filtered by --query",
+      "inspect": "Show the schema for a specific namespace.resource.action command",
+      "plugins": "Subcommands: list, explore, install, remove, show, learn, doctor",
+      "discover": "Find plugins for a task via --intent",
+      "plan": "Create an execution plan for a command or intent",
+      "act": "Execute a workflow of commands",
+      "skills": "SKILL.md catalog: list, get, teach, sync, search",
+      "mcp": "MCP server registry: list, add, tools, call, bind, doctor, remove",
+      "daemon": "Subcommands: start, stop, status",
+    },
+    examples: [
+      "sc plugins explore --name memory  # find memory-related plugins",
+      "sc plugins install agentmemory-cli  # install a plugin",
+      "sc commands --query json  # list commands matching 'json'",
+      "sc inspect rtk git status  # inspect the rtk.git.status command schema",
+      "sc plan rtk git status  # preview the execution plan",
+      "sc rtk git status  # execute the command",
+    ],
+    gotchas: [
+      "SUPERCLI_SERVER is optional — sc works fully offline with local plugins, but server-only features (sync, remote plugins) need it set",
+      "The config cache at ~/.supercli/ may be stale — run 'sc sync' to refresh from the server",
+      "Flags use --flag value (space-separated), not --flag=value",
+      "If sc is too slow for repeated calls, switch to sc-zig (faster, single binary)",
+      "If sc-zig crashes or is missing a feature, fall back to sc (Node.js) — the reference implementation",
+      "Use context-mode MCP tool for large outputs (sc commands has 5000+ plugins) to reduce token usage by up to 98%",
+    ],
+  };
+}
+
+function buildGuideHuman() {
+  return [
+    "# supercli — agent guide",
+    "",
+    "Capability router that wraps external CLIs behind namespace.resource.action",
+    "commands — discover, inspect, plan, execute.",
+    "",
+    "## Model",
+    "",
+    "SuperCLI is a deterministic capability router, not an LLM. It wraps external CLIs",
+    "behind a uniform namespace.resource.action interface. Plugins declare their",
+    "commands in plugin.json manifests; sc reads ~/.supercli/ config to discover and",
+    "dispatch them. No inference, no guessing — the agent discovers commands,",
+    "inspects their schema, plans execution, then runs.",
+    "",
+    "## Loop",
+    "",
+    "  sc plugins explore --name <topic>  # find plugins by keyword",
+    "  sc plugins install <name>           # install a plugin",
+    "  sc commands --query <keyword>       # list matching commands",
+    "  sc inspect <ns> <res> <act>         # inspect command schema",
+    "  sc plan <ns> <res> <act>            # preview execution plan",
+    "  sc <ns> <res> <act> --flag val      # execute command",
+    "",
+    "## Commands",
+    "",
+    "  help-json    Print the machine-readable command catalog",
+    "  guide        Print this guide (JSON or --human markdown)",
+    "  version      Print version info",
+    "  commands     List all available commands (--query to filter)",
+    "  inspect      Show schema for a specific command",
+    "  plugins      list|explore|install|remove|show|learn|doctor",
+    "  discover     Find plugins for a task (--intent)",
+    "  plan         Create an execution plan",
+    "  daemon       start|stop|status",
+    "",
+    "## Gotchas",
+    "",
+    "- SUPERCLI_SERVER is optional — sc works offline with local plugins",
+    "- Config cache may be stale — run 'sc sync' to refresh",
+    "- If sc is slow, switch to sc-zig (faster, single binary)",
+    "- If sc-zig crashes, fall back to sc (Node.js) — the reference implementation",
+    "",
+  ].join("\n");
+}
+
+module.exports = { buildGuide, buildGuideHuman, CLI_VERSION };

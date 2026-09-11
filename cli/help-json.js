@@ -2,6 +2,9 @@
 
 function buildCapabilities(config, hasServer) {
   const commands = {
+    "help-json": { description: "Print the machine-readable command catalog with exit codes" },
+    "guide": { description: "Print the agent guide (JSON or --human markdown)" },
+    "version": { description: "Print version info as JSON" },
     help: { description: "List namespaces and commands" },
     discover: { description: "Deterministic intent-to-plugin discovery", usage: "supercli discover --intent \"<task>\" [--limit <n>]" },
     config: { subcommands: ["show"] },

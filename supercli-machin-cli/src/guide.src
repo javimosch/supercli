@@ -1,0 +1,124 @@
+// guide — `guide` command per cli-guide-spec.
+// Embeds the full agent mental model as JSON (default) or --human (markdown).
+
+func render_guide_json() {
+    out := "{"
+    out = out + "\"version\":" + json_str(sc_machin_version()) + ","
+    out = out + "\"one_liner\":\"Single-binary SuperCLI core in machin (MFL): discover, inspect, and execute CLI plugin commands behind namespace.resource.action\","
+    out = out + "\"model\":\"SuperCLI is a deterministic router, not an LLM. It wraps external CLIs behind a uniform namespace.resource.action interface. Plugins declare their commands in plugin.json manifests; sc-machin reads ~/.supercli/plugins/plugins.lock.json to discover and dispatch them. No inference, no guessing — the agent discovers commands, inspects their schema, then executes them. Three implementations exist (sc-zig, sc Node.js, sc-machin) sharing the same lockfile and JSON envelope shapes. sc-machin also exposes an MCP server (mcp serve) with built-in skills.match and rtk passthrough.\","
+    out = out + "\"loop\":["
+    out = out + "\"sc-machin plugins explore --name <topic>  # find plugins by keyword\","
+    out = out + "\"sc-machin plugins install <name>           # install plugin (needs Node.js sc)\","
+    out = out + "\"sc-machin commands --query <keyword>       # list matching commands\","
+    out = out + "\"sc-machin inspect <ns> <res> <act>         # inspect command schema\","
+    out = out + "\"sc-machin <ns> <res> <act> --flag val      # execute command\""
+    out = out + "],"
+    out = out + "\"concepts\":{"
+    out = out + "\"plugin\":\"A directory under plugins/ with plugin.json (manifest + commands) and meta.json (description + tags). Each command has namespace, resource, action, adapter, adapterConfig, and args.\","
+    out = out + "\"lockfile\":\"~/.supercli/plugins/plugins.lock.json — the installed-plugin registry. sc-machin reads this to discover commands. Plugin install delegates to Node.js sc.\","
+    out = out + "\"adapter\":\"The execution backend for a command. 'process' runs an external binary with baseArgs + user flags.\","
+    out = out + "\"mcp_serve\":\"sc-machin mcp serve starts a JSON-RPC 2.0 MCP server over stdio, exposing all plugin commands plus built-in tools (skills.match, rtk).\","
+    out = out + "\"skills_match\":\"Built-in MCP tool for semantic skill discovery across ~/.agents/skills, ~/.claude/skills, and project-level skill dirs.\","
+    out = out + "\"rtk\":\"Built-in MCP tool for token-reduced directory listing and git operations (ls, git status, git log, etc).\""
+    out = out + "},"
+    out = out + "\"commands\":{"
+    out = out + "\"help-json\":\"Print the machine-readable command catalog with exit codes\","
+    out = out + "\"guide\":\"Print this agent guide (JSON or --human markdown)\","
+    out = out + "\"version\":\"Print version info as JSON\","
+    out = out + "\"commands\":\"List all available commands (--query to filter)\","
+    out = out + "\"inspect\":\"Show schema for a specific namespace.resource.action\","
+    out = out + "\"plugins\":\"list|explore|install|update\","
+    out = out + "\"mcp\":\"serve (MCP server over stdio)\""
+    out = out + "},"
+    out = out + "\"examples\":["
+    out = out + "\"sc-machin plugins explore --name memory  # find memory-related plugins\","
+    out = out + "\"sc-machin plugins install agentmemory-cli  # install a plugin\","
+    out = out + "\"sc-machin commands --query json  # list commands matching 'json'\","
+    out = out + "\"sc-machin inspect rtk git status  # inspect the rtk.git.status command\","
+    out = out + "\"sc-machin rtk git status  # execute the command\","
+    out = out + "\"sc-machin mcp serve  # start MCP server for Claude Code / Claude Desktop\""
+    out = out + "],"
+    out = out + "\"gotchas\":["
+    out = out + "\"Plugin install delegates to Node.js sc — sc-machin cannot install plugins without Node.js on PATH\","
+    out = out + "\"The lockfile is at ~/.supercli/plugins/plugins.lock.json, not in the sc-machin binary directory\","
+    out = out + "\"No per-command timeout enforcement yet (known gap)\","
+    out = out + "\"If sc-machin is missing a feature, fall back to sc (Node.js) — the reference implementation\","
+    out = out + "\"Use sc-machin mcp serve to expose all commands to AI agents via MCP\""
+    out = out + "]"
+    out = out + "}"
+    println(out)
+}
+
+func render_guide_human() {
+    println("# sc-machin — agent guide")
+    println("")
+    println("Single-binary SuperCLI core in machin (MFL): discover, inspect, and execute")
+    println("CLI plugin commands behind namespace.resource.action.")
+    println("")
+    println("## Model")
+    println("")
+    println("SuperCLI is a deterministic router, not an LLM. It wraps external CLIs behind")
+    println("a uniform namespace.resource.action interface. Plugins declare their commands")
+    println("in plugin.json manifests; sc-machin reads ~/.supercli/plugins/plugins.lock.json")
+    println("to discover and dispatch them.")
+    println("")
+    println("## Loop")
+    println("")
+    println("  sc-machin plugins explore --name <topic>  # find plugins by keyword")
+    println("  sc-machin plugins install <name>           # install plugin (needs Node.js sc)")
+    println("  sc-machin commands --query <keyword>       # list matching commands")
+    println("  sc-machin inspect <ns> <res> <act>         # inspect command schema")
+    println("  sc-machin <ns> <res> <act> --flag val      # execute command")
+    println("")
+    println("## Commands")
+    println("")
+    println("  help-json    Print the machine-readable command catalog")
+    println("  guide        Print this guide (JSON or --human markdown)")
+    println("  version      Print version info")
+    println("  commands     List all available commands (--query to filter)")
+    println("  inspect      Show schema for a specific command")
+    println("  plugins      list|explore|install|update")
+    println("  mcp serve    Start MCP server over stdio")
+    println("")
+    println("## Gotchas")
+    println("")
+    println("- Plugin install delegates to Node.js sc — sc-machin cannot install without Node.js")
+    println("- No per-command timeout enforcement yet (known gap)")
+    println("- If sc-machin is missing a feature, fall back to sc (Node.js)")
+    println("- Use sc-machin mcp serve to expose all commands to AI agents via MCP")
+    println("")
+}
+
+func render_help_json_catalog() {
+    out := "{"
+    out = out + "\"name\":\"SuperCLI (machin)\","
+    out = out + "\"description\":\"Single-binary SuperCLI core written in machin (MFL)\","
+    out = out + "\"binary\":\"sc-machin\","
+    out = out + "\"version\":" + json_str(sc_machin_version()) + ","
+    out = out + "\"commands\":["
+    out = out + "{\"name\":\"help-json\",\"description\":\"Print the machine-readable command catalog\"},"
+    out = out + "{\"name\":\"guide\",\"description\":\"Print the agent guide (JSON or --human markdown)\"},"
+    out = out + "{\"name\":\"version\",\"description\":\"Print version info as JSON\"},"
+    out = out + "{\"name\":\"commands\",\"description\":\"List all available commands (--query to filter)\"},"
+    out = out + "{\"name\":\"inspect\",\"description\":\"Show schema for a specific namespace.resource.action\"},"
+    out = out + "{\"name\":\"plugins\",\"description\":\"list|explore|install|update\"},"
+    out = out + "{\"name\":\"mcp\",\"description\":\"serve (MCP server over stdio)\"}"
+    out = out + "],"
+    out = out + "\"exit_codes\":{"
+    out = out + "\"0\":\"success\","
+    out = out + "\"80\":\"input_error\","
+    out = out + "\"85\":\"invalid_argument\","
+    out = out + "\"90\":\"resource_not_found\","
+    out = out + "\"110\":\"internal_error\""
+    out = out + "}"
+    out = out + "}"
+    println(out)
+}
+
+// typed_error prints a cli-output-spec conformant error and exits.
+func typed_error(code, err_type, message, recoverable) {
+    rec := "false"
+    if recoverable { rec = "true" }
+    println("{\"error\":{\"code\":" + str(code) + ",\"type\":" + json_str(err_type) + ",\"message\":" + json_str(message) + ",\"recoverable\":" + rec + ",\"suggestions\":[]}}")
+    exit(code)
+}

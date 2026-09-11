@@ -17,6 +17,46 @@ pub fn handleHelpJson(gpa: std.mem.Allocator) void {
     jw.objectField("binary") catch return;
     jw.write("sc-zig") catch return;
 
+    jw.objectField("version") catch return;
+    jw.write("0.1.1") catch return;
+
+    // cli-output-spec §4: .commands must be present in the catalog
+    jw.objectField("commands") catch return;
+    jw.beginArray() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("help-json") catch return;
+    jw.objectField("description") catch return; jw.write("Print the machine-readable command catalog") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("guide") catch return;
+    jw.objectField("description") catch return; jw.write("Print the agent guide (JSON or --human markdown)") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("version") catch return;
+    jw.objectField("description") catch return; jw.write("Print version info as JSON") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("commands") catch return;
+    jw.objectField("description") catch return; jw.write("List all available commands (--query to filter)") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("inspect") catch return;
+    jw.objectField("description") catch return; jw.write("Show schema for a specific namespace.resource.action") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("plugins") catch return;
+    jw.objectField("description") catch return; jw.write("list|explore|install|remove|show|learn|doctor|update") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("discover") catch return;
+    jw.objectField("description") catch return; jw.write("Find plugins for a task (--intent)") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("daemon") catch return;
+    jw.objectField("description") catch return; jw.write("start|stop|status") catch return;
+    jw.endObject() catch return;
+    jw.endArray() catch return;
+
     jw.objectField("core_commands") catch return;
     jw.beginArray() catch return;
     jw.write("sc-zig <namespace> <resource> <action>  # Execute capability") catch return;
@@ -136,3 +176,12 @@ pub fn handleHelp(gpa: std.mem.Allocator, mode: output.Mode) void {
         handleHelpJson(gpa);
     }
 }
+
+// ---------------------------------------------------------------------------
+// Tests
+// ---------------------------------------------------------------------------
+
+const th = @import("../test_helpers.zig");
+
+
+
