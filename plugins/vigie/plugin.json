@@ -1,0 +1,329 @@
+{
+  "name": "vigie",
+  "version": "0.1.0",
+  "description": "Agent-first, cookieless web analytics \u2014 one static binary, JSON verbs, no dashboard",
+  "source": "https://github.com/javimosch/vigie",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vigie"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vigie",
+    "binary": "vigie",
+    "check": "which vigie",
+    "install_steps": [
+      "Build from source: https://github.com/javimosch/vigie",
+      "Verify: vigie version || vigie guide"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "vigie",
+      "resource": "self",
+      "action": "serve",
+      "description": "Run the ingest+snippet HTTP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "serve"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "port",
+          "type": "integer",
+          "required": false,
+          "description": "Port number",
+          "default": 8090
+        },
+        {
+          "name": "db",
+          "type": "string",
+          "required": false,
+          "description": "SQLite DB path"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "site",
+      "action": "add",
+      "description": "Register a tracked site",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "site",
+          "add"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "domain",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "site",
+      "action": "list",
+      "description": "List all registered sites",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "site",
+          "list"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vigie",
+      "resource": "site",
+      "action": "key",
+      "description": "Get the per-site read key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "site",
+          "key"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "stats",
+      "action": "overview",
+      "description": "Query overview analytics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "stats",
+          "overview"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        },
+        {
+          "name": "since",
+          "type": "string",
+          "required": false,
+          "description": "Time range (e.g. 7d, 30d)"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "stats",
+      "action": "pages",
+      "description": "Query page breakdown",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "stats",
+          "pages"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        },
+        {
+          "name": "since",
+          "type": "string",
+          "required": false,
+          "description": "Time range"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "stats",
+      "action": "events",
+      "description": "Query custom events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "stats",
+          "events"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        },
+        {
+          "name": "since",
+          "type": "string",
+          "required": false,
+          "description": "Time range"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "stats",
+      "action": "live",
+      "description": "Real-time last-5-min stats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "stats",
+          "live"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "track",
+      "action": "event",
+      "description": "Record a server-side event (agents are users too)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "track"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "description": "Event name"
+        },
+        {
+          "name": "actor",
+          "type": "string",
+          "required": false,
+          "description": "Actor identifier"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "report",
+      "action": "url",
+      "description": "Print the live-report dashboard URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "report"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "globe",
+      "action": "url",
+      "description": "Print the war-room globe URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "globe"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": [
+        {
+          "name": "site",
+          "type": "string",
+          "required": true,
+          "description": "Site domain"
+        }
+      ]
+    },
+    {
+      "namespace": "vigie",
+      "resource": "self",
+      "action": "guide",
+      "description": "Print the agent guide (JSON)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vigie",
+        "baseArgs": [
+          "guide"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install vigie from https://github.com/javimosch/vigie"
+      },
+      "args": []
+    }
+  ]
+}

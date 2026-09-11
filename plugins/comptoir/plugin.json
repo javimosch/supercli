@@ -1,0 +1,162 @@
+{
+  "name": "comptoir",
+  "version": "0.1.0",
+  "description": "The billing + declarative-compute spine for 12 tax calculators \u2014 each product is a config row, one binary serves all",
+  "source": "https://github.com/javimosch/comptoir",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "comptoir"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "comptoir",
+    "binary": "comptoir",
+    "check": "which comptoir",
+    "install_steps": [
+      "Build from source: https://github.com/javimosch/comptoir",
+      "Verify: comptoir version || comptoir guide"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "comptoir",
+      "resource": "product",
+      "action": "verify",
+      "description": "Validate a product config (cases + structural, no writes)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comptoir",
+        "baseArgs": [
+          "verify"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install comptoir from https://github.com/javimosch/comptoir"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Product directory path"
+        }
+      ]
+    },
+    {
+      "namespace": "comptoir",
+      "resource": "product",
+      "action": "apply",
+      "description": "Validate + upsert a product (refuses on case failure)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comptoir",
+        "baseArgs": [
+          "apply"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install comptoir from https://github.com/javimosch/comptoir"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Product directory path"
+        }
+      ]
+    },
+    {
+      "namespace": "comptoir",
+      "resource": "product",
+      "action": "status",
+      "description": "Set product status (draft/live)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comptoir",
+        "baseArgs": [
+          "product",
+          "status"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install comptoir from https://github.com/javimosch/comptoir"
+      },
+      "args": [
+        {
+          "name": "slug",
+          "type": "string",
+          "required": true,
+          "description": "Product slug"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "description": "Status: draft|live"
+        }
+      ]
+    },
+    {
+      "namespace": "comptoir",
+      "resource": "product",
+      "action": "bundle",
+      "description": "Emit the standalone HTML artifact for a product",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comptoir",
+        "baseArgs": [
+          "bundle"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install comptoir from https://github.com/javimosch/comptoir"
+      },
+      "args": [
+        {
+          "name": "slug",
+          "type": "string",
+          "required": true,
+          "description": "Product slug"
+        }
+      ]
+    },
+    {
+      "namespace": "comptoir",
+      "resource": "self",
+      "action": "serve",
+      "description": "Start the HTTP server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comptoir",
+        "baseArgs": [
+          "serve"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install comptoir from https://github.com/javimosch/comptoir"
+      },
+      "args": [
+        {
+          "name": "port",
+          "type": "integer",
+          "required": false,
+          "description": "Port number",
+          "default": 8781
+        }
+      ]
+    },
+    {
+      "namespace": "comptoir",
+      "resource": "self",
+      "action": "guide",
+      "description": "Print the agent guide (JSON)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "comptoir",
+        "baseArgs": [
+          "guide"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install comptoir from https://github.com/javimosch/comptoir"
+      },
+      "args": []
+    }
+  ]
+}

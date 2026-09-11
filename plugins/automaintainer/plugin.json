@@ -1,0 +1,90 @@
+{
+  "name": "automaintainer",
+  "version": "0.1.0",
+  "description": "Verified autonomy for your codebase \u2014 AI staff augmentation via SaaS worker",
+  "source": "https://github.com/javimosch/automaintainer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "am-cloud"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "automaintainer",
+    "binary": "am-cloud",
+    "check": "which am-cloud",
+    "install_steps": [
+      "Build from source: https://github.com/javimosch/automaintainer",
+      "Verify: am-cloud version || am-cloud guide"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "automaintainer",
+      "resource": "worker",
+      "action": "start",
+      "description": "Connect to SaaS panel as worker",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": [
+          "start"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install am-cloud from https://github.com/javimosch/automaintainer"
+      },
+      "args": [
+        {
+          "name": "panel",
+          "type": "string",
+          "required": true,
+          "description": "Panel WSS URL"
+        },
+        {
+          "name": "token",
+          "type": "string",
+          "required": true,
+          "description": "Worker token"
+        },
+        {
+          "name": "daemon",
+          "type": "boolean",
+          "required": false,
+          "description": "Run as background daemon"
+        }
+      ]
+    },
+    {
+      "namespace": "automaintainer",
+      "resource": "worker",
+      "action": "stop",
+      "description": "Stop the background daemon",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": [
+          "stop"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install am-cloud from https://github.com/javimosch/automaintainer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "automaintainer",
+      "resource": "worker",
+      "action": "status",
+      "description": "Show daemon status + last 20 log lines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "am-cloud",
+        "baseArgs": [
+          "status"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install am-cloud from https://github.com/javimosch/automaintainer"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,242 @@
+{
+  "name": "bilan",
+  "version": "0.1.0",
+  "description": "Deterministic financial ledger + tax radar for French pluri-actifs \u2014 no LLM, just signed math",
+  "source": "https://github.com/javimosch/bilan",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "bilan"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "bilan",
+    "binary": "bilan",
+    "check": "which bilan",
+    "install_steps": [
+      "Build from source: https://github.com/javimosch/bilan",
+      "Verify: bilan version || bilan guide"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "bilan",
+      "resource": "stream",
+      "action": "add",
+      "description": "Create an activity stream (salary|bnc|bic|rent|crypto|trading|dividends)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "stream",
+          "add"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": [
+        {
+          "name": "kind",
+          "type": "string",
+          "required": true,
+          "description": "Activity kind"
+        },
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "description": "Stream label"
+        }
+      ]
+    },
+    {
+      "namespace": "bilan",
+      "resource": "stream",
+      "action": "list",
+      "description": "List all activity streams",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "stream",
+          "list"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bilan",
+      "resource": "tx",
+      "action": "add",
+      "description": "Record a signed money event",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "tx",
+          "add"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": [
+        {
+          "name": "stream",
+          "type": "string",
+          "required": true,
+          "description": "Stream ID"
+        },
+        {
+          "name": "amount",
+          "type": "string",
+          "required": true,
+          "description": "Amount (positive income, negative expense)"
+        }
+      ]
+    },
+    {
+      "namespace": "bilan",
+      "resource": "tx",
+      "action": "list",
+      "description": "List transactions, latest first",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "tx",
+          "list"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": [
+        {
+          "name": "stream",
+          "type": "string",
+          "required": false,
+          "description": "Filter by stream"
+        }
+      ]
+    },
+    {
+      "namespace": "bilan",
+      "resource": "self",
+      "action": "import",
+      "description": "Import a broker/bank CSV (idempotent, reads stdin)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "import"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": [
+        {
+          "name": "connector",
+          "type": "string",
+          "required": true,
+          "description": "CSV connector type"
+        }
+      ]
+    },
+    {
+      "namespace": "bilan",
+      "resource": "stats",
+      "action": "show",
+      "description": "Per-kind signed totals, income/expense/net",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "stats"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": [
+        {
+          "name": "year",
+          "type": "integer",
+          "required": false,
+          "description": "Tax year"
+        }
+      ]
+    },
+    {
+      "namespace": "bilan",
+      "resource": "tax",
+      "action": "radar",
+      "description": "The tax radar: abattements, social, PFU, crypto exemptions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "tax"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": [
+        {
+          "name": "year",
+          "type": "integer",
+          "required": true,
+          "description": "Tax year"
+        }
+      ]
+    },
+    {
+      "namespace": "bilan",
+      "resource": "rule",
+      "action": "list",
+      "description": "List tax rules (the rate card as data)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "rule",
+          "list"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bilan",
+      "resource": "self",
+      "action": "demo",
+      "description": "Seed a deterministic pluri-actif demo ledger",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "demo"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "bilan",
+      "resource": "self",
+      "action": "guide",
+      "description": "Print the operator guide",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "bilan",
+        "baseArgs": [
+          "guide"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install bilan from https://github.com/javimosch/bilan"
+      },
+      "args": []
+    }
+  ]
+}
