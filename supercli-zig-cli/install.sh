@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-VERSION="v0.1.0-zig"
+VERSION="v0.1.1-zig"
 REPO="javimosch/supercli"
 REPLACE_SC=false
 CUSTOM_PATH=""
