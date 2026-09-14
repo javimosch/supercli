@@ -20,6 +20,7 @@ function displayJsonHelp() {
     ],
     core_commands: [
       "supercli <namespace> <resource> <action>  # Execute capability",
+      "supercli run <plugin> <resource> <action> # Sync catalog, install plugin, and execute",
       "supercli inspect <ns> <res> <act>       # View command details",
       "supercli plan <ns> <res> <act>          # Create execution plan",
       "supercli execute <plan_id>              # Run stored plan",
@@ -75,6 +76,7 @@ function displayComprehensiveHelp() {
   console.log('    supercli discover --intent "<task>"  # Find capabilities for a task\n');
   console.log("  🔧 CORE COMMANDS:");
   console.log("    supercli <namespace> <resource> <action>  # Execute capability");
+  console.log("    supercli run <plugin> <resource> <action> # Sync catalog, install plugin, and execute");
   console.log("    supercli inspect <ns> <res> <act>       # View command details");
   console.log("    supercli plan <ns> <res> <act>          # Create execution plan");
   console.log("    supercli execute <plan_id>              # Run stored plan");
