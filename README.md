@@ -488,3 +488,7 @@ If supercli saved you time, consider supporting the project:
 ## License
 
 MIT — <a href="https://www.linkedin.com/in/arancibiajav/" target="_blank">Javier Leandro Arancibia</a>
+
+## Projects using supercli
+
+- **[Crevisto](https://crevisto.com)** — 100+ AI image tools. CLI built with supercli patterns.
