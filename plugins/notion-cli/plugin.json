@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "description": "notion-cli — full-featured Notion CLI with 39 commands for pages, databases, blocks, and the full Notion API",
   "source": "https://github.com/4ier/notion-cli",
-  "checks": [
-    { "type": "binary", "name": "notion" }
-  ],
+  "checks": [{"type":"binary","name":"notion"}],
   "install_guidance": {
     "plugin": "notion-cli",
     "binary": "notion",
@@ -19,222 +17,33 @@
     ],
     "note": "Primary install is `go install github.com/4ier/notion-cli@latest`, which builds a binary named `notion-cli`. Link or rename it to `notion` before the `Verify` step. Also available via Homebrew (`brew install 4ier/tap/notion-cli`), npm (`npm install -g @4ier/notion-cli`), GitHub Releases (https://github.com/4ier/notion-cli/releases), or Scoop on Windows. Token stored in ~/.config/notion-cli/config.json (mode 0600). Auto-detects JSON output when piped to another command."
   },
-  "learn": {
-    "file": "skills/quickstart/SKILL.md"
-  },
+  "learn": {"file":"skills/quickstart/SKILL.md"},
   "commands": [
-    {
-      "namespace": "notion",
-      "resource": "self",
-      "action": "version",
-      "description": "Print notion-cli version",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["--version"],
-        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli"
-      },
-      "args": []
-    },
-    {
-      "namespace": "notion",
-      "resource": "auth",
-      "action": "status",
-      "description": "Check Notion authentication status",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["auth", "status"],
-        "timeout_ms": 5000,
-        "missingDependencyHelp": "Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
-      },
-      "args": []
-    },
-    {
-      "namespace": "notion",
-      "resource": "search",
-      "action": "run",
-      "description": "Search Notion pages and databases by query string",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["search"],
-        "positionalArgs": ["query"],
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "query", "type": "string", "required": true, "description": "Search query text" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "page",
-      "action": "view",
-      "description": "View a Notion page by ID or URL",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["page", "view"],
-        "positionalArgs": ["pageId"],
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "pageId", "type": "string", "required": true, "description": "Page ID or full Notion URL" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "page",
-      "action": "create",
-      "description": "Create a new page in a Notion database",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["page", "create"],
-        "positionalArgs": ["dbId"],
-        "passthrough": true,
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "dbId", "type": "string", "required": true, "description": "Database ID or URL" },
-        { "name": "--db", "type": "string", "required": false, "description": "Database properties in 'Name=Value' format (e.g., 'Name=Task', 'Status=Done')" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "page",
-      "action": "list",
-      "description": "List recent Notion pages",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["page", "list"],
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": []
-    },
-    {
-      "namespace": "notion",
-      "resource": "db",
-      "action": "query",
-      "description": "Query a Notion database with filters and sorting",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["db", "query"],
-        "positionalArgs": ["dbId"],
-        "passthrough": true,
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "dbId", "type": "string", "required": true, "description": "Database ID or URL" },
-        { "name": "--filter", "type": "string", "required": false, "description": "Filter by property (e.g., 'Status=Done', 'Priority=High')" },
-        { "name": "--filter-json", "type": "string", "required": false, "description": "Complex filter in JSON (for OR/nesting)" },
-        { "name": "--sort", "type": "string", "required": false, "description": "Sort by property (e.g., 'Date:desc')" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "db",
-      "action": "list",
-      "description": "List Notion databases",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["db", "list"],
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": []
-    },
-    {
-      "namespace": "notion",
-      "resource": "block",
-      "action": "list",
-      "description": "List blocks (content) of a Notion page as Markdown",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["block", "list"],
-        "positionalArgs": ["pageId"],
-        "passthrough": true,
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "pageId", "type": "string", "required": true, "description": "Page ID or URL" },
-        { "name": "--depth", "type": "number", "required": false, "description": "Recursion depth for nested blocks (default 1)" },
-        { "name": "--md", "type": "boolean", "required": false, "description": "Output as Markdown" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "block",
-      "action": "append",
-      "description": "Append Markdown content to a Notion page",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["block", "append"],
-        "positionalArgs": ["pageId"],
-        "passthrough": true,
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "pageId", "type": "string", "required": true, "description": "Page ID or URL" },
-        { "name": "--file", "type": "string", "required": false, "description": "Markdown file to append" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "user",
-      "action": "list",
-      "description": "List workspace members",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["user", "list"],
-        "timeout_ms": 10000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": []
-    },
-    {
-      "namespace": "notion",
-      "resource": "api",
-      "action": "request",
-      "description": "Raw Notion API request (e.g., GET /v1/users/me)",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "baseArgs": ["api"],
-        "positionalArgs": ["method", "path"],
-        "timeout_ms": 15000,
-        "missingDependencyHelp": "Install notion-cli and authenticate"
-      },
-      "args": [
-        { "name": "method", "type": "string", "required": true, "description": "HTTP method (GET, POST, PATCH, DELETE)" },
-        { "name": "path", "type": "string", "required": true, "description": "API path (e.g., /v1/users/me)" }
-      ]
-    },
-    {
-      "namespace": "notion",
-      "resource": "_",
-      "action": "_",
-      "description": "Passthrough to notion CLI for any command",
-      "adapter": "process",
-      "adapterConfig": {
-        "command": "notion",
-        "passthrough": true,
-        "missingDependencyHelp": "Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"
-      },
-      "args": []
-    }
+    {"namespace":"notion","resource":"self","action":"version","description":"Print notion-cli version","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["--version"],"missingDependencyHelp":"Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli","timeout_ms":5000},"args":[]},
+    {"namespace":"notion","resource":"auth","action":"status","description":"Check Notion authentication status","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["auth","status"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":5000},"args":[]},
+    {"namespace":"notion","resource":"auth","action":"logout","description":"Log out of Notion","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["auth","logout"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":5000},"args":[]},
+    {"namespace":"notion","resource":"auth","action":"doctor","description":"Check authentication and API connectivity","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["auth","doctor"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":10000},"args":[]},
+    {"namespace":"notion","resource":"search","action":"run","description":"Search Notion pages and databases by query string","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["search"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["query"]},"args":[{"name":"query","type":"string","required":true,"description":"Search query text"},{"name":"limit","type":"number","required":false,"description":"Maximum results per page"},{"name":"all","type":"boolean","required":false,"description":"Fetch all pages of results"}]},
+    {"namespace":"notion","resource":"page","action":"view","description":"View a Notion page by ID or URL","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["page","view"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["pageId"]},"args":[{"name":"pageId","type":"string","required":true,"description":"Page ID or full Notion URL"}]},
+    {"namespace":"notion","resource":"page","action":"list","description":"List recent Notion pages","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["page","list"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000},"args":[]},
+    {"namespace":"notion","resource":"page","action":"create","description":"Create a new page under a parent page or database","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["page","create"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["parentId"]},"args":[{"name":"parentId","type":"string","required":true,"description":"Parent page or database ID/URL"},{"name":"title","type":"string","required":false,"description":"Page title (required when parent is a page)"},{"name":"body","type":"string","required":false,"description":"Page body text"}]},
+    {"namespace":"notion","resource":"page","action":"archive","description":"Archive (soft-delete) a Notion page","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["page","archive"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["pageId"]},"args":[{"name":"pageId","type":"string","required":true,"description":"Page ID or full Notion URL"}]},
+    {"namespace":"notion","resource":"page","action":"restore","description":"Restore an archived Notion page","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["page","restore"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["pageId"]},"args":[{"name":"pageId","type":"string","required":true,"description":"Page ID or full Notion URL"}]},
+    {"namespace":"notion","resource":"db","action":"list","description":"List Notion databases","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["db","list"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000},"args":[]},
+    {"namespace":"notion","resource":"db","action":"view","description":"Show database schema","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["db","view"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["dbId"]},"args":[{"name":"dbId","type":"string","required":true,"description":"Database ID or URL"}]},
+    {"namespace":"notion","resource":"db","action":"query","description":"Query a Notion database with filters and sorting","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["db","query"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["dbId"]},"args":[{"name":"dbId","type":"string","required":true,"description":"Database ID or URL"},{"name":"filter","type":"string","required":false,"description":"Filter expression (e.g. 'Status=Done')"},{"name":"filter-json","type":"string","required":false,"description":"Complex filter in raw Notion API JSON"},{"name":"sort","type":"string","required":false,"description":"Sort expression (e.g. 'Date:desc')"},{"name":"limit","type":"number","required":false,"description":"Maximum results per page"},{"name":"all","type":"boolean","required":false,"description":"Fetch all pages of results"},{"name":"cursor","type":"string","required":false,"description":"Pagination cursor"}]},
+    {"namespace":"notion","resource":"db","action":"add","description":"Add a new row (page) to a database","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["db","add"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["dbId"]},"args":[{"name":"dbId","type":"string","required":true,"description":"Database ID or URL"}]},
+    {"namespace":"notion","resource":"db","action":"create","description":"Create a new database under a parent page","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["db","create"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["parentId"]},"args":[{"name":"parentId","type":"string","required":true,"description":"Parent page ID or URL"},{"name":"title","type":"string","required":false,"description":"Database title (required)"},{"name":"props","type":"string","required":false,"description":"Additional properties as name:type,... (e.g. Status:select,Date:date)"}]},
+    {"namespace":"notion","resource":"block","action":"list","description":"List child blocks of a page or block as Markdown","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["block","list"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["pageId"]},"args":[{"name":"pageId","type":"string","required":true,"description":"Page or block ID/URL"},{"name":"depth","type":"number","required":false,"description":"Recursion depth for nested blocks (default 1)"},{"name":"md","type":"boolean","required":false,"description":"Output as Markdown"},{"name":"all","type":"boolean","required":false,"description":"Fetch all pages of results"},{"name":"cursor","type":"string","required":false,"description":"Pagination cursor"},{"name":"format","type":"string","required":false,"description":"Output format: json, md, table, text"}]},
+    {"namespace":"notion","resource":"block","action":"get","description":"Get a specific block by ID","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["block","get"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["blockId"]},"args":[{"name":"blockId","type":"string","required":true,"description":"Block ID or URL"}]},
+    {"namespace":"notion","resource":"block","action":"append","description":"Append Markdown or blocks to a Notion page or block","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["block","append"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["parentId"]},"args":[{"name":"parentId","type":"string","required":true,"description":"Page or block ID/URL"},{"name":"file","type":"string","required":false,"description":"Read content from a Markdown file"},{"name":"type","type":"string","required":false,"description":"Block type: paragraph, h1, h2, h3, todo, bullet, numbered, quote, code, callout, divider"},{"name":"lang","type":"string","required":false,"description":"Language for code blocks (e.g. go, python, bash)"},{"name":"on-oversize","type":"string","required":false,"description":"Behavior for rich_text >2000 chars: split|truncate|fail"},{"name":"caption","type":"string","required":false,"description":"Caption for media blocks"}]},
+    {"namespace":"notion","resource":"block","action":"delete","description":"Delete one or more blocks by ID","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["block","delete"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["blockId"]},"args":[{"name":"blockId","type":"string","required":true,"description":"Block ID or URL"}]},
+    {"namespace":"notion","resource":"user","action":"list","description":"List workspace members","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["user","list"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":10000},"args":[]},
+    {"namespace":"notion","resource":"user","action":"me","description":"Show current bot user","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["user","me"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":10000},"args":[]},
+    {"namespace":"notion","resource":"comment","action":"list","description":"List comments on a Notion page or block","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["comment","list"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["pageId"]},"args":[{"name":"pageId","type":"string","required":true,"description":"Page or block ID/URL"},{"name":"all","type":"boolean","required":false,"description":"Fetch all pages of results"},{"name":"cursor","type":"string","required":false,"description":"Pagination cursor"}]},
+    {"namespace":"notion","resource":"file","action":"list","description":"List file uploads","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["file","list"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":10000},"args":[]},
+    {"namespace":"notion","resource":"file","action":"upload","description":"Upload a file to Notion","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["file","upload"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":60000,"positionalArgs":["source"]},"args":[{"name":"source","type":"string","required":true,"description":"Local path, http(s) URL, or - for stdin"},{"name":"to","type":"string","required":false,"description":"Target page ID to attach file to"},{"name":"name","type":"string","required":false,"description":"Override filename (required for stdin/URL)"}]},
+    {"namespace":"notion","resource":"api","action":"request","description":"Raw Notion API request (e.g. GET /v1/users/me)","adapter":"process","adapterConfig":{"command":"notion","baseArgs":["api"],"missingDependencyHelp":"Install notion-cli and authenticate: echo 'ntn_xxxx' | notion auth login --with-token","timeout_ms":15000,"positionalArgs":["method","path"]},"args":[{"name":"method","type":"string","required":true,"description":"HTTP method (GET, POST, PATCH, DELETE)"},{"name":"path","type":"string","required":true,"description":"API path (e.g. /v1/users/me)"},{"name":"body","type":"string","required":false,"description":"JSON request body. Use @<file> to read from file, or - for stdin"}]},
+    {"namespace":"notion","resource":"_","action":"_","description":"Passthrough to notion CLI for any command","adapter":"process","adapterConfig":{"command":"notion","passthrough":true,"missingDependencyHelp":"Install notion-cli: go install github.com/4ier/notion-cli@latest (the binary will be named notion-cli; symlink or rename it to notion) or brew install 4ier/tap/notion-cli. Authenticate: echo 'ntn_xxxx' | notion auth login --with-token"},"args":[]}
   ]
 }
