@@ -1,0 +1,90 @@
+{
+  "name": "depscan",
+  "version": "0.1.0",
+  "description": "OWASP dep-scan — open-source dependency and container vulnerability auditor with VEX and reachability analysis",
+  "source": "https://github.com/owasp-dep-scan/dep-scan",
+  "checks": [
+    { "type": "binary", "name": "depscan" }
+  ],
+  "install_guidance": {
+    "plugin": "depscan",
+    "binary": "depscan",
+    "check": "which depscan",
+    "install_steps": [
+      "pipx install owasp-depscan",
+      "Verify: depscan --version",
+      "supercli plugins install ./plugins/depscan --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "depscan",
+      "resource": "self",
+      "action": "version",
+      "description": "Print depscan version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "depscan",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install depscan: pipx install owasp-depscan"
+      },
+      "args": []
+    },
+    {
+      "namespace": "depscan",
+      "resource": "scan",
+      "action": "run",
+      "description": "Audit a project's dependencies for vulnerabilities (auto-detects project type; use --reports-dir for JSON/VEX output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "depscan",
+        "baseArgs": ["--src"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install depscan: pipx install owasp-depscan"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Source directory to audit (use . for current dir)" }
+      ]
+    },
+    {
+      "namespace": "depscan",
+      "resource": "scan",
+      "action": "bom",
+      "description": "Audit an existing SBOM file instead of a source tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "depscan",
+        "baseArgs": ["--bom"],
+        "positionalArgs": ["sbom_file"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install depscan: pipx install owasp-depscan"
+      },
+      "args": [
+        { "name": "sbom_file", "type": "string", "required": true, "description": "Path to a CycloneDX/SPDX SBOM file" }
+      ]
+    },
+    {
+      "namespace": "depscan",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to depscan CLI (--src-image-dir for containers, --profile, --deep, --vex-file, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "depscan",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install depscan: pipx install owasp-depscan"
+      },
+      "args": []
+    }
+  ]
+}

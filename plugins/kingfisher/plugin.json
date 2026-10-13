@@ -1,0 +1,103 @@
+{
+  "name": "kingfisher",
+  "version": "0.1.0",
+  "description": "MongoDB's secret detection engine — finds and live-validates exposed credentials in code, git history, and developer platforms",
+  "source": "https://github.com/mongodb/kingfisher",
+  "checks": [
+    { "type": "binary", "name": "kingfisher" }
+  ],
+  "install_guidance": {
+    "plugin": "kingfisher",
+    "binary": "kingfisher",
+    "check": "which kingfisher",
+    "install_steps": [
+      "curl -sSL https://raw.githubusercontent.com/mongodb/kingfisher/main/scripts/install-kingfisher.sh | bash",
+      "Verify: kingfisher --version",
+      "supercli plugins install ./plugins/kingfisher --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kingfisher",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kingfisher version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kingfisher",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install kingfisher: curl -sSL https://raw.githubusercontent.com/mongodb/kingfisher/main/scripts/install-kingfisher.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kingfisher",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan a path for secrets and sensitive credentials (use --only-valid to filter to live secrets, --format json for machine output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kingfisher",
+        "baseArgs": ["scan"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kingfisher: curl -sSL https://raw.githubusercontent.com/mongodb/kingfisher/main/scripts/install-kingfisher.sh | bash"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File or directory to scan (use . for current dir)" }
+      ]
+    },
+    {
+      "namespace": "kingfisher",
+      "resource": "scan",
+      "action": "github-org",
+      "description": "Scan all repositories of a GitHub organization (requires KF_GITHUB_TOKEN env var)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kingfisher",
+        "baseArgs": ["scan", "github", "--organization"],
+        "positionalArgs": ["org"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install kingfisher: curl -sSL https://raw.githubusercontent.com/mongodb/kingfisher/main/scripts/install-kingfisher.sh | bash"
+      },
+      "args": [
+        { "name": "org", "type": "string", "required": true, "description": "GitHub organization name" }
+      ]
+    },
+    {
+      "namespace": "kingfisher",
+      "resource": "rules",
+      "action": "list",
+      "description": "List the built-in detection rules (Betterleaks and Veles catalogs)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kingfisher",
+        "baseArgs": ["rules", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kingfisher: curl -sSL https://raw.githubusercontent.com/mongodb/kingfisher/main/scripts/install-kingfisher.sh | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kingfisher",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kingfisher CLI (scan gitlab, scan s3, rules test, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kingfisher",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kingfisher: curl -sSL https://raw.githubusercontent.com/mongodb/kingfisher/main/scripts/install-kingfisher.sh | bash"
+      },
+      "args": []
+    }
+  ]
+}

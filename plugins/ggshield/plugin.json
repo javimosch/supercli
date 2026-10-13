@@ -1,0 +1,138 @@
+{
+  "name": "ggshield",
+  "version": "0.1.0",
+  "description": "GitGuardian CLI — scan code, git history, and IaC for leaked secrets, plus honeytokens and policy checks",
+  "source": "https://github.com/GitGuardian/ggshield",
+  "checks": [
+    { "type": "binary", "name": "ggshield" }
+  ],
+  "install_guidance": {
+    "plugin": "ggshield",
+    "binary": "ggshield",
+    "check": "which ggshield",
+    "install_steps": [
+      "pipx install ggshield",
+      "Verify: ggshield --version",
+      "supercli plugins install ./plugins/ggshield --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ggshield",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ggshield version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ggshield",
+      "resource": "secret",
+      "action": "scan-path",
+      "description": "Scan files/directories for secrets (ggshield secret scan path)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "baseArgs": ["secret", "scan", "path"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "File or directory to scan" }
+      ]
+    },
+    {
+      "namespace": "ggshield",
+      "resource": "secret",
+      "action": "scan-repo",
+      "description": "Scan a remote git repository's full history for secrets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "baseArgs": ["secret", "scan", "repo"],
+        "positionalArgs": ["repo_url"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": [
+        { "name": "repo_url", "type": "string", "required": true, "description": "Repository URL, e.g. https://github.com/org/repo.git" }
+      ]
+    },
+    {
+      "namespace": "ggshield",
+      "resource": "secret",
+      "action": "scan-ci",
+      "description": "Scan commits pushed in CI context (uses CI env vars for commit range)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "baseArgs": ["secret", "scan", "ci"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ggshield",
+      "resource": "iac",
+      "action": "scan",
+      "description": "Scan infrastructure-as-code files for vulnerabilities (Terraform, K8s, Docker)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "baseArgs": ["iac", "scan", "all"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "Directory to scan (defaults to current dir)" }
+      ]
+    },
+    {
+      "namespace": "ggshield",
+      "resource": "auth",
+      "action": "login",
+      "description": "Authenticate ggshield with a GitGuardian workspace (opens browser OAuth flow)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "baseArgs": ["auth", "login"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ggshield",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ggshield CLI (secret scan pre-commit, honeytoken create, quota, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ggshield",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ggshield: pipx install ggshield"
+      },
+      "args": []
+    }
+  ]
+}

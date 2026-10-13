@@ -1,0 +1,160 @@
+{
+  "name": "vt-cli",
+  "version": "0.1.0",
+  "description": "Official VirusTotal CLI — look up files, URLs, IPs, and domains, run intel searches, and submit samples from the shell",
+  "source": "https://github.com/VirusTotal/vt-cli",
+  "checks": [
+    { "type": "binary", "name": "vt" }
+  ],
+  "install_guidance": {
+    "plugin": "vt-cli",
+    "binary": "vt",
+    "check": "which vt",
+    "install_steps": [
+      "go install github.com/VirusTotal/vt-cli/vt@latest",
+      "Verify: vt --version",
+      "supercli plugins install ./plugins/vt-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vt-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vt CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "file",
+      "action": "lookup",
+      "description": "Look up a file report by hash (MD5/SHA1/SHA256) in VirusTotal",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["file"],
+        "positionalArgs": ["hash"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": [
+        { "name": "hash", "type": "string", "required": true, "description": "File hash (MD5, SHA-1, or SHA-256)" }
+      ]
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "url",
+      "action": "lookup",
+      "description": "Look up a URL's VirusTotal report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["url"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "URL to look up" }
+      ]
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "ip",
+      "action": "lookup",
+      "description": "Look up an IP address report in VirusTotal",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["ip"],
+        "positionalArgs": ["ip"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": [
+        { "name": "ip", "type": "string", "required": true, "description": "IPv4/IPv6 address" }
+      ]
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "domain",
+      "action": "lookup",
+      "description": "Look up a domain's VirusTotal report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["domain"],
+        "positionalArgs": ["domain"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": [
+        { "name": "domain", "type": "string", "required": true, "description": "Domain name to look up" }
+      ]
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "search",
+      "action": "run",
+      "description": "Run a VirusTotal Intelligence search query",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["search"],
+        "positionalArgs": ["query"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": [
+        { "name": "query", "type": "string", "required": true, "description": "VT Intelligence query, e.g. \"type:peexe size:100kb-\"" }
+      ]
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "scan",
+      "action": "file",
+      "description": "Upload a file to VirusTotal for scanning",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "baseArgs": ["scan", "file"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Local file to upload for scanning" }
+      ]
+    },
+    {
+      "namespace": "vt-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vt CLI (analysis, comments, collections, monitor, retrofit, graph, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vt",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install vt-cli: go install github.com/VirusTotal/vt-cli/vt@latest"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "name": "openscap",
+  "version": "0.1.0",
+  "description": "OpenSCAP (oscap) — NIST-certified SCAP scanner for security compliance auditing, vulnerability assessment, and benchmark evaluation",
+  "source": "https://github.com/OpenSCAP/openscap",
+  "checks": [
+    { "type": "binary", "name": "oscap" }
+  ],
+  "install_guidance": {
+    "plugin": "openscap",
+    "binary": "oscap",
+    "check": "which oscap",
+    "install_steps": [
+      "sudo apt-get update && (sudo apt-get install -y openscap-scanner || sudo apt-get install -y openscap-utils)",
+      "Verify: oscap --version",
+      "supercli plugins install ./plugins/openscap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "openscap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oscap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oscap",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install openscap: apt install openscap-scanner"
+      },
+      "args": []
+    },
+    {
+      "namespace": "openscap",
+      "resource": "info",
+      "action": "inspect",
+      "description": "Inspect a SCAP datastream/benchmark — lists profiles, checks, and metadata",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oscap",
+        "baseArgs": ["info"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openscap: apt install openscap-scanner"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "SCAP datastream or XCCDF/OVAL file" }
+      ]
+    },
+    {
+      "namespace": "openscap",
+      "resource": "xccdf",
+      "action": "eval",
+      "description": "Evaluate an XCCDF benchmark (e.g. CIS profile) against the system (use --profile, --results, --report)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oscap",
+        "baseArgs": ["xccdf", "eval"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openscap: apt install openscap-scanner"
+      },
+      "args": []
+    },
+    {
+      "namespace": "openscap",
+      "resource": "oval",
+      "action": "eval",
+      "description": "Evaluate OVAL definitions (vulnerability or compliance checks) against the system",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oscap",
+        "baseArgs": ["oval", "eval"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openscap: apt install openscap-scanner"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "OVAL definitions file" }
+      ]
+    },
+    {
+      "namespace": "openscap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oscap CLI (xccdf generate fix/remediate, ds rds-split, cvss scoring, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oscap",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install openscap: apt install openscap-scanner"
+      },
+      "args": []
+    }
+  ]
+}

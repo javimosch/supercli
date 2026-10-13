@@ -1,0 +1,88 @@
+{
+  "name": "scorecard",
+  "version": "0.1.0",
+  "description": "OpenSSF Scorecard — automated security posture scoring for open-source repositories and dependencies",
+  "source": "https://github.com/ossf/scorecard",
+  "checks": [
+    { "type": "binary", "name": "scorecard" }
+  ],
+  "install_guidance": {
+    "plugin": "scorecard",
+    "binary": "scorecard",
+    "check": "which scorecard",
+    "install_steps": [
+      "go install github.com/ossf/scorecard/v5/cmd/scorecard@latest",
+      "Verify: scorecard --version",
+      "supercli plugins install ./plugins/scorecard --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "scorecard",
+      "resource": "self",
+      "action": "version",
+      "description": "Print scorecard version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scorecard",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install scorecard: go install github.com/ossf/scorecard/v5/cmd/scorecard@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "scorecard",
+      "resource": "repo",
+      "action": "audit",
+      "description": "Audit a remote repository's security posture (use --format json, --show-details, --checks X,Y to select checks)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scorecard",
+        "baseArgs": ["--repo"],
+        "positionalArgs": ["repo_url"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install scorecard: go install github.com/ossf/scorecard/v5/cmd/scorecard@latest"
+      },
+      "args": [
+        { "name": "repo_url", "type": "string", "required": true, "description": "Repo URL or slug, e.g. github.com/ossf/scorecard" }
+      ]
+    },
+    {
+      "namespace": "scorecard",
+      "resource": "local",
+      "action": "audit",
+      "description": "Audit a local directory's security posture (subset of checks work offline)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scorecard",
+        "baseArgs": ["--local"],
+        "positionalArgs": ["dir"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install scorecard: go install github.com/ossf/scorecard/v5/cmd/scorecard@latest"
+      },
+      "args": [
+        { "name": "dir", "type": "string", "required": true, "description": "Local directory to audit" }
+      ]
+    },
+    {
+      "namespace": "scorecard",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to scorecard CLI (--npm/--pypi/--nuget package audits, --policy, --probe, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "scorecard",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install scorecard: go install github.com/ossf/scorecard/v5/cmd/scorecard@latest"
+      },
+      "args": []
+    }
+  ]
+}
