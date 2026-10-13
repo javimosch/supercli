@@ -1,0 +1,96 @@
+{
+  "name": "usage",
+  "version": "0.1.0",
+  "description": "CLI spec and tooling by jdx — generate completions, help docs, and parse CLI arguments declaratively (powers mise completions)",
+  "source": "https://github.com/jdx/usage",
+  "checks": [
+    { "type": "binary", "name": "usage" }
+  ],
+  "install_guidance": {
+    "plugin": "usage",
+    "binary": "usage",
+    "check": "which usage",
+    "install_steps": [
+      "cargo install usage-cli",
+      "Verify: usage --version",
+      "supercli plugins install ./plugins/usage --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "usage",
+      "resource": "self",
+      "action": "version",
+      "description": "Print usage version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usage",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install usage: cargo install usage-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usage",
+      "resource": "completion",
+      "action": "generate",
+      "description": "Generate shell completions from a usage.kdl spec (usage generate completion <shell> <file>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usage",
+        "baseArgs": ["generate", "completion"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usage: cargo install usage-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usage",
+      "resource": "json",
+      "action": "generate",
+      "description": "Parse a usage.kdl/CLI spec and emit it as JSON (for docs, tooling)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usage",
+        "baseArgs": ["generate", "json"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usage: cargo install usage-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usage",
+      "resource": "spec",
+      "action": "list",
+      "description": "List commands/subcommands defined in a spec (usage list)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usage",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usage: cargo install usage-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "usage",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to usage CLI (usage exec, usage complete, usage g, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "usage",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install usage: cargo install usage-cli"
+      },
+      "args": []
+    }
+  ]
+}

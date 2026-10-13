@@ -1,0 +1,90 @@
+{
+  "name": "murex",
+  "version": "0.1.0",
+  "description": "Smarter shell and scripting environment with typed pipelines — JSON/YAML-aware data flows, inline hinting, and safer syntax than bash",
+  "source": "https://github.com/lmorg/murex",
+  "checks": [
+    { "type": "binary", "name": "murex" }
+  ],
+  "install_guidance": {
+    "plugin": "murex",
+    "binary": "murex",
+    "check": "which murex",
+    "install_steps": [
+      "go install github.com/lmorg/murex@latest",
+      "or download prebuilt binary from https://github.com/lmorg/murex/releases",
+      "Verify: murex --version",
+      "supercli plugins install ./plugins/murex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "murex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print murex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "murex",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install murex: go install github.com/lmorg/murex@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "murex",
+      "resource": "shell",
+      "action": "exec",
+      "description": "Execute a murex command string (murex -c 'code')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "murex",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["code"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install murex: go install github.com/lmorg/murex@latest"
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": true, "description": "Murex code to execute" }
+      ]
+    },
+    {
+      "namespace": "murex",
+      "resource": "script",
+      "action": "run",
+      "description": "Run a .mx murex script file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "murex",
+        "positionalArgs": ["script"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install murex: go install github.com/lmorg/murex@latest"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to .mx script" }
+      ]
+    },
+    {
+      "namespace": "murex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to murex CLI (flags like --load-modules, -c, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "murex",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install murex: go install github.com/lmorg/murex@latest"
+      },
+      "args": []
+    }
+  ]
+}

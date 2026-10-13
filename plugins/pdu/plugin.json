@@ -1,0 +1,83 @@
+{
+  "name": "pdu",
+  "version": "0.1.0",
+  "description": "Parallel disk usage analyzer — a dramatically faster alternative to du -sh with progress bar and JSON output",
+  "source": "https://github.com/KSXGitHub/parallel-disk-usage",
+  "checks": [
+    { "type": "binary", "name": "pdu" }
+  ],
+  "install_guidance": {
+    "plugin": "pdu",
+    "binary": "pdu",
+    "check": "which pdu",
+    "install_steps": [
+      "cargo install parallel-disk-usage",
+      "Verify: pdu --version",
+      "supercli plugins install ./plugins/pdu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pdu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pdu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdu",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pdu: cargo install parallel-disk-usage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdu",
+      "resource": "disk",
+      "action": "scan",
+      "description": "Scan disk usage of paths in parallel and print a tree (pdu [PATH...])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdu",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdu: cargo install parallel-disk-usage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdu",
+      "resource": "disk",
+      "action": "json",
+      "description": "Scan disk usage and emit JSON (pipe to jq or feed back into pdu --json-input)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdu",
+        "baseArgs": ["--json-output"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdu: cargo install parallel-disk-usage"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pdu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pdu CLI (pdu --top=20, --max-depth, --bytes-format, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pdu",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pdu: cargo install parallel-disk-usage"
+      },
+      "args": []
+    }
+  ]
+}

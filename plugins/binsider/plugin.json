@@ -1,0 +1,82 @@
+{
+  "name": "binsider",
+  "version": "0.1.0",
+  "description": "TUI for analyzing binary files — ELF headers, symbols, strings, sections, linked libs and a hex viewer, plus dynamic tracing (readelf/nm/strings in one)",
+  "source": "https://github.com/orhun/binsider",
+  "checks": [
+    { "type": "binary", "name": "binsider" }
+  ],
+  "install_guidance": {
+    "plugin": "binsider",
+    "binary": "binsider",
+    "check": "which binsider",
+    "install_steps": [
+      "cargo install binsider",
+      "Verify: binsider --version",
+      "supercli plugins install ./plugins/binsider --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "binsider",
+      "resource": "self",
+      "action": "version",
+      "description": "Print binsider version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binsider",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install binsider: cargo install binsider"
+      },
+      "args": []
+    },
+    {
+      "namespace": "binsider",
+      "resource": "binary",
+      "action": "analyze",
+      "description": "Open a binary in the binsider analysis TUI (headers, symbols, strings, sections)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binsider",
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install binsider: cargo install binsider"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Binary file to analyze" }
+      ]
+    },
+    {
+      "namespace": "binsider",
+      "resource": "binary",
+      "action": "strings",
+      "description": "Extract strings from a binary non-interactively (binsider <file> --strings-style)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binsider",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install binsider: cargo install binsider"
+      },
+      "args": []
+    },
+    {
+      "namespace": "binsider",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to binsider CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "binsider",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install binsider: cargo install binsider"
+      },
+      "args": []
+    }
+  ]
+}

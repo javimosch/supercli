@@ -1,0 +1,111 @@
+{
+  "name": "ysh",
+  "version": "0.1.0",
+  "description": "Oils for Unix — an upgraded POSIX shell: OSH runs your existing bash scripts, YSH adds structured data, real types and modern syntax",
+  "source": "https://github.com/oils-for-unix/oils-for-unix",
+  "checks": [
+    { "type": "binary", "name": "ysh" }
+  ],
+  "install_guidance": {
+    "plugin": "ysh",
+    "binary": "ysh",
+    "check": "which ysh",
+    "install_steps": [
+      "Download latest tarball from https://www.oils.pub/release/latest/ (oils-for-unix-*.tar.gz)",
+      "tar xzf oils-for-unix-*.tar.gz && cd oils-for-unix-*/",
+      "./configure && _build/oils.sh",
+      "sudo ./install",
+      "Verify: ysh --version",
+      "supercli plugins install ./plugins/ysh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ysh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ysh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ysh",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install ysh: build from the oils-for-unix tarball at https://www.oils.pub/release/latest/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ysh",
+      "resource": "shell",
+      "action": "exec",
+      "description": "Execute YSH code (ysh -c 'code')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ysh",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["code"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ysh: build from https://www.oils.pub/release/latest/"
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": true, "description": "YSH code to execute" }
+      ]
+    },
+    {
+      "namespace": "ysh",
+      "resource": "osh",
+      "action": "exec",
+      "description": "Execute POSIX/bash-compatible code with OSH (osh -c 'code') — drops in for bash",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osh",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["code"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oils-for-unix: build from https://www.oils.pub/release/latest/ (installs osh and ysh)"
+      },
+      "args": [
+        { "name": "code", "type": "string", "required": true, "description": "POSIX/bash code to execute" }
+      ]
+    },
+    {
+      "namespace": "ysh",
+      "resource": "script",
+      "action": "run",
+      "description": "Run a .ysh script file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ysh",
+        "positionalArgs": ["script"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ysh: build from https://www.oils.pub/release/latest/"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to .ysh script" }
+      ]
+    },
+    {
+      "namespace": "ysh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ysh CLI (ysh --tool cat-em, ysh -n for syntax check, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ysh",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install ysh: build from https://www.oils.pub/release/latest/"
+      },
+      "args": []
+    }
+  ]
+}

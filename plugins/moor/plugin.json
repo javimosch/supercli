@@ -1,0 +1,68 @@
+{
+  "name": "moor",
+  "version": "0.1.0",
+  "description": "Smarter pager replacement for less — designed to just do the right thing without any configuration",
+  "source": "https://github.com/walles/moor",
+  "checks": [
+    { "type": "binary", "name": "moor" }
+  ],
+  "install_guidance": {
+    "plugin": "moor",
+    "binary": "moor",
+    "check": "which moor",
+    "install_steps": [
+      "go install github.com/walles/moor@latest",
+      "Verify: moor --version",
+      "supercli plugins install ./plugins/moor --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "moor",
+      "resource": "self",
+      "action": "version",
+      "description": "Print moor version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "moor",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install moor: go install github.com/walles/moor@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "moor",
+      "resource": "file",
+      "action": "view",
+      "description": "Page a file with syntax highlighting (moor FILE; / to search inside)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "moor",
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install moor: go install github.com/walles/moor@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File to page" }
+      ]
+    },
+    {
+      "namespace": "moor",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to moor CLI (moor --no-linenumbers, moor +LINENO file, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "moor",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install moor: go install github.com/walles/moor@latest"
+      },
+      "args": []
+    }
+  ]
+}
