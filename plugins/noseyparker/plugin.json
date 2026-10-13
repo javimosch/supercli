@@ -1,0 +1,112 @@
+{
+  "name": "noseyparker",
+  "version": "0.1.0",
+  "description": "Deep secrets scanner for files and git history — fast Rust CLI with a deduplicating datastore and JSON/human reports",
+  "source": "https://github.com/praetorian-inc/noseyparker",
+  "checks": [
+    { "type": "binary", "name": "noseyparker" }
+  ],
+  "install_guidance": {
+    "plugin": "noseyparker",
+    "binary": "noseyparker",
+    "check": "which noseyparker",
+    "install_steps": [
+      "cargo install noseyparker-cli",
+      "Verify: noseyparker --version",
+      "supercli plugins install ./plugins/noseyparker --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "noseyparker",
+      "resource": "self",
+      "action": "version",
+      "description": "Print noseyparker version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noseyparker",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install noseyparker: cargo install noseyparker-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "noseyparker",
+      "resource": "scan",
+      "action": "run",
+      "description": "Scan files/git repos for secrets into a datastore (noseyparker scan -d <datastore> <path>...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noseyparker",
+        "baseArgs": ["scan"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install noseyparker: cargo install noseyparker-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "noseyparker",
+      "resource": "report",
+      "action": "generate",
+      "description": "Report findings from a datastore (noseyparker report -d <datastore> — add -f json for machine output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noseyparker",
+        "baseArgs": ["report"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install noseyparker: cargo install noseyparker-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "noseyparker",
+      "resource": "rules",
+      "action": "list",
+      "description": "List built-in detection rules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noseyparker",
+        "baseArgs": ["rules", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install noseyparker: cargo install noseyparker-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "noseyparker",
+      "resource": "datastore",
+      "action": "export",
+      "description": "Export a datastore's findings (noseyparker datastore export -d <datastore>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noseyparker",
+        "baseArgs": ["datastore", "export"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install noseyparker: cargo install noseyparker-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "noseyparker",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to noseyparker CLI (noseyparker github repos list, noseyparker summarize, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "noseyparker",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install noseyparker: cargo install noseyparker-cli"
+      },
+      "args": []
+    }
+  ]
+}

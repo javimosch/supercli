@@ -1,0 +1,65 @@
+{
+  "name": "wiremix",
+  "version": "0.1.0",
+  "description": "Terminal mixer for PipeWire — a ratatui TUI to control volume, mute, and reroute audio streams",
+  "source": "https://github.com/tsowell/wiremix",
+  "checks": [
+    { "type": "binary", "name": "wiremix" }
+  ],
+  "install_guidance": {
+    "plugin": "wiremix",
+    "binary": "wiremix",
+    "check": "which wiremix",
+    "install_steps": [
+      "cargo install wiremix",
+      "Verify: wiremix --version",
+      "supercli plugins install ./plugins/wiremix --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wiremix",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wiremix version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wiremix",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wiremix: cargo install wiremix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wiremix",
+      "resource": "tui",
+      "action": "open",
+      "description": "Launch the wiremix mixer TUI (interactive)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wiremix",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install wiremix: cargo install wiremix"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wiremix",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wiremix CLI (wiremix --config-file <path>, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wiremix",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install wiremix: cargo install wiremix"
+      },
+      "args": []
+    }
+  ]
+}

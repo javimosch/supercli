@@ -1,0 +1,153 @@
+{
+  "name": "llm",
+  "version": "0.1.0",
+  "description": "Simon Willison's pipe-friendly LLM CLI — prompt any model, embed text, and log conversations with a plugin ecosystem",
+  "source": "https://github.com/simonw/llm",
+  "checks": [
+    { "type": "binary", "name": "llm" }
+  ],
+  "install_guidance": {
+    "plugin": "llm",
+    "binary": "llm",
+    "check": "which llm",
+    "install_steps": [
+      "pipx install llm",
+      "Verify: llm --version",
+      "supercli plugins install ./plugins/llm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "llm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print llm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "prompt",
+      "action": "run",
+      "description": "Send a prompt to the default model (llm \"prompt\" — pipe stdin for context, -m model, -s system)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "models",
+      "action": "list",
+      "description": "List available models (--options to show their options)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["models"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "plugins",
+      "action": "list",
+      "description": "List installed llm plugins (install more with: llm install llm-xxx)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["plugins"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "keys",
+      "action": "manage",
+      "description": "Manage model API keys (llm keys list, llm keys set <name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["keys"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "templates",
+      "action": "list",
+      "description": "List stored prompt templates (manage with llm templates edit/show)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["templates", "list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "logs",
+      "action": "list",
+      "description": "Show logged prompts and responses (-n N to limit, --json for machine output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["logs"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "embed",
+      "action": "run",
+      "description": "Embed text or files into the embeddings database (llm embed <collection> <content>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "baseArgs": ["embed"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to llm CLI (llm chat, llm similar, llm schemas, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llm",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install llm: pipx install llm"
+      },
+      "args": []
+    }
+  ]
+}

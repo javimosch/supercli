@@ -1,0 +1,132 @@
+{
+  "name": "sst",
+  "version": "0.1.0",
+  "description": "SST Ion — infrastructure-as-code CLI for deploying full-stack apps to AWS and other providers",
+  "source": "https://github.com/sst/v2",
+  "checks": [
+    { "type": "binary", "name": "sst" }
+  ],
+  "install_guidance": {
+    "plugin": "sst",
+    "binary": "sst",
+    "check": "which sst",
+    "install_steps": [
+      "curl -fsSL https://ion.sst.dev/install | bash",
+      "Verify: sst --version",
+      "supercli plugins install ./plugins/sst --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sst",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sst version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sst",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize a new sst project or add sst to an existing app",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sst",
+      "resource": "app",
+      "action": "deploy",
+      "description": "Deploy the app to a stage (sst deploy --stage production)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "baseArgs": ["deploy"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sst",
+      "resource": "app",
+      "action": "remove",
+      "description": "Remove the app's resources for a stage (sst remove --stage dev)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "baseArgs": ["remove"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sst",
+      "resource": "app",
+      "action": "diff",
+      "description": "Preview what a deploy would change without deploying",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sst",
+      "resource": "state",
+      "action": "unlock",
+      "description": "Force-unlock a stuck state lock (sst unlock)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "baseArgs": ["unlock"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sst",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sst CLI (sst dev, sst refresh, sst state, sst secret, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sst",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sst: curl -fsSL https://ion.sst.dev/install | bash"
+      },
+      "args": []
+    }
+  ]
+}
