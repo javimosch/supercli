@@ -1,0 +1,103 @@
+{
+  "name": "lftp",
+  "version": "0.1.0",
+  "description": "Sophisticated file transfer client for FTP/SFTP/HTTP with mirroring, segmented downloads, and scripting",
+  "source": "https://github.com/lavv17/lftp",
+  "checks": [
+    { "type": "binary", "name": "lftp" }
+  ],
+  "install_guidance": {
+    "plugin": "lftp",
+    "binary": "lftp",
+    "check": "which lftp",
+    "install_steps": [
+      "sudo apt-get install -y lftp || sudo dnf install -y lftp || brew install lftp",
+      "Verify: lftp --version",
+      "supercli plugins install ./plugins/lftp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lftp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lftp version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lftp",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lftp: apt install lftp (or brew install lftp)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lftp",
+      "resource": "connect",
+      "action": "open",
+      "description": "Open an interactive lftp session to a server (ftp://, sftp://, http://...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lftp",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install lftp: apt install lftp (or brew install lftp)"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Server URL (e.g. sftp://user@host, ftp://host)" }
+      ]
+    },
+    {
+      "namespace": "lftp",
+      "resource": "exec",
+      "action": "run",
+      "description": "Run lftp commands non-interactively (lftp -c 'open URL; cmd; ...')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lftp",
+        "baseArgs": ["-c"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install lftp: apt install lftp (or brew install lftp)"
+      },
+      "args": [
+        { "name": "command_string", "type": "string", "required": true, "description": "Semicolon-separated lftp commands, e.g. 'open ftp://host; mirror remote local; bye'" }
+      ]
+    },
+    {
+      "namespace": "lftp",
+      "resource": "script",
+      "action": "run",
+      "description": "Run an lftp script file (lftp -f script.lftp)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lftp",
+        "baseArgs": ["-f"],
+        "positionalArgs": ["script"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install lftp: apt install lftp (or brew install lftp)"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to an lftp script file" }
+      ]
+    },
+    {
+      "namespace": "lftp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lftp CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lftp",
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install lftp: apt install lftp (or brew install lftp)"
+      },
+      "args": []
+    }
+  ]
+}

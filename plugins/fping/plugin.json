@@ -1,0 +1,122 @@
+{
+  "name": "fping",
+  "version": "0.1.0",
+  "description": "Scriptable ICMP ping for sweeping many hosts with round-robin timing and per-host stats",
+  "source": "https://github.com/schweikert/fping",
+  "checks": [
+    { "type": "binary", "name": "fping" }
+  ],
+  "install_guidance": {
+    "plugin": "fping",
+    "binary": "fping",
+    "check": "which fping",
+    "install_steps": [
+      "sudo apt-get install -y fping || sudo dnf install -y fping || brew install fping",
+      "Verify: fping -v",
+      "supercli plugins install ./plugins/fping --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fping",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fping version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fping",
+        "baseArgs": ["-v"],
+        "missingDependencyHelp": "Install fping: apt install fping (or brew install fping)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fping",
+      "resource": "host",
+      "action": "ping",
+      "description": "Ping one or more hosts (space-separated), prints per-host reachability",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fping",
+        "positionalArgs": ["hosts"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fping: apt install fping (or brew install fping)"
+      },
+      "args": [
+        { "name": "hosts", "type": "string", "required": true, "description": "Hosts to ping, space-separated (e.g. '8.8.8.8 1.1.1.1')" }
+      ]
+    },
+    {
+      "namespace": "fping",
+      "resource": "sweep",
+      "action": "run",
+      "description": "Sweep a CIDR range or IP range (fping -g), e.g. 192.168.1.0/24",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fping",
+        "baseArgs": ["-g"],
+        "positionalArgs": ["range"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install fping: apt install fping (or brew install fping)"
+      },
+      "args": [
+        { "name": "range", "type": "string", "required": true, "description": "CIDR or IP range (e.g. '192.168.1.0/24' or '192.168.1.1 192.168.1.50')" }
+      ]
+    },
+    {
+      "namespace": "fping",
+      "resource": "host",
+      "action": "alive",
+      "description": "Show only reachable hosts (-a); combine with -s for a summary",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fping",
+        "baseArgs": ["-a"],
+        "positionalArgs": ["targets"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install fping: apt install fping (or brew install fping)"
+      },
+      "args": [
+        { "name": "targets", "type": "string", "required": false, "description": "Hosts to check (omit to read targets from stdin)" }
+      ]
+    },
+    {
+      "namespace": "fping",
+      "resource": "latency",
+      "action": "stats",
+      "description": "Run a timed latency test per host with loss/min/avg/max (-C count -q -s)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fping",
+        "baseArgs": ["-C", "10", "-q", "-s"],
+        "positionalArgs": ["hosts"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install fping: apt install fping (or brew install fping)"
+      },
+      "args": [
+        { "name": "hosts", "type": "string", "required": true, "description": "Hosts to measure, space-separated" }
+      ]
+    },
+    {
+      "namespace": "fping",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fping CLI (fping -l loop, -f file, -i interval, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fping",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install fping: apt install fping (or brew install fping)"
+      },
+      "args": []
+    }
+  ]
+}

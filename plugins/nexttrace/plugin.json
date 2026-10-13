@@ -1,0 +1,122 @@
+{
+  "name": "nexttrace",
+  "version": "0.1.0",
+  "description": "Open-source visual traceroute with BGP/GeoIP route mapping and JSON output",
+  "source": "https://github.com/nxtrace/NTrace-core",
+  "checks": [
+    { "type": "binary", "name": "nexttrace" }
+  ],
+  "install_guidance": {
+    "plugin": "nexttrace",
+    "binary": "nexttrace",
+    "check": "which nexttrace",
+    "install_steps": [
+      "bash -c \"$(curl -Ls https://nxtrace.org/nt)\"",
+      "Verify: nexttrace --version",
+      "supercli plugins install ./plugins/nexttrace --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nexttrace",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nexttrace version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nexttrace",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nexttrace: bash -c \"$(curl -Ls https://nxtrace.org/nt)\""
+      },
+      "args": []
+    },
+    {
+      "namespace": "nexttrace",
+      "resource": "trace",
+      "action": "run",
+      "description": "Run an ICMP traceroute to a host (default mode)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nexttrace",
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nexttrace: bash -c \"$(curl -Ls https://nxtrace.org/nt)\""
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Hostname or IP to trace (e.g. 1.1.1.1)" }
+      ]
+    },
+    {
+      "namespace": "nexttrace",
+      "resource": "trace",
+      "action": "tcp",
+      "description": "TCP SYN traceroute to a host (port via --port)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nexttrace",
+        "baseArgs": ["--tcp"],
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nexttrace: bash -c \"$(curl -Ls https://nxtrace.org/nt)\""
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Hostname or IP to trace" }
+      ]
+    },
+    {
+      "namespace": "nexttrace",
+      "resource": "trace",
+      "action": "json",
+      "description": "Traceroute with JSON output for pipelines",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nexttrace",
+        "baseArgs": ["--json"],
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nexttrace: bash -c \"$(curl -Ls https://nxtrace.org/nt)\""
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Hostname or IP to trace" }
+      ]
+    },
+    {
+      "namespace": "nexttrace",
+      "resource": "trace",
+      "action": "map",
+      "description": "Traceroute rendered on a world map with GeoIP data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nexttrace",
+        "baseArgs": ["--map"],
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nexttrace: bash -c \"$(curl -Ls https://nxtrace.org/nt)\""
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Hostname or IP to trace" }
+      ]
+    },
+    {
+      "namespace": "nexttrace",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nexttrace CLI (nexttrace --udp, --fast-trace, --table, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nexttrace",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install nexttrace: bash -c \"$(curl -Ls https://nxtrace.org/nt)\""
+      },
+      "args": []
+    }
+  ]
+}
