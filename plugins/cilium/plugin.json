@@ -1,0 +1,126 @@
+{
+  "name": "cilium",
+  "version": "0.1.0",
+  "description": "CLI to install, manage, and troubleshoot Cilium eBPF networking, observability, and service mesh on Kubernetes",
+  "source": "https://github.com/cilium/cilium-cli",
+  "checks": [
+    { "type": "binary", "name": "cilium" }
+  ],
+  "install_guidance": {
+    "plugin": "cilium",
+    "binary": "cilium",
+    "check": "which cilium",
+    "install_steps": [
+      "CILIUM_CLI_VERSION=$(curl -s https://raw.githubusercontent.com/cilium/cilium-cli/main/stable.txt) && curl -L --remote-name-all https://github.com/cilium/cilium-cli/releases/download/${CILIUM_CLI_VERSION}/cilium-linux-amd64.tar.gz && tar xzvf cilium-linux-amd64.tar.gz && mkdir -p ~/.local/bin && mv cilium ~/.local/bin/",
+      "Verify: cilium version --client",
+      "supercli plugins install ./plugins/cilium --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cilium",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cilium CLI and cluster version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "baseArgs": ["version", "--client"],
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli or run brew install cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium",
+      "resource": "cluster",
+      "action": "install",
+      "description": "Install Cilium into the current Kubernetes context",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium",
+      "resource": "status",
+      "action": "get",
+      "description": "Show Cilium deployment status on the current cluster",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium",
+      "resource": "hubble",
+      "action": "enable",
+      "description": "Enable Hubble observability on the cluster",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "baseArgs": ["hubble", "enable"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium",
+      "resource": "connectivity",
+      "action": "test",
+      "description": "Run the Cilium connectivity test suite against the cluster",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "baseArgs": ["connectivity", "test"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium",
+      "resource": "clustermesh",
+      "action": "status",
+      "description": "Show ClusterMesh multi-cluster connectivity status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "baseArgs": ["clustermesh", "status"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cilium",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cilium CLI (cilium upgrade, cilium config, hubble subcommands, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cilium",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cilium: download the release tarball from github.com/cilium/cilium-cli"
+      },
+      "args": []
+    }
+  ]
+}

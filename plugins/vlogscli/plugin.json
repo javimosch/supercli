@@ -1,0 +1,65 @@
+{
+  "name": "vlogscli",
+  "version": "0.1.0",
+  "description": "VictoriaLogs interactive and non-interactive LogsQL query CLI - tail, filter, and analyze logs from a VictoriaLogs datasource",
+  "source": "https://github.com/VictoriaMetrics/VictoriaLogs",
+  "checks": [
+    { "type": "binary", "name": "vlogscli" }
+  ],
+  "install_guidance": {
+    "plugin": "vlogscli",
+    "binary": "vlogscli",
+    "check": "which vlogscli",
+    "install_steps": [
+      "go install github.com/VictoriaMetrics/VictoriaLogs/app/vlogscli@latest",
+      "Verify: vlogscli -version",
+      "supercli plugins install ./plugins/vlogscli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vlogscli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vlogscli version (single-dash flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vlogscli",
+        "baseArgs": ["-version"],
+        "missingDependencyHelp": "Install vlogscli: go install github.com/VictoriaMetrics/VictoriaLogs/app/vlogscli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vlogscli",
+      "resource": "query",
+      "action": "run",
+      "description": "Query VictoriaLogs non-interactively: pipe a LogsQL query via stdin (needs -datasource.url). Example: echo 'error' | vlogscli -datasource.url=http://localhost:9428",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vlogscli",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install vlogscli: go install github.com/VictoriaMetrics/VictoriaLogs/app/vlogscli@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vlogscli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vlogscli CLI (single-dash flags: -datasource.url, -accountID, -blockHeader, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vlogscli",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install vlogscli: go install github.com/VictoriaMetrics/VictoriaLogs/app/vlogscli@latest"
+      },
+      "args": []
+    }
+  ]
+}

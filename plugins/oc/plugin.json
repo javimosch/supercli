@@ -1,0 +1,158 @@
+{
+  "name": "oc",
+  "version": "0.1.0",
+  "description": "OpenShift CLI - manage OpenShift clusters, projects, and applications; a kubectl superset with build and image tooling",
+  "source": "https://github.com/openshift/oc",
+  "checks": [
+    { "type": "binary", "name": "oc" }
+  ],
+  "install_guidance": {
+    "plugin": "oc",
+    "binary": "oc",
+    "check": "which oc",
+    "install_steps": [
+      "curl -LO https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/openshift-client-linux.tar.gz && tar xzf openshift-client-linux.tar.gz oc && mkdir -p ~/.local/bin && mv oc ~/.local/bin/ && rm openshift-client-linux.tar.gz",
+      "Verify: oc version --client",
+      "supercli plugins install ./plugins/oc --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oc",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oc client version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["version", "--client"],
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com/pub/openshift-v4/clients/ocp/stable/"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "auth",
+      "action": "login",
+      "description": "Log in to an OpenShift cluster (oc login <server> --token=<token> or --username/--password)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["login"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "auth",
+      "action": "whoami",
+      "description": "Show the current logged-in user (use --show-server / --show-token)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["whoami"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "project",
+      "action": "list",
+      "description": "List all projects you have access to",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["projects"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "project",
+      "action": "switch",
+      "description": "Switch to a project: oc project switch <name> (or oc new-project <name> to create)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["project"],
+        "positionalArgs": ["name"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": false, "description": "Project name to switch to (omit to show current)" }
+      ]
+    },
+    {
+      "namespace": "oc",
+      "resource": "app",
+      "action": "new",
+      "description": "Create a new application from source, image, or template",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["new-app"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "status",
+      "action": "get",
+      "description": "Show a high-level overview of the current project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "resource",
+      "action": "get",
+      "description": "Get resources (oc get pods, routes, builds...). Pass resource type and name via passthrough",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "baseArgs": ["get"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oc",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oc CLI (oc logs, oc exec, oc start-build, oc rollout, oc adm, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oc",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install oc: download openshift-client-linux.tar.gz from mirror.openshift.com"
+      },
+      "args": []
+    }
+  ]
+}
