@@ -1,0 +1,138 @@
+{
+  "name": "fastmcp",
+  "version": "0.1.0",
+  "description": "FastMCP — the fast, pythonic framework for building MCP servers and clients; run, dev-inspect, and install servers into agent CLIs",
+  "source": "https://github.com/jlowin/fastmcp",
+  "checks": [
+    { "type": "binary", "name": "fastmcp" }
+  ],
+  "install_guidance": {
+    "plugin": "fastmcp",
+    "binary": "fastmcp",
+    "check": "which fastmcp",
+    "install_steps": [
+      "pip install fastmcp  # or: uv tool install fastmcp",
+      "Verify: fastmcp version",
+      "supercli plugins install ./plugins/fastmcp --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "fastmcp",
+      "resource": "self",
+      "action": "version",
+      "description": "Print FastMCP version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastmcp",
+      "resource": "server",
+      "action": "run",
+      "description": "Run an MCP server (fastmcp run server.py --transport stdio|http|sse --port 8000)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "baseArgs": ["run"],
+        "positionalArgs": ["server"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": [
+        { "name": "server", "type": "string", "required": true, "description": "Server spec: path (server.py), module, or URL to proxy" }
+      ]
+    },
+    {
+      "namespace": "fastmcp",
+      "resource": "server",
+      "action": "dev",
+      "description": "Run a server in dev mode with the MCP Inspector UI (fastmcp dev server.py)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "baseArgs": ["dev"],
+        "positionalArgs": ["server"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": [
+        { "name": "server", "type": "string", "required": true, "description": "Path to the FastMCP server file" }
+      ]
+    },
+    {
+      "namespace": "fastmcp",
+      "resource": "server",
+      "action": "inspect",
+      "description": "Inspect a server's tools/resources/prompts without running it (fastmcp inspect server.py --format json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "baseArgs": ["inspect"],
+        "positionalArgs": ["server"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": [
+        { "name": "server", "type": "string", "required": true, "description": "Path to the FastMCP server file" }
+      ]
+    },
+    {
+      "namespace": "fastmcp",
+      "resource": "server",
+      "action": "install",
+      "description": "Install a server into an agent CLI (fastmcp install claude-code|cursor|claude-desktop server.py)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastmcp",
+      "resource": "project",
+      "action": "init",
+      "description": "Create a fastmcp.toml project config in the current directory (fastmcp project init)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "baseArgs": ["project", "init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fastmcp",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fastmcp CLI (fastmcp list, fastmcp copy, fastmcp env, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fastmcp",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fastmcp: pip install fastmcp"
+      },
+      "args": []
+    }
+  ]
+}

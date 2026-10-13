@@ -1,0 +1,143 @@
+{
+  "name": "vllm",
+  "version": "0.1.0",
+  "description": "High-throughput local LLM inference engine — serve OpenAI-compatible APIs and benchmark models with PagedAttention",
+  "source": "https://github.com/vllm-project/vllm",
+  "checks": [
+    { "type": "binary", "name": "vllm" }
+  ],
+  "install_guidance": {
+    "plugin": "vllm",
+    "binary": "vllm",
+    "check": "which vllm",
+    "install_steps": [
+      "pip install vllm  # or: uv pip install vllm",
+      "Verify: vllm --version",
+      "supercli plugins install ./plugins/vllm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vllm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vLLM version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vllm",
+      "resource": "model",
+      "action": "serve",
+      "description": "Serve a model as an OpenAI-compatible API (vllm serve <model> --port 8000). Long-running server process.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["serve"],
+        "positionalArgs": ["model"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": true, "description": "HuggingFace model id or local path (e.g. Qwen/Qwen2.5-1.5B-Instruct)" }
+      ]
+    },
+    {
+      "namespace": "vllm",
+      "resource": "model",
+      "action": "chat",
+      "description": "Interactive chat against a running vLLM OpenAI-compatible server (vllm chat --url http://localhost:8000)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["chat"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vllm",
+      "resource": "model",
+      "action": "complete",
+      "description": "One-shot text completion against a running vLLM server (vllm complete --url ...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["complete"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vllm",
+      "resource": "bench",
+      "action": "throughput",
+      "description": "Run an offline throughput benchmark (vllm bench throughput --model <hf> --input-len N --output-len N)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["bench", "throughput"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vllm",
+      "resource": "bench",
+      "action": "latency",
+      "description": "Run a latency benchmark (vllm bench latency --model <hf> --batch-size N)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["bench", "latency"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vllm",
+      "resource": "env",
+      "action": "collect",
+      "description": "Collect environment info for bug reports (vllm collect-env)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "baseArgs": ["collect-env"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vllm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vllm CLI (vllm run-batch, vllm bench serve, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vllm",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install vllm: pip install vllm"
+      },
+      "args": []
+    }
+  ]
+}

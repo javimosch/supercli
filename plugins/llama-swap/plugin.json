@@ -1,0 +1,66 @@
+{
+  "name": "llama-swap",
+  "version": "0.1.0",
+  "description": "Model hot-swapping proxy for local LLM servers — one OpenAI/Anthropic-compatible endpoint that spins models up and down on demand",
+  "source": "https://github.com/mostlygeek/llama-swap",
+  "checks": [
+    { "type": "binary", "name": "llama-swap" }
+  ],
+  "install_guidance": {
+    "plugin": "llama-swap",
+    "binary": "llama-swap",
+    "check": "which llama-swap",
+    "install_steps": [
+      "TAG=$(curl -s https://api.github.com/repos/mostlygeek/llama-swap/releases/latest | grep -oP '\"tag_name\":\\s*\"v\\K[0-9]+') && curl -sL \"https://github.com/mostlygeek/llama-swap/releases/latest/download/llama-swap_${TAG}_linux_amd64.tar.gz\" | tar xz llama-swap && mv llama-swap ~/.local/bin/",
+      "Verify: llama-swap -version",
+      "supercli plugins install ./plugins/llama-swap --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "llama-swap",
+      "resource": "self",
+      "action": "version",
+      "description": "Print llama-swap version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llama-swap",
+        "baseArgs": ["-version"],
+        "missingDependencyHelp": "Install llama-swap: download from github.com/mostlygeek/llama-swap/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llama-swap",
+      "resource": "server",
+      "action": "run",
+      "description": "Run the llama-swap proxy (llama-swap -config config.yaml -listen :8080). Long-running process.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llama-swap",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install llama-swap: download from github.com/mostlygeek/llama-swap/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "llama-swap",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to llama-swap CLI (-config, -listen, -watch-config, -tls-cert-file, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "llama-swap",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install llama-swap: download from github.com/mostlygeek/llama-swap/releases"
+      },
+      "args": []
+    }
+  ]
+}

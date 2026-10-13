@@ -1,0 +1,72 @@
+{
+  "name": "infinity",
+  "version": "0.1.0",
+  "description": "Infinity — high-throughput embedding and reranking server; serves OpenAI-compatible /embeddings, /rerank, and image embeddings for local RAG",
+  "source": "https://github.com/michaelfeil/infinity",
+  "checks": [
+    { "type": "binary", "name": "infinity_emb" }
+  ],
+  "install_guidance": {
+    "plugin": "infinity",
+    "binary": "infinity_emb",
+    "check": "which infinity_emb",
+    "install_steps": [
+      "pip install \"infinity-emb[all]\"  # or: pipx install infinity-emb[all]",
+      "Verify: infinity_emb --version",
+      "supercli plugins install ./plugins/infinity --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "infinity",
+      "resource": "self",
+      "action": "version",
+      "description": "Print Infinity version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infinity_emb",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install infinity: pip install \"infinity-emb[all]\""
+      },
+      "args": []
+    },
+    {
+      "namespace": "infinity",
+      "resource": "server",
+      "action": "run",
+      "description": "Serve embedding/reranking models (infinity_emb v2 --model-id <hf> --port 7997). Long-running server; repeat --model-id for multi-model serving.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infinity_emb",
+        "baseArgs": ["v2"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install infinity: pip install \"infinity-emb[all]\""
+      },
+      "args": [
+        { "name": "model-id", "type": "string", "required": true, "description": "HuggingFace model id (e.g. BAAI/bge-small-en-v1.5, mixedbread-ai/mxbai-rerank-xsmall-v1)" },
+        { "name": "port", "type": "string", "description": "Port to serve on (default 7997)" },
+        { "name": "engine", "type": "string", "description": "Backend engine: torch|ctranslate2|optimum|neuron" },
+        { "name": "dtype", "type": "string", "description": "Model dtype: float32|float16|bfloat16|int8" },
+        { "name": "batch-size", "type": "string", "description": "Max batch size (repeatable per model)" }
+      ]
+    },
+    {
+      "namespace": "infinity",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to infinity_emb CLI (v2 flags: --served-model-name, --embedding-dtype, --device, --compile, INFINITY_* env vars)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "infinity_emb",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install infinity: pip install \"infinity-emb[all]\""
+      },
+      "args": []
+    }
+  ]
+}

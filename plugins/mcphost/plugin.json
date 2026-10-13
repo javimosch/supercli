@@ -1,0 +1,105 @@
+{
+  "name": "mcphost",
+  "version": "0.1.0",
+  "description": "MCP host CLI — connect any LLM (Ollama, OpenAI, Anthropic, Google, OpenAI-compatible) to MCP tool servers, with non-interactive and script modes",
+  "source": "https://github.com/mark3labs/mcphost",
+  "checks": [
+    { "type": "binary", "name": "mcphost" }
+  ],
+  "install_guidance": {
+    "plugin": "mcphost",
+    "binary": "mcphost",
+    "check": "which mcphost",
+    "install_steps": [
+      "go install github.com/mark3labs/mcphost@latest",
+      "Verify: mcphost --version",
+      "supercli plugins install ./plugins/mcphost --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mcphost",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mcphost version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcphost",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install mcphost: go install github.com/mark3labs/mcphost@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcphost",
+      "resource": "agent",
+      "action": "ask",
+      "description": "Non-interactive one-shot run — reads the prompt from stdin (echo 'task' | mcphost --non-interactive -m ollama:qwen2.5)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcphost",
+        "baseArgs": ["--non-interactive"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcphost: go install github.com/mark3labs/mcphost@latest"
+      },
+      "args": [
+        { "name": "model", "type": "string", "description": "provider:model (e.g. ollama:qwen2.5, openai:gpt-4o, google:gemini-2.0-flash)" },
+        { "name": "config", "type": "string", "description": "Path to MCP config file (default ~/.mcp.json)" }
+      ]
+    },
+    {
+      "namespace": "mcphost",
+      "resource": "agent",
+      "action": "script",
+      "description": "Run a YAML-defined multi-step automation with tool calls (mcphost --script automation.yml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcphost",
+        "baseArgs": ["--script"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcphost: go install github.com/mark3labs/mcphost@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "Path to the YAML automation script" }
+      ]
+    },
+    {
+      "namespace": "mcphost",
+      "resource": "agent",
+      "action": "chat",
+      "description": "Interactive chat session connected to configured MCP servers (mcphost -m ollama:qwen2.5)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcphost",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcphost: go install github.com/mark3labs/mcphost@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mcphost",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mcphost CLI (--config, --system-prompt, --debug, --message-window, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mcphost",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install mcphost: go install github.com/mark3labs/mcphost@latest"
+      },
+      "args": []
+    }
+  ]
+}

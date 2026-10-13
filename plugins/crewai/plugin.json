@@ -1,0 +1,168 @@
+{
+  "name": "crewai",
+  "version": "0.1.0",
+  "description": "CrewAI CLI — scaffold, run, train, and test multi-agent crews and event-driven flows from the command line",
+  "source": "https://github.com/crewAIInc/crewAI",
+  "checks": [
+    { "type": "binary", "name": "crewai" }
+  ],
+  "install_guidance": {
+    "plugin": "crewai",
+    "binary": "crewai",
+    "check": "which crewai",
+    "install_steps": [
+      "pip install crewai crewai-tools  # or: uv tool install crewai --with crewai-tools",
+      "Verify: crewai --version",
+      "supercli plugins install ./plugins/crewai --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "crewai",
+      "resource": "self",
+      "action": "version",
+      "description": "Print CrewAI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crewai",
+      "resource": "crew",
+      "action": "create",
+      "description": "Scaffold a new crew project (crewai create crew <name>) — interactive provider/model wizard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["create", "crew"],
+        "positionalArgs": ["name"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Name of the new crew project" }
+      ]
+    },
+    {
+      "namespace": "crewai",
+      "resource": "flow",
+      "action": "create",
+      "description": "Scaffold a new flow project (crewai create flow <name>) — interactive wizard",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["create", "flow"],
+        "positionalArgs": ["name"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Name of the new flow project" }
+      ]
+    },
+    {
+      "namespace": "crewai",
+      "resource": "crew",
+      "action": "run",
+      "description": "Run the crew in the current project directory (crewai run)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crewai",
+      "resource": "flow",
+      "action": "kickstart",
+      "description": "Kick off the flow in the current project directory (crewai flow kickstart)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["flow", "kickstart"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crewai",
+      "resource": "crew",
+      "action": "train",
+      "description": "Train the crew for n iterations (crewai train -n 5 --filename output.pkl)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["train"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crewai",
+      "resource": "crew",
+      "action": "test",
+      "description": "Test the crew and score results (crewai test -n 3 --model gpt-4o-mini)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["test"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crewai",
+      "resource": "crew",
+      "action": "replay",
+      "description": "Replay the crew from a specific task (crewai replay -t <task_id>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "baseArgs": ["replay"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crewai",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to crewai CLI (crewai install, crewai update, crewai deploy, crewai log-tasks-outputs, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crewai",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crewai: pip install crewai crewai-tools"
+      },
+      "args": []
+    }
+  ]
+}
