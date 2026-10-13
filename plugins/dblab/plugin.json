@@ -1,0 +1,70 @@
+{
+  "name": "dblab",
+  "version": "0.1.0",
+  "description": "Interactive TUI database client for PostgreSQL, MySQL, SQLite3, and Oracle — vim-like table navigation in the terminal",
+  "source": "https://github.com/danvergara/dblab",
+  "checks": [
+    { "type": "binary", "name": "dblab" }
+  ],
+  "install_guidance": {
+    "plugin": "dblab",
+    "binary": "dblab",
+    "check": "which dblab",
+    "install_steps": [
+      "go install github.com/danvergara/dblab@latest",
+      "Verify: dblab --version",
+      "supercli plugins install ./plugins/dblab --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dblab",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dblab version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dblab",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dblab: go install github.com/danvergara/dblab@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dblab",
+      "resource": "tui",
+      "action": "open",
+      "description": "Open the interactive TUI connected to a database (pass --url or --host/--user/--db/--driver)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dblab",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dblab: go install github.com/danvergara/dblab@latest"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": false, "description": "Full connection URL, e.g. postgres://user:pass@host:5432/db?sslmode=disable (passed as --url)" },
+        { "name": "driver", "type": "string", "required": false, "description": "Driver: postgres, mysql, sqlite3, oracle (passed as --driver)" },
+        { "name": "host", "type": "string", "required": false, "description": "Database host (passed as --host)" },
+        { "name": "user", "type": "string", "required": false, "description": "Database user (passed as --user)" },
+        { "name": "db", "type": "string", "required": false, "description": "Database name (passed as --db)" },
+        { "name": "port", "type": "string", "required": false, "description": "Database port (passed as --port)" }
+      ]
+    },
+    {
+      "namespace": "dblab",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dblab CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dblab",
+        "passthrough": true,
+        "missingDependencyHelp": "Install dblab: go install github.com/danvergara/dblab@latest"
+      },
+      "args": []
+    }
+  ]
+}

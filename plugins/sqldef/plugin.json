@@ -1,0 +1,163 @@
+{
+  "name": "sqldef",
+  "version": "0.1.0",
+  "description": "Idempotent schema management for MySQL, PostgreSQL, SQLite3, and SQL Server — apply schema.sql with no hand-written migrations",
+  "source": "https://github.com/sqldef/sqldef",
+  "checks": [
+    { "type": "binary", "name": "mysqldef" }
+  ],
+  "install_guidance": {
+    "plugin": "sqldef",
+    "binary": "mysqldef",
+    "check": "which mysqldef",
+    "install_steps": [
+      "brew install sqldef",
+      "# or: curl -sL https://github.com/sqldef/sqldef/releases/latest/download/mysqldef_linux_amd64.tar.gz | tar xz && sudo mv mysqldef /usr/local/bin/",
+      "Verify: mysqldef --version",
+      "supercli plugins install ./plugins/sqldef --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqldef",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqldef (mysqldef) version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqldef",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sqldef: brew install sqldef, or download binaries from github.com/sqldef/sqldef releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "postgres",
+      "action": "apply",
+      "description": "Idempotently apply schema.sql to a PostgreSQL database (psqldef)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psqldef",
+        "positionalArgs": ["database"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install psqldef: brew install sqldef, or download psqldef from github.com/sqldef/sqldef releases"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Target database name (positional)" },
+        { "name": "file", "type": "string", "required": true, "description": "Path to schema.sql (passed as --file)" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Print planned DDL without applying (--dry-run)" }
+      ]
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "postgres",
+      "action": "export",
+      "description": "Export the current PostgreSQL schema to stdout (psqldef --export)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "psqldef",
+        "baseArgs": ["--export"],
+        "positionalArgs": ["database"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install psqldef: brew install sqldef, or download psqldef from github.com/sqldef/sqldef releases"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Database name to export (positional)" }
+      ]
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "mysql",
+      "action": "apply",
+      "description": "Idempotently apply schema.sql to a MySQL database (mysqldef)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqldef",
+        "positionalArgs": ["database"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mysqldef: brew install sqldef, or download mysqldef from github.com/sqldef/sqldef releases"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Target database name (positional)" },
+        { "name": "file", "type": "string", "required": true, "description": "Path to schema.sql (passed as --file)" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Print planned DDL without applying (--dry-run)" }
+      ]
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "mysql",
+      "action": "export",
+      "description": "Export the current MySQL schema to stdout (mysqldef --export)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqldef",
+        "baseArgs": ["--export"],
+        "positionalArgs": ["database"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mysqldef: brew install sqldef, or download mysqldef from github.com/sqldef/sqldef releases"
+      },
+      "args": [
+        { "name": "database", "type": "string", "required": true, "description": "Database name to export (positional)" }
+      ]
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "sqlite",
+      "action": "apply",
+      "description": "Idempotently apply schema.sql to a SQLite database file (sqlite3def)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3def",
+        "positionalArgs": ["file_path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install sqlite3def: brew install sqldef, or download sqlite3def from github.com/sqldef/sqldef releases"
+      },
+      "args": [
+        { "name": "file_path", "type": "string", "required": true, "description": "Path to the .db file (positional)" },
+        { "name": "file", "type": "string", "required": true, "description": "Path to schema.sql (passed as --file)" },
+        { "name": "dry-run", "type": "boolean", "required": false, "description": "Print planned DDL without applying (--dry-run)" }
+      ]
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "sqlite",
+      "action": "export",
+      "description": "Export a SQLite database file's schema to stdout (sqlite3def --export)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqlite3def",
+        "baseArgs": ["--export"],
+        "positionalArgs": ["file_path"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install sqlite3def: brew install sqldef, or download sqlite3def from github.com/sqldef/sqldef releases"
+      },
+      "args": [
+        { "name": "file_path", "type": "string", "required": true, "description": "Path to the .db file to export (positional)" }
+      ]
+    },
+    {
+      "namespace": "sqldef",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mysqldef CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mysqldef",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install sqldef: brew install sqldef, or download binaries from github.com/sqldef/sqldef releases"
+      },
+      "args": []
+    }
+  ]
+}

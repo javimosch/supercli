@@ -1,0 +1,122 @@
+{
+  "name": "pgloader",
+  "version": "0.1.0",
+  "description": "Battle-tested ETL into PostgreSQL — migrates MySQL, SQLite, MS SQL, CSV, and dBase files into Postgres with automatic schema conversion",
+  "source": "https://github.com/dimitri/pgloader",
+  "checks": [
+    { "type": "binary", "name": "pgloader" }
+  ],
+  "install_guidance": {
+    "plugin": "pgloader",
+    "binary": "pgloader",
+    "check": "which pgloader",
+    "install_steps": [
+      "sudo apt-get update && sudo apt-get install -y pgloader",
+      "Verify: pgloader --version",
+      "supercli plugins install ./plugins/pgloader --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pgloader",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pgloader version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgloader",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pgloader: apt-get install pgloader, brew install pgloader, or build from github.com/dimitri/pgloader"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgloader",
+      "resource": "migrate",
+      "action": "run",
+      "description": "Migrate a source database or file into PostgreSQL (pgloader <source> <target>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgloader",
+        "positionalArgs": ["source", "target"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgloader: apt-get install pgloader, brew install pgloader, or build from github.com/dimitri/pgloader"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source: mysql://user@host/db, sqlite:///path.db, mssql://..., or a CSV/DBF file path" },
+        { "name": "target", "type": "string", "required": true, "description": "Target Postgres URL, e.g. postgresql://user@host/db" }
+      ]
+    },
+    {
+      "namespace": "pgloader",
+      "resource": "migrate",
+      "action": "dryrun",
+      "description": "Dry-run a migration — process data without writing to the target (pgloader --dry-run)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgloader",
+        "baseArgs": ["--dry-run"],
+        "positionalArgs": ["source", "target"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgloader: apt-get install pgloader, brew install pgloader, or build from github.com/dimitri/pgloader"
+      },
+      "args": [
+        { "name": "source", "type": "string", "required": true, "description": "Source URL or file path" },
+        { "name": "target", "type": "string", "required": true, "description": "Target Postgres URL" }
+      ]
+    },
+    {
+      "namespace": "pgloader",
+      "resource": "load",
+      "action": "command",
+      "description": "Run a pgloader .load command file for fine-grained control (casting rules, filtering, on-error)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgloader",
+        "positionalArgs": ["loadfile"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgloader: apt-get install pgloader, brew install pgloader, or build from github.com/dimitri/pgloader"
+      },
+      "args": [
+        { "name": "loadfile", "type": "string", "required": true, "description": "Path to a .load command file" }
+      ]
+    },
+    {
+      "namespace": "pgloader",
+      "resource": "encodings",
+      "action": "list",
+      "description": "List the encodings pgloader supports for source data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgloader",
+        "baseArgs": ["--list-encodings"],
+        "missingDependencyHelp": "Install pgloader: apt-get install pgloader, brew install pgloader, or build from github.com/dimitri/pgloader"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pgloader",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pgloader CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pgloader",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pgloader: apt-get install pgloader, brew install pgloader, or build from github.com/dimitri/pgloader"
+      },
+      "args": []
+    }
+  ]
+}

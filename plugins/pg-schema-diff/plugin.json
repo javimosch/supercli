@@ -1,0 +1,113 @@
+{
+  "name": "pg-schema-diff",
+  "version": "0.1.0",
+  "description": "Stripe's Postgres schema diffing and migration-planning tool — plans validated against a temp database with safety hazards flagged",
+  "source": "https://github.com/stripe/pg-schema-diff",
+  "checks": [
+    { "type": "binary", "name": "pg-schema-diff" }
+  ],
+  "install_guidance": {
+    "plugin": "pg-schema-diff",
+    "binary": "pg-schema-diff",
+    "check": "which pg-schema-diff",
+    "install_steps": [
+      "brew install pg-schema-diff",
+      "# or: go install github.com/stripe/pg-schema-diff/cmd/pg-schema-diff@latest",
+      "Verify: pg-schema-diff --version",
+      "supercli plugins install ./plugins/pg-schema-diff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pg-schema-diff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pg-schema-diff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg-schema-diff",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pg-schema-diff: brew install pg-schema-diff or go install github.com/stripe/pg-schema-diff/cmd/pg-schema-diff@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pg-schema-diff",
+      "resource": "plan",
+      "action": "generate",
+      "description": "Generate a migration plan diffing a live DB (--from-dsn or --from-dir) against a target (--to-dsn or --to-dir)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg-schema-diff",
+        "baseArgs": ["plan"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg-schema-diff: brew install pg-schema-diff or go install github.com/stripe/pg-schema-diff/cmd/pg-schema-diff@latest"
+      },
+      "args": [
+        { "name": "from-dsn", "type": "string", "required": false, "description": "DSN of the source database to diff from" },
+        { "name": "from-dir", "type": "string", "required": false, "description": "Directory of .sql files representing the source schema" },
+        { "name": "to-dsn", "type": "string", "required": false, "description": "DSN of the target database to diff to" },
+        { "name": "to-dir", "type": "string", "required": false, "description": "Directory of .sql files representing the target schema" },
+        { "name": "output-format", "type": "string", "required": false, "description": "Output format: pretty, json, or sql" }
+      ]
+    },
+    {
+      "namespace": "pg-schema-diff",
+      "resource": "apply",
+      "action": "run",
+      "description": "Apply the migration plan to the target database (hazards must be approved)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg-schema-diff",
+        "baseArgs": ["apply"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg-schema-diff: brew install pg-schema-diff or go install github.com/stripe/pg-schema-diff/cmd/pg-schema-diff@latest"
+      },
+      "args": [
+        { "name": "from-dsn", "type": "string", "required": true, "description": "DSN of the database to migrate" },
+        { "name": "to-dir", "type": "string", "required": true, "description": "Directory of .sql files describing the desired schema" }
+      ]
+    },
+    {
+      "namespace": "pg-schema-diff",
+      "resource": "schema",
+      "action": "dump",
+      "description": "Dump a live database's schema into a directory of .sql files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg-schema-diff",
+        "baseArgs": ["dump"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg-schema-diff: brew install pg-schema-diff or go install github.com/stripe/pg-schema-diff/cmd/pg-schema-diff@latest"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "DSN of the database to dump" },
+        { "name": "output-dir", "type": "string", "required": true, "description": "Directory to write schema .sql files into" }
+      ]
+    },
+    {
+      "namespace": "pg-schema-diff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pg-schema-diff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pg-schema-diff",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pg-schema-diff: brew install pg-schema-diff or go install github.com/stripe/pg-schema-diff/cmd/pg-schema-diff@latest"
+      },
+      "args": []
+    }
+  ]
+}

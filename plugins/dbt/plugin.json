@@ -1,0 +1,183 @@
+{
+  "name": "dbt",
+  "version": "0.1.0",
+  "description": "Industry-standard data transformation tool — compile, run, and test SQL select statements in your warehouse",
+  "source": "https://github.com/dbt-labs/dbt-core",
+  "checks": [
+    { "type": "binary", "name": "dbt" }
+  ],
+  "install_guidance": {
+    "plugin": "dbt",
+    "binary": "dbt",
+    "check": "which dbt",
+    "install_steps": [
+      "pipx install dbt-core",
+      "pipx inject dbt-core dbt-postgres",
+      "Verify: dbt --version",
+      "supercli plugins install ./plugins/dbt --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dbt",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dbt version and installed adapters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "project",
+      "action": "init",
+      "description": "Create a new dbt project skeleton (dbt init <project_name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": [
+        { "name": "project_name", "type": "string", "required": false, "description": "Name for the new dbt project" }
+      ]
+    },
+    {
+      "namespace": "dbt",
+      "resource": "models",
+      "action": "run",
+      "description": "Compile and run dbt models against the warehouse",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "tests",
+      "action": "run",
+      "description": "Run dbt data tests (schema tests + custom singular tests)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["test"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "build",
+      "action": "run",
+      "description": "Run models, tests, seeds, and snapshots in DAG order (dbt build)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "deps",
+      "action": "install",
+      "description": "Install packages declared in packages.yml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["deps"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "debug",
+      "action": "check",
+      "description": "Validate profiles.yml connection and project setup",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["debug"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "docs",
+      "action": "generate",
+      "description": "Generate project documentation (catalog.json + manifest.json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["docs", "generate"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "parse",
+      "action": "run",
+      "description": "Parse the project without running models (validates syntax, produces manifest.json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "baseArgs": ["parse"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dbt",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dbt CLI (dbt seed, dbt snapshot, dbt compile, dbt ls, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dbt",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dbt: pipx install dbt-core (then pipx inject dbt-core dbt-<adapter>)"
+      },
+      "args": []
+    }
+  ]
+}

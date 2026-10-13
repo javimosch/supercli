@@ -1,0 +1,137 @@
+{
+  "name": "redpanda-connect",
+  "version": "0.1.0",
+  "description": "Declarative stream-processing and ETL engine (formerly Benthos) — YAML pipelines connecting 200+ inputs, processors, and outputs",
+  "source": "https://github.com/redpanda-data/connect",
+  "checks": [
+    { "type": "binary", "name": "redpanda-connect" }
+  ],
+  "install_guidance": {
+    "plugin": "redpanda-connect",
+    "binary": "redpanda-connect",
+    "check": "which redpanda-connect",
+    "install_steps": [
+      "brew install redpanda-data/tap/redpanda-connect",
+      "# or: go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest",
+      "Verify: redpanda-connect --version",
+      "supercli plugins install ./plugins/redpanda-connect --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "redpanda-connect",
+      "resource": "self",
+      "action": "version",
+      "description": "Print redpanda-connect version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "redpanda-connect",
+      "resource": "pipeline",
+      "action": "run",
+      "description": "Run a streaming pipeline from a YAML config (redpanda-connect run config.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "baseArgs": ["run"],
+        "positionalArgs": ["config"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": false, "description": "Path to pipeline config YAML (omit to read from stdin)" }
+      ]
+    },
+    {
+      "namespace": "redpanda-connect",
+      "resource": "config",
+      "action": "lint",
+      "description": "Lint a pipeline config file for errors before running",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["config"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": false, "description": "Path to config to lint (omit to read from stdin)" }
+      ]
+    },
+    {
+      "namespace": "redpanda-connect",
+      "resource": "config",
+      "action": "create",
+      "description": "Print a template pipeline config (redpanda-connect create)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "baseArgs": ["create"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "redpanda-connect",
+      "resource": "components",
+      "action": "list",
+      "description": "List available components (inputs, outputs, processors, caches, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": [
+        { "name": "type", "type": "string", "required": false, "description": "Component type filter: inputs, outputs, processors, caches, buffers, metrics, tracers" }
+      ]
+    },
+    {
+      "namespace": "redpanda-connect",
+      "resource": "streams",
+      "action": "run",
+      "description": "Run in streams mode — manage multiple pipelines via REST API and files in a directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "baseArgs": ["streams"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "redpanda-connect",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to redpanda-connect CLI (echo, blobl, test, template, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "redpanda-connect",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install redpanda-connect: brew install redpanda-data/tap/redpanda-connect or go install github.com/redpanda-data/connect/v4/cmd/redpanda-connect@latest"
+      },
+      "args": []
+    }
+  ]
+}

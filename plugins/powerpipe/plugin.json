@@ -1,0 +1,152 @@
+{
+  "name": "powerpipe",
+  "version": "0.1.0",
+  "description": "Dashboards and benchmarks as code — SQL-powered visualizations and compliance checks over Postgres, SQLite, MySQL, and DuckDB",
+  "source": "https://github.com/turbot/powerpipe",
+  "checks": [
+    { "type": "binary", "name": "powerpipe" }
+  ],
+  "install_guidance": {
+    "plugin": "powerpipe",
+    "binary": "powerpipe",
+    "check": "which powerpipe",
+    "install_steps": [
+      "sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\"",
+      "Verify: powerpipe --version",
+      "supercli plugins install ./plugins/powerpipe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "powerpipe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print powerpipe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "mod",
+      "action": "init",
+      "description": "Initialize a Powerpipe mod (powerpipe.mod file) in the current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["mod", "init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "query",
+      "action": "run",
+      "description": "Run a SQL query against the configured database (--output json for machine-readable)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["query", "run"],
+        "positionalArgs": ["sql"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": [
+        { "name": "sql", "type": "string", "required": true, "description": "SQL to execute against the configured database" },
+        { "name": "output", "type": "string", "required": false, "description": "Output format: pretty, json, csv (passed as --output)" },
+        { "name": "database", "type": "string", "required": false, "description": "Connection string, e.g. postgres://... or sqlite://file.db (passed as --database)" }
+      ]
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "dashboard",
+      "action": "run",
+      "description": "Run a dashboard or view its snapshot (powerpipe dashboard run <name> --output snapshot)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["dashboard", "run"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "benchmark",
+      "action": "run",
+      "description": "Run a compliance benchmark or all controls (powerpipe benchmark run <name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["benchmark", "run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the Powerpipe dashboard server (default port 9033)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["server"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "mod",
+      "action": "install",
+      "description": "Install mod dependencies declared in powerpipe.mod",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "baseArgs": ["mod", "install"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "powerpipe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to powerpipe CLI (control run, check all, variable, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "powerpipe",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install powerpipe: sudo /bin/sh -c \"$(curl -fsSL https://powerpipe.io/install/powerpipe.sh)\" or brew install turbot/tap/powerpipe"
+      },
+      "args": []
+    }
+  ]
+}

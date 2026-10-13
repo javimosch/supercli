@@ -1,0 +1,127 @@
+{
+  "name": "tbls",
+  "version": "0.1.0",
+  "description": "CI-friendly database documentation generator — documents schemas in Markdown for PostgreSQL, MySQL, SQLite, and more",
+  "source": "https://github.com/k1LoW/tbls",
+  "checks": [
+    { "type": "binary", "name": "tbls" }
+  ],
+  "install_guidance": {
+    "plugin": "tbls",
+    "binary": "tbls",
+    "check": "which tbls",
+    "install_steps": [
+      "go install github.com/k1LoW/tbls@latest",
+      "Verify: tbls version",
+      "supercli plugins install ./plugins/tbls --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tbls",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tbls version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbls",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install tbls: go install github.com/k1LoW/tbls@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tbls",
+      "resource": "docs",
+      "action": "generate",
+      "description": "Generate database documentation (tbls doc <dsn> [docPath], defaults to ./dbdoc or tbls.yml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbls",
+        "baseArgs": ["doc"],
+        "positionalArgs": ["dsn"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tbls: go install github.com/k1LoW/tbls@latest"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "Database DSN (e.g. postgres://user:pass@host/db, mysql://..., sqlite://path.db) or datasource name from tbls.yml" }
+      ]
+    },
+    {
+      "namespace": "tbls",
+      "resource": "lint",
+      "action": "run",
+      "description": "Lint a database against tbls.yml rules (table comments, column counts, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbls",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["dsn"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tbls: go install github.com/k1LoW/tbls@latest"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "Database DSN or datasource name from tbls.yml" }
+      ]
+    },
+    {
+      "namespace": "tbls",
+      "resource": "diff",
+      "action": "check",
+      "description": "Show diff between a database and its generated documentation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbls",
+        "baseArgs": ["diff"],
+        "positionalArgs": ["dsn"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tbls: go install github.com/k1LoW/tbls@latest"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "Database DSN or datasource name from tbls.yml" }
+      ]
+    },
+    {
+      "namespace": "tbls",
+      "resource": "schema",
+      "action": "out",
+      "description": "Output database schema in various formats (tbls out -t json <dsn> for machine-readable schema)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbls",
+        "baseArgs": ["out"],
+        "positionalArgs": ["dsn"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install tbls: go install github.com/k1LoW/tbls@latest"
+      },
+      "args": [
+        { "name": "dsn", "type": "string", "required": true, "description": "Database DSN or datasource name from tbls.yml" }
+      ]
+    },
+    {
+      "namespace": "tbls",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tbls CLI (tbls ls, tbls doc --force, tbls config, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tbls",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tbls: go install github.com/k1LoW/tbls@latest"
+      },
+      "args": []
+    }
+  ]
+}
