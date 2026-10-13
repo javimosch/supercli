@@ -1,0 +1,72 @@
+{
+  "name": "av1an",
+  "version": "0.1.0",
+  "description": "Chunked, parallel video encoding orchestrator for AV1/VP9/x265 with per-scene target quality",
+  "source": "https://github.com/rust-av/Av1an",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "av1an"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "av1an",
+    "binary": "av1an",
+    "check": "which av1an",
+    "install_steps": [
+      "sudo apt-get install -y ffmpeg svt-av1",
+      "cargo install av1an",
+      "Verify: av1an --version",
+      "supercli plugins install ./plugins/av1an --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "av1an",
+      "resource": "self",
+      "action": "version",
+      "description": "Print av1an version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "av1an",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install av1an: cargo install av1an (also needs ffmpeg + an encoder like svt-av1)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "av1an",
+      "resource": "video",
+      "action": "encode",
+      "description": "Chunked parallel encode (av1an -i in.mkv -o out.mkv -e svt-av1 -w 8)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "av1an",
+        "passthrough": true,
+        "missingDependencyHelp": "Install av1an: cargo install av1an (also needs ffmpeg + an encoder like svt-av1)",
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "av1an",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to av1an CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "av1an",
+        "passthrough": true,
+        "missingDependencyHelp": "Install av1an: cargo install av1an (also needs ffmpeg + an encoder like svt-av1)",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

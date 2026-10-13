@@ -1,0 +1,71 @@
+{
+  "name": "vtracer",
+  "version": "0.1.0",
+  "description": "Raster to vector graphics converter - turns PNG/JPG bitmaps into SVG, ~100x faster than Potrace",
+  "source": "https://github.com/visioncortex/vtracer",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vtracer"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vtracer",
+    "binary": "vtracer",
+    "check": "which vtracer",
+    "install_steps": [
+      "cargo install vtracer",
+      "Verify: vtracer --version",
+      "supercli plugins install ./plugins/vtracer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vtracer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vtracer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vtracer",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vtracer: cargo install vtracer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vtracer",
+      "resource": "vectorize",
+      "action": "convert",
+      "description": "Convert a raster image to SVG (vtracer --input in.png --output out.svg)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vtracer",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vtracer: cargo install vtracer",
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vtracer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vtracer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vtracer",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vtracer: cargo install vtracer",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

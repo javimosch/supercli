@@ -1,0 +1,71 @@
+{
+  "name": "subliminal",
+  "version": "0.1.0",
+  "description": "Download subtitles for video files from multiple providers with automatic best-match scoring",
+  "source": "https://github.com/Diaoul/subliminal",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "subliminal"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "subliminal",
+    "binary": "subliminal",
+    "check": "which subliminal",
+    "install_steps": [
+      "pipx install subliminal",
+      "Verify: subliminal --version",
+      "supercli plugins install ./plugins/subliminal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "subliminal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print subliminal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subliminal",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install subliminal: pipx install subliminal (or pip install subliminal)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "subliminal",
+      "resource": "subtitles",
+      "action": "download",
+      "description": "Download best-match subtitles (subliminal download -l en VIDEO...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subliminal",
+        "passthrough": true,
+        "missingDependencyHelp": "Install subliminal: pipx install subliminal (or pip install subliminal)",
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "subliminal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to subliminal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "subliminal",
+        "passthrough": true,
+        "missingDependencyHelp": "Install subliminal: pipx install subliminal (or pip install subliminal)",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "name": "unpaper",
+  "version": "0.1.0",
+  "description": "Post-process scanned pages - deskew, remove black borders and noise, split two-page scans - before OCR or PDF archiving",
+  "source": "https://github.com/Flameeyes/unpaper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unpaper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unpaper",
+    "binary": "unpaper",
+    "check": "which unpaper",
+    "install_steps": [
+      "sudo apt-get install -y unpaper",
+      "Verify: unpaper --version",
+      "supercli plugins install ./plugins/unpaper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unpaper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unpaper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unpaper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install unpaper: sudo apt-get install -y unpaper"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unpaper",
+      "resource": "scan",
+      "action": "clean",
+      "description": "Clean a scanned image (unpaper [options] input.pbm output.pbm)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unpaper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install unpaper: sudo apt-get install -y unpaper",
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unpaper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unpaper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unpaper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install unpaper: sudo apt-get install -y unpaper",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}
