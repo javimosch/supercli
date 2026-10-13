@@ -1,0 +1,143 @@
+{
+  "name": "hk",
+  "version": "0.1.0",
+  "description": "Fast git hooks and lint/format orchestration at the commit layer, from the author of mise",
+  "source": "https://github.com/jdx/hk",
+  "checks": [
+    { "type": "binary", "name": "hk" }
+  ],
+  "install_guidance": {
+    "plugin": "hk",
+    "binary": "hk",
+    "check": "which hk",
+    "install_steps": [
+      "cargo install hk --locked",
+      "Verify: hk --version",
+      "supercli plugins install ./plugins/hk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "project",
+      "action": "init",
+      "description": "Generate hk.pkl config by detecting linters used by the project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "check",
+      "action": "run",
+      "description": "Run configured linters in check mode (hk check --all for CI, --plan --json to preview)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "fix",
+      "action": "run",
+      "description": "Run configured linters and apply fixes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["fix"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "hooks",
+      "action": "install",
+      "description": "Install hk git hooks into the current repository (hk install --global for all repos)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["install"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "config",
+      "action": "validate",
+      "description": "Validate hk.pkl configuration without running linters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["validate"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "builtins",
+      "action": "list",
+      "description": "List built-in linter step definitions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "baseArgs": ["builtins"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hk CLI (hk run pre-commit, hk util trailing-whitespace, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hk",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hk: cargo install hk --locked"
+      },
+      "args": []
+    }
+  ]
+}

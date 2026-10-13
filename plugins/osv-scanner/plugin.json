@@ -1,0 +1,122 @@
+{
+  "name": "osv-scanner",
+  "version": "0.1.0",
+  "description": "Google's official OSV.dev vulnerability scanner - finds known vulnerabilities in project dependencies, lockfiles, and container images",
+  "source": "https://github.com/google/osv-scanner",
+  "checks": [
+    { "type": "binary", "name": "osv-scanner" }
+  ],
+  "install_guidance": {
+    "plugin": "osv-scanner",
+    "binary": "osv-scanner",
+    "check": "which osv-scanner",
+    "install_steps": [
+      "curl -sSL https://github.com/google/osv-scanner/releases/latest/download/osv-scanner_linux_amd64 -o ~/.local/bin/osv-scanner && chmod +x ~/.local/bin/osv-scanner",
+      "Verify: osv-scanner --version",
+      "supercli plugins install ./plugins/osv-scanner --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "osv-scanner",
+      "resource": "self",
+      "action": "version",
+      "description": "Print osv-scanner version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osv-scanner",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install osv-scanner: https://github.com/google/osv-scanner/releases (osv-scanner_linux_amd64) or go install github.com/google/osv-scanner/v2/cmd/osv-scanner@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osv-scanner",
+      "resource": "scan",
+      "action": "source",
+      "description": "Scan source directory for vulnerable dependencies (use -r for recursive, -L for a specific lockfile, --format json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osv-scanner",
+        "baseArgs": ["scan", "source"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osv-scanner: https://github.com/google/osv-scanner/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osv-scanner",
+      "resource": "scan",
+      "action": "image",
+      "description": "Scan a container image for OS and language package vulnerabilities",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osv-scanner",
+        "baseArgs": ["scan", "image"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install osv-scanner: https://github.com/google/osv-scanner/releases"
+      },
+      "args": [
+        {
+          "name": "image",
+          "type": "string",
+          "required": true,
+          "description": "Container image name:tag (e.g., ubuntu:24.04)"
+        }
+      ]
+    },
+    {
+      "namespace": "osv-scanner",
+      "resource": "licenses",
+      "action": "check",
+      "description": "Check dependency licenses (append a path for a summary; use passthrough with --licenses=MIT,Apache-2.0 for an allowlist)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osv-scanner",
+        "baseArgs": ["--licenses"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osv-scanner: https://github.com/google/osv-scanner/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osv-scanner",
+      "resource": "fix",
+      "action": "run",
+      "description": "Guided remediation - suggests dependency upgrades to resolve vulnerabilities (experimental; npm and Maven)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osv-scanner",
+        "baseArgs": ["fix"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osv-scanner: https://github.com/google/osv-scanner/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "osv-scanner",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to osv-scanner CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "osv-scanner",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install osv-scanner: https://github.com/google/osv-scanner/releases"
+      },
+      "args": []
+    }
+  ]
+}
