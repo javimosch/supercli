@@ -1,0 +1,115 @@
+{
+  "name": "gitlab-ci-local",
+  "version": "0.1.0",
+  "description": "Run GitLab CI pipelines locally — execute jobs from .gitlab-ci.yml without pushing to GitLab",
+  "source": "https://github.com/firecow/gitlab-ci-local",
+  "checks": [
+    { "type": "binary", "name": "gitlab-ci-local" }
+  ],
+  "install_guidance": {
+    "plugin": "gitlab-ci-local",
+    "binary": "gitlab-ci-local",
+    "check": "which gitlab-ci-local",
+    "install_steps": [
+      "npm install -g gitlab-ci-local",
+      "Verify: gitlab-ci-local --version",
+      "supercli plugins install ./plugins/gitlab-ci-local --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitlab-ci-local",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitlab-ci-local version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-ci-local",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gitlab-ci-local: npm install -g gitlab-ci-local"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-ci-local",
+      "resource": "pipeline",
+      "action": "run",
+      "description": "Run the full .gitlab-ci.yml pipeline locally in Docker containers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-ci-local",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-ci-local: npm install -g gitlab-ci-local"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-ci-local",
+      "resource": "job",
+      "action": "run",
+      "description": "Run a single CI job by name (gitlab-ci-local <job> --needs to include deps)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-ci-local",
+        "positionalArgs": ["job"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-ci-local: npm install -g gitlab-ci-local"
+      },
+      "args": [
+        { "name": "job", "type": "string", "required": true, "description": "Job name from .gitlab-ci.yml" }
+      ]
+    },
+    {
+      "namespace": "gitlab-ci-local",
+      "resource": "pipeline",
+      "action": "list",
+      "description": "List all jobs in the pipeline with stages and needs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-ci-local",
+        "baseArgs": ["--list"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-ci-local: npm install -g gitlab-ci-local"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-ci-local",
+      "resource": "pipeline",
+      "action": "preview",
+      "description": "Preview the fully resolved pipeline YAML (after includes/extends)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-ci-local",
+        "baseArgs": ["--preview"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-ci-local: npm install -g gitlab-ci-local"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-ci-local",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitlab-ci-local CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-ci-local",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-ci-local: npm install -g gitlab-ci-local"
+      },
+      "args": []
+    }
+  ]
+}

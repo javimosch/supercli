@@ -1,0 +1,90 @@
+{
+  "name": "schemathesis",
+  "version": "0.1.0",
+  "description": "Property-based fuzz testing for APIs — generates edge-case requests from OpenAPI/GraphQL schemas",
+  "source": "https://github.com/schemathesis/schemathesis",
+  "checks": [
+    { "type": "binary", "name": "st" }
+  ],
+  "install_guidance": {
+    "plugin": "schemathesis",
+    "binary": "st",
+    "check": "which st",
+    "install_steps": [
+      "pipx install schemathesis",
+      "Verify: st --version",
+      "supercli plugins install ./plugins/schemathesis --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "schemathesis",
+      "resource": "self",
+      "action": "version",
+      "description": "Print schemathesis (st) version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "st",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install schemathesis: pipx install schemathesis"
+      },
+      "args": []
+    },
+    {
+      "namespace": "schemathesis",
+      "resource": "api",
+      "action": "run",
+      "description": "Run property-based API tests against a live server (st run <schema> --base-url <url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "st",
+        "baseArgs": ["run"],
+        "positionalArgs": ["schema"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install schemathesis: pipx install schemathesis"
+      },
+      "args": [
+        { "name": "schema", "type": "string", "required": true, "description": "Path or URL to OpenAPI/GraphQL schema" }
+      ]
+    },
+    {
+      "namespace": "schemathesis",
+      "resource": "api",
+      "action": "validate",
+      "description": "Validate an API schema against a running service without fuzzing (st run <schema> --checks coverage)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "st",
+        "baseArgs": ["run"],
+        "positionalArgs": ["schema"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install schemathesis: pipx install schemathesis"
+      },
+      "args": [
+        { "name": "schema", "type": "string", "required": true, "description": "Path or URL to OpenAPI/GraphQL schema" }
+      ]
+    },
+    {
+      "namespace": "schemathesis",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to schemathesis (st) CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "st",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install schemathesis: pipx install schemathesis"
+      },
+      "args": []
+    }
+  ]
+}

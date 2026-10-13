@@ -1,0 +1,118 @@
+{
+  "name": "sqruff",
+  "version": "0.1.0",
+  "description": "Fast SQL linter and formatter written in Rust, compatible with SQLFluff rules",
+  "source": "https://github.com/quarylabs/sqruff",
+  "checks": [
+    { "type": "binary", "name": "sqruff" }
+  ],
+  "install_guidance": {
+    "plugin": "sqruff",
+    "binary": "sqruff",
+    "check": "which sqruff",
+    "install_steps": [
+      "cargo install sqruff",
+      "Verify: sqruff --version",
+      "supercli plugins install ./plugins/sqruff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sqruff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqruff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqruff",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sqruff: cargo install sqruff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqruff",
+      "resource": "sql",
+      "action": "lint",
+      "description": "Lint SQL files or directories (sqruff lint <path> --dialect ansi)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqruff",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqruff: cargo install sqruff"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "SQL file or directory to lint" }
+      ]
+    },
+    {
+      "namespace": "sqruff",
+      "resource": "sql",
+      "action": "fix",
+      "description": "Auto-fix SQL lint violations (sqruff fix <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqruff",
+        "baseArgs": ["fix"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqruff: cargo install sqruff"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": false, "description": "SQL file or directory to fix" }
+      ]
+    },
+    {
+      "namespace": "sqruff",
+      "resource": "rules",
+      "action": "list",
+      "description": "List all available lint rules",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqruff",
+        "baseArgs": ["rules"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sqruff: cargo install sqruff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqruff",
+      "resource": "dialects",
+      "action": "list",
+      "description": "List supported SQL dialects (ansi, postgres, bigquery, snowflake, ...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqruff",
+        "baseArgs": ["dialects"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sqruff: cargo install sqruff"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqruff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqruff CLI (sqruff parse, sqruff lsp, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqruff",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqruff: cargo install sqruff"
+      },
+      "args": []
+    }
+  ]
+}

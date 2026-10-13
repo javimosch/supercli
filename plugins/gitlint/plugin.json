@@ -1,0 +1,117 @@
+{
+  "name": "gitlint",
+  "version": "0.1.0",
+  "description": "Lint git commit messages for style and consistency — title length, body format, and custom rules",
+  "source": "https://github.com/jorisroovers/gitlint",
+  "checks": [
+    { "type": "binary", "name": "gitlint" }
+  ],
+  "install_guidance": {
+    "plugin": "gitlint",
+    "binary": "gitlint",
+    "check": "which gitlint",
+    "install_steps": [
+      "pipx install gitlint",
+      "Verify: gitlint --version",
+      "supercli plugins install ./plugins/gitlint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitlint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitlint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install gitlint: pipx install gitlint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlint",
+      "resource": "commit",
+      "action": "lint",
+      "description": "Lint commit messages (default: last commit; use --commits <range> for a range)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlint",
+        "baseArgs": ["lint"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlint: pipx install gitlint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlint",
+      "resource": "commit",
+      "action": "lint-range",
+      "description": "Lint a commit range (gitlint --commits <range>, e.g. HEAD~3..HEAD)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlint",
+        "baseArgs": ["--commits"],
+        "positionalArgs": ["range"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlint: pipx install gitlint"
+      },
+      "args": [
+        { "name": "range", "type": "string", "required": true, "description": "Git revision range, e.g. HEAD~3..HEAD or main..HEAD" }
+      ]
+    },
+    {
+      "namespace": "gitlint",
+      "resource": "hooks",
+      "action": "install",
+      "description": "Install gitlint as a commit-msg git hook in the current repo",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlint",
+        "baseArgs": ["install-hook"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlint: pipx install gitlint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlint",
+      "resource": "config",
+      "action": "init",
+      "description": "Generate a starter .gitlint config file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlint",
+        "baseArgs": ["generate-config"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlint: pipx install gitlint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitlint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlint",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlint: pipx install gitlint"
+      },
+      "args": []
+    }
+  ]
+}
