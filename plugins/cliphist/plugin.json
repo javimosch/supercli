@@ -1,0 +1,123 @@
+{
+  "name": "cliphist",
+  "version": "0.1.0",
+  "description": "Clipboard history manager for Wayland: stores text and images byte-for-byte, recalled via any dmenu-style picker and pipes",
+  "source": "https://github.com/sentriz/cliphist",
+  "checks": [
+    { "type": "binary", "name": "cliphist" }
+  ],
+  "install_guidance": {
+    "plugin": "cliphist",
+    "binary": "cliphist",
+    "check": "which cliphist",
+    "install_steps": [
+      "go install go.senan.xyz/cliphist@latest",
+      "Verify: cliphist -h",
+      "supercli plugins install ./plugins/cliphist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cliphist",
+      "resource": "self",
+      "action": "help",
+      "description": "Print cliphist usage (cliphist has no --version flag)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "baseArgs": ["-h"],
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cliphist",
+      "resource": "history",
+      "action": "list",
+      "description": "List clipboard history as TSV (cliphist list; -fields id,mime,preview for extra columns)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cliphist",
+      "resource": "history",
+      "action": "decode",
+      "description": "Decode a selected history id back to original bytes (cliphist list | picker | cliphist decode | wl-copy)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "baseArgs": ["decode"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cliphist",
+      "resource": "history",
+      "action": "store",
+      "description": "Store one clipboard item from stdin (normally run via wl-paste --watch cliphist store)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "baseArgs": ["store"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cliphist",
+      "resource": "history",
+      "action": "wipe",
+      "description": "Clear the clipboard database (cliphist wipe -older-than 720h to expire old entries)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "baseArgs": ["wipe"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cliphist",
+      "resource": "history",
+      "action": "compact",
+      "description": "Compact the clipboard history database",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "baseArgs": ["compact"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cliphist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cliphist CLI (cliphist delete, delete-query, -max-items, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cliphist",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install cliphist: go install go.senan.xyz/cliphist@latest"
+      },
+      "args": []
+    }
+  ]
+}

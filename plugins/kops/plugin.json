@@ -1,0 +1,155 @@
+{
+  "name": "kops",
+  "version": "0.1.0",
+  "description": "Kubernetes Operations - create, upgrade, and manage production-grade Kubernetes clusters on AWS, GCE, and other clouds",
+  "source": "https://github.com/kubernetes/kops",
+  "checks": [
+    { "type": "binary", "name": "kops" }
+  ],
+  "install_guidance": {
+    "plugin": "kops",
+    "binary": "kops",
+    "check": "which kops",
+    "install_steps": [
+      "curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '\"' -f 4)/kops-linux-amd64 && chmod +x kops && mkdir -p ~/.local/bin && mv kops ~/.local/bin/",
+      "Verify: kops version",
+      "supercli plugins install ./plugins/kops --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kops",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kops version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases or run brew install kops"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "cluster",
+      "action": "list",
+      "description": "List clusters registered in the kops state store",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["get", "clusters"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "cluster",
+      "action": "create",
+      "description": "Create a cluster configuration in the state store (use --name, --zones, --cloud)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["create", "cluster"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "cluster",
+      "action": "update",
+      "description": "Update cluster configuration; use --yes to apply changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["update", "cluster"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "cluster",
+      "action": "delete",
+      "description": "Delete a cluster; use --yes to confirm",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["delete", "cluster"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "cluster",
+      "action": "validate",
+      "description": "Validate that a cluster is healthy",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["validate", "cluster"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "cluster",
+      "action": "rolling-update",
+      "description": "Perform a rolling update of cluster instances (--yes to apply)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["rolling-update", "cluster"],
+        "passthrough": true,
+        "timeout_ms": 1800000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "kubeconfig",
+      "action": "export",
+      "description": "Export a kubeconfig for a kops-managed cluster",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "baseArgs": ["export", "kubeconfig"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kops",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kops CLI (kops edit, kops toolbox, kops get instancegroups, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kops",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install kops: download kops-linux-amd64 from github.com/kubernetes/kops/releases"
+      },
+      "args": []
+    }
+  ]
+}

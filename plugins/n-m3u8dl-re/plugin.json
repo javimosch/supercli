@@ -1,0 +1,104 @@
+{
+  "name": "n-m3u8dl-re",
+  "version": "0.1.0",
+  "description": "Cross-platform HLS/DASH/MSS stream downloader with decryption, muxing, and live recording (N_m3u8DL-RE)",
+  "source": "https://github.com/nilaoda/N_m3u8DL-RE",
+  "checks": [
+    { "type": "binary", "name": "N_m3u8DL-RE" }
+  ],
+  "install_guidance": {
+    "plugin": "n-m3u8dl-re",
+    "binary": "N_m3u8DL-RE",
+    "check": "which N_m3u8DL-RE",
+    "install_steps": [
+      "curl -sSfL https://github.com/nilaoda/N_m3u8DL-RE/releases/latest/download/N_m3u8DL-RE_Linux_x64_$(date +%Y%m%d).tar.gz -o /tmp/nm3u8.tar.gz || curl -sSfL $(curl -s https://api.github.com/repos/nilaoda/N_m3u8DL-RE/releases/latest | grep -o 'https://[^\"]*linux_x64[^\"]*\\.tar\\.gz' | head -1) -o /tmp/nm3u8.tar.gz && tar xzf /tmp/nm3u8.tar.gz -C ~/.local/bin N_m3u8DL-RE && chmod +x ~/.local/bin/N_m3u8DL-RE",
+      "Verify: N_m3u8DL-RE --version",
+      "supercli plugins install ./plugins/n-m3u8dl-re --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "n-m3u8dl-re",
+      "resource": "self",
+      "action": "version",
+      "description": "Print N_m3u8DL-RE version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "N_m3u8DL-RE",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install N_m3u8DL-RE: download a release binary from https://github.com/nilaoda/N_m3u8DL-RE/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "n-m3u8dl-re",
+      "resource": "download",
+      "action": "run",
+      "description": "Download a stream (m3u8/mpd/mss URL); flags like --save-dir, --save-name via passthrough",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "N_m3u8DL-RE",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install N_m3u8DL-RE: download a release binary from https://github.com/nilaoda/N_m3u8DL-RE/releases"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Stream URL (m3u8/mpd/mss) or local manifest file" }
+      ]
+    },
+    {
+      "namespace": "n-m3u8dl-re",
+      "resource": "download",
+      "action": "best",
+      "description": "Download with automatic best-quality stream selection (--auto-select)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "N_m3u8DL-RE",
+        "baseArgs": ["--auto-select"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install N_m3u8DL-RE: download a release binary from https://github.com/nilaoda/N_m3u8DL-RE/releases"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Stream URL (m3u8/mpd/mss)" }
+      ]
+    },
+    {
+      "namespace": "n-m3u8dl-re",
+      "resource": "live",
+      "action": "record",
+      "description": "Record a live stream, merging segments in real time (--live-real-time-merge)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "N_m3u8DL-RE",
+        "baseArgs": ["--live-real-time-merge"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install N_m3u8DL-RE: download a release binary from https://github.com/nilaoda/N_m3u8DL-RE/releases"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Live stream URL (m3u8/mpd)" }
+      ]
+    },
+    {
+      "namespace": "n-m3u8dl-re",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to N_m3u8DL-RE CLI (--key for decryption, -M for muxing, --thread-count, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "N_m3u8DL-RE",
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install N_m3u8DL-RE: download a release binary from https://github.com/nilaoda/N_m3u8DL-RE/releases"
+      },
+      "args": []
+    }
+  ]
+}

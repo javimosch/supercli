@@ -1,0 +1,71 @@
+{
+  "name": "publint",
+  "version": "0.1.0",
+  "description": "Lint npm packages for packaging and publishing mistakes before they ship",
+  "source": "https://github.com/publint/publint",
+  "checks": [
+    { "type": "binary", "name": "publint" }
+  ],
+  "install_guidance": {
+    "plugin": "publint",
+    "binary": "publint",
+    "check": "which publint",
+    "install_steps": [
+      "npm install -g publint",
+      "Verify: publint --version",
+      "supercli plugins install ./plugins/publint --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "publint",
+      "resource": "self",
+      "action": "version",
+      "description": "Print publint version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "publint",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install publint: npm install -g publint"
+      },
+      "args": []
+    },
+    {
+      "namespace": "publint",
+      "resource": "pkg",
+      "action": "lint",
+      "description": "Lint an npm package directory for publish issues (publint [dir] --strict)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "publint",
+        "baseArgs": ["lint"],
+        "positionalArgs": ["dir"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install publint: npm install -g publint"
+      },
+      "args": [
+        { "name": "dir", "type": "string", "required": false, "description": "Package directory (default: current directory)" }
+      ]
+    },
+    {
+      "namespace": "publint",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to publint CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "publint",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install publint: npm install -g publint"
+      },
+      "args": []
+    }
+  ]
+}

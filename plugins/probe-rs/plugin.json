@@ -1,0 +1,145 @@
+{
+  "name": "probe-rs",
+  "version": "0.1.0",
+  "description": "Modern embedded debugging toolkit: flash, debug, and inspect ARM, RISC-V, and Xtensa chips via debug probes",
+  "source": "https://github.com/probe-rs/probe-rs",
+  "checks": [
+    { "type": "binary", "name": "probe-rs" }
+  ],
+  "install_guidance": {
+    "plugin": "probe-rs",
+    "binary": "probe-rs",
+    "check": "which probe-rs",
+    "install_steps": [
+      "curl --proto '=https' --tlsv1.2 -LsSf https://github.com/probe-rs/probe-rs/releases/latest/download/probe-rs-tools-installer.sh | sh",
+      "Or: cargo install probe-rs-tools --locked (also installs cargo-flash and cargo-embed)",
+      "Verify: probe-rs --version",
+      "supercli plugins install ./plugins/probe-rs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "probe-rs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print probe-rs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked or run the probe-rs-tools installer script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "probe",
+      "action": "list",
+      "description": "List connected debug probes (ST-Link, J-Link, CMSIS-DAP, FTDI, WLink, ESP USB-JTAG, Blackmagic)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "chip",
+      "action": "info",
+      "description": "Auto-detect the connected chip and print its info (probe-rs info)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["info"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "chip",
+      "action": "download",
+      "description": "Flash a binary/ELF to the target (probe-rs download --chip <chip> <file>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["download"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "chip",
+      "action": "run",
+      "description": "Flash and run firmware with RTT/defmt log output (probe-rs run --chip <chip> <elf>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "chip",
+      "action": "reset",
+      "description": "Reset the attached target chip",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["reset"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "debug",
+      "action": "gdb",
+      "description": "Start a GDB server on the target (probe-rs gdb --chip <chip>, default port 1337)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "baseArgs": ["gdb"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "probe-rs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to probe-rs CLI (attach, erase, trace, dap-server, benchmark, complete, chip, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "probe-rs",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install probe-rs: cargo install probe-rs-tools --locked"
+      },
+      "args": []
+    }
+  ]
+}

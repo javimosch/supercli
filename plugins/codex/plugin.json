@@ -1,0 +1,112 @@
+{
+  "name": "codex",
+  "version": "0.1.0",
+  "description": "OpenAI's coding agent CLI — interactive TUI plus headless `codex exec` mode and MCP server support",
+  "source": "https://github.com/openai/codex",
+  "checks": [
+    { "type": "binary", "name": "codex" }
+  ],
+  "install_guidance": {
+    "plugin": "codex",
+    "binary": "codex",
+    "check": "which codex",
+    "install_steps": [
+      "npm install -g @openai/codex",
+      "Verify: codex --version",
+      "supercli plugins install ./plugins/codex --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "codex",
+      "resource": "self",
+      "action": "version",
+      "description": "Print codex version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codex",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install codex: npm install -g @openai/codex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codex",
+      "resource": "agent",
+      "action": "exec",
+      "description": "Run a task non-interactively (codex exec \"task\" — add --sandbox read-only/-w for workspace-write)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codex",
+        "baseArgs": ["exec"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install codex: npm install -g @openai/codex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codex",
+      "resource": "session",
+      "action": "resume",
+      "description": "Resume a previous codex session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codex",
+        "baseArgs": ["resume"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install codex: npm install -g @openai/codex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codex",
+      "resource": "auth",
+      "action": "login",
+      "description": "Sign in with ChatGPT or provide an API key",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codex",
+        "baseArgs": ["login"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install codex: npm install -g @openai/codex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codex",
+      "resource": "mcp",
+      "action": "manage",
+      "description": "Manage MCP servers (codex mcp add/list/remove) and run codex as an MCP server (codex mcp serve)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codex",
+        "baseArgs": ["mcp"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install codex: npm install -g @openai/codex"
+      },
+      "args": []
+    },
+    {
+      "namespace": "codex",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to codex CLI (launches interactive TUI when called bare)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "codex",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install codex: npm install -g @openai/codex"
+      },
+      "args": []
+    }
+  ]
+}

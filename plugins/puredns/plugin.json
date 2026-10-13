@@ -1,0 +1,106 @@
+{
+  "name": "puredns",
+  "version": "0.1.0",
+  "description": "Fast domain resolver and subdomain bruteforcer with wildcard filtering and trusted resolvers",
+  "source": "https://github.com/d3mondev/puredns",
+  "checks": [
+    { "type": "binary", "name": "puredns" }
+  ],
+  "install_guidance": {
+    "plugin": "puredns",
+    "binary": "puredns",
+    "check": "which puredns",
+    "install_steps": [
+      "go install github.com/d3mondev/puredns/v2@latest",
+      "Verify: puredns --version",
+      "supercli plugins install ./plugins/puredns --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "puredns",
+      "resource": "self",
+      "action": "version",
+      "description": "Print puredns version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "puredns",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install puredns: go install github.com/d3mondev/puredns/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "puredns",
+      "resource": "dns",
+      "action": "resolve",
+      "description": "Resolve a list of domains, filtering wildcards and poisoning (domains from file or stdin)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "puredns",
+        "baseArgs": ["resolve"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install puredns: go install github.com/d3mondev/puredns/v2@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": false, "description": "File with domains to resolve (omit to read stdin)" }
+      ]
+    },
+    {
+      "namespace": "puredns",
+      "resource": "dns",
+      "action": "bruteforce",
+      "description": "Bruteforce subdomains of a domain using a wordlist",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "puredns",
+        "baseArgs": ["bruteforce"],
+        "positionalArgs": ["wordlist", "domain"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install puredns: go install github.com/d3mondev/puredns/v2@latest"
+      },
+      "args": [
+        { "name": "wordlist", "type": "string", "required": true, "description": "Wordlist file with subdomain prefixes" },
+        { "name": "domain", "type": "string", "required": true, "description": "Target domain (e.g. example.com)" }
+      ]
+    },
+    {
+      "namespace": "puredns",
+      "resource": "dns",
+      "action": "resolvers",
+      "description": "Validate a list of public DNS resolvers against trusted resolvers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "puredns",
+        "baseArgs": ["resolvers"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install puredns: go install github.com/d3mondev/puredns/v2@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File with resolver IPs to validate" }
+      ]
+    },
+    {
+      "namespace": "puredns",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to puredns CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "puredns",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install puredns: go install github.com/d3mondev/puredns/v2@latest"
+      },
+      "args": []
+    }
+  ]
+}

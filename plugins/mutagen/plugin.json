@@ -1,0 +1,134 @@
+{
+  "name": "mutagen",
+  "version": "0.1.0",
+  "description": "Real-time continuous file synchronization and network forwarding between local, remote, and container endpoints",
+  "source": "https://github.com/mutagen-io/mutagen",
+  "checks": [
+    { "type": "binary", "name": "mutagen" }
+  ],
+  "install_guidance": {
+    "plugin": "mutagen",
+    "binary": "mutagen",
+    "check": "which mutagen",
+    "install_steps": [
+      "brew install mutagen-io/mutagen/mutagen || curl -sSfL https://github.com/mutagen-io/mutagen/releases/latest/download/mutagen_linux_amd64.tar.gz -o /tmp/mutagen.tar.gz && tar xzf /tmp/mutagen.tar.gz -C ~/.local/bin",
+      "Verify: mutagen version",
+      "supercli plugins install ./plugins/mutagen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mutagen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mutagen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mutagen",
+      "resource": "daemon",
+      "action": "start",
+      "description": "Start the mutagen daemon (required before creating sessions)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "baseArgs": ["daemon", "start"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mutagen",
+      "resource": "sync",
+      "action": "create",
+      "description": "Create a sync session between two endpoints (local paths, ssh URLs, docker://...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "baseArgs": ["sync", "create"],
+        "positionalArgs": ["alpha", "beta"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": [
+        { "name": "alpha", "type": "string", "required": true, "description": "Alpha endpoint (e.g. ./src or user@host:~/code)" },
+        { "name": "beta", "type": "string", "required": true, "description": "Beta endpoint (e.g. user@host:~/code or docker://container/path)" }
+      ]
+    },
+    {
+      "namespace": "mutagen",
+      "resource": "sync",
+      "action": "list",
+      "description": "List sync sessions and their status (mutagen sync list --long for detail)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "baseArgs": ["sync", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mutagen",
+      "resource": "sync",
+      "action": "monitor",
+      "description": "Live-monitor sync session status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "baseArgs": ["sync", "monitor"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mutagen",
+      "resource": "forward",
+      "action": "create",
+      "description": "Create a port-forwarding session (local port to remote/container endpoint)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "baseArgs": ["forward", "create"],
+        "positionalArgs": ["alpha", "beta"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": [
+        { "name": "alpha", "type": "string", "required": true, "description": "Local endpoint, e.g. tcp://localhost:8080" },
+        { "name": "beta", "type": "string", "required": true, "description": "Remote endpoint, e.g. user@host:tcp://localhost:80" }
+      ]
+    },
+    {
+      "namespace": "mutagen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mutagen CLI (sync pause/resume/terminate, forward list, project commands)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mutagen",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mutagen: brew install mutagen-io/mutagen/mutagen or download from GitHub releases"
+      },
+      "args": []
+    }
+  ]
+}

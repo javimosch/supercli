@@ -1,0 +1,108 @@
+{
+  "name": "datafusion-cli",
+  "version": "0.1.0",
+  "description": "Apache DataFusion CLI — run SQL queries directly against CSV, Parquet, JSON, and Avro files",
+  "source": "https://github.com/apache/datafusion",
+  "checks": [
+    { "type": "binary", "name": "datafusion-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "datafusion-cli",
+    "binary": "datafusion-cli",
+    "check": "which datafusion-cli",
+    "install_steps": [
+      "cargo install datafusion-cli",
+      "Verify: datafusion-cli --version",
+      "supercli plugins install ./plugins/datafusion-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "datafusion-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print datafusion-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "datafusion-cli",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install datafusion-cli: cargo install datafusion-cli or brew install datafusion"
+      },
+      "args": []
+    },
+    {
+      "namespace": "datafusion-cli",
+      "resource": "query",
+      "action": "exec",
+      "description": "Execute a SQL statement non-interactively (datafusion-cli -c \"SQL\"; add --format json/csv for machine output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "datafusion-cli",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["sql"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install datafusion-cli: cargo install datafusion-cli or brew install datafusion"
+      },
+      "args": [
+        { "name": "sql", "type": "string", "required": true, "description": "SQL to execute, e.g. CREATE EXTERNAL TABLE t STORED AS PARQUET LOCATION 'f.parquet'; SELECT * FROM t LIMIT 10" },
+        { "name": "format", "type": "string", "required": false, "description": "Output format: table, csv, json, nd-json, arrow, automatic (passed as --format)" },
+        { "name": "data-path", "type": "string", "required": false, "description": "Directory to scan for files (passed as --data-path)" }
+      ]
+    },
+    {
+      "namespace": "datafusion-cli",
+      "resource": "file",
+      "action": "run",
+      "description": "Execute SQL statements from a .sql file (datafusion-cli -f script.sql)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "datafusion-cli",
+        "baseArgs": ["-f"],
+        "positionalArgs": ["script"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install datafusion-cli: cargo install datafusion-cli or brew install datafusion"
+      },
+      "args": [
+        { "name": "script", "type": "string", "required": true, "description": "Path to a .sql file to execute" }
+      ]
+    },
+    {
+      "namespace": "datafusion-cli",
+      "resource": "repl",
+      "action": "open",
+      "description": "Open the interactive SQL REPL (optionally over a --data-path directory)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "datafusion-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install datafusion-cli: cargo install datafusion-cli or brew install datafusion"
+      },
+      "args": [
+        { "name": "data-path", "type": "string", "required": false, "description": "Directory of data files (passed as --data-path)" }
+      ]
+    },
+    {
+      "namespace": "datafusion-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to datafusion-cli",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "datafusion-cli",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install datafusion-cli: cargo install datafusion-cli or brew install datafusion"
+      },
+      "args": []
+    }
+  ]
+}

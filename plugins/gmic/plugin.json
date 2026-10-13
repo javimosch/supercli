@@ -1,0 +1,87 @@
+{
+  "name": "gmic",
+  "version": "0.1.0",
+  "description": "Full-featured image processing framework with 1000+ CLI filters for conversion, effects, resizing, and analysis",
+  "source": "https://github.com/GreycLab/gmic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gmic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gmic",
+    "binary": "gmic",
+    "check": "which gmic",
+    "install_steps": [
+      "sudo apt-get install -y gmic",
+      "Verify: gmic -version",
+      "supercli plugins install ./plugins/gmic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gmic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gmic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gmic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install gmic: sudo apt-get install -y gmic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gmic",
+      "resource": "image",
+      "action": "apply",
+      "description": "Run a G'MIC filter pipeline on an image (gmic <input> <filters...> -o <output>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gmic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gmic: sudo apt-get install -y gmic",
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gmic",
+      "resource": "docs",
+      "action": "lookup",
+      "description": "Show help for a G'MIC command or filter (appends: <command-name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gmic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gmic: sudo apt-get install -y gmic",
+        "baseArgs": [
+          "-h"
+        ]
+      },
+      "args": []
+    },
+    {
+      "namespace": "gmic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gmic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gmic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install gmic: sudo apt-get install -y gmic",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

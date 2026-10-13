@@ -1,0 +1,73 @@
+{
+  "name": "shaka-packager",
+  "version": "0.1.0",
+  "description": "Google's media packaging SDK - converts and encrypts media for DASH and HLS streaming",
+  "source": "https://github.com/shaka-project/shaka-packager",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "packager"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shaka-packager",
+    "binary": "packager",
+    "check": "which packager",
+    "install_steps": [
+      "mkdir -p ~/.local/bin",
+      "curl -sL https://github.com/shaka-project/shaka-packager/releases/latest/download/packager-linux-x64 -o ~/.local/bin/packager",
+      "chmod +x ~/.local/bin/packager",
+      "Verify: packager --version",
+      "supercli plugins install ./plugins/shaka-packager --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shaka-packager",
+      "resource": "self",
+      "action": "version",
+      "description": "Print packager version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "packager",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install packager: download from https://github.com/shaka-project/shaka-packager/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shaka-packager",
+      "resource": "media",
+      "action": "package",
+      "description": "Package media for DASH/HLS (packager 'in=in.mp4,stream=video,out=v.mp4' --mpd_output out.mpd)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "packager",
+        "passthrough": true,
+        "missingDependencyHelp": "Install packager: download from https://github.com/shaka-project/shaka-packager/releases",
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shaka-packager",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to packager CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "packager",
+        "passthrough": true,
+        "missingDependencyHelp": "Install packager: download from https://github.com/shaka-project/shaka-packager/releases",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

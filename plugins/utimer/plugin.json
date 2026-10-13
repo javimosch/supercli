@@ -1,0 +1,96 @@
+{
+  "name": "utimer",
+  "version": "0.1.0",
+  "description": "uTimer: a multilingual CLI multifunction timer - timer, countdown, and stopwatch with flexible time syntax like 1h30m45s",
+  "source": "https://sourceforge.net/projects/utimer/",
+  "checks": [
+    { "type": "binary", "name": "utimer" }
+  ],
+  "install_guidance": {
+    "plugin": "utimer",
+    "binary": "utimer",
+    "check": "which utimer",
+    "install_steps": [
+      "sudo apt install utimer  # Debian/Ubuntu; Arch: AUR package 'utimer'",
+      "Verify: utimer --help",
+      "supercli plugins install ./plugins/utimer --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "utimer",
+      "resource": "self",
+      "action": "help",
+      "description": "Print utimer usage and options (utimer has no --version flag)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utimer",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install utimer: sudo apt install utimer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "utimer",
+      "resource": "countdown",
+      "action": "run",
+      "description": "Count down from a duration to zero (utimer -c 5m30s)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utimer",
+        "baseArgs": ["--countdown"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install utimer: sudo apt install utimer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "utimer",
+      "resource": "timer",
+      "action": "run",
+      "description": "Count up to a duration then exit (utimer -t 10m; scriptable: utimer -t 10m && echo done)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utimer",
+        "baseArgs": ["--timer"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install utimer: sudo apt install utimer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "utimer",
+      "resource": "stopwatch",
+      "action": "run",
+      "description": "Run a stopwatch counting up until stopped (press q to quit)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utimer",
+        "baseArgs": ["--stopwatch"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install utimer: sudo apt install utimer"
+      },
+      "args": []
+    },
+    {
+      "namespace": "utimer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to utimer CLI (utimer -q quiet mode for scripts, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "utimer",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install utimer: sudo apt install utimer"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "name": "cargo-dist",
+  "version": "0.1.0",
+  "description": "Build and distribute Rust binaries — release tarballs, installers, and CI wiring for shippable CLI releases",
+  "source": "https://github.com/axodotdev/cargo-dist",
+  "checks": [
+    { "type": "binary", "name": "cargo-dist" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-dist",
+    "binary": "cargo-dist",
+    "check": "which cargo-dist",
+    "install_steps": [
+      "cargo install cargo-dist --locked",
+      "Verify: cargo-dist --version",
+      "supercli plugins install ./plugins/cargo-dist --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-dist",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cargo-dist version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-dist",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cargo-dist: cargo install cargo-dist --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-dist",
+      "resource": "project",
+      "action": "init",
+      "description": "Initialize dist in a Cargo workspace (adds [workspace.metadata.dist] + CI)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-dist",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-dist: cargo install cargo-dist --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-dist",
+      "resource": "release",
+      "action": "plan",
+      "description": "Compute and print the release plan as JSON (dist plan)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-dist",
+        "baseArgs": ["plan"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-dist: cargo install cargo-dist --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-dist",
+      "resource": "release",
+      "action": "build",
+      "description": "Build release artifacts and installers locally",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-dist",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-dist: cargo install cargo-dist --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-dist",
+      "resource": "ci",
+      "action": "generate",
+      "description": "Regenerate CI scripts (release.yml, installers) from dist config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-dist",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-dist: cargo install cargo-dist --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-dist",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo-dist CLI (dist host, dist manifest, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-dist",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-dist: cargo install cargo-dist --locked"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "oxker",
+  "version": "0.1.0",
+  "description": "Simple TUI to view and control Docker containers — start/stop/restart/remove, exec into shells, view logs and stats",
+  "source": "https://github.com/mrjackwills/oxker",
+  "checks": [
+    { "type": "binary", "name": "oxker" }
+  ],
+  "install_guidance": {
+    "plugin": "oxker",
+    "binary": "oxker",
+    "check": "which oxker",
+    "install_steps": [
+      "cargo install oxker",
+      "Verify: oxker --version",
+      "supercli plugins install ./plugins/oxker --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oxker",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oxker version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oxker",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install oxker: cargo install oxker"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oxker",
+      "resource": "tui",
+      "action": "run",
+      "description": "Launch the Docker containers TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oxker",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oxker: cargo install oxker"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oxker",
+      "resource": "docker",
+      "action": "host",
+      "description": "Connect oxker to a remote Docker host (oxker --host ssh://user@host)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oxker",
+        "baseArgs": ["--host"],
+        "positionalArgs": ["host"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oxker: cargo install oxker"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "Docker host (e.g. ssh://user@server or tcp://host:2375)" }
+      ]
+    },
+    {
+      "namespace": "oxker",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oxker CLI (oxker --use-stdout, --show-all, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oxker",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oxker: cargo install oxker"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "name": "memo",
+  "version": "0.1.0",
+  "description": "Markdown memo/notes CLI with fuzzy-finder listing, grep search, and a built-in HTTP browser, by mattn",
+  "source": "https://github.com/mattn/memo",
+  "checks": [
+    { "type": "binary", "name": "memo" }
+  ],
+  "install_guidance": {
+    "plugin": "memo",
+    "binary": "memo",
+    "check": "which memo",
+    "install_steps": [
+      "go install github.com/mattn/memo@latest",
+      "Verify: memo --version",
+      "supercli plugins install ./plugins/memo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "memo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print memo version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "notes",
+      "action": "new",
+      "description": "Create a new memo (prompts for title, then opens $EDITOR)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["new"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "notes",
+      "action": "list",
+      "description": "List memos through the configured picker (fzf/peco/percol)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "notes",
+      "action": "grep",
+      "description": "Full-text search across all memos (memo grep <pattern>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["grep"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "notes",
+      "action": "cat",
+      "description": "Print a memo picked via the fuzzy finder to stdout",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["cat"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "notes",
+      "action": "edit",
+      "description": "Edit a memo picked via the fuzzy finder in $EDITOR",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["edit"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "server",
+      "action": "serve",
+      "description": "Start local HTTP server to browse memos in a web UI (Ctrl-C to stop)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["serve"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "config",
+      "action": "edit",
+      "description": "Edit memo configuration (~/.config/memo/config.toml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "baseArgs": ["config"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "memo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to memo CLI (memo delete, memo help, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "memo",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install memo: go install github.com/mattn/memo@latest"
+      },
+      "args": []
+    }
+  ]
+}

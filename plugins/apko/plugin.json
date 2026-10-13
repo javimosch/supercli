@@ -1,0 +1,116 @@
+{
+  "name": "apko",
+  "version": "0.1.0",
+  "description": "Build minimal OCI container images declaratively from APK packages - no Dockerfile, reproducible builds, auto-generated SBOMs",
+  "source": "https://github.com/chainguard-dev/apko",
+  "checks": [
+    { "type": "binary", "name": "apko" }
+  ],
+  "install_guidance": {
+    "plugin": "apko",
+    "binary": "apko",
+    "check": "which apko",
+    "install_steps": [
+      "go install chainguard.dev/apko@latest",
+      "Verify: apko version",
+      "supercli plugins install ./plugins/apko --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "apko",
+      "resource": "self",
+      "action": "version",
+      "description": "Print apko version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apko",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install apko: go install chainguard.dev/apko@latest or brew install apko"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apko",
+      "resource": "image",
+      "action": "build",
+      "description": "Build an OCI image tarball: apko build <config.yaml> <tag> <output.tar>",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apko",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install apko: go install chainguard.dev/apko@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apko",
+      "resource": "image",
+      "action": "publish",
+      "description": "Build and publish an OCI image directly to a registry",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apko",
+        "baseArgs": ["publish"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install apko: go install chainguard.dev/apko@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apko",
+      "resource": "config",
+      "action": "show",
+      "description": "Parse an apko config and print the resolved/derived YAML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apko",
+        "baseArgs": ["show-config"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install apko: go install chainguard.dev/apko@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apko",
+      "resource": "lock",
+      "action": "generate",
+      "description": "Generate an apko.lock.json lockfile pinning exact package versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apko",
+        "baseArgs": ["lock"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install apko: go install chainguard.dev/apko@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apko",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to apko CLI (apko show-packages, apko resolve, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apko",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install apko: go install chainguard.dev/apko@latest"
+      },
+      "args": []
+    }
+  ]
+}

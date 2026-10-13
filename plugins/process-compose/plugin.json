@@ -1,0 +1,146 @@
+{
+  "name": "process-compose",
+  "version": "0.1.0",
+  "description": "Docker Compose-like scheduler and orchestrator for non-containerized processes - dependencies, health checks, restarts, TUI and headless modes",
+  "source": "https://github.com/F1bonacc1/process-compose",
+  "checks": [
+    { "type": "binary", "name": "process-compose" }
+  ],
+  "install_guidance": {
+    "plugin": "process-compose",
+    "binary": "process-compose",
+    "check": "which process-compose",
+    "install_steps": [
+      "sh -c \"$(curl --location https://raw.githubusercontent.com/F1bonacc1/process-compose/main/scripts/get-pc.sh)\" -- -d -b ~/.local/bin",
+      "Verify: process-compose version",
+      "supercli plugins install ./plugins/process-compose --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "process-compose",
+      "resource": "self",
+      "action": "version",
+      "description": "Print process-compose version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script or brew install f1bonacc1/tap/process-compose"
+      },
+      "args": []
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "project",
+      "action": "up",
+      "description": "Start processes defined in process-compose.yaml (use -f <file>, --tui=false for headless)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["up"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "project",
+      "action": "down",
+      "description": "Stop all running project processes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["down"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "project",
+      "action": "info",
+      "description": "Show running project info (use -o json for machine-readable output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["project", "info"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "process",
+      "action": "list",
+      "description": "List process states in the running project (use -o json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["process", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "process",
+      "action": "restart",
+      "description": "Restart a named process in the running project",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["process", "restart"],
+        "positionalArgs": ["name"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": [
+        { "name": "name", "type": "string", "required": true, "description": "Process name as defined in process-compose.yaml" }
+      ]
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "process",
+      "action": "logs",
+      "description": "Fetch logs of a process (process logs <name> --lines N)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "baseArgs": ["process", "logs"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": []
+    },
+    {
+      "namespace": "process-compose",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to process-compose CLI (attach, run, completion, use -o json for structured output, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "process-compose",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install process-compose: run the get-pc.sh install script"
+      },
+      "args": []
+    }
+  ]
+}

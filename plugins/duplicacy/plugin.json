@@ -1,0 +1,135 @@
+{
+  "name": "duplicacy",
+  "version": "0.1.0",
+  "description": "Lock-free deduplication backup tool with incremental snapshots to local, SFTP, and cloud storage",
+  "source": "https://github.com/gilbertchen/duplicacy",
+  "checks": [
+    { "type": "binary", "name": "duplicacy" }
+  ],
+  "install_guidance": {
+    "plugin": "duplicacy",
+    "binary": "duplicacy",
+    "check": "which duplicacy",
+    "install_steps": [
+      "curl -sSfL $(curl -s https://api.github.com/repos/gilbertchen/duplicacy/releases/latest | grep -o 'https://[^\"]*linux_x64_[0-9.]*' | head -1) -o ~/.local/bin/duplicacy && chmod +x ~/.local/bin/duplicacy",
+      "Verify: duplicacy -version",
+      "supercli plugins install ./plugins/duplicacy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "duplicacy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print duplicacy version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "baseArgs": ["-version"],
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "duplicacy",
+      "resource": "repo",
+      "action": "init",
+      "description": "Initialize the current directory as a backup repository pointing at a storage",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "baseArgs": ["init"],
+        "positionalArgs": ["snapshot_id", "storage_url"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": [
+        { "name": "snapshot_id", "type": "string", "required": true, "description": "Snapshot ID for this repo (e.g. laptop-docs)" },
+        { "name": "storage_url", "type": "string", "required": true, "description": "Storage destination (e.g. /mnt/backups/docs, sftp://host/path, s3://bucket)" }
+      ]
+    },
+    {
+      "namespace": "duplicacy",
+      "resource": "backup",
+      "action": "run",
+      "description": "Create a new incremental snapshot of the repository",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "baseArgs": ["backup"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "duplicacy",
+      "resource": "snapshots",
+      "action": "list",
+      "description": "List snapshot revisions in storage (duplicacy list)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "duplicacy",
+      "resource": "files",
+      "action": "restore",
+      "description": "Restore files from a revision (duplicacy restore -r N [-- pattern])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "baseArgs": ["restore"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "duplicacy",
+      "resource": "storage",
+      "action": "check",
+      "description": "Verify integrity of snapshots/chunks in storage (duplicacy check)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "baseArgs": ["check"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "duplicacy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to duplicacy CLI (prune, copy, diff, history, add, set, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "duplicacy",
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install duplicacy: download a release binary from https://github.com/gilbertchen/duplicacy/releases"
+      },
+      "args": []
+    }
+  ]
+}

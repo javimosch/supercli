@@ -1,0 +1,132 @@
+{
+  "name": "filebeat",
+  "version": "0.1.0",
+  "description": "Elastic Beat log shipper - tails log files, enriches events with modules (nginx, system, kubernetes), and forwards to Elasticsearch or Logstash",
+  "source": "https://github.com/elastic/beats",
+  "checks": [
+    { "type": "binary", "name": "filebeat" }
+  ],
+  "install_guidance": {
+    "plugin": "filebeat",
+    "binary": "filebeat",
+    "check": "which filebeat",
+    "install_steps": [
+      "curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-8.17.0-linux-x86_64.tar.gz && tar xzf filebeat-8.17.0-linux-x86_64.tar.gz && mkdir -p ~/.local/bin && ln -sf $(pwd)/filebeat-8.17.0-linux-x86_64/filebeat ~/.local/bin/filebeat",
+      "Verify: filebeat version",
+      "supercli plugins install ./plugins/filebeat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "filebeat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print filebeat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat or use the Elastic apt/yum repository"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filebeat",
+      "resource": "test",
+      "action": "config",
+      "description": "Validate filebeat.yml configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "baseArgs": ["test", "config"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filebeat",
+      "resource": "test",
+      "action": "output",
+      "description": "Test connectivity to the configured output (Elasticsearch/Logstash)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "baseArgs": ["test", "output"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filebeat",
+      "resource": "modules",
+      "action": "list",
+      "description": "List available modules and their enabled/disabled state",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "baseArgs": ["modules", "list"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filebeat",
+      "resource": "export",
+      "action": "config",
+      "description": "Export the resolved configuration template (export template/dashboard/index-pattern also available)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "baseArgs": ["export", "config"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filebeat",
+      "resource": "setup",
+      "action": "run",
+      "description": "Run setup: load Kibana dashboards, index templates, and ILM policies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "baseArgs": ["setup"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "filebeat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to filebeat CLI (filebeat -e, filebeat modules enable <m>, filebeat keystore, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "filebeat",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install filebeat: download the tar.gz from artifacts.elastic.co/downloads/beats/filebeat"
+      },
+      "args": []
+    }
+  ]
+}

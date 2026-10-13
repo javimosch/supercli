@@ -1,0 +1,186 @@
+{
+  "name": "argo",
+  "version": "0.1.0",
+  "description": "Argo Workflows CLI - submit, watch, and manage container-native workflows, cron workflows, and templates on Kubernetes",
+  "source": "https://github.com/argoproj/argo-workflows",
+  "checks": [
+    { "type": "binary", "name": "argo" }
+  ],
+  "install_guidance": {
+    "plugin": "argo",
+    "binary": "argo",
+    "check": "which argo",
+    "install_steps": [
+      "curl -sLO https://github.com/argoproj/argo-workflows/releases/latest/download/argo-linux-amd64.gz && gunzip argo-linux-amd64.gz && chmod +x argo-linux-amd64 && mkdir -p ~/.local/bin && mv argo-linux-amd64 ~/.local/bin/argo",
+      "Verify: argo version",
+      "supercli plugins install ./plugins/argo --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "argo",
+      "resource": "self",
+      "action": "version",
+      "description": "Print argo CLI and server version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases or run brew install argo"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "submit",
+      "description": "Submit a workflow from a YAML file or WorkflowTemplate",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["submit"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "list",
+      "description": "List workflows in the current namespace (--all-namespaces for all)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "get",
+      "description": "Show a workflow's status and step tree",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["get"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "logs",
+      "description": "Stream logs from a workflow or a specific pod/node (-f to follow)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["logs"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "watch",
+      "description": "Watch a workflow until it completes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["watch"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "retry",
+      "description": "Retry a failed or errored workflow",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["retry"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "workflow",
+      "action": "delete",
+      "description": "Delete one or more workflows by name",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["delete"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "template",
+      "action": "list",
+      "description": "List WorkflowTemplates in the current namespace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["template", "list"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "cron",
+      "action": "list",
+      "description": "List CronWorkflows in the current namespace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "baseArgs": ["cron", "list"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to argo CLI (argo stop, argo resume, argo suspend, argo node, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "argo",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install argo: download argo-linux-amd64.gz from github.com/argoproj/argo-workflows/releases"
+      },
+      "args": []
+    }
+  ]
+}

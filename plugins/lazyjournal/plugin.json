@@ -1,0 +1,84 @@
+{
+  "name": "lazyjournal",
+  "version": "0.1.0",
+  "description": "TUI for journald, auditd, syslog, Docker/Podman and Kubernetes logs — unified log viewer with filtering and highlighting",
+  "source": "https://github.com/Lifailon/lazyjournal",
+  "checks": [
+    { "type": "binary", "name": "lazyjournal" }
+  ],
+  "install_guidance": {
+    "plugin": "lazyjournal",
+    "binary": "lazyjournal",
+    "check": "which lazyjournal",
+    "install_steps": [
+      "go install github.com/Lifailon/lazyjournal@latest",
+      "or download binary from https://github.com/Lifailon/lazyjournal/releases",
+      "Verify: lazyjournal --version",
+      "supercli plugins install ./plugins/lazyjournal --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lazyjournal",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lazyjournal version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazyjournal",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lazyjournal: go install github.com/Lifailon/lazyjournal@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lazyjournal",
+      "resource": "tui",
+      "action": "run",
+      "description": "Launch the lazyjournal TUI (journald, auditd, files, containers, k8s)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazyjournal",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lazyjournal: go install github.com/Lifailon/lazyjournal@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lazyjournal",
+      "resource": "config",
+      "action": "show",
+      "description": "Run lazyjournal with a custom config file (lazyjournal --config <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazyjournal",
+        "baseArgs": ["--config"],
+        "positionalArgs": ["path"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lazyjournal: go install github.com/Lifailon/lazyjournal@latest"
+      },
+      "args": [
+        { "name": "path", "type": "string", "required": true, "description": "Path to config file" }
+      ]
+    },
+    {
+      "namespace": "lazyjournal",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lazyjournal CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lazyjournal",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lazyjournal: go install github.com/Lifailon/lazyjournal@latest"
+      },
+      "args": []
+    }
+  ]
+}

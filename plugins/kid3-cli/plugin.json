@@ -1,0 +1,88 @@
+{
+  "name": "kid3-cli",
+  "version": "0.1.0",
+  "description": "Scriptable audio tag editor - read/write ID3v1/v2, Vorbis, Opus, MP4 and APE metadata in batch",
+  "source": "https://invent.kde.org/multimedia/kid3",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kid3-cli"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kid3-cli",
+    "binary": "kid3-cli",
+    "check": "which kid3-cli",
+    "install_steps": [
+      "sudo apt-get install -y kid3-cli",
+      "Verify: kid3-cli --version",
+      "supercli plugins install ./plugins/kid3-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kid3-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kid3-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kid3-cli",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kid3-cli: sudo apt-get install -y kid3-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kid3-cli",
+      "resource": "tags",
+      "action": "read",
+      "description": "Print all tags of an audio file (appends the file path)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kid3-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kid3-cli: sudo apt-get install -y kid3-cli",
+        "baseArgs": [
+          "-c",
+          "get"
+        ],
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kid3-cli",
+      "resource": "tags",
+      "action": "run",
+      "description": "Run kid3-cli commands non-interactively (e.g. -c 'set title \"X\"' -c save FILE)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kid3-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kid3-cli: sudo apt-get install -y kid3-cli",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kid3-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kid3-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kid3-cli",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kid3-cli: sudo apt-get install -y kid3-cli",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "name": "lavat",
+  "version": "0.1.0",
+  "description": "Terminal eye-candy: renders a soothing animated lava lamp in your terminal, with configurable colors, shapes and speed",
+  "source": "https://github.com/AngelJumbo/lavat",
+  "checks": [
+    { "type": "binary", "name": "lavat" }
+  ],
+  "install_guidance": {
+    "plugin": "lavat",
+    "binary": "lavat",
+    "check": "which lavat",
+    "install_steps": [
+      "cargo install lavat",
+      "Verify: lavat --version",
+      "supercli plugins install ./plugins/lavat --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "lavat",
+      "resource": "self",
+      "action": "version",
+      "description": "Print lavat version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lavat",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install lavat: cargo install lavat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lavat",
+      "resource": "lamp",
+      "action": "run",
+      "description": "Run the animated lava lamp (lavat; q to quit)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lavat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lavat: cargo install lavat"
+      },
+      "args": []
+    },
+    {
+      "namespace": "lavat",
+      "resource": "lamp",
+      "action": "color",
+      "description": "Run lava lamp with a color (lavat -c red|blue|green|...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lavat",
+        "baseArgs": ["-c"],
+        "positionalArgs": ["color"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lavat: cargo install lavat"
+      },
+      "args": [
+        { "name": "color", "type": "string", "required": true, "description": "Lava color (red, blue, green, yellow, cyan, magenta, white, black, random)" }
+      ]
+    },
+    {
+      "namespace": "lavat",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to lavat CLI (lavat -r radius, -s speed, -S square|circle, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "lavat",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install lavat: cargo install lavat"
+      },
+      "args": []
+    }
+  ]
+}

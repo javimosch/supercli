@@ -1,0 +1,152 @@
+{
+  "name": "skeema",
+  "version": "0.1.0",
+  "description": "Declarative schema management for MySQL and MariaDB — schemas as plain CREATE statements in .sql files",
+  "source": "https://github.com/skeema/skeema",
+  "checks": [
+    { "type": "binary", "name": "skeema" }
+  ],
+  "install_guidance": {
+    "plugin": "skeema",
+    "binary": "skeema",
+    "check": "which skeema",
+    "install_steps": [
+      "go install github.com/skeema/skeema@latest",
+      "Verify: skeema version",
+      "supercli plugins install ./plugins/skeema --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "skeema",
+      "resource": "self",
+      "action": "version",
+      "description": "Print skeema version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skeema",
+      "resource": "repo",
+      "action": "init",
+      "description": "Initialize a skeema repo by dumping schemas from a live MySQL/MariaDB server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": [
+        { "name": "host", "type": "string", "required": true, "description": "MySQL/MariaDB hostname or address (passed as --host)" },
+        { "name": "user", "type": "string", "required": false, "description": "Database user (passed as --user)" },
+        { "name": "dir", "type": "string", "required": false, "description": "Output directory (passed as --dir)" }
+      ]
+    },
+    {
+      "namespace": "skeema",
+      "resource": "diff",
+      "action": "preview",
+      "description": "Preview schema changes (DDL) that skeema push would apply — dry run",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["diff"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skeema",
+      "resource": "push",
+      "action": "apply",
+      "description": "Apply schema changes from .sql files to the configured databases",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["push"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skeema",
+      "resource": "format",
+      "action": "run",
+      "description": "Canonicalize CREATE statements in the schema repo (like gofmt for SQL)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["format"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skeema",
+      "resource": "lint",
+      "action": "run",
+      "description": "Check schema files for errors, warnings, and unsafe changes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["lint"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skeema",
+      "resource": "pull",
+      "action": "run",
+      "description": "Update the schema repo to match changes made directly on the database server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "baseArgs": ["pull"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "skeema",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to skeema CLI (skeema add-environment, skeema help, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "skeema",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install skeema: go install github.com/skeema/skeema@latest"
+      },
+      "args": []
+    }
+  ]
+}

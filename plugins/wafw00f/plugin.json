@@ -1,0 +1,81 @@
+{
+  "name": "wafw00f",
+  "version": "0.1.0",
+  "description": "wafw00f — fingerprint the Web Application Firewall protecting a target site (200+ WAFs: Cloudflare, Akamai, AWS WAF, ModSecurity...)",
+  "source": "https://github.com/EnableSecurity/wafw00f",
+  "checks": [
+    { "type": "binary", "name": "wafw00f" }
+  ],
+  "install_guidance": {
+    "plugin": "wafw00f",
+    "binary": "wafw00f",
+    "check": "which wafw00f",
+    "install_steps": [
+      "pipx install wafw00f",
+      "Verify: wafw00f --version",
+      "supercli plugins install ./plugins/wafw00f --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wafw00f",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wafw00f version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wafw00f",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wafw00f: pipx install wafw00f"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wafw00f",
+      "resource": "detect",
+      "action": "run",
+      "description": "Detect the WAF protecting one or more target URLs (use -a to test all WAFs, -o/-f for output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wafw00f",
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install wafw00f: pipx install wafw00f"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Target URL(s) to fingerprint" }
+      ]
+    },
+    {
+      "namespace": "wafw00f",
+      "resource": "wafs",
+      "action": "list",
+      "description": "List all WAFs wafw00f can detect",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wafw00f",
+        "baseArgs": ["--list"],
+        "missingDependencyHelp": "Install wafw00f: pipx install wafw00f"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wafw00f",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wafw00f CLI (-i input file, -p proxy, --headers, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wafw00f",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install wafw00f: pipx install wafw00f"
+      },
+      "args": []
+    }
+  ]
+}

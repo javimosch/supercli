@@ -1,0 +1,94 @@
+{
+  "name": "promtail",
+  "version": "0.1.0",
+  "description": "Grafana Loki log shipping agent - tails local log files, applies pipeline stages, and pushes entries to Loki",
+  "source": "https://github.com/grafana/loki",
+  "checks": [
+    { "type": "binary", "name": "promtail" }
+  ],
+  "install_guidance": {
+    "plugin": "promtail",
+    "binary": "promtail",
+    "check": "which promtail",
+    "install_steps": [
+      "curl -O -L https://github.com/grafana/loki/releases/latest/download/promtail-linux-amd64.zip && unzip -o promtail-linux-amd64.zip && chmod +x promtail-linux-amd64 && mkdir -p ~/.local/bin && mv promtail-linux-amd64 ~/.local/bin/promtail && rm promtail-linux-amd64.zip",
+      "Verify: promtail -version",
+      "supercli plugins install ./plugins/promtail --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "promtail",
+      "resource": "self",
+      "action": "version",
+      "description": "Print promtail version (single-dash flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "promtail",
+        "baseArgs": ["-version"],
+        "missingDependencyHelp": "Install promtail: download promtail-linux-amd64.zip from github.com/grafana/loki/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "promtail",
+      "resource": "config",
+      "action": "print",
+      "description": "Print the effective config to stderr after loading -config.file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "promtail",
+        "baseArgs": ["-print-config-stderr"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install promtail: download promtail-linux-amd64.zip from github.com/grafana/loki/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "promtail",
+      "resource": "config",
+      "action": "dryrun",
+      "description": "Validate a config file and show which targets/lines promtail would read, without shipping (needs -config.file <path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "promtail",
+        "baseArgs": ["-dry-run"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install promtail: download promtail-linux-amd64.zip from github.com/grafana/loki/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "promtail",
+      "resource": "agent",
+      "action": "run",
+      "description": "Run the promtail agent (requires -config.file <path>; pass flags via passthrough)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "promtail",
+        "passthrough": true,
+        "timeout_ms": 0,
+        "missingDependencyHelp": "Install promtail: download promtail-linux-amd64.zip from github.com/grafana/loki/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "promtail",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to promtail CLI (single-dash flags: -config.file, -log.level, -server.http.port, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "promtail",
+        "passthrough": true,
+        "missingDependencyHelp": "Install promtail: download promtail-linux-amd64.zip from github.com/grafana/loki/releases"
+      },
+      "args": []
+    }
+  ]
+}

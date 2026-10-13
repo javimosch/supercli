@@ -1,0 +1,104 @@
+{
+  "name": "attw",
+  "version": "0.1.0",
+  "description": "Are the Types Wrong — check whether an npm package's TypeScript types actually resolve for consumers",
+  "source": "https://github.com/arethetypeswrong/arethetypeswrong.github.io",
+  "checks": [
+    { "type": "binary", "name": "attw" }
+  ],
+  "install_guidance": {
+    "plugin": "attw",
+    "binary": "attw",
+    "check": "which attw",
+    "install_steps": [
+      "npm install -g @arethetypeswrong/cli",
+      "Verify: attw --version",
+      "supercli plugins install ./plugins/attw --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "attw",
+      "resource": "self",
+      "action": "version",
+      "description": "Print attw version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "attw",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install attw: npm install -g @arethetypeswrong/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "attw",
+      "resource": "check",
+      "action": "pack",
+      "description": "Pack the local package and check its types resolve correctly (attw --pack .)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "attw",
+        "baseArgs": ["--pack", "."],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install attw: npm install -g @arethetypeswrong/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "attw",
+      "resource": "check",
+      "action": "npm",
+      "description": "Check a published npm package's types (attw --from-npm <pkg>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "attw",
+        "baseArgs": ["--from-npm"],
+        "positionalArgs": ["package"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install attw: npm install -g @arethetypeswrong/cli"
+      },
+      "args": [
+        { "name": "package", "type": "string", "required": true, "description": "npm package spec, e.g. lodash or react@19" }
+      ]
+    },
+    {
+      "namespace": "attw",
+      "resource": "check",
+      "action": "tarball",
+      "description": "Check a package tarball file (attw <file.tgz>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "attw",
+        "positionalArgs": ["tarball"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install attw: npm install -g @arethetypeswrong/cli"
+      },
+      "args": [
+        { "name": "tarball", "type": "string", "required": true, "description": "Path to a packed .tgz tarball" }
+      ]
+    },
+    {
+      "namespace": "attw",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to attw CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "attw",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install attw: npm install -g @arethetypeswrong/cli"
+      },
+      "args": []
+    }
+  ]
+}

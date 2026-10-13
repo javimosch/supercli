@@ -1,0 +1,126 @@
+{
+  "name": "shot-scraper",
+  "version": "0.1.0",
+  "description": "Automated website screenshots, PDF capture, and HTML/JS extraction via headless Chromium",
+  "source": "https://github.com/simonw/shot-scraper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "shot-scraper"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "shot-scraper",
+    "binary": "shot-scraper",
+    "check": "which shot-scraper",
+    "install_steps": [
+      "pipx install shot-scraper",
+      "shot-scraper install",
+      "Verify: shot-scraper --version",
+      "supercli plugins install ./plugins/shot-scraper --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "shot-scraper",
+      "resource": "self",
+      "action": "version",
+      "description": "Print shot-scraper version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shot-scraper",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install shot-scraper: pipx install shot-scraper && shot-scraper install"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shot-scraper",
+      "resource": "page",
+      "action": "shot",
+      "description": "Screenshot a URL (shot-scraper URL -o out.png; supports --full-page, --selector, --wait)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shot-scraper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shot-scraper: pipx install shot-scraper && shot-scraper install",
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shot-scraper",
+      "resource": "page",
+      "action": "pdf",
+      "description": "Save a page as PDF (shot-scraper pdf URL -o out.pdf)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shot-scraper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shot-scraper: pipx install shot-scraper && shot-scraper install",
+        "baseArgs": [
+          "pdf"
+        ],
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shot-scraper",
+      "resource": "page",
+      "action": "html",
+      "description": "Dump rendered HTML of a URL (shot-scraper html URL)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shot-scraper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shot-scraper: pipx install shot-scraper && shot-scraper install",
+        "baseArgs": [
+          "html"
+        ],
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shot-scraper",
+      "resource": "page",
+      "action": "javascript",
+      "description": "Run JavaScript on a page and print the result (shot-scraper javascript URL 'expr')",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shot-scraper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shot-scraper: pipx install shot-scraper && shot-scraper install",
+        "baseArgs": [
+          "javascript"
+        ],
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "shot-scraper",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to shot-scraper CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "shot-scraper",
+        "passthrough": true,
+        "missingDependencyHelp": "Install shot-scraper: pipx install shot-scraper && shot-scraper install",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

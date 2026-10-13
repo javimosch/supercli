@@ -1,0 +1,79 @@
+{
+  "name": "systemctl-tui",
+  "version": "0.1.0",
+  "description": "Fast TUI for systemd units — browse, start/stop/restart services, view logs and unit files without memorizing systemctl flags",
+  "source": "https://github.com/rgwood/systemctl-tui",
+  "checks": [
+    { "type": "binary", "name": "systemctl-tui" }
+  ],
+  "install_guidance": {
+    "plugin": "systemctl-tui",
+    "binary": "systemctl-tui",
+    "check": "which systemctl-tui",
+    "install_steps": [
+      "cargo install systemctl-tui",
+      "Verify: systemctl-tui --version",
+      "supercli plugins install ./plugins/systemctl-tui --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "systemctl-tui",
+      "resource": "self",
+      "action": "version",
+      "description": "Print systemctl-tui version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemctl-tui",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install systemctl-tui: cargo install systemctl-tui"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemctl-tui",
+      "resource": "tui",
+      "action": "run",
+      "description": "Launch the systemd units TUI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemctl-tui",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemctl-tui: cargo install systemctl-tui"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemctl-tui",
+      "resource": "logs",
+      "action": "unit",
+      "description": "Print recent logs for a unit to stdout (systemctl-tui --log-path or use unit view inside TUI)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemctl-tui",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemctl-tui: cargo install systemctl-tui"
+      },
+      "args": []
+    },
+    {
+      "namespace": "systemctl-tui",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to systemctl-tui CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "systemctl-tui",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install systemctl-tui: cargo install systemctl-tui"
+      },
+      "args": []
+    }
+  ]
+}

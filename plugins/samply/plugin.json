@@ -1,0 +1,101 @@
+{
+  "name": "samply",
+  "version": "0.1.0",
+  "description": "Command-line sampling CPU profiler for Linux, macOS, and Windows that uses the Firefox Profiler as its UI",
+  "source": "https://github.com/mstange/samply",
+  "checks": [
+    { "type": "binary", "name": "samply" }
+  ],
+  "install_guidance": {
+    "plugin": "samply",
+    "binary": "samply",
+    "check": "which samply",
+    "install_steps": [
+      "cargo install --locked samply",
+      "Or: curl --proto '=https' --tlsv1.2 -LsSf https://github.com/mstange/samply/releases/latest/download/samply-installer.sh | sh",
+      "Verify: samply --version",
+      "supercli plugins install ./plugins/samply --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "samply",
+      "resource": "self",
+      "action": "version",
+      "description": "Print samply version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "samply",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install samply: cargo install --locked samply"
+      },
+      "args": []
+    },
+    {
+      "namespace": "samply",
+      "resource": "profile",
+      "action": "record",
+      "description": "Record a CPU profile of a command (samply record ./app args). Add --save-only -o out.json to skip launching the browser",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "samply",
+        "baseArgs": ["record"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install samply: cargo install --locked samply"
+      },
+      "args": []
+    },
+    {
+      "namespace": "samply",
+      "resource": "profile",
+      "action": "import",
+      "description": "Import an existing perf.data / artifact into a Firefox Profiler profile (samply import perf.data -o out.json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "samply",
+        "baseArgs": ["import"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install samply: cargo install --locked samply"
+      },
+      "args": []
+    },
+    {
+      "namespace": "samply",
+      "resource": "profile",
+      "action": "load",
+      "description": "Serve a saved profile .json(.gz) and open it in the Firefox Profiler UI (samply load profile.json)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "samply",
+        "baseArgs": ["load"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install samply: cargo install --locked samply"
+      },
+      "args": []
+    },
+    {
+      "namespace": "samply",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to samply CLI (record -p <pid> to attach, --rate, --iteration-count, setup on macOS, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "samply",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install samply: cargo install --locked samply"
+      },
+      "args": []
+    }
+  ]
+}

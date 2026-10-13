@@ -1,0 +1,84 @@
+{
+  "name": "sish",
+  "version": "0.1.0",
+  "description": "Self-hosted serveo/ngrok alternative — HTTP(S)/WS(S)/TCP tunnels over plain SSH",
+  "source": "https://github.com/antoniomika/sish",
+  "checks": [
+    { "type": "binary", "name": "sish" }
+  ],
+  "install_guidance": {
+    "plugin": "sish",
+    "binary": "sish",
+    "check": "which sish",
+    "install_steps": [
+      "curl -sSfL https://github.com/antoniomika/sish/releases/latest/download/sish-linux-amd64 -o ~/.local/bin/sish && chmod +x ~/.local/bin/sish",
+      "Verify: sish --version",
+      "supercli plugins install ./plugins/sish --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sish",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sish version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sish",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sish: download a release binary from https://github.com/antoniomika/sish/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sish",
+      "resource": "server",
+      "action": "run",
+      "description": "Run the sish server (flags like --ssh-address, --domain go in _args)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sish",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install sish: download a release binary from https://github.com/antoniomika/sish/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sish",
+      "resource": "tunnel",
+      "action": "expose",
+      "description": "Client side: expose a local port through a sish server via ssh -R (sish needs no client binary)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ssh",
+        "baseArgs": ["-o", "StrictHostKeyChecking=accept-new", "-p", "2222", "-R"],
+        "positionalArgs": ["forward", "host"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Uses the system ssh client (ssh -R). sish server must be running and reachable."
+      },
+      "args": [
+        { "name": "forward", "type": "string", "required": true, "description": "SSH -R spec, e.g. 'mysub:80:localhost:3000' (remote_port/hostname:local_port:local_host)" },
+        { "name": "host", "type": "string", "required": true, "description": "sish server host (e.g. ssi.sh or your own domain)" }
+      ]
+    },
+    {
+      "namespace": "sish",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sish CLI (server flags and admin subcommands)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sish",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install sish: download a release binary from https://github.com/antoniomika/sish/releases"
+      },
+      "args": []
+    }
+  ]
+}

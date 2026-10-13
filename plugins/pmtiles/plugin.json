@@ -1,0 +1,149 @@
+{
+  "name": "pmtiles",
+  "version": "0.1.0",
+  "description": "Create, inspect, convert, and serve PMTiles single-file map tile archives (range-request friendly)",
+  "source": "https://github.com/protomaps/go-pmtiles",
+  "checks": [
+    { "type": "binary", "name": "pmtiles" }
+  ],
+  "install_guidance": {
+    "plugin": "pmtiles",
+    "binary": "pmtiles",
+    "check": "which pmtiles",
+    "install_steps": [
+      "Download the release binary for your OS/arch from https://github.com/protomaps/go-pmtiles/releases and move `pmtiles` into your PATH",
+      "Or: npm install -g pmtiles (JS CLI subset) | docker: protomaps/go-pmtiles",
+      "Verify: pmtiles --help",
+      "supercli plugins install ./plugins/pmtiles --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pmtiles",
+      "resource": "self",
+      "action": "help",
+      "description": "Show pmtiles CLI usage and subcommand list",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install pmtiles: download from https://github.com/protomaps/go-pmtiles/releases or npm install -g pmtiles"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "archive",
+      "action": "convert",
+      "description": "Convert an MBTiles archive to PMTiles: pmtiles convert input.mbtiles output.pmtiles",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["convert"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "archive",
+      "action": "show",
+      "description": "Show metadata and tile counts of a local or remote PMTiles archive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["show"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "archive",
+      "action": "verify",
+      "description": "Verify a PMTiles archive is spec-compliant and not corrupted",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["verify"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "archive",
+      "action": "extract",
+      "description": "Extract a subset (zoom range / bbox) of a PMTiles archive into a new archive or directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["extract"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "archive",
+      "action": "merge",
+      "description": "Merge two PMTiles archives into one",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["merge"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "server",
+      "action": "serve",
+      "description": "Serve a PMTiles archive or directory over HTTP with a map preview (pmtiles serve . --port 8080)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "baseArgs": ["serve"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pmtiles",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pmtiles CLI (bucket, cluster, edit, tile, upload, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pmtiles",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pmtiles: https://github.com/protomaps/go-pmtiles/releases"
+      },
+      "args": []
+    }
+  ]
+}

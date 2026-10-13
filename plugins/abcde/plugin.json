@@ -1,0 +1,71 @@
+{
+  "name": "abcde",
+  "version": "0.1.0",
+  "description": "A Better CD Encoder - rip audio CDs to FLAC/MP3/Ogg/AAC with CDDB/MusicBrainz tagging, fully scriptable",
+  "source": "https://abcde.einval.com/",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "abcde"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "abcde",
+    "binary": "abcde",
+    "check": "which abcde",
+    "install_steps": [
+      "sudo apt-get install -y abcde cdparanoia flac lame vorbis-tools",
+      "Verify: abcde -v",
+      "supercli plugins install ./plugins/abcde --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "abcde",
+      "resource": "self",
+      "action": "version",
+      "description": "Print abcde version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "abcde",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install abcde: sudo apt-get install -y abcde cdparanoia"
+      },
+      "args": []
+    },
+    {
+      "namespace": "abcde",
+      "resource": "cd",
+      "action": "rip",
+      "description": "Rip the audio CD in the drive (abcde -o flac; pass track numbers/flags as needed)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "abcde",
+        "passthrough": true,
+        "missingDependencyHelp": "Install abcde: sudo apt-get install -y abcde cdparanoia",
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "abcde",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to abcde CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "abcde",
+        "passthrough": true,
+        "missingDependencyHelp": "Install abcde: sudo apt-get install -y abcde cdparanoia",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}

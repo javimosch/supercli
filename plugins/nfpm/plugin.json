@@ -1,0 +1,97 @@
+{
+  "name": "nfpm",
+  "version": "0.1.0",
+  "description": "Package binaries into deb, rpm, apk, archlinux and ipk formats without the distro toolchain",
+  "source": "https://github.com/goreleaser/nfpm",
+  "checks": [
+    { "type": "binary", "name": "nfpm" }
+  ],
+  "install_guidance": {
+    "plugin": "nfpm",
+    "binary": "nfpm",
+    "check": "which nfpm",
+    "install_steps": [
+      "go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest",
+      "Verify: nfpm --version",
+      "supercli plugins install ./plugins/nfpm --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "nfpm",
+      "resource": "self",
+      "action": "version",
+      "description": "Print nfpm version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nfpm",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install nfpm: go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nfpm",
+      "resource": "config",
+      "action": "init",
+      "description": "Create a starter nfpm.yaml configuration file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nfpm",
+        "baseArgs": ["init"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nfpm: go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nfpm",
+      "resource": "pkg",
+      "action": "build",
+      "description": "Build a package from nfpm.yaml (nfpm package -p deb|rpm|apk -t out/)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nfpm",
+        "baseArgs": ["package"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nfpm: go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nfpm",
+      "resource": "config",
+      "action": "schema",
+      "description": "Output the JSON schema for nfpm.yaml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nfpm",
+        "baseArgs": ["schema"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install nfpm: go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "nfpm",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to nfpm CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "nfpm",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install nfpm: go install github.com/goreleaser/nfpm/v2/cmd/nfpm@latest"
+      },
+      "args": []
+    }
+  ]
+}

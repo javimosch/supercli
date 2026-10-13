@@ -1,0 +1,139 @@
+{
+  "name": "patool",
+  "version": "0.1.0",
+  "description": "Universal archive manager CLI — extract, create, list and test across dozens of archive formats",
+  "source": "https://github.com/wummel/patool",
+  "checks": [
+    { "type": "binary", "name": "patool" }
+  ],
+  "install_guidance": {
+    "plugin": "patool",
+    "binary": "patool",
+    "check": "which patool",
+    "install_steps": [
+      "sudo apt-get install -y patool || pipx install patool || brew install patool",
+      "Verify: patool --version",
+      "supercli plugins install ./plugins/patool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "patool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print patool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "patool",
+      "resource": "archive",
+      "action": "extract",
+      "description": "Extract an archive of any supported format to a directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "baseArgs": ["extract"],
+        "positionalArgs": ["archive"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": [
+        { "name": "archive", "type": "string", "required": true, "description": "Archive file to extract" }
+      ]
+    },
+    {
+      "namespace": "patool",
+      "resource": "archive",
+      "action": "create",
+      "description": "Create an archive from files (format inferred from extension)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "baseArgs": ["create"],
+        "positionalArgs": ["archive"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": [
+        { "name": "archive", "type": "string", "required": true, "description": "Archive to create, e.g. out.tar.gz (files follow via _args)" }
+      ]
+    },
+    {
+      "namespace": "patool",
+      "resource": "archive",
+      "action": "list",
+      "description": "List contents of an archive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "baseArgs": ["list"],
+        "positionalArgs": ["archive"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": [
+        { "name": "archive", "type": "string", "required": true, "description": "Archive file to inspect" }
+      ]
+    },
+    {
+      "namespace": "patool",
+      "resource": "archive",
+      "action": "test",
+      "description": "Test archive integrity (patool test <archive>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "baseArgs": ["test"],
+        "positionalArgs": ["archive"],
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": [
+        { "name": "archive", "type": "string", "required": true, "description": "Archive file to test" }
+      ]
+    },
+    {
+      "namespace": "patool",
+      "resource": "formats",
+      "action": "list",
+      "description": "List supported archive formats and which helper binaries they need",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "baseArgs": ["formats"],
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "patool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to patool CLI (diff, repack, search, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "patool",
+        "passthrough": true,
+        "timeout_ms": 3600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install patool: apt install patool (or pipx install patool)"
+      },
+      "args": []
+    }
+  ]
+}

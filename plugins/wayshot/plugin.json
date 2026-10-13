@@ -1,0 +1,112 @@
+{
+  "name": "wayshot",
+  "version": "0.1.0",
+  "description": "Native Rust screenshot tool for wlroots Wayland compositors (sway, river, Hyprland) with region slurp and stdout piping",
+  "source": "https://github.com/waycrate/wayshot",
+  "checks": [
+    { "type": "binary", "name": "wayshot" }
+  ],
+  "install_guidance": {
+    "plugin": "wayshot",
+    "binary": "wayshot",
+    "check": "which wayshot",
+    "install_steps": [
+      "cargo install wayshot",
+      "Verify: wayshot --version",
+      "supercli plugins install ./plugins/wayshot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "wayshot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print wayshot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayshot",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install wayshot: cargo install wayshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wayshot",
+      "resource": "screen",
+      "action": "capture",
+      "description": "Screenshot all outputs, writes a png file in the current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayshot",
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wayshot: cargo install wayshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wayshot",
+      "resource": "screen",
+      "action": "stdout",
+      "description": "Screenshot to stdout as png bytes (pipe to a file or wl-copy)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayshot",
+        "baseArgs": ["--stdout"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install wayshot: cargo install wayshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wayshot",
+      "resource": "screen",
+      "action": "region",
+      "description": "Screenshot a region; pass slurp geometry (wayshot -s \"$(slurp)\")",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayshot",
+        "baseArgs": ["--slurp"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wayshot: cargo install wayshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wayshot",
+      "resource": "screen",
+      "action": "output",
+      "description": "Interactively pick which output to screenshot (wayshot -o)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayshot",
+        "baseArgs": ["-o"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install wayshot: cargo install wayshot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "wayshot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to wayshot CLI (wayshot --file, --extension, --cursor, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "wayshot",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install wayshot: cargo install wayshot"
+      },
+      "args": []
+    }
+  ]
+}

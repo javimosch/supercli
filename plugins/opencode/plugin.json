@@ -1,0 +1,125 @@
+{
+  "name": "opencode",
+  "version": "0.1.0",
+  "description": "Terminal-first AI coding agent by SST — provider-agnostic, with headless run mode and JSON output",
+  "source": "https://github.com/sst/opencode",
+  "checks": [
+    { "type": "binary", "name": "opencode" }
+  ],
+  "install_guidance": {
+    "plugin": "opencode",
+    "binary": "opencode",
+    "check": "which opencode",
+    "install_steps": [
+      "curl -fsSL https://opencode.ai/install | bash",
+      "Verify: opencode --version",
+      "supercli plugins install ./plugins/opencode --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "opencode",
+      "resource": "self",
+      "action": "version",
+      "description": "Print opencode version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode",
+      "resource": "agent",
+      "action": "run",
+      "description": "Run a prompt non-interactively (opencode run \"task\" — add --json for events, --model/-m to pick model)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode",
+      "resource": "models",
+      "action": "list",
+      "description": "List models available from configured providers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["models"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode",
+      "resource": "stats",
+      "action": "show",
+      "description": "Show token usage and session statistics",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["stats"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode",
+      "resource": "auth",
+      "action": "manage",
+      "description": "Manage provider credentials (opencode auth login/list/logout)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["auth"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode",
+      "resource": "self",
+      "action": "upgrade",
+      "description": "Upgrade opencode to latest (or a target version)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "baseArgs": ["upgrade"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    },
+    {
+      "namespace": "opencode",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to opencode CLI (opencode serve, opencode agent, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "opencode",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install opencode: curl -fsSL https://opencode.ai/install | bash"
+      },
+      "args": []
+    }
+  ]
+}

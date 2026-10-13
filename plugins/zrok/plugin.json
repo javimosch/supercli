@@ -1,0 +1,119 @@
+{
+  "name": "zrok",
+  "version": "0.1.0",
+  "description": "Zero-trust secure sharing platform — public/private tunnels and file sharing built on OpenZiti",
+  "source": "https://github.com/openziti/zrok",
+  "checks": [
+    { "type": "binary", "name": "zrok" }
+  ],
+  "install_guidance": {
+    "plugin": "zrok",
+    "binary": "zrok",
+    "check": "which zrok",
+    "install_steps": [
+      "curl -sSf https://get.openziti.io/install.bash | bash -s zrok",
+      "Verify: zrok version",
+      "supercli plugins install ./plugins/zrok --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "zrok",
+      "resource": "self",
+      "action": "version",
+      "description": "Print zrok version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrok",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install zrok: curl -sSf https://get.openziti.io/install.bash | bash -s zrok"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zrok",
+      "resource": "share",
+      "action": "public",
+      "description": "Share a local service or files publicly via a temporary URL",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrok",
+        "baseArgs": ["share", "public"],
+        "positionalArgs": ["target"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install zrok: curl -sSf https://get.openziti.io/install.bash | bash -s zrok"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "What to share: http://localhost:8080, a folder path, etc." }
+      ]
+    },
+    {
+      "namespace": "zrok",
+      "resource": "share",
+      "action": "private",
+      "description": "Share privately — only peers with the token can access (peer-to-peer, no public URL)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrok",
+        "baseArgs": ["share", "private"],
+        "positionalArgs": ["target"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install zrok: curl -sSf https://get.openziti.io/install.bash | bash -s zrok"
+      },
+      "args": [
+        { "name": "target", "type": "string", "required": true, "description": "What to share: localhost port, folder, etc." }
+      ]
+    },
+    {
+      "namespace": "zrok",
+      "resource": "access",
+      "action": "private",
+      "description": "Access a private share by its token (zrok access private <token>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrok",
+        "baseArgs": ["access", "private"],
+        "positionalArgs": ["token"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install zrok: curl -sSf https://get.openziti.io/install.bash | bash -s zrok"
+      },
+      "args": [
+        { "name": "token", "type": "string", "required": true, "description": "Share token provided by the sharing peer" }
+      ]
+    },
+    {
+      "namespace": "zrok",
+      "resource": "env",
+      "action": "status",
+      "description": "Show environment status, shares, and usage (zrok status / overview)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrok",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install zrok: curl -sSf https://get.openziti.io/install.bash | bash -s zrok"
+      },
+      "args": []
+    },
+    {
+      "namespace": "zrok",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to zrok CLI (zrok invite, enable, overview, share reserved, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "zrok",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install zrok: curl -sSf https://get.openziti.io/install.bash | bash -s zrok"
+      },
+      "args": []
+    }
+  ]
+}

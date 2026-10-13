@@ -1,0 +1,98 @@
+{
+  "name": "tippecanoe",
+  "version": "0.1.0",
+  "description": "Build vector tilesets (MBTiles/PMTiles) at scale from large GeoJSON, CSV, and FlatGeobuf inputs",
+  "source": "https://github.com/felt/tippecanoe",
+  "checks": [
+    { "type": "binary", "name": "tippecanoe" }
+  ],
+  "install_guidance": {
+    "plugin": "tippecanoe",
+    "binary": "tippecanoe",
+    "check": "which tippecanoe",
+    "install_steps": [
+      "sudo apt-get install -y build-essential libsqlite3-dev zlib1g-dev",
+      "git clone https://github.com/felt/tippecanoe.git /tmp/tippecanoe && cd /tmp/tippecanoe && make -j$(nproc) && sudo make install",
+      "Verify: tippecanoe --version",
+      "supercli plugins install ./plugins/tippecanoe --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tippecanoe",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tippecanoe version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tippecanoe",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install tippecanoe: build from source (https://github.com/felt/tippecanoe) or brew install tippecanoe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tippecanoe",
+      "resource": "tiles",
+      "action": "build",
+      "description": "Build a vector tileset from GeoJSON/FlatGeobuf/CSV (e.g. -o out.mbtiles in.geojson -z14, or -o out.pmtiles). Key flags: -zg auto-zoom, --drop-densest-as-needed, --coalesce-densest-as-needed, -l layer name",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tippecanoe",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tippecanoe: build from source (https://github.com/felt/tippecanoe) or brew install tippecanoe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tippecanoe",
+      "resource": "tiles",
+      "action": "decode",
+      "description": "Decode an MBTiles archive or PBF tile back to GeoJSON for inspection (tippecanoe-decode)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tippecanoe-decode",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tippecanoe: build from source (https://github.com/felt/tippecanoe) or brew install tippecanoe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tippecanoe",
+      "resource": "tiles",
+      "action": "join",
+      "description": "Join or filter multiple MBTiles archives into one (tile-join). Use -o out.mbtiles and input files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tile-join",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tippecanoe: build from source (https://github.com/felt/tippecanoe) or brew install tippecanoe"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tippecanoe",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tippecanoe CLI (tippecanoe-enumerate, tippecanoe-json-tool, etc. via raw flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tippecanoe",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tippecanoe: build from source (https://github.com/felt/tippecanoe) or brew install tippecanoe"
+      },
+      "args": []
+    }
+  ]
+}

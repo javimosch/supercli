@@ -1,0 +1,84 @@
+{
+  "name": "cargo-machete",
+  "version": "0.1.0",
+  "description": "Find unused dependencies in Rust projects and workspaces by scanning for imports of each crate",
+  "source": "https://github.com/bnjjj/cargo-machete",
+  "checks": [
+    { "type": "binary", "name": "cargo-machete" }
+  ],
+  "install_guidance": {
+    "plugin": "cargo-machete",
+    "binary": "cargo-machete",
+    "check": "which cargo-machete",
+    "install_steps": [
+      "cargo install cargo-machete",
+      "Or: cargo binstall cargo-machete",
+      "Verify: cargo-machete --version",
+      "supercli plugins install ./plugins/cargo-machete --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cargo-machete",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cargo-machete version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-machete",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cargo-machete: cargo install cargo-machete"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-machete",
+      "resource": "deps",
+      "action": "scan",
+      "description": "Scan the current crate/workspace for unused dependencies. Exits 1 if unused deps are found (CI-friendly). Optional path arg; --with-metadata for full package info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-machete",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-machete: cargo install cargo-machete"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-machete",
+      "resource": "deps",
+      "action": "fix",
+      "description": "Remove detected unused dependencies from Cargo.toml (cargo machete --fix)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-machete",
+        "baseArgs": ["--fix"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-machete: cargo install cargo-machete"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cargo-machete",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cargo-machete CLI (--skip-target-dir, [paths] to scan, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cargo-machete",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cargo-machete: cargo install cargo-machete"
+      },
+      "args": []
+    }
+  ]
+}

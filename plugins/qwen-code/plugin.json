@@ -1,0 +1,101 @@
+{
+  "name": "qwen-code",
+  "version": "0.1.0",
+  "description": "Agentic coding CLI from Alibaba — Gemini CLI fork adapted for Qwen3-Coder, with headless prompt mode and MCP support",
+  "source": "https://github.com/QwenLM/qwen-code",
+  "checks": [
+    { "type": "binary", "name": "qwen" }
+  ],
+  "install_guidance": {
+    "plugin": "qwen-code",
+    "binary": "qwen",
+    "check": "which qwen",
+    "install_steps": [
+      "npm install -g @qwen-code/qwen-code",
+      "Verify: qwen --version",
+      "supercli plugins install ./plugins/qwen-code --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "qwen-code",
+      "resource": "self",
+      "action": "version",
+      "description": "Print qwen-code version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qwen",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install qwen-code: npm install -g @qwen-code/qwen-code"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qwen-code",
+      "resource": "agent",
+      "action": "ask",
+      "description": "Headless one-shot agent prompt (qwen -p \"<prompt>\"). Runs the agentic loop non-interactively in the current directory.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qwen",
+        "baseArgs": ["-p"],
+        "positionalArgs": ["prompt"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qwen-code: npm install -g @qwen-code/qwen-code"
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true, "description": "Task prompt for the agent (e.g. 'explain this codebase')" }
+      ]
+    },
+    {
+      "namespace": "qwen-code",
+      "resource": "agent",
+      "action": "chat",
+      "description": "Launch the interactive qwen-code TUI agent (qwen). Interactive — prefer agent ask for headless use.",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qwen",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qwen-code: npm install -g @qwen-code/qwen-code"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qwen-code",
+      "resource": "mcp",
+      "action": "manage",
+      "description": "Manage MCP servers configured for qwen-code (qwen mcp list|add|remove)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qwen",
+        "baseArgs": ["mcp"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qwen-code: npm install -g @qwen-code/qwen-code"
+      },
+      "args": []
+    },
+    {
+      "namespace": "qwen-code",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to qwen CLI (qwen --all-files, qwen --yolo, qwen extensions, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "qwen",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install qwen-code: npm install -g @qwen-code/qwen-code"
+      },
+      "args": []
+    }
+  ]
+}

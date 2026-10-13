@@ -1,0 +1,144 @@
+{
+  "name": "terramate",
+  "version": "0.1.0",
+  "description": "IaC orchestration and code generation for Terraform, OpenTofu, and Terragrunt stacks - run changed stacks only, generate files, detect drift",
+  "source": "https://github.com/terramate-io/terramate",
+  "checks": [
+    { "type": "binary", "name": "terramate" }
+  ],
+  "install_guidance": {
+    "plugin": "terramate",
+    "binary": "terramate",
+    "check": "which terramate",
+    "install_steps": [
+      "go install github.com/terramate-io/terramate/cmd/...@latest",
+      "Verify: terramate --version",
+      "supercli plugins install ./plugins/terramate --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "terramate",
+      "resource": "self",
+      "action": "version",
+      "description": "Print terramate version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest or brew install terramate"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "stack",
+      "action": "create",
+      "description": "Create a new stack (terramate create <dir> --name/--description/--id)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["create"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "stack",
+      "action": "list",
+      "description": "List stacks (--changed for git-change detection)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "run",
+      "action": "exec",
+      "description": "Run a command in each stack: terramate run [--changed] -- terraform plan",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "generate",
+      "action": "run",
+      "description": "Generate code defined by generate_file/generate_hcl blocks",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["generate"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "fmt",
+      "action": "run",
+      "description": "Format all Terramate configuration files",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["fmt"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "script",
+      "action": "run",
+      "description": "Run a Terramate Script defined in configuration",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "baseArgs": ["script", "run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "terramate",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to terramate CLI (terramate debug, terramate experimental, terramate cloud, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "terramate",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install terramate: go install github.com/terramate-io/terramate/cmd/...@latest"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "name": "sbomqs",
+  "version": "0.1.0",
+  "description": "SBOM Quality Score — evaluate SPDX/CycloneDX software bills of materials for completeness and NTIA/BSI compliance",
+  "source": "https://github.com/interlynk-io/sbomqs",
+  "checks": [
+    { "type": "binary", "name": "sbomqs" }
+  ],
+  "install_guidance": {
+    "plugin": "sbomqs",
+    "binary": "sbomqs",
+    "check": "which sbomqs",
+    "install_steps": [
+      "go install github.com/interlynk-io/sbomqs@latest",
+      "Verify: sbomqs --version",
+      "supercli plugins install ./plugins/sbomqs --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sbomqs",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sbomqs version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbomqs",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sbomqs: go install github.com/interlynk-io/sbomqs@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sbomqs",
+      "resource": "score",
+      "action": "run",
+      "description": "Score an SBOM's quality (use --json for machine output, --category for per-category scores)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbomqs",
+        "baseArgs": ["score"],
+        "positionalArgs": ["sbom_file"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbomqs: go install github.com/interlynk-io/sbomqs@latest"
+      },
+      "args": [
+        { "name": "sbom_file", "type": "string", "required": true, "description": "Path to a SPDX or CycloneDX SBOM file" }
+      ]
+    },
+    {
+      "namespace": "sbomqs",
+      "resource": "compliance",
+      "action": "check",
+      "description": "Check SBOM compliance against a standard (--ntia, --bsi-v2, --fsct, --oct)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbomqs",
+        "baseArgs": ["compliance"],
+        "positionalArgs": ["sbom_file"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbomqs: go install github.com/interlynk-io/sbomqs@latest"
+      },
+      "args": [
+        { "name": "sbom_file", "type": "string", "required": true, "description": "Path to a SPDX or CycloneDX SBOM file" }
+      ]
+    },
+    {
+      "namespace": "sbomqs",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sbomqs CLI (generate, list, share, enrich, compliance flags, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sbomqs",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sbomqs: go install github.com/interlynk-io/sbomqs@latest"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "name": "oapi-codegen",
+  "version": "0.1.0",
+  "description": "Generate Go server stubs, clients, and types from OpenAPI 3 specifications",
+  "source": "https://github.com/oapi-codegen/oapi-codegen",
+  "checks": [
+    { "type": "binary", "name": "oapi-codegen" }
+  ],
+  "install_guidance": {
+    "plugin": "oapi-codegen",
+    "binary": "oapi-codegen",
+    "check": "which oapi-codegen",
+    "install_steps": [
+      "go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest",
+      "Verify: oapi-codegen --version",
+      "supercli plugins install ./plugins/oapi-codegen --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oapi-codegen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oapi-codegen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oapi-codegen",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install oapi-codegen: go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oapi-codegen",
+      "resource": "spec",
+      "action": "generate",
+      "description": "Generate Go code from an OpenAPI spec (oapi-codegen -generate types,server -o gen.go <spec>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oapi-codegen",
+        "positionalArgs": ["spec"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oapi-codegen: go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
+      },
+      "args": [
+        { "name": "spec", "type": "string", "required": true, "description": "Path to OpenAPI 3 spec (YAML or JSON)" }
+      ]
+    },
+    {
+      "namespace": "oapi-codegen",
+      "resource": "config",
+      "action": "generate",
+      "description": "Generate code using a config file (oapi-codegen --config cfg.yaml <spec>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oapi-codegen",
+        "baseArgs": ["--config"],
+        "positionalArgs": ["config", "spec"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oapi-codegen: go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
+      },
+      "args": [
+        { "name": "config", "type": "string", "required": true, "description": "Path to oapi-codegen config YAML" },
+        { "name": "spec", "type": "string", "required": true, "description": "Path to OpenAPI 3 spec" }
+      ]
+    },
+    {
+      "namespace": "oapi-codegen",
+      "resource": "templates",
+      "action": "list",
+      "description": "List available generate targets and built-in templates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oapi-codegen",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install oapi-codegen: go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oapi-codegen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oapi-codegen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oapi-codegen",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install oapi-codegen: go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@latest"
+      },
+      "args": []
+    }
+  ]
+}

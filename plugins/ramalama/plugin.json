@@ -1,0 +1,175 @@
+{
+  "name": "ramalama",
+  "version": "0.1.0",
+  "description": "Make AI boring — run, serve, and manage local LLMs inside containers (podman/docker) with Ollama-compatible model registries",
+  "source": "https://github.com/containers/ramalama",
+  "checks": [
+    { "type": "binary", "name": "ramalama" }
+  ],
+  "install_guidance": {
+    "plugin": "ramalama",
+    "binary": "ramalama",
+    "check": "which ramalama",
+    "install_steps": [
+      "pipx install ramalama  # or: pip install ramalama",
+      "Verify: ramalama version",
+      "supercli plugins install ./plugins/ramalama --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ramalama",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ramalama version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "model",
+      "action": "list",
+      "description": "List all downloaded AI models in local storage (ramalama ls)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["ls"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "model",
+      "action": "pull",
+      "description": "Pull an AI model from a registry to local storage (e.g. ollama://smollm:135m, huggingface://user/repo)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["pull"],
+        "positionalArgs": ["model"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": true, "description": "Model identifier (e.g. smollm:135m, ollama://llama3.2, huggingface://user/repo)" }
+      ]
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "model",
+      "action": "run",
+      "description": "Run an AI model as an interactive chatbot (use --dryrun to preview the container command without running it)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["run"],
+        "positionalArgs": ["model"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": [
+        { "name": "model", "type": "string", "description": "Model identifier to chat with" }
+      ]
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "model",
+      "action": "serve",
+      "description": "Serve an AI model as an OpenAI-compatible REST API (ramalama serve --port 8080 --name svc -d model)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["serve"],
+        "positionalArgs": ["model"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": true, "description": "Model identifier to serve" }
+      ]
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "model",
+      "action": "rm",
+      "description": "Remove AI models from local storage (ramalama rm --ignore <name>, --all for everything)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["rm"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "model",
+      "action": "inspect",
+      "description": "Inspect the specified AI model (ramalama inspect <model>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["inspect"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "container",
+      "action": "ps",
+      "description": "List all running ramalama model containers",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["ps"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "system",
+      "action": "info",
+      "description": "Display ramalama configuration information (engine, GPU, image, store)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "baseArgs": ["info"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ramalama",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ramalama CLI (ramalama stop, ramalama push, ramalama bench, ramalama rag, ramalama login, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ramalama",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install ramalama: pipx install ramalama"
+      },
+      "args": []
+    }
+  ]
+}

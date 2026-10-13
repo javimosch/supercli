@@ -1,0 +1,117 @@
+{
+  "name": "dalfox",
+  "version": "0.1.0",
+  "description": "Powerful open-source XSS scanner — DOM/reflected/stored XSS detection with parameter analysis, WAF evasion, and 1500+ payloads",
+  "source": "https://github.com/hahwul/dalfox",
+  "checks": [
+    { "type": "binary", "name": "dalfox" }
+  ],
+  "install_guidance": {
+    "plugin": "dalfox",
+    "binary": "dalfox",
+    "check": "which dalfox",
+    "install_steps": [
+      "go install github.com/hahwul/dalfox/v2@latest",
+      "Verify: dalfox version",
+      "supercli plugins install ./plugins/dalfox --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dalfox",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dalfox version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dalfox",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install dalfox: go install github.com/hahwul/dalfox/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dalfox",
+      "resource": "scan",
+      "action": "url",
+      "description": "Scan a single URL for XSS vulnerabilities (use -b for blind XSS callback, --waf-evasion, -o for output)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dalfox",
+        "baseArgs": ["url"],
+        "positionalArgs": ["url"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install dalfox: go install github.com/hahwul/dalfox/v2@latest"
+      },
+      "args": [
+        { "name": "url", "type": "string", "required": true, "description": "Target URL with parameters to test" }
+      ]
+    },
+    {
+      "namespace": "dalfox",
+      "resource": "scan",
+      "action": "file",
+      "description": "Scan multiple targets from a file (one URL per line; use --rawdata for raw HTTP requests)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dalfox",
+        "baseArgs": ["file"],
+        "positionalArgs": ["file"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dalfox: go install github.com/hahwul/dalfox/v2@latest"
+      },
+      "args": [
+        { "name": "file", "type": "string", "required": true, "description": "File containing target URLs" }
+      ]
+    },
+    {
+      "namespace": "dalfox",
+      "resource": "scan",
+      "action": "pipe",
+      "description": "Scan URLs read from stdin (chain with other recon tools, e.g. cat urls.txt | dalfox pipe)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dalfox",
+        "baseArgs": ["pipe"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install dalfox: go install github.com/hahwul/dalfox/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dalfox",
+      "resource": "payload",
+      "action": "list",
+      "description": "List the built-in XSS payloads",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dalfox",
+        "baseArgs": ["payload"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install dalfox: go install github.com/hahwul/dalfox/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dalfox",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dalfox CLI (sxss mode, REST API server, --mining-dom for DOM XSS, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dalfox",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install dalfox: go install github.com/hahwul/dalfox/v2@latest"
+      },
+      "args": []
+    }
+  ]
+}

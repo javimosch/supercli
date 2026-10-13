@@ -1,0 +1,141 @@
+{
+  "name": "oasdiff",
+  "version": "0.1.0",
+  "description": "Compare and diff OpenAPI specs to detect breaking changes and generate changelogs",
+  "source": "https://github.com/oasdiff/oasdiff",
+  "checks": [
+    { "type": "binary", "name": "oasdiff" }
+  ],
+  "install_guidance": {
+    "plugin": "oasdiff",
+    "binary": "oasdiff",
+    "check": "which oasdiff",
+    "install_steps": [
+      "go install github.com/oasdiff/oasdiff@latest",
+      "Verify: oasdiff --version",
+      "supercli plugins install ./plugins/oasdiff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "oasdiff",
+      "resource": "self",
+      "action": "version",
+      "description": "Print oasdiff version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oasdiff",
+      "resource": "spec",
+      "action": "diff",
+      "description": "Show the diff between two OpenAPI specs (oasdiff diff <base> <revision>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "baseArgs": ["diff"],
+        "positionalArgs": ["base", "revision"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": [
+        { "name": "base", "type": "string", "required": true, "description": "Path to base OpenAPI spec" },
+        { "name": "revision", "type": "string", "required": true, "description": "Path to revised OpenAPI spec" }
+      ]
+    },
+    {
+      "namespace": "oasdiff",
+      "resource": "spec",
+      "action": "breaking",
+      "description": "Report only breaking changes between two OpenAPI specs (non-zero exit on breaking changes with --fail-on ERR)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "baseArgs": ["breaking"],
+        "positionalArgs": ["base", "revision"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": [
+        { "name": "base", "type": "string", "required": true, "description": "Path to base OpenAPI spec" },
+        { "name": "revision", "type": "string", "required": true, "description": "Path to revised OpenAPI spec" }
+      ]
+    },
+    {
+      "namespace": "oasdiff",
+      "resource": "spec",
+      "action": "changelog",
+      "description": "Generate a changelog of all changes between two OpenAPI specs (--format json|yaml|text)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "baseArgs": ["changelog"],
+        "positionalArgs": ["base", "revision"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": [
+        { "name": "base", "type": "string", "required": true, "description": "Path to base OpenAPI spec" },
+        { "name": "revision", "type": "string", "required": true, "description": "Path to revised OpenAPI spec" }
+      ]
+    },
+    {
+      "namespace": "oasdiff",
+      "resource": "spec",
+      "action": "summary",
+      "description": "Show a summary of changes between two OpenAPI specs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "baseArgs": ["summary"],
+        "positionalArgs": ["base", "revision"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": [
+        { "name": "base", "type": "string", "required": true, "description": "Path to base OpenAPI spec" },
+        { "name": "revision", "type": "string", "required": true, "description": "Path to revised OpenAPI spec" }
+      ]
+    },
+    {
+      "namespace": "oasdiff",
+      "resource": "checks",
+      "action": "list",
+      "description": "List all available checks performed by oasdiff",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "baseArgs": ["checks"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "oasdiff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to oasdiff CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "oasdiff",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install oasdiff: go install github.com/oasdiff/oasdiff@latest"
+      },
+      "args": []
+    }
+  ]
+}

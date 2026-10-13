@@ -1,0 +1,119 @@
+{
+  "name": "modelscope",
+  "version": "0.1.0",
+  "description": "ModelScope model hub CLI — download, upload, and manage AI models and datasets from Alibaba's model registry",
+  "source": "https://github.com/modelscope/modelscope",
+  "checks": [
+    { "type": "binary", "name": "modelscope" }
+  ],
+  "install_guidance": {
+    "plugin": "modelscope",
+    "binary": "modelscope",
+    "check": "which modelscope",
+    "install_steps": [
+      "pip install modelscope  # or: pipx install modelscope",
+      "Verify: modelscope --version",
+      "supercli plugins install ./plugins/modelscope --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "modelscope",
+      "resource": "self",
+      "action": "version",
+      "description": "Print modelscope version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modelscope",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install modelscope: pip install modelscope"
+      },
+      "args": []
+    },
+    {
+      "namespace": "modelscope",
+      "resource": "model",
+      "action": "download",
+      "description": "Download a model from the ModelScope hub (modelscope download --model <id> [--local_dir dir] [--include glob])",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modelscope",
+        "baseArgs": ["download"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install modelscope: pip install modelscope"
+      },
+      "args": [
+        { "name": "model", "type": "string", "required": true, "description": "Model id on ModelScope hub (e.g. Qwen/Qwen3-0.6B)" },
+        { "name": "local_dir", "type": "string", "description": "Download directly into this directory instead of the cache" },
+        { "name": "revision", "type": "string", "description": "Model revision/tag to download" },
+        { "name": "include", "type": "string", "description": "Glob patterns of files to include (e.g. '*.json')" },
+        { "name": "exclude", "type": "string", "description": "Glob patterns of files to exclude" }
+      ]
+    },
+    {
+      "namespace": "modelscope",
+      "resource": "dataset",
+      "action": "download",
+      "description": "Download a dataset from the ModelScope hub (modelscope download --dataset <id>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modelscope",
+        "baseArgs": ["download"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install modelscope: pip install modelscope"
+      },
+      "args": [
+        { "name": "dataset", "type": "string", "required": true, "description": "Dataset id on ModelScope hub" },
+        { "name": "local_dir", "type": "string", "description": "Download directly into this directory" }
+      ]
+    },
+    {
+      "namespace": "modelscope",
+      "resource": "hub",
+      "action": "login",
+      "description": "Log in to the ModelScope hub (modelscope login --token <token>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modelscope",
+        "baseArgs": ["login"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install modelscope: pip install modelscope"
+      },
+      "args": []
+    },
+    {
+      "namespace": "modelscope",
+      "resource": "hub",
+      "action": "upload",
+      "description": "Upload files to a ModelScope repository (modelscope upload <repo_id> <local_path>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modelscope",
+        "baseArgs": ["upload"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install modelscope: pip install modelscope"
+      },
+      "args": []
+    },
+    {
+      "namespace": "modelscope",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to modelscope CLI (modelscope create, modelscope pipeline, ms alias, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "modelscope",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install modelscope: pip install modelscope"
+      },
+      "args": []
+    }
+  ]
+}

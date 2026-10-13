@@ -1,0 +1,91 @@
+{
+  "name": "tectonic",
+  "version": "0.1.0",
+  "description": "Modern self-contained TeX/LaTeX engine - compiles .tex to PDF with no local TeX install required",
+  "source": "https://github.com/tectonic-typesetting/tectonic",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tectonic"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tectonic",
+    "binary": "tectonic",
+    "check": "which tectonic",
+    "install_steps": [
+      "curl --proto '=https' -fsSL https://drop-sh.fullyjustified.net | sh",
+      "mkdir -p ~/.local/bin && mv tectonic ~/.local/bin/tectonic",
+      "Verify: tectonic --version",
+      "supercli plugins install ./plugins/tectonic --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tectonic",
+      "resource": "self",
+      "action": "version",
+      "description": "Print tectonic version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tectonic",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install tectonic: cargo install tectonic"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tectonic",
+      "resource": "document",
+      "action": "build",
+      "description": "Compile a TeX document to PDF (tectonic main.tex)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tectonic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tectonic: cargo install tectonic",
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tectonic",
+      "resource": "project",
+      "action": "watch",
+      "description": "Watch a V2 project and rebuild on change (tectonic -X watch)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tectonic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tectonic: cargo install tectonic",
+        "baseArgs": [
+          "-X",
+          "watch"
+        ],
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tectonic",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tectonic CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tectonic",
+        "passthrough": true,
+        "missingDependencyHelp": "Install tectonic: cargo install tectonic",
+        "cwd": "invoke_cwd"
+      },
+      "args": []
+    }
+  ]
+}
