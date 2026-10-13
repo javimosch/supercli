@@ -1,0 +1,147 @@
+{
+  "name": "espflash",
+  "version": "0.1.0",
+  "description": "Serial flasher for Espressif ESP32/ESP8266 chips: flash images, monitor serial output, manage partition tables",
+  "source": "https://github.com/esp-rs/espflash",
+  "checks": [
+    { "type": "binary", "name": "espflash" }
+  ],
+  "install_guidance": {
+    "plugin": "espflash",
+    "binary": "espflash",
+    "check": "which espflash",
+    "install_steps": [
+      "cargo install espflash --locked",
+      "Or: cargo binstall espflash",
+      "Or: download a prebuilt binary from https://github.com/esp-rs/espflash/releases",
+      "Verify: espflash --version",
+      "supercli plugins install ./plugins/espflash --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "espflash",
+      "resource": "self",
+      "action": "version",
+      "description": "Print espflash version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "board",
+      "action": "info",
+      "description": "Detect the connected chip and print board/flash info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["board-info"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "flash",
+      "action": "write",
+      "description": "Flash a firmware image to the device (espflash flash <image>; add --monitor to watch output after)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["flash"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "serial",
+      "action": "monitor",
+      "description": "Open the serial monitor (RTT/defmt aware). Long-running; use for live device logs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["monitor"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "flash",
+      "action": "erase",
+      "description": "Erase the entire flash chip (espflash erase-flash; see also erase-region/erase-parts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["erase-flash"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "flash",
+      "action": "read",
+      "description": "Read a flash region to a file (espflash read-flash <offset> <size> <file>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["read-flash"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "partition",
+      "action": "table",
+      "description": "Read, convert (csv↔bin), or write the partition table (espflash partition-table)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "baseArgs": ["partition-table"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    },
+    {
+      "namespace": "espflash",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to espflash CLI (save-image, write-bin, checksum-md5, hold-in-reset, run, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "espflash",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install espflash: cargo install espflash --locked"
+      },
+      "args": []
+    }
+  ]
+}

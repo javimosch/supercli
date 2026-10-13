@@ -1,0 +1,82 @@
+{
+  "name": "unlighthouse",
+  "version": "0.1.0",
+  "description": "Run Google Lighthouse audits across an entire site — crawls all routes and reports performance, accessibility, and SEO scores",
+  "source": "https://github.com/harlan-zw/unlighthouse",
+  "checks": [
+    { "type": "binary", "name": "unlighthouse-ci" }
+  ],
+  "install_guidance": {
+    "plugin": "unlighthouse",
+    "binary": "unlighthouse-ci",
+    "check": "which unlighthouse-ci",
+    "install_steps": [
+      "npm install -g @unlighthouse/cli",
+      "Verify: unlighthouse-ci --version",
+      "supercli plugins install ./plugins/unlighthouse --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "unlighthouse",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unlighthouse version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlighthouse-ci",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install unlighthouse: npm install -g @unlighthouse/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unlighthouse",
+      "resource": "site",
+      "action": "audit",
+      "description": "Audit a whole site headlessly (unlighthouse-ci --site https://example.com). Use --reporter json|csv|jsonExpanded, --budget <score>, --build-static for an HTML report",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlighthouse-ci",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unlighthouse: npm install -g @unlighthouse/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unlighthouse",
+      "resource": "site",
+      "action": "dashboard",
+      "description": "Launch the interactive scan with the live dashboard UI (unlighthouse --site <url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlighthouse",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unlighthouse: npm install -g @unlighthouse/cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unlighthouse",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unlighthouse-ci CLI (--samples, --router-prefix, --urls, --cookies, config file support, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlighthouse-ci",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unlighthouse: npm install -g @unlighthouse/cli"
+      },
+      "args": []
+    }
+  ]
+}
