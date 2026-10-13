@@ -1,0 +1,80 @@
+{
+  "name": "yank",
+  "version": "0.1.0",
+  "description": "Yank terminal output to the clipboard: pick fields from piped stdin and send the selection to xsel/wl-copy or stdout",
+  "source": "https://github.com/mptre/yank",
+  "checks": [
+    { "type": "binary", "name": "yank" }
+  ],
+  "install_guidance": {
+    "plugin": "yank",
+    "binary": "yank",
+    "check": "which yank",
+    "install_steps": [
+      "sudo apt install yank  # Debian/Ubuntu; or: brew install yank",
+      "Verify: yank -v",
+      "supercli plugins install ./plugins/yank --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "yank",
+      "resource": "self",
+      "action": "version",
+      "description": "Print yank version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yank",
+        "baseArgs": ["-v"],
+        "missingDependencyHelp": "Install yank: sudo apt install yank"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yank",
+      "resource": "clipboard",
+      "action": "yank",
+      "description": "Read fields from stdin, pick one, and send to the clipboard command (default xsel)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yank",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install yank: sudo apt install yank"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yank",
+      "resource": "clipboard",
+      "action": "first",
+      "description": "Auto-select a field without the interactive UI (yank -1; pipe-friendly for scripts)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yank",
+        "baseArgs": ["-1"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install yank: sudo apt install yank"
+      },
+      "args": []
+    },
+    {
+      "namespace": "yank",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to yank CLI (yank -d =, -g pattern, -- wl-copy, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "yank",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install yank: sudo apt install yank"
+      },
+      "args": []
+    }
+  ]
+}

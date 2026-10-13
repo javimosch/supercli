@@ -1,0 +1,141 @@
+{
+  "name": "sesh",
+  "version": "0.1.0",
+  "description": "Smart terminal session manager for tmux/zellij that connects to project dirs, git repos, and running sessions via zoxide frecency",
+  "source": "https://github.com/joshmedeski/sesh",
+  "checks": [
+    { "type": "binary", "name": "sesh" }
+  ],
+  "install_guidance": {
+    "plugin": "sesh",
+    "binary": "sesh",
+    "check": "which sesh",
+    "install_steps": [
+      "go install github.com/joshmedeski/sesh/v2@latest",
+      "Verify: sesh --version",
+      "supercli plugins install ./plugins/sesh --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sesh",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sesh version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "session",
+      "action": "list",
+      "description": "List sessions (tmux, config, zoxide dirs, tmuxinator; sesh list --json for machines)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "session",
+      "action": "connect",
+      "description": "Connect or switch to a session by name or path (sesh connect <name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["connect"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "session",
+      "action": "last",
+      "description": "Connect to the last active session",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["last"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "session",
+      "action": "clone",
+      "description": "Clone a git repo and connect to a session for it (sesh clone <git-url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["clone"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "session",
+      "action": "preview",
+      "description": "Preview a session's directory contents (sesh preview <name>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["preview"],
+        "passthrough": true,
+        "timeout_ms": 30000,
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "session",
+      "action": "root",
+      "description": "Print the project root of the current directory (session naming basis)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "baseArgs": ["root"],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sesh",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sesh CLI (sesh cn, sesh icon, sesh list --icons, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sesh",
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install sesh: go install github.com/joshmedeski/sesh/v2@latest"
+      },
+      "args": []
+    }
+  ]
+}
