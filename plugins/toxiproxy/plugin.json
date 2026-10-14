@@ -1,0 +1,143 @@
+{
+  "name": "toxiproxy",
+  "version": "0.1.0",
+  "description": "Shopify's TCP proxy for chaos engineering — injects latency, jitter, bandwidth limits, and connection failures to test network resilience",
+  "source": "https://github.com/Shopify/toxiproxy",
+  "checks": [
+    { "type": "binary", "name": "toxiproxy-cli" }
+  ],
+  "install_guidance": {
+    "plugin": "toxiproxy",
+    "binary": "toxiproxy-cli",
+    "check": "which toxiproxy-cli",
+    "install_steps": [
+      "brew install toxiproxy",
+      "Or download toxiproxy-cli + toxiproxy-server binaries from https://github.com/Shopify/toxiproxy/releases",
+      "Or: docker pull ghcr.io/shopify/toxiproxy (server in container)",
+      "Verify: toxiproxy-cli version",
+      "Start the daemon first: toxiproxy-server (listens on :8474)",
+      "supercli plugins install ./plugins/toxiproxy --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "toxiproxy",
+      "resource": "self",
+      "action": "version",
+      "description": "Print toxiproxy-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "server",
+      "action": "start",
+      "description": "Start the toxiproxy daemon (toxiproxy-server). API listens on :8474 by default; run in background before creating proxies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-server",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "proxy",
+      "action": "create",
+      "description": "Create a proxy (toxiproxy-cli create db --listen localhost:26379 --upstream localhost:6379). Traffic to --listen is forwarded to --upstream",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "baseArgs": ["create"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy; start the server first: toxiproxy-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "proxy",
+      "action": "list",
+      "description": "List all proxies with listen/upstream addresses and state (toxiproxy-cli list). Add --json for machine-readable output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "baseArgs": ["list"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy; start the server first: toxiproxy-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "proxy",
+      "action": "inspect",
+      "description": "Show a proxy's details and active toxics (toxiproxy-cli inspect db). Add --json for machine-readable output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "baseArgs": ["inspect"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy; start the server first: toxiproxy-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "proxy",
+      "action": "toggle",
+      "description": "Enable/disable a proxy to simulate a full outage (toxiproxy-cli toggle db)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "baseArgs": ["toggle"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy; start the server first: toxiproxy-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "toxic",
+      "action": "add",
+      "description": "Add a toxic to a proxy (toxiproxy-cli toxic add db --type latency --attribute latency=1000). Types: latency, bandwidth, slow_close, timeout, reset_peer, slicer, limit_data",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "baseArgs": ["toxic", "add"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy; start the server first: toxiproxy-server"
+      },
+      "args": []
+    },
+    {
+      "namespace": "toxiproxy",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to toxiproxy-cli (remove, toxic remove/update/list, --host for remote servers, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "toxiproxy-cli",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install toxiproxy: brew install toxiproxy; start the server first: toxiproxy-server"
+      },
+      "args": []
+    }
+  ]
+}

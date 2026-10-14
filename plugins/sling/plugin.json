@@ -1,0 +1,129 @@
+{
+  "name": "sling",
+  "version": "0.1.0",
+  "description": "Lightweight ELT CLI that moves data between databases, files, and storage systems using YAML replication definitions",
+  "source": "https://github.com/slingdata-io/sling-cli",
+  "checks": [
+    { "type": "binary", "name": "sling" }
+  ],
+  "install_guidance": {
+    "plugin": "sling",
+    "binary": "sling",
+    "check": "which sling",
+    "install_steps": [
+      "brew install slingdata-io/sling/sling",
+      "Or: curl -LO https://github.com/slingdata-io/sling-cli/releases/latest/download/sling_linux_amd64.tar.gz && tar -xzf sling_linux_amd64.tar.gz",
+      "Or: go install github.com/slingdata-io/sling-cli/cmd/sling@latest",
+      "Or: pip install sling (Python wrapper)",
+      "Verify: sling --version",
+      "supercli plugins install ./plugins/sling --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "sling",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sling version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sling",
+      "resource": "replication",
+      "action": "run",
+      "description": "Run a replication: sling run -r replication.yaml, or ad-hoc sling run --src-conn PG --src-stream schema.table --tgt-conn SNOW --tgt-object db.schema.table",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "baseArgs": ["run"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sling",
+      "resource": "conn",
+      "action": "list",
+      "description": "List all configured connections (sling conns list). Connections are stored in ~/.sling/env.yaml or via SLING_ env vars",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "baseArgs": ["conns", "list"],
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sling",
+      "resource": "conn",
+      "action": "set",
+      "description": "Set a named connection (sling conns set PG url='postgres://user:pass@host/db'). Body supports url= or key=value pairs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "baseArgs": ["conns", "set"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sling",
+      "resource": "conn",
+      "action": "test",
+      "description": "Test connectivity to a configured connection (sling conns test PG)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "baseArgs": ["conns", "test"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sling",
+      "resource": "conn",
+      "action": "discover",
+      "description": "Discover streams/tables in a source connection (sling conns discover PG). Shows schemas, tables, and row counts",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "baseArgs": ["conns", "discover"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sling",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sling CLI (conns unset, update, --select streams, incremental mode, hooks, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sling",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sling: brew install slingdata-io/sling/sling"
+      },
+      "args": []
+    }
+  ]
+}

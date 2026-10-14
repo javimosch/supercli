@@ -1,0 +1,134 @@
+{
+  "name": "dagu",
+  "version": "0.1.0",
+  "description": "Self-contained workflow engine and cron alternative that runs YAML-defined DAGs with a built-in web UI, no database required",
+  "source": "https://github.com/dagu-org/dagu",
+  "checks": [
+    { "type": "binary", "name": "dagu" }
+  ],
+  "install_guidance": {
+    "plugin": "dagu",
+    "binary": "dagu",
+    "check": "which dagu",
+    "install_steps": [
+      "brew install dagu",
+      "Or: curl -L https://raw.githubusercontent.com/dagu-org/dagu/main/scripts/installer.sh | bash",
+      "Or: go install github.com/dagu-org/dagu/cmd/dagu@latest",
+      "Or: docker run ghcr.io/dagu-org/dagu:latest",
+      "Verify: dagu version",
+      "supercli plugins install ./plugins/dagu --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "dagu",
+      "resource": "self",
+      "action": "version",
+      "description": "Print dagu version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagu",
+      "resource": "dag",
+      "action": "start",
+      "description": "Start a new DAG run (dagu start workflow.yaml). Add --params 'KEY=VALUE' or -q to run without the scheduler",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "baseArgs": ["start"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagu",
+      "resource": "dag",
+      "action": "status",
+      "description": "Show the latest run status of a DAG (dagu status workflow.yaml). Returns step states as a table",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "baseArgs": ["status"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagu",
+      "resource": "dag",
+      "action": "retry",
+      "description": "Re-run a previous DAG execution by request id (dagu retry --req=<id> workflow.yaml). Find ids via dagu status or the web UI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "baseArgs": ["retry"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagu",
+      "resource": "dag",
+      "action": "stop",
+      "description": "Stop a running DAG execution (dagu stop workflow.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "baseArgs": ["stop"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagu",
+      "resource": "server",
+      "action": "start-all",
+      "description": "Start the web UI and scheduler together (dagu start-all). Serves the dashboard at http://127.0.0.1:8080 by default",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "baseArgs": ["start-all"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    },
+    {
+      "namespace": "dagu",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to dagu CLI (dry, scheduler, server, migrate, validate, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "dagu",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install dagu: brew install dagu"
+      },
+      "args": []
+    }
+  ]
+}

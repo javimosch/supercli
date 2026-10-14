@@ -1,0 +1,114 @@
+{
+  "name": "pack",
+  "version": "0.1.0",
+  "description": "Cloud Native Buildpacks CLI that builds production-ready OCI container images directly from source code without a Dockerfile",
+  "source": "https://github.com/buildpacks/pack",
+  "checks": [
+    { "type": "binary", "name": "pack" }
+  ],
+  "install_guidance": {
+    "plugin": "pack",
+    "binary": "pack",
+    "check": "which pack",
+    "install_steps": [
+      "brew install buildpacks/tap/pack",
+      "Or: sudo add-apt-repository ppa:cncf-buildpacks/pack-cli && sudo apt-get update && sudo apt-get install pack-cli (Debian/Ubuntu)",
+      "Or download from https://github.com/buildpacks/pack/releases",
+      "Verify: pack --version",
+      "Requires a running Docker daemon or compatible container runtime",
+      "supercli plugins install ./plugins/pack --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pack",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pack version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pack: brew install buildpacks/tap/pack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pack",
+      "resource": "image",
+      "action": "build",
+      "description": "Build an OCI image from source (pack build myapp --builder paketobuildpacks/builder-jammy-base). Auto-detects language; add --env, --buildpack, --publish",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack",
+        "baseArgs": ["build"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pack: brew install buildpacks/tap/pack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pack",
+      "resource": "image",
+      "action": "inspect",
+      "description": "Inspect a built image: stack, run-image, buildpacks used, BOM, processes (pack inspect myapp)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack",
+        "baseArgs": ["inspect"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install pack: brew install buildpacks/tap/pack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pack",
+      "resource": "builder",
+      "action": "suggest",
+      "description": "List suggested builders (pack builder suggest) — e.g. paketobuildpacks/builder-jammy-base, heroku/builder, google/builder",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack",
+        "baseArgs": ["builder", "suggest"],
+        "missingDependencyHelp": "Install pack: brew install buildpacks/tap/pack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pack",
+      "resource": "image",
+      "action": "rebase",
+      "description": "Rebase an image onto a newer run image for OS/security patches without rebuilding layers (pack rebase myapp)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack",
+        "baseArgs": ["rebase"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install pack: brew install buildpacks/tap/pack"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pack",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pack CLI (builder create/inspect, buildpack pull/register, config default-builder, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pack",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pack: brew install buildpacks/tap/pack"
+      },
+      "args": []
+    }
+  ]
+}
