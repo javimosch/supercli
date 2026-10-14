@@ -1,0 +1,92 @@
+{
+  "name": "cline",
+  "version": "0.1.0",
+  "description": "Cline CLI plugin with non-interactive task wrappers and passthrough",
+  "source": "https://github.com/cline/cline",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "cline"
+    }
+  ],
+  "commands": [
+    {
+      "namespace": "cline",
+      "resource": "cli",
+      "action": "version",
+      "description": "Show Cline CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cline",
+        "baseArgs": ["--version"],
+        "parseJson": false,
+        "missingDependencyHelp": "Please install the Cline CLI to use this command."
+      },
+      "args": []
+    },
+    {
+      "namespace": "cline",
+      "resource": "task",
+      "action": "run",
+      "description": "Run a non-interactive Cline task in act mode with streamed JSON events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cline",
+        "baseArgs": ["-a", "-y", "--json"],
+        "positionalArgs": ["prompt"],
+        "flagsBeforePositionals": true,
+        "stream": "jsonl",
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install the Cline CLI to use this command."
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true },
+        { "name": "cwd", "type": "string", "required": false },
+        { "name": "model", "type": "string", "required": false },
+        { "name": "timeout", "type": "integer", "required": false },
+        { "name": "continue", "type": "boolean", "required": false },
+        { "name": "images", "type": "string[]", "required": false }
+      ]
+    },
+    {
+      "namespace": "cline",
+      "resource": "task",
+      "action": "plan",
+      "description": "Run a non-interactive Cline task in plan mode with streamed JSON events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cline",
+        "baseArgs": ["-p", "-y", "--json"],
+        "positionalArgs": ["prompt"],
+        "flagsBeforePositionals": true,
+        "stream": "jsonl",
+        "parseJson": false,
+        "timeout_ms": 15000,
+        "missingDependencyHelp": "Please install the Cline CLI to use this command."
+      },
+      "args": [
+        { "name": "prompt", "type": "string", "required": true },
+        { "name": "cwd", "type": "string", "required": false },
+        { "name": "model", "type": "string", "required": false },
+        { "name": "timeout", "type": "integer", "required": false },
+        { "name": "continue", "type": "boolean", "required": false },
+        { "name": "images", "type": "string[]", "required": false }
+      ]
+    },
+    {
+      "namespace": "cline",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough command to execute any Cline CLI command",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cline",
+        "passthrough": true,
+        "parseJson": true,
+        "missingDependencyHelp": "Please install the Cline CLI to use this command."
+      },
+      "args": []
+    }
+  ]
+}

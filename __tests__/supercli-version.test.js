@@ -2,6 +2,7 @@ const { execSync } = require("child_process")
 const path = require("path")
 
 const CLI = path.join(__dirname, "..", "cli", "supercli.js")
+const PKG_VERSION = require("../package.json").version
 
 describe("supercli --version", () => {
   test("--version --human returns version text", () => {
@@ -29,7 +30,7 @@ describe("supercli --version", () => {
     })
     const data = JSON.parse(out)
     expect(data.name).toBe("SuperCLI")
-    expect(data.version).toBe("1.31.4")
+    expect(data.version).toBe(PKG_VERSION)
   })
 
   test("--version --compact returns compact version envelope", () => {
@@ -38,6 +39,6 @@ describe("supercli --version", () => {
     })
     const data = JSON.parse(out)
     expect(data.n).toBe("SuperCLI")
-    expect(data.v).toBe("1.31.4")
+    expect(data.v).toBe(PKG_VERSION)
   })
 })

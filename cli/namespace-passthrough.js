@@ -6,6 +6,12 @@ function findNamespacePassthrough(config, positional, rawArgs) {
 
   const passthroughCommand = config.commands.find(c => (
     c.namespace === namespace &&
+    c.resource === "_" &&
+    c.action === "_" &&
+    c.adapterConfig &&
+    c.adapterConfig.passthrough === true
+  )) || config.commands.find(c => (
+    c.namespace === namespace &&
     c.adapterConfig &&
     c.adapterConfig.passthrough === true
   ))
