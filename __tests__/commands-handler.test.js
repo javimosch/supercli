@@ -481,11 +481,11 @@ describe("handleNamespaceBrowse", () => {
       expect(result.resources).toHaveLength(2)
     })
 
-    test("emits error code 92 for unknown namespace", () => {
+    test("emits error code 85 for unknown namespace", () => {
       const io = makeIo()
       handleNamespaceBrowse(config, ["unknown"], io)
       expect(io.outputError).toHaveBeenCalledWith(
-        expect.objectContaining({ code: 92, type: "resource_not_found" })
+        expect.objectContaining({ code: 85, type: "invalid_argument" })
       )
     })
 

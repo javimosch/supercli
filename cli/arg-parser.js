@@ -1,6 +1,6 @@
 "use strict";
 
-const CLI_VERSION = "1.31.5";
+const CLI_VERSION = require("../package.json").version;
 
 const RESERVED_FLAGS = [
   "human", "json", "compact", "schema", "help-json", "help",
