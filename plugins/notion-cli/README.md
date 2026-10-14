@@ -41,6 +41,8 @@ supercli notion self version --json
 
 ```bash
 supercli notion auth status --json
+supercli notion auth doctor --json
+supercli notion auth logout --json
 ```
 
 ### Search
@@ -54,33 +56,78 @@ supercli notion search run "meeting notes" --json
 ```bash
 supercli notion page list --json
 supercli notion page view <pageId> --json
-supercli notion page create <dbId> --db "Name=Task" --db "Status=Todo" --json
+supercli notion page create <parentId> --title "My Page" --body "Body text" --json
+supercli notion page create <dbId> "Name=Task" "Status=Todo" --db --json
+supercli notion page archive <pageId> --json
+supercli notion page restore <pageId> --json
+supercli notion page move <pageId> --to <parentId> --json
+supercli notion page open <pageId> --json
+supercli notion page set <pageId> Status=Done Priority=High --json
+supercli notion page props <pageId> --json
+supercli notion page link <pageId> --prop "Project" --to <pageId> --json
+supercli notion page unlink <pageId> --prop "Project" --from <pageId> --json
 ```
 
 ### Databases
 
 ```bash
 supercli notion db list --json
+supercli notion db view <dbId> --json
 supercli notion db query <dbId> --filter "Status=Done" --sort "Date:desc" --json
+supercli notion db add <dbId> "Name=Task" "Status=Todo" --json
+supercli notion db add-bulk <dbId> --file items.json --json
+supercli notion db create <parentId> --title "Tasks" --props "Status:select,Date:date" --json
+supercli notion db update <dbId> --title "New Title" --add-prop "Priority:select" --json
+supercli notion db open <dbId> --json
+supercli notion db export <dbId> --format csv --output report.csv --json
 ```
 
 ### Blocks
 
 ```bash
 supercli notion block list <pageId> --md --depth 3 --json
-supercli notion block append <pageId> --file document.md --json
+supercli notion block get <blockId> --json
+supercli notion block append <parentId> "Hello world" --type h1 --json
+supercli notion block append <parentId> --file document.md --json
+supercli notion block insert <parentId> "New paragraph" --after <blockId> --json
+supercli notion block update <blockId> --text "Updated content" --json
+supercli notion block delete <blockId> --json
+supercli notion block move <blockId> --after <blockId> --json
+```
+
+### Comments
+
+```bash
+supercli notion comment list <pageId> --json
+supercli notion comment add <pageId> "This looks great" --json
+supercli notion comment get <commentId> --json
+supercli notion comment reply <commentId> "Thanks" --json
+supercli notion comment update <commentId> --text "Fixed typo" --json
+supercli notion comment delete <commentId> --json
 ```
 
 ### Users
 
 ```bash
+supercli notion user me --json
 supercli notion user list --json
+supercli notion user get <userId> --json
+```
+
+### Files
+
+```bash
+supercli notion file list --json
+supercli notion file upload ./document.pdf --json
+supercli notion file upload https://example.com/chart.png --name chart.png --json
+supercli notion file get <uploadId> --json
 ```
 
 ### Raw API Requests
 
 ```bash
 supercli notion api request GET /v1/users/me --json
+supercli notion api request POST /v1/search --body '{"query":"test"}' --json
 ```
 
 ### Full Passthrough
@@ -88,7 +135,7 @@ supercli notion api request GET /v1/users/me --json
 Run any upstream notion command through the `notion` namespace:
 
 ```bash
-supercli notion _ _ -- --help
+supercli notion _ _ -- db query <dbId> --filter "Status=Done"
 ```
 
 ## Output
