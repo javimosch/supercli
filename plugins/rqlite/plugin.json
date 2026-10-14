@@ -1,0 +1,98 @@
+{
+  "name": "rqlite",
+  "version": "0.1.0",
+  "description": "Distributed relational database built on SQLite — CLI shell to query nodes and inspect cluster state",
+  "source": "https://github.com/rqlite/rqlite",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rqlite"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rqlite",
+    "binary": "rqlite",
+    "check": "which rqlite",
+    "install_steps": [
+      "brew install rqlite",
+      "Or: download a release tarball (includes rqlited node binary + rqlite CLI) from https://github.com/rqlite/rqlite/releases",
+      "Or: docker pull rqlite/rqlite",
+      "Verify: rqlite --version",
+      "supercli plugins install ./plugins/rqlite --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rqlite",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rqlite CLI version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rqlite",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install rqlite: brew install rqlite"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rqlite",
+      "resource": "shell",
+      "action": "open",
+      "description": "Open the interactive rqlite shell (rqlite -H localhost -p 4001; dot-commands: .tables .schema .status .backup .exit)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rqlite",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install rqlite: brew install rqlite"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rqlite",
+      "resource": "query",
+      "action": "run",
+      "description": "Execute a SQL statement non-interactively: rqlite -e 'SELECT * FROM t' -H host -p port",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rqlite",
+        "baseArgs": [
+          "-e"
+        ],
+        "positionalArgs": [
+          "sql"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rqlite: brew install rqlite"
+      },
+      "args": [
+        {
+          "name": "sql",
+          "type": "string",
+          "required": true,
+          "description": "SQL statement to execute, e.g. \"SELECT * FROM users\""
+        }
+      ]
+    },
+    {
+      "namespace": "rqlite",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rqlite CLI (-H host, -p port, -e sql, -u user:pass, -s scheme, --fmt)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rqlite",
+        "passthrough": true,
+        "missingDependencyHelp": "Install rqlite: brew install rqlite"
+      },
+      "args": []
+    }
+  ]
+}

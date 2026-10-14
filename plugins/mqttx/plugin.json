@@ -1,0 +1,125 @@
+{
+  "name": "mqttx",
+  "version": "0.1.0",
+  "description": "All-in-one MQTT 5.0 CLI toolbox — connect, publish, subscribe, and benchmark brokers from the terminal",
+  "source": "https://github.com/emqx/MQTTX",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mqttx"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mqttx",
+    "binary": "mqttx",
+    "check": "which mqttx",
+    "install_steps": [
+      "npm install -g mqttx-cli",
+      "Or: brew install mqttx",
+      "Or: download a standalone binary from https://mqttx.app/downloads",
+      "Verify: mqttx --version",
+      "supercli plugins install ./plugins/mqttx --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mqttx",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mqttx version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mqttx",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install mqttx: npm install -g mqttx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mqttx",
+      "resource": "conn",
+      "action": "connect",
+      "description": "Connect to a broker and echo session info (mqttx conn -h broker.emqx.io -p 1883)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mqttx",
+        "baseArgs": [
+          "conn"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install mqttx: npm install -g mqttx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mqttx",
+      "resource": "pub",
+      "action": "publish",
+      "description": "Publish a message (mqttx pub -t topic -m 'hello' -h broker.emqx.io -q 1)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mqttx",
+        "baseArgs": [
+          "pub"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install mqttx: npm install -g mqttx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mqttx",
+      "resource": "sub",
+      "action": "subscribe",
+      "description": "Subscribe to a topic and stream messages (mqttx sub -t 'sensors/+' -h broker.emqx.io)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mqttx",
+        "baseArgs": [
+          "sub"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install mqttx: npm install -g mqttx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mqttx",
+      "resource": "bench",
+      "action": "run",
+      "description": "Benchmark a broker (mqttx bench conn|pub|sub -c 100 -h broker.emqx.io)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mqttx",
+        "baseArgs": [
+          "bench"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install mqttx: npm install -g mqttx-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mqttx",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mqttx CLI (conn, pub, sub, bench, ls, check)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mqttx",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mqttx: npm install -g mqttx-cli"
+      },
+      "args": []
+    }
+  ]
+}

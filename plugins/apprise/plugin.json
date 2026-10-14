@@ -1,0 +1,81 @@
+{
+  "name": "apprise",
+  "version": "0.1.0",
+  "description": "Push notifications to 100+ services (Discord, Slack, Telegram, email, Pushover…) from one CLI",
+  "source": "https://github.com/caronc/apprise",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "apprise"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "apprise",
+    "binary": "apprise",
+    "check": "which apprise",
+    "install_steps": [
+      "pip install apprise",
+      "Or: pipx install apprise",
+      "Or: brew install apprise",
+      "Verify: apprise --version",
+      "supercli plugins install ./plugins/apprise --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "apprise",
+      "resource": "self",
+      "action": "version",
+      "description": "Print apprise version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apprise",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install apprise: pip install apprise"
+      },
+      "args": []
+    },
+    {
+      "namespace": "apprise",
+      "resource": "notify",
+      "action": "send",
+      "description": "Send a notification: apprise -t 'Title' -b 'Body' <urls>. The URL scheme picks the service (tgram://, discord://, mailto://, ntfy://, ...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apprise",
+        "positionalArgs": [
+          "url"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install apprise: pip install apprise"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Notification service URL(s) — e.g. discord://webhook_id/token, tgram://bot_token/chat_id"
+        }
+      ]
+    },
+    {
+      "namespace": "apprise",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to apprise CLI (-t title, -b body, -a attach, -T tag, -c config, --dry-run)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "apprise",
+        "passthrough": true,
+        "missingDependencyHelp": "Install apprise: pip install apprise"
+      },
+      "args": []
+    }
+  ]
+}

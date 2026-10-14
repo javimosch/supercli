@@ -1,0 +1,91 @@
+{
+  "name": "websocketd",
+  "version": "0.1.0",
+  "description": "Turn any command-line program or script into a WebSocket server — stdin/stdout become a bidirectional socket",
+  "source": "https://github.com/joewalnes/websocketd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "websocketd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "websocketd",
+    "binary": "websocketd",
+    "check": "which websocketd",
+    "install_steps": [
+      "brew install websocketd",
+      "Or: go install github.com/joewalnes/websocketd@latest",
+      "Or: download a release binary from https://github.com/joewalnes/websocketd/releases",
+      "Verify: websocketd --version",
+      "supercli plugins install ./plugins/websocketd --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "websocketd",
+      "resource": "self",
+      "action": "version",
+      "description": "Print websocketd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "websocketd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install websocketd: brew install websocketd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "websocketd",
+      "resource": "server",
+      "action": "run",
+      "description": "Start a WebSocket server bridging each connection to a command/script (websocketd --port=8080 ./handler.sh). Long-running",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "websocketd",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install websocketd: brew install websocketd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "websocketd",
+      "resource": "server",
+      "action": "devconsole",
+      "description": "Serve the built-in developer console for browser testing (websocketd --devconsole --port=8080 ./handler)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "websocketd",
+        "baseArgs": [
+          "--devconsole"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install websocketd: brew install websocketd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "websocketd",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to websocketd CLI (--dir, --staticdir, --ssl, --binary, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "websocketd",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install websocketd: brew install websocketd"
+      },
+      "args": []
+    }
+  ]
+}
