@@ -1,0 +1,110 @@
+{
+  "name": "templ",
+  "version": "0.1.0",
+  "description": "HTML templating language for Go — write type-safe .templ components that compile to Go code",
+  "source": "https://github.com/a-h/templ",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "templ"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "templ",
+    "binary": "templ",
+    "check": "which templ",
+    "install_steps": [
+      "go install github.com/a-h/templ/cmd/templ@latest",
+      "Or: brew install templ",
+      "Verify: templ version",
+      "supercli plugins install ./plugins/templ --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "templ",
+      "resource": "self",
+      "action": "version",
+      "description": "Print templ version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "templ",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install templ: go install github.com/a-h/templ/cmd/templ@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "templ",
+      "resource": "code",
+      "action": "generate",
+      "description": "Compile .templ files to Go (templ generate; -f file, -path dir, -watch, -lazy)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "templ",
+        "baseArgs": [
+          "generate"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install templ: go install github.com/a-h/templ/cmd/templ@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "templ",
+      "resource": "code",
+      "action": "fmt",
+      "description": "Format .templ files in place (templ fmt; -fail to exit non-zero on diffs, -v verbose)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "templ",
+        "baseArgs": [
+          "fmt"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install templ: go install github.com/a-h/templ/cmd/templ@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "templ",
+      "resource": "lsp",
+      "action": "run",
+      "description": "Run the templ language server (templ lsp; -http localhost:7474 for a web debug view)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "templ",
+        "baseArgs": [
+          "lsp"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install templ: go install github.com/a-h/templ/cmd/templ@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "templ",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to templ CLI (generate, fmt, lsp, migrate, info, diagnose)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "templ",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install templ: go install github.com/a-h/templ/cmd/templ@latest"
+      },
+      "args": []
+    }
+  ]
+}

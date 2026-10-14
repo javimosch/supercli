@@ -1,0 +1,88 @@
+{
+  "name": "mailpit",
+  "version": "0.1.0",
+  "description": "SMTP testing tool for developers — catches outgoing email in a local web UI and API (Mailhog successor)",
+  "source": "https://github.com/axllent/mailpit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "mailpit"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "mailpit",
+    "binary": "mailpit",
+    "check": "which mailpit",
+    "install_steps": [
+      "brew install mailpit",
+      "Or: go install github.com/axllent/mailpit@latest",
+      "Or: bash < <(curl -sL https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh)",
+      "Verify: mailpit version",
+      "supercli plugins install ./plugins/mailpit --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "mailpit",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mailpit version and update info",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailpit",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install mailpit: brew install mailpit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mailpit",
+      "resource": "server",
+      "action": "start",
+      "description": "Start Mailpit SMTP server + web UI (defaults: SMTP :1025, UI :8025; flags --smtp, --listen, --database). Long-running",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailpit",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install mailpit: brew install mailpit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mailpit",
+      "resource": "mail",
+      "action": "sendmail",
+      "description": "Send mail via the sendmail-compatible command (mailpit sendmail -t to@x -f from@y < msg.eml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailpit",
+        "baseArgs": [
+          "sendmail"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mailpit: brew install mailpit"
+      },
+      "args": []
+    },
+    {
+      "namespace": "mailpit",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to mailpit CLI (sendmail, dump, readyz, reindex subcommands + server flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mailpit",
+        "passthrough": true,
+        "missingDependencyHelp": "Install mailpit: brew install mailpit"
+      },
+      "args": []
+    }
+  ]
+}

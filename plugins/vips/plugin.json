@@ -1,0 +1,156 @@
+{
+  "name": "vips",
+  "version": "0.1.0",
+  "description": "Fast, low-memory image processing CLI — resize, convert, thumbnail, and chain 300+ operations",
+  "source": "https://github.com/libvips/libvips",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "vips"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "vips",
+    "binary": "vips",
+    "check": "which vips",
+    "install_steps": [
+      "brew install vips",
+      "Or: apt install libvips-tools  # Debian/Ubuntu",
+      "Or: dnf install vips-tools     # Fedora",
+      "Verify: vips --version",
+      "supercli plugins install ./plugins/vips --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "vips",
+      "resource": "self",
+      "action": "version",
+      "description": "Print vips version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vips",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install vips: brew install vips"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vips",
+      "resource": "ops",
+      "action": "list",
+      "description": "List all available vips operations (vips -l)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vips",
+        "baseArgs": [
+          "-l"
+        ],
+        "passthrough": true,
+        "missingDependencyHelp": "Install vips: brew install vips"
+      },
+      "args": []
+    },
+    {
+      "namespace": "vips",
+      "resource": "image",
+      "action": "resize",
+      "description": "Resize an image by scale factor (vips resize in.jpg out.jpg 0.5)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vips",
+        "baseArgs": [
+          "resize"
+        ],
+        "positionalArgs": [
+          "input",
+          "output",
+          "scale"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vips: brew install vips"
+      },
+      "args": [
+        {
+          "name": "input",
+          "type": "string",
+          "required": true,
+          "description": "Source image path"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": true,
+          "description": "Destination image path"
+        },
+        {
+          "name": "scale",
+          "type": "string",
+          "required": true,
+          "description": "Scale factor, e.g. 0.5 for half size"
+        }
+      ]
+    },
+    {
+      "namespace": "vips",
+      "resource": "image",
+      "action": "thumbnail",
+      "description": "Create a thumbnail of a given width in px (vips thumbnail in.jpg out.jpg 200)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vips",
+        "baseArgs": [
+          "thumbnail"
+        ],
+        "positionalArgs": [
+          "input",
+          "output",
+          "size"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vips: brew install vips"
+      },
+      "args": [
+        {
+          "name": "input",
+          "type": "string",
+          "required": true,
+          "description": "Source image path"
+        },
+        {
+          "name": "output",
+          "type": "string",
+          "required": true,
+          "description": "Destination image path"
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "required": true,
+          "description": "Target width in pixels"
+        }
+      ]
+    },
+    {
+      "namespace": "vips",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to vips CLI (copy, extract_area, rot, jpegsave, webpsave, dzsave, ...)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "vips",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install vips: brew install vips"
+      },
+      "args": []
+    }
+  ]
+}

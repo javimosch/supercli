@@ -1,0 +1,107 @@
+{
+  "name": "kubie",
+  "version": "0.1.0",
+  "description": "Kubernetes context and namespace switcher with isolated shell sessions — an alternative to kubectx/kubens",
+  "source": "https://github.com/sbstp/kubie",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kubie"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "kubie",
+    "binary": "kubie",
+    "check": "which kubie",
+    "install_steps": [
+      "cargo install kubie",
+      "Or: brew install kubie",
+      "Verify: kubie --version",
+      "supercli plugins install ./plugins/kubie --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kubie",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kubie version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubie",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kubie: cargo install kubie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubie",
+      "resource": "ctx",
+      "action": "use",
+      "description": "Switch or spawn a shell in a context (kubie ctx <name>; omit name for the fzf picker; -n sets namespace)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubie",
+        "baseArgs": [
+          "ctx"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install kubie: cargo install kubie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubie",
+      "resource": "ns",
+      "action": "use",
+      "description": "Switch namespace in the current context (kubie ns <name>; omit name for the picker)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubie",
+        "baseArgs": [
+          "ns"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install kubie: cargo install kubie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubie",
+      "resource": "exec",
+      "action": "run",
+      "description": "Run a command inside a context+namespace: kubie exec <ctx> <ns> -- <cmd> (e.g. kubie exec prod default -- kubectl get pods)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubie",
+        "baseArgs": [
+          "exec"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install kubie: cargo install kubie"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kubie",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kubie CLI (ctx, ns, exec, edit, info, delete, lint, update)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubie",
+        "passthrough": true,
+        "missingDependencyHelp": "Install kubie: cargo install kubie"
+      },
+      "args": []
+    }
+  ]
+}

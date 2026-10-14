@@ -1,0 +1,110 @@
+{
+  "name": "you-get",
+  "version": "0.1.0",
+  "description": "Tiny command-line utility to download media (video, audio, images) from YouTube and hundreds of sites",
+  "source": "https://github.com/soimort/you-get",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "you-get"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "you-get",
+    "binary": "you-get",
+    "check": "which you-get",
+    "install_steps": [
+      "pip install you-get",
+      "Or: pipx install you-get",
+      "Or: brew install you-get",
+      "Verify: you-get --version",
+      "supercli plugins install ./plugins/you-get --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "you-get",
+      "resource": "self",
+      "action": "version",
+      "description": "Print you-get version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "you-get",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install you-get: pip install you-get"
+      },
+      "args": []
+    },
+    {
+      "namespace": "you-get",
+      "resource": "media",
+      "action": "info",
+      "description": "Show available streams/qualities for a URL without downloading (you-get -i <url>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "you-get",
+        "baseArgs": [
+          "-i"
+        ],
+        "positionalArgs": [
+          "url"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install you-get: pip install you-get"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Media page URL to inspect"
+        }
+      ]
+    },
+    {
+      "namespace": "you-get",
+      "resource": "media",
+      "action": "download",
+      "description": "Download media from a URL (you-get <url>; -o output dir, -O filename, --format=, -x proxy)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "you-get",
+        "positionalArgs": [
+          "url"
+        ],
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install you-get: pip install you-get"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Media page URL to download"
+        }
+      ]
+    },
+    {
+      "namespace": "you-get",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to you-get CLI (-i, -u, --format, --player, -o, -O, -x, -c cookies)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "you-get",
+        "cwd": "invoke_cwd",
+        "passthrough": true,
+        "missingDependencyHelp": "Install you-get: pip install you-get"
+      },
+      "args": []
+    }
+  ]
+}

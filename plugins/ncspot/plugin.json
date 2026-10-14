@@ -1,0 +1,70 @@
+{
+  "name": "ncspot",
+  "version": "0.1.0",
+  "description": "Cross-platform ncurses Spotify client in Rust — keyboard-driven playback, search, and playlists in the terminal",
+  "source": "https://github.com/hrkfdn/ncspot",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "ncspot"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ncspot",
+    "binary": "ncspot",
+    "check": "which ncspot",
+    "install_steps": [
+      "cargo install ncspot",
+      "Or: brew install ncspot",
+      "Verify: ncspot --version",
+      "supercli plugins install ./plugins/ncspot --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ncspot",
+      "resource": "self",
+      "action": "version",
+      "description": "Print ncspot version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncspot",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install ncspot: cargo install ncspot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ncspot",
+      "resource": "player",
+      "action": "start",
+      "description": "Launch the ncspot TUI (ncspot; flags: -b config dir, -u user, -p password). Interactive",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncspot",
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install ncspot: cargo install ncspot"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ncspot",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to ncspot CLI (-b/--basepath, -u/--username, -p/--password)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "ncspot",
+        "passthrough": true,
+        "missingDependencyHelp": "Install ncspot: cargo install ncspot"
+      },
+      "args": []
+    }
+  ]
+}
