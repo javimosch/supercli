@@ -2,7 +2,11 @@
 
 "use strict";
 
-require("dotenv").config({ quiet: true });
+try {
+  require("dotenv").config({ quiet: true });
+} catch (e) {
+  // dotenv not installed, proceed without .env loading
+}
 const { loadConfig, syncConfig, showConfig, setMcpServer, removeMcpServer, listMcpServers, upsertCommand, getClientId } = require("./config");
 const { handleMcpRegistryCommand } = require("./mcp-local");
 const { handlePluginsCommand } = require("./plugins-command");
