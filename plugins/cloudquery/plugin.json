@@ -1,0 +1,101 @@
+{
+  "name": "cloudquery",
+  "version": "0.1.0",
+  "description": "Cloud asset inventory CLI that syncs AWS, GCP, Azure and 70+ sources into Postgres, SQLite or other destinations for SQL querying",
+  "source": "https://github.com/cloudquery/cloudquery",
+  "checks": [
+    { "type": "binary", "name": "cloudquery" }
+  ],
+  "install_guidance": {
+    "plugin": "cloudquery",
+    "binary": "cloudquery",
+    "check": "which cloudquery",
+    "install_steps": [
+      "brew install cloudquery/tap/cloudquery",
+      "Or download the binary for your platform from https://github.com/cloudquery/cloudquery/releases",
+      "Or: docker pull ghcr.io/cloudquery/cloudquery:latest",
+      "Verify: cloudquery --version",
+      "Authenticate: cloudquery login (required since v6 for most source plugins)",
+      "supercli plugins install ./plugins/cloudquery --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "cloudquery",
+      "resource": "self",
+      "action": "version",
+      "description": "Print cloudquery version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudquery",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install cloudquery: brew install cloudquery/tap/cloudquery"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudquery",
+      "resource": "sync",
+      "action": "run",
+      "description": "Run a sync job from one or more spec files or a spec directory (cloudquery sync ./specs/). Requires cloudquery login for premium plugins",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudquery",
+        "baseArgs": ["sync"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cloudquery: brew install cloudquery/tap/cloudquery"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudquery",
+      "resource": "login",
+      "action": "open",
+      "description": "Authenticate the CLI with CloudQuery Cloud (opens browser). Required for premium source plugins and sync to managed destinations",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudquery",
+        "baseArgs": ["login"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install cloudquery: brew install cloudquery/tap/cloudquery"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudquery",
+      "resource": "plugin",
+      "action": "docs",
+      "description": "Print documentation for a plugin (cloudquery plugin docs <source>/<name>). Lists tables, columns and config options",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudquery",
+        "baseArgs": ["plugin", "docs"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install cloudquery: brew install cloudquery/tap/cloudquery"
+      },
+      "args": []
+    },
+    {
+      "namespace": "cloudquery",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to cloudquery CLI (sync, plugin, tables, migrate, test-connection, switch, completion, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "cloudquery",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install cloudquery: brew install cloudquery/tap/cloudquery"
+      },
+      "args": []
+    }
+  ]
+}

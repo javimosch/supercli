@@ -1,0 +1,82 @@
+{
+  "name": "pwru",
+  "version": "0.1.0",
+  "description": "eBPF-based kernel packet tracer by Cilium that shows the exact kernel path and drop location of network packets",
+  "source": "https://github.com/cilium/pwru",
+  "checks": [
+    { "type": "binary", "name": "pwru" }
+  ],
+  "install_guidance": {
+    "plugin": "pwru",
+    "binary": "pwru",
+    "check": "which pwru",
+    "install_steps": [
+      "go install github.com/cilium/pwru/cmd/pwru@latest",
+      "Or download the pwru binary for your platform from https://github.com/cilium/pwru/releases",
+      "Verify: pwru --version",
+      "Requires Linux kernel >= 5.4 with BTF and root privileges",
+      "supercli plugins install ./plugins/pwru --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "pwru",
+      "resource": "self",
+      "action": "version",
+      "description": "Print pwru version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwru",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install pwru: go install github.com/cilium/pwru/cmd/pwru@latest (needs root to run)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pwru",
+      "resource": "trace",
+      "action": "run",
+      "description": "Trace packets through the kernel and show where they are dropped (sudo pwru --filter-dst-port 443). Ctrl-C to stop. Combine --filter-* flags to narrow traffic",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwru",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pwru: go install github.com/cilium/pwru/cmd/pwru@latest (needs root to run)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pwru",
+      "resource": "self",
+      "action": "help",
+      "description": "Show all pwru filter and output options (pwru --help) — protocol, ports, IPs, interfaces, output modes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwru",
+        "baseArgs": ["--help"],
+        "missingDependencyHelp": "Install pwru: go install github.com/cilium/pwru/cmd/pwru@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "pwru",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to pwru CLI (all --filter-* and --output-* flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "pwru",
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install pwru: go install github.com/cilium/pwru/cmd/pwru@latest (needs root to run)"
+      },
+      "args": []
+    }
+  ]
+}

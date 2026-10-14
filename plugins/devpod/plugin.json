@@ -1,0 +1,155 @@
+{
+  "name": "devpod",
+  "version": "0.1.0",
+  "description": "Open-source dev containers orchestrator that spins up reproducible dev environments on any machine or cloud via providers",
+  "source": "https://github.com/loft-sh/devpod",
+  "checks": [
+    { "type": "binary", "name": "devpod" }
+  ],
+  "install_guidance": {
+    "plugin": "devpod",
+    "binary": "devpod",
+    "check": "which devpod",
+    "install_steps": [
+      "curl -L -o devpod https://github.com/loft-sh/devpod/releases/latest/download/devpod-linux-amd64 && sudo install -o root -g root -m 0755 devpod /usr/local/bin",
+      "Or: brew install devpod",
+      "Verify: devpod version",
+      "supercli plugins install ./plugins/devpod --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "devpod",
+      "resource": "self",
+      "action": "version",
+      "description": "Print devpod version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "workspace",
+      "action": "up",
+      "description": "Create/start a dev environment from a local path, git repo, or image (devpod up . | devpod up github.com/org/repo). Add --ide vscode/none/ssh",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["up"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "workspace",
+      "action": "list",
+      "description": "List all devpod workspaces with their provider and status (devpod list)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["list"],
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "workspace",
+      "action": "ssh",
+      "description": "SSH into a workspace (devpod ssh <workspace>). Add --command to run a one-off command instead of a shell",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["ssh"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "workspace",
+      "action": "stop",
+      "description": "Stop a running workspace without deleting it (devpod stop <workspace>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["stop"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "workspace",
+      "action": "delete",
+      "description": "Delete a workspace and its resources (devpod delete <workspace>). Add --force to skip confirmation",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["delete"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "provider",
+      "action": "list",
+      "description": "List available backend providers (docker, kubernetes, ssh, aws, gcloud, azure, ...) and which is in use (devpod provider list)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["provider", "list"],
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "provider",
+      "action": "add",
+      "description": "Add a provider (devpod provider add kubernetes | docker | ssh). Configures where workspaces run",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "baseArgs": ["provider", "add"],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    },
+    {
+      "namespace": "devpod",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to devpod CLI (build, rebuild, ide, context, machine, helper, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "devpod",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install devpod: download binary from https://github.com/loft-sh/devpod/releases or brew install devpod"
+      },
+      "args": []
+    }
+  ]
+}

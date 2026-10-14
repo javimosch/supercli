@@ -1,0 +1,142 @@
+{
+  "name": "talosctl",
+  "version": "0.1.0",
+  "description": "CLI for Talos Linux, the immutable minimal Kubernetes OS — manage clusters, nodes, and machine resources over a gRPC API",
+  "source": "https://github.com/siderolabs/talos",
+  "checks": [
+    { "type": "binary", "name": "talosctl" }
+  ],
+  "install_guidance": {
+    "plugin": "talosctl",
+    "binary": "talosctl",
+    "check": "which talosctl",
+    "install_steps": [
+      "brew install siderolabs/tap/talosctl",
+      "Or: curl -Lo talosctl https://github.com/siderolabs/talos/releases/latest/download/talosctl-linux-amd64 && chmod +x talosctl && sudo mv talosctl /usr/local/bin",
+      "Verify: talosctl version --client",
+      "supercli plugins install ./plugins/talosctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "talosctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print talosctl client and (if connected) node versions",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "cluster",
+      "action": "health",
+      "description": "Wait until the cluster is healthy: node reachability, etcd, control plane, CNI, kubelet (talosctl health -n <node>)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["health"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "cluster",
+      "action": "create",
+      "description": "Create a local Talos cluster in Docker or QEMU for testing (talosctl cluster create). Add --name, --workers, --controlplanes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["cluster", "create"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "machine",
+      "action": "get",
+      "description": "Get machine resources in kubectl style (talosctl get members, services, links, addresses). Add -o yaml/json for structured output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["get"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "machine",
+      "action": "logs",
+      "description": "Fetch service/system logs from a node (talosctl logs kubelet, etcd, machined). Add --follow to stream",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["logs"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "cluster",
+      "action": "kubeconfig",
+      "description": "Download the admin kubeconfig for the cluster (talosctl kubeconfig [path]). Merges into ~/.kube/config by default",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["kubeconfig"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "machine",
+      "action": "apply-config",
+      "description": "Apply a machine config to a node (talosctl apply-config -n <node> -f controlplane.yaml). Use --mode no-reboot for in-place updates",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "baseArgs": ["apply-config"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    },
+    {
+      "namespace": "talosctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to talosctl (dashboard, dmesg, services, bootstrap, upgrade, reset, etcd, config, gen, image, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "talosctl",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install talosctl: brew install siderolabs/tap/talosctl"
+      },
+      "args": []
+    }
+  ]
+}

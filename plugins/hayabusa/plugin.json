@@ -1,0 +1,132 @@
+{
+  "name": "hayabusa",
+  "version": "0.1.0",
+  "description": "Fast Windows event log forensics and threat hunting tool that parses .evtx files with Sigma-based detection rules",
+  "source": "https://github.com/Yamato-Security/hayabusa",
+  "checks": [
+    { "type": "binary", "name": "hayabusa" }
+  ],
+  "install_guidance": {
+    "plugin": "hayabusa",
+    "binary": "hayabusa",
+    "check": "which hayabusa",
+    "install_steps": [
+      "Download the hayabusa release zip for your platform from https://github.com/Yamato-Security/hayabusa/releases and extract the binary to PATH",
+      "Or: cargo install --git https://github.com/Yamato-Security/hayabusa (builds from source)",
+      "Verify: hayabusa --version",
+      "supercli plugins install ./plugins/hayabusa --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "hayabusa",
+      "resource": "self",
+      "action": "version",
+      "description": "Print hayabusa version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "baseArgs": ["--version"],
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hayabusa",
+      "resource": "timeline",
+      "action": "csv",
+      "description": "Generate a consolidated CSV timeline from .evtx files (hayabusa csv-timeline -d ./evtx -o out.csv). Add -l to live-analyze the current system",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "baseArgs": ["csv-timeline"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hayabusa",
+      "resource": "timeline",
+      "action": "json",
+      "description": "Generate a JSON/JSONL timeline from .evtx files (hayabusa json-timeline -d ./evtx -o out.json -L). Best for piping into jq or SIEMs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "baseArgs": ["json-timeline"],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hayabusa",
+      "resource": "logs",
+      "action": "metrics",
+      "description": "Print event ID counts and percentages per .evtx file (hayabusa log-metrics -d ./evtx). Quick overview before deep analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "baseArgs": ["log-metrics"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hayabusa",
+      "resource": "logs",
+      "action": "search",
+      "description": "Keyword/regex search inside .evtx event data (hayabusa search -d ./evtx -k mimikatz). Add -o for output file, -F for field filters",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "baseArgs": ["search"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hayabusa",
+      "resource": "rules",
+      "action": "update",
+      "description": "Update bundled Sigma detection rules to the latest version (hayabusa update-rules)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "baseArgs": ["update-rules"],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    },
+    {
+      "namespace": "hayabusa",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to hayabusa CLI (eid-metrics, logon-summary, level-tuning, extract-base64, pivot-keywords-list, computer-metrics, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "hayabusa",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install hayabusa: download the release zip from https://github.com/Yamato-Security/hayabusa/releases"
+      },
+      "args": []
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "name": "rpk",
+  "version": "0.1.0",
+  "description": "All-in-one CLI for Redpanda, the Kafka-compatible streaming platform — manage topics, brokers, ACLs, and produce/consume records",
+  "source": "https://github.com/redpanda-data/redpanda",
+  "checks": [
+    { "type": "binary", "name": "rpk" }
+  ],
+  "install_guidance": {
+    "plugin": "rpk",
+    "binary": "rpk",
+    "check": "which rpk",
+    "install_steps": [
+      "brew install redpanda-data/tap/redpanda",
+      "Or download rpk-*-linux-amd64.zip from https://github.com/redpanda-data/redpanda/releases",
+      "Or Debian/Ubuntu: curl -1sLf 'https://dl.redpanda.com/nzc4ZYQK3WRGd9sy/redpanda/cfg/setup/bash.deb.sh' | sudo -E bash && sudo apt install redpanda",
+      "Verify: rpk version",
+      "supercli plugins install ./plugins/rpk --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rpk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rpk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["version"],
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "cluster",
+      "action": "info",
+      "description": "Show cluster brokers, controller, and broker versions (rpk cluster info). Uses -X brokers or a profile for connection",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["cluster", "info"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "topic",
+      "action": "create",
+      "description": "Create a topic (rpk topic create mytopic -p 3 -r 3). Supports -p partitions, -r replicas, -c config",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["topic", "create"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "topic",
+      "action": "list",
+      "description": "List topics with partition counts (rpk topic list). Add --detailed for configs",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["topic", "list"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "topic",
+      "action": "produce",
+      "description": "Produce records to a topic (rpk topic produce mytopic). Accepts records as args or stdin; -k key, -H header, -f format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["topic", "produce"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "topic",
+      "action": "consume",
+      "description": "Consume records from a topic (rpk topic consume mytopic). Supports -o start/end/offset, -g group, -n count, --format for JSON output",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["topic", "consume"],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "cluster",
+      "action": "health",
+      "description": "Overview of cluster health: controller leader, under-replicated/offline partitions (rpk cluster health)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "baseArgs": ["cluster", "health"],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rpk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rpk CLI (group, acl, transform, registry, security, profile, redpanda start/tune, etc.)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rpk",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install rpk: brew install redpanda-data/tap/redpanda"
+      },
+      "args": []
+    }
+  ]
+}
