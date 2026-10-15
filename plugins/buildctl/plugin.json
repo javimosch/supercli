@@ -1,0 +1,111 @@
+{
+  "name": "buildctl",
+  "version": "0.1.0",
+  "description": "BuildKit's low-level build CLI \u2014 reproducible container image builds, cache management and LLB control",
+  "source": "https://github.com/moby/buildkit",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "buildctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "buildctl",
+    "binary": "buildctl",
+    "check": "which buildctl",
+    "install_steps": [
+      "Download the buildkit release tarball for your platform from https://github.com/moby/buildkit/releases \u2014 it contains buildctl and buildkitd \u2014 and extract to PATH",
+      "Or: brew install buildkit",
+      "Verify: buildctl --version (requires a reachable buildkitd for build/prune commands)",
+      "supercli plugins install ./plugins/buildctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "buildctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print buildctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildctl",
+        "baseArgs": [
+          "--version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install buildctl: Download the buildkit release tarball for your platform from https://github.com/moby/buildkit/releases \u2014 it contains buildctl and buildkitd \u2014 and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "buildctl",
+      "resource": "images",
+      "action": "build",
+      "description": "Run a build against buildkitd (buildctl build --frontend dockerfile.v0 --local context=. --local dockerfile=. --output type=image,name=app,push=true)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildctl",
+        "baseArgs": [
+          "build"
+        ],
+        "passthrough": true,
+        "timeout_ms": 1200000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install buildctl: Download the buildkit release tarball for your platform from https://github.com/moby/buildkit/releases \u2014 it contains buildctl and buildkitd \u2014 and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "buildctl",
+      "resource": "cache",
+      "action": "du",
+      "description": "Show build cache disk usage (buildctl du). Requires a running buildkitd",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildctl",
+        "baseArgs": [
+          "du"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install buildctl: Download the buildkit release tarball for your platform from https://github.com/moby/buildkit/releases \u2014 it contains buildctl and buildkitd \u2014 and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "buildctl",
+      "resource": "cache",
+      "action": "prune",
+      "description": "Prune build cache (buildctl prune). Add --all to remove everything",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildctl",
+        "baseArgs": [
+          "prune"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install buildctl: Download the buildkit release tarball for your platform from https://github.com/moby/buildkit/releases \u2014 it contains buildctl and buildkitd \u2014 and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "buildctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to buildctl CLI (debug workers, dial-stdio, and all build flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "buildctl",
+        "passthrough": true,
+        "timeout_ms": 1200000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install buildctl: Download the buildkit release tarball for your platform from https://github.com/moby/buildkit/releases \u2014 it contains buildctl and buildkitd \u2014 and extract to PATH"
+      },
+      "args": []
+    }
+  ]
+}
