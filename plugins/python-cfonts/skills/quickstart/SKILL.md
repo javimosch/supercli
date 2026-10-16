@@ -36,4 +36,6 @@ cfonts --help
 ```
 
 ## Key Features
-- fonts\n- ascii\n- terminal
+- fonts
+- ascii
+- terminal

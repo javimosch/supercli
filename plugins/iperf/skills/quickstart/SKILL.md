@@ -1,1 +1,6 @@
----\nname: iperf\ndescription: Network bandwidth measurement tool\n---\n# iperf Plugin\nNetwork bandwidth measurement tool
+---
+name: iperf
+description: Network bandwidth measurement tool
+---
+# iperf Plugin
+Network bandwidth measurement tool

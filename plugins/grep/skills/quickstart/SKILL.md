@@ -1,1 +1,6 @@
----\nname: grep\ndescription: GNU grep search utility\n---\n# grep Plugin\nGNU grep search utility
+---
+name: grep
+description: GNU grep search utility
+---
+# grep Plugin
+GNU grep search utility

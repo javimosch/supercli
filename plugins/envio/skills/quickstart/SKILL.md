@@ -1,1 +1,5 @@
----\nname: envio\ndescription: Environment variable manager with profiles\n---\n# envio Plugin
+---
+name: envio
+description: Environment variable manager with profiles
+---
+# envio Plugin

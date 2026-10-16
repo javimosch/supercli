@@ -34,4 +34,6 @@ shadcn-chat --help
 ```
 
 ## Key Features
-- chat\n- components\n- react
+- chat
+- components
+- react

@@ -1,1 +1,6 @@
----\nname: aria2\ndescription: Lightweight multi-protocol download utility\n---\n# aria2 Plugin\nLightweight multi-protocol download utility
+---
+name: aria2
+description: Lightweight multi-protocol download utility
+---
+# aria2 Plugin
+Lightweight multi-protocol download utility

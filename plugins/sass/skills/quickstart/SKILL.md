@@ -1,1 +1,6 @@
----\nname: sass\ndescription: SCSS/SASS compiler\n---\n# sass Plugin\nSCSS/SASS compiler
+---
+name: sass
+description: SCSS/SASS compiler
+---
+# sass Plugin
+SCSS/SASS compiler

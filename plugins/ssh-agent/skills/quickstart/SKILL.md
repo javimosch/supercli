@@ -1,1 +1,6 @@
----\nname: ssh-agent\ndescription: SSH authentication agent\n---\n# ssh-agent Plugin\nSSH authentication agent
+---
+name: ssh-agent
+description: SSH authentication agent
+---
+# ssh-agent Plugin
+SSH authentication agent

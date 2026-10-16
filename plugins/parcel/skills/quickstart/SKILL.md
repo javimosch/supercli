@@ -1,1 +1,6 @@
----\nname: parcel\ndescription: Zero-config web application bundler\n---\n# parcel Plugin\nZero-config web application bundler
+---
+name: parcel
+description: Zero-config web application bundler
+---
+# parcel Plugin
+Zero-config web application bundler

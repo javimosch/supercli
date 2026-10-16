@@ -1,1 +1,6 @@
----\nname: pngquant\ndescription: PNG image lossy compression\n---\n# pngquant Plugin\nPNG image lossy compression
+---
+name: pngquant
+description: PNG image lossy compression
+---
+# pngquant Plugin
+PNG image lossy compression

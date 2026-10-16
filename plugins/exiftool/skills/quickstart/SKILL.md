@@ -1,1 +1,6 @@
----\nname: exiftool\ndescription: Read and write image metadata\n---\n# exiftool Plugin\nRead and write image metadata
+---
+name: exiftool
+description: Read and write image metadata
+---
+# exiftool Plugin
+Read and write image metadata

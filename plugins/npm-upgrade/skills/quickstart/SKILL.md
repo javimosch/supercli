@@ -31,4 +31,6 @@ npm-upgrade --help
 ```
 
 ## Key Features
-- npm\n- upgrade\n- dependencies
+- npm
+- upgrade
+- dependencies

@@ -1,1 +1,6 @@
----\nname: tripwire\ndescription: File integrity monitoring\n---\n# tripwire Plugin\nFile integrity monitoring
+---
+name: tripwire
+description: File integrity monitoring
+---
+# tripwire Plugin
+File integrity monitoring

@@ -31,4 +31,6 @@ cf --help
 ```
 
 ## Key Features
-- codeforces\n- competitive-programming\n- cli
+- codeforces
+- competitive-programming
+- cli

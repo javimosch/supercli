@@ -1,1 +1,6 @@
----\nname: opus\ndescription: Opus audio codec tools\n---\n# opus Plugin\nOpus audio codec tools
+---
+name: opus
+description: Opus audio codec tools
+---
+# opus Plugin
+Opus audio codec tools

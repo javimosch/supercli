@@ -1,1 +1,6 @@
----\nname: jpeg-turbo\ndescription: JPEG image compression tools\n---\n# jpeg-turbo Plugin\nJPEG image compression tools
+---
+name: jpeg-turbo
+description: JPEG image compression tools
+---
+# jpeg-turbo Plugin
+JPEG image compression tools

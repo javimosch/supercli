@@ -32,4 +32,6 @@ gitcs --help
 ```
 
 ## Key Features
-- git\n- statistics\n- contributors
+- git
+- statistics
+- contributors

@@ -1,1 +1,6 @@
----\nname: litecli\ndescription: SQLite terminal client with auto-completion\n---\n# litecli Plugin\nSQLite terminal client with auto-completion
+---
+name: litecli
+description: SQLite terminal client with auto-completion
+---
+# litecli Plugin
+SQLite terminal client with auto-completion

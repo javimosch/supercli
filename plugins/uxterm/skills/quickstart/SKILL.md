@@ -1,1 +1,6 @@
----\nname: uxterm\ndescription: Unicode X terminal\n---\n# uxterm Plugin\nUnicode X terminal
+---
+name: uxterm
+description: Unicode X terminal
+---
+# uxterm Plugin
+Unicode X terminal

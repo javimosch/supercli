@@ -1,1 +1,6 @@
----\nname: bpython\ndescription: Fancy Python REPL\n---\n# bpython Plugin\nFancy Python REPL
+---
+name: bpython
+description: Fancy Python REPL
+---
+# bpython Plugin
+Fancy Python REPL

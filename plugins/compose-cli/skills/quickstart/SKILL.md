@@ -31,4 +31,6 @@ docker-compose --help
 ```
 
 ## Key Features
-- docker\n- containers\n- orchestration
+- docker
+- containers
+- orchestration

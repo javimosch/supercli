@@ -1,1 +1,6 @@
----\nname: xwinmidi\ndescription: brew install xwinmidi\n---\n# xwinmidi Plugin\nbrew install xwinmidi
+---
+name: xwinmidi
+description: brew install xwinmidi
+---
+# xwinmidi Plugin
+brew install xwinmidi

@@ -32,4 +32,6 @@ go-aws-sso --help
 ```
 
 ## Key Features
-- aws\n- sso\n- credentials
+- aws
+- sso
+- credentials

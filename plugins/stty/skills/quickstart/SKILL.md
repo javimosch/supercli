@@ -1,1 +1,6 @@
----\nname: stty\ndescription: Set terminal I/O options\n---\n# stty Plugin\nSet terminal I/O options
+---
+name: stty
+description: Set terminal I/O options
+---
+# stty Plugin
+Set terminal I/O options

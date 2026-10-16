@@ -1,1 +1,6 @@
----\nname: autotrace\ndescription: Bitmap to vector converter\n---\n# autotrace Plugin\nBitmap to vector converter
+---
+name: autotrace
+description: Bitmap to vector converter
+---
+# autotrace Plugin
+Bitmap to vector converter

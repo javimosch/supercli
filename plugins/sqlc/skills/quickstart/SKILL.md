@@ -30,4 +30,6 @@ sqlc --help
 ```
 
 ## Key Features
-- sql\n- code-generation\n- database
+- sql
+- code-generation
+- database

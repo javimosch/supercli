@@ -32,4 +32,6 @@ gilbert --help
 ```
 
 ## Key Features
-- task-runner\n- build-tool\n- go
+- task-runner
+- build-tool
+- go

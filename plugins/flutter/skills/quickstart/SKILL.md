@@ -1,1 +1,6 @@
----\nname: flutter\ndescription: Flutter UI toolkit CLI\n---\n# flutter Plugin\nFlutter UI toolkit CLI
+---
+name: flutter
+description: Flutter UI toolkit CLI
+---
+# flutter Plugin
+Flutter UI toolkit CLI

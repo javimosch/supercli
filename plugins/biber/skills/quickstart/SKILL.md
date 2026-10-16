@@ -1,1 +1,6 @@
----\nname: biber\ndescription: Modern bibliography processor\n---\n# biber Plugin\nModern bibliography processor
+---
+name: biber
+description: Modern bibliography processor
+---
+# biber Plugin
+Modern bibliography processor

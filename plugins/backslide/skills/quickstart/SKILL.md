@@ -32,4 +32,6 @@ backslide --help
 ```
 
 ## Key Features
-- markdown\n- presentation\n- slides
+- markdown
+- presentation
+- slides

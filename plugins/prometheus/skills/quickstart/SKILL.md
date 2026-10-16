@@ -1,1 +1,6 @@
----\nname: prometheus\ndescription: Prometheus monitoring system\n---\n# prometheus Plugin\nPrometheus monitoring system
+---
+name: prometheus
+description: Prometheus monitoring system
+---
+# prometheus Plugin
+Prometheus monitoring system

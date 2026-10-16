@@ -30,4 +30,6 @@ cleancss --help
 ```
 
 ## Key Features
-- css\n- minifier\n- optimization
+- css
+- minifier
+- optimization

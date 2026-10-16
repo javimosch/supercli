@@ -31,4 +31,6 @@ dtctl --help
 ```
 
 ## Key Features
-- dynatrace\n- monitoring\n- observability
+- dynatrace
+- monitoring
+- observability

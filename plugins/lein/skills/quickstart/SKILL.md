@@ -1,1 +1,6 @@
----\nname: lein\ndescription: Leiningen Clojure build tool\n---\n# lein Plugin\nLeiningen Clojure build tool
+---
+name: lein
+description: Leiningen Clojure build tool
+---
+# lein Plugin
+Leiningen Clojure build tool

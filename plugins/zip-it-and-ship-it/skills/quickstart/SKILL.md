@@ -31,4 +31,6 @@ zip-it-and-ship-it --help
 ```
 
 ## Key Features
-- serverless\n- bundler\n- deployment
+- serverless
+- bundler
+- deployment

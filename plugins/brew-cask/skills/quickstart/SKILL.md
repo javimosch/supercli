@@ -1,1 +1,6 @@
----\nname: brew-cask\ndescription: Homebrew Cask CLI extension\n---\n# brew-cask Plugin\nHomebrew Cask CLI extension
+---
+name: brew-cask
+description: Homebrew Cask CLI extension
+---
+# brew-cask Plugin
+Homebrew Cask CLI extension

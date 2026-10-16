@@ -31,4 +31,6 @@ conftest --help
 ```
 
 ## Key Features
-- opa\n- policy\n- testing
+- opa
+- policy
+- testing

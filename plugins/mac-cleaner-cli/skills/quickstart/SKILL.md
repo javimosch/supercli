@@ -37,4 +37,6 @@ mac-cleaner --help
 ```
 
 ## Key Features
-- macos\n- cleanup\n- disk-space
+- macos
+- cleanup
+- disk-space

@@ -1,1 +1,6 @@
----\nname: autopep8\ndescription: Python PEP8 auto-formatter\n---\n# autopep8 Plugin\nPython PEP8 auto-formatter
+---
+name: autopep8
+description: Python PEP8 auto-formatter
+---
+# autopep8 Plugin
+Python PEP8 auto-formatter

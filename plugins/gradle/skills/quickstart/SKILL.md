@@ -1,1 +1,6 @@
----\nname: gradle\ndescription: Gradle build tool\n---\n# gradle Plugin\nGradle build tool
+---
+name: gradle
+description: Gradle build tool
+---
+# gradle Plugin
+Gradle build tool

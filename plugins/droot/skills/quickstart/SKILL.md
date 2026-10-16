@@ -33,4 +33,6 @@ droot --help
 ```
 
 ## Key Features
-- containers\n- chroot\n- isolation
+- containers
+- chroot
+- isolation

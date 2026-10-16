@@ -1,1 +1,6 @@
----\nname: woff2\ndescription: Web Open Font Format 2 utilities\n---\n# woff2 Plugin\nWeb Open Font Format 2 utilities
+---
+name: woff2
+description: Web Open Font Format 2 utilities
+---
+# woff2 Plugin
+Web Open Font Format 2 utilities

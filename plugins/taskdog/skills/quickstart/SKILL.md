@@ -37,4 +37,6 @@ taskdog --help
 ```
 
 ## Key Features
-- task\n- management\n- productivity
+- task
+- management
+- productivity

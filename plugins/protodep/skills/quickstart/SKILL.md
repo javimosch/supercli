@@ -31,4 +31,6 @@ protodep --help
 ```
 
 ## Key Features
-- protobuf\n- dependencies\n- grpc
+- protobuf
+- dependencies
+- grpc

@@ -32,4 +32,6 @@ framed --help
 ```
 
 ## Key Features
-- project-scaffold\n- file-management\n- generator
+- project-scaffold
+- file-management
+- generator

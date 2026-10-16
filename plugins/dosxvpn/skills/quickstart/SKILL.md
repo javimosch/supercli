@@ -33,4 +33,6 @@ dosxvpn --help
 ```
 
 ## Key Features
-- vpn\n- digitalocean\n- networking
+- vpn
+- digitalocean
+- networking

@@ -30,4 +30,6 @@ fkill --help
 ```
 
 ## Key Features
-- process\n- kill\n- system
+- process
+- kill
+- system

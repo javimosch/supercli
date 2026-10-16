@@ -1,1 +1,6 @@
----\nname: gnuplot\ndescription: Interactive plotting and charting\n---\n# gnuplot Plugin\nInteractive plotting and charting
+---
+name: gnuplot
+description: Interactive plotting and charting
+---
+# gnuplot Plugin
+Interactive plotting and charting

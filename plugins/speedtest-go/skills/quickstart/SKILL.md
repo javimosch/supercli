@@ -30,4 +30,6 @@ speedtest-go --help
 ```
 
 ## Key Features
-- network\n- speedtest\n- internet
+- network
+- speedtest
+- internet

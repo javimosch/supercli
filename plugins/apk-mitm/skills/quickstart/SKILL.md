@@ -30,4 +30,6 @@ apk-mitm --help
 ```
 
 ## Key Features
-- android\n- apk\n- security
+- android
+- apk
+- security

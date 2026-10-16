@@ -1,1 +1,6 @@
----\nname: optipng\ndescription: PNG optimization tool\n---\n# optipng Plugin\nPNG optimization tool
+---
+name: optipng
+description: PNG optimization tool
+---
+# optipng Plugin
+PNG optimization tool

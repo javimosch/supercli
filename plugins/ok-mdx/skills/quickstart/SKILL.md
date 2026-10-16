@@ -31,4 +31,6 @@ ok-mdx --help
 ```
 
 ## Key Features
-- mdx\n- react\n- prototyping
+- mdx
+- react
+- prototyping

@@ -30,4 +30,6 @@ sitemap-generator --help
 ```
 
 ## Key Features
-- sitemap\n- seo\n- xml
+- sitemap
+- seo
+- xml

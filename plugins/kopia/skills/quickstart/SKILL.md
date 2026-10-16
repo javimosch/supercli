@@ -31,4 +31,6 @@ kopia --help
 ```
 
 ## Key Features
-- backup\n- archive\n- encryption
+- backup
+- archive
+- encryption

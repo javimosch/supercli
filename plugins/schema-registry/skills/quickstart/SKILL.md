@@ -33,4 +33,6 @@ schema-registry --help
 ```
 
 ## Key Features
-- kafka\n- schema-registry\n- messaging
+- kafka
+- schema-registry
+- messaging

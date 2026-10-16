@@ -32,4 +32,6 @@ ckube --help
 ```
 
 ## Key Features
-- kubernetes\n- dashboard\n- monitoring
+- kubernetes
+- dashboard
+- monitoring

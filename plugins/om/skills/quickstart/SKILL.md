@@ -33,4 +33,6 @@ om --help
 ```
 
 ## Key Features
-- pivotal\n- ops-manager\n- platform
+- pivotal
+- ops-manager
+- platform

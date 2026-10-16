@@ -1,1 +1,6 @@
----\nname: waypoint\ndescription: HashiCorp application deployer\n---\n# waypoint Plugin\nHashiCorp application deployer
+---
+name: waypoint
+description: HashiCorp application deployer
+---
+# waypoint Plugin
+HashiCorp application deployer

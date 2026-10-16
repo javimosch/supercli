@@ -1,1 +1,6 @@
----\nname: golint\ndescription: Go linter\n---\n# golint Plugin\nGo linter
+---
+name: golint
+description: Go linter
+---
+# golint Plugin
+Go linter

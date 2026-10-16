@@ -30,4 +30,6 @@ license-up --help
 ```
 
 ## Key Features
-- license\n- generator\n- open-source
+- license
+- generator
+- open-source

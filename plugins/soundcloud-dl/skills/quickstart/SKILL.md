@@ -31,4 +31,6 @@ soundcloud-dl --help
 ```
 
 ## Key Features
-- soundcloud\n- download\n- music
+- soundcloud
+- download
+- music

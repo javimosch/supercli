@@ -33,4 +33,6 @@ go-github-selfupdate --help
 ```
 
 ## Key Features
-- go\n- self-update\n- github
+- go
+- self-update
+- github

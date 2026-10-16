@@ -1,1 +1,6 @@
----\nname: sbt\ndescription: Scala build tool\n---\n# sbt Plugin\nScala build tool
+---
+name: sbt
+description: Scala build tool
+---
+# sbt Plugin
+Scala build tool

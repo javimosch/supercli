@@ -36,4 +36,6 @@ we-get --help
 ```
 
 ## Key Features
-- torrent\n- search\n- cli
+- torrent
+- search
+- cli

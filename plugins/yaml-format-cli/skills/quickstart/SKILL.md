@@ -1,1 +1,15 @@
----\nname: yaml-format-cli\ndescription: Use this skill for yaml-format-cli operations.\n---\n# yaml-format-cli Plugin\nCLI tool for yaml-format-cli.\n## Commands\n- `yaml-format-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install yaml-format-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF
+---
+name: yaml-format-cli
+description: Use this skill for yaml-format-cli operations.
+---
+# yaml-format-cli Plugin
+CLI tool for yaml-format-cli.
+## Commands
+- `yaml-format-cli _ _` — Passthrough
+## Installation
+```bash
+cargo install yaml-format-cli
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+EOF

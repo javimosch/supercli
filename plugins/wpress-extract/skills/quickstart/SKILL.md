@@ -30,4 +30,6 @@ wpress-extract --help
 ```
 
 ## Key Features
-- wordpress\n- backup\n- extract
+- wordpress
+- backup
+- extract

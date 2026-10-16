@@ -30,4 +30,6 @@ mmdc --help
 ```
 
 ## Key Features
-- diagrams\n- charts\n- mermaid
+- diagrams
+- charts
+- mermaid

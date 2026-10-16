@@ -30,4 +30,6 @@ goxml2json --help
 ```
 
 ## Key Features
-- xml\n- json\n- converter
+- xml
+- json
+- converter

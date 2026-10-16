@@ -30,4 +30,6 @@ compose-generator --help
 ```
 
 ## Key Features
-- docker\n- docker-compose\n- generator
+- docker
+- docker-compose
+- generator

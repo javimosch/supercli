@@ -30,4 +30,6 @@ gotty --help
 ```
 
 ## Key Features
-- terminal\n- sharing\n- web
+- terminal
+- sharing
+- web

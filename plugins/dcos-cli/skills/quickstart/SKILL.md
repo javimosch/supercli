@@ -38,4 +38,6 @@ dcos --help
 ```
 
 ## Key Features
-- dcos\n- mesosphere\n- orchestration
+- dcos
+- mesosphere
+- orchestration

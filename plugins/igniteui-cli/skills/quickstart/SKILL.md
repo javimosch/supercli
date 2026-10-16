@@ -43,4 +43,6 @@ igniteui --help
 ```
 
 ## Key Features
-- ui\n- angular\n- react
+- ui
+- angular
+- react

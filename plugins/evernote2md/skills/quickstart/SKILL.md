@@ -30,4 +30,6 @@ evernote2md --help
 ```
 
 ## Key Features
-- evernote\n- markdown\n- converter
+- evernote
+- markdown
+- converter

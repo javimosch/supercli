@@ -33,4 +33,6 @@ qrc --help
 ```
 
 ## Key Features
-- qr-code\n- terminal\n- generator
+- qr-code
+- terminal
+- generator

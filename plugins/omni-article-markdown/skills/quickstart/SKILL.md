@@ -36,4 +36,6 @@ undefined --help
 ```
 
 ## Key Features
-- markdown\n- web\n- scraping
+- markdown
+- web
+- scraping

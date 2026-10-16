@@ -30,4 +30,6 @@ sub2sing-box --help
 ```
 
 ## Key Features
-- proxy\n- sing-box\n- converter
+- proxy
+- sing-box
+- converter

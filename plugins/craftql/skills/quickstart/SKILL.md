@@ -32,4 +32,6 @@ craftql --help
 ```
 
 ## Key Features
-- graphql\n- visualization\n- rust
+- graphql
+- visualization
+- rust

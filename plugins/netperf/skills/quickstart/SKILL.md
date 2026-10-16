@@ -1,1 +1,6 @@
----\nname: netperf\ndescription: Network performance benchmark\n---\n# netperf Plugin\nNetwork performance benchmark
+---
+name: netperf
+description: Network performance benchmark
+---
+# netperf Plugin
+Network performance benchmark

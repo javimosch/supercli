@@ -33,4 +33,6 @@ lemmy-help --help
 ```
 
 ## Key Features
-- vim\n- neovim\n- documentation
+- vim
+- neovim
+- documentation

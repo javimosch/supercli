@@ -1,1 +1,6 @@
----\nname: eps2eps\ndescription: EPS file processing\n---\n# eps2eps Plugin\nEPS file processing
+---
+name: eps2eps
+description: EPS file processing
+---
+# eps2eps Plugin
+EPS file processing

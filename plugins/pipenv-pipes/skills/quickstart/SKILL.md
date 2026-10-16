@@ -37,4 +37,6 @@ pipenv-pipes --help
 ```
 
 ## Key Features
-- pipenv\n- python\n- virtual-env
+- pipenv
+- python
+- virtual-env

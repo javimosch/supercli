@@ -1,1 +1,6 @@
----\nname: jest\ndescription: JavaScript testing framework\n---\n# jest Plugin\nJavaScript testing framework
+---
+name: jest
+description: JavaScript testing framework
+---
+# jest Plugin
+JavaScript testing framework

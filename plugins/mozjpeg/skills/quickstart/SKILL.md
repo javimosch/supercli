@@ -1,1 +1,6 @@
----\nname: mozjpeg\ndescription: Mozilla JPEG encoder\n---\n# mozjpeg Plugin\nMozilla JPEG encoder
+---
+name: mozjpeg
+description: Mozilla JPEG encoder
+---
+# mozjpeg Plugin
+Mozilla JPEG encoder

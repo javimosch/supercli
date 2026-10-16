@@ -31,4 +31,6 @@ protolint --help
 ```
 
 ## Key Features
-- protobuf\n- linter\n- code-quality
+- protobuf
+- linter
+- code-quality

@@ -1,1 +1,5 @@
----\nname: ktx\ndescription: Kubernetes context manager\n---\n# ktx Plugin
+---
+name: ktx
+description: Kubernetes context manager
+---
+# ktx Plugin

@@ -37,4 +37,6 @@ myjwt --help
 ```
 
 ## Key Features
-- jwt\n- security\n- testing
+- jwt
+- security
+- testing

@@ -38,4 +38,6 @@ gto --help
 ```
 
 ## Key Features
-- git\n- artifacts\n- registry
+- git
+- artifacts
+- registry

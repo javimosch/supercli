@@ -1,1 +1,6 @@
----\nname: drizzle-kit\ndescription: Drizzle ORM migrations CLI\n---\n# drizzle-kit Plugin\nDrizzle ORM migrations CLI
+---
+name: drizzle-kit
+description: Drizzle ORM migrations CLI
+---
+# drizzle-kit Plugin
+Drizzle ORM migrations CLI

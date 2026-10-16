@@ -1,1 +1,6 @@
----\nname: vcpkg\ndescription: C++ package manager\n---\n# vcpkg Plugin\nC++ package manager
+---
+name: vcpkg
+description: C++ package manager
+---
+# vcpkg Plugin
+C++ package manager

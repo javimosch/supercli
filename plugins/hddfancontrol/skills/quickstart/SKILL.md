@@ -1,1 +1,16 @@
----\nname: hddfancontrol\ndescription: Use this skill for hddfancontrol operations.\n---\n# hddfancontrol Plugin\nCLI tool for hddfancontrol.\n## Commands\n- `hddfancontrol _ _` — Passthrough\n## Installation\n```bash\ncargo install hddfancontrol\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: hddfancontrol
+description: Use this skill for hddfancontrol operations.
+---
+# hddfancontrol Plugin
+CLI tool for hddfancontrol.
+## Commands
+- `hddfancontrol _ _` — Passthrough
+## Installation
+```bash
+cargo install hddfancontrol
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

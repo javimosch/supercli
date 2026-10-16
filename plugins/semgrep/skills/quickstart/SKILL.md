@@ -1,1 +1,6 @@
----\nname: semgrep\ndescription: Static analysis security scanner\n---\n# semgrep Plugin\nStatic analysis security scanner
+---
+name: semgrep
+description: Static analysis security scanner
+---
+# semgrep Plugin
+Static analysis security scanner

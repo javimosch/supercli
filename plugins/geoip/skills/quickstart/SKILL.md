@@ -1,1 +1,6 @@
----\nname: geoip\ndescription: IP geolocation lookup using GeoIP databases\n---\n# geoip Plugin\nIP geolocation lookup using GeoIP databases
+---
+name: geoip
+description: IP geolocation lookup using GeoIP databases
+---
+# geoip Plugin
+IP geolocation lookup using GeoIP databases

@@ -36,4 +36,6 @@ dfir-toolkit --help
 ```
 
 ## Key Features
-- forensics\n- windows\n- security
+- forensics
+- windows
+- security

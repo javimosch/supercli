@@ -30,4 +30,6 @@ extension --help
 ```
 
 ## Key Features
-- browser-extension\n- chrome\n- firefox
+- browser-extension
+- chrome
+- firefox

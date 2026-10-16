@@ -35,4 +35,6 @@ kenai --help
 ```
 
 ## Key Features
-- javascript\n- scaffolding\n- cli
+- javascript
+- scaffolding
+- cli

@@ -31,4 +31,6 @@ fil --help
 ```
 
 ## Key Features
-- file-search\n- find\n- filesystem
+- file-search
+- find
+- filesystem

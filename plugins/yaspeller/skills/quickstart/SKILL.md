@@ -30,4 +30,6 @@ yaspeller --help
 ```
 
 ## Key Features
-- spelling\n- language\n- text
+- spelling
+- language
+- text

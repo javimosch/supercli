@@ -1,1 +1,6 @@
----\nname: xwd\ndescription: X11 window dump to image\n---\n# xwd Plugin\nX11 window dump to image
+---
+name: xwd
+description: X11 window dump to image
+---
+# xwd Plugin
+X11 window dump to image

@@ -1,1 +1,6 @@
----\nname: mamba\ndescription: Fast Conda alternative\n---\n# mamba Plugin\nFast Conda alternative
+---
+name: mamba
+description: Fast Conda alternative
+---
+# mamba Plugin
+Fast Conda alternative

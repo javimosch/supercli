@@ -1,1 +1,6 @@
----\nname: woff2sfnt\ndescription: Convert WOFF fonts to SFNT\n---\n# woff2sfnt Plugin\nConvert WOFF fonts to SFNT
+---
+name: woff2sfnt
+description: Convert WOFF fonts to SFNT
+---
+# woff2sfnt Plugin
+Convert WOFF fonts to SFNT

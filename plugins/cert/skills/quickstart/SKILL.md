@@ -30,4 +30,6 @@ cert --help
 ```
 
 ## Key Features
-- ssl\n- tls\n- certificate
+- ssl
+- tls
+- certificate

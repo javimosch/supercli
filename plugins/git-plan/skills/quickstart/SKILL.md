@@ -37,4 +37,6 @@ git-plan --help
 ```
 
 ## Key Features
-- git\n- workflow\n- planning
+- git
+- workflow
+- planning

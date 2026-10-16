@@ -30,4 +30,6 @@ wuzz --help
 ```
 
 ## Key Features
-- http\n- testing\n- api
+- http
+- testing
+- api

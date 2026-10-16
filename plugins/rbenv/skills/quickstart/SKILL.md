@@ -1,1 +1,6 @@
----\nname: rbenv\ndescription: Ruby version manager\n---\n# rbenv Plugin\nRuby version manager
+---
+name: rbenv
+description: Ruby version manager
+---
+# rbenv Plugin
+Ruby version manager

@@ -31,4 +31,6 @@ hssp --help
 ```
 
 ## Key Features
-- security\n- http\n- headers
+- security
+- http
+- headers

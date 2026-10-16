@@ -30,4 +30,6 @@ undock --help
 ```
 
 ## Key Features
-- containers\n- docker\n- extraction
+- containers
+- docker
+- extraction
