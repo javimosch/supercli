@@ -1,1 +1,6 @@
----\nname: sonar-scanner\ndescription: SonarQube code quality scanner\n---\n# sonar-scanner Plugin\nSonarQube code quality scanner
+---
+name: sonar-scanner
+description: SonarQube code quality scanner
+---
+# sonar-scanner Plugin
+SonarQube code quality scanner

@@ -1,1 +1,8 @@
----\nname: bundle\ndescription: Ruby dependency manager\n---\n# bundle Plugin\nRuby dependency manager\n## Usage\n- `bundle _ _ <args>` — Run bundle
+---
+name: bundle
+description: Ruby dependency manager
+---
+# bundle Plugin
+Ruby dependency manager
+## Usage
+- `bundle _ _ <args>` — Run bundle

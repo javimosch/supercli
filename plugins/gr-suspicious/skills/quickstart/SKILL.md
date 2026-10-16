@@ -40,4 +40,6 @@ gr-suspicious --help
 ```
 
 ## Key Features
-- git\n- security\n- code-analysis
+- git
+- security
+- code-analysis

@@ -1,1 +1,6 @@
----\nname: clair\ndescription: Clair container security scanner\n---\n# clair Plugin\nClair container security scanner
+---
+name: clair
+description: Clair container security scanner
+---
+# clair Plugin
+Clair container security scanner

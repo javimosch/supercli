@@ -35,4 +35,6 @@ folder-remark --help
 ```
 
 ## Key Features
-- windows\n- folders\n- productivity
+- windows
+- folders
+- productivity

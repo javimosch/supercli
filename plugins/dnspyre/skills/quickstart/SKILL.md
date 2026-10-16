@@ -30,4 +30,6 @@ dnspyre --help
 ```
 
 ## Key Features
-- dns\n- benchmark\n- network
+- dns
+- benchmark
+- network

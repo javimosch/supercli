@@ -35,4 +35,6 @@ wtx --help
 ```
 
 ## Key Features
-- web\n- transport\n- networking
+- web
+- transport
+- networking

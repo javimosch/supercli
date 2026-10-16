@@ -31,4 +31,6 @@ kubens --help
 ```
 
 ## Key Features
-- kubernetes\n- kubectl\n- namespace
+- kubernetes
+- kubectl
+- namespace

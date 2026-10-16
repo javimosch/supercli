@@ -30,4 +30,6 @@ lev --help
 ```
 
 ## Key Features
-- leveldb\n- database\n- cli
+- leveldb
+- database
+- cli

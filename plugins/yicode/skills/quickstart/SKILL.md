@@ -31,4 +31,6 @@ yicode --help
 ```
 
 ## Key Features
-- code-generation\n- development\n- cli
+- code-generation
+- development
+- cli

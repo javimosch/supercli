@@ -1,1 +1,6 @@
----\nname: darglint\ndescription: Python docstring linter\n---\n# darglint Plugin\nPython docstring linter
+---
+name: darglint
+description: Python docstring linter
+---
+# darglint Plugin
+Python docstring linter

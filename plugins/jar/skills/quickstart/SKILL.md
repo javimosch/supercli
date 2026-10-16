@@ -1,1 +1,6 @@
----\nname: jar\ndescription: Java archive tool\n---\n# jar Plugin\nJava archive tool
+---
+name: jar
+description: Java archive tool
+---
+# jar Plugin
+Java archive tool

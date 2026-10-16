@@ -1,1 +1,6 @@
----\nname: vitest\ndescription: Blazing fast unit test framework\n---\n# vitest Plugin\nBlazing fast unit test framework
+---
+name: vitest
+description: Blazing fast unit test framework
+---
+# vitest Plugin
+Blazing fast unit test framework

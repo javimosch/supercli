@@ -32,4 +32,6 @@ osmar --help
 ```
 
 ## Key Features
-- openstreetmap\n- gis\n- data
+- openstreetmap
+- gis
+- data

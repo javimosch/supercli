@@ -30,4 +30,6 @@ go-perftuner --help
 ```
 
 ## Key Features
-- performance\n- benchmark\n- go
+- performance
+- benchmark
+- go

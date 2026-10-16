@@ -31,4 +31,6 @@ earthly --help
 ```
 
 ## Key Features
-- build\n- docker\n- ci-cd
+- build
+- docker
+- ci-cd

@@ -31,4 +31,6 @@ fclones --help
 ```
 
 ## Key Features
-- filesystem\n- duplicates\n- cleanup
+- filesystem
+- duplicates
+- cleanup

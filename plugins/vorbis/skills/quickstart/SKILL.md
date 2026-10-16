@@ -1,1 +1,6 @@
----\nname: vorbis\ndescription: Ogg Vorbis audio tools\n---\n# vorbis Plugin\nOgg Vorbis audio tools
+---
+name: vorbis
+description: Ogg Vorbis audio tools
+---
+# vorbis Plugin
+Ogg Vorbis audio tools

@@ -1,1 +1,6 @@
----\nname: faac\ndescription: AAC audio encoder\n---\n# faac Plugin\nAAC audio encoder
+---
+name: faac
+description: AAC audio encoder
+---
+# faac Plugin
+AAC audio encoder

@@ -30,4 +30,6 @@ oneshot --help
 ```
 
 ## Key Features
-- file-transfer\n- webrtc\n- p2p
+- file-transfer
+- webrtc
+- p2p

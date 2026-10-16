@@ -1,1 +1,6 @@
----\nname: grpcui\ndescription: gRPC interactive debugger\n---\n# grpcui Plugin\ngRPC interactive debugger
+---
+name: grpcui
+description: gRPC interactive debugger
+---
+# grpcui Plugin
+gRPC interactive debugger

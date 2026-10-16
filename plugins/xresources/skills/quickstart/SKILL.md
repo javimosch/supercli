@@ -30,4 +30,6 @@ xresources --help
 ```
 
 ## Key Features
-- x11\n- colors\n- terminal
+- x11
+- colors
+- terminal

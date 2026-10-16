@@ -1,1 +1,6 @@
----\nname: helmfile\ndescription: Helm chart management\n---\n# helmfile Plugin\nHelm chart management
+---
+name: helmfile
+description: Helm chart management
+---
+# helmfile Plugin
+Helm chart management

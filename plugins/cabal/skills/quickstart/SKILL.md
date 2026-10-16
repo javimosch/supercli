@@ -1,1 +1,6 @@
----\nname: cabal\ndescription: Haskell build system\n---\n# cabal Plugin\nHaskell build system
+---
+name: cabal
+description: Haskell build system
+---
+# cabal Plugin
+Haskell build system

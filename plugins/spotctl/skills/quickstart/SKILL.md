@@ -40,4 +40,6 @@ spotctl --help
 ```
 
 ## Key Features
-- spotify\n- music\n- streaming
+- spotify
+- music
+- streaming

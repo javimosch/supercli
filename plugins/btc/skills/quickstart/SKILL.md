@@ -1,1 +1,6 @@
----\nname: btc\ndescription: Bitcoin Core daemon\n---\n# btc Plugin\nBitcoin Core daemon
+---
+name: btc
+description: Bitcoin Core daemon
+---
+# btc Plugin
+Bitcoin Core daemon

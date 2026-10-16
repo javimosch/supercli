@@ -1,1 +1,6 @@
----\nname: octave\ndescription: GNU Octave scientific computing\n---\n# octave Plugin\nGNU Octave scientific computing
+---
+name: octave
+description: GNU Octave scientific computing
+---
+# octave Plugin
+GNU Octave scientific computing

@@ -32,4 +32,6 @@ circleci --help
 ```
 
 ## Key Features
-- ci-cd\n- circleci\n- devops
+- ci-cd
+- circleci
+- devops

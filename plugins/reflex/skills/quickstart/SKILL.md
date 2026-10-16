@@ -30,4 +30,6 @@ reflex --help
 ```
 
 ## Key Features
-- file-watcher\n- development\n- build
+- file-watcher
+- development
+- build

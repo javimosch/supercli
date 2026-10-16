@@ -1,1 +1,16 @@
----\nname: diskus\ndescription: Use this skill for diskus operations.\n---\n# diskus Plugin\nCLI tool for diskus.\n## Commands\n- `diskus _ _` — Passthrough\n## Installation\n```bash\ncargo install diskus\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: diskus
+description: Use this skill for diskus operations.
+---
+# diskus Plugin
+CLI tool for diskus.
+## Commands
+- `diskus _ _` — Passthrough
+## Installation
+```bash
+cargo install diskus
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

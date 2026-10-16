@@ -30,4 +30,6 @@ jaggr --help
 ```
 
 ## Key Features
-- json\n- aggregation\n- charts
+- json
+- aggregation
+- charts

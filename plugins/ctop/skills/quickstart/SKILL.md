@@ -30,4 +30,6 @@ ctop --help
 ```
 
 ## Key Features
-- containers\n- docker\n- monitoring
+- containers
+- docker
+- monitoring

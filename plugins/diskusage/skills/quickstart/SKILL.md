@@ -31,4 +31,6 @@ diskusage --help
 ```
 
 ## Key Features
-- disk\n- filesystem\n- visualization
+- disk
+- filesystem
+- visualization

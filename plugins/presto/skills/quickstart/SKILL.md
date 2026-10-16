@@ -30,4 +30,6 @@ presto --help
 ```
 
 ## Key Features
-- tunnel\n- proxy\n- networking
+- tunnel
+- proxy
+- networking

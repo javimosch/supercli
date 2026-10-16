@@ -1,1 +1,6 @@
----\nname: chamber\ndescription: AWS SSM parameter store\n---\n# chamber Plugin\nAWS SSM parameter store
+---
+name: chamber
+description: AWS SSM parameter store
+---
+# chamber Plugin
+AWS SSM parameter store

@@ -1,1 +1,6 @@
----\nname: grunt\ndescription: JavaScript task runner\n---\n# grunt Plugin\nJavaScript task runner
+---
+name: grunt
+description: JavaScript task runner
+---
+# grunt Plugin
+JavaScript task runner

@@ -30,4 +30,6 @@ obelisk --help
 ```
 
 ## Key Features
-- web\n- archive\n- html
+- web
+- archive
+- html

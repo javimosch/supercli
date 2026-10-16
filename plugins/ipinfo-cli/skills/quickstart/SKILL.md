@@ -33,4 +33,6 @@ ipinfo --help
 ```
 
 ## Key Features
-- ip\n- geolocation\n- networking
+- ip
+- geolocation
+- networking

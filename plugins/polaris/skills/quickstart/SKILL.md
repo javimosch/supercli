@@ -31,4 +31,6 @@ polaris --help
 ```
 
 ## Key Features
-- kubernetes\n- best-practices\n- audit
+- kubernetes
+- best-practices
+- audit

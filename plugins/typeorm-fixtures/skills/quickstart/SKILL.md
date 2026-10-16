@@ -38,4 +38,6 @@ typeorm-fixtures --help
 ```
 
 ## Key Features
-- typeorm\n- fixtures\n- database
+- typeorm
+- fixtures
+- database

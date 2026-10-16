@@ -37,4 +37,6 @@ epub-utils --help
 ```
 
 ## Key Features
-- epub\n- books\n- inspection
+- epub
+- books
+- inspection

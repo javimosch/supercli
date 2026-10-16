@@ -30,4 +30,6 @@ go-http-file-server --help
 ```
 
 ## Key Features
-- http\n- file-server\n- upload
+- http
+- file-server
+- upload

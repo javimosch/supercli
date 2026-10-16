@@ -32,4 +32,6 @@ boilr --help
 ```
 
 ## Key Features
-- scaffolding\n- templates\n- code-generation
+- scaffolding
+- templates
+- code-generation

@@ -31,4 +31,6 @@ gql --help
 ```
 
 ## Key Features
-- graphql\n- schema\n- query
+- graphql
+- schema
+- query

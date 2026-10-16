@@ -37,4 +37,6 @@ clack --help
 ```
 
 ## Key Features
-- cli\n- prompts\n- terminal
+- cli
+- prompts
+- terminal

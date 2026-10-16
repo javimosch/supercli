@@ -1,1 +1,6 @@
----\nname: kysely\ndescription: Kysely database query builder\n---\n# kysely Plugin\nKysely database query builder
+---
+name: kysely
+description: Kysely database query builder
+---
+# kysely Plugin
+Kysely database query builder

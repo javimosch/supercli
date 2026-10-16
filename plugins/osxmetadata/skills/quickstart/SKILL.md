@@ -36,4 +36,6 @@ osxmetadata --help
 ```
 
 ## Key Features
-- macos\n- metadata\n- files
+- macos
+- metadata
+- files

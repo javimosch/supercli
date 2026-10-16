@@ -30,4 +30,6 @@ ko --help
 ```
 
 ## Key Features
-- go\n- containers\n- kubernetes
+- go
+- containers
+- kubernetes

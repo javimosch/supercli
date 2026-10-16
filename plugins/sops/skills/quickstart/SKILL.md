@@ -32,4 +32,6 @@ sops --help
 ```
 
 ## Key Features
-- encryption\n- secrets\n- security
+- encryption
+- secrets
+- security

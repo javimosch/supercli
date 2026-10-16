@@ -1,1 +1,6 @@
----\nname: pycln\ndescription: Python unused imports cleaner\n---\n# pycln Plugin\nPython unused imports cleaner
+---
+name: pycln
+description: Python unused imports cleaner
+---
+# pycln Plugin
+Python unused imports cleaner

@@ -36,4 +36,6 @@ mail-deduplicate --help
 ```
 
 ## Key Features
-- email\n- deduplicate\n- cli
+- email
+- deduplicate
+- cli

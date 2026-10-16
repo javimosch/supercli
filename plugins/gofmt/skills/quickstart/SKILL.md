@@ -1,1 +1,8 @@
----\nname: gofmt\ndescription: Go code formatter\n---\n# gofmt Plugin\nGo code formatter\n## Usage\n- `gofmt _ _ <args>` — Run gofmt
+---
+name: gofmt
+description: Go code formatter
+---
+# gofmt Plugin
+Go code formatter
+## Usage
+- `gofmt _ _ <args>` — Run gofmt

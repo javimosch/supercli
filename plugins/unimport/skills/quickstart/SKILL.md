@@ -1,1 +1,6 @@
----\nname: unimport\ndescription: Python import optimizer\n---\n# unimport Plugin\nPython import optimizer
+---
+name: unimport
+description: Python import optimizer
+---
+# unimport Plugin
+Python import optimizer

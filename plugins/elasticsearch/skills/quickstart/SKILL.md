@@ -1,1 +1,6 @@
----\nname: elasticsearch\ndescription: Elasticsearch search and analytics\n---\n# elasticsearch Plugin\nElasticsearch search and analytics
+---
+name: elasticsearch
+description: Elasticsearch search and analytics
+---
+# elasticsearch Plugin
+Elasticsearch search and analytics

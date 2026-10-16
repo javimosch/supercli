@@ -30,4 +30,6 @@ graphqlviz --help
 ```
 
 ## Key Features
-- graphql\n- visualization\n- graphviz
+- graphql
+- visualization
+- graphviz

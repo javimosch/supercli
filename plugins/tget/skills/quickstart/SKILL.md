@@ -30,4 +30,6 @@ tget --help
 ```
 
 ## Key Features
-- torrent\n- download\n- p2p
+- torrent
+- download
+- p2p

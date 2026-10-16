@@ -71,7 +71,8 @@ This creates:
 ## Key Features
 - **JSON to filesystem**: Convert any JSON document into files and directories
 - **Symlink support**: Create symbolic links with `["link", "target"]` arrays
-- **Executable scripts**: Create scripts with `["script", "#!/bin/sh\n..."]` arrays
+- **Executable scripts**: Create scripts with `["script", "#!/bin/sh
+..."]` arrays
 - **Empty directories**: Create empty directories with `{}`
 - **Dotfile management**: Ideal for managing dotfiles with Nix or other tools
 - **Pipes-friendly**: Reads from STDIN when no file is provided

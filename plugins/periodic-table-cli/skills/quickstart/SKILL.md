@@ -30,4 +30,6 @@ periodic-table --help
 ```
 
 ## Key Features
-- chemistry\n- periodic-table\n- education
+- chemistry
+- periodic-table
+- education

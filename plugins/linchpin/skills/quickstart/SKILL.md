@@ -35,4 +35,6 @@ linchpin --help
 ```
 
 ## Key Features
-- ansible\n- cloud\n- orchestration
+- ansible
+- cloud
+- orchestration

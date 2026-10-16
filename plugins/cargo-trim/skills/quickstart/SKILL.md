@@ -1,1 +1,16 @@
----\nname: cargo-trim\ndescription: Use this skill for cargo-trim operations.\n---\n# cargo-trim Plugin\nCLI tool for cargo-trim.\n## Commands\n- `cargo-trim _ _` — Passthrough\n## Installation\n```bash\ncargo install cargo-trim\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: cargo-trim
+description: Use this skill for cargo-trim operations.
+---
+# cargo-trim Plugin
+CLI tool for cargo-trim.
+## Commands
+- `cargo-trim _ _` — Passthrough
+## Installation
+```bash
+cargo install cargo-trim
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

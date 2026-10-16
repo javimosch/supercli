@@ -30,4 +30,6 @@ rename --help
 ```
 
 ## Key Features
-- rename\n- files\n- batch
+- rename
+- files
+- batch

@@ -1,1 +1,16 @@
----\nname: kanata\ndescription: Use this skill for kanata operations.\n---\n# kanata Plugin\nCLI tool for kanata.\n## Commands\n- `kanata _ _` — Passthrough\n## Installation\n```bash\ncargo install kanata\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: kanata
+description: Use this skill for kanata operations.
+---
+# kanata Plugin
+CLI tool for kanata.
+## Commands
+- `kanata _ _` — Passthrough
+## Installation
+```bash
+cargo install kanata
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

@@ -31,4 +31,6 @@ kube-bench --help
 ```
 
 ## Key Features
-- kubernetes\n- security\n- cis-benchmark
+- kubernetes
+- security
+- cis-benchmark

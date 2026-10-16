@@ -1,1 +1,6 @@
----\nname: mix\ndescription: Elixir build tool\n---\n# mix Plugin\nElixir build tool
+---
+name: mix
+description: Elixir build tool
+---
+# mix Plugin
+Elixir build tool

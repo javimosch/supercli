@@ -1,1 +1,6 @@
----\nname: micromamba\ndescription: Tiny Mamba version\n---\n# micromamba Plugin\nTiny Mamba version
+---
+name: micromamba
+description: Tiny Mamba version
+---
+# micromamba Plugin
+Tiny Mamba version

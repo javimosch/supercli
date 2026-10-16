@@ -31,4 +31,6 @@ appfairy --help
 ```
 
 ## Key Features
-- web-app\n- development\n- deployment
+- web-app
+- development
+- deployment

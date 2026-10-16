@@ -1,1 +1,6 @@
----\nname: acme.sh\ndescription: ACME protocol client\n---\n# acme.sh Plugin\nACME protocol client
+---
+name: acme.sh
+description: ACME protocol client
+---
+# acme.sh Plugin
+ACME protocol client

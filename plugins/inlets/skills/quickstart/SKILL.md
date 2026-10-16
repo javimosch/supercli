@@ -31,4 +31,6 @@ inlets --help
 ```
 
 ## Key Features
-- tunnel\n- reverse-proxy\n- networking
+- tunnel
+- reverse-proxy
+- networking

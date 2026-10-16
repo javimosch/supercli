@@ -30,4 +30,6 @@ wkhtmltopdf --help
 ```
 
 ## Key Features
-- html\n- pdf\n- converter
+- html
+- pdf
+- converter

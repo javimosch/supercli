@@ -1,1 +1,6 @@
----\nname: ruby\ndescription: Ruby programming language interpreter\n---\n# ruby Plugin\nRuby programming language interpreter
+---
+name: ruby
+description: Ruby programming language interpreter
+---
+# ruby Plugin
+Ruby programming language interpreter

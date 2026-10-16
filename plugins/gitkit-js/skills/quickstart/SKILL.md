@@ -30,4 +30,6 @@ gitkit --help
 ```
 
 ## Key Features
-- git\n- toolkit\n- cli
+- git
+- toolkit
+- cli

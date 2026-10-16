@@ -33,4 +33,6 @@ rustfix --help
 ```
 
 ## Key Features
-- rust\n- compiler\n- automation
+- rust
+- compiler
+- automation

@@ -34,4 +34,6 @@ gh-sql --help
 ```
 
 ## Key Features
-- github\n- sql\n- query
+- github
+- sql
+- query

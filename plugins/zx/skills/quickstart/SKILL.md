@@ -30,4 +30,6 @@ zx --help
 ```
 
 ## Key Features
-- scripting\n- shell\n- automation
+- scripting
+- shell
+- automation

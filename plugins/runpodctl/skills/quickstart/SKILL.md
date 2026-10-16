@@ -32,4 +32,6 @@ runpodctl --help
 ```
 
 ## Key Features
-- gpu\n- serverless\n- cloud
+- gpu
+- serverless
+- cloud

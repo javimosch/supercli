@@ -32,4 +32,6 @@ homebutler --help
 ```
 
 ## Key Features
-- home-automation\n- iot\n- smart-home
+- home-automation
+- iot
+- smart-home

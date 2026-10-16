@@ -36,4 +36,6 @@ databooks --help
 ```
 
 ## Key Features
-- jupyter\n- notebook\n- git
+- jupyter
+- notebook
+- git

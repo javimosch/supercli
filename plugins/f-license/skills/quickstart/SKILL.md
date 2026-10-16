@@ -30,4 +30,6 @@ f-license --help
 ```
 
 ## Key Features
-- license\n- legal\n- compliance
+- license
+- legal
+- compliance

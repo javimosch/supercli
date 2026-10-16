@@ -30,4 +30,6 @@ dupl --help
 ```
 
 ## Key Features
-- code-quality\n- clones\n- go
+- code-quality
+- clones
+- go

@@ -1,1 +1,6 @@
----\nname: zig\ndescription: Zig programming language compiler\n---\n# zig Plugin\nZig programming language compiler
+---
+name: zig
+description: Zig programming language compiler
+---
+# zig Plugin
+Zig programming language compiler

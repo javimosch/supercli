@@ -1,1 +1,6 @@
----\nname: x264\ndescription: H.264 video encoder\n---\n# x264 Plugin\nH.264 video encoder
+---
+name: x264
+description: H.264 video encoder
+---
+# x264 Plugin
+H.264 video encoder

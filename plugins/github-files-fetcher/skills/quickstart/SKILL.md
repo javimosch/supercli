@@ -30,4 +30,6 @@ github-files-fetcher --help
 ```
 
 ## Key Features
-- github\n- download\n- files
+- github
+- download
+- files

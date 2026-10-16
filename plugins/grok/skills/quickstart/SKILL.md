@@ -1,1 +1,6 @@
----\nname: grok\ndescription: Grok pattern matching\n---\n# grok Plugin\nGrok pattern matching
+---
+name: grok
+description: Grok pattern matching
+---
+# grok Plugin
+Grok pattern matching

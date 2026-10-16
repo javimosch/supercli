@@ -32,4 +32,6 @@ newrelic --help
 ```
 
 ## Key Features
-- observability\n- monitoring\n- apm
+- observability
+- monitoring
+- apm

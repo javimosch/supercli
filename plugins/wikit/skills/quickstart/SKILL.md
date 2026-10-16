@@ -30,4 +30,6 @@ wikit --help
 ```
 
 ## Key Features
-- wikipedia\n- search\n- knowledge
+- wikipedia
+- search
+- knowledge

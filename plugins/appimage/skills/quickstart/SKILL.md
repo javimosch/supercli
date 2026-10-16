@@ -1,1 +1,6 @@
----\nname: appimage\ndescription: AppImage package manager\n---\n# appimage Plugin\nAppImage package manager
+---
+name: appimage
+description: AppImage package manager
+---
+# appimage Plugin
+AppImage package manager

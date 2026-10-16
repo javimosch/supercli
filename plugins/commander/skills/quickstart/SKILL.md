@@ -30,4 +30,6 @@ commander --help
 ```
 
 ## Key Features
-- testing\n- cli\n- shell
+- testing
+- cli
+- shell

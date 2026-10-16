@@ -1,1 +1,6 @@
----\nname: ossec\ndescription: Host intrusion detection\n---\n# ossec Plugin\nHost intrusion detection
+---
+name: ossec
+description: Host intrusion detection
+---
+# ossec Plugin
+Host intrusion detection

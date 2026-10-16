@@ -34,4 +34,6 @@ huniq --help
 ```
 
 ## Key Features
-- deduplication\n- sort\n- performance
+- deduplication
+- sort
+- performance

@@ -37,4 +37,6 @@ strest --help
 ```
 
 ## Key Features
-- api-testing\n- rest\n- yaml
+- api-testing
+- rest
+- yaml

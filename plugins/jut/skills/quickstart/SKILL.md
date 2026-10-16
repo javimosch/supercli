@@ -36,4 +36,6 @@ jut --help
 ```
 
 ## Key Features
-- jupyter\n- notebook\n- terminal
+- jupyter
+- notebook
+- terminal

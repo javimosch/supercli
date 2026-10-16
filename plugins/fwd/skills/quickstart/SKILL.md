@@ -33,4 +33,6 @@ fwd --help
 ```
 
 ## Key Features
-- port-forwarding\n- networking\n- ssh
+- port-forwarding
+- networking
+- ssh
