@@ -30,4 +30,6 @@ go-qrcode --help
 ```
 
 ## Key Features
-- qrcode\n- generator\n- images
+- qrcode
+- generator
+- images

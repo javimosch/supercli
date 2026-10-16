@@ -34,4 +34,6 @@ create-better-t-stack --help
 ```
 
 ## Key Features
-- typescript\n- scaffolding\n- cli
+- typescript
+- scaffolding
+- cli

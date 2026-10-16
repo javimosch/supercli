@@ -34,4 +34,6 @@ yatas --help
 ```
 
 ## Key Features
-- aws\n- gcp\n- security-audit
+- aws
+- gcp
+- security-audit

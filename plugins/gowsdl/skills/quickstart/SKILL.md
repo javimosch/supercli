@@ -30,4 +30,6 @@ gowsdl --help
 ```
 
 ## Key Features
-- wsdl\n- soap\n- code-generation
+- wsdl
+- soap
+- code-generation

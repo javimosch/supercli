@@ -32,4 +32,6 @@ stackit --help
 ```
 
 ## Key Features
-- cloud\n- stackit\n- infrastructure
+- cloud
+- stackit
+- infrastructure

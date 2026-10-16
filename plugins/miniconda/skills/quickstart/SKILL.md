@@ -1,1 +1,6 @@
----\nname: miniconda\ndescription: Minimal Conda installer\n---\n# miniconda Plugin\nMinimal Conda installer
+---
+name: miniconda
+description: Minimal Conda installer
+---
+# miniconda Plugin
+Minimal Conda installer

@@ -31,4 +31,6 @@ benchttp --help
 ```
 
 ## Key Features
-- benchmark\n- http\n- testing
+- benchmark
+- http
+- testing

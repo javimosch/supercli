@@ -1,1 +1,6 @@
----\nname: sqlfmt\ndescription: SQL formatter\n---\n# sqlfmt Plugin\nSQL formatter
+---
+name: sqlfmt
+description: SQL formatter
+---
+# sqlfmt Plugin
+SQL formatter

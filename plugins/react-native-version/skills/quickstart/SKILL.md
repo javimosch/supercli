@@ -30,4 +30,6 @@ react-native-version --help
 ```
 
 ## Key Features
-- react-native\n- versioning\n- mobile
+- react-native
+- versioning
+- mobile

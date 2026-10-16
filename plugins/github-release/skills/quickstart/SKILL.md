@@ -33,4 +33,6 @@ github-release --help
 ```
 
 ## Key Features
-- github\n- releases\n- ci-cd
+- github
+- releases
+- ci-cd

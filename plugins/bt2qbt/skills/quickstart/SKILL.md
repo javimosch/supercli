@@ -30,4 +30,6 @@ bt2qbt --help
 ```
 
 ## Key Features
-- bittorrent\n- qbittorrent\n- migration
+- bittorrent
+- qbittorrent
+- migration

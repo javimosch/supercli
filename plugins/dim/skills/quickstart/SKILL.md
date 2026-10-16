@@ -39,4 +39,6 @@ dim --help
 ```
 
 ## Key Features
-- open-data\n- package-manager\n- datasets
+- open-data
+- package-manager
+- datasets

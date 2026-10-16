@@ -1,1 +1,6 @@
----\nname: 7zip\ndescription: 7-Zip archive utility\n---\n# 7zip Plugin\n7-Zip archive utility
+---
+name: 7zip
+description: 7-Zip archive utility
+---
+# 7zip Plugin
+7-Zip archive utility

@@ -30,4 +30,7 @@ yml2dot --help
 ```
 
 ## Key Features
-- yaml\n- dot\n- graph\n- visualization
+- yaml
+- dot
+- graph
+- visualization

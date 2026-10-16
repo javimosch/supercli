@@ -37,4 +37,6 @@ pncat --help
 ```
 
 ## Key Features
-- package-manager\n- catalogs\n- monorepo
+- package-manager
+- catalogs
+- monorepo

@@ -30,4 +30,7 @@ mlr --help
 ```
 
 ## Key Features
-- csv\n- json\n- data-processing\n- cli
+- csv
+- json
+- data-processing
+- cli

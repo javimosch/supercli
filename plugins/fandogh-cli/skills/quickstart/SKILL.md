@@ -37,4 +37,6 @@ fandogh --help
 ```
 
 ## Key Features
-- cloud\n- deployment\n- cli
+- cloud
+- deployment
+- cli

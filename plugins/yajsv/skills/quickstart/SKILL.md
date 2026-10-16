@@ -30,4 +30,6 @@ yajsv --help
 ```
 
 ## Key Features
-- json\n- validation\n- schema
+- json
+- validation
+- schema

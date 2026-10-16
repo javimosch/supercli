@@ -1,1 +1,6 @@
----\nname: cargo-llvm-lines\ndescription: Rust LLVM IR line count\n---\n# cargo-llvm-lines Plugin\nRust LLVM IR line count
+---
+name: cargo-llvm-lines
+description: Rust LLVM IR line count
+---
+# cargo-llvm-lines Plugin
+Rust LLVM IR line count

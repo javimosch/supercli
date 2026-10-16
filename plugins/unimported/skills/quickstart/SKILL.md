@@ -36,4 +36,6 @@ unimported --help
 ```
 
 ## Key Features
-- javascript\n- dependencies\n- cleanup
+- javascript
+- dependencies
+- cleanup

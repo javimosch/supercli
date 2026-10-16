@@ -32,4 +32,6 @@ gojekyll --help
 ```
 
 ## Key Features
-- jekyll\n- static-site\n- generator
+- jekyll
+- static-site
+- generator

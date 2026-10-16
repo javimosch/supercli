@@ -30,4 +30,6 @@ kubeconform --help
 ```
 
 ## Key Features
-- kubernetes\n- validation\n- manifest
+- kubernetes
+- validation
+- manifest

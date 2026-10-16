@@ -1,1 +1,6 @@
----\nname: xwud\ndescription: X11 window undump\n---\n# xwud Plugin\nX11 window undump
+---
+name: xwud
+description: X11 window undump
+---
+# xwud Plugin
+X11 window undump

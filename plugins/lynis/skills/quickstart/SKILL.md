@@ -1,1 +1,6 @@
----\nname: lynis\ndescription: Security auditing tool\n---\n# lynis Plugin\nSecurity auditing tool
+---
+name: lynis
+description: Security auditing tool
+---
+# lynis Plugin
+Security auditing tool

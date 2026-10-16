@@ -39,4 +39,6 @@ git-hub --help
 ```
 
 ## Key Features
-- git\n- github\n- cli
+- git
+- github
+- cli

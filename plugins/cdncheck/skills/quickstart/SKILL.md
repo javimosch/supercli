@@ -30,4 +30,6 @@ cdncheck --help
 ```
 
 ## Key Features
-- security\n- reconnaissance\n- network
+- security
+- reconnaissance
+- network

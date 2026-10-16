@@ -33,4 +33,6 @@ cleed --help
 ```
 
 ## Key Features
-- rss\n- feed-reader\n- news
+- rss
+- feed-reader
+- news

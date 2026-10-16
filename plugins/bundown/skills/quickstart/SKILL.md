@@ -37,4 +37,6 @@ bundown --help
 ```
 
 ## Key Features
-- markdown\n- bundler\n- runtime
+- markdown
+- bundler
+- runtime

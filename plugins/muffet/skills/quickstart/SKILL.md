@@ -30,4 +30,6 @@ muffet --help
 ```
 
 ## Key Features
-- link-checker\n- web\n- crawler
+- link-checker
+- web
+- crawler

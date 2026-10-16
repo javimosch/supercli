@@ -1,1 +1,6 @@
----\nname: maxima\ndescription: Computer algebra system\n---\n# maxima Plugin\nComputer algebra system
+---
+name: maxima
+description: Computer algebra system
+---
+# maxima Plugin
+Computer algebra system

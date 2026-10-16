@@ -1,1 +1,6 @@
----\nname: browserify\ndescription: JavaScript bundler for browsers\n---\n# browserify Plugin\nJavaScript bundler for browsers
+---
+name: browserify
+description: JavaScript bundler for browsers
+---
+# browserify Plugin
+JavaScript bundler for browsers

@@ -35,4 +35,6 @@ netop --help
 ```
 
 ## Key Features
-- network\n- monitoring\n- bpf
+- network
+- monitoring
+- bpf

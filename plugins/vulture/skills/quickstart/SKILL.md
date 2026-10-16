@@ -1,1 +1,6 @@
----\nname: vulture\ndescription: Find dead Python code\n---\n# vulture Plugin\nFind dead Python code
+---
+name: vulture
+description: Find dead Python code
+---
+# vulture Plugin
+Find dead Python code

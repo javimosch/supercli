@@ -32,4 +32,6 @@ ni --help
 ```
 
 ## Key Features
-- package-manager\n- npm\n- productivity
+- package-manager
+- npm
+- productivity

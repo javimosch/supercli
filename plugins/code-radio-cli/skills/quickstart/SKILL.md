@@ -36,4 +36,6 @@ code-radio --help
 ```
 
 ## Key Features
-- music\n- radio\n- streaming
+- music
+- radio
+- streaming

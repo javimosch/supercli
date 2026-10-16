@@ -30,4 +30,6 @@ chroma --help
 ```
 
 ## Key Features
-- syntax-highlighting\n- text\n- formatting
+- syntax-highlighting
+- text
+- formatting

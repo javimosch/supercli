@@ -37,4 +37,6 @@ equa11y --help
 ```
 
 ## Key Features
-- accessibility\n- testing\n- a11y
+- accessibility
+- testing
+- a11y

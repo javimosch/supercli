@@ -1,1 +1,16 @@
----\nname: pid1\ndescription: Use this skill for pid1 operations.\n---\n# pid1 Plugin\nCLI tool for pid1.\n## Commands\n- `pid1 _ _` — Passthrough\n## Installation\n```bash\ncargo install pid1\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: pid1
+description: Use this skill for pid1 operations.
+---
+# pid1 Plugin
+CLI tool for pid1.
+## Commands
+- `pid1 _ _` — Passthrough
+## Installation
+```bash
+cargo install pid1
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

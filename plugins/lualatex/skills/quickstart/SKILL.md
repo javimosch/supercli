@@ -1,1 +1,6 @@
----\nname: lualatex\ndescription: LuaLaTeX typesetter\n---\n# lualatex Plugin\nLuaLaTeX typesetter
+---
+name: lualatex
+description: LuaLaTeX typesetter
+---
+# lualatex Plugin
+LuaLaTeX typesetter

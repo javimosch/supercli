@@ -1,1 +1,6 @@
----\nname: xlogo\ndescription: X11 logo demo\n---\n# xlogo Plugin\nX11 logo demo
+---
+name: xlogo
+description: X11 logo demo
+---
+# xlogo Plugin
+X11 logo demo

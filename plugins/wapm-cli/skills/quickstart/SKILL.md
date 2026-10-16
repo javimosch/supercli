@@ -38,4 +38,6 @@ wapm --help
 ```
 
 ## Key Features
-- webassembly\n- package-manager\n- wasmer
+- webassembly
+- package-manager
+- wasmer

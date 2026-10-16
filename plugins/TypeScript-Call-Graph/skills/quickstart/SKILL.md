@@ -30,4 +30,6 @@ ts-call-graph --help
 ```
 
 ## Key Features
-- typescript\n- analysis\n- visualization
+- typescript
+- analysis
+- visualization

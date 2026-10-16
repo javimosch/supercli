@@ -1,1 +1,6 @@
----\nname: editorconfig\ndescription: EditorConfig CLI for coding style\n---\n# editorconfig Plugin\nEditorConfig CLI for coding style
+---
+name: editorconfig
+description: EditorConfig CLI for coding style
+---
+# editorconfig Plugin
+EditorConfig CLI for coding style

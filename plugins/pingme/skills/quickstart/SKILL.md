@@ -37,4 +37,6 @@ pingme --help
 ```
 
 ## Key Features
-- notifications\n- messaging\n- cli
+- notifications
+- messaging
+- cli

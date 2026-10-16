@@ -1,1 +1,6 @@
----\nname: typeorm\ndescription: TypeORM CLI\n---\n# typeorm Plugin\nTypeORM CLI
+---
+name: typeorm
+description: TypeORM CLI
+---
+# typeorm Plugin
+TypeORM CLI

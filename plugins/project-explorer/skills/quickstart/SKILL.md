@@ -30,4 +30,6 @@ project-explorer --help
 ```
 
 ## Key Features
-- documentation\n- tree\n- project
+- documentation
+- tree
+- project

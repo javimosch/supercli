@@ -33,4 +33,6 @@ fastar --help
 ```
 
 ## Key Features
-- compression\n- archiving\n- rust
+- compression
+- archiving
+- rust

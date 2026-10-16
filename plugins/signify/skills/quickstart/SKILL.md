@@ -1,1 +1,6 @@
----\nname: signify\ndescription: OpenBSD cryptographic signing\n---\n# signify Plugin\nOpenBSD cryptographic signing
+---
+name: signify
+description: OpenBSD cryptographic signing
+---
+# signify Plugin
+OpenBSD cryptographic signing

@@ -1,1 +1,6 @@
----\nname: lua\ndescription: Lua programming language interpreter\n---\n# lua Plugin\nLua programming language interpreter
+---
+name: lua
+description: Lua programming language interpreter
+---
+# lua Plugin
+Lua programming language interpreter

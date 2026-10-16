@@ -1,1 +1,6 @@
----\nname: vpx\ndescription: VP8/VP9 video codec tools\n---\n# vpx Plugin\nVP8/VP9 video codec tools
+---
+name: vpx
+description: VP8/VP9 video codec tools
+---
+# vpx Plugin
+VP8/VP9 video codec tools

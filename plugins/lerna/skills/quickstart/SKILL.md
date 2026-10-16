@@ -1,1 +1,6 @@
----\nname: lerna\ndescription: Monorepo management tool\n---\n# lerna Plugin\nMonorepo management tool
+---
+name: lerna
+description: Monorepo management tool
+---
+# lerna Plugin
+Monorepo management tool

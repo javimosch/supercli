@@ -1,1 +1,6 @@
----\nname: xset\ndescription: X11 user preferences\n---\n# xset Plugin\nX11 user preferences
+---
+name: xset
+description: X11 user preferences
+---
+# xset Plugin
+X11 user preferences

@@ -32,4 +32,6 @@ migrate --help
 ```
 
 ## Key Features
-- database\n- migration\n- sql
+- database
+- migration
+- sql

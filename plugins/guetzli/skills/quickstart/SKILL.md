@@ -1,1 +1,6 @@
----\nname: guetzli\ndescription: Google JPEG encoder\n---\n# guetzli Plugin\nGoogle JPEG encoder
+---
+name: guetzli
+description: Google JPEG encoder
+---
+# guetzli Plugin
+Google JPEG encoder

@@ -36,4 +36,6 @@ ds1054z --help
 ```
 
 ## Key Features
-- oscilloscope\n- hardware\n- cli
+- oscilloscope
+- hardware
+- cli

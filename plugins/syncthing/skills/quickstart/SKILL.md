@@ -31,4 +31,6 @@ syncthing --help
 ```
 
 ## Key Features
-- file-sync\n- backup\n- p2p
+- file-sync
+- backup
+- p2p

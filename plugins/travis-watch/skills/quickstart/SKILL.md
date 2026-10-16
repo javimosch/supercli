@@ -30,4 +30,6 @@ travis-watch --help
 ```
 
 ## Key Features
-- travis-ci\n- ci\n- monitoring
+- travis-ci
+- ci
+- monitoring

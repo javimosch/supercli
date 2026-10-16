@@ -1,1 +1,8 @@
----\nname: lldb\ndescription: LLVM debugger\n---\n# lldb Plugin\nLLVM debugger\n## Usage\n- `lldb _ _ <args>` — Run lldb
+---
+name: lldb
+description: LLVM debugger
+---
+# lldb Plugin
+LLVM debugger
+## Usage
+- `lldb _ _ <args>` — Run lldb

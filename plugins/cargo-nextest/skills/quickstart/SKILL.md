@@ -1,1 +1,6 @@
----\nname: cargo-nextest\ndescription: Rust test runner\n---\n# cargo-nextest Plugin\nRust test runner
+---
+name: cargo-nextest
+description: Rust test runner
+---
+# cargo-nextest Plugin
+Rust test runner

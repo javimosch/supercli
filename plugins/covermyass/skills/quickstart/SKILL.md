@@ -30,4 +30,6 @@ covermyass --help
 ```
 
 ## Key Features
-- privacy\n- security\n- sanitization
+- privacy
+- security
+- sanitization

@@ -30,4 +30,6 @@ hey --help
 ```
 
 ## Key Features
-- http\n- benchmark\n- load-testing
+- http
+- benchmark
+- load-testing

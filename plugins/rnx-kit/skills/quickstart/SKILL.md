@@ -36,4 +36,6 @@ rnx --help
 ```
 
 ## Key Features
-- react-native\n- mobile\n- tools
+- react-native
+- mobile
+- tools

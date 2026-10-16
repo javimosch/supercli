@@ -1,1 +1,6 @@
----\nname: gawk\ndescription: GNU Awk\n---\n# gawk Plugin\nGNU Awk
+---
+name: gawk
+description: GNU Awk
+---
+# gawk Plugin
+GNU Awk

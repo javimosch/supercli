@@ -33,4 +33,6 @@ kyma --help
 ```
 
 ## Key Features
-- kubernetes\n- runtime\n- platform
+- kubernetes
+- runtime
+- platform

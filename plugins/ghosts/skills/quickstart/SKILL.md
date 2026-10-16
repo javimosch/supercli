@@ -30,4 +30,6 @@ ghosts --help
 ```
 
 ## Key Features
-- hosts\n- dns\n- networking
+- hosts
+- dns
+- networking

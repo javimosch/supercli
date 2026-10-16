@@ -34,4 +34,6 @@ oras --help
 ```
 
 ## Key Features
-- oci\n- registry\n- artifacts
+- oci
+- registry
+- artifacts

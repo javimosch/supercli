@@ -31,4 +31,6 @@ triangula --help
 ```
 
 ## Key Features
-- art\n- triangulation\n- image-processing
+- art
+- triangulation
+- image-processing

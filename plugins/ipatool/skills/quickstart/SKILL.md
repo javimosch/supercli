@@ -31,4 +31,7 @@ ipatool --help
 ```
 
 ## Key Features
-- ios\n- ipa\n- reverse-engineering\n- security
+- ios
+- ipa
+- reverse-engineering
+- security

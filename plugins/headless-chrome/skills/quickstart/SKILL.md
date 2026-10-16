@@ -32,4 +32,6 @@ headless-chrome --help
 ```
 
 ## Key Features
-- chrome\n- headless\n- automation
+- chrome
+- headless
+- automation

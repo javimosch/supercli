@@ -1,1 +1,6 @@
----\nname: prisma\ndescription: Prisma database ORM CLI\n---\n# prisma Plugin\nPrisma database ORM CLI
+---
+name: prisma
+description: Prisma database ORM CLI
+---
+# prisma Plugin
+Prisma database ORM CLI

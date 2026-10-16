@@ -30,4 +30,6 @@ npx-card --help
 ```
 
 ## Key Features
-- npm\n- card\n- business-card
+- npm
+- card
+- business-card

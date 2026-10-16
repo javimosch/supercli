@@ -1,1 +1,6 @@
----\nname: apache-spark\ndescription: Apache Spark data processing\n---\n# apache-spark Plugin\nApache Spark data processing
+---
+name: apache-spark
+description: Apache Spark data processing
+---
+# apache-spark Plugin
+Apache Spark data processing

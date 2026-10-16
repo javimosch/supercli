@@ -1,1 +1,6 @@
----\nname: cargo-bloat\ndescription: Analyze Rust binary size\n---\n# cargo-bloat Plugin\nAnalyze Rust binary size
+---
+name: cargo-bloat
+description: Analyze Rust binary size
+---
+# cargo-bloat Plugin
+Analyze Rust binary size

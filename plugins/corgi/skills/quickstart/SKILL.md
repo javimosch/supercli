@@ -31,4 +31,6 @@ corgi --help
 ```
 
 ## Key Features
-- scaffold\n- code-generation\n- cli
+- scaffold
+- code-generation
+- cli

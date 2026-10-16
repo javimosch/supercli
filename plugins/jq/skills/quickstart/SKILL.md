@@ -1,1 +1,6 @@
----\nname: jq\ndescription: Command-line JSON processor\n---\n# jq Plugin\nCommand-line JSON processor
+---
+name: jq
+description: Command-line JSON processor
+---
+# jq Plugin
+Command-line JSON processor

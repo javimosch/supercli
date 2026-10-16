@@ -1,1 +1,6 @@
----\nname: cassandra\ndescription: Apache Cassandra NoSQL database\n---\n# cassandra Plugin\nApache Cassandra NoSQL database
+---
+name: cassandra
+description: Apache Cassandra NoSQL database
+---
+# cassandra Plugin
+Apache Cassandra NoSQL database

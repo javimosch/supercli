@@ -35,4 +35,6 @@ protonup-rs --help
 ```
 
 ## Key Features
-- gaming\n- proton\n- linux
+- gaming
+- proton
+- linux

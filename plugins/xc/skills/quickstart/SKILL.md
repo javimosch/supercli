@@ -31,4 +31,6 @@ xc --help
 ```
 
 ## Key Features
-- markdown\n- task-runner\n- documentation
+- markdown
+- task-runner
+- documentation

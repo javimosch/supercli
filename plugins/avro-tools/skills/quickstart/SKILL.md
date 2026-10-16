@@ -1,1 +1,6 @@
----\nname: avro-tools\ndescription: Apache Avro serialization\n---\n# avro-tools Plugin\nApache Avro serialization
+---
+name: avro-tools
+description: Apache Avro serialization
+---
+# avro-tools Plugin
+Apache Avro serialization

@@ -1,1 +1,6 @@
----\nname: rar\ndescription: RAR archive creation\n---\n# rar Plugin\nRAR archive creation
+---
+name: rar
+description: RAR archive creation
+---
+# rar Plugin
+RAR archive creation

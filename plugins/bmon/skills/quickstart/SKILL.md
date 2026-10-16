@@ -1,1 +1,6 @@
----\nname: bmon\ndescription: Bandwidth monitor\n---\n# bmon Plugin\nBandwidth monitor
+---
+name: bmon
+description: Bandwidth monitor
+---
+# bmon Plugin
+Bandwidth monitor

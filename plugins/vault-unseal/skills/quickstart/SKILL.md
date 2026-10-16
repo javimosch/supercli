@@ -31,4 +31,6 @@ vault-unseal --help
 ```
 
 ## Key Features
-- vault\n- security\n- automation
+- vault
+- security
+- automation

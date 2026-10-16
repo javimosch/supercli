@@ -30,4 +30,6 @@ domain --help
 ```
 
 ## Key Features
-- domain\n- whois\n- networking
+- domain
+- whois
+- networking

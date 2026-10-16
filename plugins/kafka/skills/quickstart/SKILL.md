@@ -1,1 +1,6 @@
----\nname: kafka\ndescription: Apache Kafka event streaming\n---\n# kafka Plugin\nApache Kafka event streaming
+---
+name: kafka
+description: Apache Kafka event streaming
+---
+# kafka Plugin
+Apache Kafka event streaming

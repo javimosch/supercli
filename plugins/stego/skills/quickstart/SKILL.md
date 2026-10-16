@@ -37,4 +37,6 @@ stego --help
 ```
 
 ## Key Features
-- steganography\n- security\n- cryptography
+- steganography
+- security
+- cryptography

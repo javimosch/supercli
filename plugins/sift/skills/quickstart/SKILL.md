@@ -1,1 +1,6 @@
----\nname: sift\ndescription: Fast grep alternative\n---\n# sift Plugin\nFast grep alternative
+---
+name: sift
+description: Fast grep alternative
+---
+# sift Plugin
+Fast grep alternative
