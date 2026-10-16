@@ -1,1 +1,6 @@
----\nname: vite\ndescription: Frontend build tool and dev server\n---\n# vite Plugin\nFrontend build tool and dev server
+---
+name: vite
+description: Frontend build tool and dev server
+---
+# vite Plugin
+Frontend build tool and dev server

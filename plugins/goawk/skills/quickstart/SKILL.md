@@ -31,4 +31,6 @@ goawk --help
 ```
 
 ## Key Features
-- awk\n- text-processing\n- csv
+- awk
+- text-processing
+- csv

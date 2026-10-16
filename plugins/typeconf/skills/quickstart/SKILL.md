@@ -39,4 +39,6 @@ typeconf --help
 ```
 
 ## Key Features
-- feature-flags\n- typescript\n- configuration
+- feature-flags
+- typescript
+- configuration

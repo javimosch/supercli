@@ -1,1 +1,6 @@
----\nname: php\ndescription: PHP scripting language interpreter\n---\n# php Plugin\nPHP scripting language interpreter
+---
+name: php
+description: PHP scripting language interpreter
+---
+# php Plugin
+PHP scripting language interpreter

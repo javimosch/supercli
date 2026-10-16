@@ -30,4 +30,6 @@ run-p --help
 ```
 
 ## Key Features
-- npm\n- scripts\n- parallel
+- npm
+- scripts
+- parallel

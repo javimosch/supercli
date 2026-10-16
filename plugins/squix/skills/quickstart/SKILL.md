@@ -30,4 +30,7 @@ squix --help
 ```
 
 ## Key Features
-- sql\n- csv\n- json\n- database
+- sql
+- csv
+- json
+- database

@@ -33,4 +33,6 @@ smoothie --help
 ```
 
 ## Key Features
-- video\n- motion-blur\n- editing
+- video
+- motion-blur
+- editing

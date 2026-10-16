@@ -32,4 +32,6 @@ buf --help
 ```
 
 ## Key Features
-- protobuf\n- lint\n- api
+- protobuf
+- lint
+- api

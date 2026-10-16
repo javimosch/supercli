@@ -30,4 +30,6 @@ speakeasy --help
 ```
 
 ## Key Features
-- openapi\n- sdk\n- validation
+- openapi
+- sdk
+- validation

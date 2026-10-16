@@ -1,1 +1,6 @@
----\nname: yamlfmt\ndescription: YAML file formatter\n---\n# yamlfmt Plugin\nYAML file formatter
+---
+name: yamlfmt
+description: YAML file formatter
+---
+# yamlfmt Plugin
+YAML file formatter

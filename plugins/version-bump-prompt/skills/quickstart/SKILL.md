@@ -30,4 +30,6 @@ version-bump-prompt --help
 ```
 
 ## Key Features
-- versioning\n- semver\n- prompt
+- versioning
+- semver
+- prompt

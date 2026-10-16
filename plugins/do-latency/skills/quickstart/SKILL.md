@@ -35,4 +35,6 @@ do-latency --help
 ```
 
 ## Key Features
-- digitalocean\n- latency\n- benchmark
+- digitalocean
+- latency
+- benchmark

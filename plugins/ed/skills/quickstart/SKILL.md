@@ -1,1 +1,6 @@
----\nname: ed\ndescription: GNU Ed line editor\n---\n# ed Plugin\nGNU Ed line editor
+---
+name: ed
+description: GNU Ed line editor
+---
+# ed Plugin
+GNU Ed line editor

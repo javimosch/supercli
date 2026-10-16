@@ -32,4 +32,6 @@ tb --help
 ```
 
 ## Key Features
-- tasks\n- notes\n- productivity
+- tasks
+- notes
+- productivity

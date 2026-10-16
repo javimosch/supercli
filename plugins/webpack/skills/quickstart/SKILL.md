@@ -1,1 +1,6 @@
----\nname: webpack\ndescription: JavaScript module bundler\n---\n# webpack Plugin\nJavaScript module bundler
+---
+name: webpack
+description: JavaScript module bundler
+---
+# webpack Plugin
+JavaScript module bundler

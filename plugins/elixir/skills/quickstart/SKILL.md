@@ -1,1 +1,6 @@
----\nname: elixir\ndescription: Elixir programming language\n---\n# elixir Plugin\nElixir programming language
+---
+name: elixir
+description: Elixir programming language
+---
+# elixir Plugin
+Elixir programming language

@@ -36,4 +36,6 @@ mermaid-rs --help
 ```
 
 ## Key Features
-- mermaid\n- diagrams\n- rust
+- mermaid
+- diagrams
+- rust

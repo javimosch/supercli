@@ -31,4 +31,6 @@ swagger --help
 ```
 
 ## Key Features
-- openapi\n- swagger\n- api
+- openapi
+- swagger
+- api

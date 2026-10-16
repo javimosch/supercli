@@ -30,4 +30,6 @@ kubectx --help
 ```
 
 ## Key Features
-- kubernetes\n- k8s\n- context
+- kubernetes
+- k8s
+- context

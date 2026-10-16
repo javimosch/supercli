@@ -35,4 +35,6 @@ crlf-scanner --help
 ```
 
 ## Key Features
-- security\n- crlf\n- injection
+- security
+- crlf
+- injection

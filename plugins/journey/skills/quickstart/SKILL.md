@@ -30,4 +30,6 @@ journey --help
 ```
 
 ## Key Features
-- database\n- migration\n- schema
+- database
+- migration
+- schema

@@ -1,1 +1,6 @@
----\nname: gleam\ndescription: Gleam programming language compiler\n---\n# gleam Plugin\nGleam programming language compiler
+---
+name: gleam
+description: Gleam programming language compiler
+---
+# gleam Plugin
+Gleam programming language compiler

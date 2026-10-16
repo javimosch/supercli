@@ -31,4 +31,6 @@ pokevision --help
 ```
 
 ## Key Features
-- pokemon\n- tracking\n- cli
+- pokemon
+- tracking
+- cli

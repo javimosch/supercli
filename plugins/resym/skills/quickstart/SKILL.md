@@ -35,4 +35,6 @@ resym --help
 ```
 
 ## Key Features
-- pdb\n- c++\n- reverse-engineering
+- pdb
+- c++
+- reverse-engineering

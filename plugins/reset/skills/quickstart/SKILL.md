@@ -1,1 +1,6 @@
----\nname: reset\ndescription: Terminal reset and initialization\n---\n# reset Plugin\nTerminal reset and initialization
+---
+name: reset
+description: Terminal reset and initialization
+---
+# reset Plugin
+Terminal reset and initialization

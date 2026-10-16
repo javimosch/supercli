@@ -30,4 +30,6 @@ puml-for-markdown --help
 ```
 
 ## Key Features
-- plantuml\n- markdown\n- diagrams
+- plantuml
+- markdown
+- diagrams

@@ -33,4 +33,6 @@ bafi --help
 ```
 
 ## Key Features
-- text-formatting\n- beautifier\n- cli
+- text-formatting
+- beautifier
+- cli

@@ -1,1 +1,8 @@
----\nname: clang\ndescription: LLVM C/C++/Objective-C compiler\n---\n# clang Plugin\nLLVM C/C++/Objective-C compiler\n## Usage\n- `clang _ _ <args>` — Run clang
+---
+name: clang
+description: LLVM C/C++/Objective-C compiler
+---
+# clang Plugin
+LLVM C/C++/Objective-C compiler
+## Usage
+- `clang _ _ <args>` — Run clang

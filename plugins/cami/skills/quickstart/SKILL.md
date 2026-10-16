@@ -40,4 +40,6 @@ cami --help
 ```
 
 ## Key Features
-- configuration\n- file-management\n- cli
+- configuration
+- file-management
+- cli

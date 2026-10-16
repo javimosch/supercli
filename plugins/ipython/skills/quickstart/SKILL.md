@@ -1,1 +1,6 @@
----\nname: ipython\ndescription: Enhanced Python interactive shell\n---\n# ipython Plugin\nEnhanced Python interactive shell
+---
+name: ipython
+description: Enhanced Python interactive shell
+---
+# ipython Plugin
+Enhanced Python interactive shell

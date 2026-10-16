@@ -34,4 +34,6 @@ mediafire-dl --help
 ```
 
 ## Key Features
-- download\n- mediafire\n- file-sharing
+- download
+- mediafire
+- file-sharing

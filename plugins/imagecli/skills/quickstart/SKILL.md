@@ -38,4 +38,6 @@ imagecli --help
 ```
 
 ## Key Features
-- image-processing\n- cli\n- rust
+- image-processing
+- cli
+- rust

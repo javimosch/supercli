@@ -36,4 +36,6 @@ airflowctl --help
 ```
 
 ## Key Features
-- airflow\n- workflow\n- automation
+- airflow
+- workflow
+- automation

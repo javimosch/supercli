@@ -30,4 +30,6 @@ parrotsay --help
 ```
 
 ## Key Features
-- ascii\n- art\n- fun
+- ascii
+- art
+- fun

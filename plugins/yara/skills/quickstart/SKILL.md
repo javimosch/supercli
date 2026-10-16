@@ -1,1 +1,6 @@
----\nname: yara\ndescription: Pattern matching for malware\n---\n# yara Plugin\nPattern matching for malware
+---
+name: yara
+description: Pattern matching for malware
+---
+# yara Plugin
+Pattern matching for malware

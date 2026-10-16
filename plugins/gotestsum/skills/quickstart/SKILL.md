@@ -30,4 +30,6 @@ gotestsum --help
 ```
 
 ## Key Features
-- go\n- testing\n- ci-cd
+- go
+- testing
+- ci-cd

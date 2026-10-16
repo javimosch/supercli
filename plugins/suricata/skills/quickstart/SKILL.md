@@ -1,1 +1,6 @@
----\nname: suricata\ndescription: Network threat detection\n---\n# suricata Plugin\nNetwork threat detection
+---
+name: suricata
+description: Network threat detection
+---
+# suricata Plugin
+Network threat detection

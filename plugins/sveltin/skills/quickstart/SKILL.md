@@ -34,4 +34,6 @@ sveltin --help
 ```
 
 ## Key Features
-- svelte\n- static-site\n- generator
+- svelte
+- static-site
+- generator

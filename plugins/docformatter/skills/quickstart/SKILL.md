@@ -1,1 +1,6 @@
----\nname: docformatter\ndescription: Python docstring formatter\n---\n# docformatter Plugin\nPython docstring formatter
+---
+name: docformatter
+description: Python docstring formatter
+---
+# docformatter Plugin
+Python docstring formatter

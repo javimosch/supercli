@@ -1,1 +1,6 @@
----\nname: autossh\ndescription: Persistent SSH tunnel manager\n---\n# autossh Plugin\nPersistent SSH tunnel manager
+---
+name: autossh
+description: Persistent SSH tunnel manager
+---
+# autossh Plugin
+Persistent SSH tunnel manager

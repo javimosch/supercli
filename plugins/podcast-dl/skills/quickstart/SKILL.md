@@ -30,4 +30,6 @@ podcast-dl --help
 ```
 
 ## Key Features
-- podcast\n- download\n- rss
+- podcast
+- download
+- rss

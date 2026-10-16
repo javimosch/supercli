@@ -1,1 +1,6 @@
----\nname: xkbevd\ndescription: X11 keyboard event daemon\n---\n# xkbevd Plugin\nX11 keyboard event daemon
+---
+name: xkbevd
+description: X11 keyboard event daemon
+---
+# xkbevd Plugin
+X11 keyboard event daemon

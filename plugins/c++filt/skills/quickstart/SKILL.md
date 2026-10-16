@@ -1,1 +1,8 @@
----\nname: c++filt\ndescription: Demangle C++ symbol names\n---\n# c++filt Plugin\nDemangle C++ symbol names\n## Usage\n- `c++filt _ _ <args>` — Run c++filt
+---
+name: c++filt
+description: Demangle C++ symbol names
+---
+# c++filt Plugin
+Demangle C++ symbol names
+## Usage
+- `c++filt _ _ <args>` — Run c++filt

@@ -1,1 +1,6 @@
----\nname: ponysay\ndescription: Pony-themed cowsay\n---\n# ponysay Plugin\nPony-themed cowsay
+---
+name: ponysay
+description: Pony-themed cowsay
+---
+# ponysay Plugin
+Pony-themed cowsay

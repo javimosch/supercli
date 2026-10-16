@@ -30,4 +30,6 @@ goverter --help
 ```
 
 ## Key Features
-- go\n- converter\n- code-generation
+- go
+- converter
+- code-generation

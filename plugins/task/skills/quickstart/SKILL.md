@@ -32,4 +32,6 @@ task --help
 ```
 
 ## Key Features
-- task-runner\n- build-tool\n- makefile
+- task-runner
+- build-tool
+- makefile

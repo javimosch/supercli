@@ -1,1 +1,6 @@
----\nname: cross-seed\ndescription: Cross-seed torrent search\n---\n# cross-seed Plugin\nCross-seed torrent search
+---
+name: cross-seed
+description: Cross-seed torrent search
+---
+# cross-seed Plugin
+Cross-seed torrent search

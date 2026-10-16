@@ -1,1 +1,6 @@
----\nname: xz-utils\ndescription: XZ/LZMA compression utilities\n---\n# xz-utils Plugin\nXZ/LZMA compression utilities
+---
+name: xz-utils
+description: XZ/LZMA compression utilities
+---
+# xz-utils Plugin
+XZ/LZMA compression utilities

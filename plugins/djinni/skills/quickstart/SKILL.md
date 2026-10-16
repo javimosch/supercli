@@ -44,4 +44,6 @@ djinni --help
 ```
 
 ## Key Features
-- code-generation\n- cross-language\n- bindings
+- code-generation
+- cross-language
+- bindings

@@ -40,4 +40,6 @@ stencil --help
 ```
 
 ## Key Features
-- schema-registry\n- protobuf\n- avro
+- schema-registry
+- protobuf
+- avro

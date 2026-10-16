@@ -1,1 +1,6 @@
----\nname: ffmbc\ndescription: FFmpeg fork for broadcast\n---\n# ffmbc Plugin\nFFmpeg fork for broadcast
+---
+name: ffmbc
+description: FFmpeg fork for broadcast
+---
+# ffmbc Plugin
+FFmpeg fork for broadcast

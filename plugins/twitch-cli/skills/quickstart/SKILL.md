@@ -35,4 +35,6 @@ twitch --help
 ```
 
 ## Key Features
-- twitch\n- streaming\n- development
+- twitch
+- streaming
+- development

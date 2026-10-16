@@ -1,1 +1,6 @@
----\nname: gs\ndescription: GhostScript interpreter\n---\n# gs Plugin\nGhostScript interpreter
+---
+name: gs
+description: GhostScript interpreter
+---
+# gs Plugin
+GhostScript interpreter

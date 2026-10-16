@@ -1,1 +1,6 @@
----\nname: rabbitmq\ndescription: RabbitMQ message broker management\n---\n# rabbitmq Plugin\nRabbitMQ message broker management
+---
+name: rabbitmq
+description: RabbitMQ message broker management
+---
+# rabbitmq Plugin
+RabbitMQ message broker management

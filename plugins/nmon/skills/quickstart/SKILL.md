@@ -1,1 +1,6 @@
----\nname: nmon\ndescription: Performance monitor for Unix\n---\n# nmon Plugin\nPerformance monitor for Unix
+---
+name: nmon
+description: Performance monitor for Unix
+---
+# nmon Plugin
+Performance monitor for Unix

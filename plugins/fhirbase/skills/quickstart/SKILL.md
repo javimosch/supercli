@@ -30,4 +30,6 @@ fhirbase --help
 ```
 
 ## Key Features
-- healthcare\n- fhir\n- postgresql
+- healthcare
+- fhir
+- postgresql

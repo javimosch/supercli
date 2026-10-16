@@ -1,1 +1,6 @@
----\nname: go-critic\ndescription: Go code critic\n---\n# go-critic Plugin\nGo code critic
+---
+name: go-critic
+description: Go code critic
+---
+# go-critic Plugin
+Go code critic

@@ -36,4 +36,6 @@ tk --help
 ```
 
 ## Key Features
-- kubernetes\n- kubectl\n- context-switching
+- kubernetes
+- kubectl
+- context-switching

@@ -30,4 +30,6 @@ hygen --help
 ```
 
 ## Key Features
-- code-generation\n- scaffold\n- templates
+- code-generation
+- scaffold
+- templates

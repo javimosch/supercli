@@ -31,4 +31,6 @@ kuake --help
 ```
 
 ## Key Features
-- launcher\n- aliases\n- productivity
+- launcher
+- aliases
+- productivity

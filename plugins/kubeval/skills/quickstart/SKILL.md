@@ -30,4 +30,6 @@ kubeval --help
 ```
 
 ## Key Features
-- kubernetes\n- validation\n- yaml
+- kubernetes
+- validation
+- yaml

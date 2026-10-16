@@ -30,4 +30,6 @@ cpx --help
 ```
 
 ## Key Features
-- copy\n- files\n- build
+- copy
+- files
+- build

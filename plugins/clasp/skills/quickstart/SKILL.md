@@ -39,4 +39,6 @@ clasp --help
 ```
 
 ## Key Features
-- google-apps-script\n- cli\n- automation
+- google-apps-script
+- cli
+- automation

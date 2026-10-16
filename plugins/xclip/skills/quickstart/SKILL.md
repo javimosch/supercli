@@ -1,1 +1,6 @@
----\nname: xclip\ndescription: X11 clipboard tool\n---\n# xclip Plugin\nX11 clipboard tool
+---
+name: xclip
+description: X11 clipboard tool
+---
+# xclip Plugin
+X11 clipboard tool

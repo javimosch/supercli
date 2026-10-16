@@ -37,4 +37,6 @@ yt-audio --help
 ```
 
 ## Key Features
-- youtube\n- audio\n- downloader
+- youtube
+- audio
+- downloader

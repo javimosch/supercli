@@ -30,4 +30,6 @@ sniffer --help
 ```
 
 ## Key Features
-- network\n- packets\n- monitoring
+- network
+- packets
+- monitoring

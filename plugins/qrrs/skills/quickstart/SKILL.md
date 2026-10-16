@@ -33,4 +33,6 @@ qrrs --help
 ```
 
 ## Key Features
-- qr-code\n- rust\n- generator
+- qr-code
+- rust
+- generator

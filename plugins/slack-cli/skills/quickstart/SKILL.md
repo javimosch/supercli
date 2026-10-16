@@ -38,4 +38,6 @@ slack --help
 ```
 
 ## Key Features
-- slack\n- apps\n- cli
+- slack
+- apps
+- cli

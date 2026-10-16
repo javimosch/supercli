@@ -32,4 +32,6 @@ mevn --help
 ```
 
 ## Key Features
-- vue\n- mongodb\n- full-stack
+- vue
+- mongodb
+- full-stack

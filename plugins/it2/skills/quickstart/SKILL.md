@@ -37,4 +37,6 @@ it2 --help
 ```
 
 ## Key Features
-- iterm2\n- terminal\n- automation
+- iterm2
+- terminal
+- automation

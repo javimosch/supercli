@@ -31,4 +31,6 @@ slacrawl --help
 ```
 
 ## Key Features
-- slack\n- crawler\n- archive
+- slack
+- crawler
+- archive

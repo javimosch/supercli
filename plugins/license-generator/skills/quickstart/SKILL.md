@@ -33,4 +33,6 @@ license-generator --help
 ```
 
 ## Key Features
-- licenses\n- open-source\n- generator
+- licenses
+- open-source
+- generator

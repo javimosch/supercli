@@ -35,4 +35,6 @@ gossh --help
 ```
 
 ## Key Features
-- ssh\n- automation\n- remote
+- ssh
+- automation
+- remote

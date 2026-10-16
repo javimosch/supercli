@@ -1,1 +1,15 @@
----\nname: env-validate-cli\ndescription: Use this skill for env-validate-cli operations.\n---\n# env-validate-cli Plugin\nCLI tool for env-validate-cli.\n## Commands\n- `env-validate-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install env-validate-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\nEOF
+---
+name: env-validate-cli
+description: Use this skill for env-validate-cli operations.
+---
+# env-validate-cli Plugin
+CLI tool for env-validate-cli.
+## Commands
+- `env-validate-cli _ _` — Passthrough
+## Installation
+```bash
+cargo install env-validate-cli
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+EOF

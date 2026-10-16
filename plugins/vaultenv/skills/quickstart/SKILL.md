@@ -1,1 +1,6 @@
----\nname: vaultenv\ndescription: Vault environment variable injection\n---\n# vaultenv Plugin\nVault environment variable injection
+---
+name: vaultenv
+description: Vault environment variable injection
+---
+# vaultenv Plugin
+Vault environment variable injection

@@ -1,1 +1,6 @@
----\nname: rav1e\ndescription: AV1 video encoder in Rust\n---\n# rav1e Plugin\nAV1 video encoder in Rust
+---
+name: rav1e
+description: AV1 video encoder in Rust
+---
+# rav1e Plugin
+AV1 video encoder in Rust

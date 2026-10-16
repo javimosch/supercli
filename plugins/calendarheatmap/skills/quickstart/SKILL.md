@@ -30,4 +30,6 @@ calendarheatmap --help
 ```
 
 ## Key Features
-- visualization\n- calendar\n- heatmap
+- visualization
+- calendar
+- heatmap

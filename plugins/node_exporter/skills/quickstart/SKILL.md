@@ -1,1 +1,6 @@
----\nname: node_exporter\ndescription: Prometheus system metrics exporter\n---\n# node_exporter Plugin\nPrometheus system metrics exporter
+---
+name: node_exporter
+description: Prometheus system metrics exporter
+---
+# node_exporter Plugin
+Prometheus system metrics exporter

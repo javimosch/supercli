@@ -30,4 +30,6 @@ kepubify --help
 ```
 
 ## Key Features
-- epub\n- kobo\n- converter
+- epub
+- kobo
+- converter

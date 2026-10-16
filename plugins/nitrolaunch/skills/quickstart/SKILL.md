@@ -39,4 +39,6 @@ nitrolaunch --help
 ```
 
 ## Key Features
-- minecraft\n- launcher\n- gaming
+- minecraft
+- launcher
+- gaming

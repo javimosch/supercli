@@ -30,4 +30,6 @@ tfmv --help
 ```
 
 ## Key Features
-- terraform\n- infrastructure\n- refactoring
+- terraform
+- infrastructure
+- refactoring

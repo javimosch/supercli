@@ -38,4 +38,6 @@ sonnerie --help
 ```
 
 ## Key Features
-- timeseries\n- database\n- metrics
+- timeseries
+- database
+- metrics

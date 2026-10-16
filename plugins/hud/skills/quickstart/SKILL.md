@@ -33,4 +33,6 @@ hud --help
 ```
 
 ## Key Features
-- tokio\n- ebpf\n- diagnostics
+- tokio
+- ebpf
+- diagnostics

@@ -41,4 +41,6 @@ neonctl --help
 ```
 
 ## Key Features
-- postgres\n- neon\n- database
+- postgres
+- neon
+- database

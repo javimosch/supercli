@@ -32,4 +32,6 @@ humble --help
 ```
 
 ## Key Features
-- humble-bundle\n- games\n- download
+- humble-bundle
+- games
+- download

@@ -30,4 +30,6 @@ cassowary --help
 ```
 
 ## Key Features
-- load-testing\n- http\n- performance
+- load-testing
+- http
+- performance

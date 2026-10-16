@@ -31,4 +31,6 @@ air --help
 ```
 
 ## Key Features
-- live-reload\n- go\n- development
+- live-reload
+- go
+- development

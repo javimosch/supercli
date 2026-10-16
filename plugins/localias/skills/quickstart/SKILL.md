@@ -31,4 +31,6 @@ localias --help
 ```
 
 ## Key Features
-- aliases\n- hosts\n- development
+- aliases
+- hosts
+- development

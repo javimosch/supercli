@@ -36,4 +36,6 @@ spaceman --help
 ```
 
 ## Key Features
-- grpc\n- api-testing\n- client
+- grpc
+- api-testing
+- client

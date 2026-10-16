@@ -32,4 +32,6 @@ apizza --help
 ```
 
 ## Key Features
-- food\n- ordering\n- cli
+- food
+- ordering
+- cli

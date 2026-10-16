@@ -33,4 +33,6 @@ protolock --help
 ```
 
 ## Key Features
-- protobuf\n- api-compatibility\n- versioning
+- protobuf
+- api-compatibility
+- versioning

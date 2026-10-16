@@ -38,4 +38,6 @@ trubka --help
 ```
 
 ## Key Features
-- kafka\n- messaging\n- streaming
+- kafka
+- messaging
+- streaming

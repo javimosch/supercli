@@ -1,1 +1,6 @@
----\nname: fonttools\ndescription: Font manipulation tools\n---\n# fonttools Plugin\nFont manipulation tools
+---
+name: fonttools
+description: Font manipulation tools
+---
+# fonttools Plugin
+Font manipulation tools

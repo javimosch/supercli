@@ -33,4 +33,6 @@ gist --help
 ```
 
 ## Key Features
-- github\n- gist\n- snippets
+- github
+- gist
+- snippets

@@ -1,1 +1,6 @@
----\nname: x265\ndescription: H.265/HEVC video encoder\n---\n# x265 Plugin\nH.265/HEVC video encoder
+---
+name: x265
+description: H.265/HEVC video encoder
+---
+# x265 Plugin
+H.265/HEVC video encoder

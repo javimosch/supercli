@@ -31,4 +31,6 @@ dagger --help
 ```
 
 ## Key Features
-- ci-cd\n- pipelines\n- containers
+- ci-cd
+- pipelines
+- containers

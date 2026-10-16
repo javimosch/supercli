@@ -30,4 +30,6 @@ kbld --help
 ```
 
 ## Key Features
-- kubernetes\n- containers\n- devops
+- kubernetes
+- containers
+- devops

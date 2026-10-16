@@ -1,1 +1,6 @@
----\nname: mssql-cli\ndescription: SQL Server command-line query tool\n---\n# mssql-cli Plugin\nSQL Server command-line query tool
+---
+name: mssql-cli
+description: SQL Server command-line query tool
+---
+# mssql-cli Plugin
+SQL Server command-line query tool

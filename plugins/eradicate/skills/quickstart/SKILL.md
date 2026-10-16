@@ -1,1 +1,6 @@
----\nname: eradicate\ndescription: Remove commented-out Python code\n---\n# eradicate Plugin\nRemove commented-out Python code
+---
+name: eradicate
+description: Remove commented-out Python code
+---
+# eradicate Plugin
+Remove commented-out Python code

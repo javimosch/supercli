@@ -30,4 +30,6 @@ rpgmakermlinux --help
 ```
 
 ## Key Features
-- rpg-maker\n- linux\n- gaming
+- rpg-maker
+- linux
+- gaming

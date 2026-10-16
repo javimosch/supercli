@@ -1,1 +1,6 @@
----\nname: zopfli\ndescription: Zopfli compression algorithm\n---\n# zopfli Plugin\nZopfli compression algorithm
+---
+name: zopfli
+description: Zopfli compression algorithm
+---
+# zopfli Plugin
+Zopfli compression algorithm

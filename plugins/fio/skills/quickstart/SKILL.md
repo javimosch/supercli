@@ -1,1 +1,6 @@
----\nname: fio\ndescription: Flexible I/O tester and benchmark\n---\n# fio Plugin\nFlexible I/O tester and benchmark
+---
+name: fio
+description: Flexible I/O tester and benchmark
+---
+# fio Plugin
+Flexible I/O tester and benchmark

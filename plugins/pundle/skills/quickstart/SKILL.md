@@ -30,4 +30,6 @@ pundle --help
 ```
 
 ## Key Features
-- bundler\n- javascript\n- build-tool
+- bundler
+- javascript
+- build-tool

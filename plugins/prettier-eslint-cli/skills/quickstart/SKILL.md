@@ -30,4 +30,6 @@ prettier-eslint --help
 ```
 
 ## Key Features
-- prettier\n- eslint\n- formatting
+- prettier
+- eslint
+- formatting

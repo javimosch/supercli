@@ -30,4 +30,6 @@ gen --help
 ```
 
 ## Key Features
-- code-generation\n- scaffold\n- cli
+- code-generation
+- scaffold
+- cli
