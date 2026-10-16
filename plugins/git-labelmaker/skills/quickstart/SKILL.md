@@ -31,4 +31,6 @@ git-labelmaker --help
 ```
 
 ## Key Features
-- github\n- labels\n- git
+- github
+- labels
+- git

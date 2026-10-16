@@ -1,1 +1,6 @@
----\nname: advancecomp\ndescription: Advance image compression\n---\n# advancecomp Plugin\nAdvance image compression
+---
+name: advancecomp
+description: Advance image compression
+---
+# advancecomp Plugin
+Advance image compression

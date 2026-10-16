@@ -39,4 +39,6 @@ dotly --help
 ```
 
 ## Key Features
-- dotfiles\n- configuration\n- productivity
+- dotfiles
+- configuration
+- productivity

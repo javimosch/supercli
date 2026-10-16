@@ -35,4 +35,6 @@ nestjs-console --help
 ```
 
 ## Key Features
-- nestjs\n- cli\n- framework
+- nestjs
+- cli
+- framework

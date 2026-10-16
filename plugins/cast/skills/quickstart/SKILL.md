@@ -31,4 +31,6 @@ cast --help
 ```
 
 ## Key Features
-- broadcast\n- notifications\n- cli
+- broadcast
+- notifications
+- cli

@@ -1,1 +1,6 @@
----\nname: ps2epsi\ndescription: PS to EPS converter\n---\n# ps2epsi Plugin\nPS to EPS converter
+---
+name: ps2epsi
+description: PS to EPS converter
+---
+# ps2epsi Plugin
+PS to EPS converter

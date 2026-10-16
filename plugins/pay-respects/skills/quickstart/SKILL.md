@@ -35,4 +35,6 @@ pay-respects --help
 ```
 
 ## Key Features
-- command-suggestions\n- shell\n- productivity
+- command-suggestions
+- shell
+- productivity

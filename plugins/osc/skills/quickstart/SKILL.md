@@ -30,4 +30,6 @@ osc --help
 ```
 
 ## Key Features
-- clipboard\n- ssh\n- terminal
+- clipboard
+- ssh
+- terminal

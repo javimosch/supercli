@@ -40,4 +40,6 @@ everdev --help
 ```
 
 ## Key Features
-- blockchain\n- ton\n- tvm
+- blockchain
+- ton
+- tvm

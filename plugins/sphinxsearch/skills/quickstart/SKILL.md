@@ -1,1 +1,6 @@
----\nname: sphinxsearch\ndescription: Sphinx open-source search server\n---\n# sphinxsearch Plugin\nSphinx open-source search server
+---
+name: sphinxsearch
+description: Sphinx open-source search server
+---
+# sphinxsearch Plugin
+Sphinx open-source search server

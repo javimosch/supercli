@@ -31,4 +31,6 @@ cls3 --help
 ```
 
 ## Key Features
-- aws\n- s3\n- cleanup
+- aws
+- s3
+- cleanup

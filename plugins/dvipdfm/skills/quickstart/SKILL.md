@@ -1,1 +1,6 @@
----\nname: dvipdfm\ndescription: DVI to PDF converter\n---\n# dvipdfm Plugin\nDVI to PDF converter
+---
+name: dvipdfm
+description: DVI to PDF converter
+---
+# dvipdfm Plugin
+DVI to PDF converter

@@ -32,4 +32,6 @@ sshed --help
 ```
 
 ## Key Features
-- ssh\n- config\n- network
+- ssh
+- config
+- network

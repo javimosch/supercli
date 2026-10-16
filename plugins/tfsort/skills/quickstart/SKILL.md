@@ -30,4 +30,6 @@ tfsort --help
 ```
 
 ## Key Features
-- terraform\n- infrastructure\n- sorting
+- terraform
+- infrastructure
+- sorting

@@ -31,4 +31,6 @@ rawkit --help
 ```
 
 ## Key Features
-- development\n- toolkit\n- scaffold
+- development
+- toolkit
+- scaffold

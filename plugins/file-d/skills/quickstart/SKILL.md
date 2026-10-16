@@ -30,4 +30,6 @@ file.d --help
 ```
 
 ## Key Features
-- logs\n- collector\n- pipelines
+- logs
+- collector
+- pipelines

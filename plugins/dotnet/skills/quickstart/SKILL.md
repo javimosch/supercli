@@ -1,1 +1,6 @@
----\nname: dotnet\ndescription: .NET Core CLI\n---\n# dotnet Plugin\n.NET Core CLI
+---
+name: dotnet
+description: .NET Core CLI
+---
+# dotnet Plugin
+.NET Core CLI

@@ -32,4 +32,6 @@ gut --help
 ```
 
 ## Key Features
-- git\n- version-control\n- beginner-friendly
+- git
+- version-control
+- beginner-friendly

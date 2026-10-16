@@ -1,1 +1,6 @@
----\nname: nbconvert\ndescription: Convert Jupyter notebooks\n---\n# nbconvert Plugin\nConvert Jupyter notebooks
+---
+name: nbconvert
+description: Convert Jupyter notebooks
+---
+# nbconvert Plugin
+Convert Jupyter notebooks

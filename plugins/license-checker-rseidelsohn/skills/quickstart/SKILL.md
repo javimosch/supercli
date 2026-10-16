@@ -30,4 +30,6 @@ license-checker --help
 ```
 
 ## Key Features
-- licenses\n- npm\n- legal
+- licenses
+- npm
+- legal

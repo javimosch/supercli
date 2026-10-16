@@ -30,4 +30,6 @@ supervizer --help
 ```
 
 ## Key Features
-- process\n- manager\n- supervisor
+- process
+- manager
+- supervisor

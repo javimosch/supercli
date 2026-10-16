@@ -1,1 +1,6 @@
----\nname: jenv\ndescription: Java version manager\n---\n# jenv Plugin\nJava version manager
+---
+name: jenv
+description: Java version manager
+---
+# jenv Plugin
+Java version manager

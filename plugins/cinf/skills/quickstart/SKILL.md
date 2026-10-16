@@ -30,4 +30,6 @@ cinf --help
 ```
 
 ## Key Features
-- containers\n- docker\n- resource-usage
+- containers
+- docker
+- resource-usage

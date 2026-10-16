@@ -1,1 +1,6 @@
----\nname: doxygen\ndescription: Source code documentation generator\n---\n# doxygen Plugin\nSource code documentation generator
+---
+name: doxygen
+description: Source code documentation generator
+---
+# doxygen Plugin
+Source code documentation generator

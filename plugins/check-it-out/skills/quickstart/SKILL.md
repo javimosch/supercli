@@ -34,4 +34,6 @@ cio --help
 ```
 
 ## Key Features
-- git\n- branches\n- checkout
+- git
+- branches
+- checkout

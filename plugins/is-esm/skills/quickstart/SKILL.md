@@ -30,4 +30,6 @@ is-esm --help
 ```
 
 ## Key Features
-- esm\n- javascript\n- module-check
+- esm
+- javascript
+- module-check

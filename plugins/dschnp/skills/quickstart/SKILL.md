@@ -37,4 +37,6 @@ dschnp --help
 ```
 
 ## Key Features
-- search\n- cli\n- productivity
+- search
+- cli
+- productivity

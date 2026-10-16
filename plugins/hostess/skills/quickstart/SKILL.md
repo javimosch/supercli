@@ -32,4 +32,6 @@ hostess --help
 ```
 
 ## Key Features
-- hosts\n- network\n- system
+- hosts
+- network
+- system

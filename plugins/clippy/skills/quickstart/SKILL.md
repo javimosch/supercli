@@ -1,1 +1,8 @@
----\nname: clippy\ndescription: Rust linter\n---\n# clippy Plugin\nRust linter\n## Usage\n- `clippy _ _ <args>` — Run clippy
+---
+name: clippy
+description: Rust linter
+---
+# clippy Plugin
+Rust linter
+## Usage
+- `clippy _ _ <args>` — Run clippy

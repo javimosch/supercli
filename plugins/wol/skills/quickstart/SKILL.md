@@ -31,4 +31,6 @@ wol --help
 ```
 
 ## Key Features
-- network\n- wake-on-lan\n- iot
+- network
+- wake-on-lan
+- iot

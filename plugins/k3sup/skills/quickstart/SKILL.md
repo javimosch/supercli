@@ -31,4 +31,6 @@ k3sup --help
 ```
 
 ## Key Features
-- kubernetes\n- k3s\n- cluster
+- kubernetes
+- k3s
+- cluster

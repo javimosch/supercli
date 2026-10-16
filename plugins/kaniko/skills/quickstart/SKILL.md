@@ -31,4 +31,6 @@ executor --help
 ```
 
 ## Key Features
-- containers\n- docker\n- build
+- containers
+- docker
+- build

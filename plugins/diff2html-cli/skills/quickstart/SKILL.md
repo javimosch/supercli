@@ -39,4 +39,6 @@ diff2html --help
 ```
 
 ## Key Features
-- diff\n- html\n- visualization
+- diff
+- html
+- visualization

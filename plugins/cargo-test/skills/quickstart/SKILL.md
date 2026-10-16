@@ -1,1 +1,8 @@
----\nname: cargo-test\ndescription: Run Rust tests\n---\n# cargo-test Plugin\nRun Rust tests\n## Usage\n- `cargo-test _ _ <args>` — Run cargo-test
+---
+name: cargo-test
+description: Run Rust tests
+---
+# cargo-test Plugin
+Run Rust tests
+## Usage
+- `cargo-test _ _ <args>` — Run cargo-test

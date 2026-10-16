@@ -33,4 +33,6 @@ mc --help
 ```
 
 ## Key Features
-- s3\n- object-storage\n- cloud
+- s3
+- object-storage
+- cloud

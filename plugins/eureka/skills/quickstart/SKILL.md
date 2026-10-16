@@ -36,4 +36,6 @@ eureka --help
 ```
 
 ## Key Features
-- notes\n- ideas\n- productivity
+- notes
+- ideas
+- productivity

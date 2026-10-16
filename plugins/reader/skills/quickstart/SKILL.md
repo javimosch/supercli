@@ -33,4 +33,6 @@ reader --help
 ```
 
 ## Key Features
-- readability\n- web\n- cli
+- readability
+- web
+- cli

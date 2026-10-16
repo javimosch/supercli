@@ -32,4 +32,6 @@ gitcredits --help
 ```
 
 ## Key Features
-- git\n- contributors\n- statistics
+- git
+- contributors
+- statistics

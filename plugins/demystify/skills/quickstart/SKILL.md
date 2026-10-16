@@ -35,4 +35,6 @@ demystify --help
 ```
 
 ## Key Features
-- documentation\n- api\n- automation
+- documentation
+- api
+- automation

@@ -1,1 +1,6 @@
----\nname: pyenv\ndescription: Python version manager\n---\n# pyenv Plugin\nPython version manager
+---
+name: pyenv
+description: Python version manager
+---
+# pyenv Plugin
+Python version manager

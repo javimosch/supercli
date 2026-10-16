@@ -1,1 +1,6 @@
----\nname: jsonnet\ndescription: JSON templating and configuration language\n---\n# jsonnet Plugin\nJSON templating and configuration language
+---
+name: jsonnet
+description: JSON templating and configuration language
+---
+# jsonnet Plugin
+JSON templating and configuration language

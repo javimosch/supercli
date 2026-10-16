@@ -32,4 +32,6 @@ markpdf --help
 ```
 
 ## Key Features
-- pdf\n- watermark\n- documents
+- pdf
+- watermark
+- documents

@@ -30,4 +30,6 @@ codemap --help
 ```
 
 ## Key Features
-- code\n- visualization\n- map
+- code
+- visualization
+- map

@@ -1,1 +1,6 @@
----\nname: cargo-deny\ndescription: Audit Rust dependency licenses\n---\n# cargo-deny Plugin\nAudit Rust dependency licenses
+---
+name: cargo-deny
+description: Audit Rust dependency licenses
+---
+# cargo-deny Plugin
+Audit Rust dependency licenses

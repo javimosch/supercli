@@ -1,1 +1,6 @@
----\nname: tput\ndescription: Terminal capability database\n---\n# tput Plugin\nTerminal capability database
+---
+name: tput
+description: Terminal capability database
+---
+# tput Plugin
+Terminal capability database

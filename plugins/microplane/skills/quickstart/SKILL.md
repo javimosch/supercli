@@ -36,4 +36,6 @@ microplane --help
 ```
 
 ## Key Features
-- git\n- microservices\n- automation
+- git
+- microservices
+- automation

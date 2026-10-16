@@ -31,4 +31,6 @@ goris --help
 ```
 
 ## Key Features
-- images\n- search\n- download
+- images
+- search
+- download

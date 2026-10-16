@@ -31,4 +31,6 @@ scrt --help
 ```
 
 ## Key Features
-- password\n- secrets\n- encryption
+- password
+- secrets
+- encryption

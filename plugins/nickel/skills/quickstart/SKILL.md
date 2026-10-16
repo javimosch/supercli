@@ -1,1 +1,6 @@
----\nname: nickel\ndescription: Nickel configuration language\n---\n# nickel Plugin\nNickel configuration language
+---
+name: nickel
+description: Nickel configuration language
+---
+# nickel Plugin
+Nickel configuration language

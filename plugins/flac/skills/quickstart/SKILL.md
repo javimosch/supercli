@@ -1,1 +1,6 @@
----\nname: flac\ndescription: Free Lossless Audio Codec tools\n---\n# flac Plugin\nFree Lossless Audio Codec tools
+---
+name: flac
+description: Free Lossless Audio Codec tools
+---
+# flac Plugin
+Free Lossless Audio Codec tools

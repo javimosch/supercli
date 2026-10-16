@@ -1,1 +1,8 @@
----\nname: cargo\ndescription: Rust package manager and build tool\n---\n# cargo Plugin\nRust package manager and build tool\n## Usage\n- `cargo _ _ <args>` — Run cargo
+---
+name: cargo
+description: Rust package manager and build tool
+---
+# cargo Plugin
+Rust package manager and build tool
+## Usage
+- `cargo _ _ <args>` — Run cargo

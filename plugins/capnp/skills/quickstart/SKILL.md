@@ -1,1 +1,6 @@
----\nname: capnp\ndescription: Cap'n Proto serialization\n---\n# capnp Plugin\nCap'n Proto serialization
+---
+name: capnp
+description: Cap'n Proto serialization
+---
+# capnp Plugin
+Cap'n Proto serialization

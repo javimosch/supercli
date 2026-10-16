@@ -1,1 +1,6 @@
----\nname: unittest\ndescription: Python unit testing framework\n---\n# unittest Plugin\nPython unit testing framework
+---
+name: unittest
+description: Python unit testing framework
+---
+# unittest Plugin
+Python unit testing framework

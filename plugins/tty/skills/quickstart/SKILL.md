@@ -1,1 +1,6 @@
----\nname: tty\ndescription: Print terminal filename\n---\n# tty Plugin\nPrint terminal filename
+---
+name: tty
+description: Print terminal filename
+---
+# tty Plugin
+Print terminal filename

@@ -34,4 +34,6 @@ tv --help
 ```
 
 ## Key Features
-- json\n- table\n- formatting
+- json
+- table
+- formatting

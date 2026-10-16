@@ -32,4 +32,6 @@ goplaces --help
 ```
 
 ## Key Features
-- google-places\n- maps\n- search
+- google-places
+- maps
+- search

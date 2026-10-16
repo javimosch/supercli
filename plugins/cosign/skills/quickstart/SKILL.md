@@ -32,4 +32,6 @@ cosign --help
 ```
 
 ## Key Features
-- security\n- signing\n- containers
+- security
+- signing
+- containers

@@ -31,4 +31,6 @@ tokentracker --help
 ```
 
 ## Key Features
-- crypto\n- tokens\n- price-tracking
+- crypto
+- tokens
+- price-tracking

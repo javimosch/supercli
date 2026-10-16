@@ -32,4 +32,6 @@ k8scr --help
 ```
 
 ## Key Features
-- kubernetes\n- oci\n- images
+- kubernetes
+- oci
+- images

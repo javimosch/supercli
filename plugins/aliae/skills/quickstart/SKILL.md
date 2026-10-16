@@ -30,4 +30,6 @@ aliae --help
 ```
 
 ## Key Features
-- alias\n- shell\n- productivity
+- alias
+- shell
+- productivity

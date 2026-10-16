@@ -37,4 +37,6 @@ ramadan-cli --help
 ```
 
 ## Key Features
-- ramadan\n- prayer-times\n- cli
+- ramadan
+- prayer-times
+- cli

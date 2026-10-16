@@ -32,4 +32,6 @@ v2ex --help
 ```
 
 ## Key Features
-- v2ex\n- community\n- browser
+- v2ex
+- community
+- browser

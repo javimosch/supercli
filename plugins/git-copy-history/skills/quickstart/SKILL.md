@@ -30,4 +30,6 @@ git-copy-history --help
 ```
 
 ## Key Features
-- git\n- history\n- migration
+- git
+- history
+- migration

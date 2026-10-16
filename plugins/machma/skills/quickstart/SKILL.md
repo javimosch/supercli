@@ -30,4 +30,6 @@ machma --help
 ```
 
 ## Key Features
-- parallel\n- execution\n- progress
+- parallel
+- execution
+- progress

@@ -1,1 +1,6 @@
----\nname: flatpak\ndescription: Flatpak package manager\n---\n# flatpak Plugin\nFlatpak package manager
+---
+name: flatpak
+description: Flatpak package manager
+---
+# flatpak Plugin
+Flatpak package manager

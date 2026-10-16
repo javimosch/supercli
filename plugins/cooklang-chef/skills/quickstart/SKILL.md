@@ -37,4 +37,6 @@ chef --help
 ```
 
 ## Key Features
-- cooking\n- recipes\n- cli
+- cooking
+- recipes
+- cli

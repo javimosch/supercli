@@ -31,4 +31,6 @@ yamldiff --help
 ```
 
 ## Key Features
-- yaml\n- diff\n- configuration
+- yaml
+- diff
+- configuration

@@ -30,4 +30,6 @@ netns --help
 ```
 
 ## Key Features
-- containers\n- networking\n- oci
+- containers
+- networking
+- oci

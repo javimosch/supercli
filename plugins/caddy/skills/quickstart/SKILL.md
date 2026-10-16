@@ -32,4 +32,6 @@ caddy --help
 ```
 
 ## Key Features
-- web-server\n- https\n- proxy
+- web-server
+- https
+- proxy

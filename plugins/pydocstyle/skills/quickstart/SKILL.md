@@ -1,1 +1,6 @@
----\nname: pydocstyle\ndescription: Python docstring style checker\n---\n# pydocstyle Plugin\nPython docstring style checker
+---
+name: pydocstyle
+description: Python docstring style checker
+---
+# pydocstyle Plugin
+Python docstring style checker

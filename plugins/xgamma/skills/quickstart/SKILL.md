@@ -1,1 +1,6 @@
----\nname: xgamma\ndescription: X11 gamma correction\n---\n# xgamma Plugin\nX11 gamma correction
+---
+name: xgamma
+description: X11 gamma correction
+---
+# xgamma Plugin
+X11 gamma correction

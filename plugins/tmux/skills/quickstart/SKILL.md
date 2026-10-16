@@ -1,1 +1,6 @@
----\nname: tmux\ndescription: Terminal multiplexer\n---\n# tmux Plugin\nTerminal multiplexer
+---
+name: tmux
+description: Terminal multiplexer
+---
+# tmux Plugin
+Terminal multiplexer

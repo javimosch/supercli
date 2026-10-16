@@ -31,4 +31,6 @@ iftree --help
 ```
 
 ## Key Features
-- network\n- interfaces\n- diagnostics
+- network
+- interfaces
+- diagnostics

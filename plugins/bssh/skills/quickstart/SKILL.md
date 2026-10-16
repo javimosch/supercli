@@ -1,1 +1,16 @@
----\nname: bssh\ndescription: Use this skill for bssh operations.\n---\n# bssh Plugin\nCLI tool for bssh.\n## Commands\n- `bssh _ _` — Passthrough\n## Installation\n```bash\ncargo install bssh\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: bssh
+description: Use this skill for bssh operations.
+---
+# bssh Plugin
+CLI tool for bssh.
+## Commands
+- `bssh _ _` — Passthrough
+## Installation
+```bash
+cargo install bssh
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

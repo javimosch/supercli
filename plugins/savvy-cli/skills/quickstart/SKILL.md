@@ -32,4 +32,6 @@ savvy --help
 ```
 
 ## Key Features
-- terminal\n- recording\n- replay
+- terminal
+- recording
+- replay

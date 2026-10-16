@@ -30,4 +30,6 @@ gat --help
 ```
 
 ## Key Features
-- cat\n- syntax-highlighting\n- terminal
+- cat
+- syntax-highlighting
+- terminal

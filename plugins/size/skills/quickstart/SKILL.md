@@ -1,1 +1,8 @@
----\nname: size\ndescription: List section sizes of object files\n---\n# size Plugin\nList section sizes of object files\n## Usage\n- `size _ _ <args>` — Run size
+---
+name: size
+description: List section sizes of object files
+---
+# size Plugin
+List section sizes of object files
+## Usage
+- `size _ _ <args>` — Run size

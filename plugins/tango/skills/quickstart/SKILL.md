@@ -34,4 +34,6 @@ tango --help
 ```
 
 ## Key Features
-- benchmarking\n- performance\n- testing
+- benchmarking
+- performance
+- testing

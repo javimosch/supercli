@@ -1,1 +1,6 @@
----\nname: ghc\ndescription: Glasgow Haskell Compiler\n---\n# ghc Plugin\nGlasgow Haskell Compiler
+---
+name: ghc
+description: Glasgow Haskell Compiler
+---
+# ghc Plugin
+Glasgow Haskell Compiler

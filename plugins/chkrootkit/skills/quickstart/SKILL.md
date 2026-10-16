@@ -1,1 +1,6 @@
----\nname: chkrootkit\ndescription: Rootkit detection tool\n---\n# chkrootkit Plugin\nRootkit detection tool
+---
+name: chkrootkit
+description: Rootkit detection tool
+---
+# chkrootkit Plugin
+Rootkit detection tool

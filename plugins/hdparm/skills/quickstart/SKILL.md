@@ -1,1 +1,6 @@
----\nname: hdparm\ndescription: SATA/IDE drive parameters\n---\n# hdparm Plugin\nSATA/IDE drive parameters
+---
+name: hdparm
+description: SATA/IDE drive parameters
+---
+# hdparm Plugin
+SATA/IDE drive parameters

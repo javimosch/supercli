@@ -32,4 +32,6 @@ glab --help
 ```
 
 ## Key Features
-- gitlab\n- git\n- cli
+- gitlab
+- git
+- cli

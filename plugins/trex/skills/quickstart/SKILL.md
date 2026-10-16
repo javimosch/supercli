@@ -31,4 +31,6 @@ trex --help
 ```
 
 ## Key Features
-- text-processing\n- extraction\n- cli
+- text-processing
+- extraction
+- cli

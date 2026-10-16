@@ -1,1 +1,6 @@
----\nname: xev\ndescription: X11 event tester\n---\n# xev Plugin\nX11 event tester
+---
+name: xev
+description: X11 event tester
+---
+# xev Plugin
+X11 event tester

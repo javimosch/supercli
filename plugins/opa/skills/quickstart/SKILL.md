@@ -32,4 +32,6 @@ opa --help
 ```
 
 ## Key Features
-- policy\n- opa\n- rego
+- policy
+- opa
+- rego

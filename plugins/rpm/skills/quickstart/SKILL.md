@@ -1,1 +1,6 @@
----\nname: rpm\ndescription: RPM package manager\n---\n# rpm Plugin\nRPM package manager
+---
+name: rpm
+description: RPM package manager
+---
+# rpm Plugin
+RPM package manager

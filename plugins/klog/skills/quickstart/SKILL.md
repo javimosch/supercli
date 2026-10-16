@@ -31,4 +31,6 @@ klog --help
 ```
 
 ## Key Features
-- time-tracking\n- productivity\n- plaintext
+- time-tracking
+- productivity
+- plaintext

@@ -38,4 +38,6 @@ calcpy --help
 ```
 
 ## Key Features
-- calculator\n- math\n- terminal
+- calculator
+- math
+- terminal

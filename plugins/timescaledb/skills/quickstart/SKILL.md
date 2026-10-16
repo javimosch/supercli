@@ -1,1 +1,6 @@
----\nname: timescaledb\ndescription: TimescaleDB time-series SQL database\n---\n# timescaledb Plugin\nTimescaleDB time-series SQL database
+---
+name: timescaledb
+description: TimescaleDB time-series SQL database
+---
+# timescaledb Plugin
+TimescaleDB time-series SQL database

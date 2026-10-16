@@ -1,1 +1,6 @@
----\nname: xdo\ndescription: X11 window control\n---\n# xdo Plugin\nX11 window control
+---
+name: xdo
+description: X11 window control
+---
+# xdo Plugin
+X11 window control

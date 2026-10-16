@@ -38,4 +38,6 @@ lune --help
 ```
 
 ## Key Features
-- luau\n- scripting\n- runtime
+- luau
+- scripting
+- runtime

@@ -32,4 +32,6 @@ hopp --help
 ```
 
 ## Key Features
-- http\n- api-testing\n- cli
+- http
+- api-testing
+- cli

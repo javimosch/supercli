@@ -30,4 +30,6 @@ static-react --help
 ```
 
 ## Key Features
-- react\n- static-site\n- ssg
+- react
+- static-site
+- ssg

@@ -30,4 +30,6 @@ goWAPT --help
 ```
 
 ## Key Features
-- security\n- scanner\n- fuzzer
+- security
+- scanner
+- fuzzer

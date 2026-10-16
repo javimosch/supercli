@@ -32,4 +32,6 @@ pathos --help
 ```
 
 ## Key Features
-- filesystem\n- paths\n- utility
+- filesystem
+- paths
+- utility

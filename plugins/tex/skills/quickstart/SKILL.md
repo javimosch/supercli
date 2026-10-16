@@ -1,1 +1,6 @@
----\nname: tex\ndescription: TeX typesetting engine\n---\n# tex Plugin\nTeX typesetting engine
+---
+name: tex
+description: TeX typesetting engine
+---
+# tex Plugin
+TeX typesetting engine

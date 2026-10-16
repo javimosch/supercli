@@ -1,1 +1,6 @@
----\nname: clickhouse\ndescription: ClickHouse column-oriented DBMS\n---\n# clickhouse Plugin\nClickHouse column-oriented DBMS
+---
+name: clickhouse
+description: ClickHouse column-oriented DBMS
+---
+# clickhouse Plugin
+ClickHouse column-oriented DBMS

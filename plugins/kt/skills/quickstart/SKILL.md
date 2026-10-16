@@ -33,4 +33,6 @@ kt --help
 ```
 
 ## Key Features
-- kafka\n- messaging\n- cli
+- kafka
+- messaging
+- cli

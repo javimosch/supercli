@@ -1,1 +1,6 @@
----\nname: vagrant\ndescription: HashiCorp VM environment manager\n---\n# vagrant Plugin\nHashiCorp VM environment manager
+---
+name: vagrant
+description: HashiCorp VM environment manager
+---
+# vagrant Plugin
+HashiCorp VM environment manager

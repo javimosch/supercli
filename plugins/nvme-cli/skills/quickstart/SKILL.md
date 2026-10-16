@@ -1,1 +1,6 @@
----\nname: nvme-cli\ndescription: NVMe storage management\n---\n# nvme-cli Plugin\nNVMe storage management
+---
+name: nvme-cli
+description: NVMe storage management
+---
+# nvme-cli Plugin
+NVMe storage management

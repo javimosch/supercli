@@ -36,4 +36,6 @@ freenom-dns-updater --help
 ```
 
 ## Key Features
-- dns\n- freenom\n- domains
+- dns
+- freenom
+- domains

@@ -1,1 +1,6 @@
----\nname: ssh-copy-id\ndescription: Install SSH key on remote host\n---\n# ssh-copy-id Plugin\nInstall SSH key on remote host
+---
+name: ssh-copy-id
+description: Install SSH key on remote host
+---
+# ssh-copy-id Plugin
+Install SSH key on remote host

@@ -1,1 +1,6 @@
----\nname: erlang\ndescription: Erlang programming language\n---\n# erlang Plugin\nErlang programming language
+---
+name: erlang
+description: Erlang programming language
+---
+# erlang Plugin
+Erlang programming language

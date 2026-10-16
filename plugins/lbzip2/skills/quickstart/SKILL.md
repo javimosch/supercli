@@ -1,1 +1,6 @@
----\nname: lbzip2\ndescription: Parallel bzip2 compressor\n---\n# lbzip2 Plugin\nParallel bzip2 compressor
+---
+name: lbzip2
+description: Parallel bzip2 compressor
+---
+# lbzip2 Plugin
+Parallel bzip2 compressor

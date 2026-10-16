@@ -30,4 +30,6 @@ doctron --help
 ```
 
 ## Key Features
-- pdf\n- markdown\n- converter
+- pdf
+- markdown
+- converter

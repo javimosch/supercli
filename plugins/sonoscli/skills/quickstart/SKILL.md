@@ -33,4 +33,6 @@ sonos --help
 ```
 
 ## Key Features
-- sonos\n- audio\n- smart-home
+- sonos
+- audio
+- smart-home

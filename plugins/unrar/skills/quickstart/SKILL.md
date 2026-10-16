@@ -1,1 +1,6 @@
----\nname: unrar\ndescription: RAR archive extraction\n---\n# unrar Plugin\nRAR archive extraction
+---
+name: unrar
+description: RAR archive extraction
+---
+# unrar Plugin
+RAR archive extraction

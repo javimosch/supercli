@@ -1,1 +1,16 @@
----\nname: nanohtml2text\ndescription: Use this skill for nanohtml2text operations.\n---\n# nanohtml2text Plugin\nCLI tool for nanohtml2text.\n## Commands\n- `nanohtml2text _ _` — Passthrough\n## Installation\n```bash\ncargo install nanohtml2text\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: nanohtml2text
+description: Use this skill for nanohtml2text operations.
+---
+# nanohtml2text Plugin
+CLI tool for nanohtml2text.
+## Commands
+- `nanohtml2text _ _` — Passthrough
+## Installation
+```bash
+cargo install nanohtml2text
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

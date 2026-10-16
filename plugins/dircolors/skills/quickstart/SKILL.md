@@ -30,4 +30,6 @@ dircolors --help
 ```
 
 ## Key Features
-- ls\n- colors\n- terminal
+- ls
+- colors
+- terminal

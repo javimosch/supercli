@@ -43,4 +43,6 @@ onerepo --help
 ```
 
 ## Key Features
-- monorepo\n- javascript\n- typescript
+- monorepo
+- javascript
+- typescript
