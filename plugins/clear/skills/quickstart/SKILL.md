@@ -1,1 +1,6 @@
----\nname: clear\ndescription: Clear terminal screen\n---\n# clear Plugin\nClear terminal screen
+---
+name: clear
+description: Clear terminal screen
+---
+# clear Plugin
+Clear terminal screen

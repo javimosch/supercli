@@ -36,4 +36,6 @@ mongotail --help
 ```
 
 ## Key Features
-- mongodb\n- logging\n- monitoring
+- mongodb
+- logging
+- monitoring

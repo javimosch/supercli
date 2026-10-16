@@ -32,4 +32,6 @@ notesmd --help
 ```
 
 ## Key Features
-- notes\n- obsidian\n- markdown
+- notes
+- obsidian
+- markdown

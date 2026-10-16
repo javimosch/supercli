@@ -36,4 +36,6 @@ pinterest-dl --help
 ```
 
 ## Key Features
-- pinterest\n- media\n- downloader
+- pinterest
+- media
+- downloader

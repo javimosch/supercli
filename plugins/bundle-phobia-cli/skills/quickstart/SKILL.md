@@ -30,4 +30,6 @@ bundle-phobia --help
 ```
 
 ## Key Features
-- npm\n- bundle-size\n- performance
+- npm
+- bundle-size
+- performance

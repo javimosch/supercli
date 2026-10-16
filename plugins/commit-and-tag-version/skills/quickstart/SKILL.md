@@ -30,4 +30,6 @@ commit-and-tag-version --help
 ```
 
 ## Key Features
-- versioning\n- changelog\n- git
+- versioning
+- changelog
+- git

@@ -32,4 +32,6 @@ caire --help
 ```
 
 ## Key Features
-- image-processing\n- resize\n- content-aware
+- image-processing
+- resize
+- content-aware

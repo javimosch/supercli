@@ -31,4 +31,6 @@ plex-sync --help
 ```
 
 ## Key Features
-- plex\n- media\n- sync
+- plex
+- media
+- sync

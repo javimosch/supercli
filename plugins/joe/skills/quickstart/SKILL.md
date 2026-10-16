@@ -1,1 +1,6 @@
----\nname: joe\ndescription: Joe's Own Editor\n---\n# joe Plugin\nJoe's Own Editor
+---
+name: joe
+description: Joe's Own Editor
+---
+# joe Plugin
+Joe's Own Editor

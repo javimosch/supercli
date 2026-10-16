@@ -37,4 +37,6 @@ figma-export --help
 ```
 
 ## Key Features
-- figma\n- design\n- export
+- figma
+- design
+- export

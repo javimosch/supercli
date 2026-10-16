@@ -32,4 +32,6 @@ gotube --help
 ```
 
 ## Key Features
-- youtube\n- download\n- video
+- youtube
+- download
+- video

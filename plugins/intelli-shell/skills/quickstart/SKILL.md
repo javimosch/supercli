@@ -36,4 +36,6 @@ intelli-shell --help
 ```
 
 ## Key Features
-- shell\n- intellisense\n- productivity
+- shell
+- intellisense
+- productivity

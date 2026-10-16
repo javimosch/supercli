@@ -36,4 +36,6 @@ snm --help
 ```
 
 ## Key Features
-- node.js\n- version-manager\n- rust
+- node.js
+- version-manager
+- rust

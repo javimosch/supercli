@@ -32,4 +32,6 @@ gh-stars --help
 ```
 
 ## Key Features
-- github\n- stars\n- repositories
+- github
+- stars
+- repositories

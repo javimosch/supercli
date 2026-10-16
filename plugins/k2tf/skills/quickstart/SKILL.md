@@ -30,4 +30,6 @@ k2tf --help
 ```
 
 ## Key Features
-- kubernetes\n- terraform\n- converter
+- kubernetes
+- terraform
+- converter

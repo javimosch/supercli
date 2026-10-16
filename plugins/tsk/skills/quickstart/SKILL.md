@@ -32,4 +32,6 @@ tsk --help
 ```
 
 ## Key Features
-- todo\n- task\n- cli
+- todo
+- task
+- cli

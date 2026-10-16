@@ -36,4 +36,6 @@ xword-dl --help
 ```
 
 ## Key Features
-- crossword\n- puzzle\n- downloader
+- crossword
+- puzzle
+- downloader

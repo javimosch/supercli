@@ -30,4 +30,6 @@ tfk8s --help
 ```
 
 ## Key Features
-- terraform\n- kubernetes\n- converter
+- terraform
+- kubernetes
+- converter

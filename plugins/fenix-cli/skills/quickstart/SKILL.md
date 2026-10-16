@@ -31,4 +31,6 @@ fenix --help
 ```
 
 ## Key Features
-- code-search\n- engine\n- developer-tools
+- code-search
+- engine
+- developer-tools

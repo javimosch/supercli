@@ -33,4 +33,6 @@ mbt --help
 ```
 
 ## Key Features
-- monorepo\n- build-tool\n- ci-cd
+- monorepo
+- build-tool
+- ci-cd

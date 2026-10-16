@@ -31,4 +31,6 @@ mkcert --help
 ```
 
 ## Key Features
-- ssl\n- certificates\n- development
+- ssl
+- certificates
+- development

@@ -37,4 +37,6 @@ texture-compressor --help
 ```
 
 ## Key Features
-- texture-compression\n- graphics\n- ktx
+- texture-compression
+- graphics
+- ktx

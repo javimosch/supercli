@@ -36,4 +36,6 @@ perfops --help
 ```
 
 ## Key Features
-- network\n- performance\n- testing
+- network
+- performance
+- testing

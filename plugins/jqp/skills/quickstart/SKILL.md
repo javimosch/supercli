@@ -30,4 +30,6 @@ jqp --help
 ```
 
 ## Key Features
-- json\n- jq\n- tui
+- json
+- jq
+- tui

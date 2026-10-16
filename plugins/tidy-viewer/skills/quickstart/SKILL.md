@@ -1,1 +1,16 @@
----\nname: tidy-viewer\ndescription: Use this skill for tidy-viewer operations.\n---\n# tidy-viewer Plugin\nCLI tool for tidy-viewer.\n## Commands\n- `tidy-viewer _ _` — Passthrough\n## Installation\n```bash\ncargo install tidy-viewer\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: tidy-viewer
+description: Use this skill for tidy-viewer operations.
+---
+# tidy-viewer Plugin
+CLI tool for tidy-viewer.
+## Commands
+- `tidy-viewer _ _` — Passthrough
+## Installation
+```bash
+cargo install tidy-viewer
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

@@ -48,4 +48,6 @@ kubectl-ice --help
 ```
 
 ## Key Features
-- kubernetes\n- monitoring\n- optimization
+- kubernetes
+- monitoring
+- optimization

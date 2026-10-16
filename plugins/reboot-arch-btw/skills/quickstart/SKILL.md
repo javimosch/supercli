@@ -1,1 +1,16 @@
----\nname: reboot-arch-btw\ndescription: Use this skill for reboot-arch-btw operations.\n---\n# reboot-arch-btw Plugin\nCLI tool for reboot-arch-btw.\n## Commands\n- `reboot-arch-btw _ _` — Passthrough\n## Installation\n```bash\ncargo install reboot-arch-btw\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: reboot-arch-btw
+description: Use this skill for reboot-arch-btw operations.
+---
+# reboot-arch-btw Plugin
+CLI tool for reboot-arch-btw.
+## Commands
+- `reboot-arch-btw _ _` — Passthrough
+## Installation
+```bash
+cargo install reboot-arch-btw
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

@@ -31,4 +31,6 @@ go-audio --help
 ```
 
 ## Key Features
-- pdf\n- audiobook\n- text-to-speech
+- pdf
+- audiobook
+- text-to-speech

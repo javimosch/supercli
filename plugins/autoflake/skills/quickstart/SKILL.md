@@ -1,1 +1,6 @@
----\nname: autoflake\ndescription: Remove unused Python imports\n---\n# autoflake Plugin\nRemove unused Python imports
+---
+name: autoflake
+description: Remove unused Python imports
+---
+# autoflake Plugin
+Remove unused Python imports

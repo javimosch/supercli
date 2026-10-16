@@ -1,1 +1,6 @@
----\nname: webp\ndescription: WebP image encoder and decoder\n---\n# webp Plugin\nWebP image encoder and decoder
+---
+name: webp
+description: WebP image encoder and decoder
+---
+# webp Plugin
+WebP image encoder and decoder

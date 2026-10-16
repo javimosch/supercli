@@ -1,1 +1,6 @@
----\nname: xfontsel\ndescription: X11 font selector\n---\n# xfontsel Plugin\nX11 font selector
+---
+name: xfontsel
+description: X11 font selector
+---
+# xfontsel Plugin
+X11 font selector

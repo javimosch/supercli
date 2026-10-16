@@ -36,4 +36,6 @@ ascii-py --help
 ```
 
 ## Key Features
-- ascii\n- art\n- text
+- ascii
+- art
+- text

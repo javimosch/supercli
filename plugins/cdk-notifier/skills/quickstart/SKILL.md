@@ -31,4 +31,6 @@ cdk-notifier --help
 ```
 
 ## Key Features
-- aws-cdk\n- deployment\n- notifications
+- aws-cdk
+- deployment
+- notifications

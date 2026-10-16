@@ -1,1 +1,6 @@
----\nname: rollup\ndescription: JavaScript module bundler\n---\n# rollup Plugin\nJavaScript module bundler
+---
+name: rollup
+description: JavaScript module bundler
+---
+# rollup Plugin
+JavaScript module bundler

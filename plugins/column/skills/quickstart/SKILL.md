@@ -1,1 +1,6 @@
----\nname: column\ndescription: Columnate text files\n---\n# column Plugin\nColumnate text files
+---
+name: column
+description: Columnate text files
+---
+# column Plugin
+Columnate text files

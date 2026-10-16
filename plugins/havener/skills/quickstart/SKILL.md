@@ -31,4 +31,6 @@ havener --help
 ```
 
 ## Key Features
-- kubernetes\n- cluster\n- devops
+- kubernetes
+- cluster
+- devops

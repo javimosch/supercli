@@ -1,1 +1,8 @@
----\nname: perf\ndescription: Linux profiling with performance counters\n---\n# perf Plugin\nLinux profiling with performance counters\n## Usage\n- `perf _ _ <args>` — Run perf
+---
+name: perf
+description: Linux profiling with performance counters
+---
+# perf Plugin
+Linux profiling with performance counters
+## Usage
+- `perf _ _ <args>` — Run perf

@@ -30,4 +30,6 @@ tfvar --help
 ```
 
 ## Key Features
-- terraform\n- variables\n- iac
+- terraform
+- variables
+- iac

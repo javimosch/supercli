@@ -1,1 +1,6 @@
----\nname: mawk\ndescription: Fast Awk implementation\n---\n# mawk Plugin\nFast Awk implementation
+---
+name: mawk
+description: Fast Awk implementation
+---
+# mawk Plugin
+Fast Awk implementation

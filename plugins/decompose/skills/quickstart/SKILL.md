@@ -30,4 +30,6 @@ decompose --help
 ```
 
 ## Key Features
-- docker\n- dependencies\n- graph
+- docker
+- dependencies
+- graph

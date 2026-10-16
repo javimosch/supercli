@@ -35,4 +35,6 @@ civo --help
 ```
 
 ## Key Features
-- cloud\n- civo\n- infrastructure
+- cloud
+- civo
+- infrastructure

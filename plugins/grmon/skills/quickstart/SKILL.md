@@ -30,4 +30,6 @@ grmon --help
 ```
 
 ## Key Features
-- go\n- monitoring\n- performance
+- go
+- monitoring
+- performance

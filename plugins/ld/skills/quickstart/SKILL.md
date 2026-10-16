@@ -1,1 +1,8 @@
----\nname: ld\ndescription: GNU linker\n---\n# ld Plugin\nGNU linker\n## Usage\n- `ld _ _ <args>` — Run ld
+---
+name: ld
+description: GNU linker
+---
+# ld Plugin
+GNU linker
+## Usage
+- `ld _ _ <args>` — Run ld

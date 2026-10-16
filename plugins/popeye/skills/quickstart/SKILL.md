@@ -30,4 +30,6 @@ popeye --help
 ```
 
 ## Key Features
-- kubernetes\n- lint\n- sanitizer
+- kubernetes
+- lint
+- sanitizer

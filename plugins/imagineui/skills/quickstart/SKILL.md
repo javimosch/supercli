@@ -35,4 +35,6 @@ imagineui --help
 ```
 
 ## Key Features
-- wireframes\n- ui-design\n- prototyping
+- wireframes
+- ui-design
+- prototyping

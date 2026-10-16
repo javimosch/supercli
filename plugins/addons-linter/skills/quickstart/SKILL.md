@@ -30,4 +30,6 @@ addons-linter --help
 ```
 
 ## Key Features
-- firefox\n- webextensions\n- linting
+- firefox
+- webextensions
+- linting

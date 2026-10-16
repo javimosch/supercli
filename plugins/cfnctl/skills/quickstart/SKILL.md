@@ -33,4 +33,6 @@ cfnctl --help
 ```
 
 ## Key Features
-- aws\n- cloudformation\n- infrastructure
+- aws
+- cloudformation
+- infrastructure

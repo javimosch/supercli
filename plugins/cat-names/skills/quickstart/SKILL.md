@@ -30,4 +30,6 @@ cat-names --help
 ```
 
 ## Key Features
-- fun\n- names\n- cli
+- fun
+- names
+- cli

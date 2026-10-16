@@ -30,4 +30,6 @@ pin-github-action --help
 ```
 
 ## Key Features
-- github-actions\n- security\n- ci
+- github-actions
+- security
+- ci

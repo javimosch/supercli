@@ -1,1 +1,6 @@
----\nname: perl\ndescription: Perl programming language interpreter\n---\n# perl Plugin\nPerl programming language interpreter
+---
+name: perl
+description: Perl programming language interpreter
+---
+# perl Plugin
+Perl programming language interpreter

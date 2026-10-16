@@ -32,4 +32,6 @@ gobuster --help
 ```
 
 ## Key Features
-- security\n- scanner\n- web
+- security
+- scanner
+- web

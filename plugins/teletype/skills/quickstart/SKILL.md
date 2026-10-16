@@ -35,4 +35,6 @@ teletype --help
 ```
 
 ## Key Features
-- terminal-sharing\n- streaming\n- collaboration
+- terminal-sharing
+- streaming
+- collaboration

@@ -37,4 +37,6 @@ vininfo --help
 ```
 
 ## Key Features
-- vin\n- automotive\n- information
+- vin
+- automotive
+- information

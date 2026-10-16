@@ -30,4 +30,6 @@ protodot --help
 ```
 
 ## Key Features
-- protobuf\n- dot\n- visualization
+- protobuf
+- dot
+- visualization

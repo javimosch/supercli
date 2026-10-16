@@ -35,4 +35,6 @@ eva --help
 ```
 
 ## Key Features
-- calculator\n- math\n- repl
+- calculator
+- math
+- repl

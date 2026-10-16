@@ -31,4 +31,6 @@ mani --help
 ```
 
 ## Key Features
-- git\n- repositories\n- monorepo
+- git
+- repositories
+- monorepo

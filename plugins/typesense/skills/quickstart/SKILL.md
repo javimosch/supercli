@@ -1,1 +1,6 @@
----\nname: typesense\ndescription: Typesense search engine\n---\n# typesense Plugin\nTypesense search engine
+---
+name: typesense
+description: Typesense search engine
+---
+# typesense Plugin
+Typesense search engine

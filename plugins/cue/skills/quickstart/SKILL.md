@@ -32,4 +32,6 @@ cue --help
 ```
 
 ## Key Features
-- configuration\n- validation\n- json
+- configuration
+- validation
+- json

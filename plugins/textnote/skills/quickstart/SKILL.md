@@ -32,4 +32,6 @@ textnote --help
 ```
 
 ## Key Features
-- notes\n- plaintext\n- productivity
+- notes
+- plaintext
+- productivity

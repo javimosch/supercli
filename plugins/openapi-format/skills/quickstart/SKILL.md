@@ -31,4 +31,6 @@ openapi-format --help
 ```
 
 ## Key Features
-- openapi\n- format\n- filter
+- openapi
+- format
+- filter

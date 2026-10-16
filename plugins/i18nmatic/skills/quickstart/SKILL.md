@@ -37,4 +37,6 @@ i18nmatic --help
 ```
 
 ## Key Features
-- i18n\n- react\n- nextjs
+- i18n
+- react
+- nextjs

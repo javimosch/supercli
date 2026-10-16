@@ -32,4 +32,6 @@ writeas --help
 ```
 
 ## Key Features
-- publishing\n- blogging\n- writing
+- publishing
+- blogging
+- writing

@@ -1,1 +1,6 @@
----\nname: storybook\ndescription: UI component explorer\n---\n# storybook Plugin\nUI component explorer
+---
+name: storybook
+description: UI component explorer
+---
+# storybook Plugin
+UI component explorer

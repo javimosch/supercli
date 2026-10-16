@@ -30,4 +30,6 @@ f2 --help
 ```
 
 ## Key Features
-- filesystem\n- rename\n- batch
+- filesystem
+- rename
+- batch

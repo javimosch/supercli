@@ -30,4 +30,7 @@ rts --help
 ```
 
 ## Key Features
-- json\n- rest\n- api\n- mock
+- json
+- rest
+- api
+- mock

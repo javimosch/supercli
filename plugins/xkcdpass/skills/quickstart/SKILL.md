@@ -1,1 +1,6 @@
----\nname: xkcdpass\ndescription: XKCD-style password generator\n---\n# xkcdpass Plugin\nXKCD-style password generator
+---
+name: xkcdpass
+description: XKCD-style password generator
+---
+# xkcdpass Plugin
+XKCD-style password generator

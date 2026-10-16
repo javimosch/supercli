@@ -30,4 +30,6 @@ html-to-markdown --help
 ```
 
 ## Key Features
-- html\n- markdown\n- converter
+- html
+- markdown
+- converter

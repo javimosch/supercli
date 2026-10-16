@@ -30,4 +30,6 @@ ascii-image-converter --help
 ```
 
 ## Key Features
-- ascii\n- images\n- art
+- ascii
+- images
+- art

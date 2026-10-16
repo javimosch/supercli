@@ -33,4 +33,6 @@ openhue --help
 ```
 
 ## Key Features
-- philips-hue\n- smart-home\n- iot
+- philips-hue
+- smart-home
+- iot

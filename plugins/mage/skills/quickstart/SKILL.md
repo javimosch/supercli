@@ -32,4 +32,6 @@ mage --help
 ```
 
 ## Key Features
-- build-tool\n- go\n- scripting
+- build-tool
+- go
+- scripting

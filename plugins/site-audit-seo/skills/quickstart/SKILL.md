@@ -30,4 +30,6 @@ site-audit-seo --help
 ```
 
 ## Key Features
-- seo\n- audit\n- web
+- seo
+- audit
+- web

@@ -31,4 +31,6 @@ nanobox --help
 ```
 
 ## Key Features
-- development\n- deployment\n- containers
+- development
+- deployment
+- containers

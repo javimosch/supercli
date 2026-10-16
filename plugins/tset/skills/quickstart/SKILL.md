@@ -1,1 +1,6 @@
----\nname: tset\ndescription: Terminal initialization\n---\n# tset Plugin\nTerminal initialization
+---
+name: tset
+description: Terminal initialization
+---
+# tset Plugin
+Terminal initialization

@@ -32,4 +32,6 @@ gomainr --help
 ```
 
 ## Key Features
-- domain\n- availability\n- networking
+- domain
+- availability
+- networking

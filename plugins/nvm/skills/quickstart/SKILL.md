@@ -1,1 +1,6 @@
----\nname: nvm\ndescription: Node version manager\n---\n# nvm Plugin\nNode version manager
+---
+name: nvm
+description: Node version manager
+---
+# nvm Plugin
+Node version manager

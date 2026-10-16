@@ -33,4 +33,6 @@ gitea --help
 ```
 
 ## Key Features
-- git\n- self-hosted\n- scm
+- git
+- self-hosted
+- scm

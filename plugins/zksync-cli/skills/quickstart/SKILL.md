@@ -45,4 +45,6 @@ zksync-cli --help
 ```
 
 ## Key Features
-- zksync\n- blockchain\n- ethereum
+- zksync
+- blockchain
+- ethereum

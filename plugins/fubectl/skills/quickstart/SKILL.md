@@ -31,4 +31,6 @@ fubectl --help
 ```
 
 ## Key Features
-- kubernetes\n- kubectl\n- devops
+- kubernetes
+- kubectl
+- devops

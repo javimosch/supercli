@@ -30,4 +30,7 @@ comigo --help
 ```
 
 ## Key Features
-- comics\n- reader\n- manga\n- epub
+- comics
+- reader
+- manga
+- epub

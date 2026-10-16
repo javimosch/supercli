@@ -1,1 +1,6 @@
----\nname: dart\ndescription: Dart programming language\n---\n# dart Plugin\nDart programming language
+---
+name: dart
+description: Dart programming language
+---
+# dart Plugin
+Dart programming language

@@ -1,1 +1,6 @@
----\nname: fontconfig\ndescription: Font configuration and management\n---\n# fontconfig Plugin\nFont configuration and management
+---
+name: fontconfig
+description: Font configuration and management
+---
+# fontconfig Plugin
+Font configuration and management

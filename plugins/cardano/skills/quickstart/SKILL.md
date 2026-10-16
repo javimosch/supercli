@@ -1,1 +1,6 @@
----\nname: cardano\ndescription: Cardano node CLI\n---\n# cardano Plugin\nCardano node CLI
+---
+name: cardano
+description: Cardano node CLI
+---
+# cardano Plugin
+Cardano node CLI

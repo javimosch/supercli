@@ -36,4 +36,6 @@ geeup --help
 ```
 
 ## Key Features
-- google-earth-engine\n- gcp\n- uploads
+- google-earth-engine
+- gcp
+- uploads

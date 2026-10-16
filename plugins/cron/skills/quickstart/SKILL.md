@@ -31,4 +31,6 @@ cron --help
 ```
 
 ## Key Features
-- cron\n- parser\n- scheduler
+- cron
+- parser
+- scheduler

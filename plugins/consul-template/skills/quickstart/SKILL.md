@@ -1,1 +1,6 @@
----\nname: consul-template\ndescription: Consul template processor\n---\n# consul-template Plugin\nConsul template processor
+---
+name: consul-template
+description: Consul template processor
+---
+# consul-template Plugin
+Consul template processor

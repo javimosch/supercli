@@ -36,4 +36,6 @@ flavours --help
 ```
 
 ## Key Features
-- theme\n- colors\n- base16
+- theme
+- colors
+- base16

@@ -42,4 +42,6 @@ novus --help
 ```
 
 ## Key Features
-- package-manager\n- windows\n- cli
+- package-manager
+- windows
+- cli

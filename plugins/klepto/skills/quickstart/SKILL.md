@@ -33,4 +33,6 @@ klepto --help
 ```
 
 ## Key Features
-- database\n- anonymization\n- copy
+- database
+- anonymization
+- copy

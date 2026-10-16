@@ -33,4 +33,6 @@ dksnap --help
 ```
 
 ## Key Features
-- docker\n- snapshots\n- testing
+- docker
+- snapshots
+- testing

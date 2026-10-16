@@ -1,1 +1,6 @@
----\nname: javac\ndescription: Java compiler\n---\n# javac Plugin\nJava compiler
+---
+name: javac
+description: Java compiler
+---
+# javac Plugin
+Java compiler

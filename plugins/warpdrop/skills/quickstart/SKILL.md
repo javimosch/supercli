@@ -35,4 +35,6 @@ warpdrop --help
 ```
 
 ## Key Features
-- file-sharing\n- webrtc\n- p2p
+- file-sharing
+- webrtc
+- p2p

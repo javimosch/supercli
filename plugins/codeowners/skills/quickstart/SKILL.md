@@ -31,4 +31,6 @@ codeowners --help
 ```
 
 ## Key Features
-- codeowners\n- git\n- github
+- codeowners
+- git
+- github

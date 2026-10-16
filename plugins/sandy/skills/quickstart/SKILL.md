@@ -30,4 +30,6 @@ sandy --help
 ```
 
 ## Key Features
-- ptrace\n- syscall\n- monitoring
+- ptrace
+- syscall
+- monitoring

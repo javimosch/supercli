@@ -36,4 +36,6 @@ pypistats --help
 ```
 
 ## Key Features
-- pypi\n- stats\n- python
+- pypi
+- stats
+- python

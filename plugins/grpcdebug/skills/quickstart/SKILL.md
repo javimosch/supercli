@@ -33,4 +33,6 @@ grpcdebug --help
 ```
 
 ## Key Features
-- grpc\n- debugging\n- rpc
+- grpc
+- debugging
+- rpc

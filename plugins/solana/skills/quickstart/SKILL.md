@@ -1,1 +1,6 @@
----\nname: solana\ndescription: Solana CLI client\n---\n# solana Plugin\nSolana CLI client
+---
+name: solana
+description: Solana CLI client
+---
+# solana Plugin
+Solana CLI client

@@ -1,1 +1,6 @@
----\nname: bmeps\ndescription: PNG/JPEG to EPS converter\n---\n# bmeps Plugin\nPNG/JPEG to EPS converter
+---
+name: bmeps
+description: PNG/JPEG to EPS converter
+---
+# bmeps Plugin
+PNG/JPEG to EPS converter

@@ -1,1 +1,6 @@
----\nname: collectl\ndescription: System resource monitor\n---\n# collectl Plugin\nSystem resource monitor
+---
+name: collectl
+description: System resource monitor
+---
+# collectl Plugin
+System resource monitor

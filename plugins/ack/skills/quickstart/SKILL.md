@@ -1,1 +1,6 @@
----\nname: ack\ndescription: Ack grep for source code\n---\n# ack Plugin\nAck grep for source code
+---
+name: ack
+description: Ack grep for source code
+---
+# ack Plugin
+Ack grep for source code

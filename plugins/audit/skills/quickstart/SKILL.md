@@ -34,4 +34,6 @@ audit --help
 ```
 
 ## Key Features
-- github\n- security\n- auditing
+- github
+- security
+- auditing

@@ -1,1 +1,6 @@
----\nname: bun\ndescription: Fast Node.js runtime and bundler\n---\n# bun Plugin\nFast Node.js runtime and bundler
+---
+name: bun
+description: Fast Node.js runtime and bundler
+---
+# bun Plugin
+Fast Node.js runtime and bundler

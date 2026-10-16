@@ -37,4 +37,6 @@ zamba --help
 ```
 
 ## Key Features
-- ai\n- animals\n- computer-vision
+- ai
+- animals
+- computer-vision

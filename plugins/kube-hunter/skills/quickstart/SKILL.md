@@ -31,4 +31,6 @@ kube-hunter --help
 ```
 
 ## Key Features
-- kubernetes\n- security\n- penetration-testing
+- kubernetes
+- security
+- penetration-testing

@@ -33,4 +33,6 @@ passbolt --help
 ```
 
 ## Key Features
-- passbolt\n- password-manager\n- security
+- passbolt
+- password-manager
+- security

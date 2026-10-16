@@ -1,1 +1,16 @@
----\nname: qft\ndescription: Use this skill for qft operations.\n---\n# qft Plugin\nCLI tool for qft.\n## Commands\n- `qft _ _` — Passthrough\n## Installation\n```bash\ncargo install qft\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: qft
+description: Use this skill for qft operations.
+---
+# qft Plugin
+CLI tool for qft.
+## Commands
+- `qft _ _` — Passthrough
+## Installation
+```bash
+cargo install qft
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
+EOF

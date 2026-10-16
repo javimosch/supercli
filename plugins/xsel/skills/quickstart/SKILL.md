@@ -1,1 +1,6 @@
----\nname: xsel\ndescription: X11 selection tool\n---\n# xsel Plugin\nX11 selection tool
+---
+name: xsel
+description: X11 selection tool
+---
+# xsel Plugin
+X11 selection tool

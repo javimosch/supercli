@@ -35,4 +35,6 @@ nexus --help
 ```
 
 ## Key Features
-- nexus\n- docker-registry\n- artifacts
+- nexus
+- docker-registry
+- artifacts
