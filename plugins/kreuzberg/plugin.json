@@ -1,28 +1,134 @@
 {
   "name": "kreuzberg",
-  "description": "Polyglot document intelligence framework for extracting text and metadata",
   "version": "1.0.0",
-  "binary": "kreuzberg",
-  "check": "kreuzberg --version",
-  "install": {
-    "method": "cargo",
-    "command": "cargo install kreuzberg-cli"
-  },
-  "commands": {
-    "extract": {
-      "command": "kreuzberg extract {file}",
-      "description": "Extract text from document",
-      "args": ["file"]
-    },
-    "metadata": {
-      "command": "kreuzberg metadata {file}",
-      "description": "Extract metadata from document",
-      "args": ["file"]
-    },
-    "batch": {
-      "command": "kreuzberg batch {directory}",
-      "description": "Process multiple documents in directory",
-      "args": ["directory"]
+  "description": "Polyglot document intelligence framework for extracting text and metadata",
+  "source": "https://crates.io/crates/kreuzberg-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kreuzberg"
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "kreuzberg",
+    "binary": "kreuzberg",
+    "check": "kreuzberg --version",
+    "install_steps": [
+      "cargo install kreuzberg-cli",
+      "# Or download pre-built binary from GitHub releases"
+    ],
+    "note": "Supports 97+ document formats including PDF, DOCX, XLSX, PPTX, images, and more"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "kreuzberg",
+      "resource": "document",
+      "action": "extract",
+      "description": "Extract text from document",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kreuzberg",
+        "baseArgs": [
+          "extract"
+        ],
+        "positionalArgs": [
+          "file"
+        ],
+        "missingDependencyHelp": "Install kreuzberg: cargo install kreuzberg-cli"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Document path",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "kreuzberg",
+      "resource": "document",
+      "action": "metadata",
+      "description": "Extract metadata from document",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kreuzberg",
+        "baseArgs": [
+          "metadata"
+        ],
+        "positionalArgs": [
+          "file"
+        ],
+        "missingDependencyHelp": "Install kreuzberg: cargo install kreuzberg-cli"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Document path",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "kreuzberg",
+      "resource": "document",
+      "action": "batch",
+      "description": "Process multiple documents in directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kreuzberg",
+        "baseArgs": [
+          "batch"
+        ],
+        "positionalArgs": [
+          "directory"
+        ],
+        "missingDependencyHelp": "Install kreuzberg: cargo install kreuzberg-cli"
+      },
+      "args": [
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Directory containing documents",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "kreuzberg",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kreuzberg version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kreuzberg",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install kreuzberg: cargo install kreuzberg-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "kreuzberg",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kreuzberg CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kreuzberg",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kreuzberg: cargo install kreuzberg-cli"
+      },
+      "args": []
+    }
+  ]
 }
