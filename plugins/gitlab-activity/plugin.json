@@ -1,31 +1,106 @@
 {
   "name": "gitlab-activity",
   "version": "1.0.0",
-  "description": "Retrieve GitLab user activity for agents",
   "author": "javimosch",
-  "binary": "gitlab-activity-cli",
-  "check": "gitlab-activity-cli version",
-  "commands": [
+  "description": "Retrieve GitLab user activity for agents",
+  "checks": [
     {
-      "name": "me",
-      "description": "Get current user's GitLab activity",
-      "usage": "gitlab-activity-cli me [options]",
-      "examples": [
-        "gitlab-activity-cli me",
-        "gitlab-activity-cli me --days 7",
-        "gitlab-activity-cli me --instance https://git.geored.fr --json"
-      ]
-    },
-    {
-      "name": "user",
-      "description": "Get specific user's GitLab activity",
-      "usage": "gitlab-activity-cli user <username> [options]",
-      "examples": [
-        "gitlab-activity-cli user jarancibia",
-        "gitlab-activity-cli user jarancibia --days 3 --project georedv3"
+      "type": "binary",
+      "name": "gitlab-activity-cli",
+      "args": [
+        "version"
       ]
     }
   ],
-  "tags": ["gitlab", "activity", "devops", "api"],
-  "category": "development"
+  "install_guidance": {
+    "plugin": "gitlab-activity",
+    "binary": "gitlab-activity-cli",
+    "check": "gitlab-activity-cli version",
+    "install_steps": [
+      "cd ~/ai/supercli-clis/gitlab-activity-cli",
+      "go build -ldflags \"-s -w\" -o gitlab-activity-cli main.go",
+      "sudo cp gitlab-activity-cli /usr/local/bin/",
+      "gitlab-activity-cli version"
+    ],
+    "note": "Requires Go 1.21+ to build from source. Auto-detects GitLab tokens from ~/.gitlab/ directory."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gitlab-activity",
+      "resource": "activity",
+      "action": "me",
+      "description": "Get current user's GitLab activity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-activity-cli",
+        "baseArgs": [
+          "me"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-activity-cli: cd ~/ai/supercli-clis/gitlab-activity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-activity",
+      "resource": "activity",
+      "action": "user",
+      "description": "Get specific user's GitLab activity",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-activity-cli",
+        "baseArgs": [
+          "user"
+        ],
+        "positionalArgs": [
+          "username"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-activity-cli: cd ~/ai/supercli-clis/gitlab-activity-cli"
+      },
+      "args": [
+        {
+          "name": "username",
+          "type": "string",
+          "required": true,
+          "description": "GitLab username",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "gitlab-activity",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gitlab-activity-cli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-activity-cli",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install gitlab-activity-cli: cd ~/ai/supercli-clis/gitlab-activity-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gitlab-activity",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gitlab-activity-cli CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gitlab-activity-cli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gitlab-activity-cli: cd ~/ai/supercli-clis/gitlab-activity-cli"
+      },
+      "args": []
+    }
+  ]
 }
