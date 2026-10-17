@@ -7,6 +7,11 @@ description: Use this skill when the user needs curated AI coding agent skills, 
 
 Curated SKILL.md files and AGENTS.md playbooks for Codex, Claude Code, Cursor, OpenClaw, and other SKILL.md-compatible tools.
 
+## Commands
+- `ok-skills <resource> <action>` — Execute ok-skills commands
+- `ok-skills self version` — Print info
+- `ok-skills _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/mxyhi/ok-skills.git

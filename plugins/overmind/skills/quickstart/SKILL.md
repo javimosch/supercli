@@ -7,6 +7,10 @@ description: Use this skill when the user wants to run Procfile-based apps with 
 
 Process manager for Procfile-based applications with tmux integration. Each process runs in its own tmux pane — reconnect anytime, restart individual processes, and inspect logs per service.
 
+## Commands
+- `overmind <resource> <action>` — Execute overmind commands
+- `overmind _ _` — Passthrough to overmind CLI
+
 ## Installation
 
 ```bash

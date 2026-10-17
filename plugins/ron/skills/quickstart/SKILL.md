@@ -7,6 +7,10 @@ description: RON — Rusty Object Notation serialization format
 
 RON — Rusty Object Notation serialization format
 
+## Commands
+- `ron <resource> <action>` — Execute ron commands
+- `ron self version` — Version
+
 ## Installation
 
 ```bash

@@ -7,6 +7,10 @@ description: beets — music library manager and tagger
 
 beets — music library manager and tagger
 
+## Commands
+- `beets <resource> <action>` — Execute beets commands
+- `beets _ _` — Passthrough
+
 ## Installation
 
 ```bash

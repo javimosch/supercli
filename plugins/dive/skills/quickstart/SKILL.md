@@ -1,5 +1,9 @@
 # dive Plugin
 
+## Commands
+- `dive <resource> <action>` — Execute dive commands
+- `dive _ _` — Passthrough to dive CLI
+
 ## Overview
 The dive plugin provides a tool for exploring each layer in a docker image. Analyze docker image contents, discover inefficiencies, and optimize image sizes.
 

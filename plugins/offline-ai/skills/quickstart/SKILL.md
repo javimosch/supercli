@@ -8,6 +8,13 @@ tags: offline-ai,ai,scripting,automation,headless
 
 Use this when you need programmable prompt-engine scripts in automation workflows.
 
+## Commands
+- `offline-ai <resource> <action>` — Execute offline-ai commands
+- `offline-ai cli version` — Show installed offline-ai CLI version
+- `offline-ai script run` — Run an offline-ai script entry with optional input payload
+- `offline-ai script run-file` — Run an offline-ai script file with optional input payload
+- `offline-ai _ _` — Passthrough command to execute any offline-ai CLI command
+
 ## 1) Install plugin and dependency
 
 ```bash

@@ -6,6 +6,12 @@ description: frawk — fast AWK-like CLI for processing CSV/TSV/text with struct
 
 frawk is a fast AWK-like language for processing CSV, TSV, and text files with typed columns and structured JSON output.
 
+## Commands
+- `frawk <resource> <action>` — Execute frawk commands
+- `frawk self version` — Print frawk version
+- `frawk program run` — Run a frawk program against input files
+- `frawk _ _` — Passthrough to frawk CLI
+
 ## Quickstart
 
 ```bash

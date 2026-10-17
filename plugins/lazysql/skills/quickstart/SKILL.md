@@ -7,6 +7,12 @@ description: Use this skill when the user wants a terminal UI to browse database
 
 Cross-platform TUI database client. Browse schemas, run queries, edit rows, and switch connections — works over SSH with no desktop app required.
 
+## Commands
+- `lazysql <resource> <action>` — Execute lazysql commands
+- `lazysql connection open` — Open lazysql TUI with optional connection URL
+- `lazysql self version` — Show lazysql version
+- `lazysql _ _` — Passthrough to lazysql CLI
+
 ## Installation
 
 ```bash

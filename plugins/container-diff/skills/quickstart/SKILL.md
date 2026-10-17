@@ -7,6 +7,11 @@ description: Use this skill when the user wants to compare Docker container imag
 
 container-diff analyzes differences between container images.
 
+## Commands
+- `container-diff <resource> <action>` — Execute container-diff commands
+- `container-diff self version` — Print container-diff version
+- `container-diff _ _` — Passthrough to container-diff CLI
+
 ## Usage Examples
 
 - "compare packages between two images"

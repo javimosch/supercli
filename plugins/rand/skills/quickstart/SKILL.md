@@ -7,6 +7,10 @@ description: rand — Rust random number generator library
 
 rand — Rust random number generator library
 
+## Commands
+- `rand <resource> <action>` — Execute rand commands
+- `rand self version` — Version
+
 ## Installation
 
 ```bash

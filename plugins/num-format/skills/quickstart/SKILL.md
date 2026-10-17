@@ -7,6 +7,10 @@ description: num-format — format numbers with separators
 
 num-format — format numbers with separators
 
+## Commands
+- `num-format <resource> <action>` — Execute num-format commands
+- `num-format self version` — Version
+
 ## Installation
 
 ```bash

@@ -9,6 +9,13 @@ Rink is a unit-aware calculator with dimensionality analysis for physics and eng
 - Perform currency conversions
 - Calculate with arbitrary precision
 
+## Commands
+- `rink <resource> <action>` — Execute rink commands
+- `rink self version` — Print rink version
+- `rink calc eval` — Evaluate unit conversion or calculation
+- `rink calc interactive` — Start interactive unit calculator session
+- `rink _ _` — Passthrough to rink CLI
+
 ## Installation
 
 ```bash

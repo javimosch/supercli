@@ -4,6 +4,13 @@ Agent-friendly SMS sender. Non-interactive by design. Supports Twilio, Vonage, M
 
 **Status:** All 5 providers verified and working ✅
 
+## Commands
+- `sms-cli <resource> <action>` — Execute sms-cli commands
+- `sms message send` — Send an SMS via the configured provider (Twilio, Vonage, MailerSend, or Clickatell)
+- `sms providers list` — List all SMS providers and their configuration status
+- `sms providers check` — Check configuration status for a specific SMS provider
+- `sms schema get` — Get sms-cli JSON schema: commands, flags, exit codes, env vars
+
 ## Schema Discovery
 
 ```bash

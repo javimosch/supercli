@@ -7,6 +7,10 @@ description: Use this skill when the user wants to manage software supply chain 
 
 Software supply chain attestation and metadata framework. Record artifact integrity, build provenance, and compliance evidence for SLSA and related standards.
 
+## Commands
+- `chainloop <resource> <action>` — Execute chainloop commands
+- `chainloop _ _` — Passthrough to chainloop CLI
+
 ## Installation
 
 ```bash

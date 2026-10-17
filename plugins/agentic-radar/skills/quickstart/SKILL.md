@@ -2,6 +2,13 @@
 
 Use the agentic-radar plugin when analyzing or assessing agentic AI systems for security vulnerabilities and operational risks.
 
+## Commands
+- `agentic-radar <resource> <action>` — Execute agentic-radar commands
+- `agentic-radar self version` — Show agentic-radar version
+- `agentic-radar scan run` — Scan agentic workflow for security issues
+- `agentic-radar test run` — Run security tests on agentic system
+- `agentic-radar report show` — Show security assessment report
+
 ## Quick Start
 
 ### 1. Check Installation

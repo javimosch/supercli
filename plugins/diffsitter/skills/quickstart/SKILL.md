@@ -7,6 +7,10 @@ description: Use this skill when the user wants semantic diffs between source fi
 
 Structural diff tool powered by tree-sitter parsers. Compares code by syntax tree instead of raw lines, making reviews cleaner for refactors and reformatting.
 
+## Commands
+- `diffsitter <resource> <action>` — Execute diffsitter commands
+- `diffsitter _ _` — Passthrough to diffsitter CLI
+
 ## Installation
 
 ```bash

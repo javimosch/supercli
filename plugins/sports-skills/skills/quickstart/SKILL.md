@@ -7,6 +7,11 @@ description: Use this skill when the user needs live sports data, football match
 
 Open-source agent skills for live sports data and prediction markets. Zero API keys needed.
 
+## Commands
+- `sports-skills <resource> <action>` — Execute sports-skills commands
+- `sports-skills self version` — Print info
+- `sports-skills _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/machina-sports/sports-skills.git

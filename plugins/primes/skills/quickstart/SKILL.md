@@ -7,6 +7,11 @@ description: Use this skill when the user wants to generate prime numbers, check
 
 primes generates and tests prime numbers.
 
+## Commands
+- `primes <resource> <action>` — Execute primes commands
+- `primes self version` — Print primes version
+- `primes _ _` — Passthrough to primes CLI
+
 ## Usage Examples
 
 - "generate the first 100 prime numbers"

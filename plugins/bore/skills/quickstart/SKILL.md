@@ -2,6 +2,11 @@
 
 Simple CLI tool for making tunnels to localhost
 
+## Commands
+- `bore <resource> <action>` — Execute bore commands
+- `bore local expose` — Expose local port to remote server
+- `bore server start` — Start bore server
+
 ## Installation
 
 ```bash

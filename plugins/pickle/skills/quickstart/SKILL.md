@@ -7,6 +7,10 @@ description: pickle — serialization format
 
 pickle — serialization format
 
+## Commands
+- `pickle <resource> <action>` — Execute pickle commands
+- `pickle self version` — Version
+
 ## Installation
 
 ```bash

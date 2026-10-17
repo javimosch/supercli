@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use awesome-claude-code.
 
 A curated list of awesome skills, hooks, slash-commands, agent orchestrators, applications, and plugins for Claude Code by Anthropic
 
+## Commands
+- `awesome-claude-code <resource> <action>` — Execute awesome-claude-code commands
+- `awesome-claude-code self version` — Print awesome-claude-code version
+- `awesome-claude-code _ _` — Passthrough to awesome-claude-code CLI
+
 ## Installation
 
 ```bash

@@ -2,6 +2,17 @@
 
 Search across your local coding agent history (Codex, Claude Code, Gemini CLI, Cline, Cursor, Aider, etc.) to reuse past solutions and debugging context.
 
+## Commands
+- `cass <resource> <action>` — Execute cass commands
+- `cass cli setup` — Install coding-agent-search (cass) dependency
+- `cass index health` — Check if the search index is healthy
+- `cass index run` — Rebuild or update the search index
+- `cass search run` — Search across all agent history
+- `cass session view` — View a specific session by path
+- `cass session expand` — Expand context around a search hit
+- `cass activity stats` — Show aggregate history statistics
+- `cass activity timeline` — Display activity timeline
+
 ## Quick Start
 
 ### 1. Setup

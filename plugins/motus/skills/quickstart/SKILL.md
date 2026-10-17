@@ -1,5 +1,10 @@
 # motus - Password Generator
 
+## Commands
+- `motus <resource> <action>` — Execute motus commands
+- `motus generate password` — Generate a password
+- `motus _ _` — Passthrough to motus CLI
+
 ## Overview
 motus is a dead simple password generator. Generate memorable passwords, random passwords, and PINs.
 

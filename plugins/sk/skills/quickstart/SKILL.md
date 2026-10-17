@@ -7,6 +7,10 @@ description: skim — fuzzy finder written in Rust
 
 skim — fuzzy finder written in Rust
 
+## Commands
+- `sk <resource> <action>` — Execute sk commands
+- `sk self version` — Version
+
 ## Installation
 
 ```bash

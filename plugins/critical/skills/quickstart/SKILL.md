@@ -7,6 +7,11 @@ description: Use this skill when the user wants to extract critical CSS for abov
 
 critical extracts and inlines critical CSS.
 
+## Commands
+- `critical <resource> <action>` — Execute critical commands
+- `critical self version` — Print critical version
+- `critical _ _` — Passthrough to critical CLI
+
 ## Usage Examples
 
 - "extract critical CSS from a webpage"

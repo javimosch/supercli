@@ -7,6 +7,13 @@ description: Use this skill when the user needs per-project, isolated CLI tool v
 
 Per-project tool manager from Cash App. Each repo gets its own isolated set of CLI tools with pinned versions, activated automatically when you `cd` into the project.
 
+## Commands
+- `hermit <resource> <action>` — Execute hermit commands
+- `hermit self version` — Print hermit version
+- `hermit env init` — Initialize hermit in the current project
+- `hermit binary install` — Install a tool into the hermit-managed project
+- `hermit binary list` — List installed hermit-managed tools
+
 ## Installation
 
 ```bash

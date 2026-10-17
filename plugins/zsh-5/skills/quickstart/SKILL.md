@@ -7,6 +7,10 @@ description: Zsh shell (5.x series)
 
 Zsh shell (5.x series)
 
+## Commands
+- `zsh-5 <resource> <action>` — Execute zsh-5 commands
+- `zsh-5 self version` — Version
+
 ## Installation
 
 ```bash

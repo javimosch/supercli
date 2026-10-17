@@ -7,6 +7,10 @@ description: Use this skill when the user wants a modern terminal pager — view
 
 Feature-rich terminal pager with column mode, incremental search, multicolor highlighting, and follow mode. A modern replacement for `less` and `more`.
 
+## Commands
+- `ov <resource> <action>` — Execute ov commands
+- `ov _ _` — Passthrough to ov CLI
+
 ## Installation
 
 ```bash

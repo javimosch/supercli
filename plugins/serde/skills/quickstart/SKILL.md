@@ -7,6 +7,10 @@ description: Serde — serialization framework for Rust
 
 Serde — serialization framework for Rust
 
+## Commands
+- `serde <resource> <action>` — Execute serde commands
+- `serde self version` — Version
+
 ## Installation
 
 ```bash

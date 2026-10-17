@@ -7,6 +7,11 @@ description: Use this skill when the user wants to manage semantic versioning an
 
 changesets manages versioning and changelogs for monorepos.
 
+## Commands
+- `changesets <resource> <action>` — Execute changesets commands
+- `changesets self version` — Print changesets version
+- `changesets _ _` — Passthrough to changesets CLI
+
 ## Usage Examples
 
 - "create a new changeset for a feature"

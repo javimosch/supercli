@@ -7,6 +7,10 @@ description: TOML — configuration file format parser
 
 TOML — configuration file format parser
 
+## Commands
+- `toml <resource> <action>` — Execute toml commands
+- `toml self version` — Version
+
 ## Installation
 
 ```bash

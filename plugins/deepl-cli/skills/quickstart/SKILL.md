@@ -7,6 +7,11 @@ description: Use this skill when the user wants to translate text between langua
 
 deepl-cli translates text using DeepL API.
 
+## Commands
+- `deepl-cli <resource> <action>` — Execute deepl-cli commands
+- `deepl-cli self version` — Print deepl-cli version
+- `deepl-cli _ _` — Passthrough to deepl-cli CLI
+
 ## Usage Examples
 
 - "translate text to French"

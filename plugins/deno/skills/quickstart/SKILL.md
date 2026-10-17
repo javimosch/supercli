@@ -2,6 +2,15 @@
 
 Deno is a secure TypeScript/JavaScript runtime built in Rust. It provides built-in TypeScript support, security controls, and modern tooling.
 
+## Commands
+- `deno <resource> <action>` — Execute deno commands
+- `deno self version` — Print Deno version
+- `deno run script` — Run TypeScript/JavaScript file
+- `deno run eval` — Evaluate inline TypeScript/JavaScript
+- `deno fmt format` — Format TypeScript/JavaScript files
+- `deno lint check` — Lint TypeScript/JavaScript files
+- `deno _ _` — Passthrough to Deno CLI
+
 ## Installation
 
 ```bash

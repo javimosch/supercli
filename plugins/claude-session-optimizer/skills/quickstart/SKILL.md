@@ -7,6 +7,18 @@ description: Compress oversized Claude Code session files to prevent crashes and
 
 Claude Code sessions (`~/.claude/projects/*/*.jsonl`) grow unbounded. Once a session exceeds **~75 MB**, Claude crashes on load. This tool compresses them back to < 50 MB while keeping conversation history intact.
 
+## Commands
+- `claude-session-optimizer <resource> <action>` — Execute claude-session-optimizer commands
+- `claude-session-optimizer self install` — Download compress-claude-session script from GitHub to ~/.local/bin/
+- `claude-session-optimizer self list` — List all Claude Code sessions sorted by size, with status flags for oversized ones
+- `claude-session-optimizer self compress` — Compress all sessions over 50 MB threshold. Creates .bak backups first.
+- `claude-session-optimizer self dry-run` — Preview compression savings without modifying any files. Shows exactly what would be removed/truncated.
+- `claude-session-optimizer self compress-threshold` — Compress all sessions over a custom MB threshold. Example: --threshold 30 compresses everything over 30 MB.
+- `claude-session-optimizer self file` — Compress a specific session file. Provide the full path to the .jsonl file.
+- `claude-session-optimizer self learn` — Teach the agent how to use claude-session-optimizer. Run: sc skills teach claude-session-optimizer:quickstart
+- `claude-session-optimizer self auto` — 🔍 One-command health check: auto-installs optimizer (cached to ~/.local/bin), scans all sessions, reports oversized ones, and gives guidance on next steps. Safe — never modifies files.
+- `claude-session-optimizer _ _` — Passthrough: run any raw compress-claude-session command. Example: claude-session-optimizer _ _ --threshold 30 --dry-run
+
 ## Quick Start
 
 ### 🔍 One-command health check (safe)

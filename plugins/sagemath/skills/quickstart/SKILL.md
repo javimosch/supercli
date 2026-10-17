@@ -4,3 +4,7 @@ description: sagemath — SageMath mathematical software CLI. Python-based syste
 ---
 # sagemath
 sagemath — SageMath mathematical software CLI. Python-based system for algebra, calculus, number theory, cryptography.
+
+## Commands
+- `sagemath <resource> <action>` — Execute sagemath commands
+- `sagemath sagemath run` — sagemath — SageMath mathematical software CLI. Python-based system for algebra, calculus, number theory, cryptography.

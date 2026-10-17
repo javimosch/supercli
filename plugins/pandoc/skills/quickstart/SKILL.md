@@ -2,6 +2,14 @@
 
 pandoc is a universal document converter that reads and writes in dozens of formats.
 
+## Commands
+- `pandoc <resource> <action>` — Execute pandoc commands
+- `pandoc self version` — Print pandoc version
+- `pandoc convert markdown-to-html` — Convert Markdown to HTML
+- `pandoc convert document` — Convert document between formats
+- `pandoc list formats` — List supported input/output formats
+- `pandoc _ _` — Passthrough to pandoc CLI
+
 ## Installation
 
 ```bash

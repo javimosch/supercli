@@ -1,5 +1,11 @@
 # fcp - Fast Copy
 
+## Commands
+- `fcp <resource> <action>` — Execute fcp commands
+- `fcp copy file` — Copy SOURCE to DESTINATION_FILE
+- `fcp copy directory` — Copy each SOURCE into DESTINATION_DIRECTORY
+- `fcp _ _` — Passthrough to fcp CLI
+
 ## Overview
 fcp is a significantly faster alternative to the classic Unix cp(1) command for copying large files and directories. It's optimized for speed on modern systems with parallel processing.
 

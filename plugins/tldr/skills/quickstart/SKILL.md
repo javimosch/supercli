@@ -6,6 +6,14 @@ description: Simplified, community-driven man pages
 
 Simplified man pages with practical examples. Quick lookups for common CLI tools.
 
+## Commands
+- `tldr <resource> <action>` — Execute tldr commands
+- `tldr command show` — Show tldr page for a command
+- `tldr cache update` — Update the tldr pages cache
+- `tldr cache list` — List all available tldr commands
+- `tldr self version` — Print tldr version
+- `tldr _ _` — Passthrough to tldr CLI
+
 ## Basic Usage
 
 ```bash

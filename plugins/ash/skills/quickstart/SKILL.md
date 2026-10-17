@@ -7,6 +7,10 @@ description: Ash — lightweight POSIX-compliant shell
 
 Ash — lightweight POSIX-compliant shell
 
+## Commands
+- `ash <resource> <action>` — Execute ash commands
+- `ash self version` — Version
+
 ## Installation
 
 ```bash

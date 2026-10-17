@@ -7,6 +7,11 @@ description: Use this skill when the user wants to see a quick histogram summary
 
 diffstat creates histogram stats from diff output.
 
+## Commands
+- `diffstat <resource> <action>` — Execute diffstat commands
+- `diffstat self version` — Print diffstat version
+- `diffstat _ _` — Passthrough to diffstat CLI
+
 ## Usage Examples
 
 - "show change statistics for a patch"

@@ -1,5 +1,11 @@
 # q - Text as Data
 
+## Commands
+- `q <resource> <action>` — Execute q commands
+- `q query file` — Run SQL query on a file
+- `q query stdin` — Run SQL query on stdin data
+- `q _ _` — Passthrough to q CLI
+
 ## Overview
 q is a CLI tool that treats ordinary files as database tables and allows you to run SQL queries directly on delimited files (CSV, TSV, etc.) and multi-file sqlite databases.
 

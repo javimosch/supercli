@@ -7,6 +7,10 @@ description: editly — declarative video editor CLI
 
 editly — declarative video editor CLI
 
+## Commands
+- `editly <resource> <action>` — Execute editly commands
+- `editly _ _` — Passthrough
+
 ## Installation
 
 ```bash

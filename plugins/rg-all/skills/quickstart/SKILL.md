@@ -7,6 +7,10 @@ description: ripgrep-all — search inside documents, archives, and binaries
 
 ripgrep-all — search inside documents, archives, and binaries
 
+## Commands
+- `rg-all <resource> <action>` — Execute rg-all commands
+- `rg-all self version` — Version
+
 ## Installation
 
 ```bash

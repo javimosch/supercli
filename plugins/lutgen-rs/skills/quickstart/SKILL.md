@@ -1,5 +1,11 @@
 # lutgen-rs - LUT Generator and Applicator
 
+## Commands
+- `lutgen-rs <resource> <action>` — Execute lutgen-rs commands
+- `lutgen generate lut` — Generate LUT from image
+- `lutgen apply lut` — Apply LUT to image
+- `lutgen _ _` — Passthrough to lutgen CLI
+
 ## Overview
 lutgen-rs is a blazingly fast interpolated LUT (Look-Up Table) generator and applicator for arbitrary and popular color palettes. Generate and apply color grading LUTs to images.
 

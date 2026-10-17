@@ -7,6 +7,10 @@ description: cargo-edit — Cargo extension for adding and removing crate depend
 
 cargo-edit — Cargo extension for adding and removing crate dependencies
 
+## Commands
+- `cargo-edit <resource> <action>` — Execute cargo-edit commands
+- `cargo-edit self version` — Version
+
 ## Installation
 
 ```bash

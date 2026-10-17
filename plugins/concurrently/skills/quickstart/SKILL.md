@@ -1,5 +1,11 @@
 # concurrently - Run Commands Concurrently
 
+## Commands
+- `concurrently <resource> <action>` — Execute concurrently commands
+- `concurrently run commands` — Run multiple commands concurrently
+- `concurrently run kill-others` — Run commands concurrently, kill others if one fails
+- `concurrently _ _` — Passthrough to concurrently CLI
+
 ## Overview
 concurrently is a CLI tool that runs multiple commands concurrently with better output tracking and error handling. It's cross-platform (including Windows) and makes it easy to track which command is outputting what.
 

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to browse the web from the termi
 
 links is a text and graphics mode web browser.
 
+## Commands
+- `links <resource> <action>` — Execute links commands
+- `links self version` — Print links version
+- `links _ _` — Passthrough to links CLI
+
 ## Usage Examples
 
 - "open a URL in text mode"

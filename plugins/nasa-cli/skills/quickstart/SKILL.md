@@ -7,6 +7,10 @@ description: nasa-cli — download NASA Picture of the Day
 
 nasa-cli — download NASA Picture of the Day
 
+## Commands
+- `nasa-cli <resource> <action>` — Execute nasa-cli commands
+- `nasa-cli _ _` — Passthrough
+
 ## Installation
 
 ```bash

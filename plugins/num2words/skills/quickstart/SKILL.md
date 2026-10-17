@@ -4,3 +4,7 @@ description: num2words — convert numbers to English words (e.g., 123 → 'one 
 ---
 # num2words
 num2words — convert numbers to English words (e.g., 123 → 'one hundred twenty-three'). Supports up to trillions.
+
+## Commands
+- `num2words <resource> <action>` — Execute num2words commands
+- `num2words num2words run` — num2words — convert numbers to English words (e.g., 123 → 'one hundred twenty-three'). Supports up to trillions.

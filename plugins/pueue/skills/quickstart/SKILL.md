@@ -5,6 +5,10 @@ description: pueue — task queue manager CLI. Queue shell commands for sequenti
 # pueue
 pueue — task queue manager CLI. Queue shell commands for sequential/parallel execution. Non-interactive, JSON output with --json.
 
+## Commands
+- `pueue <resource> <action>` — Execute pueue commands
+- `pueue pueue run` — pueue — task queue manager CLI. Queue shell commands for sequential/parallel execution. Non-interactive, JSON output with --json.
+
 ## Install
 ```bash
 curl -LO https://github.com/Nukesor/pueue/releases/download/v4.0.4/pueue-x86_64-unknown-linux-musl && chmod +x pueue-x86_64-unknown-linux-musl && sudo mv pueue-x86_64-unknown-linux-musl /usr/local/bin/pueue

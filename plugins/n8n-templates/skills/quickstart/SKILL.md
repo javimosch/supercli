@@ -1,5 +1,12 @@
 # n8n Templates Plugin
 
+## Commands
+- `n8n-templates <resource> <action>` — Execute n8n-templates commands
+- `n8n-templates repo clone` — Clone the awesome-n8n-templates repository
+- `n8n-templates repo browse` — Open the awesome-n8n-templates repository in browser
+- `n8n-templates templates list` — List available n8n template categories
+- `n8n-templates n8n signup` — Open n8n signup page
+
 ## Overview
 The n8n-templates plugin provides access to 280+ free n8n automation templates from the [awesome-n8n-templates](https://github.com/enescingoz/awesome-n8n-templates) repository.
 

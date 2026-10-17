@@ -7,6 +7,11 @@ description: Use this skill when the user wants to automate backups using BorgBa
 
 borgmatic automates BorgBackup with simple YAML configuration.
 
+## Commands
+- `borgmatic <resource> <action>` — Execute borgmatic commands
+- `borgmatic self version` — Print borgmatic version
+- `borgmatic _ _` — Passthrough to borgmatic CLI
+
 ## Usage Examples
 
 - "run a backup with borgmatic"

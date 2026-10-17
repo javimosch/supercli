@@ -7,6 +7,10 @@ description: Python-powered, cross-platform shell
 
 Python-powered, cross-platform shell
 
+## Commands
+- `xonsh <resource> <action>` — Execute xonsh commands
+- `xonsh self version` — Version
+
 ## Installation
 
 ```bash

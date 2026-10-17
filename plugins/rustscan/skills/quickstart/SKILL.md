@@ -2,6 +2,14 @@
 
 RustScan is an ultra-fast port scanner written in Rust. It can scan all 65,000 ports in approximately 3 seconds, making it one of the fastest port scanners available. It's designed for network security professionals, penetration testers, and system administrators.
 
+## Commands
+- `rustscan <resource> <action>` — Execute rustscan commands
+- `rustscan self version` — Print RustScan version
+- `rustscan port scan` — Scan all ports on a target host
+- `rustscan port range` — Scan specific port range on target
+- `rustscan port with-nmap` — Scan with RustScan and pipe to Nmap
+- `rustscan _ _` — Passthrough to RustScan CLI
+
 ## Installation
 
 ```bash

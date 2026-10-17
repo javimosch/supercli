@@ -4,3 +4,7 @@ description: overheard — audio recording and processing CLI. Record, transcrib
 ---
 # overheard
 overheard — audio recording and processing CLI. Record, transcribe, analyze audio from command line.
+
+## Commands
+- `overheard <resource> <action>` — Execute overheard commands
+- `overheard overheard run` — overheard — audio recording and processing CLI. Record, transcribe, analyze audio from command line.

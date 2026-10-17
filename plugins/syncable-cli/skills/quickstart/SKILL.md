@@ -9,6 +9,18 @@ syncable-cli is a DevOps toolbox for AI coding agents and developers. Use this s
 - Generate CI/CD pipeline configurations
 - Deploy services to cloud providers
 
+## Commands
+- `syncable-cli <resource> <action>` — Execute syncable-cli commands
+- `syncable self version` — Print syncable-cli version
+- `syncable analyze project` — Analyze codebase and detect tech stack
+- `syncable security scan` — Scan for security issues and secrets
+- `syncable vulnerabilities scan` — Check dependencies for known CVEs
+- `syncable validate iac` — Validate infrastructure files
+- `syncable dependencies audit` — Audit dependencies and licenses
+- `syncable generate ci` — Generate CI pipeline configuration
+- `syncable deploy preview` — Get deployment recommendation
+- `syncable _ _` — Passthrough to sync-ctl CLI
+
 ## Installation
 
 ```bash

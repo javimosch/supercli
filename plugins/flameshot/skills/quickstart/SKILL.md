@@ -7,6 +7,11 @@ description: Use this skill when the user wants to take screenshots with annotat
 
 flameshot captures and annotates screenshots.
 
+## Commands
+- `flameshot <resource> <action>` — Execute flameshot commands
+- `flameshot self version` — Print flameshot version
+- `flameshot _ _` — Passthrough to flameshot CLI
+
 ## Usage Examples
 
 - "take a screenshot of selected region"

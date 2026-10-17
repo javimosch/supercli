@@ -5,5 +5,9 @@ description: Configurable editor and fork of JOE with improvements
 # jupp Plugin
 Configurable editor and fork of JOE with improvements
 
+## Commands
+- `jupp <resource> <action>` — Execute jupp commands
+- `jupp _ _` — Passthrough to jupp CLI
+
 ## Usage
 - `jupp _ _ <args>` — Run jupp with any arguments

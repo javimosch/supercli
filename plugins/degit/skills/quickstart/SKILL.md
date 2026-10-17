@@ -7,6 +7,11 @@ description: Use this skill when the user wants to scaffold a project from a git
 
 degit downloads project templates without git history.
 
+## Commands
+- `degit <resource> <action>` — Execute degit commands
+- `degit self version` — Print degit version
+- `degit _ _` — Passthrough to degit CLI
+
 ## Usage Examples
 
 - "scaffold a project from a GitHub template"

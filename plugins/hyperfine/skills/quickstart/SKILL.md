@@ -7,6 +7,10 @@ description: Hyperfine — command benchmarking tool for performance testing
 
 Hyperfine — command benchmarking tool for performance testing
 
+## Commands
+- `hyperfine <resource> <action>` — Execute hyperfine commands
+- `hyperfine self version` — Version
+
 ## Installation
 
 ```bash

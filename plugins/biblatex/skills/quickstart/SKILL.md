@@ -7,6 +7,11 @@ description: Use this skill when the user wants to manage bibliographies and cit
 
 BibLaTeX manages bibliographies for LaTeX documents.
 
+## Commands
+- `biblatex <resource> <action>` — Execute biblatex commands
+- `biblatex self version` — Print biblatex version
+- `biblatex _ _` — Passthrough to biblatex CLI
+
 ## Usage Examples
 
 - "format a .bib file for publication"

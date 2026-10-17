@@ -7,6 +7,10 @@ description: Zoxide — smart directory jumper with frecency tracking
 
 Zoxide — smart directory jumper with frecency tracking
 
+## Commands
+- `zoxide <resource> <action>` — Execute zoxide commands
+- `zoxide self version` — Version
+
 ## Installation
 
 ```bash

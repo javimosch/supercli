@@ -7,6 +7,11 @@ description: Use this skill when the user needs OSINT reconnaissance, external a
 
 2 paired Claude skills (5,500+ lines) for external recon: **osint-methodology** (how to think) and **offensive-osint** (what to reach for). Built by ElementalSoul.
 
+## Commands
+- `claude-osint <resource> <action>` — Execute claude-osint commands
+- `claude-osint self version` — Print claude-osint info
+- `claude-osint _ _` — Passthrough — clone and teach
+
 ## Installation
 
 ```bash

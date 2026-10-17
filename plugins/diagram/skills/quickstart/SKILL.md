@@ -1,5 +1,10 @@
 # diagram - ASCII to Hand-Drawn Diagrams
 
+## Commands
+- `diagram <resource> <action>` — Execute diagram commands
+- `diagram convert ascii` — Convert ASCII art to hand-drawn diagram
+- `diagram _ _` — Passthrough to diagram CLI
+
 ## Overview
 diagram is a CLI app to convert ASCII arts into hand drawn diagrams. Transform your ASCII diagrams into beautiful hand-drawn style images.
 

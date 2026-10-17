@@ -1,5 +1,13 @@
 # mattpocock-skills Plugin
 
+## Commands
+- `mattpocock-skills <resource> <action>` — Execute mattpocock-skills commands
+- `mattpocock-skills self setup` — Install mattpocock skills via npx (runs interactive installer)
+- `mattpocock-skills self list` — List installed mattpocock skills (checks ~/.claude/skills/ or ~/.cursor/skills/)
+- `mattpocock-skills self status` — Check if mattpocock skills are installed and show which agent targets are configured
+- `mattpocock-skills self update` — Update mattpocock skills to latest version
+- `mattpocock-skills _ _` — Passthrough for advanced npx skills commands
+
 ## Overview
 
 Integrates [Matt Pocock's developer skills](https://github.com/mattpocock/skills) (55k+ ⭐) into supercli. These are curated, battle-tested engineering workflows for AI coding agents — not your average "write a function" prompts. They enforce real software engineering discipline.

@@ -2,6 +2,12 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `sox <resource> <action>` — Execute sox commands
+- `sox self version` — Print sox version
+- `sox convert format` — Convert audio format
+- `sox _ _` — Passthrough to sox CLI
+
 ## Installation
 
 ```bash

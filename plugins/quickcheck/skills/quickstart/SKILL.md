@@ -7,6 +7,10 @@ description: quickcheck — property-based testing for Rust
 
 quickcheck — property-based testing for Rust
 
+## Commands
+- `quickcheck <resource> <action>` — Execute quickcheck commands
+- `quickcheck self version` — Version
+
 ## Installation
 
 ```bash

@@ -7,6 +7,23 @@ description: Use this skill when the user wants to control Unity Editor from the
 
 Control Unity Editor from the command line. Built for AI agents, works with anything.
 
+## Commands
+- `unity-cli <resource> <action>` — Execute unity-cli commands
+- `unity-cli self version` — Print unity-cli version
+- `unity-cli editor status` — Show Unity Editor connection state
+- `unity-cli editor play` — Enter Unity Editor play mode
+- `unity-cli editor stop` — Stop Unity Editor play mode
+- `unity-cli editor pause` — Toggle pause in Unity Editor play mode
+- `unity-cli console read` — Read Unity Editor console logs
+- `unity-cli exec code` — Execute C# code inside Unity Editor
+- `unity-cli menu execute` — Execute Unity menu item by path
+- `unity-cli reserialize assets` — Re-serialize Unity assets through Unity's serializer
+- `unity-cli profiler hierarchy` — Read Unity profiler hierarchy
+- `unity-cli test run` — Run Unity EditMode/PlayMode tests
+- `unity-cli screenshot capture` — Capture Unity scene/game view as PNG
+- `unity-cli list tools` — Show all available Unity CLI tools with parameter schemas
+- `unity-cli _ _` — Passthrough to unity-cli CLI
+
 ## What is unity-cli?
 
 unity-cli is a single binary that talks directly to Unity via HTTP. No server to run, no config to write, no process to manage. Just type a command.

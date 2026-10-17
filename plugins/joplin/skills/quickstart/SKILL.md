@@ -7,6 +7,11 @@ description: Use this skill when the user wants to take notes, organize notebook
 
 Joplin manages notes with Markdown and sync.
 
+## Commands
+- `joplin <resource> <action>` — Execute joplin commands
+- `joplin self version` — Print joplin version
+- `joplin _ _` — Passthrough to joplin CLI
+
 ## Usage Examples
 
 - "create a new note in a notebook"

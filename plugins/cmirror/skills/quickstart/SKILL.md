@@ -7,6 +7,15 @@ description: Use this skill when the user wants to manage package manager mirror
 
 China Mirror Manager - unified CLI for managing mirrors: Pip, NPM, Docker, Cargo, Apt, Go, Brew.
 
+## Commands
+- `cmirror <resource> <action>` — Execute cmirror commands
+- `cmirror self version` — Print cmirror version
+- `cmirror status check` — Check current mirror status for all tools
+- `cmirror test benchmark` — Benchmark and rank mirror sources by latency
+- `cmirror use mirror` — Switch to a specific mirror source
+- `cmirror restore config` — Restore previous configuration or reset to default
+- `cmirror _ _` — Passthrough to cmirror CLI
+
 ## What is cmirror?
 
 cmirror is a cross-platform CLI tool for Chinese developers to manage package manager mirrors. It provides concurrent speed testing, auto-configuration, and backup/restore functionality.

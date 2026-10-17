@@ -1,5 +1,10 @@
 # fundoc - Documentation Generator
 
+## Commands
+- `fundoc <resource> <action>` — Execute fundoc commands
+- `fundoc generate docs` — Generate documentation
+- `fundoc _ _` — Passthrough to fundoc CLI
+
 ## Overview
 fundoc is a language agnostic documentation generator. Generate documentation from code comments and structure.
 

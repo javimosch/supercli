@@ -4,3 +4,7 @@ description: cargo-careful — run Rust tests with extra diagnostic checks. Dete
 ---
 # cargo-careful
 cargo-careful — run Rust tests with extra diagnostic checks. Detects undefined behavior, leaks, and other subtle bugs.
+
+## Commands
+- `cargo-careful <resource> <action>` — Execute cargo-careful commands
+- `cargo careful run` — cargo-careful — run Rust tests with extra diagnostic checks. Detects undefined behavior, leaks, and other subtle bugs.

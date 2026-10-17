@@ -8,6 +8,22 @@ tags: nemoclaw,openshell,openclaw,nvidia,sandbox
 
 Use this when you need to manage NemoClaw host/sandbox workflows through supercli.
 
+## Commands
+- `nemoclaw <resource> <action>` — Execute nemoclaw commands
+- `nemoclaw self version` — Show installed NemoClaw CLI version
+- `nemoclaw sandbox list` — List registered NemoClaw sandboxes
+- `nemoclaw system status` — Show overall NemoClaw status and services
+- `nemoclaw service start` — Start NemoClaw auxiliary services
+- `nemoclaw service stop` — Stop NemoClaw auxiliary services
+- `nemoclaw host onboard` — Run NemoClaw interactive host onboarding wizard
+- `nemoclaw host onboard-auto` — Run NemoClaw onboarding in non-interactive mode for automation
+- `nemoclaw host setup-spark` — Run NemoClaw DGX Spark setup command
+- `nemoclaw deploy instance` — Deploy NemoClaw to a named Brev instance
+- `nemoclaw sandbox status` — Show sandbox status by name
+- `nemoclaw sandbox logs` — Show sandbox logs by name
+- `nemoclaw sandbox connect` — Connect to sandbox shell by name
+- `nemoclaw _ _` — Passthrough command to execute any nemoclaw CLI command
+
 ## 1) Install NemoClaw and plugin
 
 ```bash

@@ -1,5 +1,12 @@
 # npkill - Node Modules Cleanup Tool
 
+## Commands
+- `npkill <resource> <action>` — Execute npkill commands
+- `npkill scan directory` — Scan directory for node_modules and output results in JSON
+- `npkill delete all` — Delete all node_modules directories found
+- `npkill stream results` — Stream results in real-time as JSON
+- `npkill _ _` — Passthrough to npkill CLI
+
 ## Overview
 npkill is a CLI tool that finds and removes old node_modules directories to free up disk space. It scans your filesystem for node_modules directories and allows you to selectively or automatically delete them.
 

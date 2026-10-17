@@ -7,6 +7,11 @@ description: Use this skill when the user wants to clean up merged git branches 
 
 Delete merged git branches interactively or automatically.
 
+## Commands
+- `git-delete-merged-branches <resource> <action>` — Execute git-delete-merged-branches commands
+- `git-delete-merged-branches self version` — Print git-delete-merged-branches version
+- `git-delete-merged-branches _ _` — Passthrough to git-delete-merged-branches CLI
+
 ## Usage Examples
 
 - "delete all merged branches in repo"

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use airi.
 
 💖🧸 Self hosted, you-owned Grok Companion, a container of souls of waifu, cyber livings to bring them into our worlds, wishing to achieve Neuro-sama's altitude. Capable of realtime voice chat, Minecraft, Factorio playing. Web / macOS / Windows supported.
 
+## Commands
+- `airi <resource> <action>` — Execute airi commands
+- `airi self version` — Print airi version
+- `airi _ _` — Passthrough to airi CLI
+
 ## Installation
 
 ```bash

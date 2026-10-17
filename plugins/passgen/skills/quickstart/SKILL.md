@@ -4,6 +4,11 @@ description: Generate secure random passwords.
 ---
 # passgen Plugin
 Generate cryptographically secure passwords.
+
+## Commands
+- `passgen <resource> <action>` — Execute passgen commands
+- `passgen self generate` — Generate a random password
+
 ## Usage
 - `passgen self generate` — 24-char password with special chars
 - `passgen self generate 32` — 32-char password

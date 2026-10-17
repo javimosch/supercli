@@ -7,6 +7,10 @@ description: mpv — command-line media player
 
 mpv — command-line media player
 
+## Commands
+- `mpv <resource> <action>` — Execute mpv commands
+- `mpv _ _` — Passthrough
+
 ## Installation
 
 ```bash

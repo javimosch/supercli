@@ -7,6 +7,10 @@ description: Use this skill when the user wants to search and replace text acros
 
 Terminal UI for search and replace across files, powered by ripgrep. A TUI alternative to VS Code's find-and-replace with per-match preview before applying changes.
 
+## Commands
+- `serpl <resource> <action>` — Execute serpl commands
+- `serpl _ _` — Passthrough to serpl CLI
+
 ## Prerequisites
 
 Requires [ripgrep](https://github.com/BurntSushi/ripgrep) (`rg`) installed and on PATH.

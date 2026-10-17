@@ -1,5 +1,9 @@
 # cpc - Unit-Aware Calculator
 
+## Commands
+- `cpc <resource> <action>` — Execute cpc commands
+- `cpc _ _` — Passthrough to cpc CLI
+
 ## Overview
 cpc is a text calculator with support for units and conversion. Calculate expressions with unit conversions.
 
