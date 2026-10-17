@@ -7,6 +7,15 @@ description: Use this skill when the user wants to generate secure short-lived G
 
 Generate short-lived (8-hour) GitHub App User Access Tokens for secure local development.
 
+## Commands
+- `ghtkn <resource> <action>` — Execute ghtkn commands
+- `ghtkn self version` — Print ghtkn version
+- `ghtkn init config` — Initialize ghtkn configuration file
+- `ghtkn get token` — Generate or retrieve a GitHub User Access Token
+- `ghtkn git-credential helper` — Use ghtkn as Git credential helper
+- `ghtkn list apps` — List configured GitHub Apps
+- `ghtkn _ _` — Passthrough to ghtkn CLI
+
 ## What is ghtkn?
 
 ghtkn (GH-Token) generates secure 8-hour User Access Tokens from GitHub Apps using Device Flow. Stop risking token leaks with long-lived Personal Access Tokens.

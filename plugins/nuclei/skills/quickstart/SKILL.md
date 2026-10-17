@@ -2,6 +2,14 @@
 
 nuclei is a fast, modular vulnerability scanner built with Go. It uses YAML-based templates to scan for vulnerabilities across HTTP, DNS, TCP, SSL/TLS, File, Whois, WebSocket, and headless browser protocols. Powered by 12,000+ community templates.
 
+## Commands
+- `nuclei <resource> <action>` — Execute nuclei commands
+- `nuclei self version` — Print nuclei version
+- `nuclei scan http` — Scan HTTP target for vulnerabilities
+- `nuclei scan template` — Scan with specific template
+- `nuclei scan json-output` — Scan and output results as JSON
+- `nuclei _ _` — Passthrough to nuclei CLI
+
 ## Installation
 
 ```bash

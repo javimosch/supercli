@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use BettaFish.
 
 微舆：人人可用的多Agent舆情分析助手，打破信息茧房，还原舆情原貌，预测未来走向，辅助决策！从0实现，不依赖任何框架。
 
+## Commands
+- `BettaFish <resource> <action>` — Execute BettaFish commands
+- `BettaFish self version` — Print BettaFish version
+- `BettaFish _ _` — Passthrough to bettafish CLI
+
 ## Installation
 
 ```bash

@@ -4,3 +4,7 @@ description: secret-scan — scan files for leaked secrets: API keys, AWS tokens
 ---
 # secret-scan
 secret-scan — scan files for leaked secrets: API keys, AWS tokens, private keys, JWTs, passwords, connection strings. Regex-based. Recursive directory walk.
+
+## Commands
+- `secret-scan <resource> <action>` — Execute secret-scan commands
+- `secret scan run` — secret-scan — scan files for leaked secrets: API keys, AWS tokens, private keys, JWTs, passwords, connection strings. Regex-based. Recursive directory walk.

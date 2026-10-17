@@ -7,6 +7,10 @@ description: serde-json — JSON serialization for Rust
 
 serde-json — JSON serialization for Rust
 
+## Commands
+- `serde-json <resource> <action>` — Execute serde-json commands
+- `serde-json self version` — Version
+
 ## Installation
 
 ```bash

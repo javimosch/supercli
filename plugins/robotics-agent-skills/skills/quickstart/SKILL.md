@@ -7,6 +7,11 @@ description: Use this skill when the user needs to write production-grade roboti
 
 Agent skills that make AI coding assistants write production-grade robotics software. Covers ROS1, ROS2, design patterns, SOLID principles, and testing.
 
+## Commands
+- `robotics-agent-skills <resource> <action>` — Execute robotics-agent-skills commands
+- `robotics-agent-skills self version` — Print info
+- `robotics-agent-skills _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/arpitg1304/robotics-agent-skills.git

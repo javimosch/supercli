@@ -6,6 +6,10 @@ description: pomsky — regex DSL that compiles to regular expressions
 
 pomsky is a regular expression DSL that compiles regex-like syntax into standard regular expressions.
 
+## Commands
+- `pomsky <resource> <action>` — Execute pomsky commands
+- `pomsky _ _` — Passthrough to pomsky
+
 ## Quickstart
 
 ```bash

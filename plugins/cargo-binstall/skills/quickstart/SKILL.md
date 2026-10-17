@@ -5,6 +5,10 @@ description: cargo-binstall — binary installation for Rust cargo tools. Instal
 # cargo-binstall
 cargo-binstall — binary installation for Rust cargo tools. Install Rust CLI tools from prebuilt binaries instead of compiling from source.
 
+## Commands
+- `cargo-binstall <resource> <action>` — Execute cargo-binstall commands
+- `cargo binstall run` — cargo-binstall — binary installation for Rust cargo tools. Install Rust CLI tools from prebuilt binaries instead of compiling from source.
+
 ## Install
 ```bash
 curl -LO https://github.com/cargo-bins/cargo-binstall/releases/download/v1.19.1/cargo-binstall-x86_64-unknown-linux-gnu.tgz && tar xzf cargo-binstall-x86_64-unknown-linux-gnu.tgz && sudo mv cargo-binstall /usr/local/bin/ && rm cargo-binstall-x86_64-unknown-linux-gnu.tgz

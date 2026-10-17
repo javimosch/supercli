@@ -7,6 +7,11 @@ description: Use this skill when the user wants to discover hidden HTTP paramete
 
 Arjun discovers hidden HTTP GET/POST parameters.
 
+## Commands
+- `arjun <resource> <action>` — Execute arjun commands
+- `arjun self version` — Print arjun version
+- `arjun _ _` — Passthrough to arjun CLI
+
 ## Usage Examples
 
 - "find hidden parameters on a web endpoint"

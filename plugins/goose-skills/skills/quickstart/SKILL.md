@@ -7,6 +7,13 @@ description: Use this skill when the user needs GTM (Go-to-Market) tasks — sal
 
 Growth & GTM skills from [gooseworks-ai/goose-skills](https://github.com/gooseworks-ai/goose-skills). Auto-discovered via `remote_repo` provider.
 
+## Commands
+- `goose-skills <resource> <action>` — Execute goose-skills commands
+- `goose-skills self setup` — Register remote_repo provider and sync all goose-skills into supercli skills system
+- `goose-skills self sync` — Re-sync the goose-skills catalog to pick up new/updated skills
+- `goose-skills self status` — Check how many goose-skills are indexed
+- `goose-skills _ _` — Passthrough for advanced skills commands
+
 ## Quick Start
 
 ```bash

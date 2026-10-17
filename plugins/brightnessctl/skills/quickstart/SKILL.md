@@ -7,6 +7,11 @@ description: Use this skill when the user wants to adjust screen brightness from
 
 brightnessctl controls display backlight brightness.
 
+## Commands
+- `brightnessctl <resource> <action>` — Execute brightnessctl commands
+- `brightnessctl self version` — Print brightnessctl version
+- `brightnessctl _ _` — Passthrough to brightnessctl CLI
+
 ## Usage Examples
 
 - "get current brightness level"

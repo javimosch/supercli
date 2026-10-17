@@ -4,3 +4,7 @@ description: pachyderm — data versioning and pipelines CLI. Automated data lin
 ---
 # pachyderm
 pachyderm — data versioning and pipelines CLI. Automated data lineage and pipeline management.
+
+## Commands
+- `pachyderm <resource> <action>` — Execute pachyderm commands
+- `pachyderm pachyderm run` — pachyderm — data versioning and pipelines CLI. Automated data lineage and pipeline management.

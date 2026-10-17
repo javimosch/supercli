@@ -7,6 +7,10 @@ description: Criterion.rs — Rust benchmarking library with statistical analysi
 
 Criterion.rs — Rust benchmarking library with statistical analysis
 
+## Commands
+- `criterion-rs <resource> <action>` — Execute criterion-rs commands
+- `criterion-rs self version` — Version
+
 ## Installation
 
 ```bash

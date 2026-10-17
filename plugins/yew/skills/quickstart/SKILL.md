@@ -7,6 +7,10 @@ description: Yew — Rust framework for building web frontends
 
 Yew — Rust framework for building web frontends
 
+## Commands
+- `yew <resource> <action>` — Execute yew commands
+- `yew self version` — Version
+
 ## Installation
 
 ```bash

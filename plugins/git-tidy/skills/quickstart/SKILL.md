@@ -1,5 +1,10 @@
 # git-tidy - Git Branch Cleanup
 
+## Commands
+- `git-tidy <resource> <action>` — Execute git-tidy commands
+- `git-tidy tidy branches` — Tidy up stale git branches
+- `git-tidy _ _` — Passthrough to git-tidy CLI
+
 ## Overview
 git-tidy tidies up stale git branches. Automatically clean up old and merged branches.
 

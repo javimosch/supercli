@@ -7,6 +7,10 @@ description: newsboat — terminal RSS/Atom feed reader with OPML support, podca
 
 newsboat — terminal RSS/Atom feed reader with OPML support, podcast integration, and extensible configuration
 
+## Commands
+- `newsboat <resource> <action>` — Execute newsboat commands
+- `newsboat _ _` — Passthrough to newsboat CLI
+
 ## Installation
 
 ```bash

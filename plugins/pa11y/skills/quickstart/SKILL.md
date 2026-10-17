@@ -7,6 +7,11 @@ description: Use this skill when the user wants automated accessibility (a11y) t
 
 pa11y runs automated accessibility audits against web pages. Detects WCAG violations with actionable output — ideal for CI pipelines and pre-release checks.
 
+## Commands
+- `pa11y <resource> <action>` — Execute pa11y commands
+- `pa11y self version` — Print pa11y version
+- `pa11y _ _` — Passthrough to pa11y CLI
+
 ## Installation
 
 ```bash

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to preview images directly in th
 
 catimg renders images in the terminal.
 
+## Commands
+- `catimg <resource> <action>` — Execute catimg commands
+- `catimg self version` — Print catimg version
+- `catimg _ _` — Passthrough to catimg CLI
+
 ## Usage Examples
 
 - "preview an image in terminal"

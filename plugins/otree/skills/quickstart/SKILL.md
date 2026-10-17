@@ -7,6 +7,10 @@ description: Use this skill when the user wants to explore or navigate structure
 
 Interactive TUI to view JSON, YAML, and TOML as a navigable tree. Faster than scrolling raw text for deeply nested documents.
 
+## Commands
+- `otree <resource> <action>` — Execute otree commands
+- `otree _ _` — Passthrough to otree CLI
+
 ## Installation
 
 ```bash

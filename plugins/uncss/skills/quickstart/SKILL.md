@@ -7,6 +7,11 @@ description: Use this skill when the user wants to remove unused CSS from styles
 
 UnCSS removes unused CSS rules by scanning HTML/JS templates against stylesheets.
 
+## Commands
+- `uncss <resource> <action>` — Execute uncss commands
+- `uncss self version` — Print uncss version
+- `uncss _ _` — Passthrough to uncss CLI
+
 ## Usage Examples
 
 - "remove unused CSS from styles.css based on index.html"

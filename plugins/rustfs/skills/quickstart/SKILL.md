@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use rustfs.
 
 🚀2.3x faster than MinIO for 4KB object payloads. RustFS is an open-source, S3-compatible high-performance object storage system supporting migration and coexistence with other S3-compatible platforms such as MinIO and Ceph.
 
+## Commands
+- `rustfs <resource> <action>` — Execute rustfs commands
+- `rustfs self version` — Print rustfs version
+- `rustfs _ _` — Passthrough to rustfs CLI
+
 ## Installation
 
 ```bash

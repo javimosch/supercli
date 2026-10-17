@@ -10,6 +10,12 @@ Use this when you need semantic code search over a repository via SuperCLI.
 
 Prefer `supercli cocoindex code search` for normal bot and human usage. It is the easiest and fastest path.
 
+## Commands
+- `cocoindex-code <resource> <action>` — Execute cocoindex-code commands
+- `cocoindex code search` — Semantic code search via direct cocoindex-code query wrapper
+- `cocoindex mcp search` — Semantic code search via cocoindex-code MCP server
+- `cocoindex index build` — Build or refresh cocoindex-code local index
+
 ## 1) Install upstream binary
 
 ```bash

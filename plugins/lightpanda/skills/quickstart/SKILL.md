@@ -2,6 +2,14 @@
 
 Use Lightpanda through `dcli` when you need fast, headless browser automation with structured JSON output for agents.
 
+## Commands
+- `lightpanda <resource> <action>` — Execute lightpanda commands
+- `lightpanda cli setup` — Install Lightpanda plugin runtime dependencies
+- `lightpanda cli help-json` — Show machine-readable command help for the Lightpanda wrapper
+- `lightpanda script run` — Run dynamic Lightpanda automation code with injected browser and page objects
+- `lightpanda extract run` — Run generic extraction code with browser, cheerio, and resilient navigation context
+- `lightpanda contacts discover` — Discover owner contact channels with a focused multi-page crawl
+
 ## Skill Map
 
 Use the plugin-local skills directory for focused guidance:

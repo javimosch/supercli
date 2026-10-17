@@ -7,6 +7,11 @@ description: Use this skill when the user wants to lint Markdown files for style
 
 markdownlint-cli checks Markdown files against configurable style rules.
 
+## Commands
+- `markdownlint-cli <resource> <action>` — Execute markdownlint-cli commands
+- `markdownlint-cli self version` — Print markdownlint-cli version
+- `markdownlint-cli _ _` — Passthrough to markdownlint CLI
+
 ## Usage Examples
 
 - "lint README.md for common issues"

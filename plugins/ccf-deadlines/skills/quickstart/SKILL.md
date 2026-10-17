@@ -2,6 +2,10 @@
 
 Track worldwide conference deadlines
 
+## Commands
+- `ccf-deadlines <resource> <action>` — Execute ccf-deadlines commands
+- `ccf deadlines list` — List upcoming conference deadlines
+
 ## Installation
 
 ```bash

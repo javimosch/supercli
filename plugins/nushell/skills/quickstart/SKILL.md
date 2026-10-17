@@ -7,6 +7,10 @@ description: Nushell — a new type of shell using structured data
 
 Nushell — a new type of shell using structured data
 
+## Commands
+- `nushell <resource> <action>` — Execute nushell commands
+- `nushell self version` — Version
+
 ## Installation
 
 ```bash

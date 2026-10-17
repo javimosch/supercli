@@ -7,6 +7,10 @@ description: fd — fast, user-friendly alternative to find
 
 fd — fast, user-friendly alternative to find
 
+## Commands
+- `fd-find2 <resource> <action>` — Execute fd-find2 commands
+- `fd-find2 self version` — Version
+
 ## Installation
 
 ```bash

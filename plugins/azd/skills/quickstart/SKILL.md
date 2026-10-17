@@ -8,6 +8,13 @@ tags: azd,azure,cloud,automation,devops
 
 Use this skill when you need deterministic Azure deployment workflows from supercli.
 
+## Commands
+- `azd <resource> <action>` — Execute azd commands
+- `azd cli version` — Show Azure Developer CLI version
+- `azd auth status` — Check Azure authentication status without interactive login
+- `azd deploy all` — Deploy all services in non-interactive mode
+- `azd _ _` — Passthrough command to execute any Azure Developer CLI command
+
 ## 1) Learn and install
 
 ```bash

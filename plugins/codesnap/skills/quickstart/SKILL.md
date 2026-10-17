@@ -1,5 +1,10 @@
 # codesnap - Code Snapshot Generator
 
+## Commands
+- `codesnap <resource> <action>` — Execute codesnap commands
+- `codesnap capture file` — Generate code snapshot from file
+- `codesnap _ _` — Passthrough to codesnap CLI
+
 ## Overview
 codesnap is a pure Rust tool to generate beautiful code snapshots from the CLI. It creates aesthetically pleasing screenshots of code snippets with customizable themes and styling.
 

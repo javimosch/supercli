@@ -4,3 +4,7 @@ description: lorem-gen — generate Lorem Ipsum placeholder text. Control paragr
 ---
 # lorem-gen
 lorem-gen — generate Lorem Ipsum placeholder text. Control paragraphs and sentences per paragraph.
+
+## Commands
+- `lorem-gen <resource> <action>` — Execute lorem-gen commands
+- `lorem gen run` — lorem-gen — generate Lorem Ipsum placeholder text. Control paragraphs and sentences per paragraph.

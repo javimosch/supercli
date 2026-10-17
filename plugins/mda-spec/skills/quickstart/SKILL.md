@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create agent-facing documents
 
 MDA is a Markdown superset for agent-facing documents. One `.mda` source compiles to SKILL.md, AGENTS.md, MCP-SERVER.md, and CLAUDE.md.
 
+## Commands
+- `mda-spec <resource> <action>` — Execute mda-spec commands
+- `mda-spec self version` — Print info
+- `mda-spec _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/sno-ai/mda.git

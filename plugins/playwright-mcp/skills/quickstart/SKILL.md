@@ -7,6 +7,12 @@ description: Use this skill when the user needs browser automation — navigate,
 
 Official Microsoft MCP server (32.5k⭐). Control browser via MCP tools over stdio. Works with any MCP client.
 
+## Commands
+- `playwright-mcp <resource> <action>` — Execute playwright-mcp commands
+- `playwright-mcp self mcp` — Register playwright-mcp MCP server for agent use
+- `playwright-mcp self start` — Start playwright-mcp MCP server manually
+- `playwright-mcp _ _` — Passthrough to playwright-mcp CLI
+
 ## Quick Start
 
 ```bash

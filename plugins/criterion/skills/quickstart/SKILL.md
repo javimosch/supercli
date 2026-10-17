@@ -7,6 +7,10 @@ description: criterion — benchmarking library for Rust
 
 criterion — benchmarking library for Rust
 
+## Commands
+- `criterion <resource> <action>` — Execute criterion commands
+- `criterion self version` — Version
+
 ## Installation
 
 ```bash

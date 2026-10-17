@@ -4,3 +4,7 @@ description: oprofile — system-wide performance profiler. Profile entire syste
 ---
 # oprofile
 oprofile — system-wide performance profiler. Profile entire system with low overhead.
+
+## Commands
+- `oprofile <resource> <action>` — Execute oprofile commands
+- `oprofile oprofile run` — oprofile — system-wide performance profiler. Profile entire system with low overhead.

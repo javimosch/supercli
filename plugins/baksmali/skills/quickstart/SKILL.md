@@ -7,6 +7,11 @@ description: Use this skill when the user wants to disassemble Android DEX/APK f
 
 baksmali disassembles and reassembles Android DEX bytecode.
 
+## Commands
+- `baksmali <resource> <action>` — Execute baksmali commands
+- `baksmali self version` — Print baksmali version
+- `baksmali _ _` — Passthrough to baksmali CLI
+
 ## Usage Examples
 
 - "disassemble an APK to smali files"

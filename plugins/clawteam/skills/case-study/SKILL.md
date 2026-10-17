@@ -8,6 +8,16 @@ tags: clawteam,case-study,delegation,poc,example
 
 This case study demonstrates how an autonomous orchestrator (e.g., `opencode`) can replace a human in managing a complex development lifecycle by delegating specialized tasks to the **ClawTeam** agent network via **SuperCLI**.
 
+## Commands
+- `clawteam <resource> <action>` — Execute clawteam commands
+- `clawteam system setup` — Automated installation of ClawTeam platform (Gateway, API, DB, Redis). Suitable for AI agents.
+- `clawteam system start` — Start all ClawTeam services (Docker + Gateway)
+- `clawteam system stop` — Stop all ClawTeam services
+- `clawteam system status` — Check full health of ClawTeam platform (Docker + Gateway)
+- `clawteam gateway status` — Show local ClawTeam gateway process status
+- `clawteam agents list` — List shared agents and active sessions in the network
+- `clawteam task delegate` — Delegate a task to an expert agent in the ClawTeam network
+
 ## 1. Scenario
 A user requests a Single Page Application (SPA) for vegetable basket reservations with:
 - **Frontend**: Vue 3 (CDN) + Tailwind (CDN).

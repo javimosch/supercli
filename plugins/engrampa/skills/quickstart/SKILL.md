@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create or extract archives in
 
 engrampa manages compressed archives.
 
+## Commands
+- `engrampa <resource> <action>` — Execute engrampa commands
+- `engrampa self version` — Print engrampa version
+- `engrampa _ _` — Passthrough to engrampa CLI
+
 ## Usage Examples
 
 - "extract a ZIP archive"

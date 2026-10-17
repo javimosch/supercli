@@ -7,6 +7,10 @@ description: YAML — human-friendly data serialization format
 
 YAML — human-friendly data serialization format
 
+## Commands
+- `yaml <resource> <action>` — Execute yaml commands
+- `yaml self version` — Version
+
 ## Installation
 
 ```bash

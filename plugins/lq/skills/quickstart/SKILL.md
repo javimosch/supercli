@@ -2,6 +2,12 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `lq <resource> <action>` — Execute lq commands
+- `lq self version` — Print lq version
+- `lq query select` — Query YAML/TOML/JSON
+- `lq _ _` — Passthrough to lq CLI
+
 ## Installation
 
 ```bash

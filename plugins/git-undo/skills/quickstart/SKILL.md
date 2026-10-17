@@ -7,6 +7,11 @@ description: Use this skill when the user wants to undo git changes — revert c
 
 git-undo provides smart git undo operations.
 
+## Commands
+- `git-undo <resource> <action>` — Execute git-undo commands
+- `git-undo self version` — Print git-undo version
+- `git-undo _ _` — Passthrough to git-undo CLI
+
 ## Usage Examples
 
 - "undo the last commit"

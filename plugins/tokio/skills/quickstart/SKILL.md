@@ -7,6 +7,10 @@ description: Tokio — async runtime for Rust applications
 
 Tokio — async runtime for Rust applications
 
+## Commands
+- `tokio <resource> <action>` — Execute tokio commands
+- `tokio self version` — Version
+
 ## Installation
 
 ```bash

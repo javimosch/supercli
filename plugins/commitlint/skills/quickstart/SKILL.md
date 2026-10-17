@@ -7,6 +7,11 @@ description: Use this skill when the user wants to enforce conventional commit m
 
 commitlint validates commit message format.
 
+## Commands
+- `commitlint <resource> <action>` — Execute commitlint commands
+- `commitlint self version` — Print commitlint version
+- `commitlint _ _` — Passthrough to commitlint CLI
+
 ## Usage Examples
 
 - "check the latest commit message"

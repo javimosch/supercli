@@ -2,6 +2,11 @@
 
 Interactive CLI for using emojis on commits
 
+## Commands
+- `gitmoji-cli <resource> <action>` — Execute gitmoji-cli commands
+- `gitmoji commit interactive` — Interactive commit with emoji
+- `gitmoji list show` — List all gitmojis
+
 ## Installation
 
 ```bash

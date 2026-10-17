@@ -1,5 +1,11 @@
 # qrtool - QR Code Utility
 
+## Commands
+- `qrtool <resource> <action>` — Execute qrtool commands
+- `qrtool decode qr` — Decode QR code from image
+- `qrtool encode qr` — Encode text into QR code
+- `qrtool _ _` — Passthrough to qrtool CLI
+
 ## Overview
 qrtool is a command-line utility for encoding and decoding QR codes. Supports multiple output formats and colored terminal output.
 

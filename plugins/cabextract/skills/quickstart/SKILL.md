@@ -7,6 +7,11 @@ description: Use this skill when the user needs to extract files from Microsoft 
 
 cabextract extracts files from Microsoft CAB archives.
 
+## Commands
+- `cabextract <resource> <action>` — Execute cabextract commands
+- `cabextract self version` — Print cabextract version
+- `cabextract _ _` — Passthrough to cabextract CLI
+
 ## Usage Examples
 
 - "extract a .cab file to current directory"

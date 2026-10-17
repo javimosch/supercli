@@ -1,5 +1,9 @@
 # rusync - Minimalist rsync
 
+## Commands
+- `rusync <resource> <action>` — Execute rusync commands
+- `rusync _ _` — Passthrough to rusync CLI
+
 ## Overview
 rusync is a minimalist rsync implementation in Rust. Fast file synchronization with rsync-like functionality.
 

@@ -6,6 +6,11 @@ description: a tool to analyze disk usage as a colored tree
 
 dutree is a fast, Rust-based command-line tool that displays disk usage as a colored tree, combining the functionality of `du` and `tree`.
 
+## Commands
+- `dutree <resource> <action>` — Execute dutree commands
+- `dutree self version` — Print dutree version
+- `dutree _ _` — Passthrough to dutree CLI
+
 ## Usage
 
 Analyze current directory:

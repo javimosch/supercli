@@ -7,6 +7,10 @@ description: Use this skill when the user wants to provision or manage remote de
 
 Provision and manage remote development environments on your own infrastructure. Uses Terraform templates and provisioners to spin up consistent, team-shared dev workspaces.
 
+## Commands
+- `coder <resource> <action>` — Execute coder commands
+- `coder _ _` — Passthrough to coder CLI
+
 ## Installation
 
 ```bash

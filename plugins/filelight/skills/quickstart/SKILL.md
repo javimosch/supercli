@@ -7,6 +7,11 @@ description: Use this skill when the user wants to visualize disk usage with an 
 
 filelight shows disk usage as a radial map.
 
+## Commands
+- `filelight <resource> <action>` — Execute filelight commands
+- `filelight self version` — Print filelight version
+- `filelight _ _` — Passthrough to filelight CLI
+
 ## Usage Examples
 
 - "analyze disk usage in the current directory"

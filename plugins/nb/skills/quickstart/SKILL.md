@@ -10,6 +10,19 @@ nb is a command line and local web note-taking, bookmarking, archiving, and know
 - Use Git for versioning and syncing
 - Convert notes between formats with Pandoc
 
+## Commands
+- `nb <resource> <action>` — Execute nb commands
+- `nb self version` — Print nb version
+- `nb note add` — Add a new note
+- `nb note list` — List notes
+- `nb note show` — Show a note
+- `nb note edit` — Edit a note
+- `nb note delete` — Delete a note
+- `nb bookmark add` — Add a bookmark
+- `nb search query` — Search notes and bookmarks
+- `nb notebook list` — List notebooks
+- `nb _ _` — Passthrough to nb CLI
+
 ## Installation
 
 ```bash

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to perform computational discret
 
 GAP is a computational discrete algebra system.
 
+## Commands
+- `gap <resource> <action>` — Execute gap commands
+- `gap self version` — Print gap version
+- `gap _ _` — Passthrough to gap CLI
+
 ## Usage Examples
 
 - "compute the order of a permutation group"

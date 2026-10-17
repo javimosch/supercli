@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use agenticSeek.
 
 Fully Local Manus AI. No APIs, No $200 monthly bills. Enjoy an autonomous agent that thinks, browses the web, and code for the sole cost of electricity. 🔔 Official updates only via twitter @Martin993886460 (Beware of fake account)
 
+## Commands
+- `agenticSeek <resource> <action>` — Execute agenticSeek commands
+- `agenticSeek self version` — Print agenticSeek version
+- `agenticSeek _ _` — Passthrough to agenticseek CLI
+
 ## Installation
 
 ```bash

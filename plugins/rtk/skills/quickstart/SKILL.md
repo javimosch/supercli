@@ -2,6 +2,13 @@
 
 RTK (Rust Token Killer) is a CLI proxy that reduces LLM token consumption by 60-90% on common dev commands.
 
+## Commands
+- `rtk <resource> <action>` — Execute rtk commands
+- `rtk self version` — Show RTK version
+- `rtk self init` — Initialize RTK OpenCode hook (runs: rtk init -g --opencode)
+- `rtk analytics gain` — Show token savings statistics
+- `rtk _ _` — Passthrough to RTK CLI (rtk ls, rtk git status, rtk test, etc.)
+
 ## Prerequisites
 
 - Install RTK:

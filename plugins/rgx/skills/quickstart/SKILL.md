@@ -1,5 +1,9 @@
 # rgx - Regex101 for Terminal
 
+## Commands
+- `rgx <resource> <action>` — Execute rgx commands
+- `rgx _ _` — Passthrough to rgx CLI
+
 ## Overview
 rgx is regex101 for the terminal. Real-time matching, 3 engines, capture groups, replace mode, syntax highlighting, plain-English explanations, undo/redo, mouse support.
 

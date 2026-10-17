@@ -7,6 +7,10 @@ description: Use this skill when the user wants to compress executables — shri
 
 Ultimate Packer for eXecutables. Compresses binaries in place (or to a new file) using fast in-memory decompression at startup — common for shipping smaller CLI tools, firmware images, and release artifacts.
 
+## Commands
+- `upx <resource> <action>` — Execute upx commands
+- `upx _ _` — Passthrough to upx CLI
+
 ## Installation
 
 ```bash

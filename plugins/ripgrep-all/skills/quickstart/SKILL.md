@@ -7,6 +7,10 @@ description: ripgrep-all — search documents with ripgrep backend
 
 ripgrep-all — search documents with ripgrep backend
 
+## Commands
+- `ripgrep-all <resource> <action>` — Execute ripgrep-all commands
+- `ripgrep-all self version` — Version
+
 ## Installation
 
 ```bash

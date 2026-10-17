@@ -4,3 +4,7 @@ description: ddate — Discordian date CLI. Convert Gregorian dates to Discordia
 ---
 # ddate
 ddate — Discordian date CLI. Convert Gregorian dates to Discordian calendar format.
+
+## Commands
+- `ddate <resource> <action>` — Execute ddate commands
+- `ddate ddate run` — ddate — Discordian date CLI. Convert Gregorian dates to Discordian calendar format.

@@ -4,3 +4,7 @@ description: podboat — podcast download client CLI. Download and manage podcas
 ---
 # podboat
 podboat — podcast download client CLI. Download and manage podcast episodes from RSS feeds.
+
+## Commands
+- `podboat <resource> <action>` — Execute podboat commands
+- `podboat podboat run` — podboat — podcast download client CLI. Download and manage podcast episodes from RSS feeds.

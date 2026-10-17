@@ -4,3 +4,7 @@ description: markdown-links — extract all links from Markdown files recursivel
 ---
 # markdown-links
 markdown-links — extract all links from Markdown files recursively. Reports link text, URL, and whether links are external or internal.
+
+## Commands
+- `markdown-links <resource> <action>` — Execute markdown-links commands
+- `markdown links run` — markdown-links — extract all links from Markdown files recursively. Reports link text, URL, and whether links are external or internal.

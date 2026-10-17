@@ -7,6 +7,10 @@ description: cargo-generate — cargo extension for generating new Rust projects
 
 cargo-generate — cargo extension for generating new Rust projects
 
+## Commands
+- `cargo-generate-new <resource> <action>` — Execute cargo-generate-new commands
+- `cargo-generate-new self version` — Version
+
 ## Installation
 
 ```bash

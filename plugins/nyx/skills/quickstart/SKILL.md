@@ -8,6 +8,13 @@ Nyx is a lightweight Rust CLI vulnerability scanner with cross-language taint an
 - Use browser UI for interactive security triage
 - Generate SARIF reports for GitHub Actions
 
+## Commands
+- `nyx <resource> <action>` — Execute nyx commands
+- `nyx self version` — Print nyx version
+- `nyx scan run` — Run security scan on repository with taint analysis
+- `nyx ui serve` — Start browser UI for interactive security analysis
+- `nyx _ _` — Passthrough to nyx CLI
+
 ## Installation
 
 ```bash

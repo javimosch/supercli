@@ -6,6 +6,13 @@ description: Safely edit the sudoers file with syntax validation
 
 Safely edit the sudoers file with built-in syntax validation and file locking.
 
+## Commands
+- `visudo <resource> <action>` — Execute visudo commands
+- `visudo self version` — Print visudo version
+- `visudo file check` — Check sudoers file syntax without editing
+- `visudo file edit` — Edit a specific sudoers file
+- `visudo _ _` — Passthrough to visudo CLI
+
 ## Quickstart
 
 ```bash

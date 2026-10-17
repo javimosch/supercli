@@ -7,6 +7,10 @@ description: Elvish — expressive programming language and versatile interactiv
 
 Elvish — expressive programming language and versatile interactive shell
 
+## Commands
+- `elvish <resource> <action>` — Execute elvish commands
+- `elvish self version` — Version
+
 ## Installation
 
 ```bash

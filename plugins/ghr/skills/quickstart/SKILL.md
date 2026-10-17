@@ -1,5 +1,10 @@
 # ghr - Repository Management
 
+## Commands
+- `ghr <resource> <action>` — Execute ghr commands
+- `ghr clone repo` — Clone a repository
+- `ghr _ _` — Passthrough to ghr CLI
+
 ## Overview
 ghr is repository management with auto-attaching profiles. Clone, manage, and sync git repositories with profiles.
 

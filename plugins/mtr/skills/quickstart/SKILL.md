@@ -2,6 +2,12 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `mtr <resource> <action>` — Execute mtr commands
+- `mtr self version` — Print mtr version
+- `mtr trace host` — Trace route to host with packet loss info
+- `mtr _ _` — Passthrough to mtr CLI
+
 ## Installation
 
 ```bash

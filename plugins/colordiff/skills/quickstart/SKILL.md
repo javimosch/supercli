@@ -7,6 +7,11 @@ description: Use this skill when the user wants to view diff output with color h
 
 colordiff adds syntax color to diff output.
 
+## Commands
+- `colordiff <resource> <action>` — Execute colordiff commands
+- `colordiff self version` — Print colordiff version
+- `colordiff _ _` — Passthrough to colordiff CLI
+
 ## Usage Examples
 
 - "show colored diff between two files"

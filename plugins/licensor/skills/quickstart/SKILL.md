@@ -1,5 +1,10 @@
 # licensor - License Generator
 
+## Commands
+- `licensor <resource> <action>` — Execute licensor commands
+- `licensor generate license` — Generate a license
+- `licensor _ _` — Passthrough to licensor CLI
+
 ## Overview
 licensor writes licenses to stdout. Generate and display license text for various open source licenses.
 

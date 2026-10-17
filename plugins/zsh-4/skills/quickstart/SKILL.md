@@ -7,6 +7,10 @@ description: Zsh shell (4.x series)
 
 Zsh shell (4.x series)
 
+## Commands
+- `zsh-4 <resource> <action>` — Execute zsh-4 commands
+- `zsh-4 self version` — Version
+
 ## Installation
 
 ```bash

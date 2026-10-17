@@ -7,6 +7,10 @@ description: fzf — command-line fuzzy finder
 
 fzf — command-line fuzzy finder
 
+## Commands
+- `fzf-bin <resource> <action>` — Execute fzf-bin commands
+- `fzf-bin self version` — Version
+
 ## Installation
 
 ```bash

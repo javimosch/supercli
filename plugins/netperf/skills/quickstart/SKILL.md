@@ -4,3 +4,7 @@ description: Network performance benchmark
 ---
 # netperf Plugin
 Network performance benchmark
+
+## Commands
+- `netperf <resource> <action>` — Execute netperf commands
+- `netperf _ _` — Passthrough to netperf

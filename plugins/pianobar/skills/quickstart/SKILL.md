@@ -7,6 +7,10 @@ description: pianobar — console Pandora radio client
 
 pianobar — console Pandora radio client
 
+## Commands
+- `pianobar <resource> <action>` — Execute pianobar commands
+- `pianobar _ _` — Passthrough
+
 ## Installation
 
 ```bash

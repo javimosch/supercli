@@ -7,6 +7,10 @@ description: Use this skill when you need to publish articles to Dev.to via thei
 
 Publish articles to Dev.to (https://dev.to) via their REST API. Requires a Dev.to API key for authentication.
 
+## Commands
+- `devto-publish <resource> <action>` — Execute devto-publish commands
+- `devto article publish` — Publish an article to Dev.to
+
 ## Setup
 
 1. Get your Dev.to API key:

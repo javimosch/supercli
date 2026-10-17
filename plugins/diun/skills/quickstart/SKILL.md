@@ -7,6 +7,13 @@ description: Use this skill when the user wants notifications when Docker images
 
 Docker Image Update Notifier. Monitors container registries and alerts when tracked images have new tags or digests. Supports Slack, email, Telegram, webhooks, and many other channels.
 
+## Commands
+- `diun <resource> <action>` — Execute diun commands
+- `diun self version` — Show diun version
+- `diun self serve` — Start diun in serve mode (watches registries and sends notifications)
+- `diun self check-config` — Validate the configuration file
+- `diun _ _` — Passthrough to diun CLI
+
 ## Installation
 
 ```bash

@@ -4,3 +4,7 @@ description: runc — OCI container runtime (reference implementation). CLI wrap
 ---
 # runc-2
 runc — OCI container runtime (reference implementation). CLI wrapper for spawning and running containers.
+
+## Commands
+- `runc-2 <resource> <action>` — Execute runc-2 commands
+- `runc 2 run` — runc — OCI container runtime (reference implementation). CLI wrapper for spawning and running containers.

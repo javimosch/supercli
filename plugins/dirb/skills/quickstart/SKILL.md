@@ -7,6 +7,11 @@ description: Use this skill when the user wants to discover hidden directories a
 
 dirb brute-forces hidden web directories and files.
 
+## Commands
+- `dirb <resource> <action>` — Execute dirb commands
+- `dirb self version` — Print dirb version
+- `dirb _ _` — Passthrough to dirb CLI
+
 ## Usage Examples
 
 - "scan a website for hidden directories"

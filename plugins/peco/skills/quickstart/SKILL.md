@@ -7,6 +7,10 @@ description: Simplistic interactive filtering tool for the command line
 
 Simplistic interactive filtering tool for the command line
 
+## Commands
+- `peco <resource> <action>` — Execute peco commands
+- `peco self version` — Version
+
 ## Installation
 
 ```bash

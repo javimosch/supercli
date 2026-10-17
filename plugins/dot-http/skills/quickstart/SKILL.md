@@ -1,5 +1,10 @@
 # dot-http - Scriptable HTTP Client
 
+## Commands
+- `dot-http <resource> <action>` — Execute dot-http commands
+- `dot-http request http` — Send HTTP request
+- `dot-http _ _` — Passthrough to dot-http CLI
+
 ## Overview
 dot-http is a text-based scriptable HTTP client. Define HTTP requests in text files and execute them.
 

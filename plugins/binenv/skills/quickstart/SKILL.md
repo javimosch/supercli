@@ -7,6 +7,13 @@ description: Use this skill when the user needs to install or pin specific versi
 
 Binary version manager that installs CLI tools via shims and tracks versions in a lock file. Keeps kubectl, terraform, and other binaries pinned per project.
 
+## Commands
+- `binenv <resource> <action>` — Execute binenv commands
+- `binenv self version` — Print binenv version
+- `binenv binary install` — Install a specific binary version
+- `binenv binary list` — List installed binaries and versions
+- `binenv binary available` — List available versions for a binary
+
 ## Installation
 
 ```bash

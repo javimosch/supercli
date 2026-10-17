@@ -7,6 +7,10 @@ description: Use this skill when the user wants to send HTTP requests from the t
 
 Arc-inspired API client for the terminal. Send HTTP requests, manage collections, and switch environments without leaving the shell.
 
+## Commands
+- `atac <resource> <action>` — Execute atac commands
+- `atac _ _` — Passthrough to atac CLI
+
 ## Installation
 
 ```bash

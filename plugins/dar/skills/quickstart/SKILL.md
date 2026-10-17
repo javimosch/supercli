@@ -7,6 +7,10 @@ description: Use this skill when the user wants full-featured disk backups or ar
 
 Disk ARchive (dar) — a powerful backup and archiving tool. Supports incremental backups, slices, compression, encryption, and selective restore — a feature-rich alternative to tar for serious backup workflows.
 
+## Commands
+- `dar <resource> <action>` — Execute dar commands
+- `dar _ _` — Passthrough to dar CLI
+
 ## Installation
 
 ```bash

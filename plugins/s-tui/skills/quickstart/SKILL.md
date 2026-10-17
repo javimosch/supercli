@@ -7,6 +7,10 @@ description: Use this skill when the user wants terminal-based CPU monitoring an
 
 Terminal UI for CPU stress testing and monitoring. Graphical display of temperature, frequency, power draw, and utilization — useful on laptops and servers when diagnosing thermal throttling or benchmarking.
 
+## Commands
+- `s-tui <resource> <action>` — Execute s-tui commands
+- `s-tui _ _` — Passthrough to s-tui CLI
+
 ## Installation
 
 ```bash

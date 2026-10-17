@@ -4,3 +4,7 @@ description: collectd — system metrics collection daemon CLI. Collect CPU, mem
 ---
 # collectd
 collectd — system metrics collection daemon CLI. Collect CPU, memory, disk, network stats. Write to various outputs.
+
+## Commands
+- `collectd <resource> <action>` — Execute collectd commands
+- `collectd collectd run` — collectd — system metrics collection daemon CLI. Collect CPU, memory, disk, network stats. Write to various outputs.
