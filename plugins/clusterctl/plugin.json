@@ -1,0 +1,168 @@
+{
+  "name": "clusterctl",
+  "version": "0.1.0",
+  "description": "Cluster API lifecycle CLI \u2014 init providers, generate cluster manifests, move and upgrade workload clusters",
+  "source": "https://github.com/kubernetes-sigs/cluster-api",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "clusterctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "clusterctl",
+    "binary": "clusterctl",
+    "check": "which clusterctl",
+    "install_steps": [
+      "Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH",
+      "Or: brew install clusterctl",
+      "Or: go install sigs.k8s.io/cluster-api/cmd/clusterctl@latest",
+      "Verify: clusterctl version",
+      "supercli plugins install ./plugins/clusterctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "clusterctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print clusterctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "management",
+      "action": "init",
+      "description": "Install Cluster API and provider components into the management cluster (clusterctl init --infrastructure aws). Providers: aws, azure, gcp, vsphere, docker...",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "init"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "clusters",
+      "action": "generate",
+      "description": "Render a workload-cluster manifest (clusterctl generate cluster mycluster --kubernetes-version v1.30.0 --control-plane-machine-count 1 --worker-machine-count 3)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "generate",
+          "cluster"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "clusters",
+      "action": "kubeconfig",
+      "description": "Fetch a workload cluster's kubeconfig (clusterctl get kubeconfig mycluster > kubeconfig.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "get",
+          "kubeconfig"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "clusters",
+      "action": "describe",
+      "description": "Show a cluster's object tree and conditions (clusterctl describe cluster mycluster)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "describe",
+          "cluster"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "clusters",
+      "action": "move",
+      "description": "Move Cluster API objects to another management cluster (clusterctl move --to-kubeconfig target.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "move"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "upgrades",
+      "action": "plan",
+      "description": "Show available Cluster API / provider upgrades (clusterctl upgrade plan)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "baseArgs": [
+          "upgrade",
+          "plan"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "clusterctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to clusterctl CLI (delete, upgrade apply, config, alpha subcommands)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "clusterctl",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install clusterctl: Download clusterctl for your platform from https://github.com/kubernetes-sigs/cluster-api/releases and move it to PATH"
+      },
+      "args": []
+    }
+  ]
+}

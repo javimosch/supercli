@@ -1,0 +1,73 @@
+{
+  "name": "ksniff",
+  "version": "0.1.0",
+  "description": "Packet capture on Kubernetes pods \u2014 tcpdump any pod and stream traffic to Wireshark or a pcap file",
+  "source": "https://github.com/eldadru/ksniff",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kubectl-sniff"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "ksniff",
+    "binary": "kubectl-sniff",
+    "check": "which kubectl-sniff",
+    "install_steps": [
+      "Install as a kubectl plugin: kubectl krew install sniff (binary lands as kubectl-sniff on PATH)",
+      "Or download kubectl-sniff from https://github.com/eldadru/ksniff/releases and move it to PATH",
+      "Verify: kubectl-sniff --help",
+      "supercli plugins install ./plugins/ksniff --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "ksniff",
+      "resource": "self",
+      "action": "usage",
+      "description": "Print kubectl-sniff usage and flags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-sniff",
+        "baseArgs": [
+          "--help"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kubectl-sniff: Install as a kubectl plugin: kubectl krew install sniff (binary lands as kubectl-sniff on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ksniff",
+      "resource": "pods",
+      "action": "capture",
+      "description": "Capture traffic from a pod (kubectl-sniff mypod -n myns -o capture.pcap). Add -f for a BPF filter, -i for interface, -v to stream to Wireshark",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-sniff",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install kubectl-sniff: Install as a kubectl plugin: kubectl krew install sniff (binary lands as kubectl-sniff on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "ksniff",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kubectl-sniff (same as kubectl sniff) \u2014 pod arg plus tcpdump/filter flags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-sniff",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kubectl-sniff: Install as a kubectl plugin: kubectl krew install sniff (binary lands as kubectl-sniff on PATH)"
+      },
+      "args": []
+    }
+  ]
+}
