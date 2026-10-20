@@ -1,1 +1,10 @@
----\nname: aom\ndescription: AV1 video encoder\n---\n# aom Plugin\nAV1 video encoder
+---
+name: aom
+description: AV1 video encoder
+---
+# aom Plugin
+AV1 video encoder
+
+## Commands
+- `aom <resource> <action>` — Execute aom commands
+- `aom _ _` — Passthrough to aomenc CLI

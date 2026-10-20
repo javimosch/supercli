@@ -4,3 +4,7 @@ description: binary — binary analysis CLI. Analyze binary files, extract strin
 ---
 # binary-2
 binary — binary analysis CLI. Analyze binary files, extract strings, disassemble sections.
+
+## Commands
+- `binary-2 <resource> <action>` — Execute binary-2 commands
+- `binary 2 run` — binary — binary analysis CLI. Analyze binary files, extract strings, disassemble sections.

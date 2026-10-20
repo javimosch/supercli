@@ -1,1 +1,10 @@
----\nname: apk\ndescription: Alpine package manager\n---\n# apk Plugin\nAlpine package manager
+---
+name: apk
+description: Alpine package manager
+---
+# apk Plugin
+Alpine package manager
+
+## Commands
+- `apk <resource> <action>` — Execute apk commands
+- `apk _ _` — Passthrough to apk

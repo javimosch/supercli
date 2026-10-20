@@ -2,6 +2,12 @@
 
 A toolchain for web projects with formatter and linter
 
+## Commands
+- `biome <resource> <action>` — Execute biome commands
+- `biome format run` — Format files
+- `biome lint run` — Lint files
+- `biome check run` — Run format and lint checks
+
 ## Installation
 
 ```bash

@@ -1,1 +1,10 @@
----\nname: boundary\ndescription: HashiCorp identity-based access\n---\n# boundary Plugin\nHashiCorp identity-based access
+---
+name: boundary
+description: HashiCorp identity-based access
+---
+# boundary Plugin
+HashiCorp identity-based access
+
+## Commands
+- `boundary <resource> <action>` — Execute boundary commands
+- `boundary _ _` — Passthrough to boundary CLI

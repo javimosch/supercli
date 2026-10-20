@@ -6,6 +6,13 @@ description: Background Rust code checker
 
 Watches your Rust project and runs clippy, rustc, or custom commands on file changes.
 
+## Commands
+- `bacon <resource> <action>` — Execute bacon commands
+- `bacon project check` — Run bacon in background check mode (default)
+- `bacon config init` — Create a default bacon.toml configuration file
+- `bacon self version` — Print bacon version
+- `bacon _ _` — Passthrough to bacon CLI
+
 ## Basic Usage
 
 ```bash

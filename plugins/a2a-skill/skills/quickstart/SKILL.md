@@ -7,6 +7,26 @@ description: Use this skill when agents need to communicate peer-to-peer via the
 
 The **a2a-skill** plugin wraps the [a2a](https://github.com/javier-arancibia/a2a-skill) agent-to-agent messaging system for SuperCLI. It lets any number of AI coding agents (Claude Code, OpenCode, pi, ...) share messages over a local SQLite bus.
 
+## Commands
+- `a2a-skill <resource> <action>` — Execute a2a-skill commands
+- `a2a-skill self version` — Show a2a-skill help/version info
+- `a2a-skill self learn` — Teach the agent the a2a-skill quickstart guide (run: sc skills teach a2a-skill:quickstart)
+- `a2a-skill project init` — Create a new a2a project database at ~/.a2a/{project}/database.db. Project resolves from A2A_PROJECT env or basename($PWD).
+- `a2a-skill project info` — Show resolved project info (name, db path, exists). Project resolves from A2A_PROJECT env or basename($PWD).
+- `a2a-skill agent register` — Register a new agent on the bus (or upsert if already registered). Set A2A_PROJECT for custom project.
+- `a2a-skill agent unregister` — Remove an agent from the bus
+- `a2a-skill agent list` — List all registered agents with their role, CLI, status, and PID
+- `a2a-skill agent status` — Update an agent's status (active, idle, done, blocked)
+- `a2a-skill message send` — Send a message to an agent or broadcast to all ('all' = broadcast to everyone)
+- `a2a-skill message recv` — Receive messages addressed to an agent (blocks with --wait)
+- `a2a-skill message peek` — Peek at recent messages without marking them read (observable by all)
+- `a2a-skill message thread` — Show all messages in a thread
+- `a2a-skill message search` — Search messages by content (FTS5 with LIKE fallback)
+- `a2a-skill message wait` — Block until N unread messages arrive for an agent, or timeout
+- `a2a-skill stats show` — Show bus statistics: message count, agent counts, top senders
+- `a2a-skill clear run` — Delete the project database (requires --yes confirmation). Set A2A_PROJECT for custom project.
+- `a2a-skill _ _` — Passthrough: run any raw a2a command. Useful when you need --project flag. Example: a2a-skill _ _ list --project myapp
+
 ## Architecture
 
 ```

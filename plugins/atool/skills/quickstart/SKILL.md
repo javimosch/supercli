@@ -7,6 +7,11 @@ description: Use this skill when the user wants to extract, create, or list arch
 
 atool manages archives with format-agnostic commands.
 
+## Commands
+- `atool <resource> <action>` — Execute atool commands
+- `atool self version` — Print atool version
+- `atool _ _` — Passthrough to atool CLI
+
 ## Usage Examples
 
 - "extract any archive file"

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use CloakBrowser.
 
 Stealth Chromium that passes every bot detection test. Drop-in Playwright replacement with source-level fingerprint patches. 30/30 tests passed.
 
+## Commands
+- `CloakBrowser <resource> <action>` — Execute CloakBrowser commands
+- `CloakBrowser self version` — Print CloakBrowser version
+- `CloakBrowser _ _` — Passthrough to cloakbrowser CLI
+
 ## Installation
 
 ```bash

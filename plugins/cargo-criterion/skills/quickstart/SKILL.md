@@ -1,1 +1,10 @@
----\nname: cargo-criterion\ndescription: Rust benchmark runner\n---\n# cargo-criterion Plugin\nRust benchmark runner
+---
+name: cargo-criterion
+description: Rust benchmark runner
+---
+# cargo-criterion Plugin
+Rust benchmark runner
+
+## Commands
+- `cargo-criterion <resource> <action>` — Execute cargo-criterion commands
+- `cargo-criterion _ _` — Passthrough

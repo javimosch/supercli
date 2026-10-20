@@ -6,6 +6,21 @@ description: Homebrew — macOS package manager for open-source software
 
 Manage packages with Homebrew.
 
+## Commands
+- `brew <resource> <action>` — Execute brew commands
+- `brew self version` — Print Homebrew version
+- `brew package install` — Install a formula or cask
+- `brew package uninstall` — Uninstall a formula or cask
+- `brew package info` — Display information about a formula or cask
+- `brew self update` — Fetch the newest version of Homebrew and all formulae
+- `brew package upgrade` — Upgrade outdated casks and unpinned formulae
+- `brew package list` — List all installed formulae and casks
+- `brew package search` — Search for available formulae and casks
+- `brew self doctor` — Check your system for potential problems
+- `brew self cleanup` — Remove stale lock files and outdated downloads
+- `brew package outdated` — List installed formulae and casks with available updates
+- `brew _ _` — Passthrough to Homebrew CLI
+
 ## Usage
 
 - `brew self version` — Print Homebrew version

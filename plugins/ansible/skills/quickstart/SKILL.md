@@ -6,6 +6,17 @@ description: IT automation tool for configuration management, application deploy
 
 Automate IT infrastructure with Ansible.
 
+## Commands
+- `ansible <resource> <action>` — Execute ansible commands
+- `ansible self version` — Print ansible version
+- `ansible inventory list` — List hosts in inventory
+- `ansible playbook run` — Run an Ansible playbook
+- `ansible galaxy install` — Install a role or collection from Ansible Galaxy
+- `ansible galaxy search` — Search Ansible Galaxy for roles and collections
+- `ansible vault encrypt` — Encrypt a file with Ansible Vault
+- `ansible vault decrypt` — Decrypt a file with Ansible Vault
+- `ansible _ _` — Passthrough to ansible CLI
+
 ## Usage
 
 - `ansible self version` — Print ansible version

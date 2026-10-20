@@ -2,6 +2,12 @@
 
 asciidoctor converts AsciiDoc to HTML, PDF, and other formats.
 
+## Commands
+- `asciidoctor <resource> <action>` — Execute asciidoctor commands
+- `asciidoctor self version` — Print asciidoctor version
+- `asciidoctor convert html` — Convert AsciiDoc to HTML
+- `asciidoctor _ _` — Passthrough to asciidoctor CLI
+
 ## Installation
 
 ```bash

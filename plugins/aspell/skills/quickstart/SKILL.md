@@ -7,6 +7,11 @@ description: Use this skill when the user wants to check spelling in text files,
 
 Aspell checks spelling and provides corrections.
 
+## Commands
+- `aspell <resource> <action>` — Execute aspell commands
+- `aspell self version` — Print aspell version
+- `aspell _ _` — Passthrough to aspell CLI
+
 ## Usage Examples
 
 - "check spelling in a text file"

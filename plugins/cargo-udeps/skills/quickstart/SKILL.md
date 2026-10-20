@@ -1,1 +1,10 @@
----\nname: cargo-udeps\ndescription: Find unused Rust dependencies\n---\n# cargo-udeps Plugin\nFind unused Rust dependencies
+---
+name: cargo-udeps
+description: Find unused Rust dependencies
+---
+# cargo-udeps Plugin
+Find unused Rust dependencies
+
+## Commands
+- `cargo-udeps <resource> <action>` — Execute cargo-udeps commands
+- `cargo-udeps _ _` — Passthrough

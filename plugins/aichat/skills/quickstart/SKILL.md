@@ -7,6 +7,10 @@ description: Use this skill when the user wants to chat with LLMs from the termi
 
 All-in-one LLM CLI. Chat with multiple providers, run one-shot prompts, manage sessions, and pipe shell output into AI workflows.
 
+## Commands
+- `aichat <resource> <action>` — Execute aichat commands
+- `aichat _ _` — Passthrough to aichat CLI
+
 ## Installation
 
 ```bash

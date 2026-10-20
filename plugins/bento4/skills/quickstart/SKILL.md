@@ -4,3 +4,7 @@ description: bento4 — MP4 format library and tools. Analyze, fragment, encrypt
 ---
 # bento4
 bento4 — MP4 format library and tools. Analyze, fragment, encrypt, and stream MP4 files. Includes mp4info, mp4fragment.
+
+## Commands
+- `bento4 <resource> <action>` — Execute bento4 commands
+- `bento4 bento4 run` — bento4 — MP4 format library and tools. Analyze, fragment, encrypt, and stream MP4 files. Includes mp4info, mp4fragment.

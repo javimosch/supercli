@@ -1,1 +1,10 @@
----\nname: ant\ndescription: Apache Ant build tool\n---\n# ant Plugin\nApache Ant build tool
+---
+name: ant
+description: Apache Ant build tool
+---
+# ant Plugin
+Apache Ant build tool
+
+## Commands
+- `ant <resource> <action>` — Execute ant commands
+- `ant _ _` — Passthrough to ant CLI

@@ -1,1 +1,10 @@
----\nname: cargo-insta\ndescription: Rust snapshot testing\n---\n# cargo-insta Plugin\nRust snapshot testing
+---
+name: cargo-insta
+description: Rust snapshot testing
+---
+# cargo-insta Plugin
+Rust snapshot testing
+
+## Commands
+- `cargo-insta <resource> <action>` — Execute cargo-insta commands
+- `cargo-insta _ _` — Passthrough
