@@ -7,6 +7,11 @@ description: Use this skill when the user wants to write or run Bash shell tests
 
 Bash Automated Testing System. Write unit and integration tests for shell scripts with readable syntax, TAP output, and first-class CI support.
 
+## Commands
+- `bats <resource> <action>` — Execute bats commands
+- `bats test run` — Run a bats test file or test suite
+- `bats _ _` — Passthrough to bats CLI
+
 ## Installation
 
 ```bash

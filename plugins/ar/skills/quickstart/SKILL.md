@@ -1,1 +1,13 @@
----\nname: ar\ndescription: GNU archiver for static libraries\n---\n# ar Plugin\nGNU archiver for static libraries\n## Usage\n- `ar _ _ <args>` — Run ar
+---
+name: ar
+description: GNU archiver for static libraries
+---
+# ar Plugin
+GNU archiver for static libraries
+
+## Commands
+- `ar <resource> <action>` — Execute ar commands
+- `ar _ _` — Passthrough to ar CLI
+
+## Usage
+- `ar _ _ <args>` — Run ar

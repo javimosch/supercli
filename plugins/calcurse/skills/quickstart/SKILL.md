@@ -7,6 +7,11 @@ description: Use this skill when the user wants to manage a calendar, schedule a
 
 calcurse is a terminal-based calendar and scheduler.
 
+## Commands
+- `calcurse <resource> <action>` — Execute calcurse commands
+- `calcurse self version` — Print calcurse version
+- `calcurse _ _` — Passthrough to calcurse CLI
+
 ## Usage Examples
 
 - "show today's agenda and appointments"

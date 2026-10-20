@@ -6,6 +6,10 @@ description: atuin — magical shell history with sync, search, and stats
 
 Atuin replaces your shell history with a searchable, encrypted SQLite database, adding context (exit code, duration, directory) and optional end-to-end encrypted sync across machines.
 
+## Commands
+- `atuin <resource> <action>` — Execute atuin commands
+- `atuin _ _` — Passthrough to atuin CLI
+
 ## Quickstart
 
 ```bash

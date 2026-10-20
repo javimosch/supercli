@@ -7,6 +7,11 @@ description: Use this skill when the user wants an interactive shell for AWS CLI
 
 aws-shell provides an interactive AWS CLI environment.
 
+## Commands
+- `aws-shell <resource> <action>` — Execute aws-shell commands
+- `aws-shell self version` — Print aws-shell version
+- `aws-shell _ _` — Passthrough to aws-shell CLI
+
 ## Usage Examples
 
 - "start interactive AWS shell"

@@ -7,6 +7,10 @@ description: Use this skill when the user wants to map attack surfaces, discover
 
 OWASP Amass performs in-depth attack surface mapping and external asset discovery using OSINT and active recon techniques. Ideal for security assessments, bug bounty recon, and infrastructure inventory.
 
+## Commands
+- `amass <resource> <action>` — Execute amass commands
+- `amass _ _` — Passthrough to amass CLI
+
 ## Installation
 
 ```bash

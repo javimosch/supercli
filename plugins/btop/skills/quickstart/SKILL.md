@@ -1,5 +1,12 @@
 # btop Plugin
 
+## Commands
+- `btop <resource> <action>` — Execute btop commands
+- `btop self version` — Print btop version
+- `btop ui open` — Open btop terminal UI
+- `btop process tree` — Show process tree in btop
+- `btop _ _` — Passthrough to btop CLI
+
 ## Overview
 The btop plugin provides a resource monitor that shows usage and stats for processor, memory, disks, network and processes. A modern, colorful terminal UI replacement for htop.
 

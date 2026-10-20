@@ -8,6 +8,19 @@ tags: boxlite,sandbox,vm,docker,experimental
 
 Use this skill to understand the current state of the BoxLite supercli plugin before running workflows.
 
+## Commands
+- `boxlite <resource> <action>` — Execute boxlite commands
+- `boxlite capabilities show` — Show boxcli capabilities
+- `boxlite runtime info` — Show runtime info
+- `boxlite image list` — List cached images
+- `boxlite image pull` — Pull image into local cache
+- `boxlite image exists` — Check if image exists in local cache
+- `boxlite box list` — List boxes
+- `boxlite box get` — Get one box by id or name
+- `boxlite box create` — Create a new box with image preflight
+- `boxlite box remove` — Remove a box
+- `boxlite _ _` — Passthrough to boxcli for advanced commands
+
 ## 1) Install and inspect plugin
 
 ```bash

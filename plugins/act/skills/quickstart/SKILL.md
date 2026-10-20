@@ -8,6 +8,17 @@ tags: act,github-actions,ci-cd,testing,automation,docker,workflows
 
 Use this when AI agents need to run GitHub Actions workflows locally before pushing to GitHub.
 
+## Commands
+- `act <resource> <action>` — Execute act commands
+- `act workflow list` — List all available workflows and jobs from .github/workflows/
+- `act workflow run` — Run a workflow (default: push event)
+- `act job run` — Run a specific job by ID
+- `act workflow validate` — Validate workflow files without running
+- `act workflow dryrun` — Dry run mode - validate workflow and show what would run
+- `act secret list` — List configured secrets from .actrc files
+- `act secret add` — Add a secret for workflow runs
+- `act workflow watch` — Watch for file changes and re-run workflows
+
 ## 1) Install plugin and dependency
 
 ```bash

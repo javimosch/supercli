@@ -1,1 +1,10 @@
----\nname: cargo-expand\ndescription: Expand Rust macros\n---\n# cargo-expand Plugin\nExpand Rust macros
+---
+name: cargo-expand
+description: Expand Rust macros
+---
+# cargo-expand Plugin
+Expand Rust macros
+
+## Commands
+- `cargo-expand <resource> <action>` — Execute cargo-expand commands
+- `cargo-expand _ _` — Passthrough

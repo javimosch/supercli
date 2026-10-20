@@ -1,1 +1,10 @@
----\nname: cargo-asm\ndescription: Rust assembly output\n---\n# cargo-asm Plugin\nRust assembly output
+---
+name: cargo-asm
+description: Rust assembly output
+---
+# cargo-asm Plugin
+Rust assembly output
+
+## Commands
+- `cargo-asm <resource> <action>` — Execute cargo-asm commands
+- `cargo-asm _ _` — Passthrough

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to generate interactive REST API
 
 apiDoc generates API docs from source code annotations.
 
+## Commands
+- `apidoc <resource> <action>` — Execute apidoc commands
+- `apidoc self version` — Print apidoc version
+- `apidoc _ _` — Passthrough to apidoc CLI
+
 ## Usage Examples
 
 - "generate API docs from source code"

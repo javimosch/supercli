@@ -1,5 +1,9 @@
 # bunx Plugin
 
+## Commands
+- `bunx <resource> <action>` — Execute bunx commands
+- `bunx _ _` — Passthrough to bunx CLI
+
 ## Overview
 The `bunx` plugin wraps Bun's package runner CLI. `bunx` is a fast npm package runner that downloads and executes npm packages on demand, caching them globally for reuse. It is the Bun equivalent of `npx` but significantly faster.
 

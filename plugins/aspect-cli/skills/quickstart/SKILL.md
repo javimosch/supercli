@@ -1,5 +1,10 @@
 # aspect-cli - Bazel CLI
 
+## Commands
+- `aspect-cli <resource> <action>` — Execute aspect-cli commands
+- `aspect build target` — Build Bazel target
+- `aspect _ _` — Passthrough to aspect CLI
+
 ## Overview
 aspect-cli is Aspect CLI for Bazel - Correct, Fast, Usable. Bazel CLI with improvements and extensions.
 

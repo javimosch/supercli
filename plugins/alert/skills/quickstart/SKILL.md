@@ -7,6 +7,11 @@ description: Use this skill when the user wants to send desktop notifications fr
 
 alert sends desktop notifications from the terminal.
 
+## Commands
+- `alert <resource> <action>` — Execute alert commands
+- `alert self version` — Print alert version
+- `alert _ _` — Passthrough to alert CLI
+
 ## Usage Examples
 
 - "notify when a long build completes"

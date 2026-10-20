@@ -4,3 +4,7 @@ description: abduco — terminal session manager. Detach and reattach terminal s
 ---
 # abduco
 abduco — terminal session manager. Detach and reattach terminal sessions with minimal overhead.
+
+## Commands
+- `abduco <resource> <action>` — Execute abduco commands
+- `abduco abduco run` — abduco — terminal session manager. Detach and reattach terminal sessions with minimal overhead.
