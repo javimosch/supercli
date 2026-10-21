@@ -1,1 +1,13 @@
----\nname: gcc\ndescription: GNU Compiler Collection\n---\n# gcc Plugin\nGNU Compiler Collection\n## Usage\n- `gcc _ _ <args>` — Run gcc
+---
+name: gcc
+description: GNU Compiler Collection
+---
+# gcc Plugin
+GNU Compiler Collection
+
+## Commands
+- `gcc <resource> <action>` — Execute gcc commands
+- `gcc _ _` — Passthrough to gcc CLI
+
+## Usage
+- `gcc _ _ <args>` — Run gcc

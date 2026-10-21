@@ -2,6 +2,13 @@
 
 Use the fast-agent plugin when you need flexible LLM interaction for coding agents, evaluation workflows, or development tasks with MCP support.
 
+## Commands
+- `fast-agent <resource> <action>` — Execute fast-agent commands
+- `fast-agent self version` — Show fast-agent version
+- `fast-agent agent run` — Run a fast-agent task or prompt
+- `fast-agent eval run` — Run evaluation on tasks
+- `fast-agent server serve` — Start fast-agent server
+
 ## Quick Start
 
 ### 1. Check Installation

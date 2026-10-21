@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create DVD-Video files from M
 
 dvdauthor creates DVD-Video structures from MPEG files.
 
+## Commands
+- `dvdauthor <resource> <action>` — Execute dvdauthor commands
+- `dvdauthor self version` — Print dvdauthor version
+- `dvdauthor _ _` — Passthrough to dvdauthor CLI
+
 ## Usage Examples
 
 - "create a simple DVD from an MPEG file"

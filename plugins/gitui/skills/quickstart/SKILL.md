@@ -6,6 +6,10 @@ description: gitui — blazing fast terminal UI for git
 
 GitUI is a fast, keyboard-driven terminal interface for git, letting you stage hunks, commit, browse logs, manage branches, and resolve conflicts without leaving the terminal.
 
+## Commands
+- `gitui <resource> <action>` — Execute gitui commands
+- `gitui _ _` — Passthrough to gitui CLI
+
 ## Quickstart
 
 ```bash

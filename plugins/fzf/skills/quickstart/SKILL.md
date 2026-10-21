@@ -1,5 +1,12 @@
 # fzf Plugin
 
+## Commands
+- `fzf <resource> <action>` — Execute fzf commands
+- `fzf self version` — Print fzf version
+- `fzf files select` — Interactive file selection
+- `fzf history search` — Search command history
+- `fzf _ _` — Passthrough to fzf CLI
+
 ## Overview
 The fzf plugin provides a command-line fuzzy finder. An interactive Unix filter that can be used with any list: files, command history, processes, hostnames, bookmarks, git commits, and more.
 

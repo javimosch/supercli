@@ -1,1 +1,10 @@
----\nname: emacs\ndescription: GNU Emacs text editor\n---\n# emacs Plugin\nGNU Emacs text editor
+---
+name: emacs
+description: GNU Emacs text editor
+---
+# emacs Plugin
+GNU Emacs text editor
+
+## Commands
+- `emacs <resource> <action>` — Execute emacs commands
+- `emacs _ _` — Passthrough to emacs

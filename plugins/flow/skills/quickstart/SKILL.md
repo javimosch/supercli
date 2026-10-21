@@ -1,5 +1,10 @@
 # flow - Terminal Kanban
 
+## Commands
+- `flow <resource> <action>` — Execute flow commands
+- `flow run board` — Run Kanban board
+- `flow _ _` — Passthrough to flow CLI
+
 ## Overview
 flow is a keyboard-first Kanban board for terminal workflows. Manage tasks and projects in the terminal.
 

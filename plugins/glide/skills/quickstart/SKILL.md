@@ -1,1 +1,10 @@
----\nname: glide\ndescription: Go package manager\n---\n# glide Plugin\nGo package manager
+---
+name: glide
+description: Go package manager
+---
+# glide Plugin
+Go package manager
+
+## Commands
+- `glide <resource> <action>` — Execute glide commands
+- `glide _ _` — Passthrough

@@ -4,3 +4,7 @@ description: file-watch — watch a directory for file changes (create, modify, 
 ---
 # file-watch
 file-watch — watch a directory for file changes (create, modify, delete). Polls every second, outputs JSON events. Agents can monitor for downloads, logs, build artifacts.
+
+## Commands
+- `file-watch <resource> <action>` — Execute file-watch commands
+- `file watch run` — file-watch — watch a directory for file changes (create, modify, delete). Polls every second, outputs JSON events. Agents can monitor for downloads, logs, build artifacts.

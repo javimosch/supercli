@@ -4,3 +4,7 @@ description: gnuplot-nox — Gnuplot plotting CLI without X11. Plot data, functi
 ---
 # gnuplot-nox
 gnuplot-nox — Gnuplot plotting CLI without X11. Plot data, functions, and generate graphs in terminal or image formats.
+
+## Commands
+- `gnuplot-nox <resource> <action>` — Execute gnuplot-nox commands
+- `gnuplot nox run` — gnuplot-nox — Gnuplot plotting CLI without X11. Plot data, functions, and generate graphs in terminal or image formats.

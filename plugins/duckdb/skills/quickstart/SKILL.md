@@ -2,6 +2,14 @@
 
 DuckDB is an in-process SQL OLAP database system designed for high-speed analytical queries. It can read CSV, Parquet, and JSON files directly without importing, making it perfect for data exploration and transformation.
 
+## Commands
+- `duckdb <resource> <action>` — Execute duckdb commands
+- `duckdb self version` — Print DuckDB version
+- `duckdb query file` — Execute SQL query on file (CSV, Parquet, JSON)
+- `duckdb query database` — Query a DuckDB database file
+- `duckdb interactive shell` — Open DuckDB interactive shell
+- `duckdb _ _` — Passthrough to DuckDB CLI
+
 ## Installation
 
 ```bash

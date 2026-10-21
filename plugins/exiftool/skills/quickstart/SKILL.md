@@ -1,1 +1,10 @@
----\nname: exiftool\ndescription: Read and write image metadata\n---\n# exiftool Plugin\nRead and write image metadata
+---
+name: exiftool
+description: Read and write image metadata
+---
+# exiftool Plugin
+Read and write image metadata
+
+## Commands
+- `exiftool <resource> <action>` — Execute exiftool commands
+- `exiftool _ _` — Passthrough to exiftool CLI
