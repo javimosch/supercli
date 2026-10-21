@@ -7,6 +7,11 @@ description: Use this skill when the user wants to run Postman API collections f
 
 Newman runs Postman collections from the command line for API testing and automation.
 
+## Commands
+- `newman <resource> <action>` — Execute newman commands
+- `newman self version` — Print newman version
+- `newman _ _` — Passthrough to newman CLI
+
 ## Usage Examples
 
 - "run a Postman collection against the API"

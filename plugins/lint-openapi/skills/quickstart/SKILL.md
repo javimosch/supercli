@@ -7,6 +7,11 @@ description: Use this skill when the user wants to lint OpenAPI/Swagger specific
 
 lint-openapi validates OpenAPI specs.
 
+## Commands
+- `lint-openapi <resource> <action>` — Execute lint-openapi commands
+- `lint-openapi self version` — Print lint-openapi version
+- `lint-openapi _ _` — Passthrough to lint-openapi CLI
+
 ## Usage Examples
 
 - "lint an OpenAPI specification file"

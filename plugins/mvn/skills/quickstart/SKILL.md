@@ -1,1 +1,10 @@
----\nname: mvn\ndescription: Apache Maven build tool\n---\n# mvn Plugin\nApache Maven build tool
+---
+name: mvn
+description: Apache Maven build tool
+---
+# mvn Plugin
+Apache Maven build tool
+
+## Commands
+- `mvn <resource> <action>` — Execute mvn commands
+- `mvn _ _` — Passthrough to mvn CLI

@@ -1,1 +1,10 @@
----\nname: mg\ndescription: Micro GNU Emacs\n---\n# mg Plugin\nMicro GNU Emacs
+---
+name: mg
+description: Micro GNU Emacs
+---
+# mg Plugin
+Micro GNU Emacs
+
+## Commands
+- `mg <resource> <action>` — Execute mg commands
+- `mg _ _` — Passthrough to mg

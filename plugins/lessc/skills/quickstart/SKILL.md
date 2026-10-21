@@ -1,1 +1,10 @@
----\nname: lessc\ndescription: LESS CSS compiler\n---\n# lessc Plugin\nLESS CSS compiler
+---
+name: lessc
+description: LESS CSS compiler
+---
+# lessc Plugin
+LESS CSS compiler
+
+## Commands
+- `lessc <resource> <action>` — Execute lessc commands
+- `lessc _ _` — Passthrough to lessc

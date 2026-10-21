@@ -7,6 +7,11 @@ description: Use this skill when the user wants to convert expert knowledge or d
 
 Mimeograph an expert into a SKILL.md or AGENTS.md. Convert structured or unstructured expertise into reusable, composable skill files for AI agents.
 
+## Commands
+- `mimeo <resource> <action>` — Execute mimeo commands
+- `mimeo self version` — Print info
+- `mimeo _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/K-Dense-AI/mimeo.git

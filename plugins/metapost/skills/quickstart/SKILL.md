@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create vector graphics and te
 
 MetaPost creates vector graphics from text.
 
+## Commands
+- `metapost <resource> <action>` — Execute metapost commands
+- `metapost self version` — Print metapost version
+- `metapost _ _` — Passthrough to metapost CLI
+
 ## Usage Examples
 
 - "compile a MetaPost file to EPS"

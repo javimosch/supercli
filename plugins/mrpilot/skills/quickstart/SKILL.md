@@ -11,6 +11,11 @@ metadata:
 
 Quick reference for AI agents using the mrpilot plugin.
 
+## Commands
+- `mrpilot <resource> <action>` — Execute mrpilot commands
+- `mrpilot _ _` — Passthrough to mr-pilot CLI. Use --env-file <path> to load env vars, or export tokens before running.
+- `mrpilot config doctor` — Validate mr-pilot configuration and environment
+
 ## When to Use
 
 Invoke this skill when user asks to:

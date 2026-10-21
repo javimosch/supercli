@@ -1,1 +1,10 @@
----\nname: minisign\ndescription: Minimal cryptographic signing tool\n---\n# minisign Plugin\nMinimal cryptographic signing tool
+---
+name: minisign
+description: Minimal cryptographic signing tool
+---
+# minisign Plugin
+Minimal cryptographic signing tool
+
+## Commands
+- `minisign <resource> <action>` — Execute minisign commands
+- `minisign _ _` — Passthrough to minisign CLI

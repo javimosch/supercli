@@ -1,1 +1,10 @@
----\nname: nats\ndescription: NATS messaging system CLI\n---\n# nats Plugin\nNATS messaging system CLI
+---
+name: nats
+description: NATS messaging system CLI
+---
+# nats Plugin
+NATS messaging system CLI
+
+## Commands
+- `nats <resource> <action>` — Execute nats commands
+- `nats _ _` — Passthrough to nats-cli CLI
