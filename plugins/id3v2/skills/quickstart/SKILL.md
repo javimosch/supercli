@@ -4,3 +4,7 @@ description: id3v2 — ID3 tag editor for MP3 files. Read, write, and edit MP3 m
 ---
 # id3v2
 id3v2 — ID3 tag editor for MP3 files. Read, write, and edit MP3 metadata tags from CLI.
+
+## Commands
+- `id3v2 <resource> <action>` — Execute id3v2 commands
+- `id3v2 id3v2 run` — id3v2 — ID3 tag editor for MP3 files. Read, write, and edit MP3 metadata tags from CLI.

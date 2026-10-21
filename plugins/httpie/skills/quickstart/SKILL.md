@@ -7,6 +7,10 @@ description: Use this skill when the user wants to make HTTP requests from the t
 
 Modern HTTP client for the CLI. Human-friendly syntax for GET/POST/PUT/PATCH/DELETE with automatic JSON formatting, sessions, and download support.
 
+## Commands
+- `httpie <resource> <action>` — Execute httpie commands
+- `httpie _ _` — Passthrough to httpie CLI
+
 ## Installation
 
 ```bash

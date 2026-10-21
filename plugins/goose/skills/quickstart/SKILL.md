@@ -8,6 +8,15 @@ tags: goose,ai,automation,headless,json,jsonl
 
 Use this when you need Goose in scripts, CI, or agent workflows without interactive prompts.
 
+## Commands
+- `goose <resource> <action>` — Execute goose commands
+- `goose cli version` — Show installed Goose CLI version
+- `goose task text` — Run a Goose headless task and return text output
+- `goose task json` — Run a Goose headless task and return structured JSON output
+- `goose task stream` — Run a Goose headless task with stream-json events
+- `goose task file` — Run a Goose headless task from an instructions file
+- `goose _ _` — Passthrough command to execute any Goose CLI command
+
 ## 1) Install plugin and dependency
 
 ```bash

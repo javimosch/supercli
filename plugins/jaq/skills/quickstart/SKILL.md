@@ -2,6 +2,14 @@
 
 jaq is a high-performance JSON processor written in Rust. It's designed as a faster, more correct alternative to jq while maintaining compatibility with jq syntax.
 
+## Commands
+- `jaq <resource> <action>` — Execute jaq commands
+- `jaq self version` — Print jaq version
+- `jaq json process` — Process JSON data with jq filter
+- `jaq json query` — Query JSON/YAML/TOML/XML data
+- `jaq data format` — Format and prettify data
+- `jaq _ _` — Passthrough to jaq CLI
+
 ## Installation
 
 ```bash

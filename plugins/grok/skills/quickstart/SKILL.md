@@ -1,1 +1,10 @@
----\nname: grok\ndescription: Grok pattern matching\n---\n# grok Plugin\nGrok pattern matching
+---
+name: grok
+description: Grok pattern matching
+---
+# grok Plugin
+Grok pattern matching
+
+## Commands
+- `grok <resource> <action>` — Execute grok commands
+- `grok _ _` — Passthrough to grok

@@ -5,5 +5,9 @@ description: Migrate .ini/.cfg files to TOML format with PEP 621 support
 # ini2toml Plugin
 Migrate .ini/.cfg files to TOML format with PEP 621 support
 
+## Commands
+- `ini2toml <resource> <action>` — Execute ini2toml commands
+- `ini2toml _ _` — Passthrough to ini2toml CLI
+
 ## Usage
 - `ini2toml _ _ <args>` — Run ini2toml with any arguments
