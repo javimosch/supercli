@@ -2,6 +2,12 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `mycli <resource> <action>` — Execute mycli commands
+- `mycli self version` — Print mycli version
+- `mycli database connect` — Connect to MySQL database
+- `mycli _ _` — Passthrough to mycli CLI
+
 ## Installation
 
 ```bash

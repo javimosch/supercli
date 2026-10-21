@@ -8,6 +8,31 @@ Offline social media scheduler — agent-first, SQLite-backed, zero cloud deps. 
 
 **Source:** https://github.com/javimosch/minipostiz-cli
 
+## Commands
+- `minipostiz-cli <resource> <action>` — Execute minipostiz-cli commands
+- `minipostiz auth set-x` — Store X/Twitter OAuth 1.0a credentials (apiKey, apiSecret, accessToken, accessSecret)
+- `minipostiz auth set-bluesky` — Store Bluesky credentials (handle + app password)
+- `minipostiz auth set-discord` — Store Discord webhook URL
+- `minipostiz auth set-telegram` — Store Telegram bot token and chat ID
+- `minipostiz auth set-mastodon` — Store Mastodon instance URL and access token
+- `minipostiz auth set-devto` — Store Dev.to API key
+- `minipostiz auth set-linkedin` — Store LinkedIn access token and person URN
+- `minipostiz auth set-reddit` — Store Reddit OAuth credentials and target subreddit
+- `minipostiz auth set-facebook` — Store Facebook page access token and page ID
+- `minipostiz auth list` — List all configured social media platform credentials
+- `minipostiz auth remove` — Remove stored credentials for a platform
+- `minipostiz auth verify` — Verify stored credentials for a platform are valid
+- `minipostiz post publish` — Publish a message immediately to one or more social media platforms
+- `minipostiz post schedule` — Schedule a post for future publication on a social media platform
+- `minipostiz schedule list` — List scheduled posts, optionally filtered by platform
+- `minipostiz schedule cancel` — Cancel a scheduled post by ID
+- `minipostiz history list` — Show post history with optional platform and status filters
+- `minipostiz platforms list` — List all supported platforms and their auth requirements
+- `minipostiz daemon start` — Start the background scheduler daemon
+- `minipostiz daemon stop` — Stop the background scheduler daemon
+- `minipostiz daemon status` — Check if the scheduler daemon is running
+- `minipostiz self status` — Show minipostiz-cli system status: version, db path, platforms, daemon
+
 ## Install
 
 ```bash

@@ -8,6 +8,29 @@ tags: mmx,minimax,text,image,video,speech,music,vision,search,agent,quickstart
 
 Use mmx to generate text, images, video, speech, music, and search via the MiniMax AI platform.
 
+## Commands
+- `mmx <resource> <action>` — Execute mmx commands
+- `mmx auth login` — Authenticate via OAuth or API key
+- `mmx auth status` — Check authentication status
+- `mmx auth refresh` — Refresh OAuth credentials
+- `mmx auth logout` — Clear stored credentials
+- `mmx text chat` — Send a chat completion request (MiniMax Messages API)
+- `mmx image generate` — Generate images (image-01 / image-01-live)
+- `mmx video generate` — Generate a video (T2V, I2V, S2V modes)
+- `mmx video task-get` — Query video task status
+- `mmx video download` — Download a completed video by file ID
+- `mmx speech synthesize` — Text-to-speech synthesis (speech-2.8-hd / 2.6 / 02)
+- `mmx speech voices` — List available system voices
+- `mmx music generate` — Generate a song (music-2.6 / music-2.6-free / music-2.5+ / music-2.5)
+- `mmx music cover` — Generate a cover version of a song (music-cover / music-cover-free)
+- `mmx search query` — Search the web via MiniMax
+- `mmx vision describe` — Describe an image using MiniMax VLM
+- `mmx quota show` — Show usage quotas and remaining credits
+- `mmx config show` — Show current CLI configuration
+- `mmx config set` — Set a configuration value
+- `mmx config export-schema` — Export configuration schema as JSON
+- `mmx _ _` — Passthrough to execute any mmx CLI command directly
+
 ## Install and Authenticate
 
 ```bash

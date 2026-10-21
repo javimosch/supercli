@@ -1,5 +1,9 @@
 # litellm Plugin
 
+## Commands
+- `litellm <resource> <action>` — Execute litellm commands
+- `litellm _ _` — Passthrough to litellm CLI
+
 ## Overview
 The `litellm` plugin wraps the LiteLLM CLI. LiteLLM is a lightweight LLM API proxy that provides an OpenAI-format API for calling 100+ LLM providers including OpenAI, Anthropic, Cohere, Together AI, Replicate, Hugging Face, and many more.
 

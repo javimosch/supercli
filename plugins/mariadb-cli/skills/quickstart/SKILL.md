@@ -4,3 +4,7 @@ description: mariadb-cli — MariaDB database CLI client. Execute SQL queries, m
 ---
 # mariadb-cli
 mariadb-cli — MariaDB database CLI client. Execute SQL queries, manage schemas, import/export data.
+
+## Commands
+- `mariadb-cli <resource> <action>` — Execute mariadb-cli commands
+- `mariadb cli run` — mariadb-cli — MariaDB database CLI client. Execute SQL queries, manage schemas, import/export data.

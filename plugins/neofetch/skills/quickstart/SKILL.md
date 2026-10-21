@@ -1,5 +1,12 @@
 # neofetch Plugin
 
+## Commands
+- `neofetch <resource> <action>` — Execute neofetch commands
+- `neofetch self version` — Print neofetch version
+- `neofetch system info` — Display system information
+- `neofetch config generate` — Generate neofetch config
+- `neofetch _ _` — Passthrough to neofetch CLI
+
 ## Overview
 The neofetch plugin provides a command-line system information tool that displays system details with ASCII art logos.
 

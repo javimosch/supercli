@@ -1,1 +1,10 @@
----\nname: nbconvert\ndescription: Convert Jupyter notebooks\n---\n# nbconvert Plugin\nConvert Jupyter notebooks
+---
+name: nbconvert
+description: Convert Jupyter notebooks
+---
+# nbconvert Plugin
+Convert Jupyter notebooks
+
+## Commands
+- `nbconvert <resource> <action>` — Execute nbconvert commands
+- `nbconvert _ _` — Passthrough to nbconvert

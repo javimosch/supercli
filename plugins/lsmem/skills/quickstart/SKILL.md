@@ -7,6 +7,11 @@ description: Use this skill when the user wants to list memory ranges, memory bl
 
 lsmem displays Linux memory range information.
 
+## Commands
+- `lsmem <resource> <action>` — Execute lsmem commands
+- `lsmem self version` — Print lsmem version
+- `lsmem _ _` — Passthrough to lsmem CLI
+
 ## Usage Examples
 
 - "list all memory blocks in the system"

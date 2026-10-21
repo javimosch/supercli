@@ -4,3 +4,7 @@ description: Miller — like sed/awk/join/cut for CSV, JSON, and other structure
 ---
 # mlr Plugin
 Miller — like sed/awk/join/cut for CSV, JSON, and other structured data formats.
+
+## Commands
+- `mlr <resource> <action>` — Execute mlr commands
+- `mlr _ _` — Passthrough to mlr

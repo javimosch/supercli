@@ -7,6 +7,10 @@ description: Use this skill when the user wants AI on the command line — ask q
 
 AI on the command line from Charmbracelet. Pipe data in, get LLM responses out — great for summarizing logs, explaining code, or quick Q&A without leaving the terminal.
 
+## Commands
+- `mods <resource> <action>` — Execute mods commands
+- `mods _ _` — Passthrough to mods CLI
+
 ## Installation
 
 ```bash

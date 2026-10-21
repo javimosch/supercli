@@ -1,1 +1,10 @@
----\nname: nano\ndescription: Nano text editor\n---\n# nano Plugin\nNano text editor
+---
+name: nano
+description: Nano text editor
+---
+# nano Plugin
+Nano text editor
+
+## Commands
+- `nano <resource> <action>` — Execute nano commands
+- `nano _ _` — Passthrough to nano

@@ -1,1 +1,10 @@
----\nname: neovim\ndescription: Modern Vim-based text editor\n---\n# neovim Plugin\nModern Vim-based text editor
+---
+name: neovim
+description: Modern Vim-based text editor
+---
+# neovim Plugin
+Modern Vim-based text editor
+
+## Commands
+- `neovim <resource> <action>` — Execute neovim commands
+- `neovim _ _` — Passthrough to nvim

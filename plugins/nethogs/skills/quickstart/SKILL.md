@@ -1,1 +1,10 @@
----\nname: nethogs\ndescription: Per-process network bandwidth monitor\n---\n# nethogs Plugin\nPer-process network bandwidth monitor
+---
+name: nethogs
+description: Per-process network bandwidth monitor
+---
+# nethogs Plugin
+Per-process network bandwidth monitor
+
+## Commands
+- `nethogs <resource> <action>` — Execute nethogs commands
+- `nethogs _ _` — Passthrough to nethogs

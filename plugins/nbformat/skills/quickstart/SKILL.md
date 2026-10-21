@@ -1,1 +1,10 @@
----\nname: nbformat\ndescription: Jupyter notebook format tools\n---\n# nbformat Plugin\nJupyter notebook format tools
+---
+name: nbformat
+description: Jupyter notebook format tools
+---
+# nbformat Plugin
+Jupyter notebook format tools
+
+## Commands
+- `nbformat <resource> <action>` — Execute nbformat commands
+- `nbformat _ _` — Passthrough to nbformat
