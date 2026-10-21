@@ -1,1 +1,10 @@
----\nname: pigz\ndescription: Parallel gzip implementation\n---\n# pigz Plugin\nParallel gzip implementation
+---
+name: pigz
+description: Parallel gzip implementation
+---
+# pigz Plugin
+Parallel gzip implementation
+
+## Commands
+- `pigz <resource> <action>` — Execute pigz commands
+- `pigz _ _` — Passthrough to pigz

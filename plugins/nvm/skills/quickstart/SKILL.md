@@ -1,1 +1,10 @@
----\nname: nvm\ndescription: Node version manager\n---\n# nvm Plugin\nNode version manager
+---
+name: nvm
+description: Node version manager
+---
+# nvm Plugin
+Node version manager
+
+## Commands
+- `nvm <resource> <action>` — Execute nvm commands
+- `nvm _ _` — Passthrough to nvm CLI

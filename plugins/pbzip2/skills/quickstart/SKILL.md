@@ -1,1 +1,10 @@
----\nname: pbzip2\ndescription: Parallel bzip2 implementation\n---\n# pbzip2 Plugin\nParallel bzip2 implementation
+---
+name: pbzip2
+description: Parallel bzip2 implementation
+---
+# pbzip2 Plugin
+Parallel bzip2 implementation
+
+## Commands
+- `pbzip2 <resource> <action>` — Execute pbzip2 commands
+- `pbzip2 _ _` — Passthrough to pbzip2

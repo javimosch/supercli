@@ -1,5 +1,9 @@
 # nvidia_oc - NVIDIA GPU Overclocking
 
+## Commands
+- `nvidia_oc <resource> <action>` — Execute nvidia_oc commands
+- `nvidia_oc _ _` — Passthrough to nvidia_oc CLI
+
 ## Overview
 nvidia_oc is a simple command line tool to overclock Nvidia GPUs using the NVML library on Linux. Supports both X11 and Wayland.
 

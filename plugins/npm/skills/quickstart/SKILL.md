@@ -7,6 +7,11 @@ description: Use this skill when the user wants to install Node.js packages, man
 
 npm is the standard package manager for Node.js.
 
+## Commands
+- `npm <resource> <action>` — Execute npm commands
+- `npm cli version` — Show npm CLI version
+- `npm _ _` — Passthrough command to execute any npm CLI command
+
 ## Usage Examples
 
 - "install dependencies from package.json"

@@ -1,1 +1,10 @@
----\nname: pidstat\ndescription: Report statistics for running processes\n---\n# pidstat Plugin\nReport statistics for running processes
+---
+name: pidstat
+description: Report statistics for running processes
+---
+# pidstat Plugin
+Report statistics for running processes
+
+## Commands
+- `pidstat <resource> <action>` — Execute pidstat commands
+- `pidstat _ _` — Passthrough to pidstat

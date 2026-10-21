@@ -1,1 +1,10 @@
----\nname: node\ndescription: Node.js JavaScript runtime\n---\n# node Plugin\nNode.js JavaScript runtime
+---
+name: node
+description: Node.js JavaScript runtime
+---
+# node Plugin
+Node.js JavaScript runtime
+
+## Commands
+- `node <resource> <action>` — Execute node commands
+- `node _ _` — Passthrough to node CLI

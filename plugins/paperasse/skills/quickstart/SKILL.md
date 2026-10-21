@@ -7,6 +7,12 @@ description: Use this skill when the user needs help with French bureaucracy, ac
 
 Collection of 6 AI agent skills for French bureaucracy. Each skill turns your agent into an expert copilot for a specific French administrative profession.
 
+## Commands
+- `paperasse <resource> <action>` — Execute paperasse commands
+- `paperasse skill teach` — Skip — skills are auto-loaded via learn. Use sc skills teach paperasse:quickstart instead.
+- `paperasse script run` — Run a paperasse helper script (calc, fec, statements, pdfs, closing, facture)
+- `paperasse _ _` — Passthrough — clone the repo and run npm commands directly
+
 ## Installation
 
 ```bash

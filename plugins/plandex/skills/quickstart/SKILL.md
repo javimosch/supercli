@@ -8,6 +8,15 @@ tags: plandex,ai,planning,automation,headless
 
 Use this when you need deterministic, scriptable Plandex runs from supercli.
 
+## Commands
+- `plandex <resource> <action>` — Execute plandex commands
+- `plandex cli version` — Show installed Plandex CLI version
+- `plandex plan new` — Create a new plan with optional autonomy flags
+- `plandex plan set-auto` — Set autonomy level for current plan
+- `plandex task tell` — Run one-shot implementation instruction
+- `plandex task chat` — Run one-shot analysis question
+- `plandex _ _` — Passthrough command to execute any Plandex CLI command
+
 ## 1) Install plugin and dependency
 
 ```bash

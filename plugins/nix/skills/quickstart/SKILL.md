@@ -1,1 +1,10 @@
----\nname: nix\ndescription: Nix package manager\n---\n# nix Plugin\nNix package manager
+---
+name: nix
+description: Nix package manager
+---
+# nix Plugin
+Nix package manager
+
+## Commands
+- `nix <resource> <action>` — Execute nix commands
+- `nix _ _` — Passthrough to nix

@@ -1,1 +1,10 @@
----\nname: ps2epsi\ndescription: PS to EPS converter\n---\n# ps2epsi Plugin\nPS to EPS converter
+---
+name: ps2epsi
+description: PS to EPS converter
+---
+# ps2epsi Plugin
+PS to EPS converter
+
+## Commands
+- `ps2epsi <resource> <action>` — Execute ps2epsi commands
+- `ps2epsi _ _` — Passthrough to ps2epsi

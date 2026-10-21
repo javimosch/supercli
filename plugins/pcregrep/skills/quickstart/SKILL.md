@@ -1,1 +1,10 @@
----\nname: pcregrep\ndescription: Grep with Perl-compatible regex\n---\n# pcregrep Plugin\nGrep with Perl-compatible regex
+---
+name: pcregrep
+description: Grep with Perl-compatible regex
+---
+# pcregrep Plugin
+Grep with Perl-compatible regex
+
+## Commands
+- `pcregrep <resource> <action>` — Execute pcregrep commands
+- `pcregrep _ _` — Passthrough to pcregrep

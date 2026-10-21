@@ -2,6 +2,14 @@
 
 Use this plugin to run OpenHands in headless automation mode.
 
+## Commands
+- `openhands <resource> <action>` — Execute openhands commands
+- `openhands self version` — Show OpenHands CLI version
+- `openhands task run` — Run an OpenHands task in headless mode
+- `openhands task file` — Run an OpenHands task file in headless mode
+- `openhands task json` — Run an OpenHands headless task with JSONL streaming
+- `openhands _ _` — Passthrough command to execute any OpenHands CLI command
+
 ## Prerequisites
 
 - Install OpenHands CLI: `pip install openhands-ai`

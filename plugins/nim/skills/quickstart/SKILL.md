@@ -1,1 +1,10 @@
----\nname: nim\ndescription: Nim programming language compiler\n---\n# nim Plugin\nNim programming language compiler
+---
+name: nim
+description: Nim programming language compiler
+---
+# nim Plugin
+Nim programming language compiler
+
+## Commands
+- `nim <resource> <action>` — Execute nim commands
+- `nim _ _` — Passthrough to nim CLI

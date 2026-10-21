@@ -1,1 +1,10 @@
----\nname: polkadot\ndescription: Polkadot node client\n---\n# polkadot Plugin\nPolkadot node client
+---
+name: polkadot
+description: Polkadot node client
+---
+# polkadot Plugin
+Polkadot node client
+
+## Commands
+- `polkadot <resource> <action>` — Execute polkadot commands
+- `polkadot _ _` — Passthrough to polkadot

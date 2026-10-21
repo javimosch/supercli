@@ -1,1 +1,10 @@
----\nname: pdfgrep\ndescription: Search text in PDF files\n---\n# pdfgrep Plugin\nSearch text in PDF files
+---
+name: pdfgrep
+description: Search text in PDF files
+---
+# pdfgrep Plugin
+Search text in PDF files
+
+## Commands
+- `pdfgrep <resource> <action>` — Execute pdfgrep commands
+- `pdfgrep _ _` — Passthrough to pdfgrep CLI

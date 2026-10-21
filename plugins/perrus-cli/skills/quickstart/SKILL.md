@@ -2,6 +2,16 @@
 
 perrus-cli is a developer-oriented health dashboard that monitors HTTP, TCP, and DNS endpoints using configurable conditions. It is a clean-room Go reimplementation of [Gatus](https://github.com/TwiN/gatus) designed for agent-first CLI usage.
 
+## Commands
+- `perrus-cli <resource> <action>` — Execute perrus-cli commands
+- `perrus config init` — Write an example config.yaml for perrus-cli
+- `perrus config validate` — Validate a perrus-cli config file
+- `perrus endpoint check` — Run a one-shot health check on a named endpoint
+- `perrus endpoints results` — Run all endpoint checks and print results
+- `perrus server start` — Start the perrus-cli monitoring server and web dashboard
+- `perrus server stop` — Stop the perrus-cli background daemon
+- `perrus server status` — Show perrus-cli daemon status
+
 ## Setup
 
 ```bash

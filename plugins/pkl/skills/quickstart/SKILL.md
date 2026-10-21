@@ -7,6 +7,10 @@ description: Use this skill when the user wants configuration-as-code with valid
 
 Apple's configuration language with rich validation, IDE support, and multi-format output. Define configs as typed Pkl modules and render them to JSON, YAML, properties, or other formats for apps and tooling.
 
+## Commands
+- `pkl <resource> <action>` — Execute pkl commands
+- `pkl _ _` — Passthrough to pkl CLI
+
 ## Installation
 
 ```bash

@@ -7,6 +7,11 @@ description: Use this skill when the user wants a faster, disk-efficient alterna
 
 pnpm is a fast Node.js package manager using content-addressable storage.
 
+## Commands
+- `pnpm <resource> <action>` — Execute pnpm commands
+- `pnpm cli version` — Show pnpm CLI version
+- `pnpm _ _` — Passthrough command to execute any pnpm CLI command
+
 ## Usage Examples
 
 - "install dependencies with pnpm"

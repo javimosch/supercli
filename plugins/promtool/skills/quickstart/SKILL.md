@@ -1,1 +1,10 @@
----\nname: promtool\ndescription: Prometheus metrics inspection tool\n---\n# promtool Plugin\nPrometheus metrics inspection tool
+---
+name: promtool
+description: Prometheus metrics inspection tool
+---
+# promtool Plugin
+Prometheus metrics inspection tool
+
+## Commands
+- `promtool <resource> <action>` — Execute promtool commands
+- `promtool _ _` — Passthrough to promtool CLI

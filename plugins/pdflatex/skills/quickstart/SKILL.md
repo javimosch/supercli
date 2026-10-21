@@ -1,1 +1,10 @@
----\nname: pdflatex\ndescription: PDFLaTeX typesetter\n---\n# pdflatex Plugin\nPDFLaTeX typesetter
+---
+name: pdflatex
+description: PDFLaTeX typesetter
+---
+# pdflatex Plugin
+PDFLaTeX typesetter
+
+## Commands
+- `pdflatex <resource> <action>` — Execute pdflatex commands
+- `pdflatex _ _` — Passthrough to pdflatex

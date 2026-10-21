@@ -2,6 +2,22 @@
 
 PocketBase open-source backend as a single file with Go-based SQLite database, real-time subscriptions, and built-in admin UI.
 
+## Commands
+- `pocketbase <resource> <action>` — Execute pocketbase commands
+- `pocketbase self serve` — Start PocketBase server in development mode
+- `pocketbase server stop` — Stop PocketBase server
+- `pocketbase server restart` — Restart PocketBase server
+- `pocketbase server status` — Check PocketBase server status
+- `pocketbase health check` — Check PocketBase server health and response time
+- `pocketbase self version` — Print pocketbase version
+- `pocketbase migration create` — Create a new migration file (non-interactive with --force)
+- `pocketbase migration up` — Apply pending migrations (non-interactive with --force)
+- `pocketbase migration down` — Revert last N migrations (non-interactive with --force)
+- `pocketbase collection create` — Create a new PocketBase collection
+- `pocketbase collection list` — List all PocketBase collections
+- `pocketbase collection delete` — Delete a PocketBase collection
+- `pocketbase _ _` — Passthrough to pocketbase CLI
+
 ## Quick Start
 
 ```bash
