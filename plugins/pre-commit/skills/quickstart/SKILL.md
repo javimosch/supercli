@@ -6,6 +6,10 @@ description: pre-commit — framework for managing multi-language git pre-commit
 
 pre-commit is a framework for managing and running git hooks. You declare the linters, formatters, and checks you want in a `.pre-commit-config.yaml`, and pre-commit installs and runs them automatically on each commit across many languages.
 
+## Commands
+- `pre-commit <resource> <action>` — Execute pre-commit commands
+- `pre-commit _ _` — Passthrough to pre-commit CLI
+
 ## Quickstart
 
 ```bash

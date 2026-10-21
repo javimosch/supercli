@@ -2,6 +2,23 @@
 
 Official CLI for the Outline wiki/knowledge base API. Full API coverage for documents, collections, search, and authentication with OAuth and OS keyring integration.
 
+## Commands
+- `outline-cli <resource> <action>` — Execute outline-cli commands
+- `outline self version` — Print outline-cli version
+- `outline auth status` — Check Outline authentication status
+- `outline auth login` — Authenticate with Outline via OAuth (opens browser)
+- `outline auth token` — Save Outline API token for CLI auth
+- `outline search run` — Search Outline documents by query string
+- `outline document list` — List documents in a collection
+- `outline document get` — Get document details or content
+- `outline document create` — Create a new document
+- `outline document update` — Update an existing document
+- `outline document open` — Open document in browser
+- `outline collection list` — List all collections
+- `outline collection get` — Get collection details
+- `outline collection create` — Create a new collection
+- `outline _ _` — Passthrough to outline CLI for any command
+
 ## Installation
 
 ```bash

@@ -9,6 +9,15 @@ description: Poll GitHub, IMAP and Resend inbound for genuinely new items and al
 and Resend inbound; prints what is new since the last run; **exits 10** if there
 was anything — so a cron alerts only when something real arrived.
 
+## Commands
+- `inbox-watch <resource> <action>` — Execute inbox-watch commands
+- `inbox-watch inbox check` — Poll every configured channel and print items new since the last run. Exit 10 if any. CONSUMES the cursor — use inbox_peek to diagnose.
+- `inbox-watch inbox peek` — Same report WITHOUT marking items seen. Use this for any diagnostic run: a normal run consumes the alert your cron would have sent.
+- `inbox-watch inbox seed` — Mark everything currently pending as seen, reporting nothing. Run once when adding a new consumer, or it alerts on the whole backlog.
+- `inbox-watch self guide` — Embedded operator manual: the model, the loop, and the gotchas
+- `inbox-watch self help-json` — Machine-readable command catalog (cli-output-spec)
+- `inbox-watch _ _` — Passthrough to the inbox-watch CLI
+
 ## The one idea
 
 Inbound is mostly machine noise. On a domain with DMARC reporting on, aggregate

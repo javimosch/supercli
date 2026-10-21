@@ -1,1 +1,10 @@
----\nname: parcel\ndescription: Zero-config web application bundler\n---\n# parcel Plugin\nZero-config web application bundler
+---
+name: parcel
+description: Zero-config web application bundler
+---
+# parcel Plugin
+Zero-config web application bundler
+
+## Commands
+- `parcel <resource> <action>` — Execute parcel commands
+- `parcel _ _` — Passthrough to parcel

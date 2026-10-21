@@ -8,6 +8,10 @@ Extract text from images using OCR (Optical Character Recognition). Powered by r
 
 **Repository:** https://github.com/javimosch/ocr-cli
 
+## Commands
+- `ocr-cli <resource> <action>` — Execute ocr-cli commands
+- `ocr clipboard extract` — Extract text from image in clipboard using OCR
+
 ## Installation
 
 For detailed installation guidance, see the [ocr-cli repository](https://github.com/javimosch/ocr-cli).

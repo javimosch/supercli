@@ -1,1 +1,10 @@
----\nname: pgformatter\ndescription: PostgreSQL SQL formatter\n---\n# pgformatter Plugin\nPostgreSQL SQL formatter
+---
+name: pgformatter
+description: PostgreSQL SQL formatter
+---
+# pgformatter Plugin
+PostgreSQL SQL formatter
+
+## Commands
+- `pgformatter <resource> <action>` — Execute pgformatter commands
+- `pgformatter _ _` — Passthrough to pg_format CLI

@@ -4,3 +4,7 @@ description: oci — Oracle Cloud Infrastructure CLI. Manage OCI compute, networ
 ---
 # oracle-cloud
 oci — Oracle Cloud Infrastructure CLI. Manage OCI compute, networking, storage, and database services.
+
+## Commands
+- `oracle-cloud <resource> <action>` — Execute oracle-cloud commands
+- `oracle cloud run` — oci — Oracle Cloud Infrastructure CLI. Manage OCI compute, networking, storage, and database services.

@@ -1,5 +1,10 @@
 # pbgopy - Copy and Paste Between Devices
 
+## Commands
+- `pbgopy <resource> <action>` — Execute pbgopy commands
+- `pbgopy copy text` — Copy text to clipboard
+- `pbgopy _ _` — Passthrough to pbgopy CLI
+
 ## Overview
 pbgopy allows you to copy and paste between devices. Share clipboard content across devices with end-to-end encryption.
 

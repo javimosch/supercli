@@ -1,1 +1,10 @@
----\nname: octant\ndescription: Kubernetes dashboard CLI\n---\n# octant Plugin\nKubernetes dashboard CLI
+---
+name: octant
+description: Kubernetes dashboard CLI
+---
+# octant Plugin
+Kubernetes dashboard CLI
+
+## Commands
+- `octant <resource> <action>` — Execute octant commands
+- `octant _ _` — Passthrough to octant CLI

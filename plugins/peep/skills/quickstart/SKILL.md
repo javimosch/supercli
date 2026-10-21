@@ -1,5 +1,10 @@
 # peep - Terminal Text Viewer
 
+## Commands
+- `peep <resource> <action>` — Execute peep commands
+- `peep view file` — View a file in a small pane
+- `peep _ _` — Passthrough to peep CLI
+
 ## Overview
 peep is a CLI text viewer tool that works like less command on small pane within the terminal window. View files in a split-pane terminal.
 

@@ -4,3 +4,7 @@ description: normalize — audio normalization CLI. Adjust audio volume levels t
 ---
 # normalize
 normalize — audio normalization CLI. Adjust audio volume levels to a standard loudness.
+
+## Commands
+- `normalize <resource> <action>` — Execute normalize commands
+- `normalize normalize run` — normalize — audio normalization CLI. Adjust audio volume levels to a standard loudness.

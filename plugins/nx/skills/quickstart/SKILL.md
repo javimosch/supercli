@@ -1,1 +1,10 @@
----\nname: nx\ndescription: Smart monorepo build system\n---\n# nx Plugin\nSmart monorepo build system
+---
+name: nx
+description: Smart monorepo build system
+---
+# nx Plugin
+Smart monorepo build system
+
+## Commands
+- `nx <resource> <action>` — Execute nx commands
+- `nx _ _` — Passthrough to nx
