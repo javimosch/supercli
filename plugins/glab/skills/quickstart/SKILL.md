@@ -1,5 +1,16 @@
 # glab Plugin
 
+## Commands
+- `glab <resource> <action>` — Execute glab commands
+- `glab self version` — Print glab version
+- `glab auth login` — Authenticate with GitLab
+- `glab mr list` — List merge requests
+- `glab mr view` — View a merge request
+- `glab issue list` — List issues
+- `glab ci list` — List CI/CD pipelines
+- `glab repo clone` — Clone a repository
+- `glab _ _` — Passthrough to glab CLI
+
 ## Overview
 The glab plugin provides access to the GitLab CLI tool (`glab`), bringing GitLab to your command line. Work with GitLab directly from the terminal without leaving your workflow.
 

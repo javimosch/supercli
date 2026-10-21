@@ -7,6 +7,11 @@ description: Use this skill when the user wants to convert Android DEX bytecode 
 
 enjarify converts DEX to JAR for Android analysis.
 
+## Commands
+- `enjarify <resource> <action>` — Execute enjarify commands
+- `enjarify self version` — Print enjarify version
+- `enjarify _ _` — Passthrough to enjarify CLI
+
 ## Usage Examples
 
 - "convert an APK to JAR format"

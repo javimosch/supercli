@@ -1,5 +1,10 @@
 # fuc - Fast Unix Commands
 
+## Commands
+- `fuc <resource> <action>` — Execute fuc commands
+- `fuc run command` — Run a fuc command
+- `fuc _ _` — Passthrough to fuc CLI
+
 ## Overview
 fuc provides modern, performance focused unix commands - faster alternatives to coreutils. Optimized for speed and efficiency on modern Linux installations.
 

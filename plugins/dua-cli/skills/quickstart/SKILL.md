@@ -2,6 +2,11 @@
 
 View disk space usage and delete unwanted data
 
+## Commands
+- `dua-cli <resource> <action>` — Execute dua-cli commands
+- `dua usage view` — View disk space usage
+- `dua interactive browse` — Interactive disk usage browser
+
 ## Installation
 
 ```bash

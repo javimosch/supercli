@@ -1,1 +1,13 @@
----\nname: go\ndescription: Go programming language compiler and tools\n---\n# go Plugin\nGo programming language compiler and tools\n## Usage\n- `go _ _ <args>` — Run go
+---
+name: go
+description: Go programming language compiler and tools
+---
+# go Plugin
+Go programming language compiler and tools
+
+## Commands
+- `go <resource> <action>` — Execute go commands
+- `go _ _` — Passthrough to go CLI
+
+## Usage
+- `go _ _ <args>` — Run go

@@ -1,5 +1,10 @@
 # downloader-cli - Simple Downloader
 
+## Commands
+- `downloader-cli <resource> <action>` — Execute downloader-cli commands
+- `downloader download file` — Download file with progressbar
+- `downloader _ _` — Passthrough to downloader CLI
+
 ## Overview
 downloader-cli is a simple downloader written in Python with an awesome customizable progressbar. Supports batch downloads, resume, and quiet mode.
 

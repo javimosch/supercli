@@ -7,6 +7,11 @@ description: Use this skill when the user wants to fuzz web endpoints for hidden
 
 ffuf is a fast web fuzzer for content discovery.
 
+## Commands
+- `ffuf <resource> <action>` — Execute ffuf commands
+- `ffuf self version` — Print ffuf version
+- `ffuf _ _` — Passthrough to ffuf CLI
+
 ## Usage Examples
 
 - "fuzz for hidden directories on a target"

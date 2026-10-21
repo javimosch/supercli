@@ -1,1 +1,10 @@
----\nname: dotenv\ndescription: Load .env files into environment\n---\n# dotenv Plugin\nLoad .env files into environment
+---
+name: dotenv
+description: Load .env files into environment
+---
+# dotenv Plugin
+Load .env files into environment
+
+## Commands
+- `dotenv <resource> <action>` — Execute dotenv commands
+- `dotenv _ _` — Passthrough to dotenv CLI

@@ -7,6 +7,12 @@ description: Use this skill when the user needs GitHub operations — issues, PR
 
 Official GitHub MCP server (29.8k⭐). Exposes GitHub API as MCP tools over stdio.
 
+## Commands
+- `github-mcp <resource> <action>` — Execute github-mcp commands
+- `github-mcp self mcp` — Register github-mcp MCP server for agent use
+- `github-mcp self start` — Start github-mcp MCP server manually
+- `github-mcp _ _` — Passthrough to github-mcp-server CLI
+
 ## Quick Start
 
 ```bash

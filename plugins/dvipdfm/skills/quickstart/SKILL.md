@@ -1,1 +1,10 @@
----\nname: dvipdfm\ndescription: DVI to PDF converter\n---\n# dvipdfm Plugin\nDVI to PDF converter
+---
+name: dvipdfm
+description: DVI to PDF converter
+---
+# dvipdfm Plugin
+DVI to PDF converter
+
+## Commands
+- `dvipdfm <resource> <action>` — Execute dvipdfm commands
+- `dvipdfm _ _` — Passthrough to dvipdfm

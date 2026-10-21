@@ -4,3 +4,7 @@ description: global — GNU Global source code tagging CLI. Cross-reference sour
 ---
 # global
 global — GNU Global source code tagging CLI. Cross-reference source code across multiple languages.
+
+## Commands
+- `global <resource> <action>` — Execute global commands
+- `global global run` — global — GNU Global source code tagging CLI. Cross-reference source code across multiple languages.

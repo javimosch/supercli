@@ -1,1 +1,10 @@
----\nname: eth\ndescription: Ethereum Go client\n---\n# eth Plugin\nEthereum Go client
+---
+name: eth
+description: Ethereum Go client
+---
+# eth Plugin
+Ethereum Go client
+
+## Commands
+- `eth <resource> <action>` — Execute eth commands
+- `eth _ _` — Passthrough to geth

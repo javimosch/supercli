@@ -1,1 +1,10 @@
----\nname: flake8\ndescription: Python code style checker\n---\n# flake8 Plugin\nPython code style checker
+---
+name: flake8
+description: Python code style checker
+---
+# flake8 Plugin
+Python code style checker
+
+## Commands
+- `flake8 <resource> <action>` — Execute flake8 commands
+- `flake8 _ _` — Passthrough to flake8 CLI

@@ -1,5 +1,10 @@
 # gocloc - Count Lines of Code
 
+## Commands
+- `gocloc <resource> <action>` — Execute gocloc commands
+- `gocloc count lines` — Count lines of code in files/directories
+- `gocloc _ _` — Passthrough to gocloc CLI
+
 ## Overview
 gocloc is a little fast cloc (Count Lines Of Code) written in Go. Count lines of code in files and directories with support for multiple languages.
 

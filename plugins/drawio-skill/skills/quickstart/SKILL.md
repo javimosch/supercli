@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create diagrams, flowcharts, 
 
 Agent skill that generates draw.io diagrams from natural language and exports to PNG/SVG/PDF/JPG via the draw.io desktop CLI. Works with Claude Code, Cursor, Copilot, Codex, and any SKILL.md-compatible agent.
 
+## Commands
+- `drawio-skill <resource> <action>` — Execute drawio-skill commands
+- `drawio-skill self version` — Print drawio-skill info
+- `drawio-skill _ _` — Passthrough — clone the repo and teach the skill
+
 ## Installation
 
 ```bash

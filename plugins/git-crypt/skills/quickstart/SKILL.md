@@ -4,3 +4,7 @@ description: git-crypt — transparent git encryption. Protect sensitive files i
 ---
 # git-crypt
 git-crypt — transparent git encryption. Protect sensitive files in git repos with GPG-based encryption. Non-interactive CLI.
+
+## Commands
+- `git-crypt <resource> <action>` — Execute git-crypt commands
+- `git crypt run` — git-crypt — transparent git encryption. Protect sensitive files in git repos with GPG-based encryption. Non-interactive CLI.
