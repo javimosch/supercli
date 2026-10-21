@@ -4,3 +4,7 @@ description: containerd — industry-standard container runtime. Daemon for mana
 ---
 # containerd
 containerd — industry-standard container runtime. Daemon for managing container lifecycle.
+
+## Commands
+- `containerd <resource> <action>` — Execute containerd commands
+- `containerd containerd run` — containerd — industry-standard container runtime. Daemon for managing container lifecycle.

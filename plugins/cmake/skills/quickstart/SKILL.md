@@ -1,1 +1,13 @@
----\nname: cmake\ndescription: Cross-platform build system generator\n---\n# cmake Plugin\nCross-platform build system generator\n## Usage\n- `cmake _ _ <args>` — Run cmake
+---
+name: cmake
+description: Cross-platform build system generator
+---
+# cmake Plugin
+Cross-platform build system generator
+
+## Commands
+- `cmake <resource> <action>` — Execute cmake commands
+- `cmake _ _` — Passthrough to cmake CLI
+
+## Usage
+- `cmake _ _ <args>` — Run cmake

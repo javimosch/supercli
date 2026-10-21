@@ -1,1 +1,10 @@
----\nname: dnstop\ndescription: DNS traffic analyzer\n---\n# dnstop Plugin\nDNS traffic analyzer
+---
+name: dnstop
+description: DNS traffic analyzer
+---
+# dnstop Plugin
+DNS traffic analyzer
+
+## Commands
+- `dnstop <resource> <action>` — Execute dnstop commands
+- `dnstop _ _` — Passthrough to dnstop

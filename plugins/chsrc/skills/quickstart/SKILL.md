@@ -7,6 +7,13 @@ description: Use this skill when the user wants to switch package manager mirror
 
 Cross-platform universal source mirror changer. Switches software sources for package managers and language toolchains (brew, pip, npm, cargo, apt, and more).
 
+## Commands
+- `chsrc <resource> <action>` — Execute chsrc commands
+- `chsrc self version` — Print chsrc version
+- `chsrc source list` — List available source mirrors
+- `chsrc source set` — Set a source mirror for a tool
+- `chsrc source reset` — Reset source mirrors to default
+
 ## Installation
 
 ```bash

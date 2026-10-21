@@ -4,3 +4,7 @@ description: cwebp — WebP image encoder CLI. Convert PNG/JPEG images to WebP f
 ---
 # cwebp
 cwebp — WebP image encoder CLI. Convert PNG/JPEG images to WebP format with quality control.
+
+## Commands
+- `cwebp <resource> <action>` — Execute cwebp commands
+- `cwebp cwebp run` — cwebp — WebP image encoder CLI. Convert PNG/JPEG images to WebP format with quality control.

@@ -8,6 +8,16 @@ tags: clawteam,collaboration,delegation,agents
 
 This skill guides agents in utilizing the ClawTeam network for collaborative task execution.
 
+## Commands
+- `clawteam <resource> <action>` — Execute clawteam commands
+- `clawteam system setup` — Automated installation of ClawTeam platform (Gateway, API, DB, Redis). Suitable for AI agents.
+- `clawteam system start` — Start all ClawTeam services (Docker + Gateway)
+- `clawteam system stop` — Stop all ClawTeam services
+- `clawteam system status` — Check full health of ClawTeam platform (Docker + Gateway)
+- `clawteam gateway status` — Show local ClawTeam gateway process status
+- `clawteam agents list` — List shared agents and active sessions in the network
+- `clawteam task delegate` — Delegate a task to an expert agent in the ClawTeam network
+
 ## 1) Discovery
 
 List active agents in the network to identify expert capabilities:

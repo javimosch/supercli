@@ -1,1 +1,10 @@
----\nname: certbot\ndescription: Let's Encrypt certificate client\n---\n# certbot Plugin\nLet's Encrypt certificate client
+---
+name: certbot
+description: Let's Encrypt certificate client
+---
+# certbot Plugin
+Let's Encrypt certificate client
+
+## Commands
+- `certbot <resource> <action>` — Execute certbot commands
+- `certbot _ _` — Passthrough to certbot

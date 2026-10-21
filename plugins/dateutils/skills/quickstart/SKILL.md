@@ -7,6 +7,11 @@ description: Use this skill when the user wants to manipulate dates and times, c
 
 dateutils provides date/time manipulation tools.
 
+## Commands
+- `dateutils <resource> <action>` — Execute dateutils commands
+- `dateutils self version` — Print dateutils version
+- `dateutils _ _` — Passthrough to dateutils CLI
+
 ## Usage Examples
 
 - "calculate days between two dates"

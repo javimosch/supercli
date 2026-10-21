@@ -7,6 +7,11 @@ description: Use this skill when the user wants to pick, convert, or manipulate 
 
 color-picker picks and converts colors from the CLI.
 
+## Commands
+- `color-picker <resource> <action>` — Execute color-picker commands
+- `color-picker self version` — Print color-picker version
+- `color-picker _ _` — Passthrough to color-picker CLI
+
 ## Usage Examples
 
 - "extract colors from an image"

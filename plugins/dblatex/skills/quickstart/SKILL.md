@@ -7,6 +7,11 @@ description: Use this skill when the user wants to convert DocBook XML documents
 
 dblatex converts DocBook to PDF via LaTeX.
 
+## Commands
+- `dblatex <resource> <action>` — Execute dblatex commands
+- `dblatex self version` — Print dblatex version
+- `dblatex _ _` — Passthrough to dblatex CLI
+
 ## Usage Examples
 
 - "convert a DocBook document to PDF"

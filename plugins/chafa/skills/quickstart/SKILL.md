@@ -7,6 +7,11 @@ description: Use this skill when the user wants to display images in the termina
 
 chafa converts and displays images in the terminal.
 
+## Commands
+- `chafa <resource> <action>` — Execute chafa commands
+- `chafa self version` — Print chafa version
+- `chafa _ _` — Passthrough to chafa CLI
+
 ## Usage Examples
 
 - "display an image in terminal"

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to format CSS consistently and s
 
 csscomb formats and sorts CSS properties.
 
+## Commands
+- `csscomb <resource> <action>` — Execute csscomb commands
+- `csscomb self version` — Print csscomb version
+- `csscomb _ _` — Passthrough to csscomb CLI
+
 ## Usage Examples
 
 - "sort CSS properties in a file"

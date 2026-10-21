@@ -7,6 +7,11 @@ description: Use this skill when the user wants to enumerate DNS information abo
 
 dnsenum performs DNS enumeration for security testing.
 
+## Commands
+- `dnsenum <resource> <action>` — Execute dnsenum commands
+- `dnsenum self version` — Print dnsenum version
+- `dnsenum _ _` — Passthrough to dnsenum CLI
+
 ## Usage Examples
 
 - "enumerate DNS records for a domain"

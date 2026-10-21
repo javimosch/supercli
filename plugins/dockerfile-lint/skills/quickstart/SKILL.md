@@ -7,6 +7,11 @@ description: Use this skill when the user wants to lint Dockerfiles for best pra
 
 dockerfile-lint checks Dockerfiles for issues.
 
+## Commands
+- `dockerfile-lint <resource> <action>` — Execute dockerfile-lint commands
+- `dockerfile-lint self version` — Print dockerfile-lint version
+- `dockerfile-lint _ _` — Passthrough to dockerfile-lint CLI
+
 ## Usage Examples
 
 - "lint a Dockerfile for best practices"

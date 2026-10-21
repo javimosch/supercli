@@ -8,6 +8,13 @@ tags: copilot,github,ai,automation,headless
 
 Use this when you need GitHub Copilot CLI for scripted prompts and machine-readable outputs.
 
+## Commands
+- `copilot <resource> <action>` — Execute copilot commands
+- `copilot cli version` — Show installed Copilot CLI version
+- `copilot task ask` — Run a programmatic Copilot prompt and return text-only response
+- `copilot task ask-json` — Run a programmatic Copilot prompt with non-stream text output
+- `copilot _ _` — Passthrough command to execute any Copilot CLI command
+
 ## 1) Install plugin and dependency
 
 ```bash

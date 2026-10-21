@@ -4,3 +4,7 @@ description: diff-summary — parse unified git diff into structured JSON. Repor
 ---
 # diff-summary
 diff-summary — parse unified git diff into structured JSON. Reports files changed, hunks, additions/deletions per file.
+
+## Commands
+- `diff-summary <resource> <action>` — Execute diff-summary commands
+- `diff summary run` — diff-summary — parse unified git diff into structured JSON. Reports files changed, hunks, additions/deletions per file.

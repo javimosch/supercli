@@ -2,6 +2,10 @@
 
 Convert codebase into a single LLM prompt with source tree
 
+## Commands
+- `code2prompt <resource> <action>` — Execute code2prompt commands
+- `code2prompt codebase convert` — Convert codebase to LLM prompt
+
 ## Installation
 
 ```bash

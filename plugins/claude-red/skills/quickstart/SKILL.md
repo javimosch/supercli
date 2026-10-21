@@ -7,6 +7,11 @@ description: Use this skill when the user needs offensive security expertise —
 
 58 curated SKILL.md files across 13 categories that prime AI agents with expert-level offensive security methodology. Built by SnailSploit.
 
+## Commands
+- `claude-red <resource> <action>` — Execute claude-red commands
+- `claude-red self version` — Print claude-red info
+- `claude-red _ _` — Passthrough — clone and teach the skills
+
 ## Installation
 
 ```bash

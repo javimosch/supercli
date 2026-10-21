@@ -7,6 +7,10 @@ description: Use this skill when the user wants a SQL database with Git-style ve
 
 Git for data — a MySQL-compatible SQL database you can fork, clone, branch, merge, push, and pull. Version-control tabular data with familiar Git workflows.
 
+## Commands
+- `dolt <resource> <action>` — Execute dolt commands
+- `dolt _ _` — Passthrough to dolt CLI
+
 ## Installation
 
 ```bash

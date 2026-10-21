@@ -7,6 +7,10 @@ description: Use this skill when the user wants static analysis for Kotlin code 
 
 Static analysis for Kotlin and Gradle projects. Enforces style rules, flags complexity and smells, and integrates with CI via SARIF/XML/TXT reports.
 
+## Commands
+- `detekt <resource> <action>` — Execute detekt commands
+- `detekt _ _` — Passthrough to detekt CLI
+
 ## Installation
 
 ```bash

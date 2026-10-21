@@ -19,3 +19,10 @@ Apply replacements in-place:
 ```bash
 sc comby code replace "let :[name] = :[val]" "const :[name] = :[val]" --extensions .js --in-place
 ```
+
+## Commands
+- `comby <resource> <action>` — Execute comby commands
+- `comby code search` — Search code using structural patterns with hole syntax
+- `comby code replace` — Replace code matching structural patterns using hole syntax
+- `comby code rewrite` — Rewrite entire file using a structural template
+- `comby _ _` — Passthrough to comby CLI

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to manipulate CSV files — extr
 
 csvtool manipulates CSV data from the command line.
 
+## Commands
+- `csvtool <resource> <action>` — Execute csvtool commands
+- `csvtool self version` — Print csvtool version
+- `csvtool _ _` — Passthrough to csvtool CLI
+
 ## Usage Examples
 
 - "extract the second column from a CSV"

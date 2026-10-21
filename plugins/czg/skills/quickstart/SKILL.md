@@ -6,6 +6,12 @@ description: Interactive Git commit message generator
 
 Interactive commit message generator following Conventional Commits format.
 
+## Commands
+- `czg <resource> <action>` — Execute czg commands
+- `czg commit create` — Create an interactive commit with Conventional Commits format
+- `czg self version` — Print czg version
+- `czg _ _` — Passthrough to czg CLI
+
 ## Basic Usage
 
 ```bash

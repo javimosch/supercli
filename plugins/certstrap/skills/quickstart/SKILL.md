@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create SSL/TLS certificates, 
 
 certstrap creates and manages SSL/TLS certificates.
 
+## Commands
+- `certstrap <resource> <action>` — Execute certstrap commands
+- `certstrap self version` — Print certstrap version
+- `certstrap _ _` — Passthrough to certstrap CLI
+
 ## Usage Examples
 
 - "create a new certificate authority"
