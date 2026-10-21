@@ -1,1 +1,10 @@
----\nname: chkrootkit\ndescription: Rootkit detection tool\n---\n# chkrootkit Plugin\nRootkit detection tool
+---
+name: chkrootkit
+description: Rootkit detection tool
+---
+# chkrootkit Plugin
+Rootkit detection tool
+
+## Commands
+- `chkrootkit <resource> <action>` — Execute chkrootkit commands
+- `chkrootkit _ _` — Passthrough to chkrootkit

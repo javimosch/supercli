@@ -1,5 +1,10 @@
 # dembrandt Plugin
 
+## Commands
+- `dembrandt <resource> <action>` — Execute dembrandt commands
+- `dembrandt self analyze` — Extract design tokens from a website URL
+- `dembrandt _ _` — Passthrough for advanced dembrandt commands
+
 ## Overview
 
 Extracts design tokens from any live website URL using [dembrandt](https://github.com/dembrandt/dembrandt). Analyzes computed DOM styles and CSS variables via Playwright to produce a structured design system — colors, typography, spacing, borders, shadows, component patterns, logos, favicons, and breakpoints.

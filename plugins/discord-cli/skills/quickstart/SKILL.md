@@ -7,6 +7,11 @@ description: Use this skill when the user wants to interact with Discord from th
 
 discord-cli provides terminal access to Discord.
 
+## Commands
+- `discord-cli <resource> <action>` — Execute discord-cli commands
+- `discord-cli self version` — Print discord-cli version
+- `discord-cli _ _` — Passthrough to discord-cli CLI
+
 ## Usage Examples
 
 - "send a message to a Discord channel"

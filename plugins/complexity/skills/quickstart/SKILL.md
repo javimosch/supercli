@@ -1,5 +1,10 @@
 # complexity - Code Complexity Analyzer
 
+## Commands
+- `complexity <resource> <action>` — Execute complexity commands
+- `complexity analyze code` — Analyze code complexity
+- `complexity _ _` — Passthrough to complexity CLI
+
 ## Overview
 complexity is a command line tool to identify complex code. Analyze code complexity and identify areas that need refactoring.
 

@@ -6,6 +6,10 @@ description: difft — structural syntax-aware diff tool comparing code by AST
 
 Difftastic is a syntax-aware diff tool that compares code by AST rather than line-by-line, producing clearer diffs across 30+ languages.
 
+## Commands
+- `difft <resource> <action>` — Execute difft commands
+- `difft _ _` — Passthrough to difft CLI
+
 ## Quickstart
 
 ```bash

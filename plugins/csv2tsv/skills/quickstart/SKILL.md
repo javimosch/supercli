@@ -7,6 +7,11 @@ description: Use this skill when the user wants to convert CSV files to tab-sepa
 
 csv2tsv converts comma-separated to tab-separated data.
 
+## Commands
+- `csv2tsv <resource> <action>` — Execute csv2tsv commands
+- `csv2tsv self version` — Print csv2tsv version
+- `csv2tsv _ _` — Passthrough to csv2tsv CLI
+
 ## Usage Examples
 
 - "convert a CSV to TSV for cut/awk processing"

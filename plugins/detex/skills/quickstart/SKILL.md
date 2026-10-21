@@ -7,6 +7,11 @@ description: Use this skill when the user wants to extract plain text from LaTeX
 
 detex strips LaTeX markup to extract plain text.
 
+## Commands
+- `detex <resource> <action>` — Execute detex commands
+- `detex self version` — Print detex version
+- `detex _ _` — Passthrough to detex CLI
+
 ## Usage Examples
 
 - "extract plain text from a .tex file"

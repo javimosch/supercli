@@ -2,6 +2,19 @@
 
 Use the codedb plugin for fast, structured code intelligence queries via the `codedb` CLI. It provides tree-sitter-based structural parsing, trigram-accelerated full-text search, O(1) inverted word index, and reverse dependency graphs.
 
+## Commands
+- `codedb <resource> <action>` — Execute codedb commands
+- `codedb self version` — Print codedb version
+- `codedb tree run` — Show file tree with language and symbol counts
+- `codedb outline run` — List all symbols in a file (functions, structs, imports, with line numbers)
+- `codedb find run` — Find where a symbol is defined across the codebase
+- `codedb search run` — Full-text search (trigram-accelerated, case-insensitive)
+- `codedb search regex` — Regex search across the codebase
+- `codedb word run` — O(1) exact word lookup via inverted index
+- `codedb hot run` — Show recently modified files
+- `codedb nuke run` — Remove all codedb data, snapshots, and kill processes
+- `codedb _ _` — Catch-all passthrough to codedb CLI (codedb ls, codedb git status, etc.)
+
 ## Quick Start
 
 ### 1. Install

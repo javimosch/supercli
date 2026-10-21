@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create a new React project wi
 
 Scaffolds new React applications.
 
+## Commands
+- `create-react-app <resource> <action>` — Execute create-react-app commands
+- `create-react-app self version` — Print create-react-app version
+- `create-react-app _ _` — Passthrough to create-react-app CLI
+
 ## Usage Examples
 
 - "create a new React app"

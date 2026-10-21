@@ -7,6 +7,11 @@ description: Use this skill when the user wants to discover hidden web paths, di
 
 dirsearch is an advanced web path scanner.
 
+## Commands
+- `dirsearch <resource> <action>` — Execute dirsearch commands
+- `dirsearch self version` — Print dirsearch version
+- `dirsearch _ _` — Passthrough to dirsearch CLI
+
 ## Usage Examples
 
 - "scan a target for hidden paths"

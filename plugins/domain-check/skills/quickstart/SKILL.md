@@ -8,6 +8,12 @@ tags: domain,dns,whois,rdap,tld,availability,check,pattern,generator
 
 Use this when AI agents need to check domain name availability, batch check multiple domains, or generate domain patterns.
 
+## Commands
+- `domain-check <resource> <action>` — Execute domain-check commands
+- `domain-check self version` — Show domain-check CLI version information
+- `domain-check domain check` — Check if a single domain is available
+- `domain-check domain bulk` — Check multiple domains from a file or list
+
 ## 1) Install plugin and dependency
 
 ```bash

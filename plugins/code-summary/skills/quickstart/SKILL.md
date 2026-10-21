@@ -4,3 +4,7 @@ description: code-summary — analyze project codebase: files, blank lines, comm
 ---
 # code-summary
 code-summary — analyze project codebase: files, blank lines, comment lines, code lines per file extension. COCOMO-style metrics.
+
+## Commands
+- `code-summary <resource> <action>` — Execute code-summary commands
+- `code summary run` — code-summary — analyze project codebase: files, blank lines, comment lines, code lines per file extension. COCOMO-style metrics.

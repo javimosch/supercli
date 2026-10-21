@@ -1,1 +1,10 @@
----\nname: clojure\ndescription: Clojure programming language\n---\n# clojure Plugin\nClojure programming language
+---
+name: clojure
+description: Clojure programming language
+---
+# clojure Plugin
+Clojure programming language
+
+## Commands
+- `clojure <resource> <action>` — Execute clojure commands
+- `clojure _ _` — Passthrough to clojure CLI
