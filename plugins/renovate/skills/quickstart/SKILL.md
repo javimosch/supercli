@@ -7,6 +7,11 @@ description: Use this skill when the user wants automated dependency updates —
 
 Renovate automatically detects outdated dependencies across your repo and opens pull requests with updates, changelogs, and compatibility notes. Supports npm, Docker, Terraform, Helm, and many more.
 
+## Commands
+- `renovate <resource> <action>` — Execute renovate commands
+- `renovate self version` — Print renovate version
+- `renovate _ _` — Passthrough to renovate CLI
+
 ## Installation
 
 ```bash

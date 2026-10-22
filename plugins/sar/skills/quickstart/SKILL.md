@@ -1,1 +1,10 @@
----\nname: sar\ndescription: System activity reporter\n---\n# sar Plugin\nSystem activity reporter
+---
+name: sar
+description: System activity reporter
+---
+# sar Plugin
+System activity reporter
+
+## Commands
+- `sar <resource> <action>` — Execute sar commands
+- `sar _ _` — Passthrough to sar

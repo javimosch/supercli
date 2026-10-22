@@ -1,1 +1,10 @@
----\nname: sift\ndescription: Fast grep alternative\n---\n# sift Plugin\nFast grep alternative
+---
+name: sift
+description: Fast grep alternative
+---
+# sift Plugin
+Fast grep alternative
+
+## Commands
+- `sift <resource> <action>` — Execute sift commands
+- `sift _ _` — Passthrough to sift

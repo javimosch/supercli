@@ -2,6 +2,11 @@
 
 script records a terminal session to a file (typescript). Use scriptreplay to replay recorded sessions.
 
+## Commands
+- `script <resource> <action>` — Execute script commands
+- `script session record` — Record a terminal session
+- `script _ _` — Passthrough to script CLI
+
 ## Basic Usage
 
 ```bash

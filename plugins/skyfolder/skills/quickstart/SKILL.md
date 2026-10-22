@@ -1,5 +1,10 @@
 # skyfolder - Network File Sharing
 
+## Commands
+- `skyfolder <resource> <action>` — Execute skyfolder commands
+- `skyfolder share folder` — Share a folder on the network
+- `skyfolder _ _` — Passthrough to skyfolder CLI
+
 ## Overview
 skyfolder shares folders on the network. Turn any device into a file-server accessible on the web.
 

@@ -7,6 +7,10 @@ description: Use this skill when the user wants to profile Ruby CPU usage — sa
 
 Sampling CPU profiler for Ruby. Attaches to running Ruby processes (MRI, JRuby, TruffleRuby) and records stack samples with minimal overhead — ideal for production flamegraphs and call-graph analysis.
 
+## Commands
+- `rbspy <resource> <action>` — Execute rbspy commands
+- `rbspy _ _` — Passthrough to rbspy CLI
+
 ## Installation
 
 ```bash

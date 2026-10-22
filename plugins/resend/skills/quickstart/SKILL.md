@@ -8,6 +8,29 @@ tags: resend,email,domains,api-keys,contacts,agents,usage
 
 Use this when you need to send emails, manage domains, API keys, or audience contacts.
 
+## Commands
+- `resend <resource> <action>` — Execute resend commands
+- `resend cli setup` — Install resend-cli dependency globally
+- `resend auth whoami` — Display the current authenticated user/identity
+- `resend auth logout` — Log out and clear local credentials
+- `resend cli doctor` — Run environment diagnostics for Resend
+- `resend emails send` — Send an email via the Resend API
+- `resend domains list` — List all domains in your account
+- `resend domains create` — Create a new domain for sending/receiving
+- `resend domains get` — Retrieve details for a specific domain
+- `resend domains delete` — Delete an existing domain
+- `resend domains verify` — Verify an existing domain
+- `resend api-keys list` — List all API keys in your account
+- `resend api-keys create` — Create a new API key
+- `resend api-keys delete` — Delete an existing API key
+- `resend webhooks list` — List all webhooks in your account
+- `resend webhooks create` — Create a new webhook
+- `resend webhooks delete` — Delete an existing webhook
+- `resend contacts list` — List contacts in an audience
+- `resend contacts create` — Create a new contact
+- `resend contacts delete` — Delete an existing contact
+- `resend _ _` — Passthrough command for any other Resend CLI command
+
 ## 1) Install the plugin
 
 ```bash

@@ -1,1 +1,10 @@
----\nname: racket\ndescription: Racket programming language\n---\n# racket Plugin\nRacket programming language
+---
+name: racket
+description: Racket programming language
+---
+# racket Plugin
+Racket programming language
+
+## Commands
+- `racket <resource> <action>` — Execute racket commands
+- `racket _ _` — Passthrough to racket CLI

@@ -1,1 +1,13 @@
----\nname: ranlib\ndescription: Generate index to archive\n---\n# ranlib Plugin\nGenerate index to archive\n## Usage\n- `ranlib _ _ <args>` — Run ranlib
+---
+name: ranlib
+description: Generate index to archive
+---
+# ranlib Plugin
+Generate index to archive
+
+## Commands
+- `ranlib <resource> <action>` — Execute ranlib commands
+- `ranlib _ _` — Passthrough to ranlib CLI
+
+## Usage
+- `ranlib _ _ <args>` — Run ranlib

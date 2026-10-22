@@ -2,6 +2,14 @@
 
 ripsecrets is a command-line tool designed to scan source code for accidentally committed secrets and API keys. It's 95x faster than comparable tools and uses intelligent pattern detection to find sensitive data before it reaches your repository.
 
+## Commands
+- `ripsecrets <resource> <action>` — Execute ripsecrets commands
+- `ripsecrets self version` — Print ripsecrets version
+- `ripsecrets scan directory` — Scan directory/repository for secrets
+- `ripsecrets scan install-hook` — Install ripsecrets as pre-commit hook
+- `ripsecrets scan custom-pattern` — Scan with additional secret pattern
+- `ripsecrets _ _` — Passthrough to ripsecrets CLI
+
 ## Installation
 
 ```bash

@@ -1,1 +1,10 @@
----\nname: pytest\ndescription: Python testing framework\n---\n# pytest Plugin\nPython testing framework
+---
+name: pytest
+description: Python testing framework
+---
+# pytest Plugin
+Python testing framework
+
+## Commands
+- `pytest <resource> <action>` — Execute pytest commands
+- `pytest _ _` — Passthrough to pytest CLI

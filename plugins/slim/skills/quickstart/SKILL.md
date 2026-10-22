@@ -7,6 +7,15 @@ description: Use this skill when the user wants to shrink Docker images, analyze
 
 DockerSlim (slimtoolkit/slim) minifies container images by removing unused files, analyzes image layers, lints Dockerfiles, and attaches debug shells to running containers. CNCF sandbox project.
 
+## Commands
+- `slim <resource> <action>` — Execute slim commands
+- `slim image build` — Analyze, profile and optimize a container image
+- `slim image xray` — Perform static analysis on a container image
+- `slim dockerfile lint` — Lint a Dockerfile for best practices
+- `slim container debug` — Debug a running container
+- `slim self version` — Show slim version information
+- `slim _ _` — Passthrough to slim CLI
+
 ## Installation
 
 ```bash

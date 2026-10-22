@@ -7,6 +7,11 @@ description: Use this skill when the user needs to plan large-scale code refacto
 
 Cross-platform AI agent skill that turns "rewrite this in Rust" or "migrate to microservices" into a structured 7-phase document-driven pipeline. Works with Claude Code, Codex, Cursor, and any Markdown-reading agent.
 
+## Commands
+- `spec-driven-develop <resource> <action>` — Execute spec-driven-develop commands
+- `spec-driven-develop self version` — Print spec-driven-develop info
+- `spec-driven-develop _ _` — Passthrough — clone and teach
+
 ## Installation
 
 ```bash
