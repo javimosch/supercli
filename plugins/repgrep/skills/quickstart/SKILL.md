@@ -6,6 +6,10 @@ description: repgrep — interactive terminal UI for ripgrep search and replace
 
 repgrep (`rgr`) is an interactive terminal companion to ripgrep. It runs a ripgrep search, lets you review matches in a TUI, deselect any you want to skip, and then applies a replacement across all selected matches.
 
+## Commands
+- `repgrep <resource> <action>` — Execute repgrep commands
+- `repgrep _ _` — Passthrough to repgrep (rgr) CLI
+
 ## Quickstart
 
 ```bash

@@ -1,1 +1,10 @@
----\nname: rg\ndescription: ripgrep ultra-fast text search\n---\n# rg Plugin\nripgrep ultra-fast text search
+---
+name: rg
+description: ripgrep ultra-fast text search
+---
+# rg Plugin
+ripgrep ultra-fast text search
+
+## Commands
+- `rg <resource> <action>` — Execute rg commands
+- `rg _ _` — Passthrough to rg

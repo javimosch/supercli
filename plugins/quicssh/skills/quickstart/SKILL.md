@@ -1,5 +1,9 @@
 # quicssh - SSH over QUIC
 
+## Commands
+- `quicssh <resource> <action>` — Execute quicssh commands
+- `quicssh _ _` — Passthrough to quicssh CLI
+
 ## Overview
 quicssh provides SSH over QUIC protocol. Faster and more reliable SSH connections using QUIC transport.
 

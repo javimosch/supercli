@@ -7,6 +7,10 @@ description: Use this skill when the user wants to render, convert, or optimize 
 
 High-quality SVG rendering engine with a CLI for converting SVG to PNG, PDF, or optimized SVG. Supports SVG 1.1 and most SVG 2.0 features.
 
+## Commands
+- `resvg <resource> <action>` — Execute resvg commands
+- `resvg _ _` — Passthrough to resvg CLI
+
 ## Installation
 
 ```bash

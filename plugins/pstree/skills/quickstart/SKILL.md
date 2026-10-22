@@ -2,6 +2,11 @@
 
 pstree displays running processes as a tree hierarchy, showing parent-child relationships.
 
+## Commands
+- `pstree <resource> <action>` — Execute pstree commands
+- `pstree process tree` — Display process tree
+- `pstree _ _` — Passthrough to pstree CLI
+
 ## Basic Usage
 
 ```bash

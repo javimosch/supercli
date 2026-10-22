@@ -2,6 +2,15 @@
 
 Scarb is the Cairo package manager for Starknet smart contracts and Cairo programs.
 
+## Commands
+- `scarb <resource> <action>` — Execute scarb commands
+- `scarb self version` — Print scarb version
+- `scarb project init` — Initialize a new Scarb project
+- `scarb project build` — Compile the current project
+- `scarb project test` — Run project tests
+- `scarb project clean` — Remove build artifacts
+- `scarb _ _` — Passthrough to scarb CLI
+
 ## Prerequisites
 
 - Install Scarb: `curl --proto '=https' --tlsv1.2 -sSf https://docs.swmansion.com/scarb/install.sh | sh`

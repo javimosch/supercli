@@ -1,1 +1,10 @@
----\nname: socat\ndescription: Multipurpose socket relay tool\n---\n# socat Plugin\nMultipurpose socket relay tool
+---
+name: socat
+description: Multipurpose socket relay tool
+---
+# socat Plugin
+Multipurpose socket relay tool
+
+## Commands
+- `socat <resource> <action>` — Execute socat commands
+- `socat _ _` — Passthrough to socat CLI

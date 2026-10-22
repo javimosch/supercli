@@ -1,1 +1,10 @@
----\nname: pyenv\ndescription: Python version manager\n---\n# pyenv Plugin\nPython version manager
+---
+name: pyenv
+description: Python version manager
+---
+# pyenv Plugin
+Python version manager
+
+## Commands
+- `pyenv <resource> <action>` — Execute pyenv commands
+- `pyenv _ _` — Passthrough to pyenv CLI

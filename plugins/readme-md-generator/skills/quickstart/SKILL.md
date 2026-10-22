@@ -2,6 +2,10 @@
 
 Generate beautiful README.md files interactively
 
+## Commands
+- `readme-md-generator <resource> <action>` — Execute readme-md-generator commands
+- `readme generate interactive` — Generate README interactively
+
 ## Installation
 
 ```bash

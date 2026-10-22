@@ -1,1 +1,10 @@
----\nname: ruby\ndescription: Ruby programming language interpreter\n---\n# ruby Plugin\nRuby programming language interpreter
+---
+name: ruby
+description: Ruby programming language interpreter
+---
+# ruby Plugin
+Ruby programming language interpreter
+
+## Commands
+- `ruby <resource> <action>` — Execute ruby commands
+- `ruby _ _` — Passthrough to ruby CLI

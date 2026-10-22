@@ -1,5 +1,10 @@
 # smag - Command Line Graphing
 
+## Commands
+- `smag <resource> <action>` — Execute smag commands
+- `smag graph data` — Create a graph from data
+- `smag _ _` — Passthrough to smag CLI
+
 ## Overview
 smag is Show Me A Graph - Command Line Graphing. Create graphs from data directly in the terminal.
 

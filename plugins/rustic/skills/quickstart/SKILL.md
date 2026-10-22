@@ -6,6 +6,10 @@ description: rustic — fast encrypted deduplicated backup tool (restic-compatib
 
 Rustic is a fast, encrypted, deduplicated backup tool written in Rust. It is compatible with the restic repository format and can back up to local disks, SFTP, S3, and other cloud storage.
 
+## Commands
+- `rustic <resource> <action>` — Execute rustic commands
+- `rustic _ _` — Passthrough to rustic CLI
+
 ## Quickstart
 
 ```bash

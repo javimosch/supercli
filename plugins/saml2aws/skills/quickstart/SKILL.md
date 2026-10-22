@@ -5,5 +5,9 @@ description: CLI tool for AWS SAML authentication and temporary credential gener
 # saml2aws Plugin
 CLI tool for AWS SAML authentication and temporary credential generation
 
+## Commands
+- `saml2aws <resource> <action>` — Execute saml2aws commands
+- `saml2aws _ _` — Passthrough to saml2aws CLI
+
 ## Usage
 - `saml2aws _ _ <args>` — Run saml2aws with any arguments

@@ -1,1 +1,10 @@
----\nname: signify\ndescription: OpenBSD cryptographic signing\n---\n# signify Plugin\nOpenBSD cryptographic signing
+---
+name: signify
+description: OpenBSD cryptographic signing
+---
+# signify Plugin
+OpenBSD cryptographic signing
+
+## Commands
+- `signify <resource> <action>` — Execute signify commands
+- `signify _ _` — Passthrough to signify CLI

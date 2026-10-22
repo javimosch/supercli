@@ -7,6 +7,11 @@ description: Use this skill when the user needs to develop production-grade ROS 
 
 Production-grade ROS 2 development SKILL.md for AI coding assistants. Progressive-disclosure from workspace setup through deployment.
 
+## Commands
+- `ros2-engineering-skills <resource> <action>` — Execute ros2-engineering-skills commands
+- `ros2-engineering-skills self version` — Print info
+- `ros2-engineering-skills _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/dbwls99706/ros2-engineering-skills.git

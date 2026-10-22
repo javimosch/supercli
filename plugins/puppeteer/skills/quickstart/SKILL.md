@@ -1,1 +1,10 @@
----\nname: puppeteer\ndescription: Browser automation library\n---\n# puppeteer Plugin\nBrowser automation library
+---
+name: puppeteer
+description: Browser automation library
+---
+# puppeteer Plugin
+Browser automation library
+
+## Commands
+- `puppeteer <resource> <action>` — Execute puppeteer commands
+- `puppeteer _ _` — Passthrough to puppeteer

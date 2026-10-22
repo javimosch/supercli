@@ -1,1 +1,10 @@
----\nname: rkhunter\ndescription: Rootkit hunter scanner\n---\n# rkhunter Plugin\nRootkit hunter scanner
+---
+name: rkhunter
+description: Rootkit hunter scanner
+---
+# rkhunter Plugin
+Rootkit hunter scanner
+
+## Commands
+- `rkhunter <resource> <action>` — Execute rkhunter commands
+- `rkhunter _ _` — Passthrough to rkhunter
