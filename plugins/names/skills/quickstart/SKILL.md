@@ -1,1 +1,18 @@
----\nname: names\ndescription: Use this skill for names operations.\n---\n# names Plugin\nCLI tool for names.\n## Commands\n- `names _ _` — Passthrough\n## Installation\n```bash\ncargo install names\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: names
+description: Use this skill for names operations.
+---
+# names Plugin
+CLI tool for names.
+
+## Commands
+- `names <resource> <action>` — Execute names commands
+- `names _ _` — Passthrough to names CLI
+
+## Installation
+```bash
+cargo install names
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

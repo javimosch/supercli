@@ -1,5 +1,10 @@
 # tokf - LLM Context Compressor
 
+## Commands
+- `tokf <resource> <action>` — Execute tokf commands
+- `tokf run command` — Run command with output filtering
+- `tokf _ _` — Passthrough to tokf CLI
+
 ## Overview
 tokf is a config-driven CLI tool that compresses command output before it reaches an LLM context. Reduces token usage for AI tools.
 

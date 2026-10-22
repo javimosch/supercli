@@ -1,5 +1,11 @@
 # timetrace - Time Tracking
 
+## Commands
+- `timetrace <resource> <action>` — Execute timetrace commands
+- `timetrace start tracking` — Start tracking time for a project
+- `timetrace stop tracking` — Stop tracking time
+- `timetrace _ _` — Passthrough to timetrace CLI
+
 ## Overview
 timetrace is a simple CLI for tracking your working time. Track time by project, generate reports, and integrate with shell prompts.
 

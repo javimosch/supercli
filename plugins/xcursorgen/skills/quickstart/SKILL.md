@@ -1,1 +1,10 @@
----\nname: xcursorgen\ndescription: X11 cursor generator\n---\n# xcursorgen Plugin\nX11 cursor generator
+---
+name: xcursorgen
+description: X11 cursor generator
+---
+# xcursorgen Plugin
+X11 cursor generator
+
+## Commands
+- `xcursorgen <resource> <action>` — Execute xcursorgen commands
+- `xcursorgen _ _` — Passthrough to xcursorgen

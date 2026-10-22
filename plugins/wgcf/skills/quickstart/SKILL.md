@@ -2,6 +2,11 @@
 
 Cross-platform CLI for Cloudflare Warp
 
+## Commands
+- `wgcf <resource> <action>` — Execute wgcf commands
+- `wgcf account register` — Register new Cloudflare account
+- `wgcf profile generate` — Generate WireGuard profile
+
 ## Installation
 
 ```bash

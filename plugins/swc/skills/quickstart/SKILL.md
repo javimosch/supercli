@@ -7,6 +7,11 @@ description: Use this skill when the user wants to transpile or minify JavaScrip
 
 SWC is a fast Rust-based compiler for JavaScript and TypeScript. Transpile modern syntax, minify bundles, and resolve modules — typically 10–20× faster than Babel.
 
+## Commands
+- `swc <resource> <action>` — Execute swc commands
+- `swc self version` — Print swc version
+- `swc _ _` — Passthrough to swc CLI
+
 ## Installation
 
 ```bash
