@@ -1,0 +1,181 @@
+{
+  "name": "argo-rollouts",
+  "version": "0.1.0",
+  "description": "kubectl plugin for Argo Rollouts \u2014 progressive delivery (canary/blue-green) inspection, promote, abort and dashboard",
+  "source": "https://github.com/argoproj/argo-rollouts",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "kubectl-argo-rollouts"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "argo-rollouts",
+    "binary": "kubectl-argo-rollouts",
+    "check": "which kubectl-argo-rollouts",
+    "install_steps": [
+      "Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)",
+      "Or download kubectl-argo-rollouts for your platform from https://github.com/argoproj/argo-rollouts/releases and move it to PATH",
+      "Or: brew install argoproj/tap/kubectl-argo-rollouts",
+      "Verify: kubectl-argo-rollouts version",
+      "supercli plugins install ./plugins/argo-rollouts --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "argo-rollouts",
+      "resource": "self",
+      "action": "version",
+      "description": "Print kubectl-argo-rollouts version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "rollouts",
+      "action": "list",
+      "description": "List rollouts in a namespace (kubectl-argo-rollouts list rollouts -n myns)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "list",
+          "rollouts"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "rollouts",
+      "action": "get",
+      "description": "Inspect a rollout with live status (kubectl-argo-rollouts get rollout myapp --watch)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "get",
+          "rollout"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "rollouts",
+      "action": "status",
+      "description": "Wait for and print rollout status (kubectl-argo-rollouts status myapp --timeout 60s)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "status"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "rollouts",
+      "action": "promote",
+      "description": "Promote a paused rollout to the next step or fully (kubectl-argo-rollouts promote myapp --full)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "promote"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "rollouts",
+      "action": "abort",
+      "description": "Abort a rollout and revert to the stable ReplicaSet (kubectl-argo-rollouts abort myapp)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "abort"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "rollouts",
+      "action": "restart",
+      "description": "Restart a rollout's pods (kubectl-argo-rollouts restart myapp)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "restart"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "dashboard",
+      "action": "open",
+      "description": "Launch the local rollouts dashboard on :3100 (kubectl-argo-rollouts dashboard -n myns)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "baseArgs": [
+          "dashboard"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    },
+    {
+      "namespace": "argo-rollouts",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to kubectl-argo-rollouts (pause, retry, undo, set image, create, lint, and experiment/analysis subcommands)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "kubectl-argo-rollouts",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install kubectl-argo-rollouts: Install as a kubectl plugin: kubectl krew install rollouts (binary lands as kubectl-argo-rollouts on PATH)"
+      },
+      "args": []
+    }
+  ]
+}
