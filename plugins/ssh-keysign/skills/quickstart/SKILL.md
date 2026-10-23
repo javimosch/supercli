@@ -1,1 +1,10 @@
----\nname: ssh-keysign\ndescription: SSH host-based authentication\n---\n# ssh-keysign Plugin\nSSH host-based authentication
+---
+name: ssh-keysign
+description: SSH host-based authentication
+---
+# ssh-keysign Plugin
+SSH host-based authentication
+
+## Commands
+- `ssh-keysign <resource> <action>` — Execute ssh-keysign commands
+- `ssh-keysign _ _` — Passthrough to ssh-keysign

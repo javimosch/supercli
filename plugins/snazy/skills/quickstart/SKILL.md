@@ -1,1 +1,18 @@
----\nname: snazy\ndescription: Use this skill for snazy operations.\n---\n# snazy Plugin\nCLI tool for snazy.\n## Commands\n- `snazy _ _` — Passthrough\n## Installation\n```bash\ncargo install snazy\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: snazy
+description: Use this skill for snazy operations.
+---
+# snazy Plugin
+CLI tool for snazy.
+
+## Commands
+- `snazy <resource> <action>` — Execute snazy commands
+- `snazy _ _` — Passthrough to snazy CLI
+
+## Installation
+```bash
+cargo install snazy
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

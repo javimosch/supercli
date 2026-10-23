@@ -1,1 +1,18 @@
----\nname: gosh-dl-cli\ndescription: Use this skill for gosh-dl-cli operations.\n---\n# gosh-dl-cli Plugin\nCLI tool for gosh-dl-cli.\n## Commands\n- `gosh-dl-cli _ _` — Passthrough\n## Installation\n```bash\ncargo install gosh-dl-cli\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: gosh-dl-cli
+description: Use this skill for gosh-dl-cli operations.
+---
+# gosh-dl-cli Plugin
+CLI tool for gosh-dl-cli.
+
+## Commands
+- `gosh-dl-cli <resource> <action>` — Execute gosh-dl-cli commands
+- `gosh-dl-cli _ _` — Passthrough to gosh-dl-cli CLI
+
+## Installation
+```bash
+cargo install gosh-dl-cli
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

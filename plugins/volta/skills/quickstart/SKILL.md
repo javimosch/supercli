@@ -2,6 +2,12 @@
 
 JS Toolchains as Code - hassle-free JavaScript tools
 
+## Commands
+- `volta <resource> <action>` — Execute volta commands
+- `volta install package` — Install a package
+- `volta pin tool` — Pin tool version
+- `volta list tools` — List installed tools
+
 ## Installation
 
 ```bash

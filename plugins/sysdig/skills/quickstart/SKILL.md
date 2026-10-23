@@ -4,3 +4,7 @@ description: System troubleshooting and exploration tool. Capture system calls a
 ---
 # sysdig Plugin
 System troubleshooting and exploration tool. Capture system calls and events.
+
+## Commands
+- `sysdig <resource> <action>` — Execute sysdig commands
+- `sysdig _ _` — Passthrough to sysdig

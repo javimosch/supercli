@@ -1,1 +1,10 @@
----\nname: xmore\ndescription: X11 text pager\n---\n# xmore Plugin\nX11 text pager
+---
+name: xmore
+description: X11 text pager
+---
+# xmore Plugin
+X11 text pager
+
+## Commands
+- `xmore <resource> <action>` — Execute xmore commands
+- `xmore _ _` — Passthrough to xmore

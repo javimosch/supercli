@@ -6,6 +6,17 @@ description: Report virtual memory and system statistics
 
 Report virtual memory, processes, CPU, I/O, and system statistics.
 
+## Commands
+- `vmstat <resource> <action>` — Execute vmstat commands
+- `vmstat self version` — Print vmstat version
+- `vmstat stats report` — Report virtual memory statistics (default one-shot)
+- `vmstat stats active` — Report active/inactive memory
+- `vmstat disk report` — Report disk statistics
+- `vmstat disk summary` — Report disk summary statistics
+- `vmstat disk partition` — Report partition read/write statistics
+- `vmstat slab report` — Report slab allocator statistics
+- `vmstat _ _` — Passthrough to vmstat CLI
+
 ## Quickstart
 
 ```bash
