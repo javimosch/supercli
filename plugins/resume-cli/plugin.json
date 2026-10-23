@@ -1,30 +1,128 @@
 {
   "name": "resume-cli",
-  "description": "CLI tool to easily setup a new resume using JSON Resume standard",
   "version": "1.0.0",
-  "binary": "resume",
-  "check": "resume --version",
-  "install": {
-    "method": "npm",
-    "command": "npm install -g resume-cli"
-  },
-  "commands": {
-    "init": {
-      "command": "resume init",
-      "description": "Create a new resume.json file"
-    },
-    "export": {
-      "command": "resume export {filename}",
-      "description": "Export resume to PDF or HTML",
-      "args": ["filename"]
-    },
-    "serve": {
-      "command": "resume serve",
-      "description": "Serve resume locally for preview"
-    },
-    "validate": {
-      "command": "resume validate",
-      "description": "Validate resume.json format"
+  "description": "CLI tool to easily setup a new resume using JSON Resume standard",
+  "source": "https://github.com/jsonresume/resume-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "resume"
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "resume-cli",
+    "binary": "resume",
+    "check": "resume --version",
+    "install_steps": [
+      "npm install -g resume-cli"
+    ],
+    "note": "Uses JSON Resume schema. Export requires a theme - install with npm install -g jsonresume-theme-<name>"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "resume-cli",
+      "resource": "resume",
+      "action": "init",
+      "description": "Create a new resume.json file",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resume",
+        "baseArgs": [
+          "init"
+        ],
+        "missingDependencyHelp": "Install resume: npm install -g resume-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "resume-cli",
+      "resource": "resume",
+      "action": "export",
+      "description": "Export resume to PDF or HTML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resume",
+        "baseArgs": [
+          "export"
+        ],
+        "positionalArgs": [
+          "filename"
+        ],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install resume: npm install -g resume-cli"
+      },
+      "args": [
+        {
+          "name": "filename",
+          "type": "string",
+          "required": true,
+          "description": "Output filename (e.g. resume.pdf)",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "resume-cli",
+      "resource": "resume",
+      "action": "serve",
+      "description": "Serve resume locally for preview",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resume",
+        "baseArgs": [
+          "serve"
+        ],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install resume: npm install -g resume-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "resume-cli",
+      "resource": "resume",
+      "action": "validate",
+      "description": "Validate resume.json format",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resume",
+        "baseArgs": [
+          "validate"
+        ],
+        "missingDependencyHelp": "Install resume: npm install -g resume-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "resume-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print resume version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resume",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install resume: npm install -g resume-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "resume-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to resume CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "resume",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install resume: npm install -g resume-cli"
+      },
+      "args": []
+    }
+  ]
 }

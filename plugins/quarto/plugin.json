@@ -1,37 +1,180 @@
 {
   "name": "quarto",
-  "description": "Open-source scientific and technical publishing system built on Pandoc",
   "version": "1.9.37",
-  "binary": "quarto",
-  "check": "quarto --version",
-  "install": {
-    "method": "custom",
-    "command": "Download .deb/.rpm/.tar.gz from https://github.com/quarto-dev/quarto-cli/releases/latest"
-  },
-  "commands": {
-    "render": {
-      "command": "quarto render {file}",
-      "description": "Render a document to various formats",
-      "args": ["file"]
-    },
-    "preview": {
-      "command": "quarto preview {file}",
-      "description": "Preview a document with live reload",
-      "args": ["file"]
-    },
-    "create": {
-      "command": "quarto create {type}",
-      "description": "Create a new project (project, document, extension)",
-      "args": ["type"]
-    },
-    "convert": {
-      "command": "quarto convert {file}",
-      "description": "Convert between .qmd and .ipynb formats",
-      "args": ["file"]
-    },
-    "check": {
-      "command": "quarto check",
-      "description": "Verify Quarto installation and dependencies"
+  "description": "Open-source scientific and technical publishing system built on Pandoc",
+  "source": "https://github.com/quarto-dev/quarto-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "quarto"
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "quarto",
+    "binary": "quarto",
+    "check": "quarto --version",
+    "install_steps": [
+      "Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest",
+      "Linux (.deb): sudo dpkg -i quarto-*.deb",
+      "Linux (.tar.gz): tar -C ~/opt -xvzf quarto-*.tar.gz && ln -s ~/opt/quarto-*/bin/quarto ~/bin/quarto",
+      "macOS: Download .pkg installer and double-click to install",
+      "Windows: Download .msi installer and run"
+    ],
+    "note": "Quarto requires Pandoc and optionally TeX for PDF output. See https://quarto.org/docs/get-started/ for full installation instructions."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "quarto",
+      "resource": "document",
+      "action": "render",
+      "description": "Render a document to various formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "baseArgs": [
+          "render"
+        ],
+        "positionalArgs": [
+          "file"
+        ],
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Document path (.qmd, .ipynb, .md)",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "quarto",
+      "resource": "document",
+      "action": "preview",
+      "description": "Preview a document with live reload",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "baseArgs": [
+          "preview"
+        ],
+        "positionalArgs": [
+          "file"
+        ],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Document path",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "quarto",
+      "resource": "project",
+      "action": "create",
+      "description": "Create a new project (project, document, extension)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "baseArgs": [
+          "create"
+        ],
+        "positionalArgs": [
+          "type"
+        ],
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": [
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "description": "Project type to create",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "quarto",
+      "resource": "document",
+      "action": "convert",
+      "description": "Convert between .qmd and .ipynb formats",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "baseArgs": [
+          "convert"
+        ],
+        "positionalArgs": [
+          "file"
+        ],
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Document path",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "quarto",
+      "resource": "self",
+      "action": "check",
+      "description": "Verify Quarto installation and dependencies",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "baseArgs": [
+          "check"
+        ],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "quarto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print quarto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "quarto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to quarto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "quarto",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install quarto: Download the appropriate release for your platform from https://github.com/quarto-dev/quarto-cli/releases/latest"
+      },
+      "args": []
+    }
+  ]
 }
