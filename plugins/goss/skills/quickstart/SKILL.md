@@ -7,6 +7,10 @@ description: Use this skill when the user wants to validate server configuration
 
 Quick and Easy server testing. Define infrastructure expectations as YAML and run them in milliseconds — ideal for CI, Docker image validation, and post-deploy smoke tests.
 
+## Commands
+- `goss <resource> <action>` — Execute goss commands
+- `goss _ _` — Passthrough to goss CLI
+
 ## Installation
 
 ```bash

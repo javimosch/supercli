@@ -7,6 +7,10 @@ description: Use this skill when the user wants to probe a list of domains for w
 
 Takes line-delimited domains on stdin and outputs only those with live HTTP or HTTPS endpoints. Built for pipeline workflows with other recon tools (subfinder, amass, etc.).
 
+## Commands
+- `httprobe <resource> <action>` — Execute httprobe commands
+- `httprobe domain probe` — Probe domains stdin for working HTTP/HTTPS servers
+
 ## Installation
 
 ```bash

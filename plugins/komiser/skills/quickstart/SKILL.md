@@ -7,6 +7,10 @@ description: Use this skill when the user wants cloud cost visibility and resour
 
 Open-source cloud cost management tool. Scans cloud accounts, builds a resource inventory, and surfaces cost dashboards with anomaly detection. Supports AWS, GCP, Azure, and Oracle Cloud.
 
+## Commands
+- `komiser <resource> <action>` — Execute komiser commands
+- `komiser _ _` — Passthrough to komiser CLI
+
 ## Installation
 
 ```bash

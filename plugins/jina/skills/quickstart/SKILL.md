@@ -8,6 +8,14 @@ tags: jina,search,embeddings,rerank,reader,ai,web-search,scraping
 
 Use this when AI agents need to search the web, read web pages, generate embeddings, or rerank results using Jina AI APIs.
 
+## Commands
+- `jina <resource> <action>` — Execute jina commands
+- `jina self version` — Show jina CLI version information
+- `jina search run` — Search the web using Jina AI search API
+- `jina reader read` — Read and extract content from URLs
+- `jina embed run` — Generate text embeddings using Jina AI embeddings API
+- `jina rerank run` — Rerank search results using Jina AI rerank API
+
 ## 1) Install plugin and dependency
 
 ```bash
