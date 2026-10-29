@@ -32,4 +32,6 @@ bsky --help
 ```
 
 ## Key Features
-- bluesky\n- social\n- cli
+- bluesky
+- social
+- cli

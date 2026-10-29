@@ -30,4 +30,6 @@ athenapdf --help
 ```
 
 ## Key Features
-- pdf\n- html\n- headless
+- pdf
+- html
+- headless

@@ -39,4 +39,6 @@ os-cli --help
 ```
 
 ## Key Features
-- os\n- system-info\n- cross-platform
+- os
+- system-info
+- cross-platform

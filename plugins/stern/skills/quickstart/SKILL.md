@@ -30,4 +30,6 @@ stern --help
 ```
 
 ## Key Features
-- kubernetes\n- k8s\n- logs
+- kubernetes
+- k8s
+- logs

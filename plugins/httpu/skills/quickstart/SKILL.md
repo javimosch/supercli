@@ -30,4 +30,6 @@ httpu --help
 ```
 
 ## Key Features
-- http\n- client\n- api
+- http
+- client
+- api

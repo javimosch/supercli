@@ -32,4 +32,6 @@ corber --help
 ```
 
 ## Key Features
-- cordova\n- electron\n- hybrid-app
+- cordova
+- electron
+- hybrid-app

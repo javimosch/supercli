@@ -36,4 +36,6 @@ maestro --help
 ```
 
 ## Key Features
-- audio\n- music\n- terminal
+- audio
+- music
+- terminal

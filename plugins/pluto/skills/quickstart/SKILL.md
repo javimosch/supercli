@@ -31,4 +31,6 @@ pluto --help
 ```
 
 ## Key Features
-- kubernetes\n- deprecation\n- api-versions
+- kubernetes
+- deprecation
+- api-versions

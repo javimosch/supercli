@@ -32,4 +32,6 @@ gomockhandler --help
 ```
 
 ## Key Features
-- go\n- mock\n- testing
+- go
+- mock
+- testing

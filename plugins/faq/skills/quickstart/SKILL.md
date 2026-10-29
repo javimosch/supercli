@@ -30,4 +30,7 @@ faq --help
 ```
 
 ## Key Features
-- json\n- xml\n- csv\n- query
+- json
+- xml
+- csv
+- query

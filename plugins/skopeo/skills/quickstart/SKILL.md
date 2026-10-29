@@ -32,4 +32,6 @@ skopeo --help
 ```
 
 ## Key Features
-- containers\n- registry\n- images
+- containers
+- registry
+- images

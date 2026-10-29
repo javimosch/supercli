@@ -37,4 +37,6 @@ dbin --help
 ```
 
 ## Key Features
-- package-manager\n- binaries\n- cli
+- package-manager
+- binaries
+- cli

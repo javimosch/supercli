@@ -30,4 +30,6 @@ git-chglog --help
 ```
 
 ## Key Features
-- changelog\n- git\n- release
+- changelog
+- git
+- release

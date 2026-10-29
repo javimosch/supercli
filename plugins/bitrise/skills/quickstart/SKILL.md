@@ -37,4 +37,6 @@ bitrise --help
 ```
 
 ## Key Features
-- ci-cd\n- automation\n- bitrise
+- ci-cd
+- automation
+- bitrise

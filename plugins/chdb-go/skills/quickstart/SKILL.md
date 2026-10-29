@@ -30,4 +30,6 @@ chdb --help
 ```
 
 ## Key Features
-- clickhouse\n- database\n- sql
+- clickhouse
+- database
+- sql

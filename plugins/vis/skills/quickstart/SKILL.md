@@ -1,1 +1,6 @@
----\nname: vis\ndescription: Display non-printable chars\n---\n# vis Plugin\nDisplay non-printable chars
+---
+name: vis
+description: Display non-printable chars
+---
+# vis Plugin
+Display non-printable chars

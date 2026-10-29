@@ -38,4 +38,6 @@ srgn --help
 ```
 
 ## Key Features
-- grep\n- syntax\n- source-code
+- grep
+- syntax
+- source-code

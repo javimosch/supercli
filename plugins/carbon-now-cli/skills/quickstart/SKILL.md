@@ -30,4 +30,6 @@ carbon-now --help
 ```
 
 ## Key Features
-- code\n- images\n- sharing
+- code
+- images
+- sharing

@@ -30,4 +30,6 @@ iponmap --help
 ```
 
 ## Key Features
-- ip\n- geolocation\n- map
+- ip
+- geolocation
+- map

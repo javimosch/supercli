@@ -32,4 +32,6 @@ easycert --help
 ```
 
 ## Key Features
-- ssl\n- tls\n- development
+- ssl
+- tls
+- development

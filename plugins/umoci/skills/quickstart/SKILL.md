@@ -33,4 +33,6 @@ umoci --help
 ```
 
 ## Key Features
-- oci\n- containers\n- images
+- oci
+- containers
+- images

@@ -30,4 +30,6 @@ nova --help
 ```
 
 ## Key Features
-- helm\n- kubernetes\n- charts
+- helm
+- kubernetes
+- charts

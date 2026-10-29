@@ -30,4 +30,6 @@ kail --help
 ```
 
 ## Key Features
-- kubernetes\n- logs\n- monitoring
+- kubernetes
+- logs
+- monitoring

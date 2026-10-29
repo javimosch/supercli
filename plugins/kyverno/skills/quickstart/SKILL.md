@@ -32,4 +32,6 @@ kyverno --help
 ```
 
 ## Key Features
-- kubernetes\n- policy\n- security
+- kubernetes
+- policy
+- security

@@ -36,4 +36,6 @@ npmvet --help
 ```
 
 ## Key Features
-- npm\n- versioning\n- audit
+- npm
+- versioning
+- audit

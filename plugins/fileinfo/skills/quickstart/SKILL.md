@@ -36,4 +36,6 @@ fileinfo --help
 ```
 
 ## Key Features
-- files\n- extensions\n- information
+- files
+- extensions
+- information

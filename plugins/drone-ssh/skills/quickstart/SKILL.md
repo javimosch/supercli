@@ -31,4 +31,6 @@ drone-ssh --help
 ```
 
 ## Key Features
-- drone-ci\n- ssh\n- deployment
+- drone-ci
+- ssh
+- deployment

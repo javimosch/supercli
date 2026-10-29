@@ -30,4 +30,6 @@ trash --help
 ```
 
 ## Key Features
-- filesystem\n- trash\n- cleanup
+- filesystem
+- trash
+- cleanup

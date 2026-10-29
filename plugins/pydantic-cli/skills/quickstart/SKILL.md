@@ -36,4 +36,6 @@ pydantic-cli --help
 ```
 
 ## Key Features
-- pydantic\n- cli\n- data-models
+- pydantic
+- cli
+- data-models

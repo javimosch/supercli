@@ -39,4 +39,6 @@ barrelsby --help
 ```
 
 ## Key Features
-- typescript\n- barrels\n- code-generation
+- typescript
+- barrels
+- code-generation

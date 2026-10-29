@@ -30,4 +30,6 @@ mdx --help
 ```
 
 ## Key Features
-- markdown\n- processing\n- converter
+- markdown
+- processing
+- converter

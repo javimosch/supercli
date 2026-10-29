@@ -31,4 +31,6 @@ skaffold --help
 ```
 
 ## Key Features
-- kubernetes\n- k8s\n- devops
+- kubernetes
+- k8s
+- devops

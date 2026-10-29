@@ -30,4 +30,6 @@ gitsu --help
 ```
 
 ## Key Features
-- git\n- user-management\n- productivity
+- git
+- user-management
+- productivity

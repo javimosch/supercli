@@ -36,4 +36,6 @@ parquet-tools --help
 ```
 
 ## Key Features
-- parquet\n- data\n- cli
+- parquet
+- data
+- cli

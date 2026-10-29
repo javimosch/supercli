@@ -31,4 +31,7 @@ zq --help
 ```
 
 ## Key Features
-- zed\n- query\n- structured-data\n- analytics
+- zed
+- query
+- structured-data
+- analytics

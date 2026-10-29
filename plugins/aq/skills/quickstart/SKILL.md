@@ -37,4 +37,6 @@ aq --help
 ```
 
 ## Key Features
-- aws\n- sql\n- query
+- aws
+- sql
+- query

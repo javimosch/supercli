@@ -31,4 +31,6 @@ pcp --help
 ```
 
 ## Key Features
-- p2p\n- transfer\n- network
+- p2p
+- transfer
+- network

@@ -33,4 +33,6 @@ pig --help
 ```
 
 ## Key Features
-- postgresql\n- extensions\n- database
+- postgresql
+- extensions
+- database

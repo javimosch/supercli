@@ -30,4 +30,6 @@ goread --help
 ```
 
 ## Key Features
-- epub\n- reader\n- ebook
+- epub
+- reader
+- ebook

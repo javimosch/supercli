@@ -31,4 +31,6 @@ upterm --help
 ```
 
 ## Key Features
-- terminal\n- ssh\n- sharing
+- terminal
+- ssh
+- sharing

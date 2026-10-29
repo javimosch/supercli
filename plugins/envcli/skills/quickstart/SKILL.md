@@ -32,4 +32,6 @@ envcli --help
 ```
 
 ## Key Features
-- environment\n- configuration\n- development
+- environment
+- configuration
+- development

@@ -32,4 +32,6 @@ coolify --help
 ```
 
 ## Key Features
-- deployment\n- self-hosted\n- paas
+- deployment
+- self-hosted
+- paas

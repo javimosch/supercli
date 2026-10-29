@@ -31,4 +31,6 @@ scmpuff --help
 ```
 
 ## Key Features
-- git\n- shortcuts\n- productivity
+- git
+- shortcuts
+- productivity

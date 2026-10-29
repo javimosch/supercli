@@ -33,4 +33,6 @@ nostromo --help
 ```
 
 ## Key Features
-- aliases\n- shortcuts\n- productivity
+- aliases
+- shortcuts
+- productivity

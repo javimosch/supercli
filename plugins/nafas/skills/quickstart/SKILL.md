@@ -35,4 +35,6 @@ nafas --help
 ```
 
 ## Key Features
-- breathing\n- health\n- wellness
+- breathing
+- health
+- wellness

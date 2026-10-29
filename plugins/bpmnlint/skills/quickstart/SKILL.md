@@ -30,4 +30,6 @@ bpmnlint --help
 ```
 
 ## Key Features
-- bpmn\n- lint\n- validation
+- bpmn
+- lint
+- validation

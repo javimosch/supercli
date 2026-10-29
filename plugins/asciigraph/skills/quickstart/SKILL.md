@@ -30,4 +30,6 @@ asciigraph --help
 ```
 
 ## Key Features
-- charts\n- ascii\n- visualization
+- charts
+- ascii
+- visualization

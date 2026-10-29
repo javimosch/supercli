@@ -30,4 +30,6 @@ fb2converter --help
 ```
 
 ## Key Features
-- ebook\n- fb2\n- converter
+- ebook
+- fb2
+- converter

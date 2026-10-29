@@ -32,4 +32,6 @@ ghalint --help
 ```
 
 ## Key Features
-- github-actions\n- linter\n- security
+- github-actions
+- linter
+- security

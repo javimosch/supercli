@@ -32,4 +32,6 @@ mmdbctl --help
 ```
 
 ## Key Features
-- mmdb\n- database\n- network
+- mmdb
+- database
+- network

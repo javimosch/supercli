@@ -30,4 +30,6 @@ i18next-scanner --help
 ```
 
 ## Key Features
-- i18n\n- translation\n- scanner
+- i18n
+- translation
+- scanner

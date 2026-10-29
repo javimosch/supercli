@@ -30,4 +30,7 @@ poutine --help
 ```
 
 ## Key Features
-- security\n- scanner\n- supply-chain\n- go
+- security
+- scanner
+- supply-chain
+- go

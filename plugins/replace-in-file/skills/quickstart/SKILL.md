@@ -30,4 +30,6 @@ replace-in-file --help
 ```
 
 ## Key Features
-- text\n- replacement\n- files
+- text
+- replacement
+- files

@@ -35,4 +35,6 @@ cbox --help
 ```
 
 ## Key Features
-- python\n- cli\n- wrapper
+- python
+- cli
+- wrapper

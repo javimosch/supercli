@@ -31,4 +31,6 @@ trivy --help
 ```
 
 ## Key Features
-- security\n- scanner\n- vulnerability
+- security
+- scanner
+- vulnerability

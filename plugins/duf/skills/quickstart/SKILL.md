@@ -30,4 +30,6 @@ duf --help
 ```
 
 ## Key Features
-- disk\n- filesystem\n- monitoring
+- disk
+- filesystem
+- monitoring

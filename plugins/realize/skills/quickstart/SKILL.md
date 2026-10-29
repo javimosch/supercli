@@ -31,4 +31,6 @@ realize --help
 ```
 
 ## Key Features
-- build-system\n- live-reload\n- development
+- build-system
+- live-reload
+- development

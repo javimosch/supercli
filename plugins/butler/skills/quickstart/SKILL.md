@@ -31,4 +31,6 @@ butler --help
 ```
 
 ## Key Features
-- developer-tools\n- automation\n- utility
+- developer-tools
+- automation
+- utility

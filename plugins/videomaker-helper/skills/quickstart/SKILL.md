@@ -38,4 +38,6 @@ videomaker-helper --help
 ```
 
 ## Key Features
-- video\n- editing\n- ffmpeg
+- video
+- editing
+- ffmpeg

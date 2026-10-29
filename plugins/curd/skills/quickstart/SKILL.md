@@ -30,4 +30,6 @@ curd --help
 ```
 
 ## Key Features
-- anime\n- scraper\n- cli
+- anime
+- scraper
+- cli

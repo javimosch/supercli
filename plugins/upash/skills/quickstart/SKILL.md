@@ -31,4 +31,6 @@ upash --help
 ```
 
 ## Key Features
-- password\n- hashing\n- security
+- password
+- hashing
+- security

@@ -30,4 +30,6 @@ create-component-app --help
 ```
 
 ## Key Features
-- react\n- components\n- generator
+- react
+- components
+- generator

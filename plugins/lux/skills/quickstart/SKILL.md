@@ -30,4 +30,6 @@ lux --help
 ```
 
 ## Key Features
-- video\n- download\n- media
+- video
+- download
+- media

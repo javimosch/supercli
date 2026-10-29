@@ -40,4 +40,6 @@ consola --help
 ```
 
 ## Key Features
-- logging\n- console\n- nodejs
+- logging
+- console
+- nodejs

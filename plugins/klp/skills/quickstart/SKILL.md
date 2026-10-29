@@ -37,4 +37,6 @@ klp --help
 ```
 
 ## Key Features
-- logs\n- viewer\n- structured-data
+- logs
+- viewer
+- structured-data

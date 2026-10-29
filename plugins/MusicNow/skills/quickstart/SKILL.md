@@ -38,4 +38,6 @@ musicnow --help
 ```
 
 ## Key Features
-- music\n- downloader\n- metadata
+- music
+- downloader
+- metadata

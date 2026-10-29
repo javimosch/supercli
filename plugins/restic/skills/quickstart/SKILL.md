@@ -31,4 +31,6 @@ restic --help
 ```
 
 ## Key Features
-- backup\n- archive\n- security
+- backup
+- archive
+- security

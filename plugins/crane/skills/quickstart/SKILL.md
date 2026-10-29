@@ -33,4 +33,6 @@ crane --help
 ```
 
 ## Key Features
-- containers\n- registry\n- oci
+- containers
+- registry
+- oci

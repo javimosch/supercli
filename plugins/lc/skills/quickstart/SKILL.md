@@ -32,4 +32,6 @@ lc --help
 ```
 
 ## Key Features
-- license\n- compliance\n- code-analysis
+- license
+- compliance
+- code-analysis

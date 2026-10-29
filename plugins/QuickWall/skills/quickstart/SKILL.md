@@ -36,4 +36,6 @@ quickwall --help
 ```
 
 ## Key Features
-- wallpaper\n- unsplash\n- desktop
+- wallpaper
+- unsplash
+- desktop

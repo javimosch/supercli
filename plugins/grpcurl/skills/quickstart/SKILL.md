@@ -32,4 +32,6 @@ grpcurl --help
 ```
 
 ## Key Features
-- grpc\n- api\n- curl
+- grpc
+- api
+- curl

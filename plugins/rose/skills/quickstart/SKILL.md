@@ -31,4 +31,6 @@ rose --help
 ```
 
 ## Key Features
-- theme\n- rose-pine\n- cli
+- theme
+- rose-pine
+- cli

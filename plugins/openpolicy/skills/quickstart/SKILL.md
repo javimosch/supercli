@@ -36,4 +36,6 @@ openpolicy --help
 ```
 
 ## Key Features
-- privacy\n- policy\n- security
+- privacy
+- policy
+- security

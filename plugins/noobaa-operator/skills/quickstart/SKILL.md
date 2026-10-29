@@ -32,4 +32,6 @@ noobaa --help
 ```
 
 ## Key Features
-- object-storage\n- kubernetes\n- operator
+- object-storage
+- kubernetes
+- operator

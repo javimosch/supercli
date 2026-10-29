@@ -30,4 +30,6 @@ textimg --help
 ```
 
 ## Key Features
-- text\n- image\n- terminal
+- text
+- image
+- terminal
