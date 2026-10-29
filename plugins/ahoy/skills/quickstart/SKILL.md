@@ -31,4 +31,6 @@ ahoy --help
 ```
 
 ## Key Features
-- automation\n- yaml\n- cli
+- automation
+- yaml
+- cli

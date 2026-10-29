@@ -34,4 +34,6 @@ hauler --help
 ```
 
 ## Key Features
-- airgap\n- containers\n- artifacts
+- airgap
+- containers
+- artifacts

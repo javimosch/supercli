@@ -30,4 +30,7 @@ percollate --help
 ```
 
 ## Key Features
-- pdf\n- epub\n- html\n- web
+- pdf
+- epub
+- html
+- web

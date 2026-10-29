@@ -32,4 +32,6 @@ gotun --help
 ```
 
 ## Key Features
-- vpn\n- tunnel\n- networking
+- vpn
+- tunnel
+- networking

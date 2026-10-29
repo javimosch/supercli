@@ -30,4 +30,6 @@ webpalm --help
 ```
 
 ## Key Features
-- crawler\n- web\n- osint
+- crawler
+- web
+- osint

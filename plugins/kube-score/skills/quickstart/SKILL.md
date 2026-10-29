@@ -30,4 +30,6 @@ kube-score --help
 ```
 
 ## Key Features
-- kubernetes\n- security\n- reliability
+- kubernetes
+- security
+- reliability

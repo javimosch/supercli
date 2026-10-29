@@ -30,4 +30,6 @@ pt --help
 ```
 
 ## Key Features
-- search\n- text\n- grep
+- search
+- text
+- grep

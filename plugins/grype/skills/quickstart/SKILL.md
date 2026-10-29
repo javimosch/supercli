@@ -32,4 +32,6 @@ grype --help
 ```
 
 ## Key Features
-- security\n- vulnerability\n- scanner
+- security
+- vulnerability
+- scanner

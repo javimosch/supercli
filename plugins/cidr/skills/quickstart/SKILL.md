@@ -30,4 +30,6 @@ cidr --help
 ```
 
 ## Key Features
-- network\n- cidr\n- subnet
+- network
+- cidr
+- subnet

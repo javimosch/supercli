@@ -30,4 +30,6 @@ wtp --help
 ```
 
 ## Key Features
-- weather\n- terminal\n- forecast
+- weather
+- terminal
+- forecast

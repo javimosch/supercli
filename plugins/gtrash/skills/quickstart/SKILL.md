@@ -33,4 +33,6 @@ gtrash --help
 ```
 
 ## Key Features
-- trash\n- filesystem\n- utility
+- trash
+- filesystem
+- utility

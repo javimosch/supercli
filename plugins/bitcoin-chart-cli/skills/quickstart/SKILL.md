@@ -30,4 +30,6 @@ bitcoin-chart --help
 ```
 
 ## Key Features
-- bitcoin\n- crypto\n- chart
+- bitcoin
+- crypto
+- chart

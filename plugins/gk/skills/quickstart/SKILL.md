@@ -32,4 +32,6 @@ gk --help
 ```
 
 ## Key Features
-- go-kit\n- microservices\n- generator
+- go-kit
+- microservices
+- generator

@@ -31,4 +31,6 @@ datree --help
 ```
 
 ## Key Features
-- kubernetes\n- policy\n- validation
+- kubernetes
+- policy
+- validation

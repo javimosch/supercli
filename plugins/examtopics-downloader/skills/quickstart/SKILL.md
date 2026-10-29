@@ -31,4 +31,6 @@ examtopics-downloader --help
 ```
 
 ## Key Features
-- exams\n- download\n- education
+- exams
+- download
+- education

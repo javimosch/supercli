@@ -36,4 +36,6 @@ logdissect --help
 ```
 
 ## Key Features
-- logs\n- analysis\n- parsing
+- logs
+- analysis
+- parsing

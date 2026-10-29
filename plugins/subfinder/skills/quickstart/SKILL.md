@@ -31,4 +31,6 @@ subfinder --help
 ```
 
 ## Key Features
-- security\n- reconnaissance\n- subdomain
+- security
+- reconnaissance
+- subdomain

@@ -30,4 +30,6 @@ zfind --help
 ```
 
 ## Key Features
-- search\n- sql\n- archives
+- search
+- sql
+- archives

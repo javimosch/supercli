@@ -31,4 +31,6 @@ xo --help
 ```
 
 ## Key Features
-- regex\n- text-processing\n- cli
+- regex
+- text-processing
+- cli

@@ -30,4 +30,6 @@ ojosama --help
 ```
 
 ## Key Features
-- japanese\n- text-processing\n- converter
+- japanese
+- text-processing
+- converter

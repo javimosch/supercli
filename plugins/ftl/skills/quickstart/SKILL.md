@@ -31,4 +31,6 @@ ftl --help
 ```
 
 ## Key Features
-- deployment\n- devops\n- ssh
+- deployment
+- devops
+- ssh

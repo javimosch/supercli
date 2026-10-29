@@ -32,4 +32,6 @@ protocurl --help
 ```
 
 ## Key Features
-- protobuf\n- http\n- api-testing
+- protobuf
+- http
+- api-testing

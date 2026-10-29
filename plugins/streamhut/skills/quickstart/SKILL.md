@@ -30,4 +30,6 @@ streamhut --help
 ```
 
 ## Key Features
-- streams\n- websockets\n- sharing
+- streams
+- websockets
+- sharing

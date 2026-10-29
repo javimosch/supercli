@@ -32,4 +32,6 @@ wd-41 --help
 ```
 
 ## Key Features
-- web-server\n- live-reload\n- development
+- web-server
+- live-reload
+- development

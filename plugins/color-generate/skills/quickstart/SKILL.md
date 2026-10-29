@@ -30,4 +30,6 @@ color-generate --help
 ```
 
 ## Key Features
-- colors\n- palette\n- design
+- colors
+- palette
+- design

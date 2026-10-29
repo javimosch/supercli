@@ -30,4 +30,7 @@ csvtk --help
 ```
 
 ## Key Features
-- csv\n- tsv\n- bioinformatics\n- data-processing
+- csv
+- tsv
+- bioinformatics
+- data-processing

@@ -31,4 +31,6 @@ age --help
 ```
 
 ## Key Features
-- encryption\n- security\n- crypto
+- encryption
+- security
+- crypto

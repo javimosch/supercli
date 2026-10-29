@@ -1,1 +1,6 @@
----\nname: gifski\ndescription: GIF encoder based on pngquant\n---\n# gifski Plugin\nGIF encoder based on pngquant
+---
+name: gifski
+description: GIF encoder based on pngquant
+---
+# gifski Plugin
+GIF encoder based on pngquant

@@ -30,4 +30,6 @@ whereami --help
 ```
 
 ## Key Features
-- geolocation\n- ip\n- location
+- geolocation
+- ip
+- location

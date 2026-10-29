@@ -31,4 +31,6 @@ httpretty --help
 ```
 
 ## Key Features
-- http\n- debugging\n- pretty-print
+- http
+- debugging
+- pretty-print

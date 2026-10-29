@@ -38,4 +38,6 @@ teip --help
 ```
 
 ## Key Features
-- text-processing\n- pipe\n- unix
+- text-processing
+- pipe
+- unix

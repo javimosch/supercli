@@ -33,4 +33,6 @@ run --help
 ```
 
 ## Key Features
-- scripting\n- multi-language\n- rust
+- scripting
+- multi-language
+- rust

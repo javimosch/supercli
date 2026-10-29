@@ -35,4 +35,6 @@ http-server --help
 ```
 
 ## Key Features
-- http-server\n- static-files\n- rust
+- http-server
+- static-files
+- rust

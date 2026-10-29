@@ -35,4 +35,6 @@ fw --help
 ```
 
 ## Key Features
-- workspace\n- project-management\n- git
+- workspace
+- project-management
+- git

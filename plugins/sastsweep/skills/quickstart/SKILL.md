@@ -30,4 +30,6 @@ sastsweep --help
 ```
 
 ## Key Features
-- security\n- scanner\n- sast
+- security
+- scanner
+- sast

@@ -30,4 +30,6 @@ ips --help
 ```
 
 ## Key Features
-- ip\n- geoip\n- network
+- ip
+- geoip
+- network

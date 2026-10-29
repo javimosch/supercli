@@ -32,4 +32,6 @@ terraform-module-versions --help
 ```
 
 ## Key Features
-- terraform\n- modules\n- versioning
+- terraform
+- modules
+- versioning

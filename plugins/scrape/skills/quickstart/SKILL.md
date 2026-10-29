@@ -31,4 +31,6 @@ scrape --help
 ```
 
 ## Key Features
-- web-scraping\n- emails\n- security
+- web-scraping
+- emails
+- security

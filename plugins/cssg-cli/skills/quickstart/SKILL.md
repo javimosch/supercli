@@ -37,4 +37,6 @@ cssg --help
 ```
 
 ## Key Features
-- css\n- design-tokens\n- generator
+- css
+- design-tokens
+- generator

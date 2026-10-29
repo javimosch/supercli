@@ -38,4 +38,6 @@ todo-cli --help
 ```
 
 ## Key Features
-- todo\n- productivity\n- cli
+- todo
+- productivity
+- cli

@@ -30,4 +30,6 @@ terradrift --help
 ```
 
 ## Key Features
-- terraform\n- drift\n- iac
+- terraform
+- drift
+- iac

@@ -30,4 +30,6 @@ md2wechat --help
 ```
 
 ## Key Features
-- markdown\n- wechat\n- converter
+- markdown
+- wechat
+- converter

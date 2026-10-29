@@ -30,4 +30,6 @@ next-build-id --help
 ```
 
 ## Key Features
-- nextjs\n- build\n- versioning
+- nextjs
+- build
+- versioning

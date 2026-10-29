@@ -40,4 +40,6 @@ LiveBudsCli --help
 ```
 
 ## Key Features
-- bluetooth\n- galaxy-buds\n- audio
+- bluetooth
+- galaxy-buds
+- audio

@@ -39,4 +39,6 @@ pagit --help
 ```
 
 ## Key Features
-- git\n- repository-management\n- cli
+- git
+- repository-management
+- cli

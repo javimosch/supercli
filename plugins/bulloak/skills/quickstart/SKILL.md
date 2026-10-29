@@ -33,4 +33,6 @@ bulloak --help
 ```
 
 ## Key Features
-- testing\n- smart-contracts\n- solidity
+- testing
+- smart-contracts
+- solidity

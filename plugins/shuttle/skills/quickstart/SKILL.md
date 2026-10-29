@@ -30,4 +30,6 @@ shuttle --help
 ```
 
 ## Key Features
-- build\n- deploy\n- automation
+- build
+- deploy
+- automation

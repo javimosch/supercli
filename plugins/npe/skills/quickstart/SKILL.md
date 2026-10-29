@@ -38,4 +38,6 @@ npe --help
 ```
 
 ## Key Features
-- npm\n- versioning\n- package-management
+- npm
+- versioning
+- package-management

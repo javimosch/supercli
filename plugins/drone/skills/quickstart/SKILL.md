@@ -31,4 +31,6 @@ drone --help
 ```
 
 ## Key Features
-- ci-cd\n- devops\n- automation
+- ci-cd
+- devops
+- automation

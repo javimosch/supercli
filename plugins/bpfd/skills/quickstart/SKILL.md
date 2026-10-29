@@ -31,4 +31,6 @@ bpfd --help
 ```
 
 ## Key Features
-- ebpf\n- kernel\n- networking
+- ebpf
+- kernel
+- networking

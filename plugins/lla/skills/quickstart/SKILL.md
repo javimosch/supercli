@@ -40,4 +40,6 @@ lla --help
 ```
 
 ## Key Features
-- ls\n- file-manager\n- rust
+- ls
+- file-manager
+- rust

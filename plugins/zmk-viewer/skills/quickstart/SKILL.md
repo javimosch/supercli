@@ -31,4 +31,6 @@ zmk-viewer --help
 ```
 
 ## Key Features
-- zmk\n- keyboard\n- keymap
+- zmk
+- keyboard
+- keymap

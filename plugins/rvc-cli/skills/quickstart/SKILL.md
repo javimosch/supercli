@@ -37,4 +37,6 @@ rvc-cli --help
 ```
 
 ## Key Features
-- voice\n- ai\n- cloning
+- voice
+- ai
+- cloning

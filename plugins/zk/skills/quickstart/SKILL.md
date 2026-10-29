@@ -32,4 +32,6 @@ zk --help
 ```
 
 ## Key Features
-- notes\n- markdown\n- zettelkasten
+- notes
+- markdown
+- zettelkasten

@@ -30,4 +30,6 @@ json2struct --help
 ```
 
 ## Key Features
-- json\n- go\n- code-generation
+- json
+- go
+- code-generation

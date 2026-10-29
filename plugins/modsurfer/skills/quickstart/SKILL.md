@@ -35,4 +35,6 @@ modsurfer --help
 ```
 
 ## Key Features
-- webassembly\n- validation\n- auditing
+- webassembly
+- validation
+- auditing

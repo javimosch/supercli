@@ -37,4 +37,6 @@ install-release --help
 ```
 
 ## Key Features
-- binary\n- installation\n- github
+- binary
+- installation
+- github

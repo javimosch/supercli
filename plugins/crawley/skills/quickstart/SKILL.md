@@ -30,4 +30,6 @@ crawley --help
 ```
 
 ## Key Features
-- web\n- crawler\n- scraping
+- web
+- crawler
+- scraping

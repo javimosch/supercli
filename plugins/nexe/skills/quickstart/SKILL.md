@@ -30,4 +30,6 @@ nexe --help
 ```
 
 ## Key Features
-- node\n- executable\n- compiler
+- node
+- executable
+- compiler

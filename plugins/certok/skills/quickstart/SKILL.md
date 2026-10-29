@@ -30,4 +30,6 @@ certok --help
 ```
 
 ## Key Features
-- ssl\n- certificates\n- security
+- ssl
+- certificates
+- security
