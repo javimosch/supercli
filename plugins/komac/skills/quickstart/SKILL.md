@@ -1,1 +1,18 @@
----\nname: komac\ndescription: Use this skill for komac operations.\n---\n# komac Plugin\nCLI tool for komac.\n## Commands\n- `komac _ _` — Passthrough\n## Installation\n```bash\ncargo install komac\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: komac
+description: Use this skill for komac operations.
+---
+# komac Plugin
+CLI tool for komac.
+
+## Commands
+- `komac <resource> <action>` — Execute komac commands
+- `komac _ _` — Passthrough to komac CLI
+
+## Installation
+```bash
+cargo install komac
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

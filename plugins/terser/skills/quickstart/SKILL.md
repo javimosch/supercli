@@ -7,6 +7,11 @@ description: Use this skill when the user wants to minify JavaScript code for pr
 
 Terser minifies and optimizes JavaScript for ES6+. Successor to UglifyJS.
 
+## Commands
+- `terser <resource> <action>` — Execute terser commands
+- `terser self version` — Print terser version
+- `terser _ _` — Passthrough to terser CLI
+
 ## Usage Examples
 
 - "minify app.js for production"
