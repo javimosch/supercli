@@ -1,0 +1,95 @@
+{
+  "name": "gator",
+  "version": "0.1.0",
+  "description": "OPA Gatekeeper policy testing CLI \u2014 run ConstraintTemplate suites and test manifests against policies locally",
+  "source": "https://github.com/open-policy-agent/gatekeeper",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gator"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "gator",
+    "binary": "gator",
+    "check": "which gator",
+    "install_steps": [
+      "Download the gator archive for your platform from https://github.com/open-policy-agent/gatekeeper/releases (asset: gator-<ver>-<os>-<arch>.tar.gz) and extract to PATH",
+      "Or: go install github.com/open-policy-agent/gatekeeper/v3/cmd/gator@latest",
+      "Verify: gator version",
+      "supercli plugins install ./plugins/gator --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "gator",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gator version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gator",
+        "baseArgs": [
+          "version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install gator: Download the gator archive for your platform from https://github.com/open-policy-agent/gatekeeper/releases (asset: gator-<ver>-<os>-<arch>.tar.gz) and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gator",
+      "resource": "suites",
+      "action": "verify",
+      "description": "Run declarative Gatekeeper test suites (gator verify ./suite.yaml). Asserts allowed/denied outcomes per template+constraint",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gator",
+        "baseArgs": [
+          "verify"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gator: Download the gator archive for your platform from https://github.com/open-policy-agent/gatekeeper/releases (asset: gator-<ver>-<os>-<arch>.tar.gz) and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gator",
+      "resource": "constraints",
+      "action": "test",
+      "description": "Evaluate manifests against ConstraintTemplates+Constraints in a directory (gator test --path ./policies --image dep.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gator",
+        "baseArgs": [
+          "test"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gator: Download the gator archive for your platform from https://github.com/open-policy-agent/gatekeeper/releases (asset: gator-<ver>-<os>-<arch>.tar.gz) and extract to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "gator",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gator CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gator",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gator: Download the gator archive for your platform from https://github.com/open-policy-agent/gatekeeper/releases (asset: gator-<ver>-<os>-<arch>.tar.gz) and extract to PATH"
+      },
+      "args": []
+    }
+  ]
+}
