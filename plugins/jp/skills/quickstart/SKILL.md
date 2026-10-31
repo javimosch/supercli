@@ -6,6 +6,12 @@ description: JMESPath JSON processor
 
 Query and transform JSON data using JMESPath expressions.
 
+## Commands
+- `jp <resource> <action>` — Execute jp commands
+- `jp data query` — Query JSON data using JMESPath expression
+- `jp self version` — Print jp version
+- `jp _ _` — Passthrough to jp CLI
+
 ## Basic Usage
 
 ```bash

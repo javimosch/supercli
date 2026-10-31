@@ -1,1 +1,10 @@
----\nname: knex\ndescription: Knex.js query builder CLI\n---\n# knex Plugin\nKnex.js query builder CLI
+---
+name: knex
+description: Knex.js query builder CLI
+---
+# knex Plugin
+Knex.js query builder CLI
+
+## Commands
+- `knex <resource> <action>` — Execute knex commands
+- `knex _ _` — Passthrough
