@@ -2,62 +2,227 @@
   "name": "unlog",
   "version": "1.0.0",
   "description": "Fast CLI tool for log analysis with JSON output and optional LLM analysis",
+  "source": "https://github.com/oxforge/unlog",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "unlog",
+      "args": [
+        "version"
+      ]
+    }
+  ],
+  "install_guidance": {
+    "plugin": "unlog",
+    "binary": "unlog",
+    "check": "unlog version",
+    "install_steps": [
+      "go install github.com/oxforge/unlog@latest",
+      "Or download from: https://github.com/oxforge/unlog/releases"
+    ],
+    "note": "unlog is a fast CLI tool for log analysis with 11 format parsers, noise removal, and optional LLM-powered root cause analysis"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
   "commands": [
     {
-      "name": "analyze",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze",
       "description": "Analyze log directory with JSON output",
-      "binary": "unlog",
-      "args": ["--format", "json", "{{.directory}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json \"{{directory}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Log directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-file",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-file",
       "description": "Analyze single log file with JSON output",
-      "binary": "unlog",
-      "args": ["--format", "json", "{{.file}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json \"{{file}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Log file path"
+        }
+      ]
     },
     {
-      "name": "analyze-stdin",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-stdin",
       "description": "Analyze logs from stdin with JSON output",
-      "binary": "unlog",
-      "args": ["--format", "json", "-"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json -",
+        "unsafe": true
+      },
+      "args": []
     },
     {
-      "name": "analyze-level",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-level",
       "description": "Analyze logs with minimum log level filter",
-      "binary": "unlog",
-      "args": ["--format", "json", "--level", "{{.level}}", "{{.directory}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json --level \"{{level}}\" \"{{directory}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "level",
+          "type": "string",
+          "required": true,
+          "description": "Minimum log level"
+        },
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Log directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-time-range",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-time-range",
       "description": "Analyze logs within time range",
-      "binary": "unlog",
-      "args": ["--format", "json", "--since", "{{.since}}", "--until", "{{.until}}", "{{.directory}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json --since \"{{since}}\" --until \"{{until}}\" \"{{directory}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "since",
+          "type": "string",
+          "required": true,
+          "description": "Start time"
+        },
+        {
+          "name": "until",
+          "type": "string",
+          "required": true,
+          "description": "End time"
+        },
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Log directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-ai",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-ai",
       "description": "Analyze logs with AI-powered root cause analysis",
-      "binary": "unlog",
-      "args": ["--format", "json", "--ai-provider", "{{.provider}}", "{{.directory}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json --ai-provider \"{{provider}}\" \"{{directory}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "provider",
+          "type": "string",
+          "required": true,
+          "description": "LLM provider"
+        },
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Log directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-verbose",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-verbose",
       "description": "Analyze logs with detailed output",
-      "binary": "unlog",
-      "args": ["--format", "json", "--verbose", "{{.directory}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format json --verbose \"{{directory}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Log directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-markdown",
+      "namespace": "unlog",
+      "resource": "logs",
+      "action": "analyze-markdown",
       "description": "Analyze logs and output as Markdown report",
-      "binary": "unlog",
-      "args": ["--format", "markdown", "{{.directory}}"],
-      "output_format": "markdown"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "unlog --format markdown \"{{directory}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "directory",
+          "type": "string",
+          "required": true,
+          "description": "Log directory path"
+        }
+      ]
+    },
+    {
+      "namespace": "unlog",
+      "resource": "self",
+      "action": "version",
+      "description": "Print unlog version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlog",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install unlog: go install github.com/oxforge/unlog@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "unlog",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to unlog CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "unlog",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install unlog: go install github.com/oxforge/unlog@latest"
+      },
+      "args": []
     }
   ]
 }

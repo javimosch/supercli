@@ -2,118 +2,434 @@
   "name": "stride",
   "version": "1.0.0",
   "description": "High-performance filesystem traversal and search tool with JSON output support",
+  "source": "https://github.com/TFMV/stride",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "stride",
+      "args": [
+        "version"
+      ]
+    }
+  ],
+  "install_guidance": {
+    "plugin": "stride",
+    "binary": "stride",
+    "check": "stride version",
+    "install_steps": [
+      "go install github.com/TFMV/stride@latest",
+      "Or download from: https://github.com/TFMV/stride/releases"
+    ],
+    "note": "stride is a high-performance filesystem traversal tool that extends filepath.Walk with concurrency, filtering, and monitoring capabilities. Requires Go 1.24.0 or later."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
   "commands": [
     {
-      "name": "walk",
+      "namespace": "stride",
+      "resource": "tree",
+      "action": "walk",
       "description": "Traverse directory with JSON output",
-      "binary": "stride",
-      "args": ["{{.path}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride \"{{path}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        }
+      ]
     },
     {
-      "name": "walk-workers",
+      "namespace": "stride",
+      "resource": "tree",
+      "action": "walk-workers",
       "description": "Traverse directory with custom worker count",
-      "binary": "stride",
-      "args": ["{{.path}}", "--format=json", "--workers={{.workers}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride \"{{path}}\" --format=json --workers=\"{{workers}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "workers",
+          "type": "string",
+          "required": true,
+          "description": "Worker thread count"
+        }
+      ]
     },
     {
-      "name": "find-name",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "name",
       "description": "Find files by name pattern with JSON output",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--name={{.pattern}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --name=\"{{pattern}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": true,
+          "description": "Filename pattern"
+        }
+      ]
     },
     {
-      "name": "find-regex",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "regex",
       "description": "Find files by regex pattern with JSON output",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--regex={{.pattern}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --regex=\"{{pattern}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": true,
+          "description": "Regex pattern"
+        }
+      ]
     },
     {
-      "name": "find-large",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "large",
       "description": "Find files larger than specified size",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--larger-than={{.size}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --larger-than=\"{{size}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "required": true,
+          "description": "Size threshold (e.g. 100M)"
+        }
+      ]
     },
     {
-      "name": "find-small",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "small",
       "description": "Find files smaller than specified size",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--smaller-than={{.size}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --smaller-than=\"{{size}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "size",
+          "type": "string",
+          "required": true,
+          "description": "Size threshold (e.g. 10K)"
+        }
+      ]
     },
     {
-      "name": "find-recent",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "recent",
       "description": "Find files modified recently",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--newer-than={{.time}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --newer-than=\"{{time}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "required": true,
+          "description": "Time threshold (e.g. 1h, 30m)"
+        }
+      ]
     },
     {
-      "name": "find-old",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "old",
       "description": "Find files older than specified time",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--older-than={{.time}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --older-than=\"{{time}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "time",
+          "type": "string",
+          "required": true,
+          "description": "Time threshold (e.g. 7d)"
+        }
+      ]
     },
     {
-      "name": "find-depth",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "depth",
       "description": "Find files with maximum depth limit",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--max-depth={{.depth}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --max-depth=\"{{depth}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "depth",
+          "type": "string",
+          "required": true,
+          "description": "Max directory depth"
+        }
+      ]
     },
     {
-      "name": "find-permissions",
+      "namespace": "stride",
+      "resource": "find",
+      "action": "permissions",
       "description": "Find files by exact permissions",
-      "binary": "stride",
-      "args": ["find", "{{.path}}", "--exact-permissions={{.perms}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride find \"{{path}}\" --exact-permissions=\"{{perms}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "perms",
+          "type": "string",
+          "required": true,
+          "description": "Permission bits (e.g. 644)"
+        }
+      ]
     },
     {
-      "name": "watch",
+      "namespace": "stride",
+      "resource": "dir",
+      "action": "watch",
       "description": "Watch directory for changes with JSON output",
-      "binary": "stride",
-      "args": ["watch", "{{.path}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride watch \"{{path}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        }
+      ]
     },
     {
-      "name": "watch-pattern",
+      "namespace": "stride",
+      "resource": "dir",
+      "action": "watch-pattern",
       "description": "Watch for specific file patterns",
-      "binary": "stride",
-      "args": ["watch", "{{.path}}", "--pattern={{.pattern}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride watch \"{{path}}\" --pattern=\"{{pattern}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": true,
+          "description": "File pattern to watch"
+        }
+      ]
     },
     {
-      "name": "watch-events",
+      "namespace": "stride",
+      "resource": "dir",
+      "action": "watch-events",
       "description": "Watch for specific event types",
-      "binary": "stride",
-      "args": ["watch", "{{.path}}", "--events={{.events}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride watch \"{{path}}\" --events=\"{{events}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "events",
+          "type": "string",
+          "required": true,
+          "description": "Event types to watch"
+        }
+      ]
     },
     {
-      "name": "analyze",
+      "namespace": "stride",
+      "resource": "dir",
+      "action": "analyze",
       "description": "Analyze directory structure with JSON output",
-      "binary": "stride",
-      "args": ["analyze", "{{.path}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride analyze \"{{path}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-duplicates",
+      "namespace": "stride",
+      "resource": "dir",
+      "action": "analyze-duplicates",
       "description": "Find duplicate files with JSON output",
-      "binary": "stride",
-      "args": ["analyze", "{{.path}}", "--duplicates", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride analyze \"{{path}}\" --duplicates --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        }
+      ]
     },
     {
-      "name": "analyze-code",
+      "namespace": "stride",
+      "resource": "dir",
+      "action": "analyze-code",
       "description": "Analyze code statistics with JSON output",
-      "binary": "stride",
-      "args": ["analyze", "{{.path}}", "--code-stats", "--languages={{.langs}}", "--format=json"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "stride analyze \"{{path}}\" --code-stats --languages=\"{{langs}}\" --format=json",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path"
+        },
+        {
+          "name": "langs",
+          "type": "string",
+          "required": true,
+          "description": "Comma-separated languages"
+        }
+      ]
+    },
+    {
+      "namespace": "stride",
+      "resource": "self",
+      "action": "version",
+      "description": "Print stride version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stride",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install stride: go install github.com/TFMV/stride@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "stride",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to stride CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "stride",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install stride: go install github.com/TFMV/stride@latest"
+      },
+      "args": []
     }
   ]
 }
