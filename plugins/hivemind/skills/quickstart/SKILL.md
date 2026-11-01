@@ -7,6 +7,10 @@ description: Use this skill when the user wants to run a Procfile-based app loca
 
 Lightweight process manager for Procfile-based applications. Starts all processes defined in a `Procfile` in one terminal — no tmux required.
 
+## Commands
+- `hivemind <resource> <action>` — Execute hivemind commands
+- `hivemind _ _` — Passthrough to hivemind CLI
+
 ## Installation
 
 ```bash

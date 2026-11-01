@@ -4,3 +4,7 @@ description: jupyter-console — Jupyter kernel CLI client. Run Jupyter kernels 
 ---
 # jupyter-console
 jupyter-console — Jupyter kernel CLI client. Run Jupyter kernels from terminal without browser.
+
+## Commands
+- `jupyter-console <resource> <action>` — Execute jupyter-console commands
+- `jupyter console run` — jupyter-console — Jupyter kernel CLI client. Run Jupyter kernels from terminal without browser.

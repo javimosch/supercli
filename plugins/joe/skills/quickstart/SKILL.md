@@ -1,1 +1,10 @@
----\nname: joe\ndescription: Joe's Own Editor\n---\n# joe Plugin\nJoe's Own Editor
+---
+name: joe
+description: Joe's Own Editor
+---
+# joe Plugin
+Joe's Own Editor
+
+## Commands
+- `joe <resource> <action>` — Execute joe commands
+- `joe _ _` — Passthrough to joe

@@ -1,1 +1,10 @@
----\nname: golint\ndescription: Go linter\n---\n# golint Plugin\nGo linter
+---
+name: golint
+description: Go linter
+---
+# golint Plugin
+Go linter
+
+## Commands
+- `golint <resource> <action>` — Execute golint commands
+- `golint _ _` — Passthrough

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to create, preview, render, or e
 
 Open-source video framework by [HeyGen](https://github.com/heygen-com/hyperframes) (18.4k⭐). Write HTML, render video.
 
+## Commands
+- `hyperframes <resource> <action>` — Execute hyperframes commands
+- `hyperframes self mcp` — Register hyperframes MCP server for agent use (requires npx, installs heavy deps)
+- `hyperframes _ _` — Passthrough for hyperframes CLI (heavy deps, use only if already installed)
+
 ## Skills Indexed (15)
 
 Auto-discovered via `remote_repo` provider. Search and get:

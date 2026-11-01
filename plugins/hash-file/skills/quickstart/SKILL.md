@@ -4,3 +4,7 @@ description: hash-file — compute MD5, SHA1, SHA256, SHA512 hashes for files. A
 ---
 # hash-file
 hash-file — compute MD5, SHA1, SHA256, SHA512 hashes for files. Accepts multiple files. JSON output array.
+
+## Commands
+- `hash-file <resource> <action>` — Execute hash-file commands
+- `hash file run` — hash-file — compute MD5, SHA1, SHA256, SHA512 hashes for files. Accepts multiple files. JSON output array.

@@ -5,6 +5,20 @@ description: Use this skill when working with graphify through supercli to under
 
 # Graphify Supercli Integration
 
+## Commands
+- `graphify <resource> <action>` — Execute graphify commands
+- `graphify self help` — Show graphify help
+- `graphify content add` — Add paper, video, or tweet to the graph
+- `graphify graph query` — Query the knowledge graph
+- `graphify graph path` — Find shortest path between two nodes
+- `graphify graph explain` — Get plain-language explanation of a node
+- `graphify graph update` — Re-extract only changed files, merge into existing graph
+- `graphify graph watch` — Auto-sync graph as files change
+- `graphify platform install` — Install graphify skill for AI assistant
+- `graphify git hook-install` — Install git hooks for auto-rebuild on commit and branch switch
+- `graphify git hook-status` — Check if git hooks are installed
+- `graphify _ _` — Passthrough to graphify CLI
+
 ## Supercli-Specific Workarounds
 
 Graphify commands work through supercli, but multi-word arguments require explicit flags instead of positional args.

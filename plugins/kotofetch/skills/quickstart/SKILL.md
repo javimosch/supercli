@@ -1,5 +1,10 @@
 # kotofetch - Japanese Quotes
 
+## Commands
+- `kotofetch <resource> <action>` — Execute kotofetch commands
+- `kotofetch fetch quote` — Display Japanese quote
+- `kotofetch _ _` — Passthrough to kotofetch CLI
+
 ## Overview
 kotofetch displays Japanese quotes in the terminal. A small, configurable CLI for Japanese quotes.
 

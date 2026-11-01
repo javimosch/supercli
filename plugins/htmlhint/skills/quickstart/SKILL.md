@@ -7,6 +7,11 @@ description: Use this skill when the user wants to lint HTML files for best prac
 
 HTMLHint checks HTML files for markup quality, accessibility, and best practices.
 
+## Commands
+- `htmlhint <resource> <action>` — Execute htmlhint commands
+- `htmlhint self version` — Print htmlhint version
+- `htmlhint _ _` — Passthrough to htmlhint CLI
+
 ## Usage Examples
 
 - "lint index.html for common issues"

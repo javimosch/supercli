@@ -9,6 +9,14 @@ Kalker is a calculator program with support for user-defined variables, function
 - Use different number bases (binary, octal, hexadecimal)
 - Perform calculations with syntax highlighting
 
+## Commands
+- `kalker <resource> <action>` — Execute kalker commands
+- `kalker self version` — Print kalker version
+- `kalker calc eval` — Evaluate mathematical expression
+- `kalker calc interactive` — Start interactive calculator session
+- `kalker file load` — Load file with predefined functions and constants
+- `kalker _ _` — Passthrough to kalker CLI
+
 ## Installation
 
 ```bash

@@ -8,6 +8,14 @@ tags: jsalt,jsa,frontend,ast,validation,agents
 
 Use this when you need to generate or edit JSALT (`.jsa`) apps with reliable syntax validation.
 
+## Commands
+- `jsalt <resource> <action>` — Execute jsalt commands
+- `jsalt cli help` — Show jsa-ast CLI usage help
+- `jsalt ast validate` — Validate .jsa syntax for a file or directory
+- `jsalt ast json` — Parse .jsa and emit machine-readable JSON AST
+- `jsalt ast tree` — Render parsed .jsa structure as a tree
+- `jsalt _ _` — Passthrough to run any jsa-ast command
+
 ## 1) Install plugin and dependency
 
 ```bash

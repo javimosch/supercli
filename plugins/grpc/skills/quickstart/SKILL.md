@@ -1,1 +1,10 @@
----\nname: grpc\ndescription: gRPC framework tools\n---\n# grpc Plugin\ngRPC framework tools
+---
+name: grpc
+description: gRPC framework tools
+---
+# grpc Plugin
+gRPC framework tools
+
+## Commands
+- `grpc <resource> <action>` — Execute grpc commands
+- `grpc _ _` — Passthrough to grpc

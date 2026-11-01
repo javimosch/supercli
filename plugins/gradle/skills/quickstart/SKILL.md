@@ -1,1 +1,10 @@
----\nname: gradle\ndescription: Gradle build tool\n---\n# gradle Plugin\nGradle build tool
+---
+name: gradle
+description: Gradle build tool
+---
+# gradle Plugin
+Gradle build tool
+
+## Commands
+- `gradle <resource> <action>` — Execute gradle commands
+- `gradle _ _` — Passthrough to gradle CLI

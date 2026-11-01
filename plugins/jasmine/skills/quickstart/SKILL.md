@@ -1,1 +1,10 @@
----\nname: jasmine\ndescription: JavaScript test framework\n---\n# jasmine Plugin\nJavaScript test framework
+---
+name: jasmine
+description: JavaScript test framework
+---
+# jasmine Plugin
+JavaScript test framework
+
+## Commands
+- `jasmine <resource> <action>` — Execute jasmine commands
+- `jasmine _ _` — Passthrough to jasmine

@@ -1,1 +1,10 @@
----\nname: govulncheck\ndescription: Go vulnerability checker\n---\n# govulncheck Plugin\nGo vulnerability checker
+---
+name: govulncheck
+description: Go vulnerability checker
+---
+# govulncheck Plugin
+Go vulnerability checker
+
+## Commands
+- `govulncheck <resource> <action>` — Execute govulncheck commands
+- `govulncheck _ _` — Passthrough

@@ -4,3 +4,7 @@ description: http-bench — concurrent HTTP benchmark. Test throughput with conf
 ---
 # http-bench
 http-bench — concurrent HTTP benchmark. Test throughput with configurable concurrency and request count. Reports RPS, latency percentiles (p50/p90/p95/p99).
+
+## Commands
+- `http-bench <resource> <action>` — Execute http-bench commands
+- `http bench run` — http-bench — concurrent HTTP benchmark. Test throughput with configurable concurrency and request count. Reports RPS, latency percentiles (p50/p90/p95/p99).

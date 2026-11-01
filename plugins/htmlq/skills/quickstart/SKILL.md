@@ -2,6 +2,12 @@
 
 htmlq queries HTML using CSS selectors (like jq for HTML).
 
+## Commands
+- `htmlq <resource> <action>` — Execute htmlq commands
+- `htmlq self version` — Print htmlq version
+- `htmlq query select` — Query HTML with CSS selector
+- `htmlq _ _` — Passthrough to htmlq CLI
+
 ## Installation
 
 ```bash

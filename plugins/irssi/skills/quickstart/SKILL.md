@@ -7,6 +7,10 @@ description: Use this skill when the user wants a terminal IRC client — connec
 
 Modular terminal IRC client. Lightweight, scriptable with Perl, and ideal for persistent IRC sessions over SSH or on headless servers.
 
+## Commands
+- `irssi <resource> <action>` — Execute irssi commands
+- `irssi _ _` — Passthrough to irssi CLI
+
 ## Installation
 
 ```bash

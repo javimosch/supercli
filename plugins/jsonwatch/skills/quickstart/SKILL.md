@@ -1,5 +1,10 @@
 # jsonwatch - JSON Change Tracker
 
+## Commands
+- `jsonwatch <resource> <action>` — Execute jsonwatch commands
+- `jsonwatch watch json` — Watch JSON data for changes
+- `jsonwatch _ _` — Passthrough to jsonwatch CLI
+
 ## Overview
 jsonwatch tracks changes in JSON data from the command line. Like watch -d, but for JSON files and URLs.
 
