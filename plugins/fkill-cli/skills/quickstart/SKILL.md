@@ -2,6 +2,9 @@
 
 Fabulously kill processes. Cross-platform CLI tool for terminating processes by name or PID.
 
+## Commands
+- `fkill-cli <resource> <action>` — Execute fkill-cli commands
+
 ## Installation
 
 ```bash

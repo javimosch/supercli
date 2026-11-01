@@ -8,6 +8,11 @@ tags: supabase,database,postgres,migrations,edge-functions,secrets,storage,auth
 
 Use this when AI agents need to manage Supabase projects — database, migrations, functions, secrets, or storage.
 
+## Commands
+- `supabase <resource> <action>` — Execute supabase commands
+- `supabase projects list` — List Supabase projects for the authenticated account
+- `supabase _ _` — Passthrough command to execute any Supabase CLI command
+
 ## 1) Install plugin and dependency
 
 ```bash

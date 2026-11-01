@@ -2,6 +2,9 @@
 
 Find a person's profile across 1000+ social media websites.
 
+## Commands
+- `social-analyzer <resource> <action>` — Execute social-analyzer commands
+
 ## Installation
 
 ```bash

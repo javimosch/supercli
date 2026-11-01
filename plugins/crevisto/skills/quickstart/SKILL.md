@@ -2,6 +2,14 @@
 
 AI image generation from your terminal. 100+ curated tools, pay-per-use, no subscription.
 
+## Commands
+- `crevisto <resource> <action>` — Execute crevisto commands
+- `crevisto trial` — Get a free trial token (5 credits, no email needed)
+- `crevisto tools` — List all 100+ AI image tools
+- `crevisto generate` — Generate an image with a specific tool
+- `crevisto whoami` — Check credit balance and trial status
+- `crevisto gallery` — Browse public gallery
+
 ## Install
 
 ```sh

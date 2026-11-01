@@ -1,5 +1,12 @@
 # Disk Analyzer - Agent Quickstart
 
+## Commands
+- `disk-analyzer <resource> <action>` — Execute disk-analyzer commands
+- `disk-analyzer analyze` — Analyze disk usage for directory with detailed breakdown
+- `disk-analyzer large-files` — Find large files above specified size threshold
+- `disk-analyzer file-types` — Aggregate and analyze files by type/extension
+- `disk-analyzer cleanup-report` — Generate cleanup recommendations based on analysis
+
 ## Purpose
 Advanced disk usage analysis for local systems with file type aggregation, large file detection, and cleanup recommendations.
 

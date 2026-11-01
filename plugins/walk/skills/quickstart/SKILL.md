@@ -2,6 +2,9 @@
 
 Terminal file manager - Navigate directories and execute files.
 
+## Commands
+- `walk <resource> <action>` — Execute walk commands
+
 ## Installation
 
 ```bash

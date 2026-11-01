@@ -2,6 +2,10 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `k6 <resource> <action>` — Execute k6 commands
+- `k6 _ _` — Passthrough to k6 CLI
+
 ## Installation
 
 ```bash

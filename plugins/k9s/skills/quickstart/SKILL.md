@@ -2,6 +2,9 @@
 
 k9s is a terminal-based UI for interacting with Kubernetes clusters.
 
+## Commands
+- `k9s <resource> <action>` — Execute k9s commands
+
 ## Prerequisites
 
 - Kubernetes cluster access (configured in `~/.kube/config`)

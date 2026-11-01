@@ -1,5 +1,10 @@
 # GitLab Activity CLI - Agent Quickstart
 
+## Commands
+- `gitlab-activity <resource> <action>` — Execute gitlab-activity commands
+- `gitlab-activity me` — Get current user's GitLab activity
+- `gitlab-activity user` — Get specific user's GitLab activity
+
 ## Purpose
 Retrieve GitLab user activity for agent consumption with structured output and minimal dependencies.
 

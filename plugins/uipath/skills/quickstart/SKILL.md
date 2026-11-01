@@ -8,6 +8,12 @@ tags: uipath,uipcli,rpa,cicd,automation
 
 Use this skill when automating UiPath package deployment tasks in CI/CD.
 
+## Commands
+- `uipath <resource> <action>` — Execute uipath commands
+- `uipath cli version` — Show UiPath CLI version
+- `uipath package deploy` — Deploy a UiPath package path using non-interactive credentials
+- `uipath _ _` — Passthrough command to execute any UiPath CLI command
+
 ## 1) Learn and install
 
 ```bash

@@ -2,6 +2,9 @@
 
 CLI that generates beautiful README.md files
 
+## Commands
+- `readme-gen <resource> <action>` — Execute readme-gen commands
+
 ## Installation
 
 ```bash

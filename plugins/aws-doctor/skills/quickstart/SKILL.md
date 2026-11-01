@@ -1,5 +1,12 @@
 # AWS Doctor Plugin Quickstart
 
+## Commands
+- `aws-doctor <resource> <action>` — Execute aws-doctor commands
+- `aws-doctor version` — Display aws-doctor version
+- `aws-doctor scan` — Scan AWS resources for security, cost, and best practice issues
+- `aws-doctor report` — Generate a detailed report of AWS resource analysis
+- `aws-doctor audit` — Perform a comprehensive AWS audit
+
 ## Overview
 The `aws-doctor` plugin provides commands to audit AWS resources for security vulnerabilities, cost optimization opportunities, and best practice compliance.
 

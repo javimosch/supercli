@@ -2,6 +2,9 @@
 
 Quarto is an open-source scientific and technical publishing system built on Pandoc.
 
+## Commands
+- `quarto <resource> <action>` — Execute quarto commands
+
 ## Installation
 
 ### Linux (Debian/Ubuntu)

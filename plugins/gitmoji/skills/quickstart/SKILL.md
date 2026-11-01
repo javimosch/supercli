@@ -2,6 +2,9 @@
 
 A gitmoji interactive cli tool for using emojis on commits
 
+## Commands
+- `gitmoji <resource> <action>` — Execute gitmoji commands
+
 ## Installation
 
 ```bash
