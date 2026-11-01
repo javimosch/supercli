@@ -1,5 +1,14 @@
 # Prom2json Plugin Quickstart
 
+## Commands
+- `prom2json <resource> <action>` — Execute prom2json commands
+- `prom2json convert` — Convert Prometheus metrics URL to JSON
+- `prom2json convert-file` — Convert Prometheus metrics file to JSON
+- `prom2json convert-stdin` — Convert Prometheus metrics from stdin to JSON
+- `prom2json convert-tls` — Convert HTTPS metrics with TLS client authentication
+- `prom2json convert-insecure` — Convert HTTPS metrics without TLS validation (testing only)
+- `prom2json convert-utf8` — Convert metrics with UTF-8 escaping scheme
+
 ## Overview
 
 Prom2json is a Prometheus tool that scrapes metrics endpoints and converts them from text or protocol buffer format to JSON. The supercli prom2json plugin provides convenient commands for converting Prometheus metrics to structured JSON, making it ideal for parsing and processing in scripts.

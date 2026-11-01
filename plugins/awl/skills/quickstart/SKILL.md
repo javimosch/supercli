@@ -1,5 +1,18 @@
 # AWL Plugin Quickstart
 
+## Commands
+- `awl <resource> <action>` — Execute awl commands
+- `awl lookup` — Perform DNS lookup with JSON output
+- `awl lookup-a` — Lookup A records with JSON output
+- `awl lookup-aaaa` — Lookup AAAA records with JSON output
+- `awl lookup-mx` — Lookup MX records with JSON output
+- `awl lookup-txt` — Lookup TXT records with JSON output
+- `awl lookup-ns` — Lookup NS records with JSON output
+- `awl lookup-https` — DNS over HTTPS lookup with JSON output
+- `awl lookup-tls` — DNS over TLS lookup with JSON output
+- `awl lookup-quic` — DNS over QUIC lookup with JSON output
+- `awl lookup-dnscrypt` — DNSCrypt lookup with JSON output
+
 ## Overview
 
 AWL (a pointed tool for making small holes) is a command-line DNS lookup tool that supports DNS queries over UDP, TCP, TLS, HTTPS, DNSCrypt, and QUIC. It's designed as a drop-in replacement for dig with modern protocol support and JSON output. The supercli awl plugin provides convenient commands for DNS lookups with structured JSON output.

@@ -2,6 +2,9 @@
 
 CLI tool to easily setup a new resume
 
+## Commands
+- `resume <resource> <action>` — Execute resume commands
+
 ## Installation
 
 ```bash

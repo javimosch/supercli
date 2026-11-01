@@ -8,6 +8,10 @@ tags: gemini,ai,automation,headless,json
 
 Use this when you need Gemini in scripts or agent workflows without interactive prompts.
 
+## Commands
+- `gemini <resource> <action>` — Execute gemini commands
+- `gemini _ _` — Passthrough to gemini CLI
+
 ## 1) Install plugin and dependency
 
 ```bash

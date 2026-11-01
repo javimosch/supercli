@@ -1,5 +1,17 @@
 # cmdcenter Quickstart
 
+## Commands
+- `cmdcenter <resource> <action>` — Execute cmdcenter commands
+- `cmdcenter init` — Initialize config file with defaults
+- `cmdcenter add` — Add a new command
+- `cmdcenter edit` — Edit an existing command
+- `cmdcenter remove` — Remove a command
+- `cmdcenter list` — List all configured commands
+- `cmdcenter run` — Execute a command by ID
+- `cmdcenter start` — Start HTTP server (UI)
+- `cmdcenter stop` — Stop daemon server
+- `cmdcenter status` — Check daemon status
+
 ## Overview
 cmdcenter is a generic command execution dashboard with configurable commands via JSON config file. It provides both a web UI and CLI for managing and executing shell commands.
 

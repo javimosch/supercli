@@ -2,6 +2,9 @@
 
 Create beautiful animated SVG recordings of terminal sessions.
 
+## Commands
+- `svg-term <resource> <action>` — Execute svg-term commands
+
 ## Installation
 
 ```bash

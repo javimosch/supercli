@@ -13,3 +13,6 @@ sc skills teach token-reduction-ultimate:main.skill
 ```
 
 This fetches the full skill document from github.com/javimosch/token-reduction-ultimate.
+
+## Commands
+- `token-reduction-ultimate <resource> <action>` — Execute token-reduction-ultimate commands

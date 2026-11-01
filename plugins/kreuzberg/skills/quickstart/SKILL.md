@@ -2,6 +2,9 @@
 
 Extract text and metadata from documents in 97+ formats.
 
+## Commands
+- `kreuzberg <resource> <action>` — Execute kreuzberg commands
+
 ## Installation
 
 ```bash

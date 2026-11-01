@@ -2,6 +2,10 @@
 
 ghz is a gRPC load testing and benchmarking tool.
 
+## Commands
+- `ghz <resource> <action>` — Execute ghz commands
+- `ghz _ _` — Passthrough to ghz CLI
+
 ## Installation
 
 ```bash

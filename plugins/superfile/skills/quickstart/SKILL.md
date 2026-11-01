@@ -2,6 +2,9 @@
 
 Pretty fancy and modern terminal file manager.
 
+## Commands
+- `superfile <resource> <action>` — Execute superfile commands
+
 ## Installation
 
 ```bash

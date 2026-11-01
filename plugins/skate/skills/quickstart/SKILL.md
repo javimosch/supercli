@@ -5,5 +5,9 @@ description: Personal key-value store with encryption
 # skate Plugin
 Personal key-value store with encryption
 
+## Commands
+- `skate <resource> <action>` — Execute skate commands
+- `skate _ _` — Passthrough to skate CLI
+
 ## Usage
 - `skate _ _ <args>` — Run skate with any arguments

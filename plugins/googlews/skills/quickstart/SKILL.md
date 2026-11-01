@@ -1,5 +1,16 @@
 # Google Workspace CLI (googlews) — Agent Usage Guide
 
+## Commands
+- `googlews <resource> <action>` — Execute googlews commands
+- `googlews version` — Display Google Workspace CLI version
+- `googlews drive` — Google Drive management - upload, download, share files and folders
+- `googlews gmail` — Gmail operations - send emails, manage labels, search messages
+- `googlews calendar` — Google Calendar - manage events, list calendars, set availability
+- `googlews sheets` — Google Sheets - read, write, and manage spreadsheets
+- `googlews docs` — Google Docs - create and manage documents
+- `googlews chat` — Google Chat - send messages and manage spaces
+- `googlews admin` — Google Workspace Admin - manage users, groups, and domain settings
+
 ## Overview
 
 The `googlews` plugin provides access to Google Workspace services via the official CLI tool.

@@ -1,5 +1,17 @@
 # Sqleton Plugin Quickstart
 
+## Commands
+- `sqleton <resource> <action>` — Execute sqleton commands
+- `sqleton query` — Execute SQL query with JSON output
+- `sqleton query-mysql` — Execute SQL query on MySQL with JSON output
+- `sqleton query-postgres` — Execute SQL query on PostgreSQL with JSON output
+- `sqleton query-sqlite` — Execute SQL query on SQLite with JSON output
+- `sqleton export-csv` — Export query results to CSV
+- `sqleton export-yaml` — Export query results to YAML
+- `sqleton list-tables` — List all tables in database
+- `sqleton describe-table` — Describe table structure
+- `sqleton test-connection` — Test database connection
+
 ## Overview
 
 Sqleton is a powerful SQL CLI tool with rich output formatting that supports MySQL, PostgreSQL, SQLite and other databases. The supercli sqleton plugin provides convenient commands for database operations with structured JSON output, making it ideal for scripting and automation.

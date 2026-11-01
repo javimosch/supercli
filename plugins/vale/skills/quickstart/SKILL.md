@@ -2,6 +2,11 @@
 
 Markup-aware linter for prose
 
+## Commands
+- `vale <resource> <action>` — Execute vale commands
+- `vale self version` — Print vale version
+- `vale _ _` — Passthrough to vale CLI
+
 ## Installation
 
 ```bash

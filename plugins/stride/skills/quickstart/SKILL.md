@@ -1,5 +1,24 @@
 # Stride Plugin Quickstart
 
+## Commands
+- `stride <resource> <action>` — Execute stride commands
+- `stride walk` — Traverse directory with JSON output
+- `stride walk-workers` — Traverse directory with custom worker count
+- `stride find-name` — Find files by name pattern with JSON output
+- `stride find-regex` — Find files by regex pattern with JSON output
+- `stride find-large` — Find files larger than specified size
+- `stride find-small` — Find files smaller than specified size
+- `stride find-recent` — Find files modified recently
+- `stride find-old` — Find files older than specified time
+- `stride find-depth` — Find files with maximum depth limit
+- `stride find-permissions` — Find files by exact permissions
+- `stride watch` — Watch directory for changes with JSON output
+- `stride watch-pattern` — Watch for specific file patterns
+- `stride watch-events` — Watch for specific event types
+- `stride analyze` — Analyze directory structure with JSON output
+- `stride analyze-duplicates` — Find duplicate files with JSON output
+- `stride analyze-code` — Analyze code statistics with JSON output
+
 ## Overview
 
 Stride is a high-performance filesystem traversal and search tool written in Go that extends the standard `filepath.Walk` with enhanced concurrency, filtering, and monitoring capabilities. The supercli stride plugin provides convenient commands for filesystem operations with structured JSON output, making it ideal for automation and scripting.

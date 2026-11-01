@@ -2,6 +2,14 @@
 
 Use this plugin for CI/CD automation tasks with UiPath CLI.
 
+## Commands
+- `uipathcli <resource> <action>` — Execute uipathcli commands
+- `uipath self version` — Show UiPath CLI version
+- `uipath project pack` — Pack a UiPath project into a package
+- `uipath project analyze` — Run static analysis for a UiPath project
+- `uipath project deploy` — Deploy a UiPath package to Orchestrator
+- `uipath _ _` — Passthrough command to execute any UiPath CLI command
+
 ## Prerequisites
 
 - Install UiPath CLI package for your OS.

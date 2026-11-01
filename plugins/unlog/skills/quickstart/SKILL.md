@@ -1,5 +1,16 @@
 # Unlog Plugin Quickstart
 
+## Commands
+- `unlog <resource> <action>` — Execute unlog commands
+- `unlog analyze` — Analyze log directory with JSON output
+- `unlog analyze-file` — Analyze single log file with JSON output
+- `unlog analyze-stdin` — Analyze logs from stdin with JSON output
+- `unlog analyze-level` — Analyze logs with minimum log level filter
+- `unlog analyze-time-range` — Analyze logs within time range
+- `unlog analyze-ai` — Analyze logs with AI-powered root cause analysis
+- `unlog analyze-verbose` — Analyze logs with detailed output
+- `unlog analyze-markdown` — Analyze logs and output as Markdown report
+
 ## Overview
 
 Unlog is a fast CLI tool for log analysis that supports 11 different log formats, noise removal, fuzzy deduplication, and optional LLM-powered root cause analysis. The supercli unlog plugin provides convenient commands for log analysis with structured JSON output, making it ideal for automation and incident investigation.

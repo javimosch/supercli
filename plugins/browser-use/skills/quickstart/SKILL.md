@@ -8,6 +8,9 @@ tags: browser-use,mcp,automation,agents
 
 Use this when you need browser automation through Browser Use MCP.
 
+## Commands
+- `browser-use <resource> <action>` — Execute browser-use commands
+
 ## 1) Ensure API key is available
 
 ```bash

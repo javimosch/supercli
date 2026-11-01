@@ -2,6 +2,9 @@
 
 Create professional resumes using the JSON Resume standard.
 
+## Commands
+- `resume-cli <resource> <action>` — Execute resume-cli commands
+
 ## Installation
 
 ```bash

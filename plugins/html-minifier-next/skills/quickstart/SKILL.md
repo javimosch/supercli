@@ -1,5 +1,10 @@
 # html-minifier-next Quickstart
 
+## Commands
+- `html-minifier-next <resource> <action>` — Execute html-minifier-next commands
+- `html-minifier-next version` — Show html-minifier-next version
+- `html-minifier-next minify` — Minify HTML, CSS, JS, and SVG files
+
 ## Overview
 `html-minifier-next` is a super-configurable web page minifier that handles HTML, CSS, JS, and SVG files.
 
