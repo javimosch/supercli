@@ -1,1 +1,10 @@
----\nname: ugrep\ndescription: Ultra fast grep with Unicode\n---\n# ugrep Plugin\nUltra fast grep with Unicode
+---
+name: ugrep
+description: Ultra fast grep with Unicode
+---
+# ugrep Plugin
+Ultra fast grep with Unicode
+
+## Commands
+- `ugrep <resource> <action>` — Execute ugrep commands
+- `ugrep _ _` — Passthrough to ugrep

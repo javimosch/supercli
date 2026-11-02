@@ -7,6 +7,11 @@ description: Use this skill when the user wants to use wild.
 
 A very fast linker for Linux
 
+## Commands
+- `wild <resource> <action>` — Execute wild commands
+- `wild self version` — Print wild version
+- `wild _ _` — Passthrough to wild CLI
+
 ## Installation
 
 ```bash

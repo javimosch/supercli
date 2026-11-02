@@ -1,5 +1,10 @@
 # tinty - Color Scheme Manager
 
+## Commands
+- `tinty <resource> <action>` — Execute tinty commands
+- `tinty apply scheme` — Apply a color scheme
+- `tinty _ _` — Passthrough to tinty CLI
+
 ## Overview
 tinty is a base16 and base24 color scheme manager. Apply color schemes to your terminal and applications.
 

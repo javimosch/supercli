@@ -1,1 +1,10 @@
----\nname: sqlfluff\ndescription: SQL linter and formatter\n---\n# sqlfluff Plugin\nSQL linter and formatter
+---
+name: sqlfluff
+description: SQL linter and formatter
+---
+# sqlfluff Plugin
+SQL linter and formatter
+
+## Commands
+- `sqlfluff <resource> <action>` — Execute sqlfluff commands
+- `sqlfluff _ _` — Passthrough to sqlfluff CLI

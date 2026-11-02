@@ -1,5 +1,11 @@
 # zerobox - Process Sandbox
 
+## Commands
+- `zerobox <resource> <action>` — Execute zerobox commands
+- `zerobox run command` — Run command with sandboxing
+- `zerobox snapshot list` — List filesystem snapshots
+- `zerobox _ _` — Passthrough to zerobox CLI
+
 ## Overview
 zerobox is a lightweight, cross-platform process sandboxing tool with file, network, and credential controls. Run commands safely with granular permissions.
 

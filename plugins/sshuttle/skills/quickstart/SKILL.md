@@ -1,1 +1,10 @@
----\nname: sshuttle\ndescription: Transparent VPN over SSH\n---\n# sshuttle Plugin\nTransparent VPN over SSH
+---
+name: sshuttle
+description: Transparent VPN over SSH
+---
+# sshuttle Plugin
+Transparent VPN over SSH
+
+## Commands
+- `sshuttle <resource> <action>` — Execute sshuttle commands
+- `sshuttle _ _` — Passthrough to sshuttle CLI

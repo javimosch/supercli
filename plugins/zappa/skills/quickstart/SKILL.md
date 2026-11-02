@@ -4,3 +4,7 @@ description: zappa — Python serverless WSGI CLI. Deploy Python WSGI apps to AW
 ---
 # zappa
 zappa — Python serverless WSGI CLI. Deploy Python WSGI apps to AWS Lambda + API Gateway.
+
+## Commands
+- `zappa <resource> <action>` — Execute zappa commands
+- `zappa zappa run` — zappa — Python serverless WSGI CLI. Deploy Python WSGI apps to AWS Lambda + API Gateway.

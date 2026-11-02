@@ -1,1 +1,18 @@
----\nname: odbc2parquet\ndescription: Use this skill for odbc2parquet operations.\n---\n# odbc2parquet Plugin\nCLI tool for odbc2parquet.\n## Commands\n- `odbc2parquet _ _` — Passthrough\n## Installation\n```bash\ncargo install odbc2parquet\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: odbc2parquet
+description: Use this skill for odbc2parquet operations.
+---
+# odbc2parquet Plugin
+CLI tool for odbc2parquet.
+
+## Commands
+- `odbc2parquet <resource> <action>` — Execute odbc2parquet commands
+- `odbc2parquet _ _` — Passthrough to odbc2parquet CLI
+
+## Installation
+```bash
+cargo install odbc2parquet
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

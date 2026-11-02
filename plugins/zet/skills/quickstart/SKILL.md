@@ -6,6 +6,10 @@ description: zet — CLI utility for set operations (union, intersection, differ
 
 zet — CLI utility for set operations (union, intersection, difference) on lines from files or stdin.
 
+## Commands
+- `zet <resource> <action>` — Execute zet commands
+- `zet _ _` — Passthrough to zet
+
 ## Quickstart
 
 zet performs set operations (union, intersection, difference, and symmetric difference) on lines from files or stdin.

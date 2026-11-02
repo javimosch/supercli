@@ -1,1 +1,18 @@
----\nname: husky-rs\ndescription: Use this skill for husky-rs operations.\n---\n# husky-rs Plugin\nCLI tool for husky-rs.\n## Commands\n- `husky-rs _ _` — Passthrough\n## Installation\n```bash\ncargo install husky-rs\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: husky-rs
+description: Use this skill for husky-rs operations.
+---
+# husky-rs Plugin
+CLI tool for husky-rs.
+
+## Commands
+- `husky-rs <resource> <action>` — Execute husky-rs commands
+- `husky-rs _ _` — Passthrough to husky-rs CLI
+
+## Installation
+```bash
+cargo install husky-rs
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

@@ -7,6 +7,12 @@ description: Use this skill when the user wants to install developer tools witho
 
 Web-based installer for developer tools. Installs binaries via easy-to-remember URLs without root or a package manager.
 
+## Commands
+- `webi <resource> <action>` — Execute webi commands
+- `webi self version` — Print webi version
+- `webi install run` — Install a tool via webi URL
+- `webi _ _` — Passthrough to webi CLI
+
 ## Installation
 
 ```bash

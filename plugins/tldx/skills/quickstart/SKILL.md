@@ -1,5 +1,12 @@
 # tldx - Domain Availability Research Tool
 
+## Commands
+- `tldx <resource> <action>` — Execute tldx commands
+- `tldx check domains` — Check domain availability for keywords
+- `tldx check available` — Show only available domains
+- `tldx show presets` — Show available TLD presets
+- `tldx _ _` — Passthrough to tldx CLI
+
 ## Overview
 tldx is a domain availability research tool with smart keyword-based permutations and fast concurrent RDAP availability checks. Great for finding available domains for projects and startups.
 

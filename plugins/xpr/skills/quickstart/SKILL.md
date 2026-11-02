@@ -1,1 +1,10 @@
----\nname: xpr\ndescription: X11 print window\n---\n# xpr Plugin\nX11 print window
+---
+name: xpr
+description: X11 print window
+---
+# xpr Plugin
+X11 print window
+
+## Commands
+- `xpr <resource> <action>` — Execute xpr commands
+- `xpr _ _` — Passthrough to xpr

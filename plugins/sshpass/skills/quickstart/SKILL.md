@@ -6,6 +6,14 @@ description: Non-interactive SSH password authentication utility
 
 Non-interactive SSH password authentication for automated remote operations.
 
+## Commands
+- `sshpass <resource> <action>` — Execute sshpass commands
+- `sshpass self version` — Print sshpass version
+- `sshpass ssh exec` — Run SSH command with password authentication
+- `sshpass scp copy` — Run SCP with password authentication
+- `sshpass rsync sync` — Run rsync over SSH with password authentication
+- `sshpass _ _` — Passthrough to sshpass CLI
+
 ## Quickstart
 
 ```bash

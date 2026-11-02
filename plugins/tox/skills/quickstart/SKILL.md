@@ -1,1 +1,10 @@
----\nname: tox\ndescription: Python test environment manager\n---\n# tox Plugin\nPython test environment manager
+---
+name: tox
+description: Python test environment manager
+---
+# tox Plugin
+Python test environment manager
+
+## Commands
+- `tox <resource> <action>` — Execute tox commands
+- `tox _ _` — Passthrough to tox CLI

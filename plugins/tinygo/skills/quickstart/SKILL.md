@@ -7,6 +7,10 @@ description: Use this skill when the user wants to compile Go for microcontrolle
 
 TinyGo is a Go compiler for microcontrollers, WebAssembly, and systems with tight memory limits. Produces smaller binaries than `go build` and supports dozens of embedded boards.
 
+## Commands
+- `tinygo <resource> <action>` — Execute tinygo commands
+- `tinygo _ _` — Passthrough to tinygo CLI
+
 ## Installation
 
 ```bash

@@ -4,3 +4,7 @@ description: stylua — opinionated Lua code formatter. Auto-format Lua files wi
 ---
 # stylua
 stylua — opinionated Lua code formatter. Auto-format Lua files with consistent style. Non-interactive, headless.
+
+## Commands
+- `stylua <resource> <action>` — Execute stylua commands
+- `stylua stylua run` — stylua — opinionated Lua code formatter. Auto-format Lua files with consistent style. Non-interactive, headless.

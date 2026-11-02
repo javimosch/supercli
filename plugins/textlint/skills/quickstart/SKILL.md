@@ -7,6 +7,11 @@ description: Use this skill when the user wants to check writing quality — gra
 
 textlint lints natural language text for quality issues.
 
+## Commands
+- `textlint <resource> <action>` — Execute textlint commands
+- `textlint self version` — Print textlint version
+- `textlint _ _` — Passthrough to textlint CLI
+
 ## Usage Examples
 
 - "lint a markdown file for writing quality"

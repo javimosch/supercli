@@ -7,6 +7,13 @@ description: Use this skill when the user wants quick, practical CLI examples in
 
 Official Rust client for [tldr pages](https://github.com/tldr-pages/tldr) — concise, example-driven command help. Faster and more readable than `man` for everyday CLI tasks.
 
+## Commands
+- `tlrc <resource> <action>` — Execute tlrc commands
+- `tldr page show` — Show tlrc page for a command
+- `tldr cache list` — List all cached command pages
+- `tldr self version` — Show tldr client version
+- `tldr _ _` — Passthrough to tldr CLI
+
 ## Installation
 
 ```bash

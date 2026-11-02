@@ -4,3 +4,7 @@ description: testkube — Kubernetes-native testing framework. Run and manage te
 ---
 # testkube
 testkube — Kubernetes-native testing framework. Run and manage tests (Postman, cypress, curl, k6) in k8s clusters.
+
+## Commands
+- `testkube <resource> <action>` — Execute testkube commands
+- `testkube testkube run` — testkube — Kubernetes-native testing framework. Run and manage tests (Postman, cypress, curl, k6) in k8s clusters.

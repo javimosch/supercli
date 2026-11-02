@@ -1,1 +1,10 @@
----\nname: vagrant\ndescription: HashiCorp VM environment manager\n---\n# vagrant Plugin\nHashiCorp VM environment manager
+---
+name: vagrant
+description: HashiCorp VM environment manager
+---
+# vagrant Plugin
+HashiCorp VM environment manager
+
+## Commands
+- `vagrant <resource> <action>` — Execute vagrant commands
+- `vagrant _ _` — Passthrough to vagrant CLI

@@ -7,6 +7,11 @@ description: Use this skill when the user wants to improve English writing quali
 
 write-good suggests simpler alternatives for English prose.
 
+## Commands
+- `write-good <resource> <action>` — Execute write-good commands
+- `write-good self version` — Print write-good version
+- `write-good _ _` — Passthrough to write-good CLI
+
 ## Usage Examples
 
 - "check README.md for weasel words"

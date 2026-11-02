@@ -1,1 +1,18 @@
----\nname: matugen\ndescription: Use this skill for matugen operations.\n---\n# matugen Plugin\nCLI tool for matugen.\n## Commands\n- `matugen _ _` — Passthrough\n## Installation\n```bash\ncargo install matugen\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: matugen
+description: Use this skill for matugen operations.
+---
+# matugen Plugin
+CLI tool for matugen.
+
+## Commands
+- `matugen <resource> <action>` — Execute matugen commands
+- `matugen _ _` — Passthrough to matugen CLI
+
+## Installation
+```bash
+cargo install matugen
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool
