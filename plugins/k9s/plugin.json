@@ -1,34 +1,145 @@
 {
   "name": "k9s",
-  "description": "Kubernetes CLI to manage your clusters in style",
   "version": "1.0.0",
-  "binary": "k9s",
-  "check": "k9s version",
-  "install": {
-    "method": "brew",
-    "command": "brew install k9s"
-  },
-  "commands": {
-    "start": {
-      "command": "k9s",
-      "description": "Launch k9s TUI for Kubernetes cluster management"
-    },
-    "pods": {
-      "command": "k9s -c pod",
-      "description": "Open k9s with pods view"
-    },
-    "deployments": {
-      "command": "k9s -c deployment",
-      "description": "Open k9s with deployments view"
-    },
-    "logs": {
-      "command": "k9s -c logs",
-      "description": "Open k9s with logs view"
-    },
-    "namespace": {
-      "command": "k9s -n {namespace}",
-      "description": "Open k9s in specific namespace",
-      "args": ["namespace"]
+  "description": "Kubernetes CLI to manage your clusters in style",
+  "source": "https://github.com/derailed/k9s",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "k9s",
+      "args": [
+        "version"
+      ]
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "k9s",
+    "binary": "k9s",
+    "check": "k9s version",
+    "install_steps": [
+      "brew install k9s",
+      "# Or via curl: curl -sS https://webinstall.dev/k9s | bash"
+    ],
+    "note": "Requires a Kubernetes cluster configured in ~/.kube/config. Works with minikube, kind, EKS, GKE, AKS, etc."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "k9s",
+      "resource": "cluster",
+      "action": "open",
+      "description": "Launch k9s TUI for Kubernetes cluster management",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k9s",
+      "resource": "pods",
+      "action": "view",
+      "description": "Open k9s with pods view",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "baseArgs": [
+          "-c",
+          "pod"
+        ],
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k9s",
+      "resource": "deployments",
+      "action": "view",
+      "description": "Open k9s with deployments view",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "baseArgs": [
+          "-c",
+          "deployment"
+        ],
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k9s",
+      "resource": "logs",
+      "action": "view",
+      "description": "Open k9s with logs view",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "baseArgs": [
+          "-c",
+          "logs"
+        ],
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k9s",
+      "resource": "namespace",
+      "action": "open",
+      "description": "Open k9s in specific namespace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "baseArgs": [
+          "-n"
+        ],
+        "positionalArgs": [
+          "namespace"
+        ],
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": [
+        {
+          "name": "namespace",
+          "type": "string",
+          "required": true,
+          "description": "Kubernetes namespace",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "k9s",
+      "resource": "self",
+      "action": "version",
+      "description": "Print k9s version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k9s",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to k9s CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k9s",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k9s: brew install k9s"
+      },
+      "args": []
+    }
+  ]
 }

@@ -1,31 +1,141 @@
 {
   "name": "crevisto",
   "version": "1.0.0",
-  "description": "AI image generation CLI — 100+ curated tools, pay-per-use, BYOK/OpenRouter",
+  "description": "AI image generation CLI \u2014 100+ curated tools, pay-per-use, BYOK/OpenRouter",
+  "source": "https://crevisto.com",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "crevisto"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "crevisto",
+    "binary": "crevisto",
+    "check": "crevisto --version",
+    "install_steps": [
+      "curl -fsSL https://crevisto.com/install.sh | sh"
+    ],
+    "note": "5 free credits on signup, no credit card. BYOK with OpenRouter for unlimited use."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
   "commands": [
     {
-      "name": "trial",
+      "namespace": "crevisto",
+      "resource": "account",
+      "action": "trial",
       "description": "Get a free trial token (5 credits, no email needed)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "baseArgs": [
+          "trial"
+        ],
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
       "args": []
     },
     {
-      "name": "tools",
+      "namespace": "crevisto",
+      "resource": "tools",
+      "action": "list",
       "description": "List all 100+ AI image tools",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "baseArgs": [
+          "tools"
+        ],
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
       "args": []
     },
     {
-      "name": "generate",
+      "namespace": "crevisto",
+      "resource": "image",
+      "action": "generate",
       "description": "Generate an image with a specific tool",
-      "args": [{"name": "slug", "positional": true, "required": true}]
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "baseArgs": [
+          "generate"
+        ],
+        "positionalArgs": [
+          "slug"
+        ],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
+      "args": [
+        {
+          "name": "slug",
+          "type": "string",
+          "required": true,
+          "description": "Tool slug from `crevisto tools`",
+          "positional": true
+        }
+      ]
     },
     {
-      "name": "whoami",
+      "namespace": "crevisto",
+      "resource": "account",
+      "action": "whoami",
       "description": "Check credit balance and trial status",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "baseArgs": [
+          "whoami"
+        ],
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
       "args": []
     },
     {
-      "name": "gallery",
+      "namespace": "crevisto",
+      "resource": "gallery",
+      "action": "browse",
       "description": "Browse public gallery",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "baseArgs": [
+          "gallery"
+        ],
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crevisto",
+      "resource": "self",
+      "action": "version",
+      "description": "Print crevisto version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
+      "args": []
+    },
+    {
+      "namespace": "crevisto",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to crevisto CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "crevisto",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install crevisto: curl -fsSL https://crevisto.com/install.sh | sh"
+      },
       "args": []
     }
   ]

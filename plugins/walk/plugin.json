@@ -1,22 +1,92 @@
 {
   "name": "walk",
-  "description": "Terminal file manager - Navigate directories and execute files",
   "version": "1.0.0",
-  "binary": "walk",
-  "check": "walk --version",
-  "install": {
-    "method": "go",
-    "command": "go install github.com/antonmedv/walk@latest"
-  },
-  "commands": {
-    "open": {
-      "command": "walk",
-      "description": "Open walk file manager in current directory"
-    },
-    "open-path": {
-      "command": "walk {path}",
-      "description": "Open walk at specific path",
-      "args": ["path"]
+  "description": "Terminal file manager - Navigate directories and execute files",
+  "source": "https://github.com/antonmedv/walk",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "walk"
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "walk",
+    "binary": "walk",
+    "check": "walk --version",
+    "install_steps": [
+      "Install via Go: go install github.com/antonmedv/walk@latest",
+      "Or download binary from GitHub releases: https://github.com/antonmedv/walk/releases",
+      "Or use Homebrew: brew install walk"
+    ],
+    "note": "Make sure your PATH includes the Go bin directory (usually ~/go/bin) if installing via go install."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "walk",
+      "resource": "files",
+      "action": "open",
+      "description": "Open walk file manager in current directory",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "walk",
+        "missingDependencyHelp": "Install walk: Install via Go: go install github.com/antonmedv/walk@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "walk",
+      "resource": "files",
+      "action": "open-path",
+      "description": "Open walk at specific path",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "walk",
+        "positionalArgs": [
+          "path"
+        ],
+        "missingDependencyHelp": "Install walk: Install via Go: go install github.com/antonmedv/walk@latest"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path to open",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "walk",
+      "resource": "self",
+      "action": "version",
+      "description": "Print walk version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "walk",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install walk: Install via Go: go install github.com/antonmedv/walk@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "walk",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to walk CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "walk",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install walk: Install via Go: go install github.com/antonmedv/walk@latest"
+      },
+      "args": []
+    }
+  ]
 }

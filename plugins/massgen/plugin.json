@@ -1,29 +1,98 @@
 {
-  "plugin": "massgen",
+  "name": "massgen",
   "version": "1.0.0",
   "description": "Multi-agent scaling system that coordinates AI agents to solve complex tasks",
-  "commands": [
-    {
-      "name": "version",
-      "description": "Show massgen version",
-      "command": "massgen --version"
-    },
-    {
-      "name": "run",
-      "description": "Run massgen with a task",
-      "command": "massgen run <task>"
-    },
-    {
-      "name": "serve",
-      "description": "Start massgen server",
-      "command": "massgen serve"
-    }
-  ],
+  "source": "https://pypi.org/project/massgen/",
   "checks": [
     {
-      "name": "massgen",
-      "command": "massgen --version",
-      "parse": "\\d+\\.\\d+\\.\\d+"
+      "type": "binary",
+      "name": "massgen"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "massgen",
+    "binary": "massgen",
+    "check": "massgen --version",
+    "install_steps": [
+      "pip install massgen"
+    ],
+    "note": "Requires Python and pip to be installed"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "massgen",
+      "resource": "task",
+      "action": "run",
+      "description": "Run massgen with a task",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "massgen",
+        "baseArgs": [
+          "run"
+        ],
+        "positionalArgs": [
+          "task"
+        ],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install massgen: pip install massgen"
+      },
+      "args": [
+        {
+          "name": "task",
+          "type": "string",
+          "required": true,
+          "description": "Task description for agents",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "massgen",
+      "resource": "server",
+      "action": "serve",
+      "description": "Start massgen server",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "massgen",
+        "baseArgs": [
+          "serve"
+        ],
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install massgen: pip install massgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "massgen",
+      "resource": "self",
+      "action": "version",
+      "description": "Print massgen version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "massgen",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install massgen: pip install massgen"
+      },
+      "args": []
+    },
+    {
+      "namespace": "massgen",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to massgen CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "massgen",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install massgen: pip install massgen"
+      },
+      "args": []
     }
   ]
 }

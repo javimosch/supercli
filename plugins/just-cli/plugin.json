@@ -2,5 +2,95 @@
   "name": "just-cli",
   "version": "0.1.0",
   "description": "Just command runner - a simpler Make alternative",
-  "source": "https://github.com/casey/just"
+  "source": "https://github.com/casey/just",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "just"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "just-cli",
+    "binary": "just",
+    "check": "which just",
+    "install_steps": [
+      "brew install just",
+      "Verify: just --version",
+      "supercli plugins install ./plugins/just-cli --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "just-cli",
+      "resource": "recipe",
+      "action": "run",
+      "description": "Run a justfile recipe",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "just",
+        "positionalArgs": [
+          "recipe"
+        ],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install just: brew install just"
+      },
+      "args": [
+        {
+          "name": "recipe",
+          "type": "string",
+          "required": true,
+          "description": "Recipe name from justfile",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "just-cli",
+      "resource": "recipe",
+      "action": "list",
+      "description": "List available justfile recipes",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "just",
+        "baseArgs": [
+          "--list"
+        ],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install just: brew install just"
+      },
+      "args": []
+    },
+    {
+      "namespace": "just-cli",
+      "resource": "self",
+      "action": "version",
+      "description": "Print just version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "just",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install just: brew install just"
+      },
+      "args": []
+    },
+    {
+      "namespace": "just-cli",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to just CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "just",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install just: brew install just"
+      },
+      "args": []
+    }
+  ]
 }

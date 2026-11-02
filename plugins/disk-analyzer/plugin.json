@@ -1,49 +1,174 @@
 {
   "name": "disk-analyzer",
   "version": "1.0.0",
-  "description": "Advanced disk usage analyzer for local systems with file type aggregation, large file detection, and cleanup recommendations",
   "author": "javimosch",
-  "binary": "disk-analyzer",
-  "check": "disk-analyzer version",
-  "commands": [
+  "description": "Advanced disk usage analyzer for local systems with file type aggregation, large file detection, and cleanup recommendations",
+  "checks": [
     {
-      "name": "analyze",
-      "description": "Analyze disk usage for directory with detailed breakdown",
-      "usage": "disk-analyzer analyze <path> [options]",
-      "examples": [
-        "disk-analyzer analyze /home/user",
-        "disk-analyzer analyze /var/log --depth 3",
-        "disk-analyzer analyze . --min-size 100M"
-      ]
-    },
-    {
-      "name": "large-files",
-      "description": "Find large files above specified size threshold",
-      "usage": "disk-analyzer large-files <path> [options]",
-      "examples": [
-        "disk-analyzer large-files /home/user --min-size 100M",
-        "disk-analyzer large-files /var --top 20"
-      ]
-    },
-    {
-      "name": "file-types",
-      "description": "Aggregate and analyze files by type/extension",
-      "usage": "disk-analyzer file-types <path> [options]",
-      "examples": [
-        "disk-analyzer file-types /home/user/projects",
-        "disk-analyzer file-types /var/lib --json"
-      ]
-    },
-    {
-      "name": "cleanup-report",
-      "description": "Generate cleanup recommendations based on analysis",
-      "usage": "disk-analyzer cleanup-report <path> [options]",
-      "examples": [
-        "disk-analyzer cleanup-report /home/user",
-        "disk-analyzer cleanup-report /var/log --aggressive"
+      "type": "binary",
+      "name": "disk-analyzer",
+      "args": [
+        "version"
       ]
     }
   ],
-  "tags": ["disk", "storage", "analysis", "cleanup", "system"],
-  "category": "system"
+  "install_guidance": {
+    "plugin": "disk-analyzer",
+    "binary": "disk-analyzer",
+    "check": "disk-analyzer version",
+    "install_steps": [
+      "cd /tmp",
+      "curl -LO https://raw.githubusercontent.com/javimosch/supercli/main/plugins/disk-analyzer/disk-analyzer.sh",
+      "chmod +x disk-analyzer.sh",
+      "sudo mv disk-analyzer.sh /usr/local/bin/disk-analyzer",
+      "disk-analyzer version"
+    ],
+    "note": "Shell script wrapper for Unix disk analysis commands. Works on Linux/macOS with standard utilities (du, find, sort, etc.)."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "disk-analyzer",
+      "resource": "disk",
+      "action": "analyze",
+      "description": "Analyze disk usage for directory with detailed breakdown",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "disk-analyzer",
+        "baseArgs": [
+          "analyze"
+        ],
+        "positionalArgs": [
+          "path"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install disk-analyzer: cd /tmp"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path to analyze",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "disk-analyzer",
+      "resource": "files",
+      "action": "large",
+      "description": "Find large files above specified size threshold",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "disk-analyzer",
+        "baseArgs": [
+          "large-files"
+        ],
+        "positionalArgs": [
+          "path"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install disk-analyzer: cd /tmp"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path to scan",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "disk-analyzer",
+      "resource": "files",
+      "action": "types",
+      "description": "Aggregate and analyze files by type/extension",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "disk-analyzer",
+        "baseArgs": [
+          "file-types"
+        ],
+        "positionalArgs": [
+          "path"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install disk-analyzer: cd /tmp"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path to analyze",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "disk-analyzer",
+      "resource": "report",
+      "action": "cleanup",
+      "description": "Generate cleanup recommendations based on analysis",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "disk-analyzer",
+        "baseArgs": [
+          "cleanup-report"
+        ],
+        "positionalArgs": [
+          "path"
+        ],
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install disk-analyzer: cd /tmp"
+      },
+      "args": [
+        {
+          "name": "path",
+          "type": "string",
+          "required": true,
+          "description": "Directory path to analyze",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "disk-analyzer",
+      "resource": "self",
+      "action": "version",
+      "description": "Print disk-analyzer version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "disk-analyzer",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install disk-analyzer: cd /tmp"
+      },
+      "args": []
+    },
+    {
+      "namespace": "disk-analyzer",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to disk-analyzer CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "disk-analyzer",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install disk-analyzer: cd /tmp"
+      },
+      "args": []
+    }
+  ]
 }

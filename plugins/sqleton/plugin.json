@@ -2,69 +2,367 @@
   "name": "sqleton",
   "version": "1.0.0",
   "description": "Powerful SQL CLI tool with rich output and JSON support for multiple database types",
+  "source": "https://github.com/go-go-golems/sqleton",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "sqleton",
+      "args": [
+        "version"
+      ]
+    }
+  ],
+  "install_guidance": {
+    "plugin": "sqleton",
+    "binary": "sqleton",
+    "check": "sqleton version",
+    "install_steps": [
+      "go install github.com/go-go-golems/sqleton@latest",
+      "Or download from: https://github.com/go-go-golems/sqleton/releases"
+    ],
+    "note": "sqleton is a powerful SQL CLI tool with rich output formatting, supporting MySQL, PostgreSQL, SQLite and other databases with professional-grade output"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
   "commands": [
     {
-      "name": "query",
+      "namespace": "sqleton",
+      "resource": "sql",
+      "action": "query",
       "description": "Execute SQL query with JSON output",
-      "binary": "sqleton",
-      "args": ["query", "--db-type", "{{.db_type}}", "--host", "{{.host}}", "--database", "{{.database}}", "--output", "json", "{{.query}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton query --db-type \"{{db_type}}\" --host \"{{host}}\" --database \"{{database}}\" --output json \"{{query}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "db_type",
+          "type": "string",
+          "required": true,
+          "description": "Database type (mysql, postgres, sqlite, ...)"
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "SQL query to execute"
+        }
+      ]
     },
     {
-      "name": "query-mysql",
+      "namespace": "sqleton",
+      "resource": "sql",
+      "action": "query-mysql",
       "description": "Execute SQL query on MySQL with JSON output",
-      "binary": "sqleton",
-      "args": ["query", "--db-type", "mysql", "--host", "{{.host}}", "--user", "{{.user}}", "--database", "{{.database}}", "--output", "json", "{{.query}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton query --db-type mysql --host \"{{host}}\" --user \"{{user}}\" --database \"{{database}}\" --output json \"{{query}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "required": true,
+          "description": "Database user"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "SQL query to execute"
+        }
+      ]
     },
     {
-      "name": "query-postgres",
+      "namespace": "sqleton",
+      "resource": "sql",
+      "action": "query-postgres",
       "description": "Execute SQL query on PostgreSQL with JSON output",
-      "binary": "sqleton",
-      "args": ["query", "--db-type", "postgres", "--host", "{{.host}}", "--user", "{{.user}}", "--database", "{{.database}}", "--output", "json", "{{.query}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton query --db-type postgres --host \"{{host}}\" --user \"{{user}}\" --database \"{{database}}\" --output json \"{{query}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "user",
+          "type": "string",
+          "required": true,
+          "description": "Database user"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "SQL query to execute"
+        }
+      ]
     },
     {
-      "name": "query-sqlite",
+      "namespace": "sqleton",
+      "resource": "sql",
+      "action": "query-sqlite",
       "description": "Execute SQL query on SQLite with JSON output",
-      "binary": "sqleton",
-      "args": ["query", "--db-type", "sqlite", "--database", "{{.database}}", "--output", "json", "{{.query}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton query --db-type sqlite --database \"{{database}}\" --output json \"{{query}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "SQLite database file"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "SQL query to execute"
+        }
+      ]
     },
     {
-      "name": "export-csv",
+      "namespace": "sqleton",
+      "resource": "export",
+      "action": "csv",
       "description": "Export query results to CSV",
-      "binary": "sqleton",
-      "args": ["query", "--db-type", "{{.db_type}}", "--host", "{{.host}}", "--database", "{{.database}}", "--output", "csv", "{{.query}}"],
-      "output_format": "csv"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton query --db-type \"{{db_type}}\" --host \"{{host}}\" --database \"{{database}}\" --output csv \"{{query}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "db_type",
+          "type": "string",
+          "required": true,
+          "description": "Database type (mysql, postgres, sqlite, ...)"
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "SQL query to execute"
+        }
+      ]
     },
     {
-      "name": "export-yaml",
+      "namespace": "sqleton",
+      "resource": "export",
+      "action": "yaml",
       "description": "Export query results to YAML",
-      "binary": "sqleton",
-      "args": ["query", "--db-type", "{{.db_type}}", "--host", "{{.host}}", "--database", "{{.database}}", "--output", "yaml", "{{.query}}"],
-      "output_format": "yaml"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton query --db-type \"{{db_type}}\" --host \"{{host}}\" --database \"{{database}}\" --output yaml \"{{query}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "db_type",
+          "type": "string",
+          "required": true,
+          "description": "Database type (mysql, postgres, sqlite, ...)"
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        },
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "SQL query to execute"
+        }
+      ]
     },
     {
-      "name": "list-tables",
+      "namespace": "sqleton",
+      "resource": "tables",
+      "action": "list",
       "description": "List all tables in database",
-      "binary": "sqleton",
-      "args": ["db", "ls-tables", "--db-type", "{{.db_type}}", "--host", "{{.host}}", "--database", "{{.database}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton db ls-tables --db-type \"{{db_type}}\" --host \"{{host}}\" --database \"{{database}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "db_type",
+          "type": "string",
+          "required": true,
+          "description": "Database type (mysql, postgres, sqlite, ...)"
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        }
+      ]
     },
     {
-      "name": "describe-table",
+      "namespace": "sqleton",
+      "resource": "table",
+      "action": "describe",
       "description": "Describe table structure",
-      "binary": "sqleton",
-      "args": ["select", "--table", "{{.table}}", "--describe", "--db-type", "{{.db_type}}", "--host", "{{.host}}", "--database", "{{.database}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton select --table \"{{table}}\" --describe --db-type \"{{db_type}}\" --host \"{{host}}\" --database \"{{database}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "table",
+          "type": "string",
+          "required": true,
+          "description": "Table name"
+        },
+        {
+          "name": "db_type",
+          "type": "string",
+          "required": true,
+          "description": "Database type (mysql, postgres, sqlite, ...)"
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        }
+      ]
     },
     {
-      "name": "test-connection",
+      "namespace": "sqleton",
+      "resource": "connection",
+      "action": "test",
       "description": "Test database connection",
-      "binary": "sqleton",
-      "args": ["db", "test", "--db-type", "{{.db_type}}", "--host", "{{.host}}", "--database", "{{.database}}"],
-      "output_format": "text"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "sqleton db test --db-type \"{{db_type}}\" --host \"{{host}}\" --database \"{{database}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "db_type",
+          "type": "string",
+          "required": true,
+          "description": "Database type (mysql, postgres, sqlite, ...)"
+        },
+        {
+          "name": "host",
+          "type": "string",
+          "required": true,
+          "description": "Database host"
+        },
+        {
+          "name": "database",
+          "type": "string",
+          "required": true,
+          "description": "Database name"
+        }
+      ]
+    },
+    {
+      "namespace": "sqleton",
+      "resource": "self",
+      "action": "version",
+      "description": "Print sqleton version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqleton",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install sqleton: go install github.com/go-go-golems/sqleton@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "sqleton",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to sqleton CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "sqleton",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install sqleton: go install github.com/go-go-golems/sqleton@latest"
+      },
+      "args": []
     }
   ]
 }

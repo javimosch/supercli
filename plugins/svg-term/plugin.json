@@ -1,28 +1,132 @@
 {
   "name": "svg-term",
-  "description": "Share terminal sessions as razor-sharp animated SVG everywhere.",
   "version": "1.0.0",
-  "binary": "svg-term",
-  "check": "svg-term --version",
-  "install": {
-    "method": "npm",
-    "command": "npm install -g svg-term-cli"
-  },
-  "commands": {
-    "convert": {
-      "command": "svg-term --in {{input}} --out {{output}}",
-      "description": "Convert asciicast JSON to SVG",
-      "args": ["input", "output"]
-    },
-    "from-cast": {
-      "command": "svg-term --cast {{castId}} --out {{output}}",
-      "description": "Convert asciinema cast to SVG",
-      "args": ["castId", "output"]
-    },
-    "record": {
-      "command": "svg-term --command {{command}} --out {{output}}",
-      "description": "Record command and output as SVG",
-      "args": ["command", "output"]
+  "description": "Share terminal sessions as razor-sharp animated SVG everywhere.",
+  "source": "https://github.com/marionebl/svg-term-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "svg-term"
     }
-  }
+  ],
+  "install_guidance": {
+    "plugin": "svg-term",
+    "binary": "svg-term",
+    "check": "svg-term --version",
+    "install_steps": [
+      "# First install asciinema: https://asciinema.org/docs/installation",
+      "npm install -g svg-term-cli"
+    ],
+    "note": "Requires asciinema for recording. Works with terminal color profiles."
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "svg-term",
+      "resource": "svg",
+      "action": "convert",
+      "description": "Convert asciicast JSON to SVG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "missingDependencyHelp": "Install svg-term: First install asciinema: https://asciinema.org/docs/installation"
+      },
+      "args": [
+        {
+          "name": "--in",
+          "type": "string",
+          "required": true,
+          "description": "Input asciicast JSON file"
+        },
+        {
+          "name": "--out",
+          "type": "string",
+          "required": true,
+          "description": "Output SVG file"
+        }
+      ]
+    },
+    {
+      "namespace": "svg-term",
+      "resource": "svg",
+      "action": "from-cast",
+      "description": "Convert asciinema cast to SVG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "missingDependencyHelp": "Install svg-term: First install asciinema: https://asciinema.org/docs/installation"
+      },
+      "args": [
+        {
+          "name": "--cast",
+          "type": "string",
+          "required": true,
+          "description": "Asciinema cast ID"
+        },
+        {
+          "name": "--out",
+          "type": "string",
+          "required": true,
+          "description": "Output SVG file"
+        }
+      ]
+    },
+    {
+      "namespace": "svg-term",
+      "resource": "svg",
+      "action": "record",
+      "description": "Record command and output as SVG",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install svg-term: First install asciinema: https://asciinema.org/docs/installation"
+      },
+      "args": [
+        {
+          "name": "--command",
+          "type": "string",
+          "required": true,
+          "description": "Command to record"
+        },
+        {
+          "name": "--out",
+          "type": "string",
+          "required": true,
+          "description": "Output SVG file"
+        }
+      ]
+    },
+    {
+      "namespace": "svg-term",
+      "resource": "self",
+      "action": "version",
+      "description": "Print svg-term version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install svg-term: First install asciinema: https://asciinema.org/docs/installation"
+      },
+      "args": []
+    },
+    {
+      "namespace": "svg-term",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to svg-term CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "svg-term",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install svg-term: First install asciinema: https://asciinema.org/docs/installation"
+      },
+      "args": []
+    }
+  ]
 }

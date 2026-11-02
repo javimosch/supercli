@@ -5,17 +5,19 @@
   "source": "https://github.com/caol64/omni-article-markdown",
   "checks": [
     {
-      "type": "binary"
+      "type": "binary",
+      "name": "mdcli"
     }
   ],
   "install_guidance": {
     "plugin": "omni-article-markdown",
-    "check": "which undefined",
+    "check": "which mdcli",
     "install_steps": [
       "pip install omni-article-markdown",
-      "Verify: undefined --version",
+      "Verify: mdcli --version",
       "supercli plugins install ./plugins/omni-article-markdown --on-conflict replace --json"
-    ]
+    ],
+    "binary": "mdcli"
   },
   "learn": {
     "file": "skills/quickstart/SKILL.md"
@@ -23,195 +25,119 @@
   "commands": [
     {
       "namespace": "omni-article-markdown",
-      "resource": "self",
-      "action": "version",
-      "description": "Print omni-article-markdown version",
+      "resource": "article",
+      "action": "parse",
+      "description": "Parse a web article or local file into clean Markdown",
       "adapter": "process",
       "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
+        "command": "mdcli",
+        "baseArgs": [
+          "parse"
+        ],
+        "positionalArgs": [
+          "url"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Article URL or local file path",
+          "positional": true
+        },
+        {
+          "name": "--save",
+          "type": "string",
+          "required": false,
+          "description": "Save result to directory (use -s for ./)"
+        },
+        {
+          "name": "--no-verify-ssl",
+          "type": "boolean",
+          "required": false,
+          "description": "Disable SSL certificate verification"
+        }
+      ]
+    },
+    {
+      "namespace": "omni-article-markdown",
+      "resource": "article",
+      "action": "read",
+      "description": "Read and format raw article HTML",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdcli",
+        "baseArgs": [
+          "read"
+        ],
+        "positionalArgs": [
+          "url"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Article URL or local file path",
+          "positional": true
+        },
+        {
+          "name": "--prettify",
+          "type": "boolean",
+          "required": false,
+          "description": "Prettify the HTML output"
+        }
+      ]
+    },
+    {
+      "namespace": "omni-article-markdown",
+      "resource": "self",
+      "action": "version",
+      "description": "Print mdcli version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "mdcli",
         "baseArgs": [
           "--version"
-        ]
+        ],
+        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown"
       },
       "args": []
     },
     {
       "namespace": "omni-article-markdown",
-      "resource": "article",
-      "action": "convert",
-      "description": "convert article via undefined",
-      "adapter": "process",
-      "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "baseArgs": [],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "omni-article-markdown",
-      "resource": "url",
-      "action": "fetch",
-      "description": "fetch url via undefined",
-      "adapter": "process",
-      "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "baseArgs": [
-          "--url"
-        ],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "omni-article-markdown",
-      "resource": "output",
-      "action": "set",
-      "description": "set output via undefined",
-      "adapter": "process",
-      "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "baseArgs": [
-          "--output"
-        ],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "omni-article-markdown",
-      "resource": "format",
-      "action": "set",
-      "description": "set format via undefined",
-      "adapter": "process",
-      "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "baseArgs": [
-          "--format"
-        ],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "omni-article-markdown",
-      "resource": "image",
-      "action": "download",
-      "description": "download image via undefined",
-      "adapter": "process",
-      "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "baseArgs": [
-          "--download-images"
-        ],
-        "passthrough": true,
-        "timeout_ms": 300000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "omni-article-markdown",
-      "resource": "verbose",
-      "action": "set",
-      "description": "set verbose via undefined",
-      "adapter": "process",
-      "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "baseArgs": [
-          "--verbose"
-        ],
-        "passthrough": true,
-        "timeout_ms": 30000
-      },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
-    },
-    {
-      "namespace": "omni-article-markdown",
       "resource": "help",
       "action": "show",
-      "description": "show help via undefined",
+      "description": "Show mdcli help",
       "adapter": "process",
       "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
+        "command": "mdcli",
         "baseArgs": [
           "--help"
         ],
-        "passthrough": true,
-        "timeout_ms": 30000
+        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown"
       },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
+      "args": []
     },
     {
       "namespace": "omni-article-markdown",
       "resource": "_",
       "action": "_",
-      "description": "_ _ via undefined",
+      "description": "Passthrough to mdcli CLI",
       "adapter": "process",
       "adapterConfig": {
-        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown",
-        "passthrough": true
+        "command": "mdcli",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install omni-article-markdown: pip install omni-article-markdown"
       },
-      "args": [
-        {
-          "name": "args",
-          "type": "string",
-          "required": false,
-          "description": "Additional arguments"
-        }
-      ]
+      "args": []
     }
   ]
 }
