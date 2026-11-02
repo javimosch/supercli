@@ -1,0 +1,129 @@
+{
+  "name": "inspektor-gadget",
+  "version": "0.1.0",
+  "description": "eBPF-powered debugging and inspection framework for Kubernetes and containers \u2014 trace exec, network, DNS and more",
+  "source": "https://github.com/inspektor-gadget/inspektor-gadget",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "gadgetctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "inspektor-gadget",
+    "binary": "gadgetctl",
+    "check": "which gadgetctl",
+    "install_steps": [
+      "Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH",
+      "Or: go install github.com/inspektor-gadget/inspektor-gadget/cmd/gadgetctl@latest",
+      "Or as a kubectl plugin: kubectl krew install gadget (invoked as kubectl gadget)",
+      "Verify: gadgetctl version",
+      "supercli plugins install ./plugins/inspektor-gadget --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "inspektor-gadget",
+      "resource": "self",
+      "action": "version",
+      "description": "Print gadgetctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gadgetctl",
+        "baseArgs": [
+          "version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install gadgetctl: Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inspektor-gadget",
+      "resource": "cluster",
+      "action": "deploy",
+      "description": "Deploy the Inspektor Gadget DaemonSet into the cluster (gadgetctl deploy). Required once before running gadgets",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gadgetctl",
+        "baseArgs": [
+          "deploy"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install gadgetctl: Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inspektor-gadget",
+      "resource": "cluster",
+      "action": "undeploy",
+      "description": "Remove the Inspektor Gadget DaemonSet from the cluster (gadgetctl undeploy)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gadgetctl",
+        "baseArgs": [
+          "undeploy"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install gadgetctl: Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inspektor-gadget",
+      "resource": "gadgets",
+      "action": "run",
+      "description": "Run a gadget image such as trace_exec, trace_dns or trace_tcpconnect (gadgetctl run trace_exec -n myns). Streams live events",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gadgetctl",
+        "baseArgs": [
+          "run"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "missingDependencyHelp": "Install gadgetctl: Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inspektor-gadget",
+      "resource": "images",
+      "action": "list",
+      "description": "List local gadget OCI images (gadgetctl image list)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gadgetctl",
+        "baseArgs": [
+          "image",
+          "list"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install gadgetctl: Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "inspektor-gadget",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to gadgetctl CLI (advise, audit, profile, top, snapshot, traceloop subcommands and image management)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "gadgetctl",
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install gadgetctl: Download gadgetctl for your platform from https://github.com/inspektor-gadget/inspektor-gadget/releases and move it to PATH"
+      },
+      "args": []
+    }
+  ]
+}

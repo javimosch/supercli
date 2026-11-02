@@ -1,0 +1,150 @@
+{
+  "name": "k0sctl",
+  "version": "0.1.0",
+  "description": "k0s cluster lifecycle tool \u2014 declaratively bootstrap and upgrade k0s Kubernetes clusters over SSH",
+  "source": "https://github.com/k0sproject/k0sctl",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "k0sctl"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "k0sctl",
+    "binary": "k0sctl",
+    "check": "which k0sctl",
+    "install_steps": [
+      "Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH",
+      "Or: brew install k0sctl",
+      "Or: go install github.com/k0sproject/k0sctl@latest",
+      "Verify: k0sctl version",
+      "supercli plugins install ./plugins/k0sctl --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "k0sctl",
+      "resource": "self",
+      "action": "version",
+      "description": "Print k0sctl version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "baseArgs": [
+          "version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k0sctl",
+      "resource": "config",
+      "action": "init",
+      "description": "Generate a starter k0sctl.yaml cluster spec (k0sctl init > k0sctl.yaml). Add hosts inline: k0sctl init --k0s user@host",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "baseArgs": [
+          "init"
+        ],
+        "passthrough": true,
+        "timeout_ms": 60000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k0sctl",
+      "resource": "cluster",
+      "action": "apply",
+      "description": "Provision or converge the cluster from k0sctl.yaml (k0sctl apply --config k0sctl.yaml). Idempotent \u2014 re-run to upgrade or scale",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "baseArgs": [
+          "apply"
+        ],
+        "passthrough": true,
+        "timeout_ms": 1200000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k0sctl",
+      "resource": "cluster",
+      "action": "kubeconfig",
+      "description": "Fetch the admin kubeconfig for the deployed cluster (k0sctl kubeconfig > kubeconfig.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "baseArgs": [
+          "kubeconfig"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k0sctl",
+      "resource": "cluster",
+      "action": "backup",
+      "description": "Back up cluster state and certificates (k0sctl backup --config k0sctl.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "baseArgs": [
+          "backup"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k0sctl",
+      "resource": "cluster",
+      "action": "reset",
+      "description": "Uninstall k0s and reset all hosts in k0sctl.yaml (k0sctl reset --config k0sctl.yaml)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "baseArgs": [
+          "reset"
+        ],
+        "passthrough": true,
+        "timeout_ms": 600000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "k0sctl",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to k0sctl CLI (config status/edit, completion, other subcommands)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "k0sctl",
+        "passthrough": true,
+        "timeout_ms": 1200000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install k0sctl: Download k0sctl for your platform from https://github.com/k0sproject/k0sctl/releases and move it to PATH"
+      },
+      "args": []
+    }
+  ]
+}

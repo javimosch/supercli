@@ -1,0 +1,146 @@
+{
+  "name": "rbac-tool",
+  "version": "0.1.0",
+  "description": "Kubernetes RBAC inspection toolkit \u2014 who-can queries, permission lookups, rule analysis and policy generation",
+  "source": "https://github.com/alcideio/rbac-tool",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "rbac-tool"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "rbac-tool",
+    "binary": "rbac-tool",
+    "check": "which rbac-tool",
+    "install_steps": [
+      "Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH",
+      "Or: brew install rbac-tool",
+      "Or as a kubectl plugin: kubectl krew install rbac-tool (invoked as kubectl rbac-tool)",
+      "Verify: rbac-tool version",
+      "supercli plugins install ./plugins/rbac-tool --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "rbac-tool",
+      "resource": "self",
+      "action": "version",
+      "description": "Print rbac-tool version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "baseArgs": [
+          "version"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rbac-tool",
+      "resource": "access",
+      "action": "who-can",
+      "description": "Show which subjects can perform an action (rbac-tool who-can get secrets). Add -n to scope to a namespace",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "baseArgs": [
+          "who-can"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rbac-tool",
+      "resource": "access",
+      "action": "lookup",
+      "description": "Show effective permissions of a serviceaccount or user (rbac-tool lookup -e system:serviceaccount:ns:name)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "baseArgs": [
+          "lookup"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rbac-tool",
+      "resource": "rules",
+      "action": "analysis",
+      "description": "Analyze RBAC rules and flag risky/overly broad permissions (rbac-tool analysis -o table)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "baseArgs": [
+          "analysis"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rbac-tool",
+      "resource": "policies",
+      "action": "gen",
+      "description": "Generate least-privilege RBAC policies from observed audit-log traffic (rbac-tool gen). Reads the API server audit log",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "baseArgs": [
+          "gen"
+        ],
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rbac-tool",
+      "resource": "graph",
+      "action": "viz",
+      "description": "Render the RBAC permission graph as HTML (rbac-tool viz --outformat html -o rbac.html)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "baseArgs": [
+          "viz"
+        ],
+        "passthrough": true,
+        "timeout_ms": 180000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    },
+    {
+      "namespace": "rbac-tool",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to rbac-tool CLI (policy-rules, audit-log and other subcommands)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "rbac-tool",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install rbac-tool: Download rbac-tool for your platform from https://github.com/alcideio/rbac-tool/releases and move it to PATH"
+      },
+      "args": []
+    }
+  ]
+}

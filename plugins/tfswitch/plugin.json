@@ -1,0 +1,92 @@
+{
+  "name": "tfswitch",
+  "version": "0.1.0",
+  "description": "Terraform version switcher \u2014 instantly swap between installed Terraform versions per project",
+  "source": "https://github.com/warrensbox/terraform-switcher",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "tfswitch"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "tfswitch",
+    "binary": "tfswitch",
+    "check": "which tfswitch",
+    "install_steps": [
+      "brew install warrensbox/tap/tfswitch",
+      "Or: curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/master/install.sh | bash",
+      "Or: go install github.com/warrensbox/terraform-switcher@latest",
+      "Verify: tfswitch --help",
+      "supercli plugins install ./plugins/tfswitch --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "tfswitch",
+      "resource": "self",
+      "action": "usage",
+      "description": "Print tfswitch usage and flags",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfswitch",
+        "baseArgs": [
+          "--help"
+        ],
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install tfswitch: brew install warrensbox/tap/tfswitch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tfswitch",
+      "resource": "versions",
+      "action": "list",
+      "description": "List all downloadable Terraform versions (tfswitch --list-all). Pipes well into grep",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfswitch",
+        "baseArgs": [
+          "--list-all"
+        ],
+        "passthrough": true,
+        "timeout_ms": 120000,
+        "missingDependencyHelp": "Install tfswitch: brew install warrensbox/tap/tfswitch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tfswitch",
+      "resource": "versions",
+      "action": "switch",
+      "description": "Switch terraform to a version (tfswitch 1.6.6). Bare 'tfswitch' prompts interactively or honors .tfswitch.toml",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfswitch",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tfswitch: brew install warrensbox/tap/tfswitch"
+      },
+      "args": []
+    },
+    {
+      "namespace": "tfswitch",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to tfswitch CLI (version arg, --chdir, --bin, --opentofu and other flags)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "tfswitch",
+        "passthrough": true,
+        "timeout_ms": 300000,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install tfswitch: brew install warrensbox/tap/tfswitch"
+      },
+      "args": []
+    }
+  ]
+}
