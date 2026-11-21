@@ -1,11 +1,11 @@
 ---
 name: wrmsr
-description: Use this skill when the user wants to use wrmsr, cli tool: wrmsr.
+description: Use this skill when the user wants to use wrmsr, Utilities for modifying MSRs from userspace.
 ---
 
 # wrmsr Plugin
 
-CLI tool: wrmsr.
+wrmsr — Utilities for modifying MSRs from userspace.
 
 ## Commands
 - `wrmsr <resource> <action>` — Execute wrmsr commands
@@ -18,7 +18,7 @@ CLI tool: wrmsr.
 
 ## Installation
 ```bash
-apt-get install wrmsr 2>/dev/null || which wrmsr
+apt-get install msr-tools 2>/dev/null || which wrmsr
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: zjsdecode
-description: Use this skill when the user wants to use zjsdecode, cli tool: zjsdecode.
+description: Use this skill when the user wants to use zjsdecode, printer driver for ZjStream-based printers.
 ---
 
 # zjsdecode Plugin
 
-CLI tool: zjsdecode.
+zjsdecode — printer driver for ZjStream-based printers.
 
 ## Commands
 - `zjsdecode <resource> <action>` — Execute zjsdecode commands
@@ -18,7 +18,7 @@ CLI tool: zjsdecode.
 
 ## Installation
 ```bash
-apt-get install zjsdecode 2>/dev/null || which zjsdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which zjsdecode
 ```
 
 ## Key Features

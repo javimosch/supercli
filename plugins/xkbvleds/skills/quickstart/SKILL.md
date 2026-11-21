@@ -1,11 +1,11 @@
 ---
 name: xkbvleds
-description: Use this skill when the user wants to use xkbvleds, cli tool: xkbvleds.
+description: Use this skill when the user wants to use xkbvleds, X11 XKB utilities.
 ---
 
 # xkbvleds Plugin
 
-CLI tool: xkbvleds.
+xkbvleds — X11 XKB utilities.
 
 ## Commands
 - `xkbvleds <resource> <action>` — Execute xkbvleds commands
@@ -18,7 +18,7 @@ CLI tool: xkbvleds.
 
 ## Installation
 ```bash
-apt-get install xkbvleds 2>/dev/null || which xkbvleds
+apt-get install x11-xkb-utils 2>/dev/null || which xkbvleds
 ```
 
 ## Key Features

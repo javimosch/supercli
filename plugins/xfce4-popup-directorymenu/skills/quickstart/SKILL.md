@@ -1,11 +1,11 @@
 ---
 name: xfce4-popup-directorymenu
-description: Use this skill when the user wants to use xfce4-popup-directorymenu, cli tool: xfce4-popup-directorymenu.
+description: Use this skill when the user wants to use xfce4-popup-directorymenu, panel for Xfce4 desktop environment.
 ---
 
 # xfce4-popup-directorymenu Plugin
 
-CLI tool: xfce4-popup-directorymenu.
+xfce4-popup-directorymenu — panel for Xfce4 desktop environment.
 
 ## Commands
 - `xfce4-popup-directorymenu <resource> <action>` — Execute xfce4-popup-directorymenu commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-popup-directorymenu.
 
 ## Installation
 ```bash
-apt-get install xfce4-popup-directorymenu 2>/dev/null || which xfce4-popup-directorymenu
+apt-get install xfce4-panel 2>/dev/null || which xfce4-popup-directorymenu
 ```
 
 ## Key Features

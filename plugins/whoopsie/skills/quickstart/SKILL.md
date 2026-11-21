@@ -1,11 +1,11 @@
 ---
 name: whoopsie
-description: Use this skill when the user wants to use whoopsie, cli tool: whoopsie.
+description: Use this skill when the user wants to use whoopsie, Ubuntu error tracker submission.
 ---
 
 # whoopsie Plugin
 
-CLI tool: whoopsie.
+Ubuntu error tracker submission.
 
 ## Commands
 - `whoopsie <resource> <action>` — Execute whoopsie commands

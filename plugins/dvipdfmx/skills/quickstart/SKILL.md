@@ -1,11 +1,11 @@
 ---
 name: dvipdfmx
-description: Use this skill when the user wants to use dvipdfmx, cli tool: dvipdfmx.
+description: Use this skill when the user wants to use dvipdfmx, Binaries for TeX Live.
 ---
 
 # dvipdfmx Plugin
 
-CLI tool: dvipdfmx.
+dvipdfmx — Binaries for TeX Live.
 
 ## Commands
 - `dvipdfmx <resource> <action>` — Execute dvipdfmx commands
@@ -18,7 +18,7 @@ CLI tool: dvipdfmx.
 
 ## Installation
 ```bash
-apt-get install dvipdfmx 2>/dev/null || which dvipdfmx
+apt-get install texlive-binaries 2>/dev/null || which dvipdfmx
 ```
 
 ## Key Features

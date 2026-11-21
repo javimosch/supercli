@@ -1,11 +1,11 @@
 ---
 name: vgmerge
-description: Use this skill when the user wants to use vgmerge, cli tool: vgmerge.
+description: Use this skill when the user wants to use vgmerge, Linux Logical Volume Manager.
 ---
 
 # vgmerge Plugin
 
-CLI tool: vgmerge.
+vgmerge — Linux Logical Volume Manager.
 
 ## Commands
 - `vgmerge <resource> <action>` — Execute vgmerge commands
@@ -18,7 +18,7 @@ CLI tool: vgmerge.
 
 ## Installation
 ```bash
-apt-get install vgmerge 2>/dev/null || which vgmerge
+apt-get install lvm2 2>/dev/null || which vgmerge
 ```
 
 ## Key Features

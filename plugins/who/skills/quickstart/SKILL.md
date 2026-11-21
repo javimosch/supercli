@@ -1,11 +1,11 @@
 ---
 name: who
-description: Use this skill when the user wants to use who, cli tool: who.
+description: Use this skill when the user wants to use who, GNU core utilities.
 ---
 
 # who Plugin
 
-CLI tool: who.
+who — GNU core utilities.
 
 ## Commands
 - `who <resource> <action>` — Execute who commands
@@ -18,7 +18,7 @@ CLI tool: who.
 
 ## Installation
 ```bash
-apt-get install who 2>/dev/null || which who
+apt-get install coreutils 2>/dev/null || which who
 ```
 
 ## Key Features

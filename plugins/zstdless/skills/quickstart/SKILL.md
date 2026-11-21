@@ -1,11 +1,11 @@
 ---
 name: zstdless
-description: Use this skill when the user wants to use zstdless, cli tool: zstdless.
+description: Use this skill when the user wants to use zstdless, fast lossless compression algorithm -- CLI tool.
 ---
 
 # zstdless Plugin
 
-CLI tool: zstdless.
+zstdless — fast lossless compression algorithm -- CLI tool.
 
 ## Commands
 - `zstdless <resource> <action>` — Execute zstdless commands
@@ -18,7 +18,7 @@ CLI tool: zstdless.
 
 ## Installation
 ```bash
-apt-get install zstdless 2>/dev/null || which zstdless
+apt-get install zstd 2>/dev/null || which zstdless
 ```
 
 ## Key Features

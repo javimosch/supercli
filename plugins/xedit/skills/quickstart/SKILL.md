@@ -1,11 +1,11 @@
 ---
 name: xedit
-description: Use this skill when the user wants to use xedit, cli tool: xedit.
+description: Use this skill when the user wants to use xedit, X applications.
 ---
 
 # xedit Plugin
 
-CLI tool: xedit.
+xedit — X applications.
 
 ## Commands
 - `xedit <resource> <action>` — Execute xedit commands
@@ -18,7 +18,7 @@ CLI tool: xedit.
 
 ## Installation
 ```bash
-apt-get install xedit 2>/dev/null || which xedit
+apt-get install x11-apps 2>/dev/null || which xedit
 ```
 
 ## Key Features

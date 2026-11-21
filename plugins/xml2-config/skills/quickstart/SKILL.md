@@ -1,11 +1,11 @@
 ---
 name: xml2-config
-description: Use this skill when the user wants to use xml2-config, cli tool: xml2-config.
+description: Use this skill when the user wants to use xml2-config, GNOME XML library - development files.
 ---
 
 # xml2-config Plugin
 
-CLI tool: xml2-config.
+xml2-config — GNOME XML library - development files.
 
 ## Commands
 - `xml2-config <resource> <action>` — Execute xml2-config commands
@@ -18,7 +18,7 @@ CLI tool: xml2-config.
 
 ## Installation
 ```bash
-apt-get install xml2-config 2>/dev/null || which xml2-config
+apt-get install libxml2-dev 2>/dev/null || which xml2-config
 ```
 
 ## Key Features

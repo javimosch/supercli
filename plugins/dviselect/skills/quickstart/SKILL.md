@@ -1,11 +1,11 @@
 ---
 name: dviselect
-description: Use this skill when the user wants to use dviselect, cli tool: dviselect.
+description: Use this skill when the user wants to use dviselect, Binaries for TeX Live.
 ---
 
 # dviselect Plugin
 
-CLI tool: dviselect.
+dviselect — Binaries for TeX Live.
 
 ## Commands
 - `dviselect <resource> <action>` — Execute dviselect commands
@@ -18,7 +18,7 @@ CLI tool: dviselect.
 
 ## Installation
 ```bash
-apt-get install dviselect 2>/dev/null || which dviselect
+apt-get install texlive-binaries 2>/dev/null || which dviselect
 ```
 
 ## Key Features

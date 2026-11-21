@@ -1,11 +1,11 @@
 ---
 name: zic
-description: Use this skill when the user wants to use zic, cli tool: zic.
+description: Use this skill when the user wants to use zic, GNU C Library: Binaries.
 ---
 
 # zic Plugin
 
-CLI tool: zic.
+zic — GNU C Library: Binaries.
 
 ## Commands
 - `zic <resource> <action>` — Execute zic commands
@@ -18,7 +18,7 @@ CLI tool: zic.
 
 ## Installation
 ```bash
-apt-get install zic 2>/dev/null || which zic
+apt-get install libc-bin 2>/dev/null || which zic
 ```
 
 ## Key Features

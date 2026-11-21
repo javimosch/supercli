@@ -1,11 +1,11 @@
 ---
 name: xbrlapi
-description: Use this skill when the user wants to use xbrlapi, cli tool: xbrlapi.
+description: Use this skill when the user wants to use xbrlapi, Access software for a blind person using a braille display - xbrlapi.
 ---
 
 # xbrlapi Plugin
 
-CLI tool: xbrlapi.
+Access software for a blind person using a braille display - xbrlapi.
 
 ## Commands
 - `xbrlapi <resource> <action>` — Execute xbrlapi commands

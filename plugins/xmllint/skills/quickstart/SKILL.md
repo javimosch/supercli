@@ -1,11 +1,11 @@
 ---
 name: xmllint
-description: Use this skill when the user wants to use xmllint, cli tool: xmllint.
+description: Use this skill when the user wants to use xmllint, GNOME XML library - utilities.
 ---
 
 # xmllint Plugin
 
-CLI tool: xmllint.
+xmllint — GNOME XML library - utilities.
 
 ## Commands
 - `xmllint <resource> <action>` — Execute xmllint commands
@@ -18,7 +18,7 @@ CLI tool: xmllint.
 
 ## Installation
 ```bash
-apt-get install xmllint 2>/dev/null || which xmllint
+apt-get install libxml2-utils 2>/dev/null || which xmllint
 ```
 
 ## Key Features

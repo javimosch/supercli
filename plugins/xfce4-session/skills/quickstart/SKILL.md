@@ -1,11 +1,11 @@
 ---
 name: xfce4-session
-description: Use this skill when the user wants to use xfce4-session, cli tool: xfce4-session.
+description: Use this skill when the user wants to use xfce4-session, Xfce4 Session Manager.
 ---
 
 # xfce4-session Plugin
 
-CLI tool: xfce4-session.
+Xfce4 Session Manager.
 
 ## Commands
 - `xfce4-session <resource> <action>` — Execute xfce4-session commands

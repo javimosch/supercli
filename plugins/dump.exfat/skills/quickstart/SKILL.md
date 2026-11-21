@@ -1,11 +1,11 @@
 ---
 name: dump.exfat
-description: Use this skill when the user wants to use dump.exfat, cli tool: dump.exfat.
+description: Use this skill when the user wants to use dump.exfat, exFAT file system utilities.
 ---
 
 # dump.exfat Plugin
 
-CLI tool: dump.exfat.
+dump.exfat — exFAT file system utilities.
 
 ## Commands
 - `dump.exfat <resource> <action>` — Execute dump.exfat commands
@@ -18,7 +18,7 @@ CLI tool: dump.exfat.
 
 ## Installation
 ```bash
-apt-get install dump.exfat 2>/dev/null || which dump.exfat
+apt-get install exfatprogs 2>/dev/null || which dump.exfat
 ```
 
 ## Key Features

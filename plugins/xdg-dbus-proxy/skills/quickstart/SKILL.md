@@ -1,11 +1,11 @@
 ---
 name: xdg-dbus-proxy
-description: Use this skill when the user wants to use xdg-dbus-proxy, cli tool: xdg-dbus-proxy.
+description: Use this skill when the user wants to use xdg-dbus-proxy, filtering D-Bus proxy.
 ---
 
 # xdg-dbus-proxy Plugin
 
-CLI tool: xdg-dbus-proxy.
+filtering D-Bus proxy.
 
 ## Commands
 - `xdg-dbus-proxy <resource> <action>` — Execute xdg-dbus-proxy commands

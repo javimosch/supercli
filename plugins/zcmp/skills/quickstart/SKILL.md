@@ -1,11 +1,11 @@
 ---
 name: zcmp
-description: Use this skill when the user wants to use zcmp, cli tool: zcmp.
+description: Use this skill when the user wants to use zcmp, GNU compression utilities.
 ---
 
 # zcmp Plugin
 
-CLI tool: zcmp.
+zcmp — GNU compression utilities.
 
 ## Commands
 - `zcmp <resource> <action>` — Execute zcmp commands
@@ -18,7 +18,7 @@ CLI tool: zcmp.
 
 ## Installation
 ```bash
-apt-get install zcmp 2>/dev/null || which zcmp
+apt-get install gzip 2>/dev/null || which zcmp
 ```
 
 ## Key Features

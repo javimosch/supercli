@@ -1,11 +1,11 @@
 ---
 name: x-terminal-emulator
-description: Use this skill when the user wants to use x-terminal-emulator, cli tool: x-terminal-emulator.
+description: Use this skill when the user wants to use x-terminal-emulator, Fast, lightweight and minimalistic Wayland terminal emulator.
 ---
 
 # x-terminal-emulator Plugin
 
-CLI tool: x-terminal-emulator.
+x-terminal-emulator — Fast, lightweight and minimalistic Wayland terminal emulator.
 
 ## Commands
 - `x-terminal-emulator <resource> <action>` — Execute x-terminal-emulator commands
@@ -18,7 +18,7 @@ CLI tool: x-terminal-emulator.
 
 ## Installation
 ```bash
-apt-get install x-terminal-emulator 2>/dev/null || which x-terminal-emulator
+apt-get install foot 2>/dev/null || which x-terminal-emulator
 ```
 
 ## Key Features

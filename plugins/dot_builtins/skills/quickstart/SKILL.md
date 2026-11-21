@@ -1,11 +1,11 @@
 ---
 name: dot_builtins
-description: Use this skill when the user wants to use dot_builtins, cli tool: dot_builtins.
+description: Use this skill when the user wants to use dot_builtins, rich set of graph drawing tools.
 ---
 
 # dot_builtins Plugin
 
-CLI tool: dot_builtins.
+dot_builtins — rich set of graph drawing tools.
 
 ## Commands
 - `dot_builtins <resource> <action>` — Execute dot_builtins commands
@@ -18,7 +18,7 @@ CLI tool: dot_builtins.
 
 ## Installation
 ```bash
-apt-get install dot_builtins 2>/dev/null || which dot_builtins
+apt-get install graphviz 2>/dev/null || which dot_builtins
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: dvitype
-description: Use this skill when the user wants to use dvitype, cli tool: dvitype.
+description: Use this skill when the user wants to use dvitype, Binaries for TeX Live.
 ---
 
 # dvitype Plugin
 
-CLI tool: dvitype.
+dvitype — Binaries for TeX Live.
 
 ## Commands
 - `dvitype <resource> <action>` — Execute dvitype commands
@@ -18,7 +18,7 @@ CLI tool: dvitype.
 
 ## Installation
 ```bash
-apt-get install dvitype 2>/dev/null || which dvitype
+apt-get install texlive-binaries 2>/dev/null || which dvitype
 ```
 
 ## Key Features

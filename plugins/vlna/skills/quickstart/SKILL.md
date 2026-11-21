@@ -1,11 +1,11 @@
 ---
 name: vlna
-description: Use this skill when the user wants to use vlna, cli tool: vlna.
+description: Use this skill when the user wants to use vlna, Binaries for TeX Live.
 ---
 
 # vlna Plugin
 
-CLI tool: vlna.
+vlna — Binaries for TeX Live.
 
 ## Commands
 - `vlna <resource> <action>` — Execute vlna commands
@@ -18,7 +18,7 @@ CLI tool: vlna.
 
 ## Installation
 ```bash
-apt-get install vlna 2>/dev/null || which vlna
+apt-get install texlive-binaries 2>/dev/null || which vlna
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: zmore
-description: Use this skill when the user wants to use zmore, cli tool: zmore.
+description: Use this skill when the user wants to use zmore, GNU compression utilities.
 ---
 
 # zmore Plugin
 
-CLI tool: zmore.
+zmore — GNU compression utilities.
 
 ## Commands
 - `zmore <resource> <action>` — Execute zmore commands
@@ -18,7 +18,7 @@ CLI tool: zmore.
 
 ## Installation
 ```bash
-apt-get install zmore 2>/dev/null || which zmore
+apt-get install gzip 2>/dev/null || which zmore
 ```
 
 ## Key Features

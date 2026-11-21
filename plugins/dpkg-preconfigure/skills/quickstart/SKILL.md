@@ -1,11 +1,11 @@
 ---
 name: dpkg-preconfigure
-description: Use this skill when the user wants to use dpkg-preconfigure, cli tool: dpkg-preconfigure.
+description: Use this skill when the user wants to use dpkg-preconfigure, Debian configuration management system.
 ---
 
 # dpkg-preconfigure Plugin
 
-CLI tool: dpkg-preconfigure.
+dpkg-preconfigure — Debian configuration management system.
 
 ## Commands
 - `dpkg-preconfigure <resource> <action>` — Execute dpkg-preconfigure commands
@@ -18,7 +18,7 @@ CLI tool: dpkg-preconfigure.
 
 ## Installation
 ```bash
-apt-get install dpkg-preconfigure 2>/dev/null || which dpkg-preconfigure
+apt-get install debconf 2>/dev/null || which dpkg-preconfigure
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xzdiff
-description: Use this skill when the user wants to use xzdiff, cli tool: xzdiff.
+description: Use this skill when the user wants to use xzdiff, XZ-format compression utilities.
 ---
 
 # xzdiff Plugin
 
-CLI tool: xzdiff.
+xzdiff — XZ-format compression utilities.
 
 ## Commands
 - `xzdiff <resource> <action>` — Execute xzdiff commands
@@ -18,7 +18,7 @@ CLI tool: xzdiff.
 
 ## Installation
 ```bash
-apt-get install xzdiff 2>/dev/null || which xzdiff
+apt-get install xz-utils 2>/dev/null || which xzdiff
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-objcopy
-description: Use this skill when the user wants to use x86_64-linux-gnu-objcopy, cli tool: x86_64-linux-gnu-objcopy.
+description: Use this skill when the user wants to use x86_64-linux-gnu-objcopy, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-objcopy Plugin
 
-CLI tool: x86_64-linux-gnu-objcopy.
+x86_64-linux-gnu-objcopy — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-objcopy <resource> <action>` — Execute x86_64-linux-gnu-objcopy commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-objcopy.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-objcopy 2>/dev/null || which x86_64-linux-gnu-objcopy
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-objcopy
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: vimdot
-description: Use this skill when the user wants to use vimdot, cli tool: vimdot.
+description: Use this skill when the user wants to use vimdot, rich set of graph drawing tools.
 ---
 
 # vimdot Plugin
 
-CLI tool: vimdot.
+vimdot — rich set of graph drawing tools.
 
 ## Commands
 - `vimdot <resource> <action>` — Execute vimdot commands
@@ -18,7 +18,7 @@ CLI tool: vimdot.
 
 ## Installation
 ```bash
-apt-get install vimdot 2>/dev/null || which vimdot
+apt-get install graphviz 2>/dev/null || which vimdot
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: Xvfb
-description: Use this skill when the user wants to use Xvfb, cli tool: xvfb.
+description: Use this skill when the user wants to use Xvfb, Virtual Framebuffer 'fake' X server.
 ---
 
 # Xvfb Plugin
 
-CLI tool: Xvfb.
+Xvfb — Virtual Framebuffer 'fake' X server.
 
 ## Commands
 - `Xvfb <resource> <action>` — Execute Xvfb commands
@@ -18,7 +18,7 @@ CLI tool: Xvfb.
 
 ## Installation
 ```bash
-apt-get install Xvfb 2>/dev/null || which Xvfb
+apt-get install xvfb 2>/dev/null || which Xvfb
 ```
 
 ## Key Features

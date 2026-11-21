@@ -1,11 +1,11 @@
 ---
 name: xmlpatternsvalidator
-description: Use this skill when the user wants to use xmlpatternsvalidator, cli tool: xmlpatternsvalidator.
+description: Use this skill when the user wants to use xmlpatternsvalidator, Wrapper to select between Qt development binary versions.
 ---
 
 # xmlpatternsvalidator Plugin
 
-CLI tool: xmlpatternsvalidator.
+xmlpatternsvalidator — Wrapper to select between Qt development binary versions.
 
 ## Commands
 - `xmlpatternsvalidator <resource> <action>` — Execute xmlpatternsvalidator commands
@@ -18,7 +18,7 @@ CLI tool: xmlpatternsvalidator.
 
 ## Installation
 ```bash
-apt-get install xmlpatternsvalidator 2>/dev/null || which xmlpatternsvalidator
+apt-get install qtchooser 2>/dev/null || which xmlpatternsvalidator
 ```
 
 ## Key Features

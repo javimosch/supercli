@@ -1,11 +1,11 @@
 ---
 name: dt2dv
-description: Use this skill when the user wants to use dt2dv, cli tool: dt2dv.
+description: Use this skill when the user wants to use dt2dv, Binaries for TeX Live.
 ---
 
 # dt2dv Plugin
 
-CLI tool: dt2dv.
+dt2dv — Binaries for TeX Live.
 
 ## Commands
 - `dt2dv <resource> <action>` — Execute dt2dv commands
@@ -18,7 +18,7 @@ CLI tool: dt2dv.
 
 ## Installation
 ```bash
-apt-get install dt2dv 2>/dev/null || which dt2dv
+apt-get install texlive-binaries 2>/dev/null || which dt2dv
 ```
 
 ## Key Features

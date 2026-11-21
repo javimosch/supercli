@@ -1,11 +1,11 @@
 ---
 name: xdvi-xaw
-description: Use this skill when the user wants to use xdvi-xaw, cli tool: xdvi-xaw.
+description: Use this skill when the user wants to use xdvi-xaw, Binaries for TeX Live.
 ---
 
 # xdvi-xaw Plugin
 
-CLI tool: xdvi-xaw.
+xdvi-xaw — Binaries for TeX Live.
 
 ## Commands
 - `xdvi-xaw <resource> <action>` — Execute xdvi-xaw commands
@@ -18,7 +18,7 @@ CLI tool: xdvi-xaw.
 
 ## Installation
 ```bash
-apt-get install xdvi-xaw 2>/dev/null || which xdvi-xaw
+apt-get install texlive-binaries 2>/dev/null || which xdvi-xaw
 ```
 
 ## Key Features

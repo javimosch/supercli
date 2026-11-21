@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gcc-ar-11
-description: Use this skill when the user wants to use x86_64-linux-gnu-gcc-ar-11, cli tool: x86_64-linux-gnu-gcc-ar-11.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gcc-ar-11, GNU C compiler.
 ---
 
 # x86_64-linux-gnu-gcc-ar-11 Plugin
 
-CLI tool: x86_64-linux-gnu-gcc-ar-11.
+x86_64-linux-gnu-gcc-ar-11 — GNU C compiler.
 
 ## Commands
 - `x86_64-linux-gnu-gcc-ar-11 <resource> <action>` — Execute x86_64-linux-gnu-gcc-ar-11 commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcc-ar-11.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcc-ar-11 2>/dev/null || which x86_64-linux-gnu-gcc-ar-11
+apt-get install gcc-11 2>/dev/null || which x86_64-linux-gnu-gcc-ar-11
 ```
 
 ## Key Features

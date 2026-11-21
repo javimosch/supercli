@@ -1,11 +1,11 @@
 ---
 name: vgmknodes
-description: Use this skill when the user wants to use vgmknodes, cli tool: vgmknodes.
+description: Use this skill when the user wants to use vgmknodes, Linux Logical Volume Manager.
 ---
 
 # vgmknodes Plugin
 
-CLI tool: vgmknodes.
+vgmknodes — Linux Logical Volume Manager.
 
 ## Commands
 - `vgmknodes <resource> <action>` — Execute vgmknodes commands
@@ -18,7 +18,7 @@ CLI tool: vgmknodes.
 
 ## Installation
 ```bash
-apt-get install vgmknodes 2>/dev/null || which vgmknodes
+apt-get install lvm2 2>/dev/null || which vgmknodes
 ```
 
 ## Key Features

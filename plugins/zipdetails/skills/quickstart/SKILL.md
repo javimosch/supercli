@@ -1,11 +1,11 @@
 ---
 name: zipdetails
-description: Use this skill when the user wants to use zipdetails, cli tool: zipdetails.
+description: Use this skill when the user wants to use zipdetails, Larry Wall's Practical Extraction and Report Language.
 ---
 
 # zipdetails Plugin
 
-CLI tool: zipdetails.
+zipdetails — Larry Wall's Practical Extraction and Report Language.
 
 ## Commands
 - `zipdetails <resource> <action>` — Execute zipdetails commands
@@ -18,7 +18,7 @@ CLI tool: zipdetails.
 
 ## Installation
 ```bash
-apt-get install zipdetails 2>/dev/null || which zipdetails
+apt-get install perl 2>/dev/null || which zipdetails
 ```
 
 ## Key Features

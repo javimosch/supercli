@@ -1,11 +1,11 @@
 ---
 name: whoami
-description: Use this skill when the user wants to use whoami, cli tool: whoami.
+description: Use this skill when the user wants to use whoami, GNU core utilities.
 ---
 
 # whoami Plugin
 
-CLI tool: whoami.
+whoami — GNU core utilities.
 
 ## Commands
 - `whoami <resource> <action>` — Execute whoami commands
@@ -18,7 +18,7 @@ CLI tool: whoami.
 
 ## Installation
 ```bash
-apt-get install whoami 2>/dev/null || which whoami
+apt-get install coreutils 2>/dev/null || which whoami
 ```
 
 ## Key Features

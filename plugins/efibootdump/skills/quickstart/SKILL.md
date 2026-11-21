@@ -1,11 +1,11 @@
 ---
 name: efibootdump
-description: Use this skill when the user wants to use efibootdump, cli tool: efibootdump.
+description: Use this skill when the user wants to use efibootdump, Interact with the EFI Boot Manager.
 ---
 
 # efibootdump Plugin
 
-CLI tool: efibootdump.
+efibootdump — Interact with the EFI Boot Manager.
 
 ## Commands
 - `efibootdump <resource> <action>` — Execute efibootdump commands
@@ -18,7 +18,7 @@ CLI tool: efibootdump.
 
 ## Installation
 ```bash
-apt-get install efibootdump 2>/dev/null || which efibootdump
+apt-get install efibootmgr 2>/dev/null || which efibootdump
 ```
 
 ## Key Features

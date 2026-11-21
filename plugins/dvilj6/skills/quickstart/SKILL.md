@@ -1,11 +1,11 @@
 ---
 name: dvilj6
-description: Use this skill when the user wants to use dvilj6, cli tool: dvilj6.
+description: Use this skill when the user wants to use dvilj6, Binaries for TeX Live.
 ---
 
 # dvilj6 Plugin
 
-CLI tool: dvilj6.
+dvilj6 — Binaries for TeX Live.
 
 ## Commands
 - `dvilj6 <resource> <action>` — Execute dvilj6 commands
@@ -18,7 +18,7 @@ CLI tool: dvilj6.
 
 ## Installation
 ```bash
-apt-get install dvilj6 2>/dev/null || which dvilj6
+apt-get install texlive-binaries 2>/dev/null || which dvilj6
 ```
 
 ## Key Features

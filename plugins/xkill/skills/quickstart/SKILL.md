@@ -1,11 +1,11 @@
 ---
 name: xkill
-description: Use this skill when the user wants to use xkill, cli tool: xkill.
+description: Use this skill when the user wants to use xkill, X11 utilities.
 ---
 
 # xkill Plugin
 
-CLI tool: xkill.
+xkill — X11 utilities.
 
 ## Commands
 - `xkill <resource> <action>` — Execute xkill commands
@@ -18,7 +18,7 @@ CLI tool: xkill.
 
 ## Installation
 ```bash
-apt-get install xkill 2>/dev/null || which xkill
+apt-get install x11-utils 2>/dev/null || which xkill
 ```
 
 ## Key Features

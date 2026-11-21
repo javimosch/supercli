@@ -1,11 +1,11 @@
 ---
 name: dockerd
-description: Use this skill when the user wants to use dockerd, cli tool: dockerd.
+description: Use this skill when the user wants to use dockerd, Linux container runtime.
 ---
 
 # dockerd Plugin
 
-CLI tool: dockerd.
+dockerd — Linux container runtime.
 
 ## Commands
 - `dockerd <resource> <action>` — Execute dockerd commands
@@ -18,7 +18,7 @@ CLI tool: dockerd.
 
 ## Installation
 ```bash
-apt-get install dockerd 2>/dev/null || which dockerd
+apt-get install docker.io 2>/dev/null || which dockerd
 ```
 
 ## Key Features

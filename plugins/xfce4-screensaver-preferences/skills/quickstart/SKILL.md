@@ -1,11 +1,11 @@
 ---
 name: xfce4-screensaver-preferences
-description: Use this skill when the user wants to use xfce4-screensaver-preferences, cli tool: xfce4-screensaver-preferences.
+description: Use this skill when the user wants to use xfce4-screensaver-preferences, screen saver and locker that is integrated with the xfce4 desktop.
 ---
 
 # xfce4-screensaver-preferences Plugin
 
-CLI tool: xfce4-screensaver-preferences.
+xfce4-screensaver-preferences — screen saver and locker that is integrated with the xfce4 desktop.
 
 ## Commands
 - `xfce4-screensaver-preferences <resource> <action>` — Execute xfce4-screensaver-preferences commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-screensaver-preferences.
 
 ## Installation
 ```bash
-apt-get install xfce4-screensaver-preferences 2>/dev/null || which xfce4-screensaver-preferences
+apt-get install xfce4-screensaver 2>/dev/null || which xfce4-screensaver-preferences
 ```
 
 ## Key Features

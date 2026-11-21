@@ -1,11 +1,11 @@
 ---
 name: simpdftex
-description: Use this skill when the user wants to use simpdftex, cli tool: simpdftex.
+description: Use this skill when the user wants to use simpdftex, TeX Live: Essential programs and files.
 ---
 
 # simpdftex Plugin
 
-CLI tool: simpdftex.
+simpdftex — TeX Live: Essential programs and files.
 
 ## Commands
 - `simpdftex <resource> <action>` — Execute simpdftex commands
@@ -18,7 +18,7 @@ CLI tool: simpdftex.
 
 ## Installation
 ```bash
-apt-get install simpdftex 2>/dev/null || which simpdftex
+apt-get install texlive-base 2>/dev/null || which simpdftex
 ```
 
 ## Key Features

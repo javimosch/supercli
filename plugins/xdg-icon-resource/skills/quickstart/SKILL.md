@@ -1,11 +1,11 @@
 ---
 name: xdg-icon-resource
-description: Use this skill when the user wants to use xdg-icon-resource, cli tool: xdg-icon-resource.
+description: Use this skill when the user wants to use xdg-icon-resource, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-icon-resource Plugin
 
-CLI tool: xdg-icon-resource.
+xdg-icon-resource — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-icon-resource <resource> <action>` — Execute xdg-icon-resource commands
@@ -18,7 +18,7 @@ CLI tool: xdg-icon-resource.
 
 ## Installation
 ```bash
-apt-get install xdg-icon-resource 2>/dev/null || which xdg-icon-resource
+apt-get install xdg-utils 2>/dev/null || which xdg-icon-resource
 ```
 
 ## Key Features

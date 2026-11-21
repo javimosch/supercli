@@ -1,11 +1,11 @@
 ---
 name: xbrnetwork-ui
-description: Use this skill when the user wants to use xbrnetwork-ui, cli tool: xbrnetwork-ui.
+description: Use this skill when the user wants to use xbrnetwork-ui, WebSocket client and server library, WAMP framework - Python 3.x.
 ---
 
 # xbrnetwork-ui Plugin
 
-CLI tool: xbrnetwork-ui.
+xbrnetwork-ui — WebSocket client and server library, WAMP framework - Python 3.x.
 
 ## Commands
 - `xbrnetwork-ui <resource> <action>` — Execute xbrnetwork-ui commands
@@ -18,7 +18,7 @@ CLI tool: xbrnetwork-ui.
 
 ## Installation
 ```bash
-apt-get install xbrnetwork-ui 2>/dev/null || which xbrnetwork-ui
+apt-get install python3-autobahn 2>/dev/null || which xbrnetwork-ui
 ```
 
 ## Key Features

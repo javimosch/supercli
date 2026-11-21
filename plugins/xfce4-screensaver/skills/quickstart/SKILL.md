@@ -1,11 +1,11 @@
 ---
 name: xfce4-screensaver
-description: Use this skill when the user wants to use xfce4-screensaver, cli tool: xfce4-screensaver.
+description: Use this skill when the user wants to use xfce4-screensaver, screen saver and locker that is integrated with the xfce4 desktop.
 ---
 
 # xfce4-screensaver Plugin
 
-CLI tool: xfce4-screensaver.
+screen saver and locker that is integrated with the xfce4 desktop.
 
 ## Commands
 - `xfce4-screensaver <resource> <action>` — Execute xfce4-screensaver commands

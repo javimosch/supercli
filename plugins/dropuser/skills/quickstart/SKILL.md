@@ -1,11 +1,11 @@
 ---
 name: dropuser
-description: Use this skill when the user wants to use dropuser, cli tool: dropuser.
+description: Use this skill when the user wants to use dropuser, manager for multiple PostgreSQL client versions.
 ---
 
 # dropuser Plugin
 
-CLI tool: dropuser.
+dropuser — manager for multiple PostgreSQL client versions.
 
 ## Commands
 - `dropuser <resource> <action>` — Execute dropuser commands
@@ -18,7 +18,7 @@ CLI tool: dropuser.
 
 ## Installation
 ```bash
-apt-get install dropuser 2>/dev/null || which dropuser
+apt-get install postgresql-client-common 2>/dev/null || which dropuser
 ```
 
 ## Key Features

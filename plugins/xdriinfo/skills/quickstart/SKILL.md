@@ -1,11 +1,11 @@
 ---
 name: xdriinfo
-description: Use this skill when the user wants to use xdriinfo, cli tool: xdriinfo.
+description: Use this skill when the user wants to use xdriinfo, X11 utilities.
 ---
 
 # xdriinfo Plugin
 
-CLI tool: xdriinfo.
+xdriinfo — X11 utilities.
 
 ## Commands
 - `xdriinfo <resource> <action>` — Execute xdriinfo commands
@@ -18,7 +18,7 @@ CLI tool: xdriinfo.
 
 ## Installation
 ```bash
-apt-get install xdriinfo 2>/dev/null || which xdriinfo
+apt-get install x11-utils 2>/dev/null || which xdriinfo
 ```
 
 ## Key Features

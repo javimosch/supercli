@@ -1,11 +1,11 @@
 ---
 name: xfsettingsd
-description: Use this skill when the user wants to use xfsettingsd, cli tool: xfsettingsd.
+description: Use this skill when the user wants to use xfsettingsd, graphical application for managing Xfce settings.
 ---
 
 # xfsettingsd Plugin
 
-CLI tool: xfsettingsd.
+xfsettingsd — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfsettingsd <resource> <action>` — Execute xfsettingsd commands
@@ -18,7 +18,7 @@ CLI tool: xfsettingsd.
 
 ## Installation
 ```bash
-apt-get install xfsettingsd 2>/dev/null || which xfsettingsd
+apt-get install xfce4-settings 2>/dev/null || which xfsettingsd
 ```
 
 ## Key Features

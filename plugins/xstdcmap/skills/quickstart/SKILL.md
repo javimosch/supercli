@@ -1,11 +1,11 @@
 ---
 name: xstdcmap
-description: Use this skill when the user wants to use xstdcmap, cli tool: xstdcmap.
+description: Use this skill when the user wants to use xstdcmap, X server utilities.
 ---
 
 # xstdcmap Plugin
 
-CLI tool: xstdcmap.
+xstdcmap — X server utilities.
 
 ## Commands
 - `xstdcmap <resource> <action>` — Execute xstdcmap commands
@@ -18,7 +18,7 @@ CLI tool: xstdcmap.
 
 ## Installation
 ```bash
-apt-get install xstdcmap 2>/dev/null || which xstdcmap
+apt-get install x11-xserver-utils 2>/dev/null || which xstdcmap
 ```
 
 ## Key Features

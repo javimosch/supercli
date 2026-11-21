@@ -1,11 +1,11 @@
 ---
 name: vdpa
-description: Use this skill when the user wants to use vdpa, cli tool: vdpa.
+description: Use this skill when the user wants to use vdpa, networking and traffic control tools.
 ---
 
 # vdpa Plugin
 
-CLI tool: vdpa.
+vdpa — networking and traffic control tools.
 
 ## Commands
 - `vdpa <resource> <action>` — Execute vdpa commands
@@ -18,7 +18,7 @@ CLI tool: vdpa.
 
 ## Installation
 ```bash
-apt-get install vdpa 2>/dev/null || which vdpa
+apt-get install iproute2 2>/dev/null || which vdpa
 ```
 
 ## Key Features

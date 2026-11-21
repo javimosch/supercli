@@ -1,11 +1,11 @@
 ---
 name: dvi2tty
-description: Use this skill when the user wants to use dvi2tty, cli tool: dvi2tty.
+description: Use this skill when the user wants to use dvi2tty, Binaries for TeX Live.
 ---
 
 # dvi2tty Plugin
 
-CLI tool: dvi2tty.
+dvi2tty — Binaries for TeX Live.
 
 ## Commands
 - `dvi2tty <resource> <action>` — Execute dvi2tty commands
@@ -18,7 +18,7 @@ CLI tool: dvi2tty.
 
 ## Installation
 ```bash
-apt-get install dvi2tty 2>/dev/null || which dvi2tty
+apt-get install texlive-binaries 2>/dev/null || which dvi2tty
 ```
 
 ## Key Features

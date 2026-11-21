@@ -1,11 +1,11 @@
 ---
 name: xauth
-description: Use this skill when the user wants to use xauth, cli tool: xauth.
+description: Use this skill when the user wants to use xauth, X authentication utility.
 ---
 
 # xauth Plugin
 
-CLI tool: xauth.
+X authentication utility.
 
 ## Commands
 - `xauth <resource> <action>` — Execute xauth commands

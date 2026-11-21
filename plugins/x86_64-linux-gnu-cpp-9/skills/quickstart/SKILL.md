@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-cpp-9
-description: Use this skill when the user wants to use x86_64-linux-gnu-cpp-9, cli tool: x86_64-linux-gnu-cpp-9.
+description: Use this skill when the user wants to use x86_64-linux-gnu-cpp-9, GNU C preprocessor.
 ---
 
 # x86_64-linux-gnu-cpp-9 Plugin
 
-CLI tool: x86_64-linux-gnu-cpp-9.
+x86_64-linux-gnu-cpp-9 — GNU C preprocessor.
 
 ## Commands
 - `x86_64-linux-gnu-cpp-9 <resource> <action>` — Execute x86_64-linux-gnu-cpp-9 commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-cpp-9.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-cpp-9 2>/dev/null || which x86_64-linux-gnu-cpp-9
+apt-get install cpp-9 2>/dev/null || which x86_64-linux-gnu-cpp-9
 ```
 
 ## Key Features

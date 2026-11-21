@@ -1,11 +1,11 @@
 ---
 name: dvibook
-description: Use this skill when the user wants to use dvibook, cli tool: dvibook.
+description: Use this skill when the user wants to use dvibook, Binaries for TeX Live.
 ---
 
 # dvibook Plugin
 
-CLI tool: dvibook.
+dvibook — Binaries for TeX Live.
 
 ## Commands
 - `dvibook <resource> <action>` — Execute dvibook commands
@@ -18,7 +18,7 @@ CLI tool: dvibook.
 
 ## Installation
 ```bash
-apt-get install dvibook 2>/dev/null || which dvibook
+apt-get install texlive-binaries 2>/dev/null || which dvibook
 ```
 
 ## Key Features

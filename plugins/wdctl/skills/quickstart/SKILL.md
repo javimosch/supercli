@@ -1,11 +1,11 @@
 ---
 name: wdctl
-description: Use this skill when the user wants to use wdctl, cli tool: wdctl.
+description: Use this skill when the user wants to use wdctl, miscellaneous system utilities.
 ---
 
 # wdctl Plugin
 
-CLI tool: wdctl.
+wdctl — miscellaneous system utilities.
 
 ## Commands
 - `wdctl <resource> <action>` — Execute wdctl commands
@@ -18,7 +18,7 @@ CLI tool: wdctl.
 
 ## Installation
 ```bash
-apt-get install wdctl 2>/dev/null || which wdctl
+apt-get install util-linux 2>/dev/null || which wdctl
 ```
 
 ## Key Features

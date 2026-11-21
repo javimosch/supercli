@@ -1,11 +1,11 @@
 ---
 name: xdg-user-dirs-update
-description: Use this skill when the user wants to use xdg-user-dirs-update, cli tool: xdg-user-dirs-update.
+description: Use this skill when the user wants to use xdg-user-dirs-update, tool to manage well known user directories.
 ---
 
 # xdg-user-dirs-update Plugin
 
-CLI tool: xdg-user-dirs-update.
+xdg-user-dirs-update — tool to manage well known user directories.
 
 ## Commands
 - `xdg-user-dirs-update <resource> <action>` — Execute xdg-user-dirs-update commands
@@ -18,7 +18,7 @@ CLI tool: xdg-user-dirs-update.
 
 ## Installation
 ```bash
-apt-get install xdg-user-dirs-update 2>/dev/null || which xdg-user-dirs-update
+apt-get install xdg-user-dirs 2>/dev/null || which xdg-user-dirs-update
 ```
 
 ## Key Features

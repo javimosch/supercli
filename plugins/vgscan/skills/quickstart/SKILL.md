@@ -1,11 +1,11 @@
 ---
 name: vgscan
-description: Use this skill when the user wants to use vgscan, cli tool: vgscan.
+description: Use this skill when the user wants to use vgscan, Linux Logical Volume Manager.
 ---
 
 # vgscan Plugin
 
-CLI tool: vgscan.
+vgscan — Linux Logical Volume Manager.
 
 ## Commands
 - `vgscan <resource> <action>` — Execute vgscan commands
@@ -18,7 +18,7 @@ CLI tool: vgscan.
 
 ## Installation
 ```bash
-apt-get install vgscan 2>/dev/null || which vgscan
+apt-get install lvm2 2>/dev/null || which vgscan
 ```
 
 ## Key Features

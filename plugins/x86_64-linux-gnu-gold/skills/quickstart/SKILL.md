@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gold
-description: Use this skill when the user wants to use x86_64-linux-gnu-gold, cli tool: x86_64-linux-gnu-gold.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gold, GNU binary utilities, for x86-64-linux-gnu target.
 ---
 
 # x86_64-linux-gnu-gold Plugin
 
-CLI tool: x86_64-linux-gnu-gold.
+x86_64-linux-gnu-gold — GNU binary utilities, for x86-64-linux-gnu target.
 
 ## Commands
 - `x86_64-linux-gnu-gold <resource> <action>` — Execute x86_64-linux-gnu-gold commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gold.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gold 2>/dev/null || which x86_64-linux-gnu-gold
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-gold
 ```
 
 ## Key Features

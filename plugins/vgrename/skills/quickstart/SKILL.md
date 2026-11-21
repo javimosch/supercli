@@ -1,11 +1,11 @@
 ---
 name: vgrename
-description: Use this skill when the user wants to use vgrename, cli tool: vgrename.
+description: Use this skill when the user wants to use vgrename, Linux Logical Volume Manager.
 ---
 
 # vgrename Plugin
 
-CLI tool: vgrename.
+vgrename — Linux Logical Volume Manager.
 
 ## Commands
 - `vgrename <resource> <action>` — Execute vgrename commands
@@ -18,7 +18,7 @@ CLI tool: vgrename.
 
 ## Installation
 ```bash
-apt-get install vgrename 2>/dev/null || which vgrename
+apt-get install lvm2 2>/dev/null || which vgrename
 ```
 
 ## Key Features

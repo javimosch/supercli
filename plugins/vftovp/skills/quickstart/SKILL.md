@@ -1,11 +1,11 @@
 ---
 name: vftovp
-description: Use this skill when the user wants to use vftovp, cli tool: vftovp.
+description: Use this skill when the user wants to use vftovp, Binaries for TeX Live.
 ---
 
 # vftovp Plugin
 
-CLI tool: vftovp.
+vftovp — Binaries for TeX Live.
 
 ## Commands
 - `vftovp <resource> <action>` — Execute vftovp commands
@@ -18,7 +18,7 @@ CLI tool: vftovp.
 
 ## Installation
 ```bash
-apt-get install vftovp 2>/dev/null || which vftovp
+apt-get install texlive-binaries 2>/dev/null || which vftovp
 ```
 
 ## Key Features

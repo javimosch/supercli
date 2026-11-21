@@ -1,11 +1,11 @@
 ---
 name: ModemManager
-description: Use this skill when the user wants to use ModemManager, cli tool: modemmanager.
+description: Use this skill when the user wants to use ModemManager, D-Bus service for managing modems.
 ---
 
 # ModemManager Plugin
 
-CLI tool: ModemManager.
+ModemManager — D-Bus service for managing modems.
 
 ## Commands
 - `ModemManager <resource> <action>` — Execute ModemManager commands
@@ -18,7 +18,7 @@ CLI tool: ModemManager.
 
 ## Installation
 ```bash
-apt-get install ModemManager 2>/dev/null || which ModemManager
+apt-get install modemmanager 2>/dev/null || which ModemManager
 ```
 
 ## Key Features

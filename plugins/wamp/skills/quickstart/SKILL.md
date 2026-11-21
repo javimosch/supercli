@@ -1,11 +1,11 @@
 ---
 name: wamp
-description: Use this skill when the user wants to use wamp, cli tool: wamp.
+description: Use this skill when the user wants to use wamp, WebSocket client and server library, WAMP framework - Python 3.x.
 ---
 
 # wamp Plugin
 
-CLI tool: wamp.
+wamp — WebSocket client and server library, WAMP framework - Python 3.x.
 
 ## Commands
 - `wamp <resource> <action>` — Execute wamp commands
@@ -18,7 +18,7 @@ CLI tool: wamp.
 
 ## Installation
 ```bash
-apt-get install wamp 2>/dev/null || which wamp
+apt-get install python3-autobahn 2>/dev/null || which wamp
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: dvicopy
-description: Use this skill when the user wants to use dvicopy, cli tool: dvicopy.
+description: Use this skill when the user wants to use dvicopy, Binaries for TeX Live.
 ---
 
 # dvicopy Plugin
 
-CLI tool: dvicopy.
+dvicopy — Binaries for TeX Live.
 
 ## Commands
 - `dvicopy <resource> <action>` — Execute dvicopy commands
@@ -18,7 +18,7 @@ CLI tool: dvicopy.
 
 ## Installation
 ```bash
-apt-get install dvicopy 2>/dev/null || which dvicopy
+apt-get install texlive-binaries 2>/dev/null || which dvicopy
 ```
 
 ## Key Features

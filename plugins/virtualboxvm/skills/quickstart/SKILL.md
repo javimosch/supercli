@@ -1,11 +1,11 @@
 ---
 name: virtualboxvm
-description: Use this skill when the user wants to use virtualboxvm, cli tool: virtualboxvm.
+description: Use this skill when the user wants to use virtualboxvm, x86 virtualization solution - Qt based user interface.
 ---
 
 # virtualboxvm Plugin
 
-CLI tool: virtualboxvm.
+virtualboxvm — x86 virtualization solution - Qt based user interface.
 
 ## Commands
 - `virtualboxvm <resource> <action>` — Execute virtualboxvm commands
@@ -18,7 +18,7 @@ CLI tool: virtualboxvm.
 
 ## Installation
 ```bash
-apt-get install virtualboxvm 2>/dev/null || which virtualboxvm
+apt-get install virtualbox-qt 2>/dev/null || which virtualboxvm
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-dwp
-description: Use this skill when the user wants to use x86_64-linux-gnu-dwp, cli tool: x86_64-linux-gnu-dwp.
+description: Use this skill when the user wants to use x86_64-linux-gnu-dwp, GNU binary utilities, for x86-64-linux-gnu target.
 ---
 
 # x86_64-linux-gnu-dwp Plugin
 
-CLI tool: x86_64-linux-gnu-dwp.
+x86_64-linux-gnu-dwp — GNU binary utilities, for x86-64-linux-gnu target.
 
 ## Commands
 - `x86_64-linux-gnu-dwp <resource> <action>` — Execute x86_64-linux-gnu-dwp commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-dwp.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-dwp 2>/dev/null || which x86_64-linux-gnu-dwp
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-dwp
 ```
 
 ## Key Features

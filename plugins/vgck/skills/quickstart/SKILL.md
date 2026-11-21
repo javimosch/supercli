@@ -1,11 +1,11 @@
 ---
 name: vgck
-description: Use this skill when the user wants to use vgck, cli tool: vgck.
+description: Use this skill when the user wants to use vgck, Linux Logical Volume Manager.
 ---
 
 # vgck Plugin
 
-CLI tool: vgck.
+vgck — Linux Logical Volume Manager.
 
 ## Commands
 - `vgck <resource> <action>` — Execute vgck commands
@@ -18,7 +18,7 @@ CLI tool: vgck.
 
 ## Installation
 ```bash
-apt-get install vgck 2>/dev/null || which vgck
+apt-get install lvm2 2>/dev/null || which vgck
 ```
 
 ## Key Features

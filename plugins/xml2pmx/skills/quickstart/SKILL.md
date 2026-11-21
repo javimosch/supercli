@@ -1,11 +1,11 @@
 ---
 name: xml2pmx
-description: Use this skill when the user wants to use xml2pmx, cli tool: xml2pmx.
+description: Use this skill when the user wants to use xml2pmx, Binaries for TeX Live.
 ---
 
 # xml2pmx Plugin
 
-CLI tool: xml2pmx.
+xml2pmx — Binaries for TeX Live.
 
 ## Commands
 - `xml2pmx <resource> <action>` — Execute xml2pmx commands
@@ -18,7 +18,7 @@ CLI tool: xml2pmx.
 
 ## Installation
 ```bash
-apt-get install xml2pmx 2>/dev/null || which xml2pmx
+apt-get install texlive-binaries 2>/dev/null || which xml2pmx
 ```
 
 ## Key Features

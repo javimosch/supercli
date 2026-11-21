@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gfortran-9
-description: Use this skill when the user wants to use x86_64-linux-gnu-gfortran-9, cli tool: x86_64-linux-gnu-gfortran-9.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gfortran-9, GNU Fortran compiler.
 ---
 
 # x86_64-linux-gnu-gfortran-9 Plugin
 
-CLI tool: x86_64-linux-gnu-gfortran-9.
+x86_64-linux-gnu-gfortran-9 — GNU Fortran compiler.
 
 ## Commands
 - `x86_64-linux-gnu-gfortran-9 <resource> <action>` — Execute x86_64-linux-gnu-gfortran-9 commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gfortran-9.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gfortran-9 2>/dev/null || which x86_64-linux-gnu-gfortran-9
+apt-get install gfortran-9 2>/dev/null || which x86_64-linux-gnu-gfortran-9
 ```
 
 ## Key Features

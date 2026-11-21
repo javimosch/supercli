@@ -1,11 +1,11 @@
 ---
 name: wpa_cli
-description: Use this skill when the user wants to use wpa_cli, cli tool: wpa_cli.
+description: Use this skill when the user wants to use wpa_cli, client support for WPA and WPA2 (IEEE 802.11i).
 ---
 
 # wpa_cli Plugin
 
-CLI tool: wpa_cli.
+wpa_cli — client support for WPA and WPA2 (IEEE 802.11i).
 
 ## Commands
 - `wpa_cli <resource> <action>` — Execute wpa_cli commands
@@ -18,7 +18,7 @@ CLI tool: wpa_cli.
 
 ## Installation
 ```bash
-apt-get install wpa_cli 2>/dev/null || which wpa_cli
+apt-get install wpasupplicant 2>/dev/null || which wpa_cli
 ```
 
 ## Key Features

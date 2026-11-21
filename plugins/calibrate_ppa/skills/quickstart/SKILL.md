@@ -1,11 +1,11 @@
 ---
 name: calibrate_ppa
-description: Use this skill when the user wants to use calibrate_ppa, cli tool: calibrate_ppa.
+description: Use this skill when the user wants to use calibrate_ppa, printer driver for HP-GDI printers.
 ---
 
 # calibrate_ppa Plugin
 
-CLI tool: calibrate_ppa.
+calibrate_ppa — printer driver for HP-GDI printers.
 
 ## Commands
 - `calibrate_ppa <resource> <action>` — Execute calibrate_ppa commands
@@ -18,7 +18,7 @@ CLI tool: calibrate_ppa.
 
 ## Installation
 ```bash
-apt-get install calibrate_ppa 2>/dev/null || which calibrate_ppa
+apt-get install printer-driver-pnm2ppa 2>/dev/null || which calibrate_ppa
 ```
 
 ## Key Features

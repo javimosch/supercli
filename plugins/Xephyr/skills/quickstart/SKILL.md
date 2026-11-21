@@ -1,11 +1,11 @@
 ---
 name: Xephyr
-description: Use this skill when the user wants to use Xephyr, cli tool: xephyr.
+description: Use this skill when the user wants to use Xephyr, nested X server.
 ---
 
 # Xephyr Plugin
 
-CLI tool: Xephyr.
+Xephyr — nested X server.
 
 ## Commands
 - `Xephyr <resource> <action>` — Execute Xephyr commands
@@ -18,7 +18,7 @@ CLI tool: Xephyr.
 
 ## Installation
 ```bash
-apt-get install Xephyr 2>/dev/null || which Xephyr
+apt-get install xserver-xephyr 2>/dev/null || which Xephyr
 ```
 
 ## Key Features

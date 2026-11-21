@@ -1,11 +1,11 @@
 ---
 name: vgreduce
-description: Use this skill when the user wants to use vgreduce, cli tool: vgreduce.
+description: Use this skill when the user wants to use vgreduce, Linux Logical Volume Manager.
 ---
 
 # vgreduce Plugin
 
-CLI tool: vgreduce.
+vgreduce — Linux Logical Volume Manager.
 
 ## Commands
 - `vgreduce <resource> <action>` — Execute vgreduce commands
@@ -18,7 +18,7 @@ CLI tool: vgreduce.
 
 ## Installation
 ```bash
-apt-get install vgreduce 2>/dev/null || which vgreduce
+apt-get install lvm2 2>/dev/null || which vgreduce
 ```
 
 ## Key Features

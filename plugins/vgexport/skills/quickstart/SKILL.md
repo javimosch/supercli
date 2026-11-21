@@ -1,11 +1,11 @@
 ---
 name: vgexport
-description: Use this skill when the user wants to use vgexport, cli tool: vgexport.
+description: Use this skill when the user wants to use vgexport, Linux Logical Volume Manager.
 ---
 
 # vgexport Plugin
 
-CLI tool: vgexport.
+vgexport — Linux Logical Volume Manager.
 
 ## Commands
 - `vgexport <resource> <action>` — Execute vgexport commands
@@ -18,7 +18,7 @@ CLI tool: vgexport.
 
 ## Installation
 ```bash
-apt-get install vgexport 2>/dev/null || which vgexport
+apt-get install lvm2 2>/dev/null || which vgexport
 ```
 
 ## Key Features

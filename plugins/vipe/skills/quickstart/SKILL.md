@@ -1,11 +1,11 @@
 ---
 name: vipe
-description: Use this skill when the user wants to use vipe, cli tool: vipe.
+description: Use this skill when the user wants to use vipe, additional Unix utilities.
 ---
 
 # vipe Plugin
 
-CLI tool: vipe.
+vipe — additional Unix utilities.
 
 ## Commands
 - `vipe <resource> <action>` — Execute vipe commands
@@ -18,7 +18,7 @@ CLI tool: vipe.
 
 ## Installation
 ```bash
-apt-get install vipe 2>/dev/null || which vipe
+apt-get install moreutils 2>/dev/null || which vipe
 ```
 
 ## Key Features

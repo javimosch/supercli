@@ -1,11 +1,11 @@
 ---
 name: xmlcatalog
-description: Use this skill when the user wants to use xmlcatalog, cli tool: xmlcatalog.
+description: Use this skill when the user wants to use xmlcatalog, GNOME XML library - utilities.
 ---
 
 # xmlcatalog Plugin
 
-CLI tool: xmlcatalog.
+xmlcatalog — GNOME XML library - utilities.
 
 ## Commands
 - `xmlcatalog <resource> <action>` — Execute xmlcatalog commands
@@ -18,7 +18,7 @@ CLI tool: xmlcatalog.
 
 ## Installation
 ```bash
-apt-get install xmlcatalog 2>/dev/null || which xmlcatalog
+apt-get install libxml2-utils 2>/dev/null || which xmlcatalog
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xsubpp
-description: Use this skill when the user wants to use xsubpp, cli tool: xsubpp.
+description: Use this skill when the user wants to use xsubpp, Larry Wall's Practical Extraction and Report Language.
 ---
 
 # xsubpp Plugin
 
-CLI tool: xsubpp.
+xsubpp — Larry Wall's Practical Extraction and Report Language.
 
 ## Commands
 - `xsubpp <resource> <action>` — Execute xsubpp commands
@@ -18,7 +18,7 @@ CLI tool: xsubpp.
 
 ## Installation
 ```bash
-apt-get install xsubpp 2>/dev/null || which xsubpp
+apt-get install perl 2>/dev/null || which xsubpp
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: dvihp
-description: Use this skill when the user wants to use dvihp, cli tool: dvihp.
+description: Use this skill when the user wants to use dvihp, Binaries for TeX Live.
 ---
 
 # dvihp Plugin
 
-CLI tool: dvihp.
+dvihp — Binaries for TeX Live.
 
 ## Commands
 - `dvihp <resource> <action>` — Execute dvihp commands
@@ -18,7 +18,7 @@ CLI tool: dvihp.
 
 ## Installation
 ```bash
-apt-get install dvihp 2>/dev/null || which dvihp
+apt-get install texlive-binaries 2>/dev/null || which dvihp
 ```
 
 ## Key Features

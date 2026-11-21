@@ -1,11 +1,11 @@
 ---
 name: xzless
-description: Use this skill when the user wants to use xzless, cli tool: xzless.
+description: Use this skill when the user wants to use xzless, XZ-format compression utilities.
 ---
 
 # xzless Plugin
 
-CLI tool: xzless.
+xzless — XZ-format compression utilities.
 
 ## Commands
 - `xzless <resource> <action>` — Execute xzless commands
@@ -18,7 +18,7 @@ CLI tool: xzless.
 
 ## Installation
 ```bash
-apt-get install xzless 2>/dev/null || which xzless
+apt-get install xz-utils 2>/dev/null || which xzless
 ```
 
 ## Key Features

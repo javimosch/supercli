@@ -1,11 +1,11 @@
 ---
 name: xsetmode
-description: Use this skill when the user wants to use xsetmode, cli tool: xsetmode.
+description: Use this skill when the user wants to use xsetmode, X server utilities.
 ---
 
 # xsetmode Plugin
 
-CLI tool: xsetmode.
+xsetmode — X server utilities.
 
 ## Commands
 - `xsetmode <resource> <action>` — Execute xsetmode commands
@@ -18,7 +18,7 @@ CLI tool: xsetmode.
 
 ## Installation
 ```bash
-apt-get install xsetmode 2>/dev/null || which xsetmode
+apt-get install x11-xserver-utils 2>/dev/null || which xsetmode
 ```
 
 ## Key Features

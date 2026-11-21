@@ -1,11 +1,11 @@
 ---
 name: zeisstopnm
-description: Use this skill when the user wants to use zeisstopnm, cli tool: zeisstopnm.
+description: Use this skill when the user wants to use zeisstopnm, Graphics conversion tools between image formats.
 ---
 
 # zeisstopnm Plugin
 
-CLI tool: zeisstopnm.
+zeisstopnm — Graphics conversion tools between image formats.
 
 ## Commands
 - `zeisstopnm <resource> <action>` — Execute zeisstopnm commands
@@ -18,7 +18,7 @@ CLI tool: zeisstopnm.
 
 ## Installation
 ```bash
-apt-get install zeisstopnm 2>/dev/null || which zeisstopnm
+apt-get install netpbm 2>/dev/null || which zeisstopnm
 ```
 
 ## Key Features

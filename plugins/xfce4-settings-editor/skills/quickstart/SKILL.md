@@ -1,11 +1,11 @@
 ---
 name: xfce4-settings-editor
-description: Use this skill when the user wants to use xfce4-settings-editor, cli tool: xfce4-settings-editor.
+description: Use this skill when the user wants to use xfce4-settings-editor, graphical application for managing Xfce settings.
 ---
 
 # xfce4-settings-editor Plugin
 
-CLI tool: xfce4-settings-editor.
+xfce4-settings-editor — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-settings-editor <resource> <action>` — Execute xfce4-settings-editor commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-settings-editor.
 
 ## Installation
 ```bash
-apt-get install xfce4-settings-editor 2>/dev/null || which xfce4-settings-editor
+apt-get install xfce4-settings 2>/dev/null || which xfce4-settings-editor
 ```
 
 ## Key Features

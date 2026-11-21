@@ -1,11 +1,11 @@
 ---
 name: xfce4-screensaver-configure
-description: Use this skill when the user wants to use xfce4-screensaver-configure, cli tool: xfce4-screensaver-configure.
+description: Use this skill when the user wants to use xfce4-screensaver-configure, screen saver and locker that is integrated with the xfce4 desktop.
 ---
 
 # xfce4-screensaver-configure Plugin
 
-CLI tool: xfce4-screensaver-configure.
+xfce4-screensaver-configure — screen saver and locker that is integrated with the xfce4 desktop.
 
 ## Commands
 - `xfce4-screensaver-configure <resource> <action>` — Execute xfce4-screensaver-configure commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-screensaver-configure.
 
 ## Installation
 ```bash
-apt-get install xfce4-screensaver-configure 2>/dev/null || which xfce4-screensaver-configure
+apt-get install xfce4-screensaver 2>/dev/null || which xfce4-screensaver-configure
 ```
 
 ## Key Features
