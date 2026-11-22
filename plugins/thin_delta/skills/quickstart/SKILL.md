@@ -18,7 +18,7 @@ CLI tool: thin_delta.
 
 ## Installation
 ```bash
-apt-get install thin_delta 2>/dev/null || which thin_delta
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_delta
 ```
 
 ## Key Features

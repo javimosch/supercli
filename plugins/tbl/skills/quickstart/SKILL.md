@@ -18,7 +18,7 @@ CLI tool: tbl.
 
 ## Installation
 ```bash
-apt-get install tbl 2>/dev/null || which tbl
+apt-get install groff-base 2>/dev/null || which tbl
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: usb_modeswitch_dispatcher.
 
 ## Installation
 ```bash
-apt-get install usb_modeswitch_dispatcher 2>/dev/null || which usb_modeswitch_dispatcher
+apt-get install usb-modeswitch 2>/dev/null || which usb_modeswitch_dispatcher
 ```
 
 ## Key Features

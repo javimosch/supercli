@@ -18,7 +18,7 @@ CLI tool: p7content.
 
 ## Installation
 ```bash
-apt-get install p7content 2>/dev/null || which p7content
+apt-get install libnss3-tools 2>/dev/null || which p7content
 ```
 
 ## Key Features

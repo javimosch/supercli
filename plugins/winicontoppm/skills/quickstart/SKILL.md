@@ -18,7 +18,7 @@ CLI tool: winicontoppm.
 
 ## Installation
 ```bash
-apt-get install winicontoppm 2>/dev/null || which winicontoppm
+apt-get install netpbm 2>/dev/null || which winicontoppm
 ```
 
 ## Key Features

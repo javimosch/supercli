@@ -18,7 +18,7 @@ CLI tool: lft.db.
 
 ## Installation
 ```bash
-apt-get install lft.db 2>/dev/null || which lft.db
+apt-get install traceroute 2>/dev/null || which lft.db
 ```
 
 ## Key Features

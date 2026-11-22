@@ -18,7 +18,7 @@ CLI tool: mount.fuse3.
 
 ## Installation
 ```bash
-apt-get install mount.fuse3 2>/dev/null || which mount.fuse3
+apt-get install fuse3 2>/dev/null || which mount.fuse3
 ```
 
 ## Key Features

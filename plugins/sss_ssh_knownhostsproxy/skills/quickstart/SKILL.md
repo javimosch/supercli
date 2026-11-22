@@ -18,7 +18,7 @@ CLI tool: sss_ssh_knownhostsproxy.
 
 ## Installation
 ```bash
-apt-get install sss_ssh_knownhostsproxy 2>/dev/null || which sss_ssh_knownhostsproxy
+apt-get install sssd-common 2>/dev/null || which sss_ssh_knownhostsproxy
 ```
 
 ## Key Features

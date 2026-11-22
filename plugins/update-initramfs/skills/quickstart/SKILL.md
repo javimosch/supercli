@@ -18,7 +18,7 @@ CLI tool: update-initramfs.
 
 ## Installation
 ```bash
-apt-get install update-initramfs 2>/dev/null || which update-initramfs
+apt-get install initramfs-tools 2>/dev/null || which update-initramfs
 ```
 
 ## Key Features

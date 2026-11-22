@@ -18,7 +18,7 @@ CLI tool: servertool.
 
 ## Installation
 ```bash
-apt-get install servertool 2>/dev/null || which servertool
+apt-get install openjdk-8-jre-headless 2>/dev/null || which servertool
 ```
 
 ## Key Features

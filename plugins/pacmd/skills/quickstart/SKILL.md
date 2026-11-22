@@ -18,7 +18,7 @@ CLI tool: pacmd.
 
 ## Installation
 ```bash
-apt-get install pacmd 2>/dev/null || which pacmd
+apt-get install pulseaudio-utils 2>/dev/null || which pacmd
 ```
 
 ## Key Features

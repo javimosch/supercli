@@ -18,7 +18,7 @@ CLI tool: defrag.f2fs.
 
 ## Installation
 ```bash
-apt-get install defrag.f2fs 2>/dev/null || which defrag.f2fs
+apt-get install f2fs-tools 2>/dev/null || which defrag.f2fs
 ```
 
 ## Key Features

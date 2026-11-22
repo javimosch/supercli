@@ -18,7 +18,7 @@ CLI tool: vgextend.
 
 ## Installation
 ```bash
-apt-get install vgextend 2>/dev/null || which vgextend
+apt-get install lvm2 2>/dev/null || which vgextend
 ```
 
 ## Key Features

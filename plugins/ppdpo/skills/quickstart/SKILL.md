@@ -18,7 +18,7 @@ CLI tool: ppdpo.
 
 ## Installation
 ```bash
-apt-get install ppdpo 2>/dev/null || which ppdpo
+apt-get install cups-ppdc 2>/dev/null || which ppdpo
 ```
 
 ## Key Features

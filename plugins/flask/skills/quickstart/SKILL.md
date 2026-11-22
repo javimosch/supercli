@@ -18,7 +18,7 @@ CLI tool: flask.
 
 ## Installation
 ```bash
-apt-get install flask 2>/dev/null || which flask
+apt-get install python3-flask 2>/dev/null || which flask
 ```
 
 ## Key Features

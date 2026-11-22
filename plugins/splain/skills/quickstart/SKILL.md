@@ -18,7 +18,7 @@ CLI tool: splain.
 
 ## Installation
 ```bash
-apt-get install splain 2>/dev/null || which splain
+apt-get install perl 2>/dev/null || which splain
 ```
 
 ## Key Features

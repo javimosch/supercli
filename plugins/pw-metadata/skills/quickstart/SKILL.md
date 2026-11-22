@@ -18,7 +18,7 @@ CLI tool: pw-metadata.
 
 ## Installation
 ```bash
-apt-get install pw-metadata 2>/dev/null || which pw-metadata
+apt-get install pipewire-bin 2>/dev/null || which pw-metadata
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xmllint.
 
 ## Installation
 ```bash
-apt-get install xmllint 2>/dev/null || which xmllint
+apt-get install libxml2-utils 2>/dev/null || which xmllint
 ```
 
 ## Key Features

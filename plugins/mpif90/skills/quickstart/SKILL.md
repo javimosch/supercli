@@ -18,7 +18,7 @@ CLI tool: mpif90.
 
 ## Installation
 ```bash
-apt-get install mpif90 2>/dev/null || which mpif90
+apt-get install mpich 2>/dev/null || which mpif90
 ```
 
 ## Key Features

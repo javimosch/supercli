@@ -18,7 +18,7 @@ CLI tool: dvipdfmx.
 
 ## Installation
 ```bash
-apt-get install dvipdfmx 2>/dev/null || which dvipdfmx
+apt-get install texlive-binaries 2>/dev/null || which dvipdfmx
 ```
 
 ## Key Features

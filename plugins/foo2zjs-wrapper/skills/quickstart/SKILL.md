@@ -18,7 +18,7 @@ CLI tool: foo2zjs-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2zjs-wrapper 2>/dev/null || which foo2zjs-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2zjs-wrapper
 ```
 
 ## Key Features

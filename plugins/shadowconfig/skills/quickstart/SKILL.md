@@ -18,7 +18,7 @@ CLI tool: shadowconfig.
 
 ## Installation
 ```bash
-apt-get install shadowconfig 2>/dev/null || which shadowconfig
+apt-get install passwd 2>/dev/null || which shadowconfig
 ```
 
 ## Key Features

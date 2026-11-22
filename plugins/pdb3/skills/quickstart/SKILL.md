@@ -18,7 +18,7 @@ CLI tool: pdb3.
 
 ## Installation
 ```bash
-apt-get install pdb3 2>/dev/null || which pdb3
+apt-get install python3 2>/dev/null || which pdb3
 ```
 
 ## Key Features

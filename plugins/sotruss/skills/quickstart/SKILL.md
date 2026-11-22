@@ -18,7 +18,7 @@ CLI tool: sotruss.
 
 ## Installation
 ```bash
-apt-get install sotruss 2>/dev/null || which sotruss
+apt-get install libc-devtools 2>/dev/null || which sotruss
 ```
 
 ## Key Features

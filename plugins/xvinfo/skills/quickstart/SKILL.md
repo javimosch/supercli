@@ -18,7 +18,7 @@ CLI tool: xvinfo.
 
 ## Installation
 ```bash
-apt-get install xvinfo 2>/dev/null || which xvinfo
+apt-get install x11-utils 2>/dev/null || which xvinfo
 ```
 
 ## Key Features

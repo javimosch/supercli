@@ -18,7 +18,7 @@ CLI tool: mf-nowin.
 
 ## Installation
 ```bash
-apt-get install mf-nowin 2>/dev/null || which mf-nowin
+apt-get install texlive-binaries 2>/dev/null || which mf-nowin
 ```
 
 ## Key Features

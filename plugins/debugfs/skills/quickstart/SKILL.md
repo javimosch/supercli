@@ -18,7 +18,7 @@ CLI tool: debugfs.
 
 ## Installation
 ```bash
-apt-get install debugfs 2>/dev/null || which debugfs
+apt-get install e2fsprogs 2>/dev/null || which debugfs
 ```
 
 ## Key Features

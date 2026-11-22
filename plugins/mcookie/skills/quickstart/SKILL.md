@@ -18,7 +18,7 @@ CLI tool: mcookie.
 
 ## Installation
 ```bash
-apt-get install mcookie 2>/dev/null || which mcookie
+apt-get install util-linux 2>/dev/null || which mcookie
 ```
 
 ## Key Features

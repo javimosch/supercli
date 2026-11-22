@@ -18,7 +18,7 @@ CLI tool: t1ascii.
 
 ## Installation
 ```bash
-apt-get install t1ascii 2>/dev/null || which t1ascii
+apt-get install t1utils 2>/dev/null || which t1ascii
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmtotiffcmyk.
 
 ## Installation
 ```bash
-apt-get install pnmtotiffcmyk 2>/dev/null || which pnmtotiffcmyk
+apt-get install netpbm 2>/dev/null || which pnmtotiffcmyk
 ```
 
 ## Key Features

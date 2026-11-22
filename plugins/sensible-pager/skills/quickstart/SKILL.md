@@ -18,7 +18,7 @@ CLI tool: sensible-pager.
 
 ## Installation
 ```bash
-apt-get install sensible-pager 2>/dev/null || which sensible-pager
+apt-get install sensible-utils 2>/dev/null || which sensible-pager
 ```
 
 ## Key Features

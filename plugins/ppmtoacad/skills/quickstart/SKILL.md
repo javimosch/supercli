@@ -18,7 +18,7 @@ CLI tool: ppmtoacad.
 
 ## Installation
 ```bash
-apt-get install ppmtoacad 2>/dev/null || which ppmtoacad
+apt-get install netpbm 2>/dev/null || which ppmtoacad
 ```
 
 ## Key Features

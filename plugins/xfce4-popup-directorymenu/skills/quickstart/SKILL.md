@@ -18,7 +18,7 @@ CLI tool: xfce4-popup-directorymenu.
 
 ## Installation
 ```bash
-apt-get install xfce4-popup-directorymenu 2>/dev/null || which xfce4-popup-directorymenu
+apt-get install xfce4-panel 2>/dev/null || which xfce4-popup-directorymenu
 ```
 
 ## Key Features

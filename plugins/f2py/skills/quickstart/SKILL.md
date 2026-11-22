@@ -18,7 +18,7 @@ CLI tool: f2py.
 
 ## Installation
 ```bash
-apt-get install f2py 2>/dev/null || which f2py
+apt-get install python3-numpy 2>/dev/null || which f2py
 ```
 
 ## Key Features

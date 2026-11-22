@@ -18,7 +18,7 @@ CLI tool: foo2xqx.
 
 ## Installation
 ```bash
-apt-get install foo2xqx 2>/dev/null || which foo2xqx
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2xqx
 ```
 
 ## Key Features

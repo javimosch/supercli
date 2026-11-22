@@ -18,7 +18,7 @@ CLI tool: lwp-request.
 
 ## Installation
 ```bash
-apt-get install lwp-request 2>/dev/null || which lwp-request
+apt-get install libwww-perl 2>/dev/null || which lwp-request
 ```
 
 ## Key Features

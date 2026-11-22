@@ -18,7 +18,7 @@ CLI tool: intltool-prepare.
 
 ## Installation
 ```bash
-apt-get install intltool-prepare 2>/dev/null || which intltool-prepare
+apt-get install intltool 2>/dev/null || which intltool-prepare
 ```
 
 ## Key Features

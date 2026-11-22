@@ -18,7 +18,7 @@ CLI tool: run-mailcap.
 
 ## Installation
 ```bash
-apt-get install run-mailcap 2>/dev/null || which run-mailcap
+apt-get install mailcap 2>/dev/null || which run-mailcap
 ```
 
 ## Key Features

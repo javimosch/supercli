@@ -18,7 +18,7 @@ CLI tool: era_check.
 
 ## Installation
 ```bash
-apt-get install era_check 2>/dev/null || which era_check
+apt-get install thin-provisioning-tools 2>/dev/null || which era_check
 ```
 
 ## Key Features

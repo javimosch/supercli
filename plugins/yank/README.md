@@ -9,7 +9,7 @@ clipboard command (xsel by default, anything via `-- <cmd>`).
 
 ```bash
 # Install yank binary
-sudo apt install yank
+sudo apt install emboss
 # or: brew install yank / make install from source
 
 # Install supercli plugin

@@ -18,7 +18,7 @@ CLI tool: xmlpatternsvalidator.
 
 ## Installation
 ```bash
-apt-get install xmlpatternsvalidator 2>/dev/null || which xmlpatternsvalidator
+apt-get install qtchooser 2>/dev/null || which xmlpatternsvalidator
 ```
 
 ## Key Features

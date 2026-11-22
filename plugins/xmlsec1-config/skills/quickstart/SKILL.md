@@ -18,7 +18,7 @@ CLI tool: xmlsec1-config.
 
 ## Installation
 ```bash
-apt-get install xmlsec1-config 2>/dev/null || which xmlsec1-config
+apt-get install libxmlsec1-dev 2>/dev/null || which xmlsec1-config
 ```
 
 ## Key Features

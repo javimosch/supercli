@@ -18,7 +18,7 @@ CLI tool: file2brl.
 
 ## Installation
 ```bash
-apt-get install file2brl 2>/dev/null || which file2brl
+apt-get install liblouisutdml-bin 2>/dev/null || which file2brl
 ```
 
 ## Key Features

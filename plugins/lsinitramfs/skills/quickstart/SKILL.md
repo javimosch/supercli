@@ -18,7 +18,7 @@ CLI tool: lsinitramfs.
 
 ## Installation
 ```bash
-apt-get install lsinitramfs 2>/dev/null || which lsinitramfs
+apt-get install initramfs-tools-core 2>/dev/null || which lsinitramfs
 ```
 
 ## Key Features

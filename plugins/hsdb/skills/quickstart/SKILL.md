@@ -18,7 +18,7 @@ CLI tool: hsdb.
 
 ## Installation
 ```bash
-apt-get install hsdb 2>/dev/null || which hsdb
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which hsdb
 ```
 
 ## Key Features

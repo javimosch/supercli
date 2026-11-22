@@ -18,7 +18,7 @@ CLI tool: pixeltool.
 
 ## Installation
 ```bash
-apt-get install pixeltool 2>/dev/null || which pixeltool
+apt-get install qtchooser 2>/dev/null || which pixeltool
 ```
 
 ## Key Features

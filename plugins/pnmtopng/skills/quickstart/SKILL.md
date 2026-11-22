@@ -18,7 +18,7 @@ CLI tool: pnmtopng.
 
 ## Installation
 ```bash
-apt-get install pnmtopng 2>/dev/null || which pnmtopng
+apt-get install netpbm 2>/dev/null || which pnmtopng
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: wg-quick.
 
 ## Installation
 ```bash
-apt-get install wg-quick 2>/dev/null || which wg-quick
+apt-get install wireguard-tools 2>/dev/null || which wg-quick
 ```
 
 ## Key Features

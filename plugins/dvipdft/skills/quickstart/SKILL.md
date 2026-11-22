@@ -18,7 +18,7 @@ CLI tool: dvipdft.
 
 ## Installation
 ```bash
-apt-get install dvipdft 2>/dev/null || which dvipdft
+apt-get install texlive-binaries 2>/dev/null || which dvipdft
 ```
 
 ## Key Features

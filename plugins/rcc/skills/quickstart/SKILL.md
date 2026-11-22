@@ -18,7 +18,7 @@ CLI tool: rcc.
 
 ## Installation
 ```bash
-apt-get install rcc 2>/dev/null || which rcc
+apt-get install qtchooser 2>/dev/null || which rcc
 ```
 
 ## Key Features

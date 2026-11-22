@@ -18,7 +18,7 @@ CLI tool: objcopy.
 
 ## Installation
 ```bash
-apt-get install objcopy 2>/dev/null || which objcopy
+apt-get install binutils 2>/dev/null || which objcopy
 ```
 
 ## Key Features

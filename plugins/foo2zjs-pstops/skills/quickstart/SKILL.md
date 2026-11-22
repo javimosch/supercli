@@ -18,7 +18,7 @@ CLI tool: foo2zjs-pstops.
 
 ## Installation
 ```bash
-apt-get install foo2zjs-pstops 2>/dev/null || which foo2zjs-pstops
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2zjs-pstops
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: qml.
 
 ## Installation
 ```bash
-apt-get install qml 2>/dev/null || which qml
+apt-get install qtchooser 2>/dev/null || which qml
 ```
 
 ## Key Features

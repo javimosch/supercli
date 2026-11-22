@@ -18,7 +18,7 @@ CLI tool: pdfclose.
 
 ## Installation
 ```bash
-apt-get install pdfclose 2>/dev/null || which pdfclose
+apt-get install texlive-binaries 2>/dev/null || which pdfclose
 ```
 
 ## Key Features

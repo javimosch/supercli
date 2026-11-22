@@ -18,7 +18,7 @@ CLI tool: ppmcie.
 
 ## Installation
 ```bash
-apt-get install ppmcie 2>/dev/null || which ppmcie
+apt-get install netpbm 2>/dev/null || which ppmcie
 ```
 
 ## Key Features

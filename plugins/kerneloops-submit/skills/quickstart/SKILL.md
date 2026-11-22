@@ -18,7 +18,7 @@ CLI tool: kerneloops-submit.
 
 ## Installation
 ```bash
-apt-get install kerneloops-submit 2>/dev/null || which kerneloops-submit
+apt-get install kerneloops 2>/dev/null || which kerneloops-submit
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: kvm-spice.
 
 ## Installation
 ```bash
-apt-get install kvm-spice 2>/dev/null || which kvm-spice
+apt-get install qemu-system-x86 2>/dev/null || which kvm-spice
 ```
 
 ## Key Features

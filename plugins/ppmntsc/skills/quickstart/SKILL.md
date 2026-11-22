@@ -18,7 +18,7 @@ CLI tool: ppmntsc.
 
 ## Installation
 ```bash
-apt-get install ppmntsc 2>/dev/null || which ppmntsc
+apt-get install netpbm 2>/dev/null || which ppmntsc
 ```
 
 ## Key Features

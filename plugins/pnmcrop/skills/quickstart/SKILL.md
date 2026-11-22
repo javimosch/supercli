@@ -18,7 +18,7 @@ CLI tool: pnmcrop.
 
 ## Installation
 ```bash
-apt-get install pnmcrop 2>/dev/null || which pnmcrop
+apt-get install netpbm 2>/dev/null || which pnmcrop
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ts.
 
 ## Installation
 ```bash
-apt-get install ts 2>/dev/null || which ts
+apt-get install moreutils 2>/dev/null || which ts
 ```
 
 ## Key Features

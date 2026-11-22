@@ -18,7 +18,7 @@ CLI tool: foo2xqx-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2xqx-wrapper 2>/dev/null || which foo2xqx-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2xqx-wrapper
 ```
 
 ## Key Features

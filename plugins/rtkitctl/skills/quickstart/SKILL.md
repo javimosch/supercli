@@ -18,7 +18,7 @@ CLI tool: rtkitctl.
 
 ## Installation
 ```bash
-apt-get install rtkitctl 2>/dev/null || which rtkitctl
+apt-get install rtkit 2>/dev/null || which rtkitctl
 ```
 
 ## Key Features

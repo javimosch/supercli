@@ -18,7 +18,7 @@ CLI tool: systemd-cryptenroll.
 
 ## Installation
 ```bash
-apt-get install systemd-cryptenroll 2>/dev/null || which systemd-cryptenroll
+apt-get install systemd 2>/dev/null || which systemd-cryptenroll
 ```
 
 ## Key Features

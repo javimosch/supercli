@@ -18,7 +18,7 @@ CLI tool: foo2lava.
 
 ## Installation
 ```bash
-apt-get install foo2lava 2>/dev/null || which foo2lava
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2lava
 ```
 
 ## Key Features

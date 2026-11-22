@@ -18,7 +18,7 @@ CLI tool: lodraw.
 
 ## Installation
 ```bash
-apt-get install lodraw 2>/dev/null || which lodraw
+apt-get install libreoffice-draw 2>/dev/null || which lodraw
 ```
 
 ## Key Features

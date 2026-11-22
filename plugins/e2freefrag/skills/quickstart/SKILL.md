@@ -18,7 +18,7 @@ CLI tool: e2freefrag.
 
 ## Installation
 ```bash
-apt-get install e2freefrag 2>/dev/null || which e2freefrag
+apt-get install e2fsprogs 2>/dev/null || which e2freefrag
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: unxz.
 
 ## Installation
 ```bash
-apt-get install unxz 2>/dev/null || which unxz
+apt-get install xz-utils 2>/dev/null || which unxz
 ```
 
 ## Key Features

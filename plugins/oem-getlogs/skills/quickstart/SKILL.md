@@ -18,7 +18,7 @@ CLI tool: oem-getlogs.
 
 ## Installation
 ```bash
-apt-get install oem-getlogs 2>/dev/null || which oem-getlogs
+apt-get install apport 2>/dev/null || which oem-getlogs
 ```
 
 ## Key Features

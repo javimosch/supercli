@@ -18,7 +18,7 @@ CLI tool: rst2odt_prepstyles.
 
 ## Installation
 ```bash
-apt-get install rst2odt_prepstyles 2>/dev/null || which rst2odt_prepstyles
+apt-get install python3-docutils 2>/dev/null || which rst2odt_prepstyles
 ```
 
 ## Key Features

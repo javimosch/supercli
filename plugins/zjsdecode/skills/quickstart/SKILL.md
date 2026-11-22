@@ -18,7 +18,7 @@ CLI tool: zjsdecode.
 
 ## Installation
 ```bash
-apt-get install zjsdecode 2>/dev/null || which zjsdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which zjsdecode
 ```
 
 ## Key Features

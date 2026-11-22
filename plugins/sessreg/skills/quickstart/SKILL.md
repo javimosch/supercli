@@ -18,7 +18,7 @@ CLI tool: sessreg.
 
 ## Installation
 ```bash
-apt-get install sessreg 2>/dev/null || which sessreg
+apt-get install x11-xserver-utils 2>/dev/null || which sessreg
 ```
 
 ## Key Features

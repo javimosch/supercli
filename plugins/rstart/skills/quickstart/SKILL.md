@@ -18,7 +18,7 @@ CLI tool: rstart.
 
 ## Installation
 ```bash
-apt-get install rstart 2>/dev/null || which rstart
+apt-get install x11-session-utils 2>/dev/null || which rstart
 ```
 
 ## Key Features

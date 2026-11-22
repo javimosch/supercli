@@ -18,7 +18,7 @@ CLI tool: mandb.
 
 ## Installation
 ```bash
-apt-get install mandb 2>/dev/null || which mandb
+apt-get install man-db 2>/dev/null || which mandb
 ```
 
 ## Key Features

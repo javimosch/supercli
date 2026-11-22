@@ -18,7 +18,7 @@ CLI tool: pivot_root.
 
 ## Installation
 ```bash
-apt-get install pivot_root 2>/dev/null || which pivot_root
+apt-get install util-linux 2>/dev/null || which pivot_root
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: setxkbmap.
 
 ## Installation
 ```bash
-apt-get install setxkbmap 2>/dev/null || which setxkbmap
+apt-get install x11-xkb-utils 2>/dev/null || which setxkbmap
 ```
 
 ## Key Features

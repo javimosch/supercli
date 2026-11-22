@@ -18,7 +18,7 @@ CLI tool: pi1toppm.
 
 ## Installation
 ```bash
-apt-get install pi1toppm 2>/dev/null || which pi1toppm
+apt-get install netpbm 2>/dev/null || which pi1toppm
 ```
 
 ## Key Features

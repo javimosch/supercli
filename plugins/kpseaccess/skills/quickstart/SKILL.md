@@ -18,7 +18,7 @@ CLI tool: kpseaccess.
 
 ## Installation
 ```bash
-apt-get install kpseaccess 2>/dev/null || which kpseaccess
+apt-get install texlive-binaries 2>/dev/null || which kpseaccess
 ```
 
 ## Key Features

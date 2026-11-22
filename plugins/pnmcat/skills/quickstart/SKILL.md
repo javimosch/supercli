@@ -18,7 +18,7 @@ CLI tool: pnmcat.
 
 ## Installation
 ```bash
-apt-get install pnmcat 2>/dev/null || which pnmcat
+apt-get install netpbm 2>/dev/null || which pnmcat
 ```
 
 ## Key Features

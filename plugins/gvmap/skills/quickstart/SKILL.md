@@ -18,7 +18,7 @@ CLI tool: gvmap.
 
 ## Installation
 ```bash
-apt-get install gvmap 2>/dev/null || which gvmap
+apt-get install graphviz 2>/dev/null || which gvmap
 ```
 
 ## Key Features

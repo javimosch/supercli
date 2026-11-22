@@ -18,7 +18,7 @@ CLI tool: unicode_stop.
 
 ## Installation
 ```bash
-apt-get install unicode_stop 2>/dev/null || which unicode_stop
+apt-get install kbd 2>/dev/null || which unicode_stop
 ```
 
 ## Key Features

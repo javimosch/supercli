@@ -18,7 +18,7 @@ CLI tool: fsck.fat.
 
 ## Installation
 ```bash
-apt-get install fsck.fat 2>/dev/null || which fsck.fat
+apt-get install dosfstools 2>/dev/null || which fsck.fat
 ```
 
 ## Key Features

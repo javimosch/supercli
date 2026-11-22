@@ -18,7 +18,7 @@ CLI tool: hp-logcapture.
 
 ## Installation
 ```bash
-apt-get install hp-logcapture 2>/dev/null || which hp-logcapture
+apt-get install hplip 2>/dev/null || which hp-logcapture
 ```
 
 ## Key Features

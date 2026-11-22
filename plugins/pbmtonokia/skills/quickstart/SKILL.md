@@ -18,7 +18,7 @@ CLI tool: pbmtonokia.
 
 ## Installation
 ```bash
-apt-get install pbmtonokia 2>/dev/null || which pbmtonokia
+apt-get install netpbm 2>/dev/null || which pbmtonokia
 ```
 
 ## Key Features

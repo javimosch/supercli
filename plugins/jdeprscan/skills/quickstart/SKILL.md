@@ -18,7 +18,7 @@ CLI tool: jdeprscan.
 
 ## Installation
 ```bash
-apt-get install jdeprscan 2>/dev/null || which jdeprscan
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jdeprscan
 ```
 
 ## Key Features

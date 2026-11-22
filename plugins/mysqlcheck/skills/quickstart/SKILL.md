@@ -18,7 +18,7 @@ CLI tool: mysqlcheck.
 
 ## Installation
 ```bash
-apt-get install mysqlcheck 2>/dev/null || which mysqlcheck
+apt-get install mysql-client-core-8.0 2>/dev/null || which mysqlcheck
 ```
 
 ## Key Features

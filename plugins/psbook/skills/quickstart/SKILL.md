@@ -18,7 +18,7 @@ CLI tool: psbook.
 
 ## Installation
 ```bash
-apt-get install psbook 2>/dev/null || which psbook
+apt-get install psutils 2>/dev/null || which psbook
 ```
 
 ## Key Features

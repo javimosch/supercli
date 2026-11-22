@@ -18,7 +18,7 @@ CLI tool: hprof-conv.
 
 ## Installation
 ```bash
-apt-get install hprof-conv 2>/dev/null || which hprof-conv
+apt-get install google-android-platform-tools-installer 2>/dev/null || which hprof-conv
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xdvi.
 
 ## Installation
 ```bash
-apt-get install xdvi 2>/dev/null || which xdvi
+apt-get install texlive-binaries 2>/dev/null || which xdvi
 ```
 
 ## Key Features

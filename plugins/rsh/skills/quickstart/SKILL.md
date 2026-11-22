@@ -18,7 +18,7 @@ CLI tool: rsh.
 
 ## Installation
 ```bash
-apt-get install rsh 2>/dev/null || which rsh
+apt-get install rsh-client 2>/dev/null || which rsh
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mdu.
 
 ## Installation
 ```bash
-apt-get install mdu 2>/dev/null || which mdu
+apt-get install mtools 2>/dev/null || which mdu
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ucfr.
 
 ## Installation
 ```bash
-apt-get install ucfr 2>/dev/null || which ucfr
+apt-get install ucf 2>/dev/null || which ucfr
 ```
 
 ## Key Features

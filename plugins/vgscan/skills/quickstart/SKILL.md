@@ -18,7 +18,7 @@ CLI tool: vgscan.
 
 ## Installation
 ```bash
-apt-get install vgscan 2>/dev/null || which vgscan
+apt-get install lvm2 2>/dev/null || which vgscan
 ```
 
 ## Key Features

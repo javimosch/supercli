@@ -18,7 +18,7 @@ CLI tool: pnmpad.
 
 ## Installation
 ```bash
-apt-get install pnmpad 2>/dev/null || which pnmpad
+apt-get install netpbm 2>/dev/null || which pnmpad
 ```
 
 ## Key Features

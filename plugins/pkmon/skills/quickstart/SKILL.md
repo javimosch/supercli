@@ -18,7 +18,7 @@ CLI tool: pkmon.
 
 ## Installation
 ```bash
-apt-get install pkmon 2>/dev/null || which pkmon
+apt-get install packagekit-tools 2>/dev/null || which pkmon
 ```
 
 ## Key Features

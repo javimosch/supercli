@@ -18,7 +18,7 @@ CLI tool: sbsiglist.
 
 ## Installation
 ```bash
-apt-get install sbsiglist 2>/dev/null || which sbsiglist
+apt-get install sbsigntool 2>/dev/null || which sbsiglist
 ```
 
 ## Key Features

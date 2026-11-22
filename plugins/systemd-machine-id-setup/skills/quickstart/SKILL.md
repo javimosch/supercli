@@ -18,7 +18,7 @@ CLI tool: systemd-machine-id-setup.
 
 ## Installation
 ```bash
-apt-get install systemd-machine-id-setup 2>/dev/null || which systemd-machine-id-setup
+apt-get install systemd 2>/dev/null || which systemd-machine-id-setup
 ```
 
 ## Key Features

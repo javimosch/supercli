@@ -18,7 +18,7 @@ CLI tool: pk12util.
 
 ## Installation
 ```bash
-apt-get install pk12util 2>/dev/null || which pk12util
+apt-get install libnss3-tools 2>/dev/null || which pk12util
 ```
 
 ## Key Features

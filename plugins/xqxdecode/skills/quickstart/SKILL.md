@@ -18,7 +18,7 @@ CLI tool: xqxdecode.
 
 ## Installation
 ```bash
-apt-get install xqxdecode 2>/dev/null || which xqxdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which xqxdecode
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: qmlviewer.
 
 ## Installation
 ```bash
-apt-get install qmlviewer 2>/dev/null || which qmlviewer
+apt-get install qtchooser 2>/dev/null || which qmlviewer
 ```
 
 ## Key Features

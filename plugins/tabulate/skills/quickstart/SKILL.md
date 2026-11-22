@@ -18,7 +18,7 @@ CLI tool: tabulate.
 
 ## Installation
 ```bash
-apt-get install tabulate 2>/dev/null || which tabulate
+apt-get install python3-tabulate 2>/dev/null || which tabulate
 ```
 
 ## Key Features

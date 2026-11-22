@@ -18,7 +18,7 @@ CLI tool: updmap-sys.
 
 ## Installation
 ```bash
-apt-get install updmap-sys 2>/dev/null || which updmap-sys
+apt-get install texlive-base 2>/dev/null || which updmap-sys
 ```
 
 ## Key Features

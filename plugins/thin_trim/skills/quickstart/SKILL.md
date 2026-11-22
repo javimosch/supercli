@@ -18,7 +18,7 @@ CLI tool: thin_trim.
 
 ## Installation
 ```bash
-apt-get install thin_trim 2>/dev/null || which thin_trim
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_trim
 ```
 
 ## Key Features

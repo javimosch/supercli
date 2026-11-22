@@ -18,7 +18,7 @@ CLI tool: loweb.
 
 ## Installation
 ```bash
-apt-get install loweb 2>/dev/null || which loweb
+apt-get install libreoffice-writer 2>/dev/null || which loweb
 ```
 
 ## Key Features

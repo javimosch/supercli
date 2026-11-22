@@ -18,7 +18,7 @@ CLI tool: perli11ndoc.
 
 ## Installation
 ```bash
-apt-get install perli11ndoc 2>/dev/null || which perli11ndoc
+apt-get install libglib-object-introspection-perl 2>/dev/null || which perli11ndoc
 ```
 
 ## Key Features

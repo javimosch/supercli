@@ -18,7 +18,7 @@ CLI tool: hp-query.
 
 ## Installation
 ```bash
-apt-get install hp-query 2>/dev/null || which hp-query
+apt-get install hplip 2>/dev/null || which hp-query
 ```
 
 ## Key Features

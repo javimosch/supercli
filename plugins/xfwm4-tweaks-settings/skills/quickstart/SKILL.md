@@ -18,7 +18,7 @@ CLI tool: xfwm4-tweaks-settings.
 
 ## Installation
 ```bash
-apt-get install xfwm4-tweaks-settings 2>/dev/null || which xfwm4-tweaks-settings
+apt-get install xfwm4 2>/dev/null || which xfwm4-tweaks-settings
 ```
 
 ## Key Features

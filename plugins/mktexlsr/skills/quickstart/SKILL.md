@@ -18,7 +18,7 @@ CLI tool: mktexlsr.
 
 ## Installation
 ```bash
-apt-get install mktexlsr 2>/dev/null || which mktexlsr
+apt-get install texlive-base 2>/dev/null || which mktexlsr
 ```
 
 ## Key Features

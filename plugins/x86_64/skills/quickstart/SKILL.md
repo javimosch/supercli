@@ -18,7 +18,7 @@ CLI tool: x86_64.
 
 ## Installation
 ```bash
-apt-get install x86_64 2>/dev/null || which x86_64
+apt-get install util-linux 2>/dev/null || which x86_64
 ```
 
 ## Key Features

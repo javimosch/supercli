@@ -18,7 +18,7 @@ CLI tool: update-fmtutil.
 
 ## Installation
 ```bash
-apt-get install update-fmtutil 2>/dev/null || which update-fmtutil
+apt-get install tex-common 2>/dev/null || which update-fmtutil
 ```
 
 ## Key Features

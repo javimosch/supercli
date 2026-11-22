@@ -18,7 +18,7 @@ CLI tool: obexctl.
 
 ## Installation
 ```bash
-apt-get install obexctl 2>/dev/null || which obexctl
+apt-get install bluez 2>/dev/null || which obexctl
 ```
 
 ## Key Features

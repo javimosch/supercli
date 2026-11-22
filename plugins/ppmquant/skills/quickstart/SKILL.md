@@ -18,7 +18,7 @@ CLI tool: ppmquant.
 
 ## Installation
 ```bash
-apt-get install ppmquant 2>/dev/null || which ppmquant
+apt-get install netpbm 2>/dev/null || which ppmquant
 ```
 
 ## Key Features

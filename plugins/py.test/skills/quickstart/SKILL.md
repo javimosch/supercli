@@ -18,7 +18,7 @@ CLI tool: py.test.
 
 ## Installation
 ```bash
-apt-get install py.test 2>/dev/null || which py.test
+apt-get install python3-pytest 2>/dev/null || which py.test
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: modprobe.
 
 ## Installation
 ```bash
-apt-get install modprobe 2>/dev/null || which modprobe
+apt-get install kmod 2>/dev/null || which modprobe
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: dvispc.
 
 ## Installation
 ```bash
-apt-get install dvispc 2>/dev/null || which dvispc
+apt-get install texlive-binaries 2>/dev/null || which dvispc
 ```
 
 ## Key Features

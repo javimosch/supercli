@@ -18,7 +18,7 @@ CLI tool: rdma.
 
 ## Installation
 ```bash
-apt-get install rdma 2>/dev/null || which rdma
+apt-get install iproute2 2>/dev/null || which rdma
 ```
 
 ## Key Features

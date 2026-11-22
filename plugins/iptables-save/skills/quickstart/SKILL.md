@@ -18,7 +18,7 @@ CLI tool: iptables-save.
 
 ## Installation
 ```bash
-apt-get install iptables-save 2>/dev/null || which iptables-save
+apt-get install iptables 2>/dev/null || which iptables-save
 ```
 
 ## Key Features

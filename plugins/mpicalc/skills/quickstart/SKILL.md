@@ -18,7 +18,7 @@ CLI tool: mpicalc.
 
 ## Installation
 ```bash
-apt-get install mpicalc 2>/dev/null || which mpicalc
+apt-get install libgcrypt20-dev 2>/dev/null || which mpicalc
 ```
 
 ## Key Features

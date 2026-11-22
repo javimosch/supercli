@@ -18,7 +18,7 @@ CLI tool: fsck.msdos.
 
 ## Installation
 ```bash
-apt-get install fsck.msdos 2>/dev/null || which fsck.msdos
+apt-get install dosfstools 2>/dev/null || which fsck.msdos
 ```
 
 ## Key Features

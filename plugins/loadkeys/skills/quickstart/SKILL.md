@@ -18,7 +18,7 @@ CLI tool: loadkeys.
 
 ## Installation
 ```bash
-apt-get install loadkeys 2>/dev/null || which loadkeys
+apt-get install kbd 2>/dev/null || which loadkeys
 ```
 
 ## Key Features

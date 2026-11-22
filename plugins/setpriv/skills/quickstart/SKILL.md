@@ -18,7 +18,7 @@ CLI tool: setpriv.
 
 ## Installation
 ```bash
-apt-get install setpriv 2>/dev/null || which setpriv
+apt-get install util-linux 2>/dev/null || which setpriv
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: vptovf.
 
 ## Installation
 ```bash
-apt-get install vptovf 2>/dev/null || which vptovf
+apt-get install texlive-binaries 2>/dev/null || which vptovf
 ```
 
 ## Key Features

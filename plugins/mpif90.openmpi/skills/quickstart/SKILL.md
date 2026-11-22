@@ -18,7 +18,7 @@ CLI tool: mpif90.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpif90.openmpi 2>/dev/null || which mpif90.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpif90.openmpi
 ```
 
 ## Key Features

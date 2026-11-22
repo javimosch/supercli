@@ -18,7 +18,7 @@ CLI tool: fstopgm.
 
 ## Installation
 ```bash
-apt-get install fstopgm 2>/dev/null || which fstopgm
+apt-get install netpbm 2>/dev/null || which fstopgm
 ```
 
 ## Key Features

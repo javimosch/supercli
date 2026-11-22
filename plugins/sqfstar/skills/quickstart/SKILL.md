@@ -18,7 +18,7 @@ CLI tool: sqfstar.
 
 ## Installation
 ```bash
-apt-get install sqfstar 2>/dev/null || which sqfstar
+apt-get install squashfs-tools 2>/dev/null || which sqfstar
 ```
 
 ## Key Features

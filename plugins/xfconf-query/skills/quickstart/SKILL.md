@@ -18,7 +18,7 @@ CLI tool: xfconf-query.
 
 ## Installation
 ```bash
-apt-get install xfconf-query 2>/dev/null || which xfconf-query
+apt-get install xfconf 2>/dev/null || which xfconf-query
 ```
 
 ## Key Features

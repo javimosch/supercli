@@ -18,7 +18,7 @@ CLI tool: popcon-largest-unused.
 
 ## Installation
 ```bash
-apt-get install popcon-largest-unused 2>/dev/null || which popcon-largest-unused
+apt-get install popularity-contest 2>/dev/null || which popcon-largest-unused
 ```
 
 ## Key Features

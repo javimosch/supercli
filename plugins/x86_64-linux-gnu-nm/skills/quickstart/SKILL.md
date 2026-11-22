@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-nm.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-nm 2>/dev/null || which x86_64-linux-gnu-nm
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-nm
 ```
 
 ## Key Features

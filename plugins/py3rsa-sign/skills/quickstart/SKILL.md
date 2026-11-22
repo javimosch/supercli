@@ -18,7 +18,7 @@ CLI tool: py3rsa-sign.
 
 ## Installation
 ```bash
-apt-get install py3rsa-sign 2>/dev/null || which py3rsa-sign
+apt-get install python3-rsa 2>/dev/null || which py3rsa-sign
 ```
 
 ## Key Features

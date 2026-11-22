@@ -18,7 +18,7 @@ CLI tool: m2300w.
 
 ## Installation
 ```bash
-apt-get install m2300w 2>/dev/null || which m2300w
+apt-get install printer-driver-m2300w 2>/dev/null || which m2300w
 ```
 
 ## Key Features

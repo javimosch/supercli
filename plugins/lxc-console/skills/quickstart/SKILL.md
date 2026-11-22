@@ -18,7 +18,7 @@ CLI tool: lxc-console.
 
 ## Installation
 ```bash
-apt-get install lxc-console 2>/dev/null || which lxc-console
+apt-get install lxc-utils 2>/dev/null || which lxc-console
 ```
 
 ## Key Features

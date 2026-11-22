@@ -18,7 +18,7 @@ CLI tool: foo2slx-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2slx-wrapper 2>/dev/null || which foo2slx-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2slx-wrapper
 ```
 
 ## Key Features

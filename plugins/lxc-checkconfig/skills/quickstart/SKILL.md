@@ -18,7 +18,7 @@ CLI tool: lxc-checkconfig.
 
 ## Installation
 ```bash
-apt-get install lxc-checkconfig 2>/dev/null || which lxc-checkconfig
+apt-get install lxc-utils 2>/dev/null || which lxc-checkconfig
 ```
 
 ## Key Features

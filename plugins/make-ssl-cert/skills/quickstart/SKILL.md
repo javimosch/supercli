@@ -18,7 +18,7 @@ CLI tool: make-ssl-cert.
 
 ## Installation
 ```bash
-apt-get install make-ssl-cert 2>/dev/null || which make-ssl-cert
+apt-get install ssl-cert 2>/dev/null || which make-ssl-cert
 ```
 
 ## Key Features

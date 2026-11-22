@@ -18,7 +18,7 @@ CLI tool: ppmtouil.
 
 ## Installation
 ```bash
-apt-get install ppmtouil 2>/dev/null || which ppmtouil
+apt-get install netpbm 2>/dev/null || which ppmtouil
 ```
 
 ## Key Features

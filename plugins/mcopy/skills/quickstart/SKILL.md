@@ -18,7 +18,7 @@ CLI tool: mcopy.
 
 ## Installation
 ```bash
-apt-get install mcopy 2>/dev/null || which mcopy
+apt-get install mtools 2>/dev/null || which mcopy
 ```
 
 ## Key Features

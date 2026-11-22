@@ -18,7 +18,7 @@ CLI tool: lxc-update-config.
 
 ## Installation
 ```bash
-apt-get install lxc-update-config 2>/dev/null || which lxc-update-config
+apt-get install lxc-utils 2>/dev/null || which lxc-update-config
 ```
 
 ## Key Features

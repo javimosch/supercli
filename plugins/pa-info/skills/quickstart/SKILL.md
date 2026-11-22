@@ -18,7 +18,7 @@ CLI tool: pa-info.
 
 ## Installation
 ```bash
-apt-get install pa-info 2>/dev/null || which pa-info
+apt-get install pulseaudio-utils 2>/dev/null || which pa-info
 ```
 
 ## Key Features

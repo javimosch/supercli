@@ -18,7 +18,7 @@ CLI tool: qtplugininfo.
 
 ## Installation
 ```bash
-apt-get install qtplugininfo 2>/dev/null || which qtplugininfo
+apt-get install qtchooser 2>/dev/null || which qtplugininfo
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ppmtomap.
 
 ## Installation
 ```bash
-apt-get install ppmtomap 2>/dev/null || which ppmtomap
+apt-get install netpbm 2>/dev/null || which ppmtomap
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: thin_restore.
 
 ## Installation
 ```bash
-apt-get install thin_restore 2>/dev/null || which thin_restore
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_restore
 ```
 
 ## Key Features

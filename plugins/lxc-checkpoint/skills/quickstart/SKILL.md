@@ -18,7 +18,7 @@ CLI tool: lxc-checkpoint.
 
 ## Installation
 ```bash
-apt-get install lxc-checkpoint 2>/dev/null || which lxc-checkpoint
+apt-get install lxc-utils 2>/dev/null || which lxc-checkpoint
 ```
 
 ## Key Features

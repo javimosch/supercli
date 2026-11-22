@@ -18,7 +18,7 @@ CLI tool: xfrun4.
 
 ## Installation
 ```bash
-apt-get install xfrun4 2>/dev/null || which xfrun4
+apt-get install xfce4-appfinder 2>/dev/null || which xfrun4
 ```
 
 ## Key Features

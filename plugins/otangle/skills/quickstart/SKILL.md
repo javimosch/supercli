@@ -18,7 +18,7 @@ CLI tool: otangle.
 
 ## Installation
 ```bash
-apt-get install otangle 2>/dev/null || which otangle
+apt-get install texlive-binaries 2>/dev/null || which otangle
 ```
 
 ## Key Features

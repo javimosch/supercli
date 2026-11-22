@@ -18,7 +18,7 @@ CLI tool: xfdesktop.
 
 ## Installation
 ```bash
-apt-get install xfdesktop 2>/dev/null || which xfdesktop
+apt-get install xfdesktop4 2>/dev/null || which xfdesktop
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-language.
 
 ## Installation
 ```bash
-apt-get install update-language 2>/dev/null || which update-language
+apt-get install tex-common 2>/dev/null || which update-language
 ```
 
 ## Key Features

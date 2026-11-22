@@ -18,7 +18,7 @@ CLI tool: openvt.
 
 ## Installation
 ```bash
-apt-get install openvt 2>/dev/null || which openvt
+apt-get install kbd 2>/dev/null || which openvt
 ```
 
 ## Key Features

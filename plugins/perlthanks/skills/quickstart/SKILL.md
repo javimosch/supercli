@@ -18,7 +18,7 @@ CLI tool: perlthanks.
 
 ## Installation
 ```bash
-apt-get install perlthanks 2>/dev/null || which perlthanks
+apt-get install perl 2>/dev/null || which perlthanks
 ```
 
 ## Key Features

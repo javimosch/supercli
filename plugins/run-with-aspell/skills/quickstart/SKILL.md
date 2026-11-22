@@ -18,7 +18,7 @@ CLI tool: run-with-aspell.
 
 ## Installation
 ```bash
-apt-get install run-with-aspell 2>/dev/null || which run-with-aspell
+apt-get install aspell 2>/dev/null || which run-with-aspell
 ```
 
 ## Key Features

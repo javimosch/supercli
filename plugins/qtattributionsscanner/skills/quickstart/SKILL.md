@@ -18,7 +18,7 @@ CLI tool: qtattributionsscanner.
 
 ## Installation
 ```bash
-apt-get install qtattributionsscanner 2>/dev/null || which qtattributionsscanner
+apt-get install qtchooser 2>/dev/null || which qtattributionsscanner
 ```
 
 ## Key Features

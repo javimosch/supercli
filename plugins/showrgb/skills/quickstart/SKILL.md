@@ -18,7 +18,7 @@ CLI tool: showrgb.
 
 ## Installation
 ```bash
-apt-get install showrgb 2>/dev/null || which showrgb
+apt-get install x11-xserver-utils 2>/dev/null || which showrgb
 ```
 
 ## Key Features

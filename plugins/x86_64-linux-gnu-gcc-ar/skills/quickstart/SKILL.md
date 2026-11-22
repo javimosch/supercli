@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcc-ar.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcc-ar 2>/dev/null || which x86_64-linux-gnu-gcc-ar
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcc-ar
 ```
 
 ## Key Features

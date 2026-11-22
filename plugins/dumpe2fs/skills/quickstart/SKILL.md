@@ -18,7 +18,7 @@ CLI tool: dumpe2fs.
 
 ## Installation
 ```bash
-apt-get install dumpe2fs 2>/dev/null || which dumpe2fs
+apt-get install e2fsprogs 2>/dev/null || which dumpe2fs
 ```
 
 ## Key Features

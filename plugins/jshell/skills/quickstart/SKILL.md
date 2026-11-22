@@ -18,7 +18,7 @@ CLI tool: jshell.
 
 ## Installation
 ```bash
-apt-get install jshell 2>/dev/null || which jshell
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jshell
 ```
 
 ## Key Features

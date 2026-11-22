@@ -18,7 +18,7 @@ CLI tool: sensors-detect.
 
 ## Installation
 ```bash
-apt-get install sensors-detect 2>/dev/null || which sensors-detect
+apt-get install lm-sensors 2>/dev/null || which sensors-detect
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mdel.
 
 ## Installation
 ```bash
-apt-get install mdel 2>/dev/null || which mdel
+apt-get install mtools 2>/dev/null || which mdel
 ```
 
 ## Key Features

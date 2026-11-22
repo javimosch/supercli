@@ -18,7 +18,7 @@ CLI tool: mattrib.
 
 ## Installation
 ```bash
-apt-get install mattrib 2>/dev/null || which mattrib
+apt-get install mtools 2>/dev/null || which mattrib
 ```
 
 ## Key Features

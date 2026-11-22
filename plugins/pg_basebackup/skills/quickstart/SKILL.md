@@ -18,7 +18,7 @@ CLI tool: pg_basebackup.
 
 ## Installation
 ```bash
-apt-get install pg_basebackup 2>/dev/null || which pg_basebackup
+apt-get install postgresql-client-common 2>/dev/null || which pg_basebackup
 ```
 
 ## Key Features

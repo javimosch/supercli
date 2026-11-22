@@ -18,7 +18,7 @@ CLI tool: update-mime.
 
 ## Installation
 ```bash
-apt-get install update-mime 2>/dev/null || which update-mime
+apt-get install mailcap 2>/dev/null || which update-mime
 ```
 
 ## Key Features

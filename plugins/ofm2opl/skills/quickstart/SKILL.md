@@ -18,7 +18,7 @@ CLI tool: ofm2opl.
 
 ## Installation
 ```bash
-apt-get install ofm2opl 2>/dev/null || which ofm2opl
+apt-get install texlive-binaries 2>/dev/null || which ofm2opl
 ```
 
 ## Key Features

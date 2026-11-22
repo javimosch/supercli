@@ -18,7 +18,7 @@ CLI tool: pnminterp-gen.
 
 ## Installation
 ```bash
-apt-get install pnminterp-gen 2>/dev/null || which pnminterp-gen
+apt-get install netpbm 2>/dev/null || which pnminterp-gen
 ```
 
 ## Key Features

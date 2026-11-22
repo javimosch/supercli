@@ -18,7 +18,7 @@ CLI tool: xmlpatterns.
 
 ## Installation
 ```bash
-apt-get install xmlpatterns 2>/dev/null || which xmlpatterns
+apt-get install qtchooser 2>/dev/null || which xmlpatterns
 ```
 
 ## Key Features

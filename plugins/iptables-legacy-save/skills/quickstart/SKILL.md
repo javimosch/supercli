@@ -18,7 +18,7 @@ CLI tool: iptables-legacy-save.
 
 ## Installation
 ```bash
-apt-get install iptables-legacy-save 2>/dev/null || which iptables-legacy-save
+apt-get install iptables 2>/dev/null || which iptables-legacy-save
 ```
 
 ## Key Features

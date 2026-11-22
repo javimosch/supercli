@@ -18,7 +18,7 @@ CLI tool: pvck.
 
 ## Installation
 ```bash
-apt-get install pvck 2>/dev/null || which pvck
+apt-get install lvm2 2>/dev/null || which pvck
 ```
 
 ## Key Features

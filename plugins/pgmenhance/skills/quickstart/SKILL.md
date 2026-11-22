@@ -18,7 +18,7 @@ CLI tool: pgmenhance.
 
 ## Installation
 ```bash
-apt-get install pgmenhance 2>/dev/null || which pgmenhance
+apt-get install netpbm 2>/dev/null || which pgmenhance
 ```
 
 ## Key Features

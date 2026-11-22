@@ -18,7 +18,7 @@ CLI tool: iptables-apply.
 
 ## Installation
 ```bash
-apt-get install iptables-apply 2>/dev/null || which iptables-apply
+apt-get install iptables 2>/dev/null || which iptables-apply
 ```
 
 ## Key Features

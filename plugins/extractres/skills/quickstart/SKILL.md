@@ -18,7 +18,7 @@ CLI tool: extractres.
 
 ## Installation
 ```bash
-apt-get install extractres 2>/dev/null || which extractres
+apt-get install psutils 2>/dev/null || which extractres
 ```
 
 ## Key Features

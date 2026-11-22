@@ -18,7 +18,7 @@ CLI tool: wamp.
 
 ## Installation
 ```bash
-apt-get install wamp 2>/dev/null || which wamp
+apt-get install python3-autobahn 2>/dev/null || which wamp
 ```
 
 ## Key Features

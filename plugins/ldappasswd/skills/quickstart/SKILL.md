@@ -18,7 +18,7 @@ CLI tool: ldappasswd.
 
 ## Installation
 ```bash
-apt-get install ldappasswd 2>/dev/null || which ldappasswd
+apt-get install ldap-utils 2>/dev/null || which ldappasswd
 ```
 
 ## Key Features

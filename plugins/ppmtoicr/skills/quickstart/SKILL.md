@@ -18,7 +18,7 @@ CLI tool: ppmtoicr.
 
 ## Installation
 ```bash
-apt-get install ppmtoicr 2>/dev/null || which ppmtoicr
+apt-get install netpbm 2>/dev/null || which ppmtoicr
 ```
 
 ## Key Features

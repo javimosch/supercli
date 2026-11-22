@@ -18,7 +18,7 @@ CLI tool: select-editor.
 
 ## Installation
 ```bash
-apt-get install select-editor 2>/dev/null || which select-editor
+apt-get install sensible-utils 2>/dev/null || which select-editor
 ```
 
 ## Key Features

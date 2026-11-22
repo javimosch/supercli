@@ -18,7 +18,7 @@ CLI tool: lesspipe.
 
 ## Installation
 ```bash
-apt-get install lesspipe 2>/dev/null || which lesspipe
+apt-get install less 2>/dev/null || which lesspipe
 ```
 
 ## Key Features

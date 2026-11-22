@@ -18,7 +18,7 @@ CLI tool: slxdecode.
 
 ## Installation
 ```bash
-apt-get install slxdecode 2>/dev/null || which slxdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which slxdecode
 ```
 
 ## Key Features

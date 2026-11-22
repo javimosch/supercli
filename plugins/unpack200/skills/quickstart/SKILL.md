@@ -18,7 +18,7 @@ CLI tool: unpack200.
 
 ## Installation
 ```bash
-apt-get install unpack200 2>/dev/null || which unpack200
+apt-get install openjdk-11-jre-headless 2>/dev/null || which unpack200
 ```
 
 ## Key Features

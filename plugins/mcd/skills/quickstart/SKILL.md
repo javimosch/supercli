@@ -18,7 +18,7 @@ CLI tool: mcd.
 
 ## Installation
 ```bash
-apt-get install mcd 2>/dev/null || which mcd
+apt-get install mtools 2>/dev/null || which mcd
 ```
 
 ## Key Features

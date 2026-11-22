@@ -18,7 +18,7 @@ CLI tool: lessfile.
 
 ## Installation
 ```bash
-apt-get install lessfile 2>/dev/null || which lessfile
+apt-get install less 2>/dev/null || which lessfile
 ```
 
 ## Key Features

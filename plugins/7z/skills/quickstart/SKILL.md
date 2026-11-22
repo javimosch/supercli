@@ -18,7 +18,7 @@ CLI tool: 7z.
 
 ## Installation
 ```bash
-apt-get install 7z 2>/dev/null || which 7z
+apt-get install 7zip 2>/dev/null || which 7z
 ```
 
 ## Key Features

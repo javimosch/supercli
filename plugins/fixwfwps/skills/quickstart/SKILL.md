@@ -18,7 +18,7 @@ CLI tool: fixwfwps.
 
 ## Installation
 ```bash
-apt-get install fixwfwps 2>/dev/null || which fixwfwps
+apt-get install psutils 2>/dev/null || which fixwfwps
 ```
 
 ## Key Features

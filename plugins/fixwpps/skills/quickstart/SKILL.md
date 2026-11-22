@@ -18,7 +18,7 @@ CLI tool: fixwpps.
 
 ## Installation
 ```bash
-apt-get install fixwpps 2>/dev/null || which fixwpps
+apt-get install psutils 2>/dev/null || which fixwpps
 ```
 
 ## Key Features

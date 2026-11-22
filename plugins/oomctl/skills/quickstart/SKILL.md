@@ -18,7 +18,7 @@ CLI tool: oomctl.
 
 ## Installation
 ```bash
-apt-get install oomctl 2>/dev/null || which oomctl
+apt-get install systemd-oomd 2>/dev/null || which oomctl
 ```
 
 ## Key Features

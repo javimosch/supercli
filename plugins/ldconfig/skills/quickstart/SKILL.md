@@ -18,7 +18,7 @@ CLI tool: ldconfig.
 
 ## Installation
 ```bash
-apt-get install ldconfig 2>/dev/null || which ldconfig
+apt-get install libc-bin 2>/dev/null || which ldconfig
 ```
 
 ## Key Features

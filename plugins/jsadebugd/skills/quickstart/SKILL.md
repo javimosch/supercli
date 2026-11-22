@@ -18,7 +18,7 @@ CLI tool: jsadebugd.
 
 ## Installation
 ```bash
-apt-get install jsadebugd 2>/dev/null || which jsadebugd
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which jsadebugd
 ```
 
 ## Key Features

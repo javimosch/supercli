@@ -25,7 +25,7 @@ Identify processes using files, sockets, or filesystems. Essential for debugging
 ```bash
 # Pre-installed on most Linux systems
 # If missing:
-apt-get install util-linux
+apt-get install psmisc
 supercli plugins install ./plugins/fuser --on-conflict replace --json
 ```
 

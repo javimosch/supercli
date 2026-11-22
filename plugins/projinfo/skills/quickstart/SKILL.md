@@ -18,7 +18,7 @@ CLI tool: projinfo.
 
 ## Installation
 ```bash
-apt-get install projinfo 2>/dev/null || which projinfo
+apt-get install proj-bin 2>/dev/null || which projinfo
 ```
 
 ## Key Features

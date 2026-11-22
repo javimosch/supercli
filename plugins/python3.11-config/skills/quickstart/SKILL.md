@@ -18,7 +18,7 @@ CLI tool: python3.11-config.
 
 ## Installation
 ```bash
-apt-get install python3.11-config 2>/dev/null || which python3.11-config
+apt-get install python3.11-dev 2>/dev/null || which python3.11-config
 ```
 
 ## Key Features

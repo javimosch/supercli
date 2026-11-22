@@ -18,7 +18,7 @@ CLI tool: helpztags.
 
 ## Installation
 ```bash
-apt-get install helpztags 2>/dev/null || which helpztags
+apt-get install vim-common 2>/dev/null || which helpztags
 ```
 
 ## Key Features

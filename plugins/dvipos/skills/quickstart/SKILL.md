@@ -18,7 +18,7 @@ CLI tool: dvipos.
 
 ## Installation
 ```bash
-apt-get install dvipos 2>/dev/null || which dvipos
+apt-get install texlive-binaries 2>/dev/null || which dvipos
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ua.
 
 ## Installation
 ```bash
-apt-get install ua 2>/dev/null || which ua
+apt-get install ubuntu-advantage-tools 2>/dev/null || which ua
 ```
 
 ## Key Features

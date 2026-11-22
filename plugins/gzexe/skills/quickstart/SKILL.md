@@ -18,7 +18,7 @@ CLI tool: gzexe.
 
 ## Installation
 ```bash
-apt-get install gzexe 2>/dev/null || which gzexe
+apt-get install gzip 2>/dev/null || which gzexe
 ```
 
 ## Key Features

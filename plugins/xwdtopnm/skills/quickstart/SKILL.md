@@ -18,7 +18,7 @@ CLI tool: xwdtopnm.
 
 ## Installation
 ```bash
-apt-get install xwdtopnm 2>/dev/null || which xwdtopnm
+apt-get install netpbm 2>/dev/null || which xwdtopnm
 ```
 
 ## Key Features

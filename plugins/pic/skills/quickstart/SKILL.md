@@ -18,7 +18,7 @@ CLI tool: pic.
 
 ## Installation
 ```bash
-apt-get install pic 2>/dev/null || which pic
+apt-get install groff-base 2>/dev/null || which pic
 ```
 
 ## Key Features

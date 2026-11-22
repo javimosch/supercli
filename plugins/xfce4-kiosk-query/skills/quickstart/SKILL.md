@@ -18,7 +18,7 @@ CLI tool: xfce4-kiosk-query.
 
 ## Installation
 ```bash
-apt-get install xfce4-kiosk-query 2>/dev/null || which xfce4-kiosk-query
+apt-get install libxfce4util-bin 2>/dev/null || which xfce4-kiosk-query
 ```
 
 ## Key Features

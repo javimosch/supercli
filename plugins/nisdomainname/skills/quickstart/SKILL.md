@@ -18,7 +18,7 @@ CLI tool: nisdomainname.
 
 ## Installation
 ```bash
-apt-get install nisdomainname 2>/dev/null || which nisdomainname
+apt-get install hostname 2>/dev/null || which nisdomainname
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pee.
 
 ## Installation
 ```bash
-apt-get install pee 2>/dev/null || which pee
+apt-get install moreutils 2>/dev/null || which pee
 ```
 
 ## Key Features

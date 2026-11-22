@@ -18,7 +18,7 @@ CLI tool: xdvi.bin.
 
 ## Installation
 ```bash
-apt-get install xdvi.bin 2>/dev/null || which xdvi.bin
+apt-get install xdvik-ja 2>/dev/null || which xdvi.bin
 ```
 
 ## Key Features

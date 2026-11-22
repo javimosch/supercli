@@ -18,7 +18,7 @@ CLI tool: sprof.
 
 ## Installation
 ```bash
-apt-get install sprof 2>/dev/null || which sprof
+apt-get install libc-devtools 2>/dev/null || which sprof
 ```
 
 ## Key Features

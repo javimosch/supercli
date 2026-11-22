@@ -18,7 +18,7 @@ CLI tool: qemu-system-x86_64.
 
 ## Installation
 ```bash
-apt-get install qemu-system-x86_64 2>/dev/null || which qemu-system-x86_64
+apt-get install qemu-system-x86 2>/dev/null || which qemu-system-x86_64
 ```
 
 ## Key Features

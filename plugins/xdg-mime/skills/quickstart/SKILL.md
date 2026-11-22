@@ -18,7 +18,7 @@ CLI tool: xdg-mime.
 
 ## Installation
 ```bash
-apt-get install xdg-mime 2>/dev/null || which xdg-mime
+apt-get install xdg-utils 2>/dev/null || which xdg-mime
 ```
 
 ## Key Features

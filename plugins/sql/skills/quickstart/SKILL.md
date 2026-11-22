@@ -18,7 +18,7 @@ CLI tool: sql.
 
 ## Installation
 ```bash
-apt-get install sql 2>/dev/null || which sql
+apt-get install parallel 2>/dev/null || which sql
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: nameif.
 
 ## Installation
 ```bash
-apt-get install nameif 2>/dev/null || which nameif
+apt-get install net-tools 2>/dev/null || which nameif
 ```
 
 ## Key Features

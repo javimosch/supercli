@@ -18,7 +18,7 @@ CLI tool: pnmtosgi.
 
 ## Installation
 ```bash
-apt-get install pnmtosgi 2>/dev/null || which pnmtosgi
+apt-get install netpbm 2>/dev/null || which pnmtosgi
 ```
 
 ## Key Features

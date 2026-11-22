@@ -18,7 +18,7 @@ CLI tool: pnmcolormap.
 
 ## Installation
 ```bash
-apt-get install pnmcolormap 2>/dev/null || which pnmcolormap
+apt-get install netpbm 2>/dev/null || which pnmcolormap
 ```
 
 ## Key Features

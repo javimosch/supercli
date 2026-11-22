@@ -18,7 +18,7 @@ CLI tool: intltool-extract.
 
 ## Installation
 ```bash
-apt-get install intltool-extract 2>/dev/null || which intltool-extract
+apt-get install intltool 2>/dev/null || which intltool-extract
 ```
 
 ## Key Features

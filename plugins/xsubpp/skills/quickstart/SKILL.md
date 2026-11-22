@@ -18,7 +18,7 @@ CLI tool: xsubpp.
 
 ## Installation
 ```bash
-apt-get install xsubpp 2>/dev/null || which xsubpp
+apt-get install perl 2>/dev/null || which xsubpp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xclip-pastefile.
 
 ## Installation
 ```bash
-apt-get install xclip-pastefile 2>/dev/null || which xclip-pastefile
+apt-get install xclip 2>/dev/null || which xclip-pastefile
 ```
 
 ## Key Features

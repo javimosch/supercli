@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gprof.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gprof 2>/dev/null || which x86_64-linux-gnu-gprof
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-gprof
 ```
 
 ## Key Features

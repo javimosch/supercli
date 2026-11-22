@@ -18,7 +18,7 @@ CLI tool: tclsh8.6.
 
 ## Installation
 ```bash
-apt-get install tclsh8.6 2>/dev/null || which tclsh8.6
+apt-get install tcl8.6 2>/dev/null || which tclsh8.6
 ```
 
 ## Key Features

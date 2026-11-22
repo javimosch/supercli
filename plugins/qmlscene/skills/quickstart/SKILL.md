@@ -18,7 +18,7 @@ CLI tool: qmlscene.
 
 ## Installation
 ```bash
-apt-get install qmlscene 2>/dev/null || which qmlscene
+apt-get install qtchooser 2>/dev/null || which qmlscene
 ```
 
 ## Key Features

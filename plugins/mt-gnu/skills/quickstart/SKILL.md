@@ -18,7 +18,7 @@ CLI tool: mt-gnu.
 
 ## Installation
 ```bash
-apt-get install mt-gnu 2>/dev/null || which mt-gnu
+apt-get install cpio 2>/dev/null || which mt-gnu
 ```
 
 ## Key Features

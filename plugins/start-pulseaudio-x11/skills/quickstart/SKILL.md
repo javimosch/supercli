@@ -18,7 +18,7 @@ CLI tool: start-pulseaudio-x11.
 
 ## Installation
 ```bash
-apt-get install start-pulseaudio-x11 2>/dev/null || which start-pulseaudio-x11
+apt-get install pulseaudio 2>/dev/null || which start-pulseaudio-x11
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: vboxmanage.
 
 ## Installation
 ```bash
-apt-get install vboxmanage 2>/dev/null || which vboxmanage
+apt-get install virtualbox 2>/dev/null || which vboxmanage
 ```
 
 ## Key Features

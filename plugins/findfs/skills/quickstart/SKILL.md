@@ -18,7 +18,7 @@ CLI tool: findfs.
 
 ## Installation
 ```bash
-apt-get install findfs 2>/dev/null || which findfs
+apt-get install util-linux 2>/dev/null || which findfs
 ```
 
 ## Key Features

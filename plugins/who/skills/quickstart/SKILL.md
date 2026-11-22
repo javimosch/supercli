@@ -18,7 +18,7 @@ CLI tool: who.
 
 ## Installation
 ```bash
-apt-get install who 2>/dev/null || which who
+apt-get install coreutils 2>/dev/null || which who
 ```
 
 ## Key Features

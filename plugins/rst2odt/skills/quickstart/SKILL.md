@@ -18,7 +18,7 @@ CLI tool: rst2odt.
 
 ## Installation
 ```bash
-apt-get install rst2odt 2>/dev/null || which rst2odt
+apt-get install python3-docutils 2>/dev/null || which rst2odt
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: tgatoppm.
 
 ## Installation
 ```bash
-apt-get install tgatoppm 2>/dev/null || which tgatoppm
+apt-get install netpbm 2>/dev/null || which tgatoppm
 ```
 
 ## Key Features

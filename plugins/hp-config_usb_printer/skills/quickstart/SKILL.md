@@ -18,7 +18,7 @@ CLI tool: hp-config_usb_printer.
 
 ## Installation
 ```bash
-apt-get install hp-config_usb_printer 2>/dev/null || which hp-config_usb_printer
+apt-get install hplip 2>/dev/null || which hp-config_usb_printer
 ```
 
 ## Key Features

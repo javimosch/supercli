@@ -18,7 +18,7 @@ CLI tool: tred.
 
 ## Installation
 ```bash
-apt-get install tred 2>/dev/null || which tred
+apt-get install graphviz 2>/dev/null || which tred
 ```
 
 ## Key Features

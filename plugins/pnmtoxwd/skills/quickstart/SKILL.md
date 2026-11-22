@@ -18,7 +18,7 @@ CLI tool: pnmtoxwd.
 
 ## Installation
 ```bash
-apt-get install pnmtoxwd 2>/dev/null || which pnmtoxwd
+apt-get install netpbm 2>/dev/null || which pnmtoxwd
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: systemd-sysext.
 
 ## Installation
 ```bash
-apt-get install systemd-sysext 2>/dev/null || which systemd-sysext
+apt-get install systemd 2>/dev/null || which systemd-sysext
 ```
 
 ## Key Features

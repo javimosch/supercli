@@ -18,7 +18,7 @@ CLI tool: pgmnorm.
 
 ## Installation
 ```bash
-apt-get install pgmnorm 2>/dev/null || which pgmnorm
+apt-get install netpbm 2>/dev/null || which pgmnorm
 ```
 
 ## Key Features

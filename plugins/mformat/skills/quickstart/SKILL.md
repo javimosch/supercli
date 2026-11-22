@@ -18,7 +18,7 @@ CLI tool: mformat.
 
 ## Installation
 ```bash
-apt-get install mformat 2>/dev/null || which mformat
+apt-get install mtools 2>/dev/null || which mformat
 ```
 
 ## Key Features

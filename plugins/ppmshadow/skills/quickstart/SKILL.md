@@ -18,7 +18,7 @@ CLI tool: ppmshadow.
 
 ## Installation
 ```bash
-apt-get install ppmshadow 2>/dev/null || which ppmshadow
+apt-get install netpbm 2>/dev/null || which ppmshadow
 ```
 
 ## Key Features

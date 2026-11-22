@@ -18,7 +18,7 @@ CLI tool: pgmtofs.
 
 ## Installation
 ```bash
-apt-get install pgmtofs 2>/dev/null || which pgmtofs
+apt-get install netpbm 2>/dev/null || which pgmtofs
 ```
 
 ## Key Features

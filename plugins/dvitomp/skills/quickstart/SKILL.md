@@ -18,7 +18,7 @@ CLI tool: dvitomp.
 
 ## Installation
 ```bash
-apt-get install dvitomp 2>/dev/null || which dvitomp
+apt-get install texlive-binaries 2>/dev/null || which dvitomp
 ```
 
 ## Key Features

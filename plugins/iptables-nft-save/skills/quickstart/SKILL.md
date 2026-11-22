@@ -18,7 +18,7 @@ CLI tool: iptables-nft-save.
 
 ## Installation
 ```bash
-apt-get install iptables-nft-save 2>/dev/null || which iptables-nft-save
+apt-get install iptables 2>/dev/null || which iptables-nft-save
 ```
 
 ## Key Features

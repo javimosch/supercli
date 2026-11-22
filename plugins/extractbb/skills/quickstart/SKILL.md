@@ -18,7 +18,7 @@ CLI tool: extractbb.
 
 ## Installation
 ```bash
-apt-get install extractbb 2>/dev/null || which extractbb
+apt-get install texlive-binaries 2>/dev/null || which extractbb
 ```
 
 ## Key Features

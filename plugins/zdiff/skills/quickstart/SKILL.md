@@ -18,7 +18,7 @@ CLI tool: zdiff.
 
 ## Installation
 ```bash
-apt-get install zdiff 2>/dev/null || which zdiff
+apt-get install gzip 2>/dev/null || which zdiff
 ```
 
 ## Key Features

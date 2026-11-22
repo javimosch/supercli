@@ -18,7 +18,7 @@ CLI tool: mpost.
 
 ## Installation
 ```bash
-apt-get install mpost 2>/dev/null || which mpost
+apt-get install texlive-binaries 2>/dev/null || which mpost
 ```
 
 ## Key Features

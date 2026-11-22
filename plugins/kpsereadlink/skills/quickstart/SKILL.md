@@ -18,7 +18,7 @@ CLI tool: kpsereadlink.
 
 ## Installation
 ```bash
-apt-get install kpsereadlink 2>/dev/null || which kpsereadlink
+apt-get install texlive-binaries 2>/dev/null || which kpsereadlink
 ```
 
 ## Key Features

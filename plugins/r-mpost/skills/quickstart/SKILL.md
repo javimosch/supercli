@@ -16,7 +16,7 @@ MetaPost tool for TeX documents.
 
 ## Installation
 ```bash
-apt-get install texlive-metapost
+apt-get install texlive-binaries
 ```
 
 ## Key Features

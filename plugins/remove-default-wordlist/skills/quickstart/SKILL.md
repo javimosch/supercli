@@ -18,7 +18,7 @@ CLI tool: remove-default-wordlist.
 
 ## Installation
 ```bash
-apt-get install remove-default-wordlist 2>/dev/null || which remove-default-wordlist
+apt-get install dictionaries-common 2>/dev/null || which remove-default-wordlist
 ```
 
 ## Key Features

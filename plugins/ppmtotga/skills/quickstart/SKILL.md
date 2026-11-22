@@ -18,7 +18,7 @@ CLI tool: ppmtotga.
 
 ## Installation
 ```bash
-apt-get install ppmtotga 2>/dev/null || which ppmtotga
+apt-get install netpbm 2>/dev/null || which ppmtotga
 ```
 
 ## Key Features

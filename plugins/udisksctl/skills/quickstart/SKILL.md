@@ -18,7 +18,7 @@ CLI tool: udisksctl.
 
 ## Installation
 ```bash
-apt-get install udisksctl 2>/dev/null || which udisksctl
+apt-get install udisks2 2>/dev/null || which udisksctl
 ```
 
 ## Key Features

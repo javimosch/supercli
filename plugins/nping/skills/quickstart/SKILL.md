@@ -18,7 +18,7 @@ CLI tool: nping.
 
 ## Installation
 ```bash
-apt-get install nping 2>/dev/null || which nping
+apt-get install nmap 2>/dev/null || which nping
 ```
 
 ## Key Features

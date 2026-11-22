@@ -18,7 +18,7 @@ CLI tool: parse.f2fs.
 
 ## Installation
 ```bash
-apt-get install parse.f2fs 2>/dev/null || which parse.f2fs
+apt-get install f2fs-tools 2>/dev/null || which parse.f2fs
 ```
 
 ## Key Features

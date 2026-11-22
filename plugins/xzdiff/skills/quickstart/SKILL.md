@@ -18,7 +18,7 @@ CLI tool: xzdiff.
 
 ## Installation
 ```bash
-apt-get install xzdiff 2>/dev/null || which xzdiff
+apt-get install xz-utils 2>/dev/null || which xzdiff
 ```
 
 ## Key Features

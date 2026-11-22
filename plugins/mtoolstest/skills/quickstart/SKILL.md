@@ -18,7 +18,7 @@ CLI tool: mtoolstest.
 
 ## Installation
 ```bash
-apt-get install mtoolstest 2>/dev/null || which mtoolstest
+apt-get install mtools 2>/dev/null || which mtoolstest
 ```
 
 ## Key Features

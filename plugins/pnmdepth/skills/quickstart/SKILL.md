@@ -18,7 +18,7 @@ CLI tool: pnmdepth.
 
 ## Installation
 ```bash
-apt-get install pnmdepth 2>/dev/null || which pnmdepth
+apt-get install netpbm 2>/dev/null || which pnmdepth
 ```
 
 ## Key Features

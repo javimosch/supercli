@@ -18,7 +18,7 @@ CLI tool: rawtopgm.
 
 ## Installation
 ```bash
-apt-get install rawtopgm 2>/dev/null || which rawtopgm
+apt-get install netpbm 2>/dev/null || which rawtopgm
 ```
 
 ## Key Features

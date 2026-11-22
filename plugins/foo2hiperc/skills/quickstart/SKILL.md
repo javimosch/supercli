@@ -18,7 +18,7 @@ CLI tool: foo2hiperc.
 
 ## Installation
 ```bash
-apt-get install foo2hiperc 2>/dev/null || which foo2hiperc
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2hiperc
 ```
 
 ## Key Features

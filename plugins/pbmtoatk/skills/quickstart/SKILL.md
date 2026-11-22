@@ -18,7 +18,7 @@ CLI tool: pbmtoatk.
 
 ## Installation
 ```bash
-apt-get install pbmtoatk 2>/dev/null || which pbmtoatk
+apt-get install netpbm 2>/dev/null || which pbmtoatk
 ```
 
 ## Key Features

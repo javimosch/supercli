@@ -18,7 +18,7 @@ CLI tool: dpkg-preconfigure.
 
 ## Installation
 ```bash
-apt-get install dpkg-preconfigure 2>/dev/null || which dpkg-preconfigure
+apt-get install debconf 2>/dev/null || which dpkg-preconfigure
 ```
 
 ## Key Features

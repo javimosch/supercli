@@ -18,7 +18,7 @@ CLI tool: pktype.
 
 ## Installation
 ```bash
-apt-get install pktype 2>/dev/null || which pktype
+apt-get install texlive-binaries 2>/dev/null || which pktype
 ```
 
 ## Key Features

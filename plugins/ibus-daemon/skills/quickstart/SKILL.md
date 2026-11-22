@@ -18,7 +18,7 @@ CLI tool: ibus-daemon.
 
 ## Installation
 ```bash
-apt-get install ibus-daemon 2>/dev/null || which ibus-daemon
+apt-get install ibus 2>/dev/null || which ibus-daemon
 ```
 
 ## Key Features

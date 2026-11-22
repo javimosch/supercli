@@ -18,7 +18,7 @@ CLI tool: linux-check-removal.
 
 ## Installation
 ```bash
-apt-get install linux-check-removal 2>/dev/null || which linux-check-removal
+apt-get install linux-base 2>/dev/null || which linux-check-removal
 ```
 
 ## Key Features

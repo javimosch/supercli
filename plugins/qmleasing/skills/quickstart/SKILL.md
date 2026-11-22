@@ -18,7 +18,7 @@ CLI tool: qmleasing.
 
 ## Installation
 ```bash
-apt-get install qmleasing 2>/dev/null || which qmleasing
+apt-get install qtchooser 2>/dev/null || which qmleasing
 ```
 
 ## Key Features

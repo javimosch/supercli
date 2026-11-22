@@ -18,7 +18,7 @@ CLI tool: fsck.f2fs.
 
 ## Installation
 ```bash
-apt-get install fsck.f2fs 2>/dev/null || which fsck.f2fs
+apt-get install f2fs-tools 2>/dev/null || which fsck.f2fs
 ```
 
 ## Key Features

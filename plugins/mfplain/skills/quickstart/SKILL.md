@@ -18,7 +18,7 @@ CLI tool: mfplain.
 
 ## Installation
 ```bash
-apt-get install mfplain 2>/dev/null || which mfplain
+apt-get install texlive-binaries 2>/dev/null || which mfplain
 ```
 
 ## Key Features

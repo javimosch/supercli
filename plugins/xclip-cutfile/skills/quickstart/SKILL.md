@@ -18,7 +18,7 @@ CLI tool: xclip-cutfile.
 
 ## Installation
 ```bash
-apt-get install xclip-cutfile 2>/dev/null || which xclip-cutfile
+apt-get install xclip 2>/dev/null || which xclip-cutfile
 ```
 
 ## Key Features

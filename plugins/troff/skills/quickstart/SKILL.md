@@ -18,7 +18,7 @@ CLI tool: troff.
 
 ## Installation
 ```bash
-apt-get install troff 2>/dev/null || which troff
+apt-get install groff-base 2>/dev/null || which troff
 ```
 
 ## Key Features

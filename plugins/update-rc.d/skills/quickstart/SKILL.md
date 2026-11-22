@@ -18,7 +18,7 @@ CLI tool: update-rc.d.
 
 ## Installation
 ```bash
-apt-get install update-rc.d 2>/dev/null || which update-rc.d
+apt-get install init-system-helpers 2>/dev/null || which update-rc.d
 ```
 
 ## Key Features

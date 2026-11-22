@@ -18,7 +18,7 @@ CLI tool: start-stop-daemon.
 
 ## Installation
 ```bash
-apt-get install start-stop-daemon 2>/dev/null || which start-stop-daemon
+apt-get install dpkg 2>/dev/null || which start-stop-daemon
 ```
 
 ## Key Features

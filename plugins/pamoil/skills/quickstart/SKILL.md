@@ -18,7 +18,7 @@ CLI tool: pamoil.
 
 ## Installation
 ```bash
-apt-get install pamoil 2>/dev/null || which pamoil
+apt-get install netpbm 2>/dev/null || which pamoil
 ```
 
 ## Key Features

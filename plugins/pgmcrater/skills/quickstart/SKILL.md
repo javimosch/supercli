@@ -18,7 +18,7 @@ CLI tool: pgmcrater.
 
 ## Installation
 ```bash
-apt-get install pgmcrater 2>/dev/null || which pgmcrater
+apt-get install netpbm 2>/dev/null || which pgmcrater
 ```
 
 ## Key Features

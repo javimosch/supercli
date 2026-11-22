@@ -18,7 +18,7 @@ CLI tool: foo2lava-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2lava-wrapper 2>/dev/null || which foo2lava-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2lava-wrapper
 ```
 
 ## Key Features

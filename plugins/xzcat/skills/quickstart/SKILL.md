@@ -18,7 +18,7 @@ CLI tool: xzcat.
 
 ## Installation
 ```bash
-apt-get install xzcat 2>/dev/null || which xzcat
+apt-get install xz-utils 2>/dev/null || which xzcat
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xgc.
 
 ## Installation
 ```bash
-apt-get install xgc 2>/dev/null || which xgc
+apt-get install x11-apps 2>/dev/null || which xgc
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lvreduce.
 
 ## Installation
 ```bash
-apt-get install lvreduce 2>/dev/null || which lvreduce
+apt-get install lvm2 2>/dev/null || which lvreduce
 ```
 
 ## Key Features

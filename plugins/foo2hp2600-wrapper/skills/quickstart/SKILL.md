@@ -18,7 +18,7 @@ CLI tool: foo2hp2600-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2hp2600-wrapper 2>/dev/null || which foo2hp2600-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2hp2600-wrapper
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: zipdetails.
 
 ## Installation
 ```bash
-apt-get install zipdetails 2>/dev/null || which zipdetails
+apt-get install perl 2>/dev/null || which zipdetails
 ```
 
 ## Key Features

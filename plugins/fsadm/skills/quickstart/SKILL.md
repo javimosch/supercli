@@ -18,7 +18,7 @@ CLI tool: fsadm.
 
 ## Installation
 ```bash
-apt-get install fsadm 2>/dev/null || which fsadm
+apt-get install lvm2 2>/dev/null || which fsadm
 ```
 
 ## Key Features

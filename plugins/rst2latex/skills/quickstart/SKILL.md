@@ -18,7 +18,7 @@ CLI tool: rst2latex.
 
 ## Installation
 ```bash
-apt-get install rst2latex 2>/dev/null || which rst2latex
+apt-get install python3-docutils 2>/dev/null || which rst2latex
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ubuntu-distro-info.
 
 ## Installation
 ```bash
-apt-get install ubuntu-distro-info 2>/dev/null || which ubuntu-distro-info
+apt-get install distro-info 2>/dev/null || which ubuntu-distro-info
 ```
 
 ## Key Features

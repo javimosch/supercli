@@ -18,7 +18,7 @@ CLI tool: pvresize.
 
 ## Installation
 ```bash
-apt-get install pvresize 2>/dev/null || which pvresize
+apt-get install lvm2 2>/dev/null || which pvresize
 ```
 
 ## Key Features

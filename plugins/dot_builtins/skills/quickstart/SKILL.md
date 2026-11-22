@@ -18,7 +18,7 @@ CLI tool: dot_builtins.
 
 ## Installation
 ```bash
-apt-get install dot_builtins 2>/dev/null || which dot_builtins
+apt-get install graphviz 2>/dev/null || which dot_builtins
 ```
 
 ## Key Features

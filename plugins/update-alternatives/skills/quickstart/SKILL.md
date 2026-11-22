@@ -18,7 +18,7 @@ CLI tool: update-alternatives.
 
 ## Installation
 ```bash
-apt-get install update-alternatives 2>/dev/null || which update-alternatives
+apt-get install dpkg 2>/dev/null || which update-alternatives
 ```
 
 ## Key Features

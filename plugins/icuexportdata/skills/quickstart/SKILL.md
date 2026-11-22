@@ -18,7 +18,7 @@ CLI tool: icuexportdata.
 
 ## Installation
 ```bash
-apt-get install icuexportdata 2>/dev/null || which icuexportdata
+apt-get install icu-devtools 2>/dev/null || which icuexportdata
 ```
 
 ## Key Features

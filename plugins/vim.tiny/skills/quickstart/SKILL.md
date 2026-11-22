@@ -18,7 +18,7 @@ CLI tool: vim.tiny.
 
 ## Installation
 ```bash
-apt-get install vim.tiny 2>/dev/null || which vim.tiny
+apt-get install vim-tiny 2>/dev/null || which vim.tiny
 ```
 
 ## Key Features

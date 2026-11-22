@@ -18,7 +18,7 @@ CLI tool: fprintd-list.
 
 ## Installation
 ```bash
-apt-get install fprintd-list 2>/dev/null || which fprintd-list
+apt-get install fprintd 2>/dev/null || which fprintd-list
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: plymouthd.
 
 ## Installation
 ```bash
-apt-get install plymouthd 2>/dev/null || which plymouthd
+apt-get install plymouth 2>/dev/null || which plymouthd
 ```
 
 ## Key Features

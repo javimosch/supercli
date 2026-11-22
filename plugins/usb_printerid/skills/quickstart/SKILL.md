@@ -18,7 +18,7 @@ CLI tool: usb_printerid.
 
 ## Installation
 ```bash
-apt-get install usb_printerid 2>/dev/null || which usb_printerid
+apt-get install printer-driver-foo2zjs 2>/dev/null || which usb_printerid
 ```
 
 ## Key Features

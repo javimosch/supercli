@@ -18,7 +18,7 @@ CLI tool: precat.
 
 ## Installation
 ```bash
-apt-get install precat 2>/dev/null || which precat
+apt-get install aspell 2>/dev/null || which precat
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: vgmerge.
 
 ## Installation
 ```bash
-apt-get install vgmerge 2>/dev/null || which vgmerge
+apt-get install lvm2 2>/dev/null || which vgmerge
 ```
 
 ## Key Features

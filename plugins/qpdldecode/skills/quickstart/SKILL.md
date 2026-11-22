@@ -18,7 +18,7 @@ CLI tool: qpdldecode.
 
 ## Installation
 ```bash
-apt-get install qpdldecode 2>/dev/null || which qpdldecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which qpdldecode
 ```
 
 ## Key Features

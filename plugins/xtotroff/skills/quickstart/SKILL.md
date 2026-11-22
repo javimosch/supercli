@@ -18,7 +18,7 @@ CLI tool: xtotroff.
 
 ## Installation
 ```bash
-apt-get install xtotroff 2>/dev/null || which xtotroff
+apt-get install groff 2>/dev/null || which xtotroff
 ```
 
 ## Key Features

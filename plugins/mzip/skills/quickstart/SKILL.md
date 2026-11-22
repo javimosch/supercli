@@ -18,7 +18,7 @@ CLI tool: mzip.
 
 ## Installation
 ```bash
-apt-get install mzip 2>/dev/null || which mzip
+apt-get install mtools 2>/dev/null || which mzip
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmhisteq.
 
 ## Installation
 ```bash
-apt-get install pnmhisteq 2>/dev/null || which pnmhisteq
+apt-get install netpbm 2>/dev/null || which pnmhisteq
 ```
 
 ## Key Features

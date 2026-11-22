@@ -18,7 +18,7 @@ CLI tool: shlibsign.
 
 ## Installation
 ```bash
-apt-get install shlibsign 2>/dev/null || which shlibsign
+apt-get install libnss3-tools 2>/dev/null || which shlibsign
 ```
 
 ## Key Features

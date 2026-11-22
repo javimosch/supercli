@@ -18,7 +18,7 @@ CLI tool: xclock.
 
 ## Installation
 ```bash
-apt-get install xclock 2>/dev/null || which xclock
+apt-get install x11-apps 2>/dev/null || which xclock
 ```
 
 ## Key Features

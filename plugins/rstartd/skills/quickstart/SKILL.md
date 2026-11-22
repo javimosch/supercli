@@ -18,7 +18,7 @@ CLI tool: rstartd.
 
 ## Installation
 ```bash
-apt-get install rstartd 2>/dev/null || which rstartd
+apt-get install x11-session-utils 2>/dev/null || which rstartd
 ```
 
 ## Key Features

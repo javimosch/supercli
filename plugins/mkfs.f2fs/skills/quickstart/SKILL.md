@@ -18,7 +18,7 @@ CLI tool: mkfs.f2fs.
 
 ## Installation
 ```bash
-apt-get install mkfs.f2fs 2>/dev/null || which mkfs.f2fs
+apt-get install f2fs-tools 2>/dev/null || which mkfs.f2fs
 ```
 
 ## Key Features

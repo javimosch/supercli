@@ -18,7 +18,7 @@ CLI tool: ppdi.
 
 ## Installation
 ```bash
-apt-get install ppdi 2>/dev/null || which ppdi
+apt-get install cups-ppdc 2>/dev/null || which ppdi
 ```
 
 ## Key Features

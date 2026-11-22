@@ -18,7 +18,7 @@ CLI tool: x-window-manager.
 
 ## Installation
 ```bash
-apt-get install x-window-manager 2>/dev/null || which x-window-manager
+apt-get install xfwm4 2>/dev/null || which x-window-manager
 ```
 
 ## Key Features

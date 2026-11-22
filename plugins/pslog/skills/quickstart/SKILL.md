@@ -18,7 +18,7 @@ CLI tool: pslog.
 
 ## Installation
 ```bash
-apt-get install pslog 2>/dev/null || which pslog
+apt-get install psmisc 2>/dev/null || which pslog
 ```
 
 ## Key Features

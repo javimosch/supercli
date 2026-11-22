@@ -18,7 +18,7 @@ CLI tool: tracker3.
 
 ## Installation
 ```bash
-apt-get install tracker3 2>/dev/null || which tracker3
+apt-get install tracker 2>/dev/null || which tracker3
 ```
 
 ## Key Features

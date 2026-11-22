@@ -18,7 +18,7 @@ CLI tool: hp-pkservice.
 
 ## Installation
 ```bash
-apt-get install hp-pkservice 2>/dev/null || which hp-pkservice
+apt-get install hplip 2>/dev/null || which hp-pkservice
 ```
 
 ## Key Features

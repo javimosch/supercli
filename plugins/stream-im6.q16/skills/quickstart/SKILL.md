@@ -18,7 +18,7 @@ CLI tool: stream-im6.q16.
 
 ## Installation
 ```bash
-apt-get install stream-im6.q16 2>/dev/null || which stream-im6.q16
+apt-get install imagemagick-6.q16 2>/dev/null || which stream-im6.q16
 ```
 
 ## Key Features

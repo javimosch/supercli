@@ -18,7 +18,7 @@ CLI tool: dvi2tty.
 
 ## Installation
 ```bash
-apt-get install dvi2tty 2>/dev/null || which dvi2tty
+apt-get install texlive-binaries 2>/dev/null || which dvi2tty
 ```
 
 ## Key Features

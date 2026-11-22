@@ -18,7 +18,7 @@ CLI tool: wbmptopbm.
 
 ## Installation
 ```bash
-apt-get install wbmptopbm 2>/dev/null || which wbmptopbm
+apt-get install netpbm 2>/dev/null || which wbmptopbm
 ```
 
 ## Key Features

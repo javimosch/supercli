@@ -18,7 +18,7 @@ CLI tool: python3.11.
 
 ## Installation
 ```bash
-apt-get install python3.11 2>/dev/null || which python3.11
+apt-get install python3.11-minimal 2>/dev/null || which python3.11
 ```
 
 ## Key Features

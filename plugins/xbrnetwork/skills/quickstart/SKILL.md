@@ -18,7 +18,7 @@ CLI tool: xbrnetwork.
 
 ## Installation
 ```bash
-apt-get install xbrnetwork 2>/dev/null || which xbrnetwork
+apt-get install python3-autobahn 2>/dev/null || which xbrnetwork
 ```
 
 ## Key Features

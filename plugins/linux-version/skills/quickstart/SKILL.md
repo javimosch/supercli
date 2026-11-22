@@ -18,7 +18,7 @@ CLI tool: linux-version.
 
 ## Installation
 ```bash
-apt-get install linux-version 2>/dev/null || which linux-version
+apt-get install linux-base 2>/dev/null || which linux-version
 ```
 
 ## Key Features

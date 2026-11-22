@@ -18,7 +18,7 @@ CLI tool: ptex.
 
 ## Installation
 ```bash
-apt-get install ptex 2>/dev/null || which ptex
+apt-get install texlive-binaries 2>/dev/null || which ptex
 ```
 
 ## Key Features

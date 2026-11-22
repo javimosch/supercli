@@ -18,7 +18,7 @@ CLI tool: vdpa.
 
 ## Installation
 ```bash
-apt-get install vdpa 2>/dev/null || which vdpa
+apt-get install iproute2 2>/dev/null || which vdpa
 ```
 
 ## Key Features

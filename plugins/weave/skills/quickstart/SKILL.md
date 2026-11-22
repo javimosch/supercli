@@ -18,7 +18,7 @@ CLI tool: weave.
 
 ## Installation
 ```bash
-apt-get install weave 2>/dev/null || which weave
+apt-get install texlive-binaries 2>/dev/null || which weave
 ```
 
 ## Key Features

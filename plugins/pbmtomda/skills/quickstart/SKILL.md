@@ -18,7 +18,7 @@ CLI tool: pbmtomda.
 
 ## Installation
 ```bash
-apt-get install pbmtomda 2>/dev/null || which pbmtomda
+apt-get install netpbm 2>/dev/null || which pbmtomda
 ```
 
 ## Key Features

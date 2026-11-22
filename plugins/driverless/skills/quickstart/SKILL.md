@@ -18,7 +18,7 @@ CLI tool: driverless.
 
 ## Installation
 ```bash
-apt-get install driverless 2>/dev/null || which driverless
+apt-get install cups-filters-core-drivers 2>/dev/null || which driverless
 ```
 
 ## Key Features

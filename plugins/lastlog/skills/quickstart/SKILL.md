@@ -18,7 +18,7 @@ CLI tool: lastlog.
 
 ## Installation
 ```bash
-apt-get install lastlog 2>/dev/null || which lastlog
+apt-get install login 2>/dev/null || which lastlog
 ```
 
 ## Key Features

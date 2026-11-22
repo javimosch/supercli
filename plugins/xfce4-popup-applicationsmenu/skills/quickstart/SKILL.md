@@ -18,7 +18,7 @@ CLI tool: xfce4-popup-applicationsmenu.
 
 ## Installation
 ```bash
-apt-get install xfce4-popup-applicationsmenu 2>/dev/null || which xfce4-popup-applicationsmenu
+apt-get install xfce4-panel 2>/dev/null || which xfce4-popup-applicationsmenu
 ```
 
 ## Key Features

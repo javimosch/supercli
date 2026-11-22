@@ -18,7 +18,7 @@ CLI tool: NetworkManager.
 
 ## Installation
 ```bash
-apt-get install NetworkManager 2>/dev/null || which NetworkManager
+apt-get install network-manager 2>/dev/null || which NetworkManager
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: traceroute6.db.
 
 ## Installation
 ```bash
-apt-get install traceroute6.db 2>/dev/null || which traceroute6.db
+apt-get install traceroute 2>/dev/null || which traceroute6.db
 ```
 
 ## Key Features

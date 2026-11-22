@@ -18,7 +18,7 @@ CLI tool: sgitopnm.
 
 ## Installation
 ```bash
-apt-get install sgitopnm 2>/dev/null || which sgitopnm
+apt-get install netpbm 2>/dev/null || which sgitopnm
 ```
 
 ## Key Features

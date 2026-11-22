@@ -18,7 +18,7 @@ CLI tool: update-language-lua.
 
 ## Installation
 ```bash
-apt-get install update-language-lua 2>/dev/null || which update-language-lua
+apt-get install tex-common 2>/dev/null || which update-language-lua
 ```
 
 ## Key Features

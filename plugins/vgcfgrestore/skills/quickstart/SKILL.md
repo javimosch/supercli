@@ -18,7 +18,7 @@ CLI tool: vgcfgrestore.
 
 ## Installation
 ```bash
-apt-get install vgcfgrestore 2>/dev/null || which vgcfgrestore
+apt-get install lvm2 2>/dev/null || which vgcfgrestore
 ```
 
 ## Key Features

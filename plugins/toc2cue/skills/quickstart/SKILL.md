@@ -18,7 +18,7 @@ CLI tool: toc2cue.
 
 ## Installation
 ```bash
-apt-get install toc2cue 2>/dev/null || which toc2cue
+apt-get install cdrdao 2>/dev/null || which toc2cue
 ```
 
 ## Key Features

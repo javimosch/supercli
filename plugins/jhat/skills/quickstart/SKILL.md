@@ -18,7 +18,7 @@ CLI tool: jhat.
 
 ## Installation
 ```bash
-apt-get install jhat 2>/dev/null || which jhat
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which jhat
 ```
 
 ## Key Features

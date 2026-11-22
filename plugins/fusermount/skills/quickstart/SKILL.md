@@ -18,7 +18,7 @@ CLI tool: fusermount.
 
 ## Installation
 ```bash
-apt-get install fusermount 2>/dev/null || which fusermount
+apt-get install fuse3 2>/dev/null || which fusermount
 ```
 
 ## Key Features

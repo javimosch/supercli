@@ -18,7 +18,7 @@ CLI tool: update-tl-stacked-conffile.
 
 ## Installation
 ```bash
-apt-get install update-tl-stacked-conffile 2>/dev/null || which update-tl-stacked-conffile
+apt-get install tex-common 2>/dev/null || which update-tl-stacked-conffile
 ```
 
 ## Key Features

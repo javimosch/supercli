@@ -18,7 +18,7 @@ CLI tool: hbpldecode.
 
 ## Installation
 ```bash
-apt-get install hbpldecode 2>/dev/null || which hbpldecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which hbpldecode
 ```
 
 ## Key Features

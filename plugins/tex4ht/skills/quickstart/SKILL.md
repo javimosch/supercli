@@ -18,7 +18,7 @@ CLI tool: tex4ht.
 
 ## Installation
 ```bash
-apt-get install tex4ht 2>/dev/null || which tex4ht
+apt-get install texlive-binaries 2>/dev/null || which tex4ht
 ```
 
 ## Key Features

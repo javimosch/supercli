@@ -18,7 +18,7 @@ CLI tool: oakdecode.
 
 ## Installation
 ```bash
-apt-get install oakdecode 2>/dev/null || which oakdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which oakdecode
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pw-mon.
 
 ## Installation
 ```bash
-apt-get install pw-mon 2>/dev/null || which pw-mon
+apt-get install pipewire-bin 2>/dev/null || which pw-mon
 ```
 
 ## Key Features

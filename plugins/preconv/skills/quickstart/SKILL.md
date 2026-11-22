@@ -18,7 +18,7 @@ CLI tool: preconv.
 
 ## Installation
 ```bash
-apt-get install preconv 2>/dev/null || which preconv
+apt-get install groff-base 2>/dev/null || which preconv
 ```
 
 ## Key Features

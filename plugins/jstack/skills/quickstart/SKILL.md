@@ -18,7 +18,7 @@ CLI tool: jstack.
 
 ## Installation
 ```bash
-apt-get install jstack 2>/dev/null || which jstack
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jstack
 ```
 
 ## Key Features

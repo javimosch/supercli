@@ -18,7 +18,7 @@ CLI tool: pdftosrc.
 
 ## Installation
 ```bash
-apt-get install pdftosrc 2>/dev/null || which pdftosrc
+apt-get install texlive-binaries 2>/dev/null || which pdftosrc
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: qhelpgenerator.
 
 ## Installation
 ```bash
-apt-get install qhelpgenerator 2>/dev/null || which qhelpgenerator
+apt-get install qtchooser 2>/dev/null || which qhelpgenerator
 ```
 
 ## Key Features

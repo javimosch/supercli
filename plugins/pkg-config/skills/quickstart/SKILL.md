@@ -18,7 +18,7 @@ CLI tool: pkg-config.
 
 ## Installation
 ```bash
-apt-get install pkg-config 2>/dev/null || which pkg-config
+apt-get install pkgconf 2>/dev/null || which pkg-config
 ```
 
 ## Key Features

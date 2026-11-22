@@ -18,7 +18,7 @@ CLI tool: sdptool.
 
 ## Installation
 ```bash
-apt-get install sdptool 2>/dev/null || which sdptool
+apt-get install bluez 2>/dev/null || which sdptool
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: slogin.
 
 ## Installation
 ```bash
-apt-get install slogin 2>/dev/null || which slogin
+apt-get install openssh-client 2>/dev/null || which slogin
 ```
 
 ## Key Features

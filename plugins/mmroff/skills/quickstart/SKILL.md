@@ -18,7 +18,7 @@ CLI tool: mmroff.
 
 ## Installation
 ```bash
-apt-get install mmroff 2>/dev/null || which mmroff
+apt-get install groff 2>/dev/null || which mmroff
 ```
 
 ## Key Features

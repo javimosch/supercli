@@ -18,7 +18,7 @@ CLI tool: systemd-delta.
 
 ## Installation
 ```bash
-apt-get install systemd-delta 2>/dev/null || which systemd-delta
+apt-get install systemd 2>/dev/null || which systemd-delta
 ```
 
 ## Key Features

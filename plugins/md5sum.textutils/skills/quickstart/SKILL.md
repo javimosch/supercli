@@ -18,7 +18,7 @@ CLI tool: md5sum.textutils.
 
 ## Installation
 ```bash
-apt-get install md5sum.textutils 2>/dev/null || which md5sum.textutils
+apt-get install coreutils 2>/dev/null || which md5sum.textutils
 ```
 
 ## Key Features

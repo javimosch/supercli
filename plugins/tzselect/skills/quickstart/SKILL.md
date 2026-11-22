@@ -18,7 +18,7 @@ CLI tool: tzselect.
 
 ## Installation
 ```bash
-apt-get install tzselect 2>/dev/null || which tzselect
+apt-get install libc-bin 2>/dev/null || which tzselect
 ```
 
 ## Key Features

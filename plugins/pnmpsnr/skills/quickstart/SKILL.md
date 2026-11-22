@@ -18,7 +18,7 @@ CLI tool: pnmpsnr.
 
 ## Installation
 ```bash
-apt-get install pnmpsnr 2>/dev/null || which pnmpsnr
+apt-get install netpbm 2>/dev/null || which pnmpsnr
 ```
 
 ## Key Features

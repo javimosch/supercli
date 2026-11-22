@@ -18,7 +18,7 @@ CLI tool: lxc-execute.
 
 ## Installation
 ```bash
-apt-get install lxc-execute 2>/dev/null || which lxc-execute
+apt-get install lxc-utils 2>/dev/null || which lxc-execute
 ```
 
 ## Key Features

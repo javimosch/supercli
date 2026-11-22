@@ -18,7 +18,7 @@ CLI tool: traceroute6.
 
 ## Installation
 ```bash
-apt-get install traceroute6 2>/dev/null || which traceroute6
+apt-get install traceroute 2>/dev/null || which traceroute6
 ```
 
 ## Key Features

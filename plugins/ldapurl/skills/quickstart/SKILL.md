@@ -18,7 +18,7 @@ CLI tool: ldapurl.
 
 ## Installation
 ```bash
-apt-get install ldapurl 2>/dev/null || which ldapurl
+apt-get install ldap-utils 2>/dev/null || which ldapurl
 ```
 
 ## Key Features

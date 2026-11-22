@@ -18,7 +18,7 @@ CLI tool: neotoppm.
 
 ## Installation
 ```bash
-apt-get install neotoppm 2>/dev/null || which neotoppm
+apt-get install netpbm 2>/dev/null || which neotoppm
 ```
 
 ## Key Features

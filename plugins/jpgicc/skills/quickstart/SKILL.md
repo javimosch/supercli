@@ -18,7 +18,7 @@ CLI tool: jpgicc.
 
 ## Installation
 ```bash
-apt-get install jpgicc 2>/dev/null || which jpgicc
+apt-get install liblcms2-utils 2>/dev/null || which jpgicc
 ```
 
 ## Key Features

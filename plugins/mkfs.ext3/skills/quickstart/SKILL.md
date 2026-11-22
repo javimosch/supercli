@@ -18,7 +18,7 @@ CLI tool: mkfs.ext3.
 
 ## Installation
 ```bash
-apt-get install mkfs.ext3 2>/dev/null || which mkfs.ext3
+apt-get install e2fsprogs 2>/dev/null || which mkfs.ext3
 ```
 
 ## Key Features

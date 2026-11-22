@@ -18,7 +18,7 @@ CLI tool: rmmod.
 
 ## Installation
 ```bash
-apt-get install rmmod 2>/dev/null || which rmmod
+apt-get install kmod 2>/dev/null || which rmmod
 ```
 
 ## Key Features

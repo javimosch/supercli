@@ -18,7 +18,7 @@ CLI tool: sssd.
 
 ## Installation
 ```bash
-apt-get install sssd 2>/dev/null || which sssd
+apt-get install sssd-common 2>/dev/null || which sssd
 ```
 
 ## Key Features

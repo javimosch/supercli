@@ -18,7 +18,7 @@ CLI tool: nss-pp.
 
 ## Installation
 ```bash
-apt-get install nss-pp 2>/dev/null || which nss-pp
+apt-get install libnss3-tools 2>/dev/null || which nss-pp
 ```
 
 ## Key Features

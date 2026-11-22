@@ -18,7 +18,7 @@ CLI tool: indxbib.
 
 ## Installation
 ```bash
-apt-get install indxbib 2>/dev/null || which indxbib
+apt-get install groff 2>/dev/null || which indxbib
 ```
 
 ## Key Features

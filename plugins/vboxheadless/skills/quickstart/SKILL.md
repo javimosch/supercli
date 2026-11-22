@@ -18,7 +18,7 @@ CLI tool: vboxheadless.
 
 ## Installation
 ```bash
-apt-get install vboxheadless 2>/dev/null || which vboxheadless
+apt-get install virtualbox 2>/dev/null || which vboxheadless
 ```
 
 ## Key Features

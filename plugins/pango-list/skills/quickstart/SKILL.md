@@ -18,7 +18,7 @@ CLI tool: pango-list.
 
 ## Installation
 ```bash
-apt-get install pango-list 2>/dev/null || which pango-list
+apt-get install pango1.0-tools 2>/dev/null || which pango-list
 ```
 
 ## Key Features

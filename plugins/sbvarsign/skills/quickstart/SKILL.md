@@ -18,7 +18,7 @@ CLI tool: sbvarsign.
 
 ## Installation
 ```bash
-apt-get install sbvarsign 2>/dev/null || which sbvarsign
+apt-get install sbsigntool 2>/dev/null || which sbvarsign
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: efibootdump.
 
 ## Installation
 ```bash
-apt-get install efibootdump 2>/dev/null || which efibootdump
+apt-get install efibootmgr 2>/dev/null || which efibootdump
 ```
 
 ## Key Features

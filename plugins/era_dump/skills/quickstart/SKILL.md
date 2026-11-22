@@ -18,7 +18,7 @@ CLI tool: era_dump.
 
 ## Installation
 ```bash
-apt-get install era_dump 2>/dev/null || which era_dump
+apt-get install thin-provisioning-tools 2>/dev/null || which era_dump
 ```
 
 ## Key Features

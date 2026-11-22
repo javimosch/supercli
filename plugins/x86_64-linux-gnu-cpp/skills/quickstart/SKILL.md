@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-cpp.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-cpp 2>/dev/null || which x86_64-linux-gnu-cpp
+apt-get install cpp 2>/dev/null || which x86_64-linux-gnu-cpp
 ```
 
 ## Key Features

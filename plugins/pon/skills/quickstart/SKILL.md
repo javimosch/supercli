@@ -18,7 +18,7 @@ CLI tool: pon.
 
 ## Installation
 ```bash
-apt-get install pon 2>/dev/null || which pon
+apt-get install ppp 2>/dev/null || which pon
 ```
 
 ## Key Features

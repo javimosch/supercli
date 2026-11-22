@@ -18,7 +18,7 @@ CLI tool: pamon.
 
 ## Installation
 ```bash
-apt-get install pamon 2>/dev/null || which pamon
+apt-get install pulseaudio-utils 2>/dev/null || which pamon
 ```
 
 ## Key Features

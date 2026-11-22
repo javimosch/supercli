@@ -18,7 +18,7 @@ CLI tool: x11perfcomp.
 
 ## Installation
 ```bash
-apt-get install x11perfcomp 2>/dev/null || which x11perfcomp
+apt-get install x11-apps 2>/dev/null || which x11perfcomp
 ```
 
 ## Key Features

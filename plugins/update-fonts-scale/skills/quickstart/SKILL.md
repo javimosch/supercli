@@ -18,7 +18,7 @@ CLI tool: update-fonts-scale.
 
 ## Installation
 ```bash
-apt-get install update-fonts-scale 2>/dev/null || which update-fonts-scale
+apt-get install xfonts-utils 2>/dev/null || which update-fonts-scale
 ```
 
 ## Key Features

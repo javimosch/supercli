@@ -18,7 +18,7 @@ CLI tool: nsupdate.
 
 ## Installation
 ```bash
-apt-get install nsupdate 2>/dev/null || which nsupdate
+apt-get install bind9-dnsutils 2>/dev/null || which nsupdate
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: qmljs.
 
 ## Installation
 ```bash
-apt-get install qmljs 2>/dev/null || which qmljs
+apt-get install qtchooser 2>/dev/null || which qmljs
 ```
 
 ## Key Features

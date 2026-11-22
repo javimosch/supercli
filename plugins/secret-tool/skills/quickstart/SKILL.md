@@ -18,7 +18,7 @@ CLI tool: secret-tool.
 
 ## Installation
 ```bash
-apt-get install secret-tool 2>/dev/null || which secret-tool
+apt-get install libsecret-tools 2>/dev/null || which secret-tool
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xfce4-accessibility-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-accessibility-settings 2>/dev/null || which xfce4-accessibility-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-accessibility-settings
 ```
 
 ## Key Features

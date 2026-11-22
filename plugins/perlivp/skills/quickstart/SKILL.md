@@ -18,7 +18,7 @@ CLI tool: perlivp.
 
 ## Installation
 ```bash
-apt-get install perlivp 2>/dev/null || which perlivp
+apt-get install perl 2>/dev/null || which perlivp
 ```
 
 ## Key Features

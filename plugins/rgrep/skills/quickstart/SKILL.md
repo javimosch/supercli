@@ -18,7 +18,7 @@ CLI tool: rgrep.
 
 ## Installation
 ```bash
-apt-get install rgrep 2>/dev/null || which rgrep
+apt-get install grep 2>/dev/null || which rgrep
 ```
 
 ## Key Features

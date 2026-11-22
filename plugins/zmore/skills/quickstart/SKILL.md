@@ -18,7 +18,7 @@ CLI tool: zmore.
 
 ## Installation
 ```bash
-apt-get install zmore 2>/dev/null || which zmore
+apt-get install gzip 2>/dev/null || which zmore
 ```
 
 ## Key Features

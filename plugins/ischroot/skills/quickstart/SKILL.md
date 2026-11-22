@@ -18,7 +18,7 @@ CLI tool: ischroot.
 
 ## Installation
 ```bash
-apt-get install ischroot 2>/dev/null || which ischroot
+apt-get install debianutils 2>/dev/null || which ischroot
 ```
 
 ## Key Features

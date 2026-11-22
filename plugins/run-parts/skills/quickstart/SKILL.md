@@ -18,7 +18,7 @@ CLI tool: run-parts.
 
 ## Installation
 ```bash
-apt-get install run-parts 2>/dev/null || which run-parts
+apt-get install debianutils 2>/dev/null || which run-parts
 ```
 
 ## Key Features

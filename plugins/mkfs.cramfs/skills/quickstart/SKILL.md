@@ -18,7 +18,7 @@ CLI tool: mkfs.cramfs.
 
 ## Installation
 ```bash
-apt-get install mkfs.cramfs 2>/dev/null || which mkfs.cramfs
+apt-get install util-linux 2>/dev/null || which mkfs.cramfs
 ```
 
 ## Key Features

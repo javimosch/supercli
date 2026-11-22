@@ -18,7 +18,7 @@ CLI tool: vgreduce.
 
 ## Installation
 ```bash
-apt-get install vgreduce 2>/dev/null || which vgreduce
+apt-get install lvm2 2>/dev/null || which vgreduce
 ```
 
 ## Key Features

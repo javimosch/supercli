@@ -18,7 +18,7 @@ CLI tool: pinky.
 
 ## Installation
 ```bash
-apt-get install pinky 2>/dev/null || which pinky
+apt-get install coreutils 2>/dev/null || which pinky
 ```
 
 ## Key Features

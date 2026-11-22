@@ -18,7 +18,7 @@ CLI tool: mdir.
 
 ## Installation
 ```bash
-apt-get install mdir 2>/dev/null || which mdir
+apt-get install mtools 2>/dev/null || which mdir
 ```
 
 ## Key Features

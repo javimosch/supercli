@@ -18,7 +18,7 @@ CLI tool: unzipsfx.
 
 ## Installation
 ```bash
-apt-get install unzipsfx 2>/dev/null || which unzipsfx
+apt-get install unzip 2>/dev/null || which unzipsfx
 ```
 
 ## Key Features

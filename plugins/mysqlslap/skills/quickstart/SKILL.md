@@ -18,7 +18,7 @@ CLI tool: mysqlslap.
 
 ## Installation
 ```bash
-apt-get install mysqlslap 2>/dev/null || which mysqlslap
+apt-get install mysql-client-core-8.0 2>/dev/null || which mysqlslap
 ```
 
 ## Key Features

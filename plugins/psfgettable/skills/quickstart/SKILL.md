@@ -18,7 +18,7 @@ CLI tool: psfgettable.
 
 ## Installation
 ```bash
-apt-get install psfgettable 2>/dev/null || which psfgettable
+apt-get install kbd 2>/dev/null || which psfgettable
 ```
 
 ## Key Features

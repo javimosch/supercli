@@ -18,7 +18,7 @@ CLI tool: orterun.
 
 ## Installation
 ```bash
-apt-get install orterun 2>/dev/null || which orterun
+apt-get install openmpi-bin 2>/dev/null || which orterun
 ```
 
 ## Key Features

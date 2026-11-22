@@ -18,7 +18,7 @@ CLI tool: h2xs.
 
 ## Installation
 ```bash
-apt-get install h2xs 2>/dev/null || which h2xs
+apt-get install perl 2>/dev/null || which h2xs
 ```
 
 ## Key Features

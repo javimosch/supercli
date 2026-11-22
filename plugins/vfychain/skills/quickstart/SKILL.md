@@ -18,7 +18,7 @@ CLI tool: vfychain.
 
 ## Installation
 ```bash
-apt-get install vfychain 2>/dev/null || which vfychain
+apt-get install libnss3-tools 2>/dev/null || which vfychain
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: setkeycodes.
 
 ## Installation
 ```bash
-apt-get install setkeycodes 2>/dev/null || which setkeycodes
+apt-get install kbd 2>/dev/null || which setkeycodes
 ```
 
 ## Key Features

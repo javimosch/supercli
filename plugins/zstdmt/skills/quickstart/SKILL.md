@@ -18,7 +18,7 @@ CLI tool: zstdmt.
 
 ## Installation
 ```bash
-apt-get install zstdmt 2>/dev/null || which zstdmt
+apt-get install zstd 2>/dev/null || which zstdmt
 ```
 
 ## Key Features

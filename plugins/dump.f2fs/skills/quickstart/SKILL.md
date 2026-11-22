@@ -18,7 +18,7 @@ CLI tool: dump.f2fs.
 
 ## Installation
 ```bash
-apt-get install dump.f2fs 2>/dev/null || which dump.f2fs
+apt-get install f2fs-tools 2>/dev/null || which dump.f2fs
 ```
 
 ## Key Features

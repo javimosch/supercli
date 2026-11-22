@@ -18,7 +18,7 @@ CLI tool: texdoctk.
 
 ## Installation
 ```bash
-apt-get install texdoctk 2>/dev/null || which texdoctk
+apt-get install texlive-base 2>/dev/null || which texdoctk
 ```
 
 ## Key Features

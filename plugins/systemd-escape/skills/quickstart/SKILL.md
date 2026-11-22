@@ -18,7 +18,7 @@ CLI tool: systemd-escape.
 
 ## Installation
 ```bash
-apt-get install systemd-escape 2>/dev/null || which systemd-escape
+apt-get install systemd 2>/dev/null || which systemd-escape
 ```
 
 ## Key Features

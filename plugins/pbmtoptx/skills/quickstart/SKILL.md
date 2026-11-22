@@ -18,7 +18,7 @@ CLI tool: pbmtoptx.
 
 ## Installation
 ```bash
-apt-get install pbmtoptx 2>/dev/null || which pbmtoptx
+apt-get install netpbm 2>/dev/null || which pbmtoptx
 ```
 
 ## Key Features

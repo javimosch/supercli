@@ -18,7 +18,7 @@ CLI tool: ntpd.
 
 ## Installation
 ```bash
-apt-get install ntpd 2>/dev/null || which ntpd
+apt-get install ntpsec 2>/dev/null || which ntpd
 ```
 
 ## Key Features

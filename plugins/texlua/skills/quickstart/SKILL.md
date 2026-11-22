@@ -18,7 +18,7 @@ CLI tool: texlua.
 
 ## Installation
 ```bash
-apt-get install texlua 2>/dev/null || which texlua
+apt-get install texlive-binaries 2>/dev/null || which texlua
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xeyes.
 
 ## Installation
 ```bash
-apt-get install xeyes 2>/dev/null || which xeyes
+apt-get install x11-apps 2>/dev/null || which xeyes
 ```
 
 ## Key Features

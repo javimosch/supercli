@@ -18,7 +18,7 @@ CLI tool: wish.
 
 ## Installation
 ```bash
-apt-get install wish 2>/dev/null || which wish
+apt-get install tk 2>/dev/null || which wish
 ```
 
 ## Key Features

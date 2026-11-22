@@ -18,7 +18,7 @@ CLI tool: sload.f2fs.
 
 ## Installation
 ```bash
-apt-get install sload.f2fs 2>/dev/null || which sload.f2fs
+apt-get install f2fs-tools 2>/dev/null || which sload.f2fs
 ```
 
 ## Key Features

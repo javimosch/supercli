@@ -18,7 +18,7 @@ CLI tool: mispipe.
 
 ## Installation
 ```bash
-apt-get install mispipe 2>/dev/null || which mispipe
+apt-get install moreutils 2>/dev/null || which mispipe
 ```
 
 ## Key Features

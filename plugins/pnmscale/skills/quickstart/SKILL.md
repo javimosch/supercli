@@ -18,7 +18,7 @@ CLI tool: pnmscale.
 
 ## Installation
 ```bash
-apt-get install pnmscale 2>/dev/null || which pnmscale
+apt-get install netpbm 2>/dev/null || which pnmscale
 ```
 
 ## Key Features

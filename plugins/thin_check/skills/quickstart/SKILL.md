@@ -18,7 +18,7 @@ CLI tool: thin_check.
 
 ## Installation
 ```bash
-apt-get install thin_check 2>/dev/null || which thin_check
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_check
 ```
 
 ## Key Features

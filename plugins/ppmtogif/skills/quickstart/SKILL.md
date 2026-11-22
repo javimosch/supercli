@@ -18,7 +18,7 @@ CLI tool: ppmtogif.
 
 ## Installation
 ```bash
-apt-get install ppmtogif 2>/dev/null || which ppmtogif
+apt-get install netpbm 2>/dev/null || which ppmtogif
 ```
 
 ## Key Features

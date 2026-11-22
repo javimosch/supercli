@@ -18,7 +18,7 @@ CLI tool: jstatd.
 
 ## Installation
 ```bash
-apt-get install jstatd 2>/dev/null || which jstatd
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jstatd
 ```
 
 ## Key Features

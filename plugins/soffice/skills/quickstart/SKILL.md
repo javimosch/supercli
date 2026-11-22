@@ -18,7 +18,7 @@ CLI tool: soffice.
 
 ## Installation
 ```bash
-apt-get install soffice 2>/dev/null || which soffice
+apt-get install libreoffice-common 2>/dev/null || which soffice
 ```
 
 ## Key Features

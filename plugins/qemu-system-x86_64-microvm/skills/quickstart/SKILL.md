@@ -18,7 +18,7 @@ CLI tool: qemu-system-x86_64-microvm.
 
 ## Installation
 ```bash
-apt-get install qemu-system-x86_64-microvm 2>/dev/null || which qemu-system-x86_64-microvm
+apt-get install qemu-system-x86 2>/dev/null || which qemu-system-x86_64-microvm
 ```
 
 ## Key Features

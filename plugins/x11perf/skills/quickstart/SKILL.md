@@ -18,7 +18,7 @@ CLI tool: x11perf.
 
 ## Installation
 ```bash
-apt-get install x11perf 2>/dev/null || which x11perf
+apt-get install x11-apps 2>/dev/null || which x11perf
 ```
 
 ## Key Features

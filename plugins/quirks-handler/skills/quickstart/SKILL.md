@@ -18,7 +18,7 @@ CLI tool: quirks-handler.
 
 ## Installation
 ```bash
-apt-get install quirks-handler 2>/dev/null || which quirks-handler
+apt-get install ubuntu-drivers-common 2>/dev/null || which quirks-handler
 ```
 
 ## Key Features

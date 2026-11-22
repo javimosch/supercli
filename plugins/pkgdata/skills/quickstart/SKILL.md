@@ -18,7 +18,7 @@ CLI tool: pkgdata.
 
 ## Installation
 ```bash
-apt-get install pkgdata 2>/dev/null || which pkgdata
+apt-get install icu-devtools 2>/dev/null || which pkgdata
 ```
 
 ## Key Features

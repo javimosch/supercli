@@ -18,7 +18,7 @@ CLI tool: lomath.
 
 ## Installation
 ```bash
-apt-get install lomath 2>/dev/null || which lomath
+apt-get install libreoffice-math 2>/dev/null || which lomath
 ```
 
 ## Key Features

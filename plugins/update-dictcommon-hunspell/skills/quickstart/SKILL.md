@@ -18,7 +18,7 @@ CLI tool: update-dictcommon-hunspell.
 
 ## Installation
 ```bash
-apt-get install update-dictcommon-hunspell 2>/dev/null || which update-dictcommon-hunspell
+apt-get install dictionaries-common 2>/dev/null || which update-dictcommon-hunspell
 ```
 
 ## Key Features

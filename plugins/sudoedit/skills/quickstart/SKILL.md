@@ -18,7 +18,7 @@ CLI tool: sudoedit.
 
 ## Installation
 ```bash
-apt-get install sudoedit 2>/dev/null || which sudoedit
+apt-get install sudo 2>/dev/null || which sudoedit
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: updmap-user.
 
 ## Installation
 ```bash
-apt-get install updmap-user 2>/dev/null || which updmap-user
+apt-get install texlive-base 2>/dev/null || which updmap-user
 ```
 
 ## Key Features

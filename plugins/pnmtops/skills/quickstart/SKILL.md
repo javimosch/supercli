@@ -18,7 +18,7 @@ CLI tool: pnmtops.
 
 ## Installation
 ```bash
-apt-get install pnmtops 2>/dev/null || which pnmtops
+apt-get install netpbm 2>/dev/null || which pnmtops
 ```
 
 ## Key Features

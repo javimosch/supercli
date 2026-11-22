@@ -18,7 +18,7 @@ CLI tool: mingle.
 
 ## Installation
 ```bash
-apt-get install mingle 2>/dev/null || which mingle
+apt-get install graphviz 2>/dev/null || which mingle
 ```
 
 ## Key Features

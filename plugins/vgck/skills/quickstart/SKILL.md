@@ -18,7 +18,7 @@ CLI tool: vgck.
 
 ## Installation
 ```bash
-apt-get install vgck 2>/dev/null || which vgck
+apt-get install lvm2 2>/dev/null || which vgck
 ```
 
 ## Key Features

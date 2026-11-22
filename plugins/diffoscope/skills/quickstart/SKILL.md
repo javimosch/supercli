@@ -34,7 +34,7 @@ pip install diffoscope
 Or via package manager:
 ```bash
 brew install diffoscope
-apt install diffoscope
+apt install diffoscope-minimal
 ```
 
 ## Examples

@@ -18,7 +18,7 @@ CLI tool: ipod-time-sync.
 
 ## Installation
 ```bash
-apt-get install ipod-time-sync 2>/dev/null || which ipod-time-sync
+apt-get install libgpod-common 2>/dev/null || which ipod-time-sync
 ```
 
 ## Key Features

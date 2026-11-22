@@ -18,7 +18,7 @@ CLI tool: sirtopnm.
 
 ## Installation
 ```bash
-apt-get install sirtopnm 2>/dev/null || which sirtopnm
+apt-get install netpbm 2>/dev/null || which sirtopnm
 ```
 
 ## Key Features

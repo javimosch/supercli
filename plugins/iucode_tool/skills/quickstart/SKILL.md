@@ -18,7 +18,7 @@ CLI tool: iucode_tool.
 
 ## Installation
 ```bash
-apt-get install iucode_tool 2>/dev/null || which iucode_tool
+apt-get install iucode-tool 2>/dev/null || which iucode_tool
 ```
 
 ## Key Features

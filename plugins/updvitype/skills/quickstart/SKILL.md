@@ -18,7 +18,7 @@ CLI tool: updvitype.
 
 ## Installation
 ```bash
-apt-get install updvitype 2>/dev/null || which updvitype
+apt-get install texlive-binaries 2>/dev/null || which updvitype
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: foo2zjs-icc2ps.
 
 ## Installation
 ```bash
-apt-get install foo2zjs-icc2ps 2>/dev/null || which foo2zjs-icc2ps
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2zjs-icc2ps
 ```
 
 ## Key Features

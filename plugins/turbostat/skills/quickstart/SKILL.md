@@ -18,7 +18,7 @@ CLI tool: turbostat.
 
 ## Installation
 ```bash
-apt-get install turbostat 2>/dev/null || which turbostat
+apt-get install linux-laptop-tools-common 2>/dev/null || which turbostat
 ```
 
 ## Key Features

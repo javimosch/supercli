@@ -18,7 +18,7 @@ CLI tool: musl-ldd.
 
 ## Installation
 ```bash
-apt-get install musl-ldd 2>/dev/null || which musl-ldd
+apt-get install musl-tools 2>/dev/null || which musl-ldd
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: kbd_mode.
 
 ## Installation
 ```bash
-apt-get install kbd_mode 2>/dev/null || which kbd_mode
+apt-get install kbd 2>/dev/null || which kbd_mode
 ```
 
 ## Key Features

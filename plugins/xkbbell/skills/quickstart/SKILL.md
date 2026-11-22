@@ -18,7 +18,7 @@ CLI tool: xkbbell.
 
 ## Installation
 ```bash
-apt-get install xkbbell 2>/dev/null || which xkbbell
+apt-get install x11-xkb-utils 2>/dev/null || which xkbbell
 ```
 
 ## Key Features

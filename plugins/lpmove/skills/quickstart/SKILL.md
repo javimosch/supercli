@@ -18,7 +18,7 @@ CLI tool: lpmove.
 
 ## Installation
 ```bash
-apt-get install lpmove 2>/dev/null || which lpmove
+apt-get install cups-client 2>/dev/null || which lpmove
 ```
 
 ## Key Features

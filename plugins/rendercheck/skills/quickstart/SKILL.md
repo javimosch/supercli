@@ -18,7 +18,7 @@ CLI tool: rendercheck.
 
 ## Installation
 ```bash
-apt-get install rendercheck 2>/dev/null || which rendercheck
+apt-get install x11-apps 2>/dev/null || which rendercheck
 ```
 
 ## Key Features

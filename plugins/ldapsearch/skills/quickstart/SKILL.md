@@ -18,7 +18,7 @@ CLI tool: ldapsearch.
 
 ## Installation
 ```bash
-apt-get install ldapsearch 2>/dev/null || which ldapsearch
+apt-get install ldap-utils 2>/dev/null || which ldapsearch
 ```
 
 ## Key Features

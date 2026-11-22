@@ -18,7 +18,7 @@ CLI tool: sldtoppm.
 
 ## Installation
 ```bash
-apt-get install sldtoppm 2>/dev/null || which sldtoppm
+apt-get install netpbm 2>/dev/null || which sldtoppm
 ```
 
 ## Key Features

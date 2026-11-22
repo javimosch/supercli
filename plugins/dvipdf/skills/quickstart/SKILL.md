@@ -18,7 +18,7 @@ CLI tool: dvipdf.
 
 ## Installation
 ```bash
-apt-get install dvipdf 2>/dev/null || which dvipdf
+apt-get install ghostscript 2>/dev/null || which dvipdf
 ```
 
 ## Key Features

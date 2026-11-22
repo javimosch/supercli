@@ -18,7 +18,7 @@ CLI tool: rmt.
 
 ## Installation
 ```bash
-apt-get install rmt 2>/dev/null || which rmt
+apt-get install tar 2>/dev/null || which rmt
 ```
 
 ## Key Features

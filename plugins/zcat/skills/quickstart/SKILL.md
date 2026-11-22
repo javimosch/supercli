@@ -18,7 +18,7 @@ CLI tool: zcat.
 
 ## Installation
 ```bash
-apt-get install zcat 2>/dev/null || which zcat
+apt-get install gzip 2>/dev/null || which zcat
 ```
 
 ## Key Features

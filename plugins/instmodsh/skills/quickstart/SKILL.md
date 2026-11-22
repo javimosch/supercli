@@ -18,7 +18,7 @@ CLI tool: instmodsh.
 
 ## Installation
 ```bash
-apt-get install instmodsh 2>/dev/null || which instmodsh
+apt-get install perl 2>/dev/null || which instmodsh
 ```
 
 ## Key Features

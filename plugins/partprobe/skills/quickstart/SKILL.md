@@ -18,7 +18,7 @@ CLI tool: partprobe.
 
 ## Installation
 ```bash
-apt-get install partprobe 2>/dev/null || which partprobe
+apt-get install parted 2>/dev/null || which partprobe
 ```
 
 ## Key Features

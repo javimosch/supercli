@@ -18,7 +18,7 @@ CLI tool: vgexport.
 
 ## Installation
 ```bash
-apt-get install vgexport 2>/dev/null || which vgexport
+apt-get install lvm2 2>/dev/null || which vgexport
 ```
 
 ## Key Features

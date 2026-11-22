@@ -18,7 +18,7 @@ CLI tool: mpif77.
 
 ## Installation
 ```bash
-apt-get install mpif77 2>/dev/null || which mpif77
+apt-get install mpich 2>/dev/null || which mpif77
 ```
 
 ## Key Features

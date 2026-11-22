@@ -18,7 +18,7 @@ CLI tool: xfce4-mime-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-mime-settings 2>/dev/null || which xfce4-mime-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-mime-settings
 ```
 
 ## Key Features

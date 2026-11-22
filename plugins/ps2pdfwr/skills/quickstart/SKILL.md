@@ -18,7 +18,7 @@ CLI tool: ps2pdfwr.
 
 ## Installation
 ```bash
-apt-get install ps2pdfwr 2>/dev/null || which ps2pdfwr
+apt-get install ghostscript 2>/dev/null || which ps2pdfwr
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: hp-makeuri.
 
 ## Installation
 ```bash
-apt-get install hp-makeuri 2>/dev/null || which hp-makeuri
+apt-get install hplip 2>/dev/null || which hp-makeuri
 ```
 
 ## Key Features

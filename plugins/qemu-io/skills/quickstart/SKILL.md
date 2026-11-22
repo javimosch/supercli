@@ -18,7 +18,7 @@ CLI tool: qemu-io.
 
 ## Installation
 ```bash
-apt-get install qemu-io 2>/dev/null || which qemu-io
+apt-get install qemu-utils 2>/dev/null || which qemu-io
 ```
 
 ## Key Features

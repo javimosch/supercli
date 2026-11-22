@@ -18,7 +18,7 @@ CLI tool: uuidparse.
 
 ## Installation
 ```bash
-apt-get install uuidparse 2>/dev/null || which uuidparse
+apt-get install uuid-runtime 2>/dev/null || which uuidparse
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmsmooth.
 
 ## Installation
 ```bash
-apt-get install pnmsmooth 2>/dev/null || which pnmsmooth
+apt-get install netpbm 2>/dev/null || which pnmsmooth
 ```
 
 ## Key Features

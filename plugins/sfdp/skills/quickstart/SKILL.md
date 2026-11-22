@@ -18,7 +18,7 @@ CLI tool: sfdp.
 
 ## Installation
 ```bash
-apt-get install sfdp 2>/dev/null || which sfdp
+apt-get install graphviz 2>/dev/null || which sfdp
 ```
 
 ## Key Features

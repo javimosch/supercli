@@ -18,7 +18,7 @@ CLI tool: htdbm.
 
 ## Installation
 ```bash
-apt-get install htdbm 2>/dev/null || which htdbm
+apt-get install apache2-utils 2>/dev/null || which htdbm
 ```
 
 ## Key Features

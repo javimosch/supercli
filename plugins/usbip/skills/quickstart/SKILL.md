@@ -18,7 +18,7 @@ CLI tool: usbip.
 
 ## Installation
 ```bash
-apt-get install usbip 2>/dev/null || which usbip
+apt-get install linux-laptop-tools-common 2>/dev/null || which usbip
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lvchange.
 
 ## Installation
 ```bash
-apt-get install lvchange 2>/dev/null || which lvchange
+apt-get install lvm2 2>/dev/null || which lvchange
 ```
 
 ## Key Features

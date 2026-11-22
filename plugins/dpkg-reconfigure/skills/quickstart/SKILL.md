@@ -18,7 +18,7 @@ CLI tool: dpkg-reconfigure.
 
 ## Installation
 ```bash
-apt-get install dpkg-reconfigure 2>/dev/null || which dpkg-reconfigure
+apt-get install debconf 2>/dev/null || which dpkg-reconfigure
 ```
 
 ## Key Features

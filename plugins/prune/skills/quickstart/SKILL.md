@@ -18,7 +18,7 @@ CLI tool: prune.
 
 ## Installation
 ```bash
-apt-get install prune 2>/dev/null || which prune
+apt-get install graphviz 2>/dev/null || which prune
 ```
 
 ## Key Features

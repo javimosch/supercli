@@ -18,7 +18,7 @@ CLI tool: pgbench.
 
 ## Installation
 ```bash
-apt-get install pgbench 2>/dev/null || which pgbench
+apt-get install postgresql-client-common 2>/dev/null || which pgbench
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mgrtopbm.
 
 ## Installation
 ```bash
-apt-get install mgrtopbm 2>/dev/null || which mgrtopbm
+apt-get install netpbm 2>/dev/null || which mgrtopbm
 ```
 
 ## Key Features

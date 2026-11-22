@@ -18,7 +18,7 @@ CLI tool: dvilj6.
 
 ## Installation
 ```bash
-apt-get install dvilj6 2>/dev/null || which dvilj6
+apt-get install texlive-binaries 2>/dev/null || which dvilj6
 ```
 
 ## Key Features

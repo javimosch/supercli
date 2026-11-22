@@ -18,7 +18,7 @@ CLI tool: lpoptions.
 
 ## Installation
 ```bash
-apt-get install lpoptions 2>/dev/null || which lpoptions
+apt-get install cups-client 2>/dev/null || which lpoptions
 ```
 
 ## Key Features

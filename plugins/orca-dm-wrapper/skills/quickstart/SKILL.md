@@ -18,7 +18,7 @@ CLI tool: orca-dm-wrapper.
 
 ## Installation
 ```bash
-apt-get install orca-dm-wrapper 2>/dev/null || which orca-dm-wrapper
+apt-get install orca 2>/dev/null || which orca-dm-wrapper
 ```
 
 ## Key Features

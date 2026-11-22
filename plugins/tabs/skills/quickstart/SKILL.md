@@ -18,7 +18,7 @@ CLI tool: tabs.
 
 ## Installation
 ```bash
-apt-get install tabs 2>/dev/null || which tabs
+apt-get install ncurses-bin 2>/dev/null || which tabs
 ```
 
 ## Key Features

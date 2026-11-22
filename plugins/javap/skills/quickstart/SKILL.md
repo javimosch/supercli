@@ -18,7 +18,7 @@ CLI tool: javap.
 
 ## Installation
 ```bash
-apt-get install javap 2>/dev/null || which javap
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which javap
 ```
 
 ## Key Features

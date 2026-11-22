@@ -18,7 +18,7 @@ CLI tool: Xephyr.
 
 ## Installation
 ```bash
-apt-get install Xephyr 2>/dev/null || which Xephyr
+apt-get install xserver-xephyr 2>/dev/null || which Xephyr
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ModemManager.
 
 ## Installation
 ```bash
-apt-get install ModemManager 2>/dev/null || which ModemManager
+apt-get install modemmanager 2>/dev/null || which ModemManager
 ```
 
 ## Key Features

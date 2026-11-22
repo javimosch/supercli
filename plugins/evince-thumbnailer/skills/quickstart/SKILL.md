@@ -18,7 +18,7 @@ CLI tool: evince-thumbnailer.
 
 ## Installation
 ```bash
-apt-get install evince-thumbnailer 2>/dev/null || which evince-thumbnailer
+apt-get install evince 2>/dev/null || which evince-thumbnailer
 ```
 
 ## Key Features

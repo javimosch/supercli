@@ -18,7 +18,7 @@ CLI tool: mflua.
 
 ## Installation
 ```bash
-apt-get install mflua 2>/dev/null || which mflua
+apt-get install texlive-binaries 2>/dev/null || which mflua
 ```
 
 ## Key Features

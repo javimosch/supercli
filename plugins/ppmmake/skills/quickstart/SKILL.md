@@ -18,7 +18,7 @@ CLI tool: ppmmake.
 
 ## Installation
 ```bash
-apt-get install ppmmake 2>/dev/null || which ppmmake
+apt-get install netpbm 2>/dev/null || which ppmmake
 ```
 
 ## Key Features

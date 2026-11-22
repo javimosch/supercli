@@ -18,7 +18,7 @@ CLI tool: xdg-screensaver.
 
 ## Installation
 ```bash
-apt-get install xdg-screensaver 2>/dev/null || which xdg-screensaver
+apt-get install xdg-utils 2>/dev/null || which xdg-screensaver
 ```
 
 ## Key Features

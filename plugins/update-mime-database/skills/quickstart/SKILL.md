@@ -18,7 +18,7 @@ CLI tool: update-mime-database.
 
 ## Installation
 ```bash
-apt-get install update-mime-database 2>/dev/null || which update-mime-database
+apt-get install shared-mime-info 2>/dev/null || which update-mime-database
 ```
 
 ## Key Features

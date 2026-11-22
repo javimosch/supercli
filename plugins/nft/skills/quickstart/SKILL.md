@@ -18,7 +18,7 @@ CLI tool: nft.
 
 ## Installation
 ```bash
-apt-get install nft 2>/dev/null || which nft
+apt-get install nftables 2>/dev/null || which nft
 ```
 
 ## Key Features

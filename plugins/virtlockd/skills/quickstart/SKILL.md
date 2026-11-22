@@ -18,7 +18,7 @@ CLI tool: virtlockd.
 
 ## Installation
 ```bash
-apt-get install virtlockd 2>/dev/null || which virtlockd
+apt-get install libvirt-daemon 2>/dev/null || which virtlockd
 ```
 
 ## Key Features

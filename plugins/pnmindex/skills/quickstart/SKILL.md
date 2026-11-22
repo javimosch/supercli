@@ -18,7 +18,7 @@ CLI tool: pnmindex.
 
 ## Installation
 ```bash
-apt-get install pnmindex 2>/dev/null || which pnmindex
+apt-get install netpbm 2>/dev/null || which pnmindex
 ```
 
 ## Key Features

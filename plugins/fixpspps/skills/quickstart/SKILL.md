@@ -18,7 +18,7 @@ CLI tool: fixpspps.
 
 ## Installation
 ```bash
-apt-get install fixpspps 2>/dev/null || which fixpspps
+apt-get install psutils 2>/dev/null || which fixpspps
 ```
 
 ## Key Features

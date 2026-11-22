@@ -18,7 +18,7 @@ CLI tool: xclip-copyfile.
 
 ## Installation
 ```bash
-apt-get install xclip-copyfile 2>/dev/null || which xclip-copyfile
+apt-get install xclip 2>/dev/null || which xclip-copyfile
 ```
 
 ## Key Features

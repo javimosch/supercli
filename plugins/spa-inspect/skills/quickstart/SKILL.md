@@ -18,7 +18,7 @@ CLI tool: spa-inspect.
 
 ## Installation
 ```bash
-apt-get install spa-inspect 2>/dev/null || which spa-inspect
+apt-get install pipewire-bin 2>/dev/null || which spa-inspect
 ```
 
 ## Key Features

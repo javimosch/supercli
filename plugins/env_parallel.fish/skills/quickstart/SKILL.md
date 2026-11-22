@@ -18,7 +18,7 @@ CLI tool: env_parallel.fish.
 
 ## Installation
 ```bash
-apt-get install env_parallel.fish 2>/dev/null || which env_parallel.fish
+apt-get install parallel 2>/dev/null || which env_parallel.fish
 ```
 
 ## Key Features

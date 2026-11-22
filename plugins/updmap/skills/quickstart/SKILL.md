@@ -18,7 +18,7 @@ CLI tool: updmap.
 
 ## Installation
 ```bash
-apt-get install updmap 2>/dev/null || which updmap
+apt-get install texlive-base 2>/dev/null || which updmap
 ```
 
 ## Key Features

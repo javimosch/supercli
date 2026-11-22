@@ -18,7 +18,7 @@ CLI tool: pbmreduce.
 
 ## Installation
 ```bash
-apt-get install pbmreduce 2>/dev/null || which pbmreduce
+apt-get install netpbm 2>/dev/null || which pbmreduce
 ```
 
 ## Key Features

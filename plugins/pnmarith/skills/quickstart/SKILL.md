@@ -18,7 +18,7 @@ CLI tool: pnmarith.
 
 ## Installation
 ```bash
-apt-get install pnmarith 2>/dev/null || which pnmarith
+apt-get install netpbm 2>/dev/null || which pnmarith
 ```
 
 ## Key Features

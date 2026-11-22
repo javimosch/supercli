@@ -18,7 +18,7 @@ CLI tool: lzmainfo.
 
 ## Installation
 ```bash
-apt-get install lzmainfo 2>/dev/null || which lzmainfo
+apt-get install xz-utils 2>/dev/null || which lzmainfo
 ```
 
 ## Key Features

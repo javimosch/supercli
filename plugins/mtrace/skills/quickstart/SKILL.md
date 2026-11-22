@@ -18,7 +18,7 @@ CLI tool: mtrace.
 
 ## Installation
 ```bash
-apt-get install mtrace 2>/dev/null || which mtrace
+apt-get install libc-devtools 2>/dev/null || which mtrace
 ```
 
 ## Key Features

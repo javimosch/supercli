@@ -18,7 +18,7 @@ CLI tool: pbmtowbmp.
 
 ## Installation
 ```bash
-apt-get install pbmtowbmp 2>/dev/null || which pbmtowbmp
+apt-get install netpbm 2>/dev/null || which pbmtowbmp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xdg-icon-resource.
 
 ## Installation
 ```bash
-apt-get install xdg-icon-resource 2>/dev/null || which xdg-icon-resource
+apt-get install xdg-utils 2>/dev/null || which xdg-icon-resource
 ```
 
 ## Key Features

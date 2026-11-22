@@ -18,7 +18,7 @@ CLI tool: xdg-user-dirs-gtk-update.
 
 ## Installation
 ```bash
-apt-get install xdg-user-dirs-gtk-update 2>/dev/null || which xdg-user-dirs-gtk-update
+apt-get install xdg-user-dirs-gtk 2>/dev/null || which xdg-user-dirs-gtk-update
 ```
 
 ## Key Features

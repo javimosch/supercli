@@ -18,7 +18,7 @@ CLI tool: f2fs_io.
 
 ## Installation
 ```bash
-apt-get install f2fs_io 2>/dev/null || which f2fs_io
+apt-get install f2fs-tools 2>/dev/null || which f2fs_io
 ```
 
 ## Key Features

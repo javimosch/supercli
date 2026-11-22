@@ -18,7 +18,7 @@ CLI tool: pacat.
 
 ## Installation
 ```bash
-apt-get install pacat 2>/dev/null || which pacat
+apt-get install pulseaudio-utils 2>/dev/null || which pacat
 ```
 
 ## Key Features

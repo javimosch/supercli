@@ -18,7 +18,7 @@ CLI tool: hwe-support-status.
 
 ## Installation
 ```bash
-apt-get install hwe-support-status 2>/dev/null || which hwe-support-status
+apt-get install update-manager-core 2>/dev/null || which hwe-support-status
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mpicc.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpicc.openmpi 2>/dev/null || which mpicc.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpicc.openmpi
 ```
 
 ## Key Features

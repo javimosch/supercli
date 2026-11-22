@@ -18,7 +18,7 @@ CLI tool: lwp-download.
 
 ## Installation
 ```bash
-apt-get install lwp-download 2>/dev/null || which lwp-download
+apt-get install libwww-perl 2>/dev/null || which lwp-download
 ```
 
 ## Key Features

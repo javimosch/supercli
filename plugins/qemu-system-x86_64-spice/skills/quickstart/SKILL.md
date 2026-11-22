@@ -18,7 +18,7 @@ CLI tool: qemu-system-x86_64-spice.
 
 ## Installation
 ```bash
-apt-get install qemu-system-x86_64-spice 2>/dev/null || which qemu-system-x86_64-spice
+apt-get install qemu-system-x86 2>/dev/null || which qemu-system-x86_64-spice
 ```
 
 ## Key Features

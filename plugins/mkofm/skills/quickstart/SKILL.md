@@ -18,7 +18,7 @@ CLI tool: mkofm.
 
 ## Installation
 ```bash
-apt-get install mkofm 2>/dev/null || which mkofm
+apt-get install texlive-binaries 2>/dev/null || which mkofm
 ```
 
 ## Key Features

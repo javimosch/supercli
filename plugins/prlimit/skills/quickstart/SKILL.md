@@ -18,7 +18,7 @@ CLI tool: prlimit.
 
 ## Installation
 ```bash
-apt-get install prlimit 2>/dev/null || which prlimit
+apt-get install util-linux 2>/dev/null || which prlimit
 ```
 
 ## Key Features

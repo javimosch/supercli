@@ -18,7 +18,7 @@ CLI tool: pbmto10x.
 
 ## Installation
 ```bash
-apt-get install pbmto10x 2>/dev/null || which pbmto10x
+apt-get install netpbm 2>/dev/null || which pbmto10x
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmpaste.
 
 ## Installation
 ```bash
-apt-get install pnmpaste 2>/dev/null || which pnmpaste
+apt-get install netpbm 2>/dev/null || which pnmpaste
 ```
 
 ## Key Features

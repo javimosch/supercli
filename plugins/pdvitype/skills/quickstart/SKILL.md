@@ -18,7 +18,7 @@ CLI tool: pdvitype.
 
 ## Installation
 ```bash
-apt-get install pdvitype 2>/dev/null || which pdvitype
+apt-get install texlive-binaries 2>/dev/null || which pdvitype
 ```
 
 ## Key Features

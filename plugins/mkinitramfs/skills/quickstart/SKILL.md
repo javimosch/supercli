@@ -18,7 +18,7 @@ CLI tool: mkinitramfs.
 
 ## Installation
 ```bash
-apt-get install mkinitramfs 2>/dev/null || which mkinitramfs
+apt-get install initramfs-tools-core 2>/dev/null || which mkinitramfs
 ```
 
 ## Key Features

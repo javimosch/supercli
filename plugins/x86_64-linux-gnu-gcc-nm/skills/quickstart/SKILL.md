@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcc-nm.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcc-nm 2>/dev/null || which x86_64-linux-gnu-gcc-nm
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcc-nm
 ```
 
 ## Key Features

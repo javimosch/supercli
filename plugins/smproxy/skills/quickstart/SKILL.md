@@ -18,7 +18,7 @@ CLI tool: smproxy.
 
 ## Installation
 ```bash
-apt-get install smproxy 2>/dev/null || which smproxy
+apt-get install x11-session-utils 2>/dev/null || which smproxy
 ```
 
 ## Key Features

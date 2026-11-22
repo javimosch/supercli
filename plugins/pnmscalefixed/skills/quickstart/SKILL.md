@@ -18,7 +18,7 @@ CLI tool: pnmscalefixed.
 
 ## Installation
 ```bash
-apt-get install pnmscalefixed 2>/dev/null || which pnmscalefixed
+apt-get install netpbm 2>/dev/null || which pnmscalefixed
 ```
 
 ## Key Features

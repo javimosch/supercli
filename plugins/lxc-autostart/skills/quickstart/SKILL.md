@@ -18,7 +18,7 @@ CLI tool: lxc-autostart.
 
 ## Installation
 ```bash
-apt-get install lxc-autostart 2>/dev/null || which lxc-autostart
+apt-get install lxc-utils 2>/dev/null || which lxc-autostart
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pgmtexture.
 
 ## Installation
 ```bash
-apt-get install pgmtexture 2>/dev/null || which pgmtexture
+apt-get install netpbm 2>/dev/null || which pgmtexture
 ```
 
 ## Key Features

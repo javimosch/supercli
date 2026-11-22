@@ -18,7 +18,7 @@ CLI tool: mkindex.
 
 ## Installation
 ```bash
-apt-get install mkindex 2>/dev/null || which mkindex
+apt-get install texlive-binaries 2>/dev/null || which mkindex
 ```
 
 ## Key Features

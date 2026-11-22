@@ -18,7 +18,7 @@ CLI tool: pngfix.
 
 ## Installation
 ```bash
-apt-get install pngfix 2>/dev/null || which pngfix
+apt-get install libpng-tools 2>/dev/null || which pngfix
 ```
 
 ## Key Features

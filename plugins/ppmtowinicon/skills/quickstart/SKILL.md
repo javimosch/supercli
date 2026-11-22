@@ -18,7 +18,7 @@ CLI tool: ppmtowinicon.
 
 ## Installation
 ```bash
-apt-get install ppmtowinicon 2>/dev/null || which ppmtowinicon
+apt-get install netpbm 2>/dev/null || which ppmtowinicon
 ```
 
 ## Key Features

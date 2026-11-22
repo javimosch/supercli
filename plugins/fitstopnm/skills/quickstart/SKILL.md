@@ -18,7 +18,7 @@ CLI tool: fitstopnm.
 
 ## Installation
 ```bash
-apt-get install fitstopnm 2>/dev/null || which fitstopnm
+apt-get install netpbm 2>/dev/null || which fitstopnm
 ```
 
 ## Key Features

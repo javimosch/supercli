@@ -18,7 +18,7 @@ CLI tool: xetex.
 
 ## Installation
 ```bash
-apt-get install xetex 2>/dev/null || which xetex
+apt-get install texlive-binaries 2>/dev/null || which xetex
 ```
 
 ## Key Features

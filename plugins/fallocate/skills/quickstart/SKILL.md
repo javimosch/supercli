@@ -18,7 +18,7 @@ CLI tool: fallocate.
 
 ## Installation
 ```bash
-apt-get install fallocate 2>/dev/null || which fallocate
+apt-get install util-linux 2>/dev/null || which fallocate
 ```
 
 ## Key Features

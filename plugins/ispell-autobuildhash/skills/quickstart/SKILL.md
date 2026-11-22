@@ -18,7 +18,7 @@ CLI tool: ispell-autobuildhash.
 
 ## Installation
 ```bash
-apt-get install ispell-autobuildhash 2>/dev/null || which ispell-autobuildhash
+apt-get install dictionaries-common 2>/dev/null || which ispell-autobuildhash
 ```
 
 ## Key Features

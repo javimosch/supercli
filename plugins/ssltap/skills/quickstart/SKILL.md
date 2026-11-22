@@ -18,7 +18,7 @@ CLI tool: ssltap.
 
 ## Installation
 ```bash
-apt-get install ssltap 2>/dev/null || which ssltap
+apt-get install libnss3-tools 2>/dev/null || which ssltap
 ```
 
 ## Key Features

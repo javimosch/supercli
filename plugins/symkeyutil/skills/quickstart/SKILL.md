@@ -18,7 +18,7 @@ CLI tool: symkeyutil.
 
 ## Installation
 ```bash
-apt-get install symkeyutil 2>/dev/null || which symkeyutil
+apt-get install libnss3-tools 2>/dev/null || which symkeyutil
 ```
 
 ## Key Features

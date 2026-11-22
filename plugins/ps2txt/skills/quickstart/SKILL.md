@@ -18,7 +18,7 @@ CLI tool: ps2txt.
 
 ## Installation
 ```bash
-apt-get install ps2txt 2>/dev/null || which ps2txt
+apt-get install ghostscript 2>/dev/null || which ps2txt
 ```
 
 ## Key Features

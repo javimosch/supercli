@@ -18,7 +18,7 @@ CLI tool: iptables-nft-restore.
 
 ## Installation
 ```bash
-apt-get install iptables-nft-restore 2>/dev/null || which iptables-nft-restore
+apt-get install iptables 2>/dev/null || which iptables-nft-restore
 ```
 
 ## Key Features

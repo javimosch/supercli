@@ -18,7 +18,7 @@ CLI tool: lvmsar.
 
 ## Installation
 ```bash
-apt-get install lvmsar 2>/dev/null || which lvmsar
+apt-get install lvm2 2>/dev/null || which lvmsar
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: userdel.
 
 ## Installation
 ```bash
-apt-get install userdel 2>/dev/null || which userdel
+apt-get install passwd 2>/dev/null || which userdel
 ```
 
 ## Key Features

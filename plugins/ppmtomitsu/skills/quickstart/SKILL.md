@@ -18,7 +18,7 @@ CLI tool: ppmtomitsu.
 
 ## Installation
 ```bash
-apt-get install ppmtomitsu 2>/dev/null || which ppmtomitsu
+apt-get install netpbm 2>/dev/null || which ppmtomitsu
 ```
 
 ## Key Features

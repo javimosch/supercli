@@ -18,7 +18,7 @@ CLI tool: tune.exfat.
 
 ## Installation
 ```bash
-apt-get install tune.exfat 2>/dev/null || which tune.exfat
+apt-get install exfatprogs 2>/dev/null || which tune.exfat
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: patgen.
 
 ## Installation
 ```bash
-apt-get install patgen 2>/dev/null || which patgen
+apt-get install texlive-binaries 2>/dev/null || which patgen
 ```
 
 ## Key Features

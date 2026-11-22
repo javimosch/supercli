@@ -18,7 +18,7 @@ CLI tool: wayland-scanner.
 
 ## Installation
 ```bash
-apt-get install wayland-scanner 2>/dev/null || which wayland-scanner
+apt-get install libwayland-bin 2>/dev/null || which wayland-scanner
 ```
 
 ## Key Features

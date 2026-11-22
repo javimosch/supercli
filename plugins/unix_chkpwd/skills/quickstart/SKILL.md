@@ -18,7 +18,7 @@ CLI tool: unix_chkpwd.
 
 ## Installation
 ```bash
-apt-get install unix_chkpwd 2>/dev/null || which unix_chkpwd
+apt-get install libpam-modules-bin 2>/dev/null || which unix_chkpwd
 ```
 
 ## Key Features

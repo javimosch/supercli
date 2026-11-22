@@ -18,7 +18,7 @@ CLI tool: rmic.
 
 ## Installation
 ```bash
-apt-get install rmic 2>/dev/null || which rmic
+apt-get install openjdk-11-jdk-headless 2>/dev/null || which rmic
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: zless.
 
 ## Installation
 ```bash
-apt-get install zless 2>/dev/null || which zless
+apt-get install gzip 2>/dev/null || which zless
 ```
 
 ## Key Features

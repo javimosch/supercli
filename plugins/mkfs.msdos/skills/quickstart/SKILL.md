@@ -18,7 +18,7 @@ CLI tool: mkfs.msdos.
 
 ## Installation
 ```bash
-apt-get install mkfs.msdos 2>/dev/null || which mkfs.msdos
+apt-get install dosfstools 2>/dev/null || which mkfs.msdos
 ```
 
 ## Key Features

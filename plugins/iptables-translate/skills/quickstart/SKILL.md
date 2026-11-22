@@ -18,7 +18,7 @@ CLI tool: iptables-translate.
 
 ## Installation
 ```bash
-apt-get install iptables-translate 2>/dev/null || which iptables-translate
+apt-get install iptables 2>/dev/null || which iptables-translate
 ```
 
 ## Key Features

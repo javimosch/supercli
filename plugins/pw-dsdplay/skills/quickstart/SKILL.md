@@ -18,7 +18,7 @@ CLI tool: pw-dsdplay.
 
 ## Installation
 ```bash
-apt-get install pw-dsdplay 2>/dev/null || which pw-dsdplay
+apt-get install pipewire-bin 2>/dev/null || which pw-dsdplay
 ```
 
 ## Key Features

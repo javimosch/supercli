@@ -18,7 +18,7 @@ CLI tool: msguniq.
 
 ## Installation
 ```bash
-apt-get install msguniq 2>/dev/null || which msguniq
+apt-get install gettext 2>/dev/null || which msguniq
 ```
 
 ## Key Features

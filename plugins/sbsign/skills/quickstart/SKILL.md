@@ -18,7 +18,7 @@ CLI tool: sbsign.
 
 ## Installation
 ```bash
-apt-get install sbsign 2>/dev/null || which sbsign
+apt-get install sbsigntool 2>/dev/null || which sbsign
 ```
 
 ## Key Features

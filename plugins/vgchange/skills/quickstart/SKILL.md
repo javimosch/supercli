@@ -18,7 +18,7 @@ CLI tool: vgchange.
 
 ## Installation
 ```bash
-apt-get install vgchange 2>/dev/null || which vgchange
+apt-get install lvm2 2>/dev/null || which vgchange
 ```
 
 ## Key Features

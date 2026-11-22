@@ -18,7 +18,7 @@ CLI tool: fmtutil-user.
 
 ## Installation
 ```bash
-apt-get install fmtutil-user 2>/dev/null || which fmtutil-user
+apt-get install texlive-base 2>/dev/null || which fmtutil-user
 ```
 
 ## Key Features

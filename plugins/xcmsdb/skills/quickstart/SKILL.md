@@ -18,7 +18,7 @@ CLI tool: xcmsdb.
 
 ## Installation
 ```bash
-apt-get install xcmsdb 2>/dev/null || which xcmsdb
+apt-get install x11-xserver-utils 2>/dev/null || which xcmsdb
 ```
 
 ## Key Features

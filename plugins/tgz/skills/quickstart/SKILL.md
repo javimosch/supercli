@@ -18,7 +18,7 @@ CLI tool: tgz.
 
 ## Installation
 ```bash
-apt-get install tgz 2>/dev/null || which tgz
+apt-get install mtools 2>/dev/null || which tgz
 ```
 
 ## Key Features

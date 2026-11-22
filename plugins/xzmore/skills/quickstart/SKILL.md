@@ -18,7 +18,7 @@ CLI tool: xzmore.
 
 ## Installation
 ```bash
-apt-get install xzmore 2>/dev/null || which xzmore
+apt-get install xz-utils 2>/dev/null || which xzmore
 ```
 
 ## Key Features

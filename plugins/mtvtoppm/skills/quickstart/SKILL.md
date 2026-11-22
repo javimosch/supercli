@@ -18,7 +18,7 @@ CLI tool: mtvtoppm.
 
 ## Installation
 ```bash
-apt-get install mtvtoppm 2>/dev/null || which mtvtoppm
+apt-get install netpbm 2>/dev/null || which mtvtoppm
 ```
 
 ## Key Features

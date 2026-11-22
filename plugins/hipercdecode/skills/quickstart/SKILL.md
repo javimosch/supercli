@@ -18,7 +18,7 @@ CLI tool: hipercdecode.
 
 ## Installation
 ```bash
-apt-get install hipercdecode 2>/dev/null || which hipercdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which hipercdecode
 ```
 
 ## Key Features

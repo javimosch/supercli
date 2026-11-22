@@ -18,7 +18,7 @@ CLI tool: rhythmbox-client.
 
 ## Installation
 ```bash
-apt-get install rhythmbox-client 2>/dev/null || which rhythmbox-client
+apt-get install rhythmbox 2>/dev/null || which rhythmbox-client
 ```
 
 ## Key Features

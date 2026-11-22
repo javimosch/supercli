@@ -18,7 +18,7 @@ CLI tool: prepmx.
 
 ## Installation
 ```bash
-apt-get install prepmx 2>/dev/null || which prepmx
+apt-get install texlive-binaries 2>/dev/null || which prepmx
 ```
 
 ## Key Features

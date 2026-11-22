@@ -18,7 +18,7 @@ CLI tool: mount.ntfs.
 
 ## Installation
 ```bash
-apt-get install mount.ntfs 2>/dev/null || which mount.ntfs
+apt-get install ntfs-3g 2>/dev/null || which mount.ntfs
 ```
 
 ## Key Features

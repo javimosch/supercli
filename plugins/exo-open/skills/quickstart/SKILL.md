@@ -18,7 +18,7 @@ CLI tool: exo-open.
 
 ## Installation
 ```bash
-apt-get install exo-open 2>/dev/null || which exo-open
+apt-get install exo-utils 2>/dev/null || which exo-open
 ```
 
 ## Key Features

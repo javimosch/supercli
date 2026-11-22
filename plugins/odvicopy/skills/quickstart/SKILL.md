@@ -18,7 +18,7 @@ CLI tool: odvicopy.
 
 ## Installation
 ```bash
-apt-get install odvicopy 2>/dev/null || which odvicopy
+apt-get install texlive-binaries 2>/dev/null || which odvicopy
 ```
 
 ## Key Features

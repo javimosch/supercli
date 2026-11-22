@@ -18,7 +18,7 @@ CLI tool: f77.
 
 ## Installation
 ```bash
-apt-get install f77 2>/dev/null || which f77
+apt-get install gfortran 2>/dev/null || which f77
 ```
 
 ## Key Features

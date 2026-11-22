@@ -18,7 +18,7 @@ CLI tool: hp-scan.
 
 ## Installation
 ```bash
-apt-get install hp-scan 2>/dev/null || which hp-scan
+apt-get install hplip 2>/dev/null || which hp-scan
 ```
 
 ## Key Features

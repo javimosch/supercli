@@ -18,7 +18,7 @@ CLI tool: validlocale.
 
 ## Installation
 ```bash
-apt-get install validlocale 2>/dev/null || which validlocale
+apt-get install locales 2>/dev/null || which validlocale
 ```
 
 ## Key Features

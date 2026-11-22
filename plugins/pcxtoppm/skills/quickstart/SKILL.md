@@ -18,7 +18,7 @@ CLI tool: pcxtoppm.
 
 ## Installation
 ```bash
-apt-get install pcxtoppm 2>/dev/null || which pcxtoppm
+apt-get install netpbm 2>/dev/null || which pcxtoppm
 ```
 
 ## Key Features

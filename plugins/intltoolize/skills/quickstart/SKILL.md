@@ -18,7 +18,7 @@ CLI tool: intltoolize.
 
 ## Installation
 ```bash
-apt-get install intltoolize 2>/dev/null || which intltoolize
+apt-get install intltool 2>/dev/null || which intltoolize
 ```
 
 ## Key Features

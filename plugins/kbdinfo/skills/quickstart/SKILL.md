@@ -18,7 +18,7 @@ CLI tool: kbdinfo.
 
 ## Installation
 ```bash
-apt-get install kbdinfo 2>/dev/null || which kbdinfo
+apt-get install kbd 2>/dev/null || which kbdinfo
 ```
 
 ## Key Features

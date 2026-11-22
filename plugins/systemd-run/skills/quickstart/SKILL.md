@@ -18,7 +18,7 @@ CLI tool: systemd-run.
 
 ## Installation
 ```bash
-apt-get install systemd-run 2>/dev/null || which systemd-run
+apt-get install systemd 2>/dev/null || which systemd-run
 ```
 
 ## Key Features

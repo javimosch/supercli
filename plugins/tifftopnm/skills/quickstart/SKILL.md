@@ -18,7 +18,7 @@ CLI tool: tifftopnm.
 
 ## Installation
 ```bash
-apt-get install tifftopnm 2>/dev/null || which tifftopnm
+apt-get install netpbm 2>/dev/null || which tifftopnm
 ```
 
 ## Key Features

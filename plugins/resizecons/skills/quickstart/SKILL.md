@@ -18,7 +18,7 @@ CLI tool: resizecons.
 
 ## Installation
 ```bash
-apt-get install resizecons 2>/dev/null || which resizecons
+apt-get install kbd 2>/dev/null || which resizecons
 ```
 
 ## Key Features

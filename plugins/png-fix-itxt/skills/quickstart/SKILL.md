@@ -18,7 +18,7 @@ CLI tool: png-fix-itxt.
 
 ## Installation
 ```bash
-apt-get install png-fix-itxt 2>/dev/null || which png-fix-itxt
+apt-get install libpng-tools 2>/dev/null || which png-fix-itxt
 ```
 
 ## Key Features

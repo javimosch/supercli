@@ -18,7 +18,7 @@ CLI tool: setcap.
 
 ## Installation
 ```bash
-apt-get install setcap 2>/dev/null || which setcap
+apt-get install libcap2-bin 2>/dev/null || which setcap
 ```
 
 ## Key Features

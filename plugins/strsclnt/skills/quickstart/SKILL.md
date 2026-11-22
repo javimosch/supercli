@@ -18,7 +18,7 @@ CLI tool: strsclnt.
 
 ## Installation
 ```bash
-apt-get install strsclnt 2>/dev/null || which strsclnt
+apt-get install libnss3-tools 2>/dev/null || which strsclnt
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: texluac.
 
 ## Installation
 ```bash
-apt-get install texluac 2>/dev/null || which texluac
+apt-get install texlive-binaries 2>/dev/null || which texluac
 ```
 
 ## Key Features

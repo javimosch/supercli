@@ -18,7 +18,7 @@ CLI tool: xkbprint.
 
 ## Installation
 ```bash
-apt-get install xkbprint 2>/dev/null || which xkbprint
+apt-get install x11-xkb-utils 2>/dev/null || which xkbprint
 ```
 
 ## Key Features

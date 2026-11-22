@@ -18,7 +18,7 @@ CLI tool: mpicxx.
 
 ## Installation
 ```bash
-apt-get install mpicxx 2>/dev/null || which mpicxx
+apt-get install mpich 2>/dev/null || which mpicxx
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ngettext.
 
 ## Installation
 ```bash
-apt-get install ngettext 2>/dev/null || which ngettext
+apt-get install gettext-base 2>/dev/null || which ngettext
 ```
 
 ## Key Features

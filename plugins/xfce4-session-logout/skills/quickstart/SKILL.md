@@ -18,7 +18,7 @@ CLI tool: xfce4-session-logout.
 
 ## Installation
 ```bash
-apt-get install xfce4-session-logout 2>/dev/null || which xfce4-session-logout
+apt-get install xfce4-session 2>/dev/null || which xfce4-session-logout
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: icuinfo.
 
 ## Installation
 ```bash
-apt-get install icuinfo 2>/dev/null || which icuinfo
+apt-get install icu-devtools 2>/dev/null || which icuinfo
 ```
 
 ## Key Features

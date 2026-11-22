@@ -18,7 +18,7 @@ CLI tool: iptables-xml.
 
 ## Installation
 ```bash
-apt-get install iptables-xml 2>/dev/null || which iptables-xml
+apt-get install iptables 2>/dev/null || which iptables-xml
 ```
 
 ## Key Features

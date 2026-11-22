@@ -18,7 +18,7 @@ CLI tool: opal_wrapper.
 
 ## Installation
 ```bash
-apt-get install opal_wrapper 2>/dev/null || which opal_wrapper
+apt-get install openmpi-bin 2>/dev/null || which opal_wrapper
 ```
 
 ## Key Features

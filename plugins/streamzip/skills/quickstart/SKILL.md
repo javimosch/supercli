@@ -18,7 +18,7 @@ CLI tool: streamzip.
 
 ## Installation
 ```bash
-apt-get install streamzip 2>/dev/null || which streamzip
+apt-get install perl 2>/dev/null || which streamzip
 ```
 
 ## Key Features

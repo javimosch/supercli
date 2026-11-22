@@ -18,7 +18,7 @@ CLI tool: lwp-dump.
 
 ## Installation
 ```bash
-apt-get install lwp-dump 2>/dev/null || which lwp-dump
+apt-get install libwww-perl 2>/dev/null || which lwp-dump
 ```
 
 ## Key Features

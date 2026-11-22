@@ -18,7 +18,7 @@ CLI tool: psjoin.
 
 ## Installation
 ```bash
-apt-get install psjoin 2>/dev/null || which psjoin
+apt-get install psutils 2>/dev/null || which psjoin
 ```
 
 ## Key Features

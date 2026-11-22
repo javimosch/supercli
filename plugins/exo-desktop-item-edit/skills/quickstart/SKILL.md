@@ -18,7 +18,7 @@ CLI tool: exo-desktop-item-edit.
 
 ## Installation
 ```bash
-apt-get install exo-desktop-item-edit 2>/dev/null || which exo-desktop-item-edit
+apt-get install exo-utils 2>/dev/null || which exo-desktop-item-edit
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ubuntu-advantage.
 
 ## Installation
 ```bash
-apt-get install ubuntu-advantage 2>/dev/null || which ubuntu-advantage
+apt-get install ubuntu-advantage-tools 2>/dev/null || which ubuntu-advantage
 ```
 
 ## Key Features

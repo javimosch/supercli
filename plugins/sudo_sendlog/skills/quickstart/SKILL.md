@@ -18,7 +18,7 @@ CLI tool: sudo_sendlog.
 
 ## Installation
 ```bash
-apt-get install sudo_sendlog 2>/dev/null || which sudo_sendlog
+apt-get install sudo 2>/dev/null || which sudo_sendlog
 ```
 
 ## Key Features

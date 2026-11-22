@@ -18,7 +18,7 @@ CLI tool: keyring.
 
 ## Installation
 ```bash
-apt-get install keyring 2>/dev/null || which keyring
+apt-get install python3-keyring 2>/dev/null || which keyring
 ```
 
 ## Key Features

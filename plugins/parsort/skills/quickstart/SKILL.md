@@ -18,7 +18,7 @@ CLI tool: parsort.
 
 ## Installation
 ```bash
-apt-get install parsort 2>/dev/null || which parsort
+apt-get install parallel 2>/dev/null || which parsort
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: dvilualatex.
 
 ## Installation
 ```bash
-apt-get install dvilualatex 2>/dev/null || which dvilualatex
+apt-get install texlive-latex-base 2>/dev/null || which dvilualatex
 ```
 
 ## Key Features

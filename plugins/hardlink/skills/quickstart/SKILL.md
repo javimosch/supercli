@@ -18,7 +18,7 @@ CLI tool: hardlink.
 
 ## Installation
 ```bash
-apt-get install hardlink 2>/dev/null || which hardlink
+apt-get install util-linux 2>/dev/null || which hardlink
 ```
 
 ## Key Features

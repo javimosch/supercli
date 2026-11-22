@@ -18,7 +18,7 @@ CLI tool: update-shells.
 
 ## Installation
 ```bash
-apt-get install update-shells 2>/dev/null || which update-shells
+apt-get install debianutils 2>/dev/null || which update-shells
 ```
 
 ## Key Features

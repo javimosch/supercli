@@ -18,7 +18,7 @@ CLI tool: mdig.
 
 ## Installation
 ```bash
-apt-get install mdig 2>/dev/null || which mdig
+apt-get install bind9-dnsutils 2>/dev/null || which mdig
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mkfs.bfs.
 
 ## Installation
 ```bash
-apt-get install mkfs.bfs 2>/dev/null || which mkfs.bfs
+apt-get install util-linux 2>/dev/null || which mkfs.bfs
 ```
 
 ## Key Features

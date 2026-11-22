@@ -18,7 +18,7 @@ CLI tool: mkocp.
 
 ## Installation
 ```bash
-apt-get install mkocp 2>/dev/null || which mkocp
+apt-get install texlive-binaries 2>/dev/null || which mkocp
 ```
 
 ## Key Features

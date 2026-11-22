@@ -18,7 +18,7 @@ CLI tool: pbmtomgr.
 
 ## Installation
 ```bash
-apt-get install pbmtomgr 2>/dev/null || which pbmtomgr
+apt-get install netpbm 2>/dev/null || which pbmtomgr
 ```
 
 ## Key Features

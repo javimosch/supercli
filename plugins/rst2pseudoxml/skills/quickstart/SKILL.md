@@ -18,7 +18,7 @@ CLI tool: rst2pseudoxml.
 
 ## Installation
 ```bash
-apt-get install rst2pseudoxml 2>/dev/null || which rst2pseudoxml
+apt-get install python3-docutils 2>/dev/null || which rst2pseudoxml
 ```
 
 ## Key Features

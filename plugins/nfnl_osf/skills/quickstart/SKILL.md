@@ -18,7 +18,7 @@ CLI tool: nfnl_osf.
 
 ## Installation
 ```bash
-apt-get install nfnl_osf 2>/dev/null || which nfnl_osf
+apt-get install iptables 2>/dev/null || which nfnl_osf
 ```
 
 ## Key Features

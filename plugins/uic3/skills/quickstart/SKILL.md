@@ -18,7 +18,7 @@ CLI tool: uic3.
 
 ## Installation
 ```bash
-apt-get install uic3 2>/dev/null || which uic3
+apt-get install qtchooser 2>/dev/null || which uic3
 ```
 
 ## Key Features

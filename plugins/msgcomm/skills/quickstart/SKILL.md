@@ -18,7 +18,7 @@ CLI tool: msgcomm.
 
 ## Installation
 ```bash
-apt-get install msgcomm 2>/dev/null || which msgcomm
+apt-get install gettext 2>/dev/null || which msgcomm
 ```
 
 ## Key Features

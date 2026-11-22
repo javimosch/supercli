@@ -18,7 +18,7 @@ CLI tool: iptables-nft.
 
 ## Installation
 ```bash
-apt-get install iptables-nft 2>/dev/null || which iptables-nft
+apt-get install iptables 2>/dev/null || which iptables-nft
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: plog.
 
 ## Installation
 ```bash
-apt-get install plog 2>/dev/null || which plog
+apt-get install ppp 2>/dev/null || which plog
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pgmramp.
 
 ## Installation
 ```bash
-apt-get install pgmramp 2>/dev/null || which pgmramp
+apt-get install netpbm 2>/dev/null || which pgmramp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: hp-align.
 
 ## Installation
 ```bash
-apt-get install hp-align 2>/dev/null || which hp-align
+apt-get install hplip 2>/dev/null || which hp-align
 ```
 
 ## Key Features

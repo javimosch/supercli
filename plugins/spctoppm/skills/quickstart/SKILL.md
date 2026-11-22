@@ -18,7 +18,7 @@ CLI tool: spctoppm.
 
 ## Installation
 ```bash
-apt-get install spctoppm 2>/dev/null || which spctoppm
+apt-get install netpbm 2>/dev/null || which spctoppm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: zsh5.
 
 ## Installation
 ```bash
-apt-get install zsh5 2>/dev/null || which zsh5
+apt-get install zsh 2>/dev/null || which zsh5
 ```
 
 ## Key Features

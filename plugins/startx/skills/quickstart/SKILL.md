@@ -18,7 +18,7 @@ CLI tool: startx.
 
 ## Installation
 ```bash
-apt-get install startx 2>/dev/null || which startx
+apt-get install xinit 2>/dev/null || which startx
 ```
 
 ## Key Features

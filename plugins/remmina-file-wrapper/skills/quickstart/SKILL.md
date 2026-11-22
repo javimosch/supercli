@@ -18,7 +18,7 @@ CLI tool: remmina-file-wrapper.
 
 ## Installation
 ```bash
-apt-get install remmina-file-wrapper 2>/dev/null || which remmina-file-wrapper
+apt-get install remmina 2>/dev/null || which remmina-file-wrapper
 ```
 
 ## Key Features

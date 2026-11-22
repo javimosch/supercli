@@ -18,7 +18,7 @@ CLI tool: encguess.
 
 ## Installation
 ```bash
-apt-get install encguess 2>/dev/null || which encguess
+apt-get install perl 2>/dev/null || which encguess
 ```
 
 ## Key Features

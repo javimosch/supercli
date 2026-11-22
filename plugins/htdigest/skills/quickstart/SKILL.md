@@ -18,7 +18,7 @@ CLI tool: htdigest.
 
 ## Installation
 ```bash
-apt-get install htdigest 2>/dev/null || which htdigest
+apt-get install apache2-utils 2>/dev/null || which htdigest
 ```
 
 ## Key Features

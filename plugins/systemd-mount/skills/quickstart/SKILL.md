@@ -18,7 +18,7 @@ CLI tool: systemd-mount.
 
 ## Installation
 ```bash
-apt-get install systemd-mount 2>/dev/null || which systemd-mount
+apt-get install systemd 2>/dev/null || which systemd-mount
 ```
 
 ## Key Features

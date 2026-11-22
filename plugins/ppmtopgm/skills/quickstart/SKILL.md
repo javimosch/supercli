@@ -18,7 +18,7 @@ CLI tool: ppmtopgm.
 
 ## Installation
 ```bash
-apt-get install ppmtopgm 2>/dev/null || which ppmtopgm
+apt-get install netpbm 2>/dev/null || which ppmtopgm
 ```
 
 ## Key Features

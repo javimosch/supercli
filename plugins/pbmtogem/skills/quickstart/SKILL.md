@@ -18,7 +18,7 @@ CLI tool: pbmtogem.
 
 ## Installation
 ```bash
-apt-get install pbmtogem 2>/dev/null || which pbmtogem
+apt-get install netpbm 2>/dev/null || which pbmtogem
 ```
 
 ## Key Features

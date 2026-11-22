@@ -18,7 +18,7 @@ CLI tool: mpirun.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpirun.openmpi 2>/dev/null || which mpirun.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpirun.openmpi
 ```
 
 ## Key Features

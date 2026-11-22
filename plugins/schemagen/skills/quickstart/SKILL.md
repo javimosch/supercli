@@ -18,7 +18,7 @@ CLI tool: schemagen.
 
 ## Installation
 ```bash
-apt-get install schemagen 2>/dev/null || which schemagen
+apt-get install jaxb 2>/dev/null || which schemagen
 ```
 
 ## Key Features

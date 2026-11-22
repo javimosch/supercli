@@ -18,7 +18,7 @@ CLI tool: systemd-hwdb.
 
 ## Installation
 ```bash
-apt-get install systemd-hwdb 2>/dev/null || which systemd-hwdb
+apt-get install udev 2>/dev/null || which systemd-hwdb
 ```
 
 ## Key Features

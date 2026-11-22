@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-pkg-config.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-pkg-config 2>/dev/null || which x86_64-linux-gnu-pkg-config
+apt-get install pkgconf 2>/dev/null || which x86_64-linux-gnu-pkg-config
 ```
 
 ## Key Features

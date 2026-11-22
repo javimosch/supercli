@@ -18,7 +18,7 @@ CLI tool: qemu-img.
 
 ## Installation
 ```bash
-apt-get install qemu-img 2>/dev/null || which qemu-img
+apt-get install qemu-utils 2>/dev/null || which qemu-img
 ```
 
 ## Key Features

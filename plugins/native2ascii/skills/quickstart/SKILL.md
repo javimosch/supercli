@@ -18,7 +18,7 @@ CLI tool: native2ascii.
 
 ## Installation
 ```bash
-apt-get install native2ascii 2>/dev/null || which native2ascii
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which native2ascii
 ```
 
 ## Key Features

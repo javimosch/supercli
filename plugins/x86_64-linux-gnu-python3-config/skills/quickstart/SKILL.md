@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-python3-config.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-python3-config 2>/dev/null || which x86_64-linux-gnu-python3-config
+apt-get install libpython3-dev 2>/dev/null || which x86_64-linux-gnu-python3-config
 ```
 
 ## Key Features

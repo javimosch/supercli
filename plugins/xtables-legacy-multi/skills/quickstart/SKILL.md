@@ -18,7 +18,7 @@ CLI tool: xtables-legacy-multi.
 
 ## Installation
 ```bash
-apt-get install xtables-legacy-multi 2>/dev/null || which xtables-legacy-multi
+apt-get install iptables 2>/dev/null || which xtables-legacy-multi
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mpiexec.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpiexec.openmpi 2>/dev/null || which mpiexec.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpiexec.openmpi
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmremap.
 
 ## Installation
 ```bash
-apt-get install pnmremap 2>/dev/null || which pnmremap
+apt-get install netpbm 2>/dev/null || which pnmremap
 ```
 
 ## Key Features

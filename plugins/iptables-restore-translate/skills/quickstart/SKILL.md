@@ -18,7 +18,7 @@ CLI tool: iptables-restore-translate.
 
 ## Installation
 ```bash
-apt-get install iptables-restore-translate 2>/dev/null || which iptables-restore-translate
+apt-get install iptables 2>/dev/null || which iptables-restore-translate
 ```
 
 ## Key Features

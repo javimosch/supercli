@@ -18,7 +18,7 @@ CLI tool: Xwayland.
 
 ## Installation
 ```bash
-apt-get install Xwayland 2>/dev/null || which Xwayland
+apt-get install xwayland 2>/dev/null || which Xwayland
 ```
 
 ## Key Features

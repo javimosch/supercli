@@ -18,7 +18,7 @@ CLI tool: qmltestrunner.
 
 ## Installation
 ```bash
-apt-get install qmltestrunner 2>/dev/null || which qmltestrunner
+apt-get install qtchooser 2>/dev/null || which qmltestrunner
 ```
 
 ## Key Features

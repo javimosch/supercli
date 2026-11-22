@@ -18,7 +18,7 @@ CLI tool: ppmflash.
 
 ## Installation
 ```bash
-apt-get install ppmflash 2>/dev/null || which ppmflash
+apt-get install netpbm 2>/dev/null || which ppmflash
 ```
 
 ## Key Features

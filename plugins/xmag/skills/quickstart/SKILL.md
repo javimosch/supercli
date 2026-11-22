@@ -18,7 +18,7 @@ CLI tool: xmag.
 
 ## Installation
 ```bash
-apt-get install xmag 2>/dev/null || which xmag
+apt-get install x11-apps 2>/dev/null || which xmag
 ```
 
 ## Key Features

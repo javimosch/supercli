@@ -18,7 +18,7 @@ CLI tool: logresolve.
 
 ## Installation
 ```bash
-apt-get install logresolve 2>/dev/null || which logresolve
+apt-get install apache2-utils 2>/dev/null || which logresolve
 ```
 
 ## Key Features

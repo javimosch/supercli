@@ -18,7 +18,7 @@ CLI tool: hp-testpage.
 
 ## Installation
 ```bash
-apt-get install hp-testpage 2>/dev/null || which hp-testpage
+apt-get install hplip 2>/dev/null || which hp-testpage
 ```
 
 ## Key Features

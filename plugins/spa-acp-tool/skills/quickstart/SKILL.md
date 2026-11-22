@@ -18,7 +18,7 @@ CLI tool: spa-acp-tool.
 
 ## Installation
 ```bash
-apt-get install spa-acp-tool 2>/dev/null || which spa-acp-tool
+apt-get install pipewire-bin 2>/dev/null || which spa-acp-tool
 ```
 
 ## Key Features

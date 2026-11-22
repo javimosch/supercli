@@ -18,7 +18,7 @@ CLI tool: ldapexop.
 
 ## Installation
 ```bash
-apt-get install ldapexop 2>/dev/null || which ldapexop
+apt-get install ldap-utils 2>/dev/null || which ldapexop
 ```
 
 ## Key Features

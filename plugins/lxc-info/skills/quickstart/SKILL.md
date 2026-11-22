@@ -18,7 +18,7 @@ CLI tool: lxc-info.
 
 ## Installation
 ```bash
-apt-get install lxc-info 2>/dev/null || which lxc-info
+apt-get install lxc-utils 2>/dev/null || which lxc-info
 ```
 
 ## Key Features

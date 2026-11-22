@@ -18,7 +18,7 @@ CLI tool: prtstat.
 
 ## Installation
 ```bash
-apt-get install prtstat 2>/dev/null || which prtstat
+apt-get install psmisc 2>/dev/null || which prtstat
 ```
 
 ## Key Features

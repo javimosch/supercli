@@ -18,7 +18,7 @@ CLI tool: lxc-create.
 
 ## Installation
 ```bash
-apt-get install lxc-create 2>/dev/null || which lxc-create
+apt-get install lxc-utils 2>/dev/null || which lxc-create
 ```
 
 ## Key Features

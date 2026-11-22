@@ -18,7 +18,7 @@ CLI tool: fsck.exfat.
 
 ## Installation
 ```bash
-apt-get install fsck.exfat 2>/dev/null || which fsck.exfat
+apt-get install exfatprogs 2>/dev/null || which fsck.exfat
 ```
 
 ## Key Features

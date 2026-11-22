@@ -18,7 +18,7 @@ CLI tool: man-recode.
 
 ## Installation
 ```bash
-apt-get install man-recode 2>/dev/null || which man-recode
+apt-get install man-db 2>/dev/null || which man-recode
 ```
 
 ## Key Features

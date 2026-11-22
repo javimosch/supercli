@@ -18,7 +18,7 @@ CLI tool: ppmlabel.
 
 ## Installation
 ```bash
-apt-get install ppmlabel 2>/dev/null || which ppmlabel
+apt-get install netpbm 2>/dev/null || which ppmlabel
 ```
 
 ## Key Features

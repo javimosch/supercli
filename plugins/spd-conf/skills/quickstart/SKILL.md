@@ -18,7 +18,7 @@ CLI tool: spd-conf.
 
 ## Installation
 ```bash
-apt-get install spd-conf 2>/dev/null || which spd-conf
+apt-get install python3-speechd 2>/dev/null || which spd-conf
 ```
 
 ## Key Features

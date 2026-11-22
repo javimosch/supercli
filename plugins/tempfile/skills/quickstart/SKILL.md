@@ -18,7 +18,7 @@ CLI tool: tempfile.
 
 ## Installation
 ```bash
-apt-get install tempfile 2>/dev/null || which tempfile
+apt-get install debianutils 2>/dev/null || which tempfile
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcc-ranlib.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcc-ranlib 2>/dev/null || which x86_64-linux-gnu-gcc-ranlib
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcc-ranlib
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mxtar.
 
 ## Installation
 ```bash
-apt-get install mxtar 2>/dev/null || which mxtar
+apt-get install mtools 2>/dev/null || which mxtar
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: fsck.ext3.
 
 ## Installation
 ```bash
-apt-get install fsck.ext3 2>/dev/null || which fsck.ext3
+apt-get install e2fsprogs 2>/dev/null || which fsck.ext3
 ```
 
 ## Key Features

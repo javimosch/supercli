@@ -18,7 +18,7 @@ CLI tool: pw-record.
 
 ## Installation
 ```bash
-apt-get install pw-record 2>/dev/null || which pw-record
+apt-get install pipewire-bin 2>/dev/null || which pw-record
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: nltk.
 
 ## Installation
 ```bash
-apt-get install nltk 2>/dev/null || which nltk
+apt-get install python3-nltk 2>/dev/null || which nltk
 ```
 
 ## Key Features

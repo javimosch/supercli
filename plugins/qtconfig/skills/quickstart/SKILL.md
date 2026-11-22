@@ -18,7 +18,7 @@ CLI tool: qtconfig.
 
 ## Installation
 ```bash
-apt-get install qtconfig 2>/dev/null || which qtconfig
+apt-get install qtchooser 2>/dev/null || which qtconfig
 ```
 
 ## Key Features

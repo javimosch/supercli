@@ -18,7 +18,7 @@ CLI tool: niceload.
 
 ## Installation
 ```bash
-apt-get install niceload 2>/dev/null || which niceload
+apt-get install parallel 2>/dev/null || which niceload
 ```
 
 ## Key Features

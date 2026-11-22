@@ -18,7 +18,7 @@ CLI tool: ld-musl-config.
 
 ## Installation
 ```bash
-apt-get install ld-musl-config 2>/dev/null || which ld-musl-config
+apt-get install musl 2>/dev/null || which ld-musl-config
 ```
 
 ## Key Features

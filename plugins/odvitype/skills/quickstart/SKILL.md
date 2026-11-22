@@ -18,7 +18,7 @@ CLI tool: odvitype.
 
 ## Installation
 ```bash
-apt-get install odvitype 2>/dev/null || which odvitype
+apt-get install texlive-binaries 2>/dev/null || which odvitype
 ```
 
 ## Key Features

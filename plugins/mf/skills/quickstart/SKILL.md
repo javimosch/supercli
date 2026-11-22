@@ -18,7 +18,7 @@ CLI tool: mf.
 
 ## Installation
 ```bash
-apt-get install mf 2>/dev/null || which mf
+apt-get install texlive-binaries 2>/dev/null || which mf
 ```
 
 ## Key Features

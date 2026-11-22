@@ -18,7 +18,7 @@ CLI tool: xkbvleds.
 
 ## Installation
 ```bash
-apt-get install xkbvleds 2>/dev/null || which xkbvleds
+apt-get install x11-xkb-utils 2>/dev/null || which xkbvleds
 ```
 
 ## Key Features

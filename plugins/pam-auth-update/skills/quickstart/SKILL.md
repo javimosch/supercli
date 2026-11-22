@@ -18,7 +18,7 @@ CLI tool: pam-auth-update.
 
 ## Installation
 ```bash
-apt-get install pam-auth-update 2>/dev/null || which pam-auth-update
+apt-get install libpam-runtime 2>/dev/null || which pam-auth-update
 ```
 
 ## Key Features

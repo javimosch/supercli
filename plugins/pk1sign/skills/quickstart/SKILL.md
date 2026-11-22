@@ -18,7 +18,7 @@ CLI tool: pk1sign.
 
 ## Installation
 ```bash
-apt-get install pk1sign 2>/dev/null || which pk1sign
+apt-get install libnss3-tools 2>/dev/null || which pk1sign
 ```
 
 ## Key Features

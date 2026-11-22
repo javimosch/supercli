@@ -18,7 +18,7 @@ CLI tool: x86_energy_perf_policy.
 
 ## Installation
 ```bash
-apt-get install x86_energy_perf_policy 2>/dev/null || which x86_energy_perf_policy
+apt-get install linux-laptop-tools-common 2>/dev/null || which x86_energy_perf_policy
 ```
 
 ## Key Features

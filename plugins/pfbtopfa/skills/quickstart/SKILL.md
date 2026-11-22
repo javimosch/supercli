@@ -18,7 +18,7 @@ CLI tool: pfbtopfa.
 
 ## Installation
 ```bash
-apt-get install pfbtopfa 2>/dev/null || which pfbtopfa
+apt-get install ghostscript 2>/dev/null || which pfbtopfa
 ```
 
 ## Key Features

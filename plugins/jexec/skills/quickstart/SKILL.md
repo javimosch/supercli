@@ -18,7 +18,7 @@ CLI tool: jexec.
 
 ## Installation
 ```bash
-apt-get install jexec 2>/dev/null || which jexec
+apt-get install default-jre 2>/dev/null || which jexec
 ```
 
 ## Key Features

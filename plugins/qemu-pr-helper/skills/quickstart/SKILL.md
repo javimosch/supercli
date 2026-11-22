@@ -18,7 +18,7 @@ CLI tool: qemu-pr-helper.
 
 ## Installation
 ```bash
-apt-get install qemu-pr-helper 2>/dev/null || which qemu-pr-helper
+apt-get install qemu-system-common 2>/dev/null || which qemu-pr-helper
 ```
 
 ## Key Features

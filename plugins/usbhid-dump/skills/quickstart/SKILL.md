@@ -18,7 +18,7 @@ CLI tool: usbhid-dump.
 
 ## Installation
 ```bash
-apt-get install usbhid-dump 2>/dev/null || which usbhid-dump
+apt-get install usbutils 2>/dev/null || which usbhid-dump
 ```
 
 ## Key Features

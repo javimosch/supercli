@@ -18,7 +18,7 @@ CLI tool: gxditview.
 
 ## Installation
 ```bash
-apt-get install gxditview 2>/dev/null || which gxditview
+apt-get install groff 2>/dev/null || which gxditview
 ```
 
 ## Key Features

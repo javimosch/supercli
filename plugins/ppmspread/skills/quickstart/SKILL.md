@@ -18,7 +18,7 @@ CLI tool: ppmspread.
 
 ## Installation
 ```bash
-apt-get install ppmspread 2>/dev/null || which ppmspread
+apt-get install netpbm 2>/dev/null || which ppmspread
 ```
 
 ## Key Features

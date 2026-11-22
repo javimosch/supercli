@@ -18,7 +18,7 @@ CLI tool: isovfy.
 
 ## Installation
 ```bash
-apt-get install isovfy 2>/dev/null || which isovfy
+apt-get install genisoimage 2>/dev/null || which isovfy
 ```
 
 ## Key Features

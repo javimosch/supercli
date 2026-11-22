@@ -18,7 +18,7 @@ CLI tool: dvilj.
 
 ## Installation
 ```bash
-apt-get install dvilj 2>/dev/null || which dvilj
+apt-get install texlive-binaries 2>/dev/null || which dvilj
 ```
 
 ## Key Features

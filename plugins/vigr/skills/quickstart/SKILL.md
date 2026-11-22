@@ -18,7 +18,7 @@ CLI tool: vigr.
 
 ## Installation
 ```bash
-apt-get install vigr 2>/dev/null || which vigr
+apt-get install passwd 2>/dev/null || which vigr
 ```
 
 ## Key Features

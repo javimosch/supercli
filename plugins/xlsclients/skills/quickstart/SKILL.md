@@ -18,7 +18,7 @@ CLI tool: xlsclients.
 
 ## Installation
 ```bash
-apt-get install xlsclients 2>/dev/null || which xlsclients
+apt-get install x11-utils 2>/dev/null || which xlsclients
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: gxl2gv.
 
 ## Installation
 ```bash
-apt-get install gxl2gv 2>/dev/null || which gxl2gv
+apt-get install graphviz 2>/dev/null || which gxl2gv
 ```
 
 ## Key Features

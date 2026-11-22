@@ -18,7 +18,7 @@ CLI tool: msggrep.
 
 ## Installation
 ```bash
-apt-get install msggrep 2>/dev/null || which msggrep
+apt-get install gettext 2>/dev/null || which msggrep
 ```
 
 ## Key Features

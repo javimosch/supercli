@@ -18,7 +18,7 @@ CLI tool: unix_update.
 
 ## Installation
 ```bash
-apt-get install unix_update 2>/dev/null || which unix_update
+apt-get install libpam-modules-bin 2>/dev/null || which unix_update
 ```
 
 ## Key Features

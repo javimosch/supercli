@@ -18,7 +18,7 @@ CLI tool: setvtrgb.
 
 ## Installation
 ```bash
-apt-get install setvtrgb 2>/dev/null || which setvtrgb
+apt-get install kbd 2>/dev/null || which setvtrgb
 ```
 
 ## Key Features

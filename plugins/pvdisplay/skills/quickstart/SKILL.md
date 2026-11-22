@@ -18,7 +18,7 @@ CLI tool: pvdisplay.
 
 ## Installation
 ```bash
-apt-get install pvdisplay 2>/dev/null || which pvdisplay
+apt-get install lvm2 2>/dev/null || which pvdisplay
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: 411toppm.
 
 ## Installation
 ```bash
-apt-get install 411toppm 2>/dev/null || which 411toppm
+apt-get install netpbm 2>/dev/null || which 411toppm
 ```
 
 ## Key Features

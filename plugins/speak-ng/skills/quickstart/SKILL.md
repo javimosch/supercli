@@ -18,7 +18,7 @@ CLI tool: speak-ng.
 
 ## Installation
 ```bash
-apt-get install speak-ng 2>/dev/null || which speak-ng
+apt-get install espeak-ng 2>/dev/null || which speak-ng
 ```
 
 ## Key Features

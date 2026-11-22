@@ -18,7 +18,7 @@ CLI tool: mkfs.exfat.
 
 ## Installation
 ```bash
-apt-get install mkfs.exfat 2>/dev/null || which mkfs.exfat
+apt-get install exfatprogs 2>/dev/null || which mkfs.exfat
 ```
 
 ## Key Features

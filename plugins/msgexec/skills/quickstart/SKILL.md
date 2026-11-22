@@ -18,7 +18,7 @@ CLI tool: msgexec.
 
 ## Installation
 ```bash
-apt-get install msgexec 2>/dev/null || which msgexec
+apt-get install gettext 2>/dev/null || which msgexec
 ```
 
 ## Key Features

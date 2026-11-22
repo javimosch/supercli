@@ -18,7 +18,7 @@ CLI tool: sponge.
 
 ## Installation
 ```bash
-apt-get install sponge 2>/dev/null || which sponge
+apt-get install moreutils 2>/dev/null || which sponge
 ```
 
 ## Key Features

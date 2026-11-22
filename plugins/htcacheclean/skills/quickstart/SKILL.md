@@ -18,7 +18,7 @@ CLI tool: htcacheclean.
 
 ## Installation
 ```bash
-apt-get install htcacheclean 2>/dev/null || which htcacheclean
+apt-get install apache2-utils 2>/dev/null || which htcacheclean
 ```
 
 ## Key Features

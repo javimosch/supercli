@@ -18,7 +18,7 @@ CLI tool: ppltotf.
 
 ## Installation
 ```bash
-apt-get install ppltotf 2>/dev/null || which ppltotf
+apt-get install texlive-binaries 2>/dev/null || which ppltotf
 ```
 
 ## Key Features

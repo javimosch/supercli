@@ -18,7 +18,7 @@ CLI tool: refer.
 
 ## Installation
 ```bash
-apt-get install refer 2>/dev/null || which refer
+apt-get install groff 2>/dev/null || which refer
 ```
 
 ## Key Features

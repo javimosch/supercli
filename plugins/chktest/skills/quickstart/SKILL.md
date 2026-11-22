@@ -18,7 +18,7 @@ CLI tool: chktest.
 
 ## Installation
 ```bash
-apt-get install chktest 2>/dev/null || which chktest
+apt-get install libnss3-tools 2>/dev/null || which chktest
 ```
 
 ## Key Features

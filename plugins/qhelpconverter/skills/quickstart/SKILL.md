@@ -18,7 +18,7 @@ CLI tool: qhelpconverter.
 
 ## Installation
 ```bash
-apt-get install qhelpconverter 2>/dev/null || which qhelpconverter
+apt-get install qtchooser 2>/dev/null || which qhelpconverter
 ```
 
 ## Key Features

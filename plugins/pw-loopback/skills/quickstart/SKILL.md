@@ -18,7 +18,7 @@ CLI tool: pw-loopback.
 
 ## Installation
 ```bash
-apt-get install pw-loopback 2>/dev/null || which pw-loopback
+apt-get install pipewire-bin 2>/dev/null || which pw-loopback
 ```
 
 ## Key Features

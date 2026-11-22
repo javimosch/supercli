@@ -18,7 +18,7 @@ CLI tool: zstdcat.
 
 ## Installation
 ```bash
-apt-get install zstdcat 2>/dev/null || which zstdcat
+apt-get install zstd 2>/dev/null || which zstdcat
 ```
 
 ## Key Features

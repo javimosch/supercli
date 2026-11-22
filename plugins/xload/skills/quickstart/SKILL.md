@@ -18,7 +18,7 @@ CLI tool: xload.
 
 ## Installation
 ```bash
-apt-get install xload 2>/dev/null || which xload
+apt-get install x11-apps 2>/dev/null || which xload
 ```
 
 ## Key Features

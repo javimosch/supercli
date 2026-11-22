@@ -18,7 +18,7 @@ CLI tool: systemd-cgtop.
 
 ## Installation
 ```bash
-apt-get install systemd-cgtop 2>/dev/null || which systemd-cgtop
+apt-get install systemd 2>/dev/null || which systemd-cgtop
 ```
 
 ## Key Features

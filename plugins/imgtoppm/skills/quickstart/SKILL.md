@@ -18,7 +18,7 @@ CLI tool: imgtoppm.
 
 ## Installation
 ```bash
-apt-get install imgtoppm 2>/dev/null || which imgtoppm
+apt-get install netpbm 2>/dev/null || which imgtoppm
 ```
 
 ## Key Features

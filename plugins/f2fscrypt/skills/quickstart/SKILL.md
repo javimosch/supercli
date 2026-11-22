@@ -18,7 +18,7 @@ CLI tool: f2fscrypt.
 
 ## Installation
 ```bash
-apt-get install f2fscrypt 2>/dev/null || which f2fscrypt
+apt-get install f2fs-tools 2>/dev/null || which f2fscrypt
 ```
 
 ## Key Features

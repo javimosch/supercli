@@ -18,7 +18,7 @@ CLI tool: rctest.
 
 ## Installation
 ```bash
-apt-get install rctest 2>/dev/null || which rctest
+apt-get install bluez 2>/dev/null || which rctest
 ```
 
 ## Key Features

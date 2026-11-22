@@ -18,7 +18,7 @@ CLI tool: ppmrainbow.
 
 ## Installation
 ```bash
-apt-get install ppmrainbow 2>/dev/null || which ppmrainbow
+apt-get install netpbm 2>/dev/null || which ppmrainbow
 ```
 
 ## Key Features

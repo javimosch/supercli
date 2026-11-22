@@ -18,7 +18,7 @@ CLI tool: strace-log-merge.
 
 ## Installation
 ```bash
-apt-get install strace-log-merge 2>/dev/null || which strace-log-merge
+apt-get install strace 2>/dev/null || which strace-log-merge
 ```
 
 ## Key Features

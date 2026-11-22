@@ -18,7 +18,7 @@ CLI tool: lastb.
 
 ## Installation
 ```bash
-apt-get install lastb 2>/dev/null || which lastb
+apt-get install util-linux 2>/dev/null || which lastb
 ```
 
 ## Key Features

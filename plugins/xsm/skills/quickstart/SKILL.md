@@ -18,7 +18,7 @@ CLI tool: xsm.
 
 ## Installation
 ```bash
-apt-get install xsm 2>/dev/null || which xsm
+apt-get install x11-session-utils 2>/dev/null || which xsm
 ```
 
 ## Key Features

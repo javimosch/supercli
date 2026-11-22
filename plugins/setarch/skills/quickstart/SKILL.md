@@ -18,7 +18,7 @@ CLI tool: setarch.
 
 ## Installation
 ```bash
-apt-get install setarch 2>/dev/null || which setarch
+apt-get install util-linux 2>/dev/null || which setarch
 ```
 
 ## Key Features

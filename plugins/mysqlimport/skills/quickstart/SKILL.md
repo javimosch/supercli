@@ -18,7 +18,7 @@ CLI tool: mysqlimport.
 
 ## Installation
 ```bash
-apt-get install mysqlimport 2>/dev/null || which mysqlimport
+apt-get install mysql-client-core-8.0 2>/dev/null || which mysqlimport
 ```
 
 ## Key Features

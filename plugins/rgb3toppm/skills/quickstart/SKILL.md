@@ -18,7 +18,7 @@ CLI tool: rgb3toppm.
 
 ## Installation
 ```bash
-apt-get install rgb3toppm 2>/dev/null || which rgb3toppm
+apt-get install netpbm 2>/dev/null || which rgb3toppm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: systemd-stdio-bridge.
 
 ## Installation
 ```bash
-apt-get install systemd-stdio-bridge 2>/dev/null || which systemd-stdio-bridge
+apt-get install systemd 2>/dev/null || which systemd-stdio-bridge
 ```
 
 ## Key Features

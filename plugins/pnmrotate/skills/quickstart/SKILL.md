@@ -18,7 +18,7 @@ CLI tool: pnmrotate.
 
 ## Installation
 ```bash
-apt-get install pnmrotate 2>/dev/null || which pnmrotate
+apt-get install netpbm 2>/dev/null || which pnmrotate
 ```
 
 ## Key Features

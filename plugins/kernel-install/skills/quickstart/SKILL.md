@@ -18,7 +18,7 @@ CLI tool: kernel-install.
 
 ## Installation
 ```bash
-apt-get install kernel-install 2>/dev/null || which kernel-install
+apt-get install systemd 2>/dev/null || which kernel-install
 ```
 
 ## Key Features

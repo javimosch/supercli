@@ -18,7 +18,7 @@ CLI tool: faillog.
 
 ## Installation
 ```bash
-apt-get install faillog 2>/dev/null || which faillog
+apt-get install login 2>/dev/null || which faillog
 ```
 
 ## Key Features

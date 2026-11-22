@@ -18,7 +18,7 @@ CLI tool: aclocal-1.16.
 
 ## Installation
 ```bash
-apt-get install aclocal-1.16 2>/dev/null || which aclocal-1.16
+apt-get install automake 2>/dev/null || which aclocal-1.16
 ```
 
 ## Key Features

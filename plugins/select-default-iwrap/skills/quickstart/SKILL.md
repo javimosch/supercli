@@ -18,7 +18,7 @@ CLI tool: select-default-iwrap.
 
 ## Installation
 ```bash
-apt-get install select-default-iwrap 2>/dev/null || which select-default-iwrap
+apt-get install dictionaries-common 2>/dev/null || which select-default-iwrap
 ```
 
 ## Key Features

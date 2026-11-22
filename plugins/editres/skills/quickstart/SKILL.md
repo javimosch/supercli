@@ -18,7 +18,7 @@ CLI tool: editres.
 
 ## Installation
 ```bash
-apt-get install editres 2>/dev/null || which editres
+apt-get install x11-utils 2>/dev/null || which editres
 ```
 
 ## Key Features

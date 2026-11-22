@@ -18,7 +18,7 @@ CLI tool: lxc-cgroup.
 
 ## Installation
 ```bash
-apt-get install lxc-cgroup 2>/dev/null || which lxc-cgroup
+apt-get install lxc-utils 2>/dev/null || which lxc-cgroup
 ```
 
 ## Key Features

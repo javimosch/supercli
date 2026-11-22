@@ -18,7 +18,7 @@ CLI tool: vgrename.
 
 ## Installation
 ```bash
-apt-get install vgrename 2>/dev/null || which vgrename
+apt-get install lvm2 2>/dev/null || which vgrename
 ```
 
 ## Key Features

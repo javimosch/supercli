@@ -18,7 +18,7 @@ CLI tool: ybmtopbm.
 
 ## Installation
 ```bash
-apt-get install ybmtopbm 2>/dev/null || which ybmtopbm
+apt-get install netpbm 2>/dev/null || which ybmtopbm
 ```
 
 ## Key Features

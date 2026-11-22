@@ -18,7 +18,7 @@ CLI tool: pbmpage.
 
 ## Installation
 ```bash
-apt-get install pbmpage 2>/dev/null || which pbmpage
+apt-get install netpbm 2>/dev/null || which pbmpage
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: osage.
 
 ## Installation
 ```bash
-apt-get install osage 2>/dev/null || which osage
+apt-get install graphviz 2>/dev/null || which osage
 ```
 
 ## Key Features

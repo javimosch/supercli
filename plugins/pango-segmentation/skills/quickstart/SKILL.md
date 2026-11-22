@@ -18,7 +18,7 @@ CLI tool: pango-segmentation.
 
 ## Installation
 ```bash
-apt-get install pango-segmentation 2>/dev/null || which pango-segmentation
+apt-get install pango1.0-tools 2>/dev/null || which pango-segmentation
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pbmclean.
 
 ## Installation
 ```bash
-apt-get install pbmclean 2>/dev/null || which pbmclean
+apt-get install netpbm 2>/dev/null || which pbmclean
 ```
 
 ## Key Features

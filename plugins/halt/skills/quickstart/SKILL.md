@@ -18,7 +18,7 @@ CLI tool: halt.
 
 ## Installation
 ```bash
-apt-get install halt 2>/dev/null || which halt
+apt-get install systemd-sysv 2>/dev/null || which halt
 ```
 
 ## Key Features

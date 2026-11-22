@@ -18,7 +18,7 @@ CLI tool: etex.
 
 ## Installation
 ```bash
-apt-get install etex 2>/dev/null || which etex
+apt-get install texlive-binaries 2>/dev/null || which etex
 ```
 
 ## Key Features

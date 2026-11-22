@@ -18,7 +18,7 @@ CLI tool: env_parallel.sh.
 
 ## Installation
 ```bash
-apt-get install env_parallel.sh 2>/dev/null || which env_parallel.sh
+apt-get install parallel 2>/dev/null || which env_parallel.sh
 ```
 
 ## Key Features

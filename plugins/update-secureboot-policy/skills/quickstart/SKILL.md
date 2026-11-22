@@ -18,7 +18,7 @@ CLI tool: update-secureboot-policy.
 
 ## Installation
 ```bash
-apt-get install update-secureboot-policy 2>/dev/null || which update-secureboot-policy
+apt-get install shim-signed 2>/dev/null || which update-secureboot-policy
 ```
 
 ## Key Features

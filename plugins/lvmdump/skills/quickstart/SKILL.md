@@ -18,7 +18,7 @@ CLI tool: lvmdump.
 
 ## Installation
 ```bash
-apt-get install lvmdump 2>/dev/null || which lvmdump
+apt-get install lvm2 2>/dev/null || which lvmdump
 ```
 
 ## Key Features

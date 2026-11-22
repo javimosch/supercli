@@ -18,7 +18,7 @@ CLI tool: pw-reserve.
 
 ## Installation
 ```bash
-apt-get install pw-reserve 2>/dev/null || which pw-reserve
+apt-get install pipewire-bin 2>/dev/null || which pw-reserve
 ```
 
 ## Key Features

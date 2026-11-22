@@ -18,7 +18,7 @@ CLI tool: javah.
 
 ## Installation
 ```bash
-apt-get install javah 2>/dev/null || which javah
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which javah
 ```
 
 ## Key Features

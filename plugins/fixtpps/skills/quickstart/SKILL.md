@@ -18,7 +18,7 @@ CLI tool: fixtpps.
 
 ## Installation
 ```bash
-apt-get install fixtpps 2>/dev/null || which fixtpps
+apt-get install psutils 2>/dev/null || which fixtpps
 ```
 
 ## Key Features

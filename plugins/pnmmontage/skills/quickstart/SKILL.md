@@ -18,7 +18,7 @@ CLI tool: pnmmontage.
 
 ## Installation
 ```bash
-apt-get install pnmmontage 2>/dev/null || which pnmmontage
+apt-get install netpbm 2>/dev/null || which pnmmontage
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: env_parallel.dash.
 
 ## Installation
 ```bash
-apt-get install env_parallel.dash 2>/dev/null || which env_parallel.dash
+apt-get install parallel 2>/dev/null || which env_parallel.dash
 ```
 
 ## Key Features

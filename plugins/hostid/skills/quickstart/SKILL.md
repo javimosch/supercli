@@ -18,7 +18,7 @@ CLI tool: hostid.
 
 ## Installation
 ```bash
-apt-get install hostid 2>/dev/null || which hostid
+apt-get install coreutils 2>/dev/null || which hostid
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mcomp.
 
 ## Installation
 ```bash
-apt-get install mcomp 2>/dev/null || which mcomp
+apt-get install mtools 2>/dev/null || which mcomp
 ```
 
 ## Key Features

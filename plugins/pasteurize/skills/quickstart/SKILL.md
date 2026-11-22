@@ -18,7 +18,7 @@ CLI tool: pasteurize.
 
 ## Installation
 ```bash
-apt-get install pasteurize 2>/dev/null || which pasteurize
+apt-get install python3-future 2>/dev/null || which pasteurize
 ```
 
 ## Key Features

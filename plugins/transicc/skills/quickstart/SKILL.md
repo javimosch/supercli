@@ -18,7 +18,7 @@ CLI tool: transicc.
 
 ## Installation
 ```bash
-apt-get install transicc 2>/dev/null || which transicc
+apt-get install liblcms2-utils 2>/dev/null || which transicc
 ```
 
 ## Key Features

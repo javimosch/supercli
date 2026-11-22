@@ -18,7 +18,7 @@ CLI tool: mimeopen.
 
 ## Installation
 ```bash
-apt-get install mimeopen 2>/dev/null || which mimeopen
+apt-get install libfile-mimeinfo-perl 2>/dev/null || which mimeopen
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: usbipd.
 
 ## Installation
 ```bash
-apt-get install usbipd 2>/dev/null || which usbipd
+apt-get install linux-laptop-tools-common 2>/dev/null || which usbipd
 ```
 
 ## Key Features

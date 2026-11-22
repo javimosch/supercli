@@ -18,7 +18,7 @@ CLI tool: iptables-restore.
 
 ## Installation
 ```bash
-apt-get install iptables-restore 2>/dev/null || which iptables-restore
+apt-get install iptables 2>/dev/null || which iptables-restore
 ```
 
 ## Key Features

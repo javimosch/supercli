@@ -18,7 +18,7 @@ CLI tool: t1mac.
 
 ## Installation
 ```bash
-apt-get install t1mac 2>/dev/null || which t1mac
+apt-get install t1utils 2>/dev/null || which t1mac
 ```
 
 ## Key Features

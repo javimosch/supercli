@@ -18,7 +18,7 @@ CLI tool: pbmtextps.
 
 ## Installation
 ```bash
-apt-get install pbmtextps 2>/dev/null || which pbmtextps
+apt-get install netpbm 2>/dev/null || which pbmtextps
 ```
 
 ## Key Features

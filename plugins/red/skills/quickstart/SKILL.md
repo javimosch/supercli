@@ -18,7 +18,7 @@ CLI tool: red.
 
 ## Installation
 ```bash
-apt-get install red 2>/dev/null || which red
+apt-get install ed 2>/dev/null || which red
 ```
 
 ## Key Features

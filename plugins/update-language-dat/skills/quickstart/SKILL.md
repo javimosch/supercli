@@ -18,7 +18,7 @@ CLI tool: update-language-dat.
 
 ## Installation
 ```bash
-apt-get install update-language-dat 2>/dev/null || which update-language-dat
+apt-get install tex-common 2>/dev/null || which update-language-dat
 ```
 
 ## Key Features

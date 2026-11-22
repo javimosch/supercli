@@ -18,7 +18,7 @@ CLI tool: futurize.
 
 ## Installation
 ```bash
-apt-get install futurize 2>/dev/null || which futurize
+apt-get install python3-future 2>/dev/null || which futurize
 ```
 
 ## Key Features

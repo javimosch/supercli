@@ -18,7 +18,7 @@ CLI tool: mkfs.ntfs.
 
 ## Installation
 ```bash
-apt-get install mkfs.ntfs 2>/dev/null || which mkfs.ntfs
+apt-get install ntfs-3g 2>/dev/null || which mkfs.ntfs
 ```
 
 ## Key Features

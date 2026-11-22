@@ -18,7 +18,7 @@ CLI tool: ldapadd.
 
 ## Installation
 ```bash
-apt-get install ldapadd 2>/dev/null || which ldapadd
+apt-get install ldap-utils 2>/dev/null || which ldapadd
 ```
 
 ## Key Features

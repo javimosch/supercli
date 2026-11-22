@@ -18,7 +18,7 @@ CLI tool: mailmail3.
 
 ## Installation
 ```bash
-apt-get install mailmail3 2>/dev/null || which mailmail3
+apt-get install python3-twisted 2>/dev/null || which mailmail3
 ```
 
 ## Key Features

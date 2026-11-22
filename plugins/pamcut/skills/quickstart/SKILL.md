@@ -18,7 +18,7 @@ CLI tool: pamcut.
 
 ## Installation
 ```bash
-apt-get install pamcut 2>/dev/null || which pamcut
+apt-get install netpbm 2>/dev/null || which pamcut
 ```
 
 ## Key Features

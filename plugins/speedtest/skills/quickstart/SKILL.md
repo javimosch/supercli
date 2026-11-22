@@ -18,7 +18,7 @@ CLI tool: speedtest.
 
 ## Installation
 ```bash
-apt-get install speedtest 2>/dev/null || which speedtest
+apt-get install speedtest-cli 2>/dev/null || which speedtest
 ```
 
 ## Key Features

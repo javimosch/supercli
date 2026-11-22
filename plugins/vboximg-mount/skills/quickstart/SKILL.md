@@ -18,7 +18,7 @@ CLI tool: vboximg-mount.
 
 ## Installation
 ```bash
-apt-get install vboximg-mount 2>/dev/null || which vboximg-mount
+apt-get install virtualbox 2>/dev/null || which vboximg-mount
 ```
 
 ## Key Features

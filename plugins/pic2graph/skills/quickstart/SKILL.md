@@ -18,7 +18,7 @@ CLI tool: pic2graph.
 
 ## Installation
 ```bash
-apt-get install pic2graph 2>/dev/null || which pic2graph
+apt-get install groff 2>/dev/null || which pic2graph
 ```
 
 ## Key Features

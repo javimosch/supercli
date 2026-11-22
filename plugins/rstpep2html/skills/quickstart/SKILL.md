@@ -18,7 +18,7 @@ CLI tool: rstpep2html.
 
 ## Installation
 ```bash
-apt-get install rstpep2html 2>/dev/null || which rstpep2html
+apt-get install python3-docutils 2>/dev/null || which rstpep2html
 ```
 
 ## Key Features

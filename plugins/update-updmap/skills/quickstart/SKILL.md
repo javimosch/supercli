@@ -18,7 +18,7 @@ CLI tool: update-updmap.
 
 ## Installation
 ```bash
-apt-get install update-updmap 2>/dev/null || which update-updmap
+apt-get install tex-common 2>/dev/null || which update-updmap
 ```
 
 ## Key Features

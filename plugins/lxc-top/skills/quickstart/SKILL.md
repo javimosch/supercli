@@ -18,7 +18,7 @@ CLI tool: lxc-top.
 
 ## Installation
 ```bash
-apt-get install lxc-top 2>/dev/null || which lxc-top
+apt-get install lxc-utils 2>/dev/null || which lxc-top
 ```
 
 ## Key Features

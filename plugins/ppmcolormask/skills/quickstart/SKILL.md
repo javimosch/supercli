@@ -18,7 +18,7 @@ CLI tool: ppmcolormask.
 
 ## Installation
 ```bash
-apt-get install ppmcolormask 2>/dev/null || which ppmcolormask
+apt-get install netpbm 2>/dev/null || which ppmcolormask
 ```
 
 ## Key Features

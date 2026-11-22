@@ -18,7 +18,7 @@ CLI tool: xfwm4-workspace-settings.
 
 ## Installation
 ```bash
-apt-get install xfwm4-workspace-settings 2>/dev/null || which xfwm4-workspace-settings
+apt-get install xfwm4 2>/dev/null || which xfwm4-workspace-settings
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mimetype.
 
 ## Installation
 ```bash
-apt-get install mimetype 2>/dev/null || which mimetype
+apt-get install libfile-mimeinfo-perl 2>/dev/null || which mimetype
 ```
 
 ## Key Features

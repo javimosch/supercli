@@ -18,7 +18,7 @@ CLI tool: rmid.
 
 ## Installation
 ```bash
-apt-get install rmid 2>/dev/null || which rmid
+apt-get install openjdk-11-jre-headless 2>/dev/null || which rmid
 ```
 
 ## Key Features

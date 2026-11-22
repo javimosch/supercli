@@ -18,7 +18,7 @@ CLI tool: tnameserv.
 
 ## Installation
 ```bash
-apt-get install tnameserv 2>/dev/null || which tnameserv
+apt-get install openjdk-8-jre-headless 2>/dev/null || which tnameserv
 ```
 
 ## Key Features

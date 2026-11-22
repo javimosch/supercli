@@ -18,7 +18,7 @@ CLI tool: infotocap.
 
 ## Installation
 ```bash
-apt-get install infotocap 2>/dev/null || which infotocap
+apt-get install ncurses-bin 2>/dev/null || which infotocap
 ```
 
 ## Key Features

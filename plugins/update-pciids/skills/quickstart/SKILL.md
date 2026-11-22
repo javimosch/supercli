@@ -18,7 +18,7 @@ CLI tool: update-pciids.
 
 ## Installation
 ```bash
-apt-get install update-pciids 2>/dev/null || which update-pciids
+apt-get install pciutils 2>/dev/null || which update-pciids
 ```
 
 ## Key Features

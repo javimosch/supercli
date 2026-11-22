@@ -18,7 +18,7 @@ CLI tool: errno.
 
 ## Installation
 ```bash
-apt-get install errno 2>/dev/null || which errno
+apt-get install moreutils 2>/dev/null || which errno
 ```
 
 ## Key Features

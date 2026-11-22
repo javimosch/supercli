@@ -18,7 +18,7 @@ CLI tool: insmod.
 
 ## Installation
 ```bash
-apt-get install insmod 2>/dev/null || which insmod
+apt-get install kmod 2>/dev/null || which insmod
 ```
 
 ## Key Features

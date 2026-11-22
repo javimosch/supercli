@@ -18,7 +18,7 @@ CLI tool: includeres.
 
 ## Installation
 ```bash
-apt-get install includeres 2>/dev/null || which includeres
+apt-get install psutils 2>/dev/null || which includeres
 ```
 
 ## Key Features

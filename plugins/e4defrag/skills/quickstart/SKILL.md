@@ -18,7 +18,7 @@ CLI tool: e4defrag.
 
 ## Installation
 ```bash
-apt-get install e4defrag 2>/dev/null || which e4defrag
+apt-get install e2fsprogs 2>/dev/null || which e4defrag
 ```
 
 ## Key Features

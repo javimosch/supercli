@@ -18,7 +18,7 @@ CLI tool: pasuspender.
 
 ## Installation
 ```bash
-apt-get install pasuspender 2>/dev/null || which pasuspender
+apt-get install pulseaudio-utils 2>/dev/null || which pasuspender
 ```
 
 ## Key Features

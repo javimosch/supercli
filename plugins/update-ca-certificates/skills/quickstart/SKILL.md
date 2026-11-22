@@ -18,7 +18,7 @@ CLI tool: update-ca-certificates.
 
 ## Installation
 ```bash
-apt-get install update-ca-certificates 2>/dev/null || which update-ca-certificates
+apt-get install ca-certificates 2>/dev/null || which update-ca-certificates
 ```
 
 ## Key Features

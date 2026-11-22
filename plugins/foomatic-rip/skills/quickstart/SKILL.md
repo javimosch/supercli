@@ -18,7 +18,7 @@ CLI tool: foomatic-rip.
 
 ## Installation
 ```bash
-apt-get install foomatic-rip 2>/dev/null || which foomatic-rip
+apt-get install cups-filters 2>/dev/null || which foomatic-rip
 ```
 
 ## Key Features

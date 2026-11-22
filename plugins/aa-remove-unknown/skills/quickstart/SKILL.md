@@ -18,7 +18,7 @@ CLI tool: aa-remove-unknown.
 
 ## Installation
 ```bash
-apt-get install aa-remove-unknown 2>/dev/null || which aa-remove-unknown
+apt-get install apparmor 2>/dev/null || which aa-remove-unknown
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: qcollectiongenerator.
 
 ## Installation
 ```bash
-apt-get install qcollectiongenerator 2>/dev/null || which qcollectiongenerator
+apt-get install qtchooser 2>/dev/null || which qcollectiongenerator
 ```
 
 ## Key Features

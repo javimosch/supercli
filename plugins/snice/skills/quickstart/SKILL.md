@@ -18,7 +18,7 @@ CLI tool: snice.
 
 ## Installation
 ```bash
-apt-get install snice 2>/dev/null || which snice
+apt-get install procps 2>/dev/null || which snice
 ```
 
 ## Key Features

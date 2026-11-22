@@ -18,7 +18,7 @@ CLI tool: pw-cli.
 
 ## Installation
 ```bash
-apt-get install pw-cli 2>/dev/null || which pw-cli
+apt-get install pipewire-bin 2>/dev/null || which pw-cli
 ```
 
 ## Key Features

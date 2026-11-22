@@ -18,7 +18,7 @@ CLI tool: pk2bm.
 
 ## Installation
 ```bash
-apt-get install pk2bm 2>/dev/null || which pk2bm
+apt-get install texlive-binaries 2>/dev/null || which pk2bm
 ```
 
 ## Key Features

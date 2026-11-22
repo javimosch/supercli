@@ -18,7 +18,7 @@ CLI tool: mitmdump.
 
 ## Installation
 ```bash
-apt-get install mitmdump 2>/dev/null || which mitmdump
+apt-get install mitmproxy 2>/dev/null || which mitmdump
 ```
 
 ## Key Features

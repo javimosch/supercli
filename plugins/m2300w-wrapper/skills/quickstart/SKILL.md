@@ -18,7 +18,7 @@ CLI tool: m2300w-wrapper.
 
 ## Installation
 ```bash
-apt-get install m2300w-wrapper 2>/dev/null || which m2300w-wrapper
+apt-get install printer-driver-m2300w 2>/dev/null || which m2300w-wrapper
 ```
 
 ## Key Features

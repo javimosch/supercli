@@ -18,7 +18,7 @@ CLI tool: pnmtopalm.
 
 ## Installation
 ```bash
-apt-get install pnmtopalm 2>/dev/null || which pnmtopalm
+apt-get install netpbm 2>/dev/null || which pnmtopalm
 ```
 
 ## Key Features

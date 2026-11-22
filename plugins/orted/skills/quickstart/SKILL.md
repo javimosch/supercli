@@ -18,7 +18,7 @@ CLI tool: orted.
 
 ## Installation
 ```bash
-apt-get install orted 2>/dev/null || which orted
+apt-get install openmpi-bin 2>/dev/null || which orted
 ```
 
 ## Key Features

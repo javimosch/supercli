@@ -18,7 +18,7 @@ CLI tool: xfdesktop-settings.
 
 ## Installation
 ```bash
-apt-get install xfdesktop-settings 2>/dev/null || which xfdesktop-settings
+apt-get install xfdesktop4 2>/dev/null || which xfdesktop-settings
 ```
 
 ## Key Features

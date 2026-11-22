@@ -18,7 +18,7 @@ CLI tool: xdg-user-dirs-update.
 
 ## Installation
 ```bash
-apt-get install xdg-user-dirs-update 2>/dev/null || which xdg-user-dirs-update
+apt-get install xdg-user-dirs 2>/dev/null || which xdg-user-dirs-update
 ```
 
 ## Key Features

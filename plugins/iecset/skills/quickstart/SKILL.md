@@ -18,7 +18,7 @@ CLI tool: iecset.
 
 ## Installation
 ```bash
-apt-get install iecset 2>/dev/null || which iecset
+apt-get install alsa-utils 2>/dev/null || which iecset
 ```
 
 ## Key Features

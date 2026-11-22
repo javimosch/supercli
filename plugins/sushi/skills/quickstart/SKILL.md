@@ -18,7 +18,7 @@ CLI tool: sushi.
 
 ## Installation
 ```bash
-apt-get install sushi 2>/dev/null || which sushi
+apt-get install gnome-sushi 2>/dev/null || which sushi
 ```
 
 ## Key Features

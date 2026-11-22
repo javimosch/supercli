@@ -18,7 +18,7 @@ CLI tool: mysqlreport.
 
 ## Installation
 ```bash
-apt-get install mysqlreport 2>/dev/null || which mysqlreport
+apt-get install mysql-client-8.0 2>/dev/null || which mysqlreport
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lspgpot.
 
 ## Installation
 ```bash
-apt-get install lspgpot 2>/dev/null || which lspgpot
+apt-get install gnupg-utils 2>/dev/null || which lspgpot
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: rst2man.
 
 ## Installation
 ```bash
-apt-get install rst2man 2>/dev/null || which rst2man
+apt-get install python3-docutils 2>/dev/null || which rst2man
 ```
 
 ## Key Features

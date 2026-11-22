@@ -18,7 +18,7 @@ CLI tool: identify-im6.
 
 ## Installation
 ```bash
-apt-get install identify-im6 2>/dev/null || which identify-im6
+apt-get install imagemagick-6.q16 2>/dev/null || which identify-im6
 ```
 
 ## Key Features

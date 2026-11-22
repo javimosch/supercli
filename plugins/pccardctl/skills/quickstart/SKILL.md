@@ -18,7 +18,7 @@ CLI tool: pccardctl.
 
 ## Installation
 ```bash
-apt-get install pccardctl 2>/dev/null || which pccardctl
+apt-get install pcmciautils 2>/dev/null || which pccardctl
 ```
 
 ## Key Features

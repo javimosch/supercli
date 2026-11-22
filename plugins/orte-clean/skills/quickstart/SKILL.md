@@ -18,7 +18,7 @@ CLI tool: orte-clean.
 
 ## Installation
 ```bash
-apt-get install orte-clean 2>/dev/null || which orte-clean
+apt-get install openmpi-bin 2>/dev/null || which orte-clean
 ```
 
 ## Key Features

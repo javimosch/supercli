@@ -18,7 +18,7 @@ CLI tool: l2ping.
 
 ## Installation
 ```bash
-apt-get install l2ping 2>/dev/null || which l2ping
+apt-get install bluez 2>/dev/null || which l2ping
 ```
 
 ## Key Features

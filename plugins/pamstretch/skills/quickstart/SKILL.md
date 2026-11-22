@@ -18,7 +18,7 @@ CLI tool: pamstretch.
 
 ## Installation
 ```bash
-apt-get install pamstretch 2>/dev/null || which pamstretch
+apt-get install netpbm 2>/dev/null || which pamstretch
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: twopi.
 
 ## Installation
 ```bash
-apt-get install twopi 2>/dev/null || which twopi
+apt-get install graphviz 2>/dev/null || which twopi
 ```
 
 ## Key Features

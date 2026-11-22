@@ -18,7 +18,7 @@ CLI tool: fixparts.
 
 ## Installation
 ```bash
-apt-get install fixparts 2>/dev/null || which fixparts
+apt-get install gdisk 2>/dev/null || which fixparts
 ```
 
 ## Key Features

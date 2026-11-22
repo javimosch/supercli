@@ -18,7 +18,7 @@ CLI tool: mysql_config_editor.
 
 ## Installation
 ```bash
-apt-get install mysql_config_editor 2>/dev/null || which mysql_config_editor
+apt-get install mysql-client-core-8.0 2>/dev/null || which mysql_config_editor
 ```
 
 ## Key Features

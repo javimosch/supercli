@@ -18,7 +18,7 @@ CLI tool: lvmdiskscan.
 
 ## Installation
 ```bash
-apt-get install lvmdiskscan 2>/dev/null || which lvmdiskscan
+apt-get install lvm2 2>/dev/null || which lvmdiskscan
 ```
 
 ## Key Features

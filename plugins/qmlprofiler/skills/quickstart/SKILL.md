@@ -18,7 +18,7 @@ CLI tool: qmlprofiler.
 
 ## Installation
 ```bash
-apt-get install qmlprofiler 2>/dev/null || which qmlprofiler
+apt-get install qtchooser 2>/dev/null || which qmlprofiler
 ```
 
 ## Key Features

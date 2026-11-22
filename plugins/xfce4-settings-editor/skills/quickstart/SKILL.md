@@ -18,7 +18,7 @@ CLI tool: xfce4-settings-editor.
 
 ## Installation
 ```bash
-apt-get install xfce4-settings-editor 2>/dev/null || which xfce4-settings-editor
+apt-get install xfce4-settings 2>/dev/null || which xfce4-settings-editor
 ```
 
 ## Key Features

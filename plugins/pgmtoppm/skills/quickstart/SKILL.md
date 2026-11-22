@@ -18,7 +18,7 @@ CLI tool: pgmtoppm.
 
 ## Installation
 ```bash
-apt-get install pgmtoppm 2>/dev/null || which pgmtoppm
+apt-get install netpbm 2>/dev/null || which pgmtoppm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-cpp-9.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-cpp-9 2>/dev/null || which x86_64-linux-gnu-cpp-9
+apt-get install cpp-9 2>/dev/null || which x86_64-linux-gnu-cpp-9
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: texluajit.
 
 ## Installation
 ```bash
-apt-get install texluajit 2>/dev/null || which texluajit
+apt-get install texlive-binaries-sse2 2>/dev/null || which texluajit
 ```
 
 ## Key Features

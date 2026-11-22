@@ -18,7 +18,7 @@ CLI tool: ppmtopi1.
 
 ## Installation
 ```bash
-apt-get install ppmtopi1 2>/dev/null || which ppmtopi1
+apt-get install netpbm 2>/dev/null || which ppmtopi1
 ```
 
 ## Key Features

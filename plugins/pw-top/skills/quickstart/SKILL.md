@@ -18,7 +18,7 @@ CLI tool: pw-top.
 
 ## Installation
 ```bash
-apt-get install pw-top 2>/dev/null || which pw-top
+apt-get install pipewire-bin 2>/dev/null || which pw-top
 ```
 
 ## Key Features

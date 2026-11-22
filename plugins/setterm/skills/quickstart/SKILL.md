@@ -18,7 +18,7 @@ CLI tool: setterm.
 
 ## Installation
 ```bash
-apt-get install setterm 2>/dev/null || which setterm
+apt-get install util-linux 2>/dev/null || which setterm
 ```
 
 ## Key Features

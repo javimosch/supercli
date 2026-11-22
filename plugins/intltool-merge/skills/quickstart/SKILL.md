@@ -18,7 +18,7 @@ CLI tool: intltool-merge.
 
 ## Installation
 ```bash
-apt-get install intltool-merge 2>/dev/null || which intltool-merge
+apt-get install intltool 2>/dev/null || which intltool-merge
 ```
 
 ## Key Features

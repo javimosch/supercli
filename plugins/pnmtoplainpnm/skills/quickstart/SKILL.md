@@ -18,7 +18,7 @@ CLI tool: pnmtoplainpnm.
 
 ## Installation
 ```bash
-apt-get install pnmtoplainpnm 2>/dev/null || which pnmtoplainpnm
+apt-get install netpbm 2>/dev/null || which pnmtoplainpnm
 ```
 
 ## Key Features

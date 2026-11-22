@@ -18,7 +18,7 @@ CLI tool: macptopbm.
 
 ## Installation
 ```bash
-apt-get install macptopbm 2>/dev/null || which macptopbm
+apt-get install netpbm 2>/dev/null || which macptopbm
 ```
 
 ## Key Features

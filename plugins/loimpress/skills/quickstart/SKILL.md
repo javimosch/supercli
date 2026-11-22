@@ -18,7 +18,7 @@ CLI tool: loimpress.
 
 ## Installation
 ```bash
-apt-get install loimpress 2>/dev/null || which loimpress
+apt-get install libreoffice-impress 2>/dev/null || which loimpress
 ```
 
 ## Key Features

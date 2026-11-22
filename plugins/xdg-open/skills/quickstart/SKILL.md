@@ -18,7 +18,7 @@ CLI tool: xdg-open.
 
 ## Installation
 ```bash
-apt-get install xdg-open 2>/dev/null || which xdg-open
+apt-get install xdg-utils 2>/dev/null || which xdg-open
 ```
 
 ## Key Features

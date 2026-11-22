@@ -18,7 +18,7 @@ CLI tool: lwp-mirror.
 
 ## Installation
 ```bash
-apt-get install lwp-mirror 2>/dev/null || which lwp-mirror
+apt-get install libwww-perl 2>/dev/null || which lwp-mirror
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ipptool.
 
 ## Installation
 ```bash
-apt-get install ipptool 2>/dev/null || which ipptool
+apt-get install cups-ipp-utils 2>/dev/null || which ipptool
 ```
 
 ## Key Features

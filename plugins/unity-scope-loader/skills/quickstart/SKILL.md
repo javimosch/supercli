@@ -18,7 +18,7 @@ CLI tool: unity-scope-loader.
 
 ## Installation
 ```bash
-apt-get install unity-scope-loader 2>/dev/null || which unity-scope-loader
+apt-get install libunity9 2>/dev/null || which unity-scope-loader
 ```
 
 ## Key Features

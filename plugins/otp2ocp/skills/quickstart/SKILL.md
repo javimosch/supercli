@@ -18,7 +18,7 @@ CLI tool: otp2ocp.
 
 ## Installation
 ```bash
-apt-get install otp2ocp 2>/dev/null || which otp2ocp
+apt-get install texlive-binaries 2>/dev/null || which otp2ocp
 ```
 
 ## Key Features

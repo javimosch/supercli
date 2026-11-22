@@ -18,7 +18,7 @@ CLI tool: env_parallel.csh.
 
 ## Installation
 ```bash
-apt-get install env_parallel.csh 2>/dev/null || which env_parallel.csh
+apt-get install parallel 2>/dev/null || which env_parallel.csh
 ```
 
 ## Key Features

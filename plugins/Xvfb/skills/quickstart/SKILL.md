@@ -18,7 +18,7 @@ CLI tool: Xvfb.
 
 ## Installation
 ```bash
-apt-get install Xvfb 2>/dev/null || which Xvfb
+apt-get install xvfb 2>/dev/null || which Xvfb
 ```
 
 ## Key Features

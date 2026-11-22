@@ -18,7 +18,7 @@ CLI tool: hp-info.
 
 ## Installation
 ```bash
-apt-get install hp-info 2>/dev/null || which hp-info
+apt-get install hplip 2>/dev/null || which hp-info
 ```
 
 ## Key Features

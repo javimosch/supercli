@@ -18,7 +18,7 @@ CLI tool: lxc-copy.
 
 ## Installation
 ```bash
-apt-get install lxc-copy 2>/dev/null || which lxc-copy
+apt-get install lxc-utils 2>/dev/null || which lxc-copy
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pactl.
 
 ## Installation
 ```bash
-apt-get install pactl 2>/dev/null || which pactl
+apt-get install pulseaudio-utils 2>/dev/null || which pactl
 ```
 
 ## Key Features

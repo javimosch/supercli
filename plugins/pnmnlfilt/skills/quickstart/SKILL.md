@@ -18,7 +18,7 @@ CLI tool: pnmnlfilt.
 
 ## Installation
 ```bash
-apt-get install pnmnlfilt 2>/dev/null || which pnmnlfilt
+apt-get install netpbm 2>/dev/null || which pnmnlfilt
 ```
 
 ## Key Features

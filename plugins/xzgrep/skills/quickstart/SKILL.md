@@ -18,7 +18,7 @@ CLI tool: xzgrep.
 
 ## Installation
 ```bash
-apt-get install xzgrep 2>/dev/null || which xzgrep
+apt-get install xz-utils 2>/dev/null || which xzgrep
 ```
 
 ## Key Features

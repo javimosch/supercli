@@ -18,7 +18,7 @@ CLI tool: bison.yacc.
 
 ## Installation
 ```bash
-apt-get install bison.yacc 2>/dev/null || which bison.yacc
+apt-get install bison 2>/dev/null || which bison.yacc
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ompi-clean.
 
 ## Installation
 ```bash
-apt-get install ompi-clean 2>/dev/null || which ompi-clean
+apt-get install openmpi-bin 2>/dev/null || which ompi-clean
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: euptex.
 
 ## Installation
 ```bash
-apt-get install euptex 2>/dev/null || which euptex
+apt-get install texlive-binaries 2>/dev/null || which euptex
 ```
 
 ## Key Features

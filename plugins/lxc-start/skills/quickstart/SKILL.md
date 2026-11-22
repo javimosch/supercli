@@ -18,7 +18,7 @@ CLI tool: lxc-start.
 
 ## Installation
 ```bash
-apt-get install lxc-start 2>/dev/null || which lxc-start
+apt-get install lxc-utils 2>/dev/null || which lxc-start
 ```
 
 ## Key Features

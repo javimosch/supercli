@@ -18,7 +18,7 @@ CLI tool: isympy.
 
 ## Installation
 ```bash
-apt-get install isympy 2>/dev/null || which isympy
+apt-get install isympy-common 2>/dev/null || which isympy
 ```
 
 ## Key Features

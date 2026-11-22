@@ -18,7 +18,7 @@ CLI tool: imagetops.
 
 ## Installation
 ```bash
-apt-get install imagetops 2>/dev/null || which imagetops
+apt-get install netpbm 2>/dev/null || which imagetops
 ```
 
 ## Key Features

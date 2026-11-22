@@ -18,7 +18,7 @@ CLI tool: pbmtoplot.
 
 ## Installation
 ```bash
-apt-get install pbmtoplot 2>/dev/null || which pbmtoplot
+apt-get install netpbm 2>/dev/null || which pbmtoplot
 ```
 
 ## Key Features

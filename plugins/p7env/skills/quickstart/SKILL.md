@@ -18,7 +18,7 @@ CLI tool: p7env.
 
 ## Installation
 ```bash
-apt-get install p7env 2>/dev/null || which p7env
+apt-get install libnss3-tools 2>/dev/null || which p7env
 ```
 
 ## Key Features

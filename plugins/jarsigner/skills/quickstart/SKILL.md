@@ -18,7 +18,7 @@ CLI tool: jarsigner.
 
 ## Installation
 ```bash
-apt-get install jarsigner 2>/dev/null || which jarsigner
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jarsigner
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ppmtoneo.
 
 ## Installation
 ```bash
-apt-get install ppmtoneo 2>/dev/null || which ppmtoneo
+apt-get install netpbm 2>/dev/null || which ppmtoneo
 ```
 
 ## Key Features

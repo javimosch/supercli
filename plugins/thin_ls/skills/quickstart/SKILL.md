@@ -18,7 +18,7 @@ CLI tool: thin_ls.
 
 ## Installation
 ```bash
-apt-get install thin_ls 2>/dev/null || which thin_ls
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_ls
 ```
 
 ## Key Features

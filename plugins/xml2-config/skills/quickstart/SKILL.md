@@ -18,7 +18,7 @@ CLI tool: xml2-config.
 
 ## Installation
 ```bash
-apt-get install xml2-config 2>/dev/null || which xml2-config
+apt-get install libxml2-dev 2>/dev/null || which xml2-config
 ```
 
 ## Key Features

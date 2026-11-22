@@ -18,7 +18,7 @@ CLI tool: update-passwd.
 
 ## Installation
 ```bash
-apt-get install update-passwd 2>/dev/null || which update-passwd
+apt-get install base-passwd 2>/dev/null || which update-passwd
 ```
 
 ## Key Features

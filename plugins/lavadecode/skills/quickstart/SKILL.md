@@ -18,7 +18,7 @@ CLI tool: lavadecode.
 
 ## Installation
 ```bash
-apt-get install lavadecode 2>/dev/null || which lavadecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which lavadecode
 ```
 
 ## Key Features

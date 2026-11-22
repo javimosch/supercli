@@ -18,7 +18,7 @@ CLI tool: pvscan.
 
 ## Installation
 ```bash
-apt-get install pvscan 2>/dev/null || which pvscan
+apt-get install lvm2 2>/dev/null || which pvscan
 ```
 
 ## Key Features

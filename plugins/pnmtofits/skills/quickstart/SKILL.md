@@ -18,7 +18,7 @@ CLI tool: pnmtofits.
 
 ## Installation
 ```bash
-apt-get install pnmtofits 2>/dev/null || which pnmtofits
+apt-get install netpbm 2>/dev/null || which pnmtofits
 ```
 
 ## Key Features

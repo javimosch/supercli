@@ -18,7 +18,7 @@ CLI tool: wdctl.
 
 ## Installation
 ```bash
-apt-get install wdctl 2>/dev/null || which wdctl
+apt-get install util-linux 2>/dev/null || which wdctl
 ```
 
 ## Key Features

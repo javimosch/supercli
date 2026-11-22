@@ -18,7 +18,7 @@ CLI tool: uclampset.
 
 ## Installation
 ```bash
-apt-get install uclampset 2>/dev/null || which uclampset
+apt-get install util-linux 2>/dev/null || which uclampset
 ```
 
 ## Key Features

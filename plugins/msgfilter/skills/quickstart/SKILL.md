@@ -18,7 +18,7 @@ CLI tool: msgfilter.
 
 ## Installation
 ```bash
-apt-get install msgfilter 2>/dev/null || which msgfilter
+apt-get install gettext 2>/dev/null || which msgfilter
 ```
 
 ## Key Features

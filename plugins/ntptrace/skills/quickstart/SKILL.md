@@ -18,7 +18,7 @@ CLI tool: ntptrace.
 
 ## Installation
 ```bash
-apt-get install ntptrace 2>/dev/null || which ntptrace
+apt-get install ntpsec 2>/dev/null || which ntptrace
 ```
 
 ## Key Features

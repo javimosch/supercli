@@ -18,7 +18,7 @@ CLI tool: mii-tool.
 
 ## Installation
 ```bash
-apt-get install mii-tool 2>/dev/null || which mii-tool
+apt-get install net-tools 2>/dev/null || which mii-tool
 ```
 
 ## Key Features

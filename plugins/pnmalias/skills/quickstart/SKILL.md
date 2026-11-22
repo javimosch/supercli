@@ -18,7 +18,7 @@ CLI tool: pnmalias.
 
 ## Installation
 ```bash
-apt-get install pnmalias 2>/dev/null || which pnmalias
+apt-get install netpbm 2>/dev/null || which pnmalias
 ```
 
 ## Key Features

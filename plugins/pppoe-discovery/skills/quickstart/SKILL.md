@@ -18,7 +18,7 @@ CLI tool: pppoe-discovery.
 
 ## Installation
 ```bash
-apt-get install pppoe-discovery 2>/dev/null || which pppoe-discovery
+apt-get install ppp 2>/dev/null || which pppoe-discovery
 ```
 
 ## Key Features

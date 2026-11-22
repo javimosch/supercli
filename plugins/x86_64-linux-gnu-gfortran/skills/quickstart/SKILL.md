@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gfortran.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gfortran 2>/dev/null || which x86_64-linux-gnu-gfortran
+apt-get install gfortran 2>/dev/null || which x86_64-linux-gnu-gfortran
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mpiexec.
 
 ## Installation
 ```bash
-apt-get install mpiexec 2>/dev/null || which mpiexec
+apt-get install mpich 2>/dev/null || which mpiexec
 ```
 
 ## Key Features

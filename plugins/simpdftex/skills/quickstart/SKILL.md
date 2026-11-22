@@ -18,7 +18,7 @@ CLI tool: simpdftex.
 
 ## Installation
 ```bash
-apt-get install simpdftex 2>/dev/null || which simpdftex
+apt-get install texlive-base 2>/dev/null || which simpdftex
 ```
 
 ## Key Features

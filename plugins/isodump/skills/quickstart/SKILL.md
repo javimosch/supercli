@@ -18,7 +18,7 @@ CLI tool: isodump.
 
 ## Installation
 ```bash
-apt-get install isodump 2>/dev/null || which isodump
+apt-get install genisoimage 2>/dev/null || which isodump
 ```
 
 ## Key Features

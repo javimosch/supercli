@@ -18,7 +18,7 @@ CLI tool: sbverify.
 
 ## Installation
 ```bash
-apt-get install sbverify 2>/dev/null || which sbverify
+apt-get install sbsigntool 2>/dev/null || which sbverify
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-desktop-database.
 
 ## Installation
 ```bash
-apt-get install update-desktop-database 2>/dev/null || which update-desktop-database
+apt-get install desktop-file-utils 2>/dev/null || which update-desktop-database
 ```
 
 ## Key Features

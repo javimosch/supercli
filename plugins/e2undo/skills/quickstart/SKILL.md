@@ -18,7 +18,7 @@ CLI tool: e2undo.
 
 ## Installation
 ```bash
-apt-get install e2undo 2>/dev/null || which e2undo
+apt-get install e2fsprogs 2>/dev/null || which e2undo
 ```
 
 ## Key Features

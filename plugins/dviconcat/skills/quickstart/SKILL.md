@@ -18,7 +18,7 @@ CLI tool: dviconcat.
 
 ## Installation
 ```bash
-apt-get install dviconcat 2>/dev/null || which dviconcat
+apt-get install texlive-binaries 2>/dev/null || which dviconcat
 ```
 
 ## Key Features

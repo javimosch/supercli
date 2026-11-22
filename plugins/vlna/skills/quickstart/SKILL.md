@@ -18,7 +18,7 @@ CLI tool: vlna.
 
 ## Installation
 ```bash
-apt-get install vlna 2>/dev/null || which vlna
+apt-get install texlive-binaries 2>/dev/null || which vlna
 ```
 
 ## Key Features

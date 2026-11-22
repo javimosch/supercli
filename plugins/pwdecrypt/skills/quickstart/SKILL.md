@@ -18,7 +18,7 @@ CLI tool: pwdecrypt.
 
 ## Installation
 ```bash
-apt-get install pwdecrypt 2>/dev/null || which pwdecrypt
+apt-get install libnss3-tools 2>/dev/null || which pwdecrypt
 ```
 
 ## Key Features

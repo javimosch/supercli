@@ -18,7 +18,7 @@ CLI tool: mako-render.
 
 ## Installation
 ```bash
-apt-get install mako-render 2>/dev/null || which mako-render
+apt-get install python3-mako 2>/dev/null || which mako-render
 ```
 
 ## Key Features

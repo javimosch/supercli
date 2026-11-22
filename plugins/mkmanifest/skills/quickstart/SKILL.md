@@ -18,7 +18,7 @@ CLI tool: mkmanifest.
 
 ## Installation
 ```bash
-apt-get install mkmanifest 2>/dev/null || which mkmanifest
+apt-get install mtools 2>/dev/null || which mkmanifest
 ```
 
 ## Key Features

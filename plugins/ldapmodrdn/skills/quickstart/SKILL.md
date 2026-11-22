@@ -18,7 +18,7 @@ CLI tool: ldapmodrdn.
 
 ## Installation
 ```bash
-apt-get install ldapmodrdn 2>/dev/null || which ldapmodrdn
+apt-get install ldap-utils 2>/dev/null || which ldapmodrdn
 ```
 
 ## Key Features

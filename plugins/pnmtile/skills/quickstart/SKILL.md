@@ -18,7 +18,7 @@ CLI tool: pnmtile.
 
 ## Installation
 ```bash
-apt-get install pnmtile 2>/dev/null || which pnmtile
+apt-get install netpbm 2>/dev/null || which pnmtile
 ```
 
 ## Key Features

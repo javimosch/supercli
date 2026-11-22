@@ -18,7 +18,7 @@ CLI tool: rst2xml.
 
 ## Installation
 ```bash
-apt-get install rst2xml 2>/dev/null || which rst2xml
+apt-get install python3-docutils 2>/dev/null || which rst2xml
 ```
 
 ## Key Features

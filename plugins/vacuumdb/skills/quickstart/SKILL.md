@@ -18,7 +18,7 @@ CLI tool: vacuumdb.
 
 ## Installation
 ```bash
-apt-get install vacuumdb 2>/dev/null || which vacuumdb
+apt-get install postgresql-client-common 2>/dev/null || which vacuumdb
 ```
 
 ## Key Features

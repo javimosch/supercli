@@ -18,7 +18,7 @@ CLI tool: systemd-id128.
 
 ## Installation
 ```bash
-apt-get install systemd-id128 2>/dev/null || which systemd-id128
+apt-get install systemd 2>/dev/null || which systemd-id128
 ```
 
 ## Key Features

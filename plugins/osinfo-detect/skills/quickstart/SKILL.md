@@ -18,7 +18,7 @@ CLI tool: osinfo-detect.
 
 ## Installation
 ```bash
-apt-get install osinfo-detect 2>/dev/null || which osinfo-detect
+apt-get install libosinfo-bin 2>/dev/null || which osinfo-detect
 ```
 
 ## Key Features

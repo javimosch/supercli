@@ -18,7 +18,7 @@ CLI tool: update-grub-gfxpayload.
 
 ## Installation
 ```bash
-apt-get install update-grub-gfxpayload 2>/dev/null || which update-grub-gfxpayload
+apt-get install grub-gfxpayload-lists 2>/dev/null || which update-grub-gfxpayload
 ```
 
 ## Key Features

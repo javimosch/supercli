@@ -18,7 +18,7 @@ CLI tool: pvremove.
 
 ## Installation
 ```bash
-apt-get install pvremove 2>/dev/null || which pvremove
+apt-get install lvm2 2>/dev/null || which pvremove
 ```
 
 ## Key Features

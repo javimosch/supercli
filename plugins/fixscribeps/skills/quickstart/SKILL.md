@@ -18,7 +18,7 @@ CLI tool: fixscribeps.
 
 ## Installation
 ```bash
-apt-get install fixscribeps 2>/dev/null || which fixscribeps
+apt-get install psutils 2>/dev/null || which fixscribeps
 ```
 
 ## Key Features

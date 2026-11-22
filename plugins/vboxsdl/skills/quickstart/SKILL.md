@@ -18,7 +18,7 @@ CLI tool: vboxsdl.
 
 ## Installation
 ```bash
-apt-get install vboxsdl 2>/dev/null || which vboxsdl
+apt-get install virtualbox 2>/dev/null || which vboxsdl
 ```
 
 ## Key Features

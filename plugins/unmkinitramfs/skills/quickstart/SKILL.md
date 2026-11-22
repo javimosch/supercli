@@ -18,7 +18,7 @@ CLI tool: unmkinitramfs.
 
 ## Installation
 ```bash
-apt-get install unmkinitramfs 2>/dev/null || which unmkinitramfs
+apt-get install initramfs-tools-core 2>/dev/null || which unmkinitramfs
 ```
 
 ## Key Features

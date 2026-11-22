@@ -18,7 +18,7 @@ CLI tool: iptunnel.
 
 ## Installation
 ```bash
-apt-get install iptunnel 2>/dev/null || which iptunnel
+apt-get install net-tools 2>/dev/null || which iptunnel
 ```
 
 ## Key Features

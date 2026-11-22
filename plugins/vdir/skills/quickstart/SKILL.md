@@ -18,7 +18,7 @@ CLI tool: vdir.
 
 ## Installation
 ```bash
-apt-get install vdir 2>/dev/null || which vdir
+apt-get install coreutils 2>/dev/null || which vdir
 ```
 
 ## Key Features

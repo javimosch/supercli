@@ -18,7 +18,7 @@ CLI tool: wkhtmltoimage.
 
 ## Installation
 ```bash
-apt-get install wkhtmltoimage 2>/dev/null || which wkhtmltoimage
+apt-get install wkhtmltopdf 2>/dev/null || which wkhtmltoimage
 ```
 
 ## Key Features

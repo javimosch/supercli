@@ -18,7 +18,7 @@ CLI tool: pvmove.
 
 ## Installation
 ```bash
-apt-get install pvmove 2>/dev/null || which pvmove
+apt-get install lvm2 2>/dev/null || which pvmove
 ```
 
 ## Key Features

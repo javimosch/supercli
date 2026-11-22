@@ -18,7 +18,7 @@ CLI tool: qemu-nbd.
 
 ## Installation
 ```bash
-apt-get install qemu-nbd 2>/dev/null || which qemu-nbd
+apt-get install qemu-utils 2>/dev/null || which qemu-nbd
 ```
 
 ## Key Features

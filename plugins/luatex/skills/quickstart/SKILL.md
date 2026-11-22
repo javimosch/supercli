@@ -18,7 +18,7 @@ CLI tool: luatex.
 
 ## Installation
 ```bash
-apt-get install luatex 2>/dev/null || which luatex
+apt-get install texlive-binaries 2>/dev/null || which luatex
 ```
 
 ## Key Features

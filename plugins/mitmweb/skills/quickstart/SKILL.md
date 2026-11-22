@@ -18,7 +18,7 @@ CLI tool: mitmweb.
 
 ## Installation
 ```bash
-apt-get install mitmweb 2>/dev/null || which mitmweb
+apt-get install mitmproxy 2>/dev/null || which mitmweb
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: yuvtoppm.
 
 ## Installation
 ```bash
-apt-get install yuvtoppm 2>/dev/null || which yuvtoppm
+apt-get install netpbm 2>/dev/null || which yuvtoppm
 ```
 
 ## Key Features

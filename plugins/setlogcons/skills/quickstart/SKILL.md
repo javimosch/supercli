@@ -18,7 +18,7 @@ CLI tool: setlogcons.
 
 ## Installation
 ```bash
-apt-get install setlogcons 2>/dev/null || which setlogcons
+apt-get install kbd 2>/dev/null || which setlogcons
 ```
 
 ## Key Features

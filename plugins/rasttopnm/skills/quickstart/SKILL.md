@@ -18,7 +18,7 @@ CLI tool: rasttopnm.
 
 ## Installation
 ```bash
-apt-get install rasttopnm 2>/dev/null || which rasttopnm
+apt-get install netpbm 2>/dev/null || which rasttopnm
 ```
 
 ## Key Features

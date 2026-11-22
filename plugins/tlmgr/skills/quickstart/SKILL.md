@@ -18,7 +18,7 @@ CLI tool: tlmgr.
 
 ## Installation
 ```bash
-apt-get install tlmgr 2>/dev/null || which tlmgr
+apt-get install texlive-base 2>/dev/null || which tlmgr
 ```
 
 ## Key Features

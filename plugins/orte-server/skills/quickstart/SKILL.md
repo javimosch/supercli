@@ -18,7 +18,7 @@ CLI tool: orte-server.
 
 ## Installation
 ```bash
-apt-get install orte-server 2>/dev/null || which orte-server
+apt-get install openmpi-bin 2>/dev/null || which orte-server
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: setmetamode.
 
 ## Installation
 ```bash
-apt-get install setmetamode 2>/dev/null || which setmetamode
+apt-get install kbd 2>/dev/null || which setmetamode
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-java-alternatives.
 
 ## Installation
 ```bash
-apt-get install update-java-alternatives 2>/dev/null || which update-java-alternatives
+apt-get install java-common 2>/dev/null || which update-java-alternatives
 ```
 
 ## Key Features

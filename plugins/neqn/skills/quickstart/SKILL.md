@@ -18,7 +18,7 @@ CLI tool: neqn.
 
 ## Installation
 ```bash
-apt-get install neqn 2>/dev/null || which neqn
+apt-get install groff-base 2>/dev/null || which neqn
 ```
 
 ## Key Features

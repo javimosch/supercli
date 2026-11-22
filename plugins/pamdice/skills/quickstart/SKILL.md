@@ -18,7 +18,7 @@ CLI tool: pamdice.
 
 ## Installation
 ```bash
-apt-get install pamdice 2>/dev/null || which pamdice
+apt-get install netpbm 2>/dev/null || which pamdice
 ```
 
 ## Key Features

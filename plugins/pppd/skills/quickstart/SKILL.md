@@ -18,7 +18,7 @@ CLI tool: pppd.
 
 ## Installation
 ```bash
-apt-get install pppd 2>/dev/null || which pppd
+apt-get install ppp 2>/dev/null || which pppd
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pg_receivewal.
 
 ## Installation
 ```bash
-apt-get install pg_receivewal 2>/dev/null || which pg_receivewal
+apt-get install postgresql-client-common 2>/dev/null || which pg_receivewal
 ```
 
 ## Key Features

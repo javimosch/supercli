@@ -18,7 +18,7 @@ CLI tool: pnmenlarge.
 
 ## Installation
 ```bash
-apt-get install pnmenlarge 2>/dev/null || which pnmenlarge
+apt-get install netpbm 2>/dev/null || which pnmenlarge
 ```
 
 ## Key Features

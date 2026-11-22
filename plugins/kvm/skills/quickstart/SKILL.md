@@ -18,7 +18,7 @@ CLI tool: kvm.
 
 ## Installation
 ```bash
-apt-get install kvm 2>/dev/null || which kvm
+apt-get install qemu-system-x86 2>/dev/null || which kvm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: py3rsa-verify.
 
 ## Installation
 ```bash
-apt-get install py3rsa-verify 2>/dev/null || which py3rsa-verify
+apt-get install python3-rsa 2>/dev/null || which py3rsa-verify
 ```
 
 ## Key Features

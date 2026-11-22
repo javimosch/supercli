@@ -18,7 +18,7 @@ CLI tool: pmxab.
 
 ## Installation
 ```bash
-apt-get install pmxab 2>/dev/null || which pmxab
+apt-get install texlive-binaries 2>/dev/null || which pmxab
 ```
 
 ## Key Features

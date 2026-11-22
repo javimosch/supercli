@@ -18,7 +18,7 @@ CLI tool: xslt-config.
 
 ## Installation
 ```bash
-apt-get install xslt-config 2>/dev/null || which xslt-config
+apt-get install libxslt1-dev 2>/dev/null || which xslt-config
 ```
 
 ## Key Features

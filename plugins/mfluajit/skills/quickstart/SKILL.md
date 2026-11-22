@@ -18,7 +18,7 @@ CLI tool: mfluajit.
 
 ## Installation
 ```bash
-apt-get install mfluajit 2>/dev/null || which mfluajit
+apt-get install texlive-binaries-sse2 2>/dev/null || which mfluajit
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: tload.
 
 ## Installation
 ```bash
-apt-get install tload 2>/dev/null || which tload
+apt-get install procps 2>/dev/null || which tload
 ```
 
 ## Key Features

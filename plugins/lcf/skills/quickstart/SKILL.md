@@ -18,7 +18,7 @@ CLI tool: lcf.
 
 ## Installation
 ```bash
-apt-get install lcf 2>/dev/null || which lcf
+apt-get install ucf 2>/dev/null || which lcf
 ```
 
 ## Key Features

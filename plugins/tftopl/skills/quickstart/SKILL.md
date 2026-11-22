@@ -18,7 +18,7 @@ CLI tool: tftopl.
 
 ## Installation
 ```bash
-apt-get install tftopl 2>/dev/null || which tftopl
+apt-get install texlive-binaries 2>/dev/null || which tftopl
 ```
 
 ## Key Features

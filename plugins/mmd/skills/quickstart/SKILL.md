@@ -18,7 +18,7 @@ CLI tool: mmd.
 
 ## Installation
 ```bash
-apt-get install mmd 2>/dev/null || which mmd
+apt-get install mtools 2>/dev/null || which mmd
 ```
 
 ## Key Features

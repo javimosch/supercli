@@ -18,7 +18,7 @@ CLI tool: a2dismod.
 
 ## Installation
 ```bash
-apt-get install a2dismod 2>/dev/null || which a2dismod
+apt-get install apache2 2>/dev/null || which a2dismod
 ```
 
 ## Key Features

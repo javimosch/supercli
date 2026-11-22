@@ -18,7 +18,7 @@ CLI tool: pnmhistmap.
 
 ## Installation
 ```bash
-apt-get install pnmhistmap 2>/dev/null || which pnmhistmap
+apt-get install netpbm 2>/dev/null || which pnmhistmap
 ```
 
 ## Key Features

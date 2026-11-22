@@ -18,7 +18,7 @@ CLI tool: pnmquant.
 
 ## Installation
 ```bash
-apt-get install pnmquant 2>/dev/null || which pnmquant
+apt-get install netpbm 2>/dev/null || which pnmquant
 ```
 
 ## Key Features

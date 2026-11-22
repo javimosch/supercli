@@ -18,7 +18,7 @@ CLI tool: saned.
 
 ## Installation
 ```bash
-apt-get install saned 2>/dev/null || which saned
+apt-get install sane-utils 2>/dev/null || which saned
 ```
 
 ## Key Features

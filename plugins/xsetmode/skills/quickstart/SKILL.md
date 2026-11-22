@@ -18,7 +18,7 @@ CLI tool: xsetmode.
 
 ## Installation
 ```bash
-apt-get install xsetmode 2>/dev/null || which xsetmode
+apt-get install x11-xserver-utils 2>/dev/null || which xsetmode
 ```
 
 ## Key Features

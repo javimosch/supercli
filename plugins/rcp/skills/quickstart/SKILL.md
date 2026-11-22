@@ -18,7 +18,7 @@ CLI tool: rcp.
 
 ## Installation
 ```bash
-apt-get install rcp 2>/dev/null || which rcp
+apt-get install rsh-client 2>/dev/null || which rcp
 ```
 
 ## Key Features

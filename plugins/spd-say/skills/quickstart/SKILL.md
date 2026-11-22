@@ -18,7 +18,7 @@ CLI tool: spd-say.
 
 ## Installation
 ```bash
-apt-get install spd-say 2>/dev/null || which spd-say
+apt-get install speech-dispatcher 2>/dev/null || which spd-say
 ```
 
 ## Key Features

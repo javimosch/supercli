@@ -18,7 +18,7 @@ CLI tool: nautilus-autorun-software.
 
 ## Installation
 ```bash
-apt-get install nautilus-autorun-software 2>/dev/null || which nautilus-autorun-software
+apt-get install nautilus 2>/dev/null || which nautilus-autorun-software
 ```
 
 ## Key Features

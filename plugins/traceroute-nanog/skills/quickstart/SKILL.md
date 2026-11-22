@@ -18,7 +18,7 @@ CLI tool: traceroute-nanog.
 
 ## Installation
 ```bash
-apt-get install traceroute-nanog 2>/dev/null || which traceroute-nanog
+apt-get install traceroute 2>/dev/null || which traceroute-nanog
 ```
 
 ## Key Features

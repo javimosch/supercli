@@ -18,7 +18,7 @@ CLI tool: signtool.
 
 ## Installation
 ```bash
-apt-get install signtool 2>/dev/null || which signtool
+apt-get install libnss3-tools 2>/dev/null || which signtool
 ```
 
 ## Key Features

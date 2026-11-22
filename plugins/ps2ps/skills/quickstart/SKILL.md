@@ -18,7 +18,7 @@ CLI tool: ps2ps.
 
 ## Installation
 ```bash
-apt-get install ps2ps 2>/dev/null || which ps2ps
+apt-get install ghostscript 2>/dev/null || which ps2ps
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mount.sshfs.
 
 ## Installation
 ```bash
-apt-get install mount.sshfs 2>/dev/null || which mount.sshfs
+apt-get install sshfs 2>/dev/null || which mount.sshfs
 ```
 
 ## Key Features

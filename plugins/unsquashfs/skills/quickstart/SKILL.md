@@ -18,7 +18,7 @@ CLI tool: unsquashfs.
 
 ## Installation
 ```bash
-apt-get install unsquashfs 2>/dev/null || which unsquashfs
+apt-get install squashfs-tools 2>/dev/null || which unsquashfs
 ```
 
 ## Key Features

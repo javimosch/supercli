@@ -18,7 +18,7 @@ CLI tool: pppstats.
 
 ## Installation
 ```bash
-apt-get install pppstats 2>/dev/null || which pppstats
+apt-get install ppp 2>/dev/null || which pppstats
 ```
 
 ## Key Features

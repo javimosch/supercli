@@ -18,7 +18,7 @@ CLI tool: pnmtorast.
 
 ## Installation
 ```bash
-apt-get install pnmtorast 2>/dev/null || which pnmtorast
+apt-get install netpbm 2>/dev/null || which pnmtorast
 ```
 
 ## Key Features

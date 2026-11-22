@@ -18,7 +18,7 @@ CLI tool: rarp.
 
 ## Installation
 ```bash
-apt-get install rarp 2>/dev/null || which rarp
+apt-get install net-tools 2>/dev/null || which rarp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: switch_root.
 
 ## Installation
 ```bash
-apt-get install switch_root 2>/dev/null || which switch_root
+apt-get install util-linux 2>/dev/null || which switch_root
 ```
 
 ## Key Features

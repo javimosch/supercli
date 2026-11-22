@@ -18,7 +18,7 @@ CLI tool: pppdump.
 
 ## Installation
 ```bash
-apt-get install pppdump 2>/dev/null || which pppdump
+apt-get install ppp 2>/dev/null || which pppdump
 ```
 
 ## Key Features

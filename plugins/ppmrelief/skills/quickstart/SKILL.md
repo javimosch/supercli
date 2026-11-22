@@ -18,7 +18,7 @@ CLI tool: ppmrelief.
 
 ## Installation
 ```bash
-apt-get install ppmrelief 2>/dev/null || which ppmrelief
+apt-get install netpbm 2>/dev/null || which ppmrelief
 ```
 
 ## Key Features

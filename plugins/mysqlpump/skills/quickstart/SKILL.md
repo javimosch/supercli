@@ -18,7 +18,7 @@ CLI tool: mysqlpump.
 
 ## Installation
 ```bash
-apt-get install mysqlpump 2>/dev/null || which mysqlpump
+apt-get install mysql-client-core-8.0 2>/dev/null || which mysqlpump
 ```
 
 ## Key Features

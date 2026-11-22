@@ -18,7 +18,7 @@ CLI tool: fixfmps.
 
 ## Installation
 ```bash
-apt-get install fixfmps 2>/dev/null || which fixfmps
+apt-get install psutils 2>/dev/null || which fixfmps
 ```
 
 ## Key Features

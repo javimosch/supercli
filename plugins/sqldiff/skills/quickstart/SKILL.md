@@ -18,7 +18,7 @@ CLI tool: sqldiff.
 
 ## Installation
 ```bash
-apt-get install sqldiff 2>/dev/null || which sqldiff
+apt-get install sqlite3-tools 2>/dev/null || which sqldiff
 ```
 
 ## Key Features

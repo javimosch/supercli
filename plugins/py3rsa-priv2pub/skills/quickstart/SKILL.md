@@ -18,7 +18,7 @@ CLI tool: py3rsa-priv2pub.
 
 ## Installation
 ```bash
-apt-get install py3rsa-priv2pub 2>/dev/null || which py3rsa-priv2pub
+apt-get install python3-rsa 2>/dev/null || which py3rsa-priv2pub
 ```
 
 ## Key Features

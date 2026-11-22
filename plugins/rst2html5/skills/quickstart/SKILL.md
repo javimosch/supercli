@@ -18,7 +18,7 @@ CLI tool: rst2html5.
 
 ## Installation
 ```bash
-apt-get install rst2html5 2>/dev/null || which rst2html5
+apt-get install python3-docutils 2>/dev/null || which rst2html5
 ```
 
 ## Key Features

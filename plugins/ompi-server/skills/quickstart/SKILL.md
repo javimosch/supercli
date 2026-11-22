@@ -18,7 +18,7 @@ CLI tool: ompi-server.
 
 ## Installation
 ```bash
-apt-get install ompi-server 2>/dev/null || which ompi-server
+apt-get install openmpi-bin 2>/dev/null || which ompi-server
 ```
 
 ## Key Features

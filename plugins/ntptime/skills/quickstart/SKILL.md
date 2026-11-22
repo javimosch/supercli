@@ -18,7 +18,7 @@ CLI tool: ntptime.
 
 ## Installation
 ```bash
-apt-get install ntptime 2>/dev/null || which ntptime
+apt-get install ntpsec 2>/dev/null || which ntptime
 ```
 
 ## Key Features

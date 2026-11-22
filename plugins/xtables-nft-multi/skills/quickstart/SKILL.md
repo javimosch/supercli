@@ -18,7 +18,7 @@ CLI tool: xtables-nft-multi.
 
 ## Installation
 ```bash
-apt-get install xtables-nft-multi 2>/dev/null || which xtables-nft-multi
+apt-get install iptables 2>/dev/null || which xtables-nft-multi
 ```
 
 ## Key Features

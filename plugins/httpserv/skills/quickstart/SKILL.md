@@ -18,7 +18,7 @@ CLI tool: httpserv.
 
 ## Installation
 ```bash
-apt-get install httpserv 2>/dev/null || which httpserv
+apt-get install libnss3-tools 2>/dev/null || which httpserv
 ```
 
 ## Key Features

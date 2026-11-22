@@ -18,7 +18,7 @@ CLI tool: usb-devices.
 
 ## Installation
 ```bash
-apt-get install usb-devices 2>/dev/null || which usb-devices
+apt-get install usbutils 2>/dev/null || which usb-devices
 ```
 
 ## Key Features

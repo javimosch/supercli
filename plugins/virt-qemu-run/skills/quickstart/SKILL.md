@@ -18,7 +18,7 @@ CLI tool: virt-qemu-run.
 
 ## Installation
 ```bash
-apt-get install virt-qemu-run 2>/dev/null || which virt-qemu-run
+apt-get install libvirt-daemon-driver-qemu 2>/dev/null || which virt-qemu-run
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: foo2hbpl2.
 
 ## Installation
 ```bash
-apt-get install foo2hbpl2 2>/dev/null || which foo2hbpl2
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2hbpl2
 ```
 
 ## Key Features

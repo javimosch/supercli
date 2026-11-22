@@ -18,7 +18,7 @@ CLI tool: lxc-ls.
 
 ## Installation
 ```bash
-apt-get install lxc-ls 2>/dev/null || which lxc-ls
+apt-get install lxc-utils 2>/dev/null || which lxc-ls
 ```
 
 ## Key Features

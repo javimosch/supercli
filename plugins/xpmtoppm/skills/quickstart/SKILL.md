@@ -18,7 +18,7 @@ CLI tool: xpmtoppm.
 
 ## Installation
 ```bash
-apt-get install xpmtoppm 2>/dev/null || which xpmtoppm
+apt-get install netpbm 2>/dev/null || which xpmtoppm
 ```
 
 ## Key Features

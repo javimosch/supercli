@@ -18,7 +18,7 @@ CLI tool: make-first-existing-target.
 
 ## Installation
 ```bash
-apt-get install make-first-existing-target 2>/dev/null || which make-first-existing-target
+apt-get install make 2>/dev/null || which make-first-existing-target
 ```
 
 ## Key Features

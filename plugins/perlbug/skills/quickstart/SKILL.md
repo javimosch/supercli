@@ -18,7 +18,7 @@ CLI tool: perlbug.
 
 ## Installation
 ```bash
-apt-get install perlbug 2>/dev/null || which perlbug
+apt-get install perl 2>/dev/null || which perlbug
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mktextfm.
 
 ## Installation
 ```bash
-apt-get install mktextfm 2>/dev/null || which mktextfm
+apt-get install texlive-base 2>/dev/null || which mktextfm
 ```
 
 ## Key Features

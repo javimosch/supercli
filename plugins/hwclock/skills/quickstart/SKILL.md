@@ -18,7 +18,7 @@ CLI tool: hwclock.
 
 ## Installation
 ```bash
-apt-get install hwclock 2>/dev/null || which hwclock
+apt-get install util-linux-extra 2>/dev/null || which hwclock
 ```
 
 ## Key Features

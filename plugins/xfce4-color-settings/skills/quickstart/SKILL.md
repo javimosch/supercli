@@ -18,7 +18,7 @@ CLI tool: xfce4-color-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-color-settings 2>/dev/null || which xfce4-color-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-color-settings
 ```
 
 ## Key Features

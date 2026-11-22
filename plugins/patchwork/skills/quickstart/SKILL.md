@@ -18,7 +18,7 @@ CLI tool: patchwork.
 
 ## Installation
 ```bash
-apt-get install patchwork 2>/dev/null || which patchwork
+apt-get install graphviz 2>/dev/null || which patchwork
 ```
 
 ## Key Features

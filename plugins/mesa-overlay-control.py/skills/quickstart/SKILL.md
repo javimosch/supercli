@@ -18,7 +18,7 @@ CLI tool: mesa-overlay-control.py.
 
 ## Installation
 ```bash
-apt-get install mesa-overlay-control.py 2>/dev/null || which mesa-overlay-control.py
+apt-get install mesa-vulkan-drivers 2>/dev/null || which mesa-overlay-control.py
 ```
 
 ## Key Features

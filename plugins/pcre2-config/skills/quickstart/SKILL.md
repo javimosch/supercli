@@ -18,7 +18,7 @@ CLI tool: pcre2-config.
 
 ## Installation
 ```bash
-apt-get install pcre2-config 2>/dev/null || which pcre2-config
+apt-get install libpcre2-dev 2>/dev/null || which pcre2-config
 ```
 
 ## Key Features

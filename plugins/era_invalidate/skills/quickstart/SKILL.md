@@ -18,7 +18,7 @@ CLI tool: era_invalidate.
 
 ## Installation
 ```bash
-apt-get install era_invalidate 2>/dev/null || which era_invalidate
+apt-get install thin-provisioning-tools 2>/dev/null || which era_invalidate
 ```
 
 ## Key Features

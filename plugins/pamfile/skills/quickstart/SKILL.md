@@ -18,7 +18,7 @@ CLI tool: pamfile.
 
 ## Installation
 ```bash
-apt-get install pamfile 2>/dev/null || which pamfile
+apt-get install netpbm 2>/dev/null || which pamfile
 ```
 
 ## Key Features

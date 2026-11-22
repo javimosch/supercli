@@ -18,7 +18,7 @@ CLI tool: nm-online.
 
 ## Installation
 ```bash
-apt-get install nm-online 2>/dev/null || which nm-online
+apt-get install network-manager 2>/dev/null || which nm-online
 ```
 
 ## Key Features

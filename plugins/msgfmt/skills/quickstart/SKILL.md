@@ -18,7 +18,7 @@ CLI tool: msgfmt.
 
 ## Installation
 ```bash
-apt-get install msgfmt 2>/dev/null || which msgfmt
+apt-get install gettext 2>/dev/null || which msgfmt
 ```
 
 ## Key Features

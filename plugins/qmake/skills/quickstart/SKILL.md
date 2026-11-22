@@ -18,7 +18,7 @@ CLI tool: qmake.
 
 ## Installation
 ```bash
-apt-get install qmake 2>/dev/null || which qmake
+apt-get install qtchooser 2>/dev/null || which qmake
 ```
 
 ## Key Features

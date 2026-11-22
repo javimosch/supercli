@@ -18,7 +18,7 @@ CLI tool: thin_repair.
 
 ## Installation
 ```bash
-apt-get install thin_repair 2>/dev/null || which thin_repair
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_repair
 ```
 
 ## Key Features

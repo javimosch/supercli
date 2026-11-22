@@ -18,7 +18,7 @@ CLI tool: zic.
 
 ## Installation
 ```bash
-apt-get install zic 2>/dev/null || which zic
+apt-get install libc-bin 2>/dev/null || which zic
 ```
 
 ## Key Features

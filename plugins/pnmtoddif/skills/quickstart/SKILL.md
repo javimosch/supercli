@@ -18,7 +18,7 @@ CLI tool: pnmtoddif.
 
 ## Installation
 ```bash
-apt-get install pnmtoddif 2>/dev/null || which pnmtoddif
+apt-get install netpbm 2>/dev/null || which pnmtoddif
 ```
 
 ## Key Features

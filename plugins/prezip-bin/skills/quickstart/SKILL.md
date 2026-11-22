@@ -18,7 +18,7 @@ CLI tool: prezip-bin.
 
 ## Installation
 ```bash
-apt-get install prezip-bin 2>/dev/null || which prezip-bin
+apt-get install aspell 2>/dev/null || which prezip-bin
 ```
 
 ## Key Features

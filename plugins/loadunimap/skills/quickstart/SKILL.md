@@ -18,7 +18,7 @@ CLI tool: loadunimap.
 
 ## Installation
 ```bash
-apt-get install loadunimap 2>/dev/null || which loadunimap
+apt-get install kbd 2>/dev/null || which loadunimap
 ```
 
 ## Key Features

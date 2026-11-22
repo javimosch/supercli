@@ -18,7 +18,7 @@ CLI tool: pbmtoybm.
 
 ## Installation
 ```bash
-apt-get install pbmtoybm 2>/dev/null || which pbmtoybm
+apt-get install netpbm 2>/dev/null || which pbmtoybm
 ```
 
 ## Key Features

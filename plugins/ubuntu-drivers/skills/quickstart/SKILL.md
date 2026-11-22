@@ -18,7 +18,7 @@ CLI tool: ubuntu-drivers.
 
 ## Installation
 ```bash
-apt-get install ubuntu-drivers 2>/dev/null || which ubuntu-drivers
+apt-get install ubuntu-drivers-common 2>/dev/null || which ubuntu-drivers
 ```
 
 ## Key Features

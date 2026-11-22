@@ -18,7 +18,7 @@ CLI tool: pydoc3.
 
 ## Installation
 ```bash
-apt-get install pydoc3 2>/dev/null || which pydoc3
+apt-get install python3 2>/dev/null || which pydoc3
 ```
 
 ## Key Features

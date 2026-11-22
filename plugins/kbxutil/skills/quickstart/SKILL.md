@@ -18,7 +18,7 @@ CLI tool: kbxutil.
 
 ## Installation
 ```bash
-apt-get install kbxutil 2>/dev/null || which kbxutil
+apt-get install gnupg-utils 2>/dev/null || which kbxutil
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: eyuvtoppm.
 
 ## Installation
 ```bash
-apt-get install eyuvtoppm 2>/dev/null || which eyuvtoppm
+apt-get install netpbm 2>/dev/null || which eyuvtoppm
 ```
 
 ## Key Features

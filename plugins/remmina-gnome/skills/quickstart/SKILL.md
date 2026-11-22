@@ -18,7 +18,7 @@ CLI tool: remmina-gnome.
 
 ## Installation
 ```bash
-apt-get install remmina-gnome 2>/dev/null || which remmina-gnome
+apt-get install remmina 2>/dev/null || which remmina-gnome
 ```
 
 ## Key Features

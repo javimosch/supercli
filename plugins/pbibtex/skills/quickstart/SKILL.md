@@ -18,7 +18,7 @@ CLI tool: pbibtex.
 
 ## Installation
 ```bash
-apt-get install pbibtex 2>/dev/null || which pbibtex
+apt-get install texlive-binaries 2>/dev/null || which pbibtex
 ```
 
 ## Key Features

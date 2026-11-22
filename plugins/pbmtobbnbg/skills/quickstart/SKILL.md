@@ -18,7 +18,7 @@ CLI tool: pbmtobbnbg.
 
 ## Installation
 ```bash
-apt-get install pbmtobbnbg 2>/dev/null || which pbmtobbnbg
+apt-get install netpbm 2>/dev/null || which pbmtobbnbg
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-fonts-alias.
 
 ## Installation
 ```bash
-apt-get install update-fonts-alias 2>/dev/null || which update-fonts-alias
+apt-get install xfonts-utils 2>/dev/null || which update-fonts-alias
 ```
 
 ## Key Features

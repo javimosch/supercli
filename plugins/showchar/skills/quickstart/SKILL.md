@@ -18,7 +18,7 @@ CLI tool: showchar.
 
 ## Installation
 ```bash
-apt-get install showchar 2>/dev/null || which showchar
+apt-get install psutils 2>/dev/null || which showchar
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: rmt-tar.
 
 ## Installation
 ```bash
-apt-get install rmt-tar 2>/dev/null || which rmt-tar
+apt-get install tar 2>/dev/null || which rmt-tar
 ```
 
 ## Key Features

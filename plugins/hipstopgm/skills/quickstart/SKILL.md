@@ -18,7 +18,7 @@ CLI tool: hipstopgm.
 
 ## Installation
 ```bash
-apt-get install hipstopgm 2>/dev/null || which hipstopgm
+apt-get install netpbm 2>/dev/null || which hipstopgm
 ```
 
 ## Key Features

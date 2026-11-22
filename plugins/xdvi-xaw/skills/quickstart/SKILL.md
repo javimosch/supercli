@@ -18,7 +18,7 @@ CLI tool: xdvi-xaw.
 
 ## Installation
 ```bash
-apt-get install xdvi-xaw 2>/dev/null || which xdvi-xaw
+apt-get install texlive-binaries 2>/dev/null || which xdvi-xaw
 ```
 
 ## Key Features

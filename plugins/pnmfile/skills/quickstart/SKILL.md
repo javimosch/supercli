@@ -18,7 +18,7 @@ CLI tool: pnmfile.
 
 ## Installation
 ```bash
-apt-get install pnmfile 2>/dev/null || which pnmfile
+apt-get install netpbm 2>/dev/null || which pnmfile
 ```
 
 ## Key Features

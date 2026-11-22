@@ -18,7 +18,7 @@ CLI tool: thunar-volman-settings.
 
 ## Installation
 ```bash
-apt-get install thunar-volman-settings 2>/dev/null || which thunar-volman-settings
+apt-get install thunar-volman 2>/dev/null || which thunar-volman-settings
 ```
 
 ## Key Features

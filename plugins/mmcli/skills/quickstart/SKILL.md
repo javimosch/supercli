@@ -18,7 +18,7 @@ CLI tool: mmcli.
 
 ## Installation
 ```bash
-apt-get install mmcli 2>/dev/null || which mmcli
+apt-get install modemmanager 2>/dev/null || which mmcli
 ```
 
 ## Key Features

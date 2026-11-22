@@ -18,7 +18,7 @@ CLI tool: rmiregistry.
 
 ## Installation
 ```bash
-apt-get install rmiregistry 2>/dev/null || which rmiregistry
+apt-get install openjdk-17-jre-headless 2>/dev/null || which rmiregistry
 ```
 
 ## Key Features

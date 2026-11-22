@@ -18,7 +18,7 @@ CLI tool: ncursesw6-config.
 
 ## Installation
 ```bash
-apt-get install ncursesw6-config 2>/dev/null || which ncursesw6-config
+apt-get install libncurses-dev 2>/dev/null || which ncursesw6-config
 ```
 
 ## Key Features

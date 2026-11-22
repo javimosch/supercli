@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ld.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ld 2>/dev/null || which x86_64-linux-gnu-ld
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-ld
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lkbib.
 
 ## Installation
 ```bash
-apt-get install lkbib 2>/dev/null || which lkbib
+apt-get install groff 2>/dev/null || which lkbib
 ```
 
 ## Key Features

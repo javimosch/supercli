@@ -18,7 +18,7 @@ CLI tool: pngtopnm.
 
 ## Installation
 ```bash
-apt-get install pngtopnm 2>/dev/null || which pngtopnm
+apt-get install netpbm 2>/dev/null || which pngtopnm
 ```
 
 ## Key Features

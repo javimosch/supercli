@@ -18,7 +18,7 @@ CLI tool: im-launch.
 
 ## Installation
 ```bash
-apt-get install im-launch 2>/dev/null || which im-launch
+apt-get install im-config 2>/dev/null || which im-launch
 ```
 
 ## Key Features

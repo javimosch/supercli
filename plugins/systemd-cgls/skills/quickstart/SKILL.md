@@ -18,7 +18,7 @@ CLI tool: systemd-cgls.
 
 ## Installation
 ```bash
-apt-get install systemd-cgls 2>/dev/null || which systemd-cgls
+apt-get install systemd 2>/dev/null || which systemd-cgls
 ```
 
 ## Key Features

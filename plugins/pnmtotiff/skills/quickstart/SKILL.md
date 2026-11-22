@@ -18,7 +18,7 @@ CLI tool: pnmtotiff.
 
 ## Installation
 ```bash
-apt-get install pnmtotiff 2>/dev/null || which pnmtotiff
+apt-get install netpbm 2>/dev/null || which pnmtotiff
 ```
 
 ## Key Features

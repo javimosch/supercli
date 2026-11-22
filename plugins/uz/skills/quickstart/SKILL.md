@@ -18,7 +18,7 @@ CLI tool: uz.
 
 ## Installation
 ```bash
-apt-get install uz 2>/dev/null || which uz
+apt-get install mtools 2>/dev/null || which uz
 ```
 
 ## Key Features

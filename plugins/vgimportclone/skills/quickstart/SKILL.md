@@ -18,7 +18,7 @@ CLI tool: vgimportclone.
 
 ## Installation
 ```bash
-apt-get install vgimportclone 2>/dev/null || which vgimportclone
+apt-get install lvm2 2>/dev/null || which vgimportclone
 ```
 
 ## Key Features

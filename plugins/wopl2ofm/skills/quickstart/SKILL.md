@@ -18,7 +18,7 @@ CLI tool: wopl2ofm.
 
 ## Installation
 ```bash
-apt-get install wopl2ofm 2>/dev/null || which wopl2ofm
+apt-get install texlive-binaries 2>/dev/null || which wopl2ofm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: iceauth.
 
 ## Installation
 ```bash
-apt-get install iceauth 2>/dev/null || which iceauth
+apt-get install x11-xserver-utils 2>/dev/null || which iceauth
 ```
 
 ## Key Features

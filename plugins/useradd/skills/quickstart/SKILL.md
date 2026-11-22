@@ -18,7 +18,7 @@ CLI tool: useradd.
 
 ## Installation
 ```bash
-apt-get install useradd 2>/dev/null || which useradd
+apt-get install passwd 2>/dev/null || which useradd
 ```
 
 ## Key Features

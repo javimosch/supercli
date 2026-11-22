@@ -18,7 +18,7 @@ CLI tool: msgunfmt.
 
 ## Installation
 ```bash
-apt-get install msgunfmt 2>/dev/null || which msgunfmt
+apt-get install gettext 2>/dev/null || which msgunfmt
 ```
 
 ## Key Features

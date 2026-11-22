@@ -18,7 +18,7 @@ CLI tool: filefrag.
 
 ## Installation
 ```bash
-apt-get install filefrag 2>/dev/null || which filefrag
+apt-get install e2fsprogs 2>/dev/null || which filefrag
 ```
 
 ## Key Features

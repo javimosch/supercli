@@ -18,7 +18,7 @@ CLI tool: pg_dumpall.
 
 ## Installation
 ```bash
-apt-get install pg_dumpall 2>/dev/null || which pg_dumpall
+apt-get install postgresql-client-common 2>/dev/null || which pg_dumpall
 ```
 
 ## Key Features

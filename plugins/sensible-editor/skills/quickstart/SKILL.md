@@ -18,7 +18,7 @@ CLI tool: sensible-editor.
 
 ## Installation
 ```bash
-apt-get install sensible-editor 2>/dev/null || which sensible-editor
+apt-get install sensible-utils 2>/dev/null || which sensible-editor
 ```
 
 ## Key Features

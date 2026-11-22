@@ -18,7 +18,7 @@ CLI tool: mount.lowntfs-3g.
 
 ## Installation
 ```bash
-apt-get install mount.lowntfs-3g 2>/dev/null || which mount.lowntfs-3g
+apt-get install ntfs-3g 2>/dev/null || which mount.lowntfs-3g
 ```
 
 ## Key Features

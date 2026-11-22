@@ -18,7 +18,7 @@ CLI tool: msginit.
 
 ## Installation
 ```bash
-apt-get install msginit 2>/dev/null || which msginit
+apt-get install gettext 2>/dev/null || which msginit
 ```
 
 ## Key Features

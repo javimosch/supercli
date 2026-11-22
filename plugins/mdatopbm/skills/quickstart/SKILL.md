@@ -18,7 +18,7 @@ CLI tool: mdatopbm.
 
 ## Installation
 ```bash
-apt-get install mdatopbm 2>/dev/null || which mdatopbm
+apt-get install netpbm 2>/dev/null || which mdatopbm
 ```
 
 ## Key Features

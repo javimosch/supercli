@@ -18,7 +18,7 @@ CLI tool: wpa_action.
 
 ## Installation
 ```bash
-apt-get install wpa_action 2>/dev/null || which wpa_action
+apt-get install wpasupplicant 2>/dev/null || which wpa_action
 ```
 
 ## Key Features

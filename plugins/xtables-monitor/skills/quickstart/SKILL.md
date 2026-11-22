@@ -18,7 +18,7 @@ CLI tool: xtables-monitor.
 
 ## Installation
 ```bash
-apt-get install xtables-monitor 2>/dev/null || which xtables-monitor
+apt-get install iptables 2>/dev/null || which xtables-monitor
 ```
 
 ## Key Features

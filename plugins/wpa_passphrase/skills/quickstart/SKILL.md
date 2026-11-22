@@ -18,7 +18,7 @@ CLI tool: wpa_passphrase.
 
 ## Installation
 ```bash
-apt-get install wpa_passphrase 2>/dev/null || which wpa_passphrase
+apt-get install wpasupplicant 2>/dev/null || which wpa_passphrase
 ```
 
 ## Key Features

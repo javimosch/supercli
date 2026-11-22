@@ -18,7 +18,7 @@ CLI tool: which.debianutils.
 
 ## Installation
 ```bash
-apt-get install which.debianutils 2>/dev/null || which which.debianutils
+apt-get install debianutils 2>/dev/null || which which.debianutils
 ```
 
 ## Key Features

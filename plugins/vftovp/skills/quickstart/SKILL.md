@@ -18,7 +18,7 @@ CLI tool: vftovp.
 
 ## Installation
 ```bash
-apt-get install vftovp 2>/dev/null || which vftovp
+apt-get install texlive-binaries 2>/dev/null || which vftovp
 ```
 
 ## Key Features

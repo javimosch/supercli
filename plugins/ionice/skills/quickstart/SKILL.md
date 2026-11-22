@@ -18,7 +18,7 @@ CLI tool: ionice.
 
 ## Installation
 ```bash
-apt-get install ionice 2>/dev/null || which ionice
+apt-get install util-linux 2>/dev/null || which ionice
 ```
 
 ## Key Features

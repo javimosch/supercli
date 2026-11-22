@@ -18,7 +18,7 @@ CLI tool: setpci.
 
 ## Installation
 ```bash
-apt-get install setpci 2>/dev/null || which setpci
+apt-get install pciutils 2>/dev/null || which setpci
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: escapesrc.
 
 ## Installation
 ```bash
-apt-get install escapesrc 2>/dev/null || which escapesrc
+apt-get install icu-devtools 2>/dev/null || which escapesrc
 ```
 
 ## Key Features

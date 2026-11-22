@@ -18,7 +18,7 @@ CLI tool: intel-virtual-output.
 
 ## Installation
 ```bash
-apt-get install intel-virtual-output 2>/dev/null || which intel-virtual-output
+apt-get install xserver-xorg-video-intel 2>/dev/null || which intel-virtual-output
 ```
 
 ## Key Features

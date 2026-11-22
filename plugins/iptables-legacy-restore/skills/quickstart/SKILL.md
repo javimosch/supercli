@@ -18,7 +18,7 @@ CLI tool: iptables-legacy-restore.
 
 ## Installation
 ```bash
-apt-get install iptables-legacy-restore 2>/dev/null || which iptables-legacy-restore
+apt-get install iptables 2>/dev/null || which iptables-legacy-restore
 ```
 
 ## Key Features

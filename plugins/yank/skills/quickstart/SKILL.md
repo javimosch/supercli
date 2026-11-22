@@ -23,7 +23,7 @@ yank reads stdin, splits it into fields (default delimiters: space/tab/newline, 
 ## Installation
 
 ```bash
-sudo apt install yank
+sudo apt install emboss
 # or: brew install yank
 ```
 

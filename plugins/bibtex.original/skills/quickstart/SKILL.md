@@ -18,7 +18,7 @@ CLI tool: bibtex.original.
 
 ## Installation
 ```bash
-apt-get install bibtex.original 2>/dev/null || which bibtex.original
+apt-get install texlive-binaries 2>/dev/null || which bibtex.original
 ```
 
 ## Key Features

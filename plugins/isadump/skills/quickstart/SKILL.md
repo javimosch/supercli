@@ -18,7 +18,7 @@ CLI tool: isadump.
 
 ## Installation
 ```bash
-apt-get install isadump 2>/dev/null || which isadump
+apt-get install lm-sensors 2>/dev/null || which isadump
 ```
 
 ## Key Features

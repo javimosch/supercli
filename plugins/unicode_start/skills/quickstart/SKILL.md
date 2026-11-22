@@ -18,7 +18,7 @@ CLI tool: unicode_start.
 
 ## Installation
 ```bash
-apt-get install unicode_start 2>/dev/null || which unicode_start
+apt-get install kbd 2>/dev/null || which unicode_start
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pre-grohtml.
 
 ## Installation
 ```bash
-apt-get install pre-grohtml 2>/dev/null || which pre-grohtml
+apt-get install groff 2>/dev/null || which pre-grohtml
 ```
 
 ## Key Features

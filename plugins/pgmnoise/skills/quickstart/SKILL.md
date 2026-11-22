@@ -18,7 +18,7 @@ CLI tool: pgmnoise.
 
 ## Installation
 ```bash
-apt-get install pgmnoise 2>/dev/null || which pgmnoise
+apt-get install netpbm 2>/dev/null || which pgmnoise
 ```
 
 ## Key Features

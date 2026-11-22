@@ -18,7 +18,7 @@ CLI tool: xdvipdfmx.
 
 ## Installation
 ```bash
-apt-get install xdvipdfmx 2>/dev/null || which xdvipdfmx
+apt-get install texlive-binaries 2>/dev/null || which xdvipdfmx
 ```
 
 ## Key Features

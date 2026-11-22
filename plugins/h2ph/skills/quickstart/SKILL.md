@@ -18,7 +18,7 @@ CLI tool: h2ph.
 
 ## Installation
 ```bash
-apt-get install h2ph 2>/dev/null || which h2ph
+apt-get install perl 2>/dev/null || which h2ph
 ```
 
 ## Key Features

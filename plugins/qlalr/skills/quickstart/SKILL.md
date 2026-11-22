@@ -18,7 +18,7 @@ CLI tool: qlalr.
 
 ## Installation
 ```bash
-apt-get install qlalr 2>/dev/null || which qlalr
+apt-get install qtchooser 2>/dev/null || which qlalr
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xkbwatch.
 
 ## Installation
 ```bash
-apt-get install xkbwatch 2>/dev/null || which xkbwatch
+apt-get install x11-xkb-utils 2>/dev/null || which xkbwatch
 ```
 
 ## Key Features

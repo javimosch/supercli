@@ -18,7 +18,7 @@ CLI tool: ubuntu-bug.
 
 ## Installation
 ```bash
-apt-get install ubuntu-bug 2>/dev/null || which ubuntu-bug
+apt-get install apport 2>/dev/null || which ubuntu-bug
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: print.
 
 ## Installation
 ```bash
-apt-get install print 2>/dev/null || which print
+apt-get install mailcap 2>/dev/null || which print
 ```
 
 ## Key Features

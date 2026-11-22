@@ -18,7 +18,7 @@ CLI tool: luahbtex.
 
 ## Installation
 ```bash
-apt-get install luahbtex 2>/dev/null || which luahbtex
+apt-get install texlive-binaries 2>/dev/null || which luahbtex
 ```
 
 ## Key Features

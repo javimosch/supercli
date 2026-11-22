@@ -18,7 +18,7 @@ CLI tool: sgdisk.
 
 ## Installation
 ```bash
-apt-get install sgdisk 2>/dev/null || which sgdisk
+apt-get install gdisk 2>/dev/null || which sgdisk
 ```
 
 ## Key Features

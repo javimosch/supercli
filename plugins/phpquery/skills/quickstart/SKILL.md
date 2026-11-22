@@ -18,7 +18,7 @@ CLI tool: phpquery.
 
 ## Installation
 ```bash
-apt-get install phpquery 2>/dev/null || which phpquery
+apt-get install php-common 2>/dev/null || which phpquery
 ```
 
 ## Key Features

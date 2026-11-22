@@ -18,7 +18,7 @@ CLI tool: pkcheck.
 
 ## Installation
 ```bash
-apt-get install pkcheck 2>/dev/null || which pkcheck
+apt-get install polkitd 2>/dev/null || which pkcheck
 ```
 
 ## Key Features

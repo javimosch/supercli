@@ -18,7 +18,7 @@ CLI tool: pphs.
 
 ## Installation
 ```bash
-apt-get install pphs 2>/dev/null || which pphs
+apt-get install ghostscript 2>/dev/null || which pphs
 ```
 
 ## Key Features

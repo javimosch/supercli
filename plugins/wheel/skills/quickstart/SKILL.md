@@ -18,7 +18,7 @@ CLI tool: wheel.
 
 ## Installation
 ```bash
-apt-get install wheel 2>/dev/null || which wheel
+apt-get install python-wheel-common 2>/dev/null || which wheel
 ```
 
 ## Key Features

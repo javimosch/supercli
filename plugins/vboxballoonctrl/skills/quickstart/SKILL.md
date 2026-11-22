@@ -18,7 +18,7 @@ CLI tool: vboxballoonctrl.
 
 ## Installation
 ```bash
-apt-get install vboxballoonctrl 2>/dev/null || which vboxballoonctrl
+apt-get install virtualbox 2>/dev/null || which vboxballoonctrl
 ```
 
 ## Key Features

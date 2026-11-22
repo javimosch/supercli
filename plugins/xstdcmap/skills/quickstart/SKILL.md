@@ -18,7 +18,7 @@ CLI tool: xstdcmap.
 
 ## Installation
 ```bash
-apt-get install xstdcmap 2>/dev/null || which xstdcmap
+apt-get install x11-xserver-utils 2>/dev/null || which xstdcmap
 ```
 
 ## Key Features

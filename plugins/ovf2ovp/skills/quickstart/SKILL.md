@@ -18,7 +18,7 @@ CLI tool: ovf2ovp.
 
 ## Installation
 ```bash
-apt-get install ovf2ovp 2>/dev/null || which ovf2ovp
+apt-get install texlive-binaries 2>/dev/null || which ovf2ovp
 ```
 
 ## Key Features

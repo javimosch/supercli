@@ -18,7 +18,7 @@ CLI tool: POST.
 
 ## Installation
 ```bash
-apt-get install POST 2>/dev/null || which POST
+apt-get install libwww-perl 2>/dev/null || which POST
 ```
 
 ## Key Features

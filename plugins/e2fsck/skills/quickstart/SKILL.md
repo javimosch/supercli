@@ -18,7 +18,7 @@ CLI tool: e2fsck.
 
 ## Installation
 ```bash
-apt-get install e2fsck 2>/dev/null || which e2fsck
+apt-get install e2fsprogs 2>/dev/null || which e2fsck
 ```
 
 ## Key Features

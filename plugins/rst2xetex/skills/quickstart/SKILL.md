@@ -18,7 +18,7 @@ CLI tool: rst2xetex.
 
 ## Installation
 ```bash
-apt-get install rst2xetex 2>/dev/null || which rst2xetex
+apt-get install python3-docutils 2>/dev/null || which rst2xetex
 ```
 
 ## Key Features

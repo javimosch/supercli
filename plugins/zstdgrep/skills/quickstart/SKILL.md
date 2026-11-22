@@ -18,7 +18,7 @@ CLI tool: zstdgrep.
 
 ## Installation
 ```bash
-apt-get install zstdgrep 2>/dev/null || which zstdgrep
+apt-get install zstd 2>/dev/null || which zstdgrep
 ```
 
 ## Key Features

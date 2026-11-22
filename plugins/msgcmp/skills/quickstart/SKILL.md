@@ -18,7 +18,7 @@ CLI tool: msgcmp.
 
 ## Installation
 ```bash
-apt-get install msgcmp 2>/dev/null || which msgcmp
+apt-get install gettext 2>/dev/null || which msgcmp
 ```
 
 ## Key Features

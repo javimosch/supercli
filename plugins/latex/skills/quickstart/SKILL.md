@@ -18,7 +18,7 @@ CLI tool: latex.
 
 ## Installation
 ```bash
-apt-get install latex 2>/dev/null || which latex
+apt-get install texlive-latex-base 2>/dev/null || which latex
 ```
 
 ## Key Features

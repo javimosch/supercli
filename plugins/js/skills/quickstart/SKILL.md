@@ -18,7 +18,7 @@ CLI tool: js.
 
 ## Installation
 ```bash
-apt-get install js 2>/dev/null || which js
+apt-get install nodejs 2>/dev/null || which js
 ```
 
 ## Key Features

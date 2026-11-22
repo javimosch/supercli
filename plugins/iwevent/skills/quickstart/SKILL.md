@@ -18,7 +18,7 @@ CLI tool: iwevent.
 
 ## Installation
 ```bash
-apt-get install iwevent 2>/dev/null || which iwevent
+apt-get install wireless-tools 2>/dev/null || which iwevent
 ```
 
 ## Key Features

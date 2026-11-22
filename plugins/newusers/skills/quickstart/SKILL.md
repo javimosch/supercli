@@ -18,7 +18,7 @@ CLI tool: newusers.
 
 ## Installation
 ```bash
-apt-get install newusers 2>/dev/null || which newusers
+apt-get install passwd 2>/dev/null || which newusers
 ```
 
 ## Key Features

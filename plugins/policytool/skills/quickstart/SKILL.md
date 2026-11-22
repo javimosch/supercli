@@ -18,7 +18,7 @@ CLI tool: policytool.
 
 ## Installation
 ```bash
-apt-get install policytool 2>/dev/null || which policytool
+apt-get install openjdk-8-jre 2>/dev/null || which policytool
 ```
 
 ## Key Features

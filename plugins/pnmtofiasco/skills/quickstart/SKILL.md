@@ -18,7 +18,7 @@ CLI tool: pnmtofiasco.
 
 ## Installation
 ```bash
-apt-get install pnmtofiasco 2>/dev/null || which pnmtofiasco
+apt-get install netpbm 2>/dev/null || which pnmtofiasco
 ```
 
 ## Key Features

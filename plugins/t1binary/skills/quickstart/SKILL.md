@@ -18,7 +18,7 @@ CLI tool: t1binary.
 
 ## Installation
 ```bash
-apt-get install t1binary 2>/dev/null || which t1binary
+apt-get install t1utils 2>/dev/null || which t1binary
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: select-default-ispell.
 
 ## Installation
 ```bash
-apt-get install select-default-ispell 2>/dev/null || which select-default-ispell
+apt-get install dictionaries-common 2>/dev/null || which select-default-ispell
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: watchmedo.
 
 ## Installation
 ```bash
-apt-get install watchmedo 2>/dev/null || which watchmedo
+apt-get install python3-watchdog 2>/dev/null || which watchmedo
 ```
 
 ## Key Features

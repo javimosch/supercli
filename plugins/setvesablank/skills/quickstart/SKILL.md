@@ -18,7 +18,7 @@ CLI tool: setvesablank.
 
 ## Installation
 ```bash
-apt-get install setvesablank 2>/dev/null || which setvesablank
+apt-get install kbd 2>/dev/null || which setvesablank
 ```
 
 ## Key Features

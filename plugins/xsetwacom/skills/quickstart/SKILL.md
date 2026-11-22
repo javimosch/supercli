@@ -18,7 +18,7 @@ CLI tool: xsetwacom.
 
 ## Installation
 ```bash
-apt-get install xsetwacom 2>/dev/null || which xsetwacom
+apt-get install xserver-xorg-input-wacom 2>/dev/null || which xsetwacom
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pg_isready.
 
 ## Installation
 ```bash
-apt-get install pg_isready 2>/dev/null || which pg_isready
+apt-get install postgresql-client-common 2>/dev/null || which pg_isready
 ```
 
 ## Key Features

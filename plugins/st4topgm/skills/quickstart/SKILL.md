@@ -18,7 +18,7 @@ CLI tool: st4topgm.
 
 ## Installation
 ```bash
-apt-get install st4topgm 2>/dev/null || which st4topgm
+apt-get install netpbm 2>/dev/null || which st4topgm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pgmslice.
 
 ## Installation
 ```bash
-apt-get install pgmslice 2>/dev/null || which pgmslice
+apt-get install netpbm 2>/dev/null || which pgmslice
 ```
 
 ## Key Features

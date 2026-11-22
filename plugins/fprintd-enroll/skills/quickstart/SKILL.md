@@ -18,7 +18,7 @@ CLI tool: fprintd-enroll.
 
 ## Installation
 ```bash
-apt-get install fprintd-enroll 2>/dev/null || which fprintd-enroll
+apt-get install fprintd 2>/dev/null || which fprintd-enroll
 ```
 
 ## Key Features

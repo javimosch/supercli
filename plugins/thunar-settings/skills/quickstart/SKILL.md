@@ -18,7 +18,7 @@ CLI tool: thunar-settings.
 
 ## Installation
 ```bash
-apt-get install thunar-settings 2>/dev/null || which thunar-settings
+apt-get install thunar 2>/dev/null || which thunar-settings
 ```
 
 ## Key Features

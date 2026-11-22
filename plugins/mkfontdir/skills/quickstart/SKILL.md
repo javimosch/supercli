@@ -18,7 +18,7 @@ CLI tool: mkfontdir.
 
 ## Installation
 ```bash
-apt-get install mkfontdir 2>/dev/null || which mkfontdir
+apt-get install xfonts-utils 2>/dev/null || which mkfontdir
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ilbmtoppm.
 
 ## Installation
 ```bash
-apt-get install ilbmtoppm 2>/dev/null || which ilbmtoppm
+apt-get install netpbm 2>/dev/null || which ilbmtoppm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pw-dump.
 
 ## Installation
 ```bash
-apt-get install pw-dump 2>/dev/null || which pw-dump
+apt-get install pipewire-bin 2>/dev/null || which pw-dump
 ```
 
 ## Key Features

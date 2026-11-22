@@ -18,7 +18,7 @@ CLI tool: lp_solve.
 
 ## Installation
 ```bash
-apt-get install lp_solve 2>/dev/null || which lp_solve
+apt-get install lp-solve 2>/dev/null || which lp_solve
 ```
 
 ## Key Features

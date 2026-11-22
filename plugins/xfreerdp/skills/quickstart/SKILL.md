@@ -18,7 +18,7 @@ CLI tool: xfreerdp.
 
 ## Installation
 ```bash
-apt-get install xfreerdp 2>/dev/null || which xfreerdp
+apt-get install freerdp2-x11 2>/dev/null || which xfreerdp
 ```
 
 ## Key Features

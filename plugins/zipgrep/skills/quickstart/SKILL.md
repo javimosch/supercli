@@ -18,7 +18,7 @@ CLI tool: zipgrep.
 
 ## Installation
 ```bash
-apt-get install zipgrep 2>/dev/null || which zipgrep
+apt-get install unzip 2>/dev/null || which zipgrep
 ```
 
 ## Key Features

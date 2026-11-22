@@ -18,7 +18,7 @@ CLI tool: pnminvert.
 
 ## Installation
 ```bash
-apt-get install pnminvert 2>/dev/null || which pnminvert
+apt-get install netpbm 2>/dev/null || which pnminvert
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ucs2any.
 
 ## Installation
 ```bash
-apt-get install ucs2any 2>/dev/null || which ucs2any
+apt-get install xfonts-utils 2>/dev/null || which ucs2any
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: poff.
 
 ## Installation
 ```bash
-apt-get install poff 2>/dev/null || which poff
+apt-get install ppp 2>/dev/null || which poff
 ```
 
 ## Key Features

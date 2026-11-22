@@ -18,7 +18,7 @@ CLI tool: traceproto.db.
 
 ## Installation
 ```bash
-apt-get install traceproto.db 2>/dev/null || which traceproto.db
+apt-get install traceroute 2>/dev/null || which traceproto.db
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ppmshift.
 
 ## Installation
 ```bash
-apt-get install ppmshift 2>/dev/null || which ppmshift
+apt-get install netpbm 2>/dev/null || which ppmshift
 ```
 
 ## Key Features

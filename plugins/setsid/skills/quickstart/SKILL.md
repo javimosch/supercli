@@ -18,7 +18,7 @@ CLI tool: setsid.
 
 ## Installation
 ```bash
-apt-get install setsid 2>/dev/null || which setsid
+apt-get install util-linux 2>/dev/null || which setsid
 ```
 
 ## Key Features

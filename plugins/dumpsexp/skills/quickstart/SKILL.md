@@ -18,7 +18,7 @@ CLI tool: dumpsexp.
 
 ## Installation
 ```bash
-apt-get install dumpsexp 2>/dev/null || which dumpsexp
+apt-get install libgcrypt20-dev 2>/dev/null || which dumpsexp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: hmac256.
 
 ## Installation
 ```bash
-apt-get install hmac256 2>/dev/null || which hmac256
+apt-get install libgcrypt20-dev 2>/dev/null || which hmac256
 ```
 
 ## Key Features

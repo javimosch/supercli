@@ -18,7 +18,7 @@ CLI tool: mkisofs.
 
 ## Installation
 ```bash
-apt-get install mkisofs 2>/dev/null || which mkisofs
+apt-get install genisoimage 2>/dev/null || which mkisofs
 ```
 
 ## Key Features

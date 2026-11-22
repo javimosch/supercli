@@ -18,7 +18,7 @@ CLI tool: xsetpointer.
 
 ## Installation
 ```bash
-apt-get install xsetpointer 2>/dev/null || which xsetpointer
+apt-get install x11-xserver-utils 2>/dev/null || which xsetpointer
 ```
 
 ## Key Features

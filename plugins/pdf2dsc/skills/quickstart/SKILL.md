@@ -18,7 +18,7 @@ CLI tool: pdf2dsc.
 
 ## Installation
 ```bash
-apt-get install pdf2dsc 2>/dev/null || which pdf2dsc
+apt-get install ghostscript 2>/dev/null || which pdf2dsc
 ```
 
 ## Key Features

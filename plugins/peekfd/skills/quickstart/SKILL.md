@@ -18,7 +18,7 @@ CLI tool: peekfd.
 
 ## Installation
 ```bash
-apt-get install peekfd 2>/dev/null || which peekfd
+apt-get install psmisc 2>/dev/null || which peekfd
 ```
 
 ## Key Features

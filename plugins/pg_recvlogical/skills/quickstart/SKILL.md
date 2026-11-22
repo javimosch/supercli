@@ -18,7 +18,7 @@ CLI tool: pg_recvlogical.
 
 ## Installation
 ```bash
-apt-get install pg_recvlogical 2>/dev/null || which pg_recvlogical
+apt-get install postgresql-client-common 2>/dev/null || which pg_recvlogical
 ```
 
 ## Key Features

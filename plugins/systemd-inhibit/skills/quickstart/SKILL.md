@@ -18,7 +18,7 @@ CLI tool: systemd-inhibit.
 
 ## Installation
 ```bash
-apt-get install systemd-inhibit 2>/dev/null || which systemd-inhibit
+apt-get install systemd 2>/dev/null || which systemd-inhibit
 ```
 
 ## Key Features

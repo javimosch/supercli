@@ -18,7 +18,7 @@ CLI tool: ppmdist.
 
 ## Installation
 ```bash
-apt-get install ppmdist 2>/dev/null || which ppmdist
+apt-get install netpbm 2>/dev/null || which ppmdist
 ```
 
 ## Key Features

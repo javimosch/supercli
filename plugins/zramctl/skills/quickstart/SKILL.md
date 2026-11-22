@@ -18,7 +18,7 @@ CLI tool: zramctl.
 
 ## Installation
 ```bash
-apt-get install zramctl 2>/dev/null || which zramctl
+apt-get install util-linux 2>/dev/null || which zramctl
 ```
 
 ## Key Features

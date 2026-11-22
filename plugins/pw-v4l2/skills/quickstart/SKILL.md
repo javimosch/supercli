@@ -18,7 +18,7 @@ CLI tool: pw-v4l2.
 
 ## Installation
 ```bash
-apt-get install pw-v4l2 2>/dev/null || which pw-v4l2
+apt-get install pipewire-v4l2 2>/dev/null || which pw-v4l2
 ```
 
 ## Key Features

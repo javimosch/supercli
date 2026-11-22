@@ -18,7 +18,7 @@ CLI tool: lz.
 
 ## Installation
 ```bash
-apt-get install lz 2>/dev/null || which lz
+apt-get install mtools 2>/dev/null || which lz
 ```
 
 ## Key Features

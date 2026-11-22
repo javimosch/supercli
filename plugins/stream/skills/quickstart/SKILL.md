@@ -18,7 +18,7 @@ CLI tool: stream.
 
 ## Installation
 ```bash
-apt-get install stream 2>/dev/null || which stream
+apt-get install imagemagick-6.q16 2>/dev/null || which stream
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: system-config-printer-applet.
 
 ## Installation
 ```bash
-apt-get install system-config-printer-applet 2>/dev/null || which system-config-printer-applet
+apt-get install system-config-printer 2>/dev/null || which system-config-printer-applet
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lxc-freeze.
 
 ## Installation
 ```bash
-apt-get install lxc-freeze 2>/dev/null || which lxc-freeze
+apt-get install lxc-utils 2>/dev/null || which lxc-freeze
 ```
 
 ## Key Features

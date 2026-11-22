@@ -18,7 +18,7 @@ CLI tool: resize.f2fs.
 
 ## Installation
 ```bash
-apt-get install resize.f2fs 2>/dev/null || which resize.f2fs
+apt-get install f2fs-tools 2>/dev/null || which resize.f2fs
 ```
 
 ## Key Features

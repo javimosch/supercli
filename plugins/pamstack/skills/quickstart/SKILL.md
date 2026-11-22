@@ -18,7 +18,7 @@ CLI tool: pamstack.
 
 ## Installation
 ```bash
-apt-get install pamstack 2>/dev/null || which pamstack
+apt-get install netpbm 2>/dev/null || which pamstack
 ```
 
 ## Key Features

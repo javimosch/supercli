@@ -18,7 +18,7 @@ CLI tool: jmap.
 
 ## Installation
 ```bash
-apt-get install jmap 2>/dev/null || which jmap
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jmap
 ```
 
 ## Key Features

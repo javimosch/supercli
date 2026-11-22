@@ -18,7 +18,7 @@ CLI tool: sensible-browser.
 
 ## Installation
 ```bash
-apt-get install sensible-browser 2>/dev/null || which sensible-browser
+apt-get install sensible-utils 2>/dev/null || which sensible-browser
 ```
 
 ## Key Features

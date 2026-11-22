@@ -18,7 +18,7 @@ CLI tool: sg.
 
 ## Installation
 ```bash
-apt-get install sg 2>/dev/null || which sg
+apt-get install login 2>/dev/null || which sg
 ```
 
 ## Key Features

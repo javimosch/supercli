@@ -18,7 +18,7 @@ CLI tool: smartd.
 
 ## Installation
 ```bash
-apt-get install smartd 2>/dev/null || which smartd
+apt-get install smartmontools 2>/dev/null || which smartd
 ```
 
 ## Key Features

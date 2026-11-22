@@ -18,7 +18,7 @@ CLI tool: ibus-setup.
 
 ## Installation
 ```bash
-apt-get install ibus-setup 2>/dev/null || which ibus-setup
+apt-get install ibus 2>/dev/null || which ibus-setup
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ldapdelete.
 
 ## Installation
 ```bash
-apt-get install ldapdelete 2>/dev/null || which ldapdelete
+apt-get install ldap-utils 2>/dev/null || which ldapdelete
 ```
 
 ## Key Features

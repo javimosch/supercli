@@ -18,7 +18,7 @@ CLI tool: update-info-dir.
 
 ## Installation
 ```bash
-apt-get install update-info-dir 2>/dev/null || which update-info-dir
+apt-get install install-info 2>/dev/null || which update-info-dir
 ```
 
 ## Key Features

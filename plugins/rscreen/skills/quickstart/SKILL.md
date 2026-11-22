@@ -18,7 +18,7 @@ CLI tool: rscreen.
 
 ## Installation
 ```bash
-apt-get install rscreen 2>/dev/null || which rscreen
+apt-get install autossh 2>/dev/null || which rscreen
 ```
 
 ## Key Features

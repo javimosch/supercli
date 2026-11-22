@@ -18,7 +18,7 @@ CLI tool: lookbib.
 
 ## Installation
 ```bash
-apt-get install lookbib 2>/dev/null || which lookbib
+apt-get install groff 2>/dev/null || which lookbib
 ```
 
 ## Key Features

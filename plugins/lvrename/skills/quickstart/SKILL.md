@@ -18,7 +18,7 @@ CLI tool: lvrename.
 
 ## Installation
 ```bash
-apt-get install lvrename 2>/dev/null || which lvrename
+apt-get install lvm2 2>/dev/null || which lvrename
 ```
 
 ## Key Features

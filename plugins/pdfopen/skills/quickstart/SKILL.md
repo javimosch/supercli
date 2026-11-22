@@ -18,7 +18,7 @@ CLI tool: pdfopen.
 
 ## Installation
 ```bash
-apt-get install pdfopen 2>/dev/null || which pdfopen
+apt-get install texlive-binaries 2>/dev/null || which pdfopen
 ```
 
 ## Key Features

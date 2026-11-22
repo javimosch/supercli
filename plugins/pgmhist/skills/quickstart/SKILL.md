@@ -18,7 +18,7 @@ CLI tool: pgmhist.
 
 ## Installation
 ```bash
-apt-get install pgmhist 2>/dev/null || which pgmhist
+apt-get install netpbm 2>/dev/null || which pgmhist
 ```
 
 ## Key Features

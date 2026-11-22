@@ -18,7 +18,7 @@ CLI tool: sqfscat.
 
 ## Installation
 ```bash
-apt-get install sqfscat 2>/dev/null || which sqfscat
+apt-get install squashfs-tools 2>/dev/null || which sqfscat
 ```
 
 ## Key Features

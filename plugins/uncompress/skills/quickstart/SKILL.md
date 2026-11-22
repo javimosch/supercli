@@ -18,7 +18,7 @@ CLI tool: uncompress.
 
 ## Installation
 ```bash
-apt-get install uncompress 2>/dev/null || which uncompress
+apt-get install gzip 2>/dev/null || which uncompress
 ```
 
 ## Key Features

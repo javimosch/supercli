@@ -18,7 +18,7 @@ CLI tool: dot2gxl.
 
 ## Installation
 ```bash
-apt-get install dot2gxl 2>/dev/null || which dot2gxl
+apt-get install graphviz 2>/dev/null || which dot2gxl
 ```
 
 ## Key Features

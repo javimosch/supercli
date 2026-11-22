@@ -18,7 +18,7 @@ CLI tool: preunzip.
 
 ## Installation
 ```bash
-apt-get install preunzip 2>/dev/null || which preunzip
+apt-get install aspell 2>/dev/null || which preunzip
 ```
 
 ## Key Features

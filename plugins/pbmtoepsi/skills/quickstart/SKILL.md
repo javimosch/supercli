@@ -18,7 +18,7 @@ CLI tool: pbmtoepsi.
 
 ## Installation
 ```bash
-apt-get install pbmtoepsi 2>/dev/null || which pbmtoepsi
+apt-get install netpbm 2>/dev/null || which pbmtoepsi
 ```
 
 ## Key Features

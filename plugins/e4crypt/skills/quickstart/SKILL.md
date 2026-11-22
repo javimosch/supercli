@@ -18,7 +18,7 @@ CLI tool: e4crypt.
 
 ## Installation
 ```bash
-apt-get install e4crypt 2>/dev/null || which e4crypt
+apt-get install e2fsprogs 2>/dev/null || which e4crypt
 ```
 
 ## Key Features

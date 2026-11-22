@@ -18,7 +18,7 @@ CLI tool: pgmedge.
 
 ## Installation
 ```bash
-apt-get install pgmedge 2>/dev/null || which pgmedge
+apt-get install netpbm 2>/dev/null || which pgmedge
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: sudoreplay.
 
 ## Installation
 ```bash
-apt-get install sudoreplay 2>/dev/null || which sudoreplay
+apt-get install sudo 2>/dev/null || which sudoreplay
 ```
 
 ## Key Features

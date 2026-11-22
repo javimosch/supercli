@@ -18,7 +18,7 @@ CLI tool: xml2pmx.
 
 ## Installation
 ```bash
-apt-get install xml2pmx 2>/dev/null || which xml2pmx
+apt-get install texlive-binaries 2>/dev/null || which xml2pmx
 ```
 
 ## Key Features

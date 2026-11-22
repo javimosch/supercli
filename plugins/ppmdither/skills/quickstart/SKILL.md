@@ -18,7 +18,7 @@ CLI tool: ppmdither.
 
 ## Installation
 ```bash
-apt-get install ppmdither 2>/dev/null || which ppmdither
+apt-get install netpbm 2>/dev/null || which ppmdither
 ```
 
 ## Key Features

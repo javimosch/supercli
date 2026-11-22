@@ -18,7 +18,7 @@ CLI tool: tor-prompt.
 
 ## Installation
 ```bash
-apt-get install tor-prompt 2>/dev/null || which tor-prompt
+apt-get install python3-stem 2>/dev/null || which tor-prompt
 ```
 
 ## Key Features

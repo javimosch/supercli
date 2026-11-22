@@ -18,7 +18,7 @@ CLI tool: lefty.
 
 ## Installation
 ```bash
-apt-get install lefty 2>/dev/null || which lefty
+apt-get install graphviz 2>/dev/null || which lefty
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: sensors-conf-convert.
 
 ## Installation
 ```bash
-apt-get install sensors-conf-convert 2>/dev/null || which sensors-conf-convert
+apt-get install lm-sensors 2>/dev/null || which sensors-conf-convert
 ```
 
 ## Key Features

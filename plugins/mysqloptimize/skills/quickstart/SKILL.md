@@ -18,7 +18,7 @@ CLI tool: mysqloptimize.
 
 ## Installation
 ```bash
-apt-get install mysqloptimize 2>/dev/null || which mysqloptimize
+apt-get install mysql-client-8.0 2>/dev/null || which mysqloptimize
 ```
 
 ## Key Features

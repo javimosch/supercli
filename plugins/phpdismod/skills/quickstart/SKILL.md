@@ -18,7 +18,7 @@ CLI tool: phpdismod.
 
 ## Installation
 ```bash
-apt-get install phpdismod 2>/dev/null || which phpdismod
+apt-get install php-common 2>/dev/null || which phpdismod
 ```
 
 ## Key Features

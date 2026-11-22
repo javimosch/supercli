@@ -18,7 +18,7 @@ CLI tool: nproc.
 
 ## Installation
 ```bash
-apt-get install nproc 2>/dev/null || which nproc
+apt-get install coreutils 2>/dev/null || which nproc
 ```
 
 ## Key Features

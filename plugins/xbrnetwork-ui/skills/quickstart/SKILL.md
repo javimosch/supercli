@@ -18,7 +18,7 @@ CLI tool: xbrnetwork-ui.
 
 ## Installation
 ```bash
-apt-get install xbrnetwork-ui 2>/dev/null || which xbrnetwork-ui
+apt-get install python3-autobahn 2>/dev/null || which xbrnetwork-ui
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmcut.
 
 ## Installation
 ```bash
-apt-get install pnmcut 2>/dev/null || which pnmcut
+apt-get install netpbm 2>/dev/null || which pnmcut
 ```
 
 ## Key Features

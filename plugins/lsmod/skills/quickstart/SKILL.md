@@ -18,7 +18,7 @@ CLI tool: lsmod.
 
 ## Installation
 ```bash
-apt-get install lsmod 2>/dev/null || which lsmod
+apt-get install kmod 2>/dev/null || which lsmod
 ```
 
 ## Key Features

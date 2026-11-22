@@ -18,7 +18,7 @@ CLI tool: tarcat.
 
 ## Installation
 ```bash
-apt-get install tarcat 2>/dev/null || which tarcat
+apt-get install tar 2>/dev/null || which tarcat
 ```
 
 ## Key Features

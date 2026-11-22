@@ -18,7 +18,7 @@ CLI tool: x-session-manager.
 
 ## Installation
 ```bash
-apt-get install x-session-manager 2>/dev/null || which x-session-manager
+apt-get install gnome-session-bin 2>/dev/null || which x-session-manager
 ```
 
 ## Key Features

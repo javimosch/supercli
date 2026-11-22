@@ -18,7 +18,7 @@ CLI tool: viewres.
 
 ## Installation
 ```bash
-apt-get install viewres 2>/dev/null || which viewres
+apt-get install x11-utils 2>/dev/null || which viewres
 ```
 
 ## Key Features

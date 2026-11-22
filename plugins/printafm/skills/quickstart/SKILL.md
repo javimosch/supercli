@@ -18,7 +18,7 @@ CLI tool: printafm.
 
 ## Installation
 ```bash
-apt-get install printafm 2>/dev/null || which printafm
+apt-get install ghostscript 2>/dev/null || which printafm
 ```
 
 ## Key Features

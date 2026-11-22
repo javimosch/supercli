@@ -18,7 +18,7 @@ CLI tool: spice-vdagentd.
 
 ## Installation
 ```bash
-apt-get install spice-vdagentd 2>/dev/null || which spice-vdagentd
+apt-get install spice-vdagent 2>/dev/null || which spice-vdagentd
 ```
 
 ## Key Features

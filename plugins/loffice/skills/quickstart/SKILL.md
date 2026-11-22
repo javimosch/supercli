@@ -18,7 +18,7 @@ CLI tool: loffice.
 
 ## Installation
 ```bash
-apt-get install loffice 2>/dev/null || which loffice
+apt-get install libreoffice-common 2>/dev/null || which loffice
 ```
 
 ## Key Features

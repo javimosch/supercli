@@ -18,7 +18,7 @@ CLI tool: qmlcachegen.
 
 ## Installation
 ```bash
-apt-get install qmlcachegen 2>/dev/null || which qmlcachegen
+apt-get install qtchooser 2>/dev/null || which qmlcachegen
 ```
 
 ## Key Features

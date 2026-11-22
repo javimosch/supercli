@@ -18,7 +18,7 @@ CLI tool: pnmnorm.
 
 ## Installation
 ```bash
-apt-get install pnmnorm 2>/dev/null || which pnmnorm
+apt-get install netpbm 2>/dev/null || which pnmnorm
 ```
 
 ## Key Features

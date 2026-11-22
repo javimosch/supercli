@@ -18,7 +18,7 @@ CLI tool: mcat.
 
 ## Installation
 ```bash
-apt-get install mcat 2>/dev/null || which mcat
+apt-get install mtools 2>/dev/null || which mcat
 ```
 
 ## Key Features

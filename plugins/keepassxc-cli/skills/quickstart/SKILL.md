@@ -18,7 +18,7 @@ CLI tool: keepassxc-cli.
 
 ## Installation
 ```bash
-apt-get install keepassxc-cli 2>/dev/null || which keepassxc-cli
+apt-get install keepassxc 2>/dev/null || which keepassxc-cli
 ```
 
 ## Key Features

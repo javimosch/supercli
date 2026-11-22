@@ -18,7 +18,7 @@ CLI tool: mren.
 
 ## Installation
 ```bash
-apt-get install mren 2>/dev/null || which mren
+apt-get install mtools 2>/dev/null || which mren
 ```
 
 ## Key Features

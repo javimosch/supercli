@@ -18,7 +18,7 @@ CLI tool: wish8.6.
 
 ## Installation
 ```bash
-apt-get install wish8.6 2>/dev/null || which wish8.6
+apt-get install tk8.6 2>/dev/null || which wish8.6
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: showconsolefont.
 
 ## Installation
 ```bash
-apt-get install showconsolefont 2>/dev/null || which showconsolefont
+apt-get install kbd 2>/dev/null || which showconsolefont
 ```
 
 ## Key Features

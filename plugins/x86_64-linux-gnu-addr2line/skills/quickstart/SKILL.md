@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-addr2line.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-addr2line 2>/dev/null || which x86_64-linux-gnu-addr2line
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-addr2line
 ```
 
 ## Key Features

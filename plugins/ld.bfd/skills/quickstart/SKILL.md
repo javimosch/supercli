@@ -18,7 +18,7 @@ CLI tool: ld.bfd.
 
 ## Installation
 ```bash
-apt-get install ld.bfd 2>/dev/null || which ld.bfd
+apt-get install binutils 2>/dev/null || which ld.bfd
 ```
 
 ## Key Features

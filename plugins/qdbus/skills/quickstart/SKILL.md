@@ -18,7 +18,7 @@ CLI tool: qdbus.
 
 ## Installation
 ```bash
-apt-get install qdbus 2>/dev/null || which qdbus
+apt-get install qtchooser 2>/dev/null || which qdbus
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmcomp.
 
 ## Installation
 ```bash
-apt-get install pnmcomp 2>/dev/null || which pnmcomp
+apt-get install netpbm 2>/dev/null || which pnmcomp
 ```
 
 ## Key Features

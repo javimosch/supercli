@@ -18,7 +18,7 @@ CLI tool: cupstestppd.
 
 ## Installation
 ```bash
-apt-get install cupstestppd 2>/dev/null || which cupstestppd
+apt-get install cups-client 2>/dev/null || which cupstestppd
 ```
 
 ## Key Features

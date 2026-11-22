@@ -18,7 +18,7 @@ CLI tool: rawtoppm.
 
 ## Installation
 ```bash
-apt-get install rawtoppm 2>/dev/null || which rawtoppm
+apt-get install netpbm 2>/dev/null || which rawtoppm
 ```
 
 ## Key Features

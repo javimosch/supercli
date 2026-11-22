@@ -18,7 +18,7 @@ CLI tool: vstp.
 
 ## Installation
 ```bash
-apt-get install vstp 2>/dev/null || which vstp
+apt-get install brltty 2>/dev/null || which vstp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lxc-wait.
 
 ## Installation
 ```bash
-apt-get install lxc-wait 2>/dev/null || which lxc-wait
+apt-get install lxc-utils 2>/dev/null || which lxc-wait
 ```
 
 ## Key Features

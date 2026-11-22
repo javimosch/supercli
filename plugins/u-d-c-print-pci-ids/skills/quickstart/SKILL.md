@@ -18,7 +18,7 @@ CLI tool: u-d-c-print-pci-ids.
 
 ## Installation
 ```bash
-apt-get install u-d-c-print-pci-ids 2>/dev/null || which u-d-c-print-pci-ids
+apt-get install ubuntu-drivers-common 2>/dev/null || which u-d-c-print-pci-ids
 ```
 
 ## Key Features

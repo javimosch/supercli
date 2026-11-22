@@ -18,7 +18,7 @@ CLI tool: lupdate.
 
 ## Installation
 ```bash
-apt-get install lupdate 2>/dev/null || which lupdate
+apt-get install qtchooser 2>/dev/null || which lupdate
 ```
 
 ## Key Features

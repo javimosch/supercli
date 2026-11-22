@@ -18,7 +18,7 @@ CLI tool: virtualboxvm.
 
 ## Installation
 ```bash
-apt-get install virtualboxvm 2>/dev/null || which virtualboxvm
+apt-get install virtualbox-qt 2>/dev/null || which virtualboxvm
 ```
 
 ## Key Features

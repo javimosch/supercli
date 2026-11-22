@@ -18,7 +18,7 @@ CLI tool: procan.
 
 ## Installation
 ```bash
-apt-get install procan 2>/dev/null || which procan
+apt-get install socat 2>/dev/null || which procan
 ```
 
 ## Key Features

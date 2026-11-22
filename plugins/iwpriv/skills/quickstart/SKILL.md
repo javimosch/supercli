@@ -18,7 +18,7 @@ CLI tool: iwpriv.
 
 ## Installation
 ```bash
-apt-get install iwpriv 2>/dev/null || which iwpriv
+apt-get install wireless-tools 2>/dev/null || which iwpriv
 ```
 
 ## Key Features

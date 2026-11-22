@@ -18,7 +18,7 @@ CLI tool: perldoc.
 
 ## Installation
 ```bash
-apt-get install perldoc 2>/dev/null || which perldoc
+apt-get install perl 2>/dev/null || which perldoc
 ```
 
 ## Key Features

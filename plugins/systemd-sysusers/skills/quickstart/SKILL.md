@@ -18,7 +18,7 @@ CLI tool: systemd-sysusers.
 
 ## Installation
 ```bash
-apt-get install systemd-sysusers 2>/dev/null || which systemd-sysusers
+apt-get install systemd 2>/dev/null || which systemd-sysusers
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: kpsewhich.
 
 ## Installation
 ```bash
-apt-get install kpsewhich 2>/dev/null || which kpsewhich
+apt-get install texlive-binaries 2>/dev/null || which kpsewhich
 ```
 
 ## Key Features

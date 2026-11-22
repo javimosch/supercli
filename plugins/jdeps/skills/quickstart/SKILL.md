@@ -18,7 +18,7 @@ CLI tool: jdeps.
 
 ## Installation
 ```bash
-apt-get install jdeps 2>/dev/null || which jdeps
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jdeps
 ```
 
 ## Key Features

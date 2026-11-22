@@ -18,7 +18,7 @@ CLI tool: pw-midiplay.
 
 ## Installation
 ```bash
-apt-get install pw-midiplay 2>/dev/null || which pw-midiplay
+apt-get install pipewire-bin 2>/dev/null || which pw-midiplay
 ```
 
 ## Key Features

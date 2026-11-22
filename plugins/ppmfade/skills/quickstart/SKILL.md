@@ -18,7 +18,7 @@ CLI tool: ppmfade.
 
 ## Installation
 ```bash
-apt-get install ppmfade 2>/dev/null || which ppmfade
+apt-get install netpbm 2>/dev/null || which ppmfade
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: tangle.
 
 ## Installation
 ```bash
-apt-get install tangle 2>/dev/null || which tangle
+apt-get install texlive-binaries 2>/dev/null || which tangle
 ```
 
 ## Key Features

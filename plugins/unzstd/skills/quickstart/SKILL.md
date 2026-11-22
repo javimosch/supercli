@@ -18,7 +18,7 @@ CLI tool: unzstd.
 
 ## Installation
 ```bash
-apt-get install unzstd 2>/dev/null || which unzstd
+apt-get install zstd 2>/dev/null || which unzstd
 ```
 
 ## Key Features

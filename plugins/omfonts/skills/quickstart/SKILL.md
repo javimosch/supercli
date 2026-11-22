@@ -18,7 +18,7 @@ CLI tool: omfonts.
 
 ## Installation
 ```bash
-apt-get install omfonts 2>/dev/null || which omfonts
+apt-get install texlive-binaries 2>/dev/null || which omfonts
 ```
 
 ## Key Features

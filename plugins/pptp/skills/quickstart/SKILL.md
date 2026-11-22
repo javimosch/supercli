@@ -18,7 +18,7 @@ CLI tool: pptp.
 
 ## Installation
 ```bash
-apt-get install pptp 2>/dev/null || which pptp
+apt-get install pptp-linux 2>/dev/null || which pptp
 ```
 
 ## Key Features

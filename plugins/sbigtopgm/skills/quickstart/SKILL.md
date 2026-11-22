@@ -18,7 +18,7 @@ CLI tool: sbigtopgm.
 
 ## Installation
 ```bash
-apt-get install sbigtopgm 2>/dev/null || which sbigtopgm
+apt-get install netpbm 2>/dev/null || which sbigtopgm
 ```
 
 ## Key Features

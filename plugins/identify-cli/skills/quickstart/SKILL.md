@@ -18,7 +18,7 @@ CLI tool: identify-cli.
 
 ## Installation
 ```bash
-apt-get install identify-cli 2>/dev/null || which identify-cli
+apt-get install python3-identify 2>/dev/null || which identify-cli
 ```
 
 ## Key Features

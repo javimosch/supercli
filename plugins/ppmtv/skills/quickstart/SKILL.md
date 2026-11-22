@@ -18,7 +18,7 @@ CLI tool: ppmtv.
 
 ## Installation
 ```bash
-apt-get install ppmtv 2>/dev/null || which ppmtv
+apt-get install netpbm 2>/dev/null || which ppmtv
 ```
 
 ## Key Features

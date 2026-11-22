@@ -18,7 +18,7 @@ CLI tool: toc2cddb.
 
 ## Installation
 ```bash
-apt-get install toc2cddb 2>/dev/null || which toc2cddb
+apt-get install cdrdao 2>/dev/null || which toc2cddb
 ```
 
 ## Key Features

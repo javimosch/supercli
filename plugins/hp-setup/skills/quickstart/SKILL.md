@@ -18,7 +18,7 @@ CLI tool: hp-setup.
 
 ## Installation
 ```bash
-apt-get install hp-setup 2>/dev/null || which hp-setup
+apt-get install hplip 2>/dev/null || which hp-setup
 ```
 
 ## Key Features

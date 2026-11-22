@@ -18,7 +18,7 @@ CLI tool: sss_ssh_authorizedkeys.
 
 ## Installation
 ```bash
-apt-get install sss_ssh_authorizedkeys 2>/dev/null || which sss_ssh_authorizedkeys
+apt-get install sssd-common 2>/dev/null || which sss_ssh_authorizedkeys
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: remotinator.
 
 ## Installation
 ```bash
-apt-get install remotinator 2>/dev/null || which remotinator
+apt-get install terminator 2>/dev/null || which remotinator
 ```
 
 ## Key Features

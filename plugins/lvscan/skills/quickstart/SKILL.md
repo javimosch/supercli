@@ -18,7 +18,7 @@ CLI tool: lvscan.
 
 ## Installation
 ```bash
-apt-get install lvscan 2>/dev/null || which lvscan
+apt-get install lvm2 2>/dev/null || which lvscan
 ```
 
 ## Key Features

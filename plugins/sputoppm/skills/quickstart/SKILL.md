@@ -18,7 +18,7 @@ CLI tool: sputoppm.
 
 ## Installation
 ```bash
-apt-get install sputoppm 2>/dev/null || which sputoppm
+apt-get install netpbm 2>/dev/null || which sputoppm
 ```
 
 ## Key Features

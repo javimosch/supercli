@@ -18,7 +18,7 @@ CLI tool: pptpsetup.
 
 ## Installation
 ```bash
-apt-get install pptpsetup 2>/dev/null || which pptpsetup
+apt-get install pptp-linux 2>/dev/null || which pptpsetup
 ```
 
 ## Key Features

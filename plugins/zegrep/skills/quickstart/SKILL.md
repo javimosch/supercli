@@ -18,7 +18,7 @@ CLI tool: zegrep.
 
 ## Installation
 ```bash
-apt-get install zegrep 2>/dev/null || which zegrep
+apt-get install gzip 2>/dev/null || which zegrep
 ```
 
 ## Key Features

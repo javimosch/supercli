@@ -18,7 +18,7 @@ CLI tool: hp-plugin-ubuntu.
 
 ## Installation
 ```bash
-apt-get install hp-plugin-ubuntu 2>/dev/null || which hp-plugin-ubuntu
+apt-get install hplip 2>/dev/null || which hp-plugin-ubuntu
 ```
 
 ## Key Features

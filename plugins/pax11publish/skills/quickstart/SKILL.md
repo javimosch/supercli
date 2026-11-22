@@ -18,7 +18,7 @@ CLI tool: pax11publish.
 
 ## Installation
 ```bash
-apt-get install pax11publish 2>/dev/null || which pax11publish
+apt-get install pulseaudio-utils 2>/dev/null || which pax11publish
 ```
 
 ## Key Features

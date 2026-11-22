@@ -18,7 +18,7 @@ CLI tool: ximtoppm.
 
 ## Installation
 ```bash
-apt-get install ximtoppm 2>/dev/null || which ximtoppm
+apt-get install netpbm 2>/dev/null || which ximtoppm
 ```
 
 ## Key Features

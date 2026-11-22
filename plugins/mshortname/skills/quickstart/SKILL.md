@@ -18,7 +18,7 @@ CLI tool: mshortname.
 
 ## Installation
 ```bash
-apt-get install mshortname 2>/dev/null || which mshortname
+apt-get install mtools 2>/dev/null || which mshortname
 ```
 
 ## Key Features

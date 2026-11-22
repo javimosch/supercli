@@ -18,7 +18,7 @@ CLI tool: synctex.
 
 ## Installation
 ```bash
-apt-get install synctex 2>/dev/null || which synctex
+apt-get install texlive-binaries 2>/dev/null || which synctex
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: install-sgmlcatalog.
 
 ## Installation
 ```bash
-apt-get install install-sgmlcatalog 2>/dev/null || which install-sgmlcatalog
+apt-get install sgml-base 2>/dev/null || which install-sgmlcatalog
 ```
 
 ## Key Features

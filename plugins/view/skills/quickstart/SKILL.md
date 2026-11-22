@@ -18,7 +18,7 @@ CLI tool: view.
 
 ## Installation
 ```bash
-apt-get install view 2>/dev/null || which view
+apt-get install vim 2>/dev/null || which view
 ```
 
 ## Key Features

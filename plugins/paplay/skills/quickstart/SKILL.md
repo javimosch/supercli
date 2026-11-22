@@ -18,7 +18,7 @@ CLI tool: paplay.
 
 ## Installation
 ```bash
-apt-get install paplay 2>/dev/null || which paplay
+apt-get install pulseaudio-utils 2>/dev/null || which paplay
 ```
 
 ## Key Features

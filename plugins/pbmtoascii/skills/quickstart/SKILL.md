@@ -18,7 +18,7 @@ CLI tool: pbmtoascii.
 
 ## Installation
 ```bash
-apt-get install pbmtoascii 2>/dev/null || which pbmtoascii
+apt-get install netpbm 2>/dev/null || which pbmtoascii
 ```
 
 ## Key Features

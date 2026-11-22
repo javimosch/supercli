@@ -18,7 +18,7 @@ CLI tool: vcstime.
 
 ## Installation
 ```bash
-apt-get install vcstime 2>/dev/null || which vcstime
+apt-get install kbd 2>/dev/null || which vcstime
 ```
 
 ## Key Features

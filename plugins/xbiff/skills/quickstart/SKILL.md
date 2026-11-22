@@ -18,7 +18,7 @@ CLI tool: xbiff.
 
 ## Installation
 ```bash
-apt-get install xbiff 2>/dev/null || which xbiff
+apt-get install x11-apps 2>/dev/null || which xbiff
 ```
 
 ## Key Features

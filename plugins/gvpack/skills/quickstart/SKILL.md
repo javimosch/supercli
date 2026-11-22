@@ -18,7 +18,7 @@ CLI tool: gvpack.
 
 ## Installation
 ```bash
-apt-get install gvpack 2>/dev/null || which gvpack
+apt-get install graphviz 2>/dev/null || which gvpack
 ```
 
 ## Key Features

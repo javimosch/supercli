@@ -18,7 +18,7 @@ CLI tool: dvihp.
 
 ## Installation
 ```bash
-apt-get install dvihp 2>/dev/null || which dvihp
+apt-get install texlive-binaries 2>/dev/null || which dvihp
 ```
 
 ## Key Features

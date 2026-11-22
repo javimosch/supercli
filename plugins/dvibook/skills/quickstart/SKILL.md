@@ -18,7 +18,7 @@ CLI tool: dvibook.
 
 ## Installation
 ```bash
-apt-get install dvibook 2>/dev/null || which dvibook
+apt-get install texlive-binaries 2>/dev/null || which dvibook
 ```
 
 ## Key Features

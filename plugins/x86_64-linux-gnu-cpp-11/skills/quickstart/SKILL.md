@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-cpp-11.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-cpp-11 2>/dev/null || which x86_64-linux-gnu-cpp-11
+apt-get install cpp-11 2>/dev/null || which x86_64-linux-gnu-cpp-11
 ```
 
 ## Key Features

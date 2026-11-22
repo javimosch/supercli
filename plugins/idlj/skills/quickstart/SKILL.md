@@ -18,7 +18,7 @@ CLI tool: idlj.
 
 ## Installation
 ```bash
-apt-get install idlj 2>/dev/null || which idlj
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which idlj
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mtr-packet.
 
 ## Installation
 ```bash
-apt-get install mtr-packet 2>/dev/null || which mtr-packet
+apt-get install mtr-tiny 2>/dev/null || which mtr-packet
 ```
 
 ## Key Features

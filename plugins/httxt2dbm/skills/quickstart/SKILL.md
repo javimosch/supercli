@@ -18,7 +18,7 @@ CLI tool: httxt2dbm.
 
 ## Installation
 ```bash
-apt-get install httxt2dbm 2>/dev/null || which httxt2dbm
+apt-get install apache2-utils 2>/dev/null || which httxt2dbm
 ```
 
 ## Key Features

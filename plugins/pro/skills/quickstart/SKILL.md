@@ -18,7 +18,7 @@ CLI tool: pro.
 
 ## Installation
 ```bash
-apt-get install pro 2>/dev/null || which pro
+apt-get install ubuntu-advantage-tools 2>/dev/null || which pro
 ```
 
 ## Key Features

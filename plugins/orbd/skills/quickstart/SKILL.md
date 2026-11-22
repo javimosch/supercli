@@ -18,7 +18,7 @@ CLI tool: orbd.
 
 ## Installation
 ```bash
-apt-get install orbd 2>/dev/null || which orbd
+apt-get install openjdk-8-jre-headless 2>/dev/null || which orbd
 ```
 
 ## Key Features

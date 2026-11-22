@@ -18,7 +18,7 @@ CLI tool: irqbalance-ui.
 
 ## Installation
 ```bash
-apt-get install irqbalance-ui 2>/dev/null || which irqbalance-ui
+apt-get install irqbalance 2>/dev/null || which irqbalance-ui
 ```
 
 ## Key Features

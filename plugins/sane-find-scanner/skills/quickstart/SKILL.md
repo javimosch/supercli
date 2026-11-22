@@ -18,7 +18,7 @@ CLI tool: sane-find-scanner.
 
 ## Installation
 ```bash
-apt-get install sane-find-scanner 2>/dev/null || which sane-find-scanner
+apt-get install sane-utils 2>/dev/null || which sane-find-scanner
 ```
 
 ## Key Features

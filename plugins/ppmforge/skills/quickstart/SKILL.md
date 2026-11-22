@@ -18,7 +18,7 @@ CLI tool: ppmforge.
 
 ## Installation
 ```bash
-apt-get install ppmforge 2>/dev/null || which ppmforge
+apt-get install netpbm 2>/dev/null || which ppmforge
 ```
 
 ## Key Features

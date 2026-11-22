@@ -18,7 +18,7 @@ CLI tool: ppmmix.
 
 ## Installation
 ```bash
-apt-get install ppmmix 2>/dev/null || which ppmmix
+apt-get install netpbm 2>/dev/null || which ppmmix
 ```
 
 ## Key Features

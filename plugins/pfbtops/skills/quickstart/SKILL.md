@@ -18,7 +18,7 @@ CLI tool: pfbtops.
 
 ## Installation
 ```bash
-apt-get install pfbtops 2>/dev/null || which pfbtops
+apt-get install groff 2>/dev/null || which pfbtops
 ```
 
 ## Key Features

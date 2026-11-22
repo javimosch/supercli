@@ -18,7 +18,7 @@ CLI tool: systemd-tmpfiles.
 
 ## Installation
 ```bash
-apt-get install systemd-tmpfiles 2>/dev/null || which systemd-tmpfiles
+apt-get install systemd 2>/dev/null || which systemd-tmpfiles
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: manpath.
 
 ## Installation
 ```bash
-apt-get install manpath 2>/dev/null || which manpath
+apt-get install man-db 2>/dev/null || which manpath
 ```
 
 ## Key Features

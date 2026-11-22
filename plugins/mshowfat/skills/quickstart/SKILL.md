@@ -18,7 +18,7 @@ CLI tool: mshowfat.
 
 ## Installation
 ```bash
-apt-get install mshowfat 2>/dev/null || which mshowfat
+apt-get install mtools 2>/dev/null || which mshowfat
 ```
 
 ## Key Features

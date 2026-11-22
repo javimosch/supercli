@@ -18,7 +18,7 @@ CLI tool: aa-teardown.
 
 ## Installation
 ```bash
-apt-get install aa-teardown 2>/dev/null || which aa-teardown
+apt-get install apparmor 2>/dev/null || which aa-teardown
 ```
 
 ## Key Features

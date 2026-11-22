@@ -18,7 +18,7 @@ CLI tool: automake-1.16.
 
 ## Installation
 ```bash
-apt-get install automake-1.16 2>/dev/null || which automake-1.16
+apt-get install automake 2>/dev/null || which automake-1.16
 ```
 
 ## Key Features

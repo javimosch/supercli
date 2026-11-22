@@ -18,7 +18,7 @@ CLI tool: thin_metadata_size.
 
 ## Installation
 ```bash
-apt-get install thin_metadata_size 2>/dev/null || which thin_metadata_size
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_metadata_size
 ```
 
 ## Key Features

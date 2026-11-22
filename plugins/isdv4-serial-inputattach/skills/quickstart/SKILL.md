@@ -18,7 +18,7 @@ CLI tool: isdv4-serial-inputattach.
 
 ## Installation
 ```bash
-apt-get install isdv4-serial-inputattach 2>/dev/null || which isdv4-serial-inputattach
+apt-get install xserver-xorg-input-wacom 2>/dev/null || which isdv4-serial-inputattach
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: wsgen.
 
 ## Installation
 ```bash
-apt-get install wsgen 2>/dev/null || which wsgen
+apt-get install jaxws 2>/dev/null || which wsgen
 ```
 
 ## Key Features

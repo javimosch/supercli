@@ -18,7 +18,7 @@ CLI tool: pbmtopi3.
 
 ## Installation
 ```bash
-apt-get install pbmtopi3 2>/dev/null || which pbmtopi3
+apt-get install netpbm 2>/dev/null || which pbmtopi3
 ```
 
 ## Key Features

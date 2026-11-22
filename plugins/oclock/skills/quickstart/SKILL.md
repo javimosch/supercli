@@ -18,7 +18,7 @@ CLI tool: oclock.
 
 ## Installation
 ```bash
-apt-get install oclock 2>/dev/null || which oclock
+apt-get install x11-apps 2>/dev/null || which oclock
 ```
 
 ## Key Features

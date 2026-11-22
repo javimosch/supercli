@@ -18,7 +18,7 @@ CLI tool: leaftoppm.
 
 ## Installation
 ```bash
-apt-get install leaftoppm 2>/dev/null || which leaftoppm
+apt-get install netpbm 2>/dev/null || which leaftoppm
 ```
 
 ## Key Features

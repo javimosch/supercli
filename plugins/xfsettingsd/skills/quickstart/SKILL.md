@@ -18,7 +18,7 @@ CLI tool: xfsettingsd.
 
 ## Installation
 ```bash
-apt-get install xfsettingsd 2>/dev/null || which xfsettingsd
+apt-get install xfce4-settings 2>/dev/null || which xfsettingsd
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xfce4-appearance-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-appearance-settings 2>/dev/null || which xfce4-appearance-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-appearance-settings
 ```
 
 ## Key Features

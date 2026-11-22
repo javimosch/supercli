@@ -18,7 +18,7 @@ CLI tool: jhsdb.
 
 ## Installation
 ```bash
-apt-get install jhsdb 2>/dev/null || which jhsdb
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jhsdb
 ```
 
 ## Key Features

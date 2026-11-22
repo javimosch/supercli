@@ -18,7 +18,7 @@ CLI tool: remove-default-ispell.
 
 ## Installation
 ```bash
-apt-get install remove-default-ispell 2>/dev/null || which remove-default-ispell
+apt-get install dictionaries-common 2>/dev/null || which remove-default-ispell
 ```
 
 ## Key Features

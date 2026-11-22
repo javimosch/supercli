@@ -18,7 +18,7 @@ CLI tool: lofromtemplate.
 
 ## Installation
 ```bash
-apt-get install lofromtemplate 2>/dev/null || which lofromtemplate
+apt-get install libreoffice-common 2>/dev/null || which lofromtemplate
 ```
 
 ## Key Features

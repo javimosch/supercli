@@ -18,7 +18,7 @@ CLI tool: pbmpscale.
 
 ## Installation
 ```bash
-apt-get install pbmpscale 2>/dev/null || which pbmpscale
+apt-get install netpbm 2>/dev/null || which pbmpscale
 ```
 
 ## Key Features

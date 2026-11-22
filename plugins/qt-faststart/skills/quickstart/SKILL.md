@@ -18,7 +18,7 @@ CLI tool: qt-faststart.
 
 ## Installation
 ```bash
-apt-get install qt-faststart 2>/dev/null || which qt-faststart
+apt-get install ffmpeg 2>/dev/null || which qt-faststart
 ```
 
 ## Key Features

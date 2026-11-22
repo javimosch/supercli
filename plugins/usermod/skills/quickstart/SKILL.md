@@ -18,7 +18,7 @@ CLI tool: usermod.
 
 ## Installation
 ```bash
-apt-get install usermod 2>/dev/null || which usermod
+apt-get install passwd 2>/dev/null || which usermod
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pbmtoxbm.
 
 ## Installation
 ```bash
-apt-get install pbmtoxbm 2>/dev/null || which pbmtoxbm
+apt-get install netpbm 2>/dev/null || which pbmtoxbm
 ```
 
 ## Key Features

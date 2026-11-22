@@ -18,7 +18,7 @@ CLI tool: uptex.
 
 ## Installation
 ```bash
-apt-get install uptex 2>/dev/null || which uptex
+apt-get install texlive-binaries 2>/dev/null || which uptex
 ```
 
 ## Key Features

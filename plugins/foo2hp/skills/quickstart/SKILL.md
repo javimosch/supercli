@@ -18,7 +18,7 @@ CLI tool: foo2hp.
 
 ## Installation
 ```bash
-apt-get install foo2hp 2>/dev/null || which foo2hp
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2hp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: switcherooctl.
 
 ## Installation
 ```bash
-apt-get install switcherooctl 2>/dev/null || which switcherooctl
+apt-get install switcheroo-control 2>/dev/null || which switcherooctl
 ```
 
 ## Key Features

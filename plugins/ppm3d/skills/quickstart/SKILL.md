@@ -18,7 +18,7 @@ CLI tool: ppm3d.
 
 ## Installation
 ```bash
-apt-get install ppm3d 2>/dev/null || which ppm3d
+apt-get install netpbm 2>/dev/null || which ppm3d
 ```
 
 ## Key Features

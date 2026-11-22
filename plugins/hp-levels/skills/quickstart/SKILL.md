@@ -18,7 +18,7 @@ CLI tool: hp-levels.
 
 ## Installation
 ```bash
-apt-get install hp-levels 2>/dev/null || which hp-levels
+apt-get install hplip 2>/dev/null || which hp-levels
 ```
 
 ## Key Features

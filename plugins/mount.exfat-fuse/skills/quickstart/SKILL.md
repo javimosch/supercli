@@ -18,7 +18,7 @@ CLI tool: mount.exfat-fuse.
 
 ## Installation
 ```bash
-apt-get install mount.exfat-fuse 2>/dev/null || which mount.exfat-fuse
+apt-get install exfat-fuse 2>/dev/null || which mount.exfat-fuse
 ```
 
 ## Key Features

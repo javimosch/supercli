@@ -18,7 +18,7 @@ CLI tool: foo2oak-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2oak-wrapper 2>/dev/null || which foo2oak-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2oak-wrapper
 ```
 
 ## Key Features

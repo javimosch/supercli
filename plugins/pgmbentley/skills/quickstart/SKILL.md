@@ -18,7 +18,7 @@ CLI tool: pgmbentley.
 
 ## Installation
 ```bash
-apt-get install pgmbentley 2>/dev/null || which pgmbentley
+apt-get install netpbm 2>/dev/null || which pgmbentley
 ```
 
 ## Key Features

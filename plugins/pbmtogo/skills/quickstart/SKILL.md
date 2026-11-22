@@ -18,7 +18,7 @@ CLI tool: pbmtogo.
 
 ## Installation
 ```bash
-apt-get install pbmtogo 2>/dev/null || which pbmtogo
+apt-get install netpbm 2>/dev/null || which pbmtogo
 ```
 
 ## Key Features

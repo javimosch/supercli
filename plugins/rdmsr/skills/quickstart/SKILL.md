@@ -18,7 +18,7 @@ CLI tool: rdmsr.
 
 ## Installation
 ```bash
-apt-get install rdmsr 2>/dev/null || which rdmsr
+apt-get install msr-tools 2>/dev/null || which rdmsr
 ```
 
 ## Key Features

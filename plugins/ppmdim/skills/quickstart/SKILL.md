@@ -18,7 +18,7 @@ CLI tool: ppmdim.
 
 ## Installation
 ```bash
-apt-get install ppmdim 2>/dev/null || which ppmdim
+apt-get install netpbm 2>/dev/null || which ppmdim
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: twistd3.
 
 ## Installation
 ```bash
-apt-get install twistd3 2>/dev/null || which twistd3
+apt-get install python3-twisted 2>/dev/null || which twistd3
 ```
 
 ## Key Features

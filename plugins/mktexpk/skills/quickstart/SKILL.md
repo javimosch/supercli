@@ -18,7 +18,7 @@ CLI tool: mktexpk.
 
 ## Installation
 ```bash
-apt-get install mktexpk 2>/dev/null || which mktexpk
+apt-get install texlive-base 2>/dev/null || which mktexpk
 ```
 
 ## Key Features

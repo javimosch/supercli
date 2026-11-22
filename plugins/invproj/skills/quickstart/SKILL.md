@@ -18,7 +18,7 @@ CLI tool: invproj.
 
 ## Installation
 ```bash
-apt-get install invproj 2>/dev/null || which invproj
+apt-get install proj-bin 2>/dev/null || which invproj
 ```
 
 ## Key Features

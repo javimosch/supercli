@@ -18,7 +18,7 @@ CLI tool: sshd.
 
 ## Installation
 ```bash
-apt-get install sshd 2>/dev/null || which sshd
+apt-get install openssh-server 2>/dev/null || which sshd
 ```
 
 ## Key Features

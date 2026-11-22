@@ -18,7 +18,7 @@ CLI tool: intltool-update.
 
 ## Installation
 ```bash
-apt-get install intltool-update 2>/dev/null || which intltool-update
+apt-get install intltool 2>/dev/null || which intltool-update
 ```
 
 ## Key Features

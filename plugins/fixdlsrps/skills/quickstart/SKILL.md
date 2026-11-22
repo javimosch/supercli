@@ -18,7 +18,7 @@ CLI tool: fixdlsrps.
 
 ## Installation
 ```bash
-apt-get install fixdlsrps 2>/dev/null || which fixdlsrps
+apt-get install psutils 2>/dev/null || which fixdlsrps
 ```
 
 ## Key Features

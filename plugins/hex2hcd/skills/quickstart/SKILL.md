@@ -18,7 +18,7 @@ CLI tool: hex2hcd.
 
 ## Installation
 ```bash
-apt-get install hex2hcd 2>/dev/null || which hex2hcd
+apt-get install bluez 2>/dev/null || which hex2hcd
 ```
 
 ## Key Features

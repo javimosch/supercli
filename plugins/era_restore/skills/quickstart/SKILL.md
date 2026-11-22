@@ -18,7 +18,7 @@ CLI tool: era_restore.
 
 ## Installation
 ```bash
-apt-get install era_restore 2>/dev/null || which era_restore
+apt-get install thin-provisioning-tools 2>/dev/null || which era_restore
 ```
 
 ## Key Features

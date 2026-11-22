@@ -18,7 +18,7 @@ CLI tool: ucfq.
 
 ## Installation
 ```bash
-apt-get install ucfq 2>/dev/null || which ucfq
+apt-get install ucf 2>/dev/null || which ucfq
 ```
 
 ## Key Features

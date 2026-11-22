@@ -18,7 +18,7 @@ CLI tool: ebb.
 
 ## Installation
 ```bash
-apt-get install ebb 2>/dev/null || which ebb
+apt-get install texlive-binaries 2>/dev/null || which ebb
 ```
 
 ## Key Features

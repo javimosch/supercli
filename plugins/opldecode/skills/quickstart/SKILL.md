@@ -18,7 +18,7 @@ CLI tool: opldecode.
 
 ## Installation
 ```bash
-apt-get install opldecode 2>/dev/null || which opldecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which opldecode
 ```
 
 ## Key Features

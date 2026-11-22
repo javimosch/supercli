@@ -18,7 +18,7 @@ CLI tool: pnmsplit.
 
 ## Installation
 ```bash
-apt-get install pnmsplit 2>/dev/null || which pnmsplit
+apt-get install netpbm 2>/dev/null || which pnmsplit
 ```
 
 ## Key Features

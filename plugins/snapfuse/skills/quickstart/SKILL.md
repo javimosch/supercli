@@ -18,7 +18,7 @@ CLI tool: snapfuse.
 
 ## Installation
 ```bash
-apt-get install snapfuse 2>/dev/null || which snapfuse
+apt-get install snapd 2>/dev/null || which snapfuse
 ```
 
 ## Key Features

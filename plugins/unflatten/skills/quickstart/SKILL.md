@@ -18,7 +18,7 @@ CLI tool: unflatten.
 
 ## Installation
 ```bash
-apt-get install unflatten 2>/dev/null || which unflatten
+apt-get install graphviz 2>/dev/null || which unflatten
 ```
 
 ## Key Features

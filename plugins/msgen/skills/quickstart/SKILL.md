@@ -18,7 +18,7 @@ CLI tool: msgen.
 
 ## Installation
 ```bash
-apt-get install msgen 2>/dev/null || which msgen
+apt-get install gettext 2>/dev/null || which msgen
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: wsdump.
 
 ## Installation
 ```bash
-apt-get install wsdump 2>/dev/null || which wsdump
+apt-get install python3-websocket 2>/dev/null || which wsdump
 ```
 
 ## Key Features

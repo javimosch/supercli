@@ -18,7 +18,7 @@ CLI tool: eptex.
 
 ## Installation
 ```bash
-apt-get install eptex 2>/dev/null || which eptex
+apt-get install texlive-binaries 2>/dev/null || which eptex
 ```
 
 ## Key Features

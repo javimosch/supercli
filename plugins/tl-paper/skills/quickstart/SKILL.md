@@ -18,7 +18,7 @@ CLI tool: tl-paper.
 
 ## Installation
 ```bash
-apt-get install tl-paper 2>/dev/null || which tl-paper
+apt-get install texlive-base 2>/dev/null || which tl-paper
 ```
 
 ## Key Features

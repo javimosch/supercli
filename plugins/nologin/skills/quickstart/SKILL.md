@@ -18,7 +18,7 @@ CLI tool: nologin.
 
 ## Installation
 ```bash
-apt-get install nologin 2>/dev/null || which nologin
+apt-get install login 2>/dev/null || which nologin
 ```
 
 ## Key Features

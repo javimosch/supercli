@@ -18,7 +18,7 @@ CLI tool: rcl.
 
 ## Installation
 ```bash
-apt-get install rcl 2>/dev/null || which rcl
+apt-get install mcl 2>/dev/null || which rcl
 ```
 
 ## Key Features

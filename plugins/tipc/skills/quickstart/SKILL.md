@@ -18,7 +18,7 @@ CLI tool: tipc.
 
 ## Installation
 ```bash
-apt-get install tipc 2>/dev/null || which tipc
+apt-get install iproute2 2>/dev/null || which tipc
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xdg-user-dir.
 
 ## Installation
 ```bash
-apt-get install xdg-user-dir 2>/dev/null || which xdg-user-dir
+apt-get install xdg-user-dirs 2>/dev/null || which xdg-user-dir
 ```
 
 ## Key Features

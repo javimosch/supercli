@@ -18,7 +18,7 @@ CLI tool: ppmtopj.
 
 ## Installation
 ```bash
-apt-get install ppmtopj 2>/dev/null || which ppmtopj
+apt-get install netpbm 2>/dev/null || which ppmtopj
 ```
 
 ## Key Features

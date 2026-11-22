@@ -18,7 +18,7 @@ CLI tool: vboxwebsrv.
 
 ## Installation
 ```bash
-apt-get install vboxwebsrv 2>/dev/null || which vboxwebsrv
+apt-get install virtualbox 2>/dev/null || which vboxwebsrv
 ```
 
 ## Key Features

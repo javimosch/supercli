@@ -18,7 +18,7 @@ CLI tool: e2image.
 
 ## Installation
 ```bash
-apt-get install e2image 2>/dev/null || which e2image
+apt-get install e2fsprogs 2>/dev/null || which e2image
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xfce4-settings-manager.
 
 ## Installation
 ```bash
-apt-get install xfce4-settings-manager 2>/dev/null || which xfce4-settings-manager
+apt-get install xfce4-settings 2>/dev/null || which xfce4-settings-manager
 ```
 
 ## Key Features

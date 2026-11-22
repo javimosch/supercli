@@ -18,7 +18,7 @@ CLI tool: pnmtosir.
 
 ## Installation
 ```bash
-apt-get install pnmtosir 2>/dev/null || which pnmtosir
+apt-get install netpbm 2>/dev/null || which pnmtosir
 ```
 
 ## Key Features

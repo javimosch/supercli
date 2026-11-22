@@ -18,7 +18,7 @@ CLI tool: lvmsadc.
 
 ## Installation
 ```bash
-apt-get install lvmsadc 2>/dev/null || which lvmsadc
+apt-get install lvm2 2>/dev/null || which lvmsadc
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-cracklib.
 
 ## Installation
 ```bash
-apt-get install update-cracklib 2>/dev/null || which update-cracklib
+apt-get install cracklib-runtime 2>/dev/null || which update-cracklib
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pbmtolj.
 
 ## Installation
 ```bash
-apt-get install pbmtolj 2>/dev/null || which pbmtolj
+apt-get install netpbm 2>/dev/null || which pbmtolj
 ```
 
 ## Key Features

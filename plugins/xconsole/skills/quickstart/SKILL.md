@@ -18,7 +18,7 @@ CLI tool: xconsole.
 
 ## Installation
 ```bash
-apt-get install xconsole 2>/dev/null || which xconsole
+apt-get install x11-apps 2>/dev/null || which xconsole
 ```
 
 ## Key Features

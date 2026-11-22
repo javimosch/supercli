@@ -18,7 +18,7 @@ CLI tool: lxc-attach.
 
 ## Installation
 ```bash
-apt-get install lxc-attach 2>/dev/null || which lxc-attach
+apt-get install lxc-utils 2>/dev/null || which lxc-attach
 ```
 
 ## Key Features

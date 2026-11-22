@@ -18,7 +18,7 @@ CLI tool: vipw.
 
 ## Installation
 ```bash
-apt-get install vipw 2>/dev/null || which vipw
+apt-get install passwd 2>/dev/null || which vipw
 ```
 
 ## Key Features

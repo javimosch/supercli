@@ -18,7 +18,7 @@ CLI tool: msgattrib.
 
 ## Installation
 ```bash
-apt-get install msgattrib 2>/dev/null || which msgattrib
+apt-get install gettext 2>/dev/null || which msgattrib
 ```
 
 ## Key Features

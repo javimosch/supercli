@@ -18,7 +18,7 @@ CLI tool: lvextend.
 
 ## Installation
 ```bash
-apt-get install lvextend 2>/dev/null || which lvextend
+apt-get install lvm2 2>/dev/null || which lvextend
 ```
 
 ## Key Features

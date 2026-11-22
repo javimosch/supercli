@@ -18,7 +18,7 @@ CLI tool: foo2qpdl.
 
 ## Installation
 ```bash
-apt-get install foo2qpdl 2>/dev/null || which foo2qpdl
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2qpdl
 ```
 
 ## Key Features

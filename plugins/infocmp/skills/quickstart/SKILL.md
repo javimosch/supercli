@@ -18,7 +18,7 @@ CLI tool: infocmp.
 
 ## Installation
 ```bash
-apt-get install infocmp 2>/dev/null || which infocmp
+apt-get install ncurses-bin 2>/dev/null || which infocmp
 ```
 
 ## Key Features

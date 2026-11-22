@@ -18,7 +18,7 @@ CLI tool: unlzma.
 
 ## Installation
 ```bash
-apt-get install unlzma 2>/dev/null || which unlzma
+apt-get install lzma 2>/dev/null || which unlzma
 ```
 
 ## Key Features

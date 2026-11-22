@@ -18,7 +18,7 @@ CLI tool: pgmkernel.
 
 ## Installation
 ```bash
-apt-get install pgmkernel 2>/dev/null || which pgmkernel
+apt-get install netpbm 2>/dev/null || which pgmkernel
 ```
 
 ## Key Features

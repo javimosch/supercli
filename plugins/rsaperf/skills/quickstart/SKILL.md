@@ -18,7 +18,7 @@ CLI tool: rsaperf.
 
 ## Installation
 ```bash
-apt-get install rsaperf 2>/dev/null || which rsaperf
+apt-get install libnss3-tools 2>/dev/null || which rsaperf
 ```
 
 ## Key Features

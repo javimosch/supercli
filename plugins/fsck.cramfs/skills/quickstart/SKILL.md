@@ -18,7 +18,7 @@ CLI tool: fsck.cramfs.
 
 ## Installation
 ```bash
-apt-get install fsck.cramfs 2>/dev/null || which fsck.cramfs
+apt-get install util-linux 2>/dev/null || which fsck.cramfs
 ```
 
 ## Key Features

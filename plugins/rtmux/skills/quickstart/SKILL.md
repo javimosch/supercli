@@ -18,7 +18,7 @@ CLI tool: rtmux.
 
 ## Installation
 ```bash
-apt-get install rtmux 2>/dev/null || which rtmux
+apt-get install autossh 2>/dev/null || which rtmux
 ```
 
 ## Key Features

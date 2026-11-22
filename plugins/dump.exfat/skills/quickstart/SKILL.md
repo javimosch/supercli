@@ -18,7 +18,7 @@ CLI tool: dump.exfat.
 
 ## Installation
 ```bash
-apt-get install dump.exfat 2>/dev/null || which dump.exfat
+apt-get install exfatprogs 2>/dev/null || which dump.exfat
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: qmllint.
 
 ## Installation
 ```bash
-apt-get install qmllint 2>/dev/null || which qmllint
+apt-get install qtchooser 2>/dev/null || which qmllint
 ```
 
 ## Key Features

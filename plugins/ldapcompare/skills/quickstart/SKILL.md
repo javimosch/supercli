@@ -18,7 +18,7 @@ CLI tool: ldapcompare.
 
 ## Installation
 ```bash
-apt-get install ldapcompare 2>/dev/null || which ldapcompare
+apt-get install ldap-utils 2>/dev/null || which ldapcompare
 ```
 
 ## Key Features

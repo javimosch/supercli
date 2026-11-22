@@ -18,7 +18,7 @@ CLI tool: ppmtopuzz.
 
 ## Installation
 ```bash
-apt-get install ppmtopuzz 2>/dev/null || which ppmtopuzz
+apt-get install netpbm 2>/dev/null || which ppmtopuzz
 ```
 
 ## Key Features

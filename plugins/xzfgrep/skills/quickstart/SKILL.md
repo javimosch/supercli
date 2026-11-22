@@ -18,7 +18,7 @@ CLI tool: xzfgrep.
 
 ## Installation
 ```bash
-apt-get install xzfgrep 2>/dev/null || which xzfgrep
+apt-get install xz-utils 2>/dev/null || which xzfgrep
 ```
 
 ## Key Features

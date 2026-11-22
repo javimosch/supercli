@@ -18,7 +18,7 @@ CLI tool: nss-addbuiltin.
 
 ## Installation
 ```bash
-apt-get install nss-addbuiltin 2>/dev/null || which nss-addbuiltin
+apt-get install libnss3-tools 2>/dev/null || which nss-addbuiltin
 ```
 
 ## Key Features

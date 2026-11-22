@@ -18,7 +18,7 @@ CLI tool: systemd-path.
 
 ## Installation
 ```bash
-apt-get install systemd-path 2>/dev/null || which systemd-path
+apt-get install systemd 2>/dev/null || which systemd-path
 ```
 
 ## Key Features

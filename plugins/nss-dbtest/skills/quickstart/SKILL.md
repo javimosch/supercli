@@ -18,7 +18,7 @@ CLI tool: nss-dbtest.
 
 ## Installation
 ```bash
-apt-get install nss-dbtest 2>/dev/null || which nss-dbtest
+apt-get install libnss3-tools 2>/dev/null || which nss-dbtest
 ```
 
 ## Key Features

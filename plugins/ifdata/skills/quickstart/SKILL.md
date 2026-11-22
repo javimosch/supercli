@@ -18,7 +18,7 @@ CLI tool: ifdata.
 
 ## Installation
 ```bash
-apt-get install ifdata 2>/dev/null || which ifdata
+apt-get install moreutils 2>/dev/null || which ifdata
 ```
 
 ## Key Features

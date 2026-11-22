@@ -18,7 +18,7 @@ CLI tool: watchgnupg.
 
 ## Installation
 ```bash
-apt-get install watchgnupg 2>/dev/null || which watchgnupg
+apt-get install gnupg-utils 2>/dev/null || which watchgnupg
 ```
 
 ## Key Features

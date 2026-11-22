@@ -18,7 +18,7 @@ CLI tool: p7sign.
 
 ## Installation
 ```bash
-apt-get install p7sign 2>/dev/null || which p7sign
+apt-get install libnss3-tools 2>/dev/null || which p7sign
 ```
 
 ## Key Features

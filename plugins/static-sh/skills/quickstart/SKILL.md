@@ -18,7 +18,7 @@ CLI tool: static-sh.
 
 ## Installation
 ```bash
-apt-get install static-sh 2>/dev/null || which static-sh
+apt-get install busybox-static 2>/dev/null || which static-sh
 ```
 
 ## Key Features

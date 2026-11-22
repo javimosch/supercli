@@ -18,7 +18,7 @@ CLI tool: inimf.
 
 ## Installation
 ```bash
-apt-get install inimf 2>/dev/null || which inimf
+apt-get install texlive-binaries 2>/dev/null || which inimf
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: zipcloak.
 
 ## Installation
 ```bash
-apt-get install zipcloak 2>/dev/null || which zipcloak
+apt-get install zip 2>/dev/null || which zipcloak
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: rfcomm.
 
 ## Installation
 ```bash
-apt-get install rfcomm 2>/dev/null || which rfcomm
+apt-get install bluez 2>/dev/null || which rfcomm
 ```
 
 ## Key Features

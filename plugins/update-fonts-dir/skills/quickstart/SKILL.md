@@ -18,7 +18,7 @@ CLI tool: update-fonts-dir.
 
 ## Installation
 ```bash
-apt-get install update-fonts-dir 2>/dev/null || which update-fonts-dir
+apt-get install xfonts-utils 2>/dev/null || which update-fonts-dir
 ```
 
 ## Key Features

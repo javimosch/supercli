@@ -18,7 +18,7 @@ CLI tool: jjs.
 
 ## Installation
 ```bash
-apt-get install jjs 2>/dev/null || which jjs
+apt-get install openjdk-11-jre-headless 2>/dev/null || which jjs
 ```
 
 ## Key Features

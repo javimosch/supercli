@@ -18,7 +18,7 @@ CLI tool: isdv4-serial-debugger.
 
 ## Installation
 ```bash
-apt-get install isdv4-serial-debugger 2>/dev/null || which isdv4-serial-debugger
+apt-get install xserver-xorg-input-wacom 2>/dev/null || which isdv4-serial-debugger
 ```
 
 ## Key Features

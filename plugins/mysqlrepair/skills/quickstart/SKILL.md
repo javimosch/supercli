@@ -18,7 +18,7 @@ CLI tool: mysqlrepair.
 
 ## Installation
 ```bash
-apt-get install mysqlrepair 2>/dev/null || which mysqlrepair
+apt-get install mysql-client-8.0 2>/dev/null || which mysqlrepair
 ```
 
 ## Key Features

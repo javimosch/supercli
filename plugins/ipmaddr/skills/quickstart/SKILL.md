@@ -18,7 +18,7 @@ CLI tool: ipmaddr.
 
 ## Installation
 ```bash
-apt-get install ipmaddr 2>/dev/null || which ipmaddr
+apt-get install net-tools 2>/dev/null || which ipmaddr
 ```
 
 ## Key Features

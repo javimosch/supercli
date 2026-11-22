@@ -18,7 +18,7 @@ CLI tool: xfhelp4.
 
 ## Installation
 ```bash
-apt-get install xfhelp4 2>/dev/null || which xfhelp4
+apt-get install libxfce4ui-utils 2>/dev/null || which xfhelp4
 ```
 
 ## Key Features

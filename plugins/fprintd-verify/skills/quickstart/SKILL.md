@@ -18,7 +18,7 @@ CLI tool: fprintd-verify.
 
 ## Installation
 ```bash
-apt-get install fprintd-verify 2>/dev/null || which fprintd-verify
+apt-get install fprintd 2>/dev/null || which fprintd-verify
 ```
 
 ## Key Features

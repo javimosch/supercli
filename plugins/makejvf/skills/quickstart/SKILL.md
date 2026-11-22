@@ -18,7 +18,7 @@ CLI tool: makejvf.
 
 ## Installation
 ```bash
-apt-get install makejvf 2>/dev/null || which makejvf
+apt-get install texlive-binaries 2>/dev/null || which makejvf
 ```
 
 ## Key Features

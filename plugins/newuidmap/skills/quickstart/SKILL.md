@@ -18,7 +18,7 @@ CLI tool: newuidmap.
 
 ## Installation
 ```bash
-apt-get install newuidmap 2>/dev/null || which newuidmap
+apt-get install uidmap 2>/dev/null || which newuidmap
 ```
 
 ## Key Features

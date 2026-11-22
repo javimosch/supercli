@@ -18,7 +18,7 @@ CLI tool: pbmmake.
 
 ## Installation
 ```bash
-apt-get install pbmmake 2>/dev/null || which pbmmake
+apt-get install netpbm 2>/dev/null || which pbmmake
 ```
 
 ## Key Features

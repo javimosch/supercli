@@ -18,7 +18,7 @@ CLI tool: sccmap.
 
 ## Installation
 ```bash
-apt-get install sccmap 2>/dev/null || which sccmap
+apt-get install graphviz 2>/dev/null || which sccmap
 ```
 
 ## Key Features

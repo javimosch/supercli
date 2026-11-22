@@ -18,7 +18,7 @@ CLI tool: unattended-upgrade.
 
 ## Installation
 ```bash
-apt-get install unattended-upgrade 2>/dev/null || which unattended-upgrade
+apt-get install unattended-upgrades 2>/dev/null || which unattended-upgrade
 ```
 
 ## Key Features

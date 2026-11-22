@@ -18,7 +18,7 @@ CLI tool: alsabat-test.
 
 ## Installation
 ```bash
-apt-get install alsabat-test 2>/dev/null || which alsabat-test
+apt-get install alsa-utils 2>/dev/null || which alsabat-test
 ```
 
 ## Key Features

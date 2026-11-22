@@ -18,7 +18,7 @@ CLI tool: lzcat.
 
 ## Installation
 ```bash
-apt-get install lzcat 2>/dev/null || which lzcat
+apt-get install lzma 2>/dev/null || which lzcat
 ```
 
 ## Key Features

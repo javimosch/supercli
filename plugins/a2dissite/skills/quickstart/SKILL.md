@@ -18,7 +18,7 @@ CLI tool: a2dissite.
 
 ## Installation
 ```bash
-apt-get install a2dissite 2>/dev/null || which a2dissite
+apt-get install apache2 2>/dev/null || which a2dissite
 ```
 
 ## Key Features

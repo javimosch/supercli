@@ -18,7 +18,7 @@ CLI tool: vgconvert.
 
 ## Installation
 ```bash
-apt-get install vgconvert 2>/dev/null || which vgconvert
+apt-get install lvm2 2>/dev/null || which vgconvert
 ```
 
 ## Key Features

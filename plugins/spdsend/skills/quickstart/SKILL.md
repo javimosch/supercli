@@ -18,7 +18,7 @@ CLI tool: spdsend.
 
 ## Installation
 ```bash
-apt-get install spdsend 2>/dev/null || which spdsend
+apt-get install speech-dispatcher 2>/dev/null || which spdsend
 ```
 
 ## Key Features

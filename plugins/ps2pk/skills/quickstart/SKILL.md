@@ -18,7 +18,7 @@ CLI tool: ps2pk.
 
 ## Installation
 ```bash
-apt-get install ps2pk 2>/dev/null || which ps2pk
+apt-get install texlive-binaries 2>/dev/null || which ps2pk
 ```
 
 ## Key Features

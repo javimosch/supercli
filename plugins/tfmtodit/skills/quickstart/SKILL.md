@@ -18,7 +18,7 @@ CLI tool: tfmtodit.
 
 ## Installation
 ```bash
-apt-get install tfmtodit 2>/dev/null || which tfmtodit
+apt-get install groff 2>/dev/null || which tfmtodit
 ```
 
 ## Key Features

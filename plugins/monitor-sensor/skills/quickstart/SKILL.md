@@ -18,7 +18,7 @@ CLI tool: monitor-sensor.
 
 ## Installation
 ```bash
-apt-get install monitor-sensor 2>/dev/null || which monitor-sensor
+apt-get install iio-sensor-proxy 2>/dev/null || which monitor-sensor
 ```
 
 ## Key Features

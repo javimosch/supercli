@@ -18,7 +18,7 @@ CLI tool: lxc-monitor.
 
 ## Installation
 ```bash
-apt-get install lxc-monitor 2>/dev/null || which lxc-monitor
+apt-get install lxc-utils 2>/dev/null || which lxc-monitor
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ppmtoyuv.
 
 ## Installation
 ```bash
-apt-get install ppmtoyuv 2>/dev/null || which ppmtoyuv
+apt-get install netpbm 2>/dev/null || which ppmtoyuv
 ```
 
 ## Key Features

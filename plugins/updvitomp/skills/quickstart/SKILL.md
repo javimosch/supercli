@@ -18,7 +18,7 @@ CLI tool: updvitomp.
 
 ## Installation
 ```bash
-apt-get install updvitomp 2>/dev/null || which updvitomp
+apt-get install texlive-binaries 2>/dev/null || which updvitomp
 ```
 
 ## Key Features

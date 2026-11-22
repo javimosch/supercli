@@ -18,7 +18,7 @@ CLI tool: isutf8.
 
 ## Installation
 ```bash
-apt-get install isutf8 2>/dev/null || which isutf8
+apt-get install moreutils 2>/dev/null || which isutf8
 ```
 
 ## Key Features

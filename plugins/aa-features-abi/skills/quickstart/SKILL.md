@@ -18,7 +18,7 @@ CLI tool: aa-features-abi.
 
 ## Installation
 ```bash
-apt-get install aa-features-abi 2>/dev/null || which aa-features-abi
+apt-get install apparmor 2>/dev/null || which aa-features-abi
 ```
 
 ## Key Features

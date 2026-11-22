@@ -18,7 +18,7 @@ CLI tool: netplan.
 
 ## Installation
 ```bash
-apt-get install netplan 2>/dev/null || which netplan
+apt-get install netplan.io 2>/dev/null || which netplan
 ```
 
 ## Key Features

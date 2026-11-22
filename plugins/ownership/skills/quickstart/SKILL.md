@@ -18,7 +18,7 @@ CLI tool: ownership.
 
 ## Installation
 ```bash
-apt-get install ownership 2>/dev/null || which ownership
+apt-get install dmidecode 2>/dev/null || which ownership
 ```
 
 ## Key Features

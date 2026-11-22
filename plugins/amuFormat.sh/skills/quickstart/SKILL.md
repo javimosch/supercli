@@ -18,7 +18,7 @@ CLI tool: amuFormat.sh.
 
 ## Installation
 ```bash
-apt-get install amuFormat.sh 2>/dev/null || which amuFormat.sh
+apt-get install mtools 2>/dev/null || which amuFormat.sh
 ```
 
 ## Key Features

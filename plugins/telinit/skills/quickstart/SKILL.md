@@ -18,7 +18,7 @@ CLI tool: telinit.
 
 ## Installation
 ```bash
-apt-get install telinit 2>/dev/null || which telinit
+apt-get install systemd-sysv 2>/dev/null || which telinit
 ```
 
 ## Key Features

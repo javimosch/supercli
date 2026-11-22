@@ -18,7 +18,7 @@ CLI tool: pvchange.
 
 ## Installation
 ```bash
-apt-get install pvchange 2>/dev/null || which pvchange
+apt-get install lvm2 2>/dev/null || which pvchange
 ```
 
 ## Key Features

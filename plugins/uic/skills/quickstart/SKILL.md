@@ -18,7 +18,7 @@ CLI tool: uic.
 
 ## Installation
 ```bash
-apt-get install uic 2>/dev/null || which uic
+apt-get install qtchooser 2>/dev/null || which uic
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ippfind.
 
 ## Installation
 ```bash
-apt-get install ippfind 2>/dev/null || which ippfind
+apt-get install cups-ipp-utils 2>/dev/null || which ippfind
 ```
 
 ## Key Features

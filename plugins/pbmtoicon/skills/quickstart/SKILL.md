@@ -18,7 +18,7 @@ CLI tool: pbmtoicon.
 
 ## Installation
 ```bash
-apt-get install pbmtoicon 2>/dev/null || which pbmtoicon
+apt-get install netpbm 2>/dev/null || which pbmtoicon
 ```
 
 ## Key Features

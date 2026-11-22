@@ -18,7 +18,7 @@ CLI tool: qemu-system-i386.
 
 ## Installation
 ```bash
-apt-get install qemu-system-i386 2>/dev/null || which qemu-system-i386
+apt-get install qemu-system-x86 2>/dev/null || which qemu-system-i386
 ```
 
 ## Key Features

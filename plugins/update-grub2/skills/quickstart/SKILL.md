@@ -18,7 +18,7 @@ CLI tool: update-grub2.
 
 ## Installation
 ```bash
-apt-get install update-grub2 2>/dev/null || which update-grub2
+apt-get install grub2-common 2>/dev/null || which update-grub2
 ```
 
 ## Key Features

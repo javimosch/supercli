@@ -18,7 +18,7 @@ CLI tool: p7verify.
 
 ## Installation
 ```bash
-apt-get install p7verify 2>/dev/null || which p7verify
+apt-get install libnss3-tools 2>/dev/null || which p7verify
 ```
 
 ## Key Features

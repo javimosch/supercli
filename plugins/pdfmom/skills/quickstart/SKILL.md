@@ -18,7 +18,7 @@ CLI tool: pdfmom.
 
 ## Installation
 ```bash
-apt-get install pdfmom 2>/dev/null || which pdfmom
+apt-get install groff 2>/dev/null || which pdfmom
 ```
 
 ## Key Features

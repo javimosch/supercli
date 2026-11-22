@@ -18,7 +18,7 @@ CLI tool: ldapmodify.
 
 ## Installation
 ```bash
-apt-get install ldapmodify 2>/dev/null || which ldapmodify
+apt-get install ldap-utils 2>/dev/null || which ldapmodify
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ttfdump.
 
 ## Installation
 ```bash
-apt-get install ttfdump 2>/dev/null || which ttfdump
+apt-get install texlive-binaries 2>/dev/null || which ttfdump
 ```
 
 ## Key Features

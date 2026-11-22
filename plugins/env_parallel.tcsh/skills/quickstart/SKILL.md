@@ -18,7 +18,7 @@ CLI tool: env_parallel.tcsh.
 
 ## Installation
 ```bash
-apt-get install env_parallel.tcsh 2>/dev/null || which env_parallel.tcsh
+apt-get install parallel 2>/dev/null || which env_parallel.tcsh
 ```
 
 ## Key Features

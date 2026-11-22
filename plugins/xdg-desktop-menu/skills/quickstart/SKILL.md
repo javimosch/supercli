@@ -18,7 +18,7 @@ CLI tool: xdg-desktop-menu.
 
 ## Installation
 ```bash
-apt-get install xdg-desktop-menu 2>/dev/null || which xdg-desktop-menu
+apt-get install xdg-utils 2>/dev/null || which xdg-desktop-menu
 ```
 
 ## Key Features

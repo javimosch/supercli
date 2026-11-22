@@ -18,7 +18,7 @@ CLI tool: i386.
 
 ## Installation
 ```bash
-apt-get install i386 2>/dev/null || which i386
+apt-get install util-linux 2>/dev/null || which i386
 ```
 
 ## Key Features

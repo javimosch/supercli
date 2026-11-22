@@ -18,7 +18,7 @@ CLI tool: palmtopnm.
 
 ## Installation
 ```bash
-apt-get install palmtopnm 2>/dev/null || which palmtopnm
+apt-get install netpbm 2>/dev/null || which palmtopnm
 ```
 
 ## Key Features

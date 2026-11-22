@@ -18,7 +18,7 @@ CLI tool: znew.
 
 ## Installation
 ```bash
-apt-get install znew 2>/dev/null || which znew
+apt-get install gzip 2>/dev/null || which znew
 ```
 
 ## Key Features

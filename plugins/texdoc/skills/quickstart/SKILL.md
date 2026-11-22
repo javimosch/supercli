@@ -18,7 +18,7 @@ CLI tool: texdoc.
 
 ## Installation
 ```bash
-apt-get install texdoc 2>/dev/null || which texdoc
+apt-get install texlive-base 2>/dev/null || which texdoc
 ```
 
 ## Key Features

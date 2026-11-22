@@ -18,7 +18,7 @@ CLI tool: nm-connection-editor.
 
 ## Installation
 ```bash
-apt-get install nm-connection-editor 2>/dev/null || which nm-connection-editor
+apt-get install network-manager-gnome 2>/dev/null || which nm-connection-editor
 ```
 
 ## Key Features

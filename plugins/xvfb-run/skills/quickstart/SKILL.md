@@ -18,7 +18,7 @@ CLI tool: xvfb-run.
 
 ## Installation
 ```bash
-apt-get install xvfb-run 2>/dev/null || which xvfb-run
+apt-get install xvfb 2>/dev/null || which xvfb-run
 ```
 
 ## Key Features

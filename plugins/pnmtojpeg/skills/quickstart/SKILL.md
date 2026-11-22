@@ -18,7 +18,7 @@ CLI tool: pnmtojpeg.
 
 ## Installation
 ```bash
-apt-get install pnmtojpeg 2>/dev/null || which pnmtojpeg
+apt-get install netpbm 2>/dev/null || which pnmtojpeg
 ```
 
 ## Key Features

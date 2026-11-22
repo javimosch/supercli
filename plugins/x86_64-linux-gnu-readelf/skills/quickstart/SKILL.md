@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-readelf.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-readelf 2>/dev/null || which x86_64-linux-gnu-readelf
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-readelf
 ```
 
 ## Key Features

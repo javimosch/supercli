@@ -18,7 +18,7 @@ CLI tool: qgltf.
 
 ## Installation
 ```bash
-apt-get install qgltf 2>/dev/null || which qgltf
+apt-get install qtchooser 2>/dev/null || which qgltf
 ```
 
 ## Key Features

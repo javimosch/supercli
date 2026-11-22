@@ -18,7 +18,7 @@ CLI tool: dv2dt.
 
 ## Installation
 ```bash
-apt-get install dv2dt 2>/dev/null || which dv2dt
+apt-get install texlive-binaries 2>/dev/null || which dv2dt
 ```
 
 ## Key Features

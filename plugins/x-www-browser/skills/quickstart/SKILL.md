@@ -18,7 +18,7 @@ CLI tool: x-www-browser.
 
 ## Installation
 ```bash
-apt-get install x-www-browser 2>/dev/null || which x-www-browser
+apt-get install firefox 2>/dev/null || which x-www-browser
 ```
 
 ## Key Features

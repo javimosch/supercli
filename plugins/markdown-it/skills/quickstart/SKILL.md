@@ -18,7 +18,7 @@ CLI tool: markdown-it.
 
 ## Installation
 ```bash
-apt-get install markdown-it 2>/dev/null || which markdown-it
+apt-get install python3-markdown-it 2>/dev/null || which markdown-it
 ```
 
 ## Key Features

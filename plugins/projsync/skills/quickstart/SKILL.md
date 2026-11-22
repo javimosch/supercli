@@ -18,7 +18,7 @@ CLI tool: projsync.
 
 ## Installation
 ```bash
-apt-get install projsync 2>/dev/null || which projsync
+apt-get install proj-bin 2>/dev/null || which projsync
 ```
 
 ## Key Features

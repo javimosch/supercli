@@ -18,7 +18,7 @@ CLI tool: fsck.ext4.
 
 ## Installation
 ```bash
-apt-get install fsck.ext4 2>/dev/null || which fsck.ext4
+apt-get install e2fsprogs 2>/dev/null || which fsck.ext4
 ```
 
 ## Key Features

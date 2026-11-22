@@ -18,7 +18,7 @@ CLI tool: dotty.
 
 ## Installation
 ```bash
-apt-get install dotty 2>/dev/null || which dotty
+apt-get install graphviz 2>/dev/null || which dotty
 ```
 
 ## Key Features

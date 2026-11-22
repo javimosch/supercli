@@ -18,7 +18,7 @@ CLI tool: vipe.
 
 ## Installation
 ```bash
-apt-get install vipe 2>/dev/null || which vipe
+apt-get install moreutils 2>/dev/null || which vipe
 ```
 
 ## Key Features

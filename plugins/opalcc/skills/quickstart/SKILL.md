@@ -18,7 +18,7 @@ CLI tool: opalcc.
 
 ## Installation
 ```bash
-apt-get install opalcc 2>/dev/null || which opalcc
+apt-get install openmpi-bin 2>/dev/null || which opalcc
 ```
 
 ## Key Features

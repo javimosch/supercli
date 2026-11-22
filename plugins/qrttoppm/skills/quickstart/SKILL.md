@@ -18,7 +18,7 @@ CLI tool: qrttoppm.
 
 ## Installation
 ```bash
-apt-get install qrttoppm 2>/dev/null || which qrttoppm
+apt-get install netpbm 2>/dev/null || which qrttoppm
 ```
 
 ## Key Features

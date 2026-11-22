@@ -18,7 +18,7 @@ CLI tool: mkfs.minix.
 
 ## Installation
 ```bash
-apt-get install mkfs.minix 2>/dev/null || which mkfs.minix
+apt-get install util-linux 2>/dev/null || which mkfs.minix
 ```
 
 ## Key Features

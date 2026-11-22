@@ -18,7 +18,7 @@ CLI tool: min12xxw.
 
 ## Installation
 ```bash
-apt-get install min12xxw 2>/dev/null || which min12xxw
+apt-get install printer-driver-min12xxw 2>/dev/null || which min12xxw
 ```
 
 ## Key Features

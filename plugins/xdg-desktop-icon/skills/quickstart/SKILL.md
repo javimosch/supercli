@@ -18,7 +18,7 @@ CLI tool: xdg-desktop-icon.
 
 ## Installation
 ```bash
-apt-get install xdg-desktop-icon 2>/dev/null || which xdg-desktop-icon
+apt-get install xdg-utils 2>/dev/null || which xdg-desktop-icon
 ```
 
 ## Key Features

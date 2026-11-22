@@ -18,7 +18,7 @@ CLI tool: update-catalog.
 
 ## Installation
 ```bash
-apt-get install update-catalog 2>/dev/null || which update-catalog
+apt-get install sgml-base 2>/dev/null || which update-catalog
 ```
 
 ## Key Features

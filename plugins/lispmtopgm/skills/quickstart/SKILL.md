@@ -18,7 +18,7 @@ CLI tool: lispmtopgm.
 
 ## Installation
 ```bash
-apt-get install lispmtopgm 2>/dev/null || which lispmtopgm
+apt-get install netpbm 2>/dev/null || which lispmtopgm
 ```
 
 ## Key Features

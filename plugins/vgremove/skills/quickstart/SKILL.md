@@ -18,7 +18,7 @@ CLI tool: vgremove.
 
 ## Installation
 ```bash
-apt-get install vgremove 2>/dev/null || which vgremove
+apt-get install lvm2 2>/dev/null || which vgremove
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: localc.
 
 ## Installation
 ```bash
-apt-get install localc 2>/dev/null || which localc
+apt-get install libreoffice-calc 2>/dev/null || which localc
 ```
 
 ## Key Features

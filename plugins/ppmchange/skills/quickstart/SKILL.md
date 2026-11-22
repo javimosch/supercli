@@ -18,7 +18,7 @@ CLI tool: ppmchange.
 
 ## Installation
 ```bash
-apt-get install ppmchange 2>/dev/null || which ppmchange
+apt-get install netpbm 2>/dev/null || which ppmchange
 ```
 
 ## Key Features

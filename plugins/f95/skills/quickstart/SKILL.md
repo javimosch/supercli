@@ -18,7 +18,7 @@ CLI tool: f95.
 
 ## Installation
 ```bash
-apt-get install f95 2>/dev/null || which f95
+apt-get install gfortran 2>/dev/null || which f95
 ```
 
 ## Key Features

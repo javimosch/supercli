@@ -18,7 +18,7 @@ CLI tool: mpirun.
 
 ## Installation
 ```bash
-apt-get install mpirun 2>/dev/null || which mpirun
+apt-get install mpich 2>/dev/null || which mpirun
 ```
 
 ## Key Features

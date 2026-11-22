@@ -18,7 +18,7 @@ CLI tool: lspcmcia.
 
 ## Installation
 ```bash
-apt-get install lspcmcia 2>/dev/null || which lspcmcia
+apt-get install pcmciautils 2>/dev/null || which lspcmcia
 ```
 
 ## Key Features

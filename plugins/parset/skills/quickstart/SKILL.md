@@ -18,7 +18,7 @@ CLI tool: parset.
 
 ## Installation
 ```bash
-apt-get install parset 2>/dev/null || which parset
+apt-get install parallel 2>/dev/null || which parset
 ```
 
 ## Key Features

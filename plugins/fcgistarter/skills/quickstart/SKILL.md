@@ -18,7 +18,7 @@ CLI tool: fcgistarter.
 
 ## Installation
 ```bash
-apt-get install fcgistarter 2>/dev/null || which fcgistarter
+apt-get install apache2-utils 2>/dev/null || which fcgistarter
 ```
 
 ## Key Features

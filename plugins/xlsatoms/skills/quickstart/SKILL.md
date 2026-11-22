@@ -18,7 +18,7 @@ CLI tool: xlsatoms.
 
 ## Installation
 ```bash
-apt-get install xlsatoms 2>/dev/null || which xlsatoms
+apt-get install x11-utils 2>/dev/null || which xlsatoms
 ```
 
 ## Key Features

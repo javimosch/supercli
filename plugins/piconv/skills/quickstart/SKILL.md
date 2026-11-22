@@ -18,7 +18,7 @@ CLI tool: piconv.
 
 ## Installation
 ```bash
-apt-get install piconv 2>/dev/null || which piconv
+apt-get install perl 2>/dev/null || which piconv
 ```
 
 ## Key Features

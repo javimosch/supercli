@@ -18,7 +18,7 @@ CLI tool: pw-profiler.
 
 ## Installation
 ```bash
-apt-get install pw-profiler 2>/dev/null || which pw-profiler
+apt-get install pipewire-bin 2>/dev/null || which pw-profiler
 ```
 
 ## Key Features

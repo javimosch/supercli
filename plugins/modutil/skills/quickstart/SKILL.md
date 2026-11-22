@@ -18,7 +18,7 @@ CLI tool: modutil.
 
 ## Installation
 ```bash
-apt-get install modutil 2>/dev/null || which modutil
+apt-get install libnss3-tools 2>/dev/null || which modutil
 ```
 
 ## Key Features

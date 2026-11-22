@@ -18,7 +18,7 @@ CLI tool: lxc-device.
 
 ## Installation
 ```bash
-apt-get install lxc-device 2>/dev/null || which lxc-device
+apt-get install lxc-utils 2>/dev/null || which lxc-device
 ```
 
 ## Key Features

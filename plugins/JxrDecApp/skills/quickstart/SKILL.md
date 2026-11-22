@@ -18,7 +18,7 @@ CLI tool: JxrDecApp.
 
 ## Installation
 ```bash
-apt-get install JxrDecApp 2>/dev/null || which JxrDecApp
+apt-get install libjxr-tools 2>/dev/null || which JxrDecApp
 ```
 
 ## Key Features

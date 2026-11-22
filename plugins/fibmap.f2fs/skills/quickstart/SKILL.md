@@ -18,7 +18,7 @@ CLI tool: fibmap.f2fs.
 
 ## Installation
 ```bash
-apt-get install fibmap.f2fs 2>/dev/null || which fibmap.f2fs
+apt-get install f2fs-tools 2>/dev/null || which fibmap.f2fs
 ```
 
 ## Key Features

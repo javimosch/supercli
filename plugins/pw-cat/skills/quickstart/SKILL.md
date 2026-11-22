@@ -18,7 +18,7 @@ CLI tool: pw-cat.
 
 ## Installation
 ```bash
-apt-get install pw-cat 2>/dev/null || which pw-cat
+apt-get install pipewire-bin 2>/dev/null || which pw-cat
 ```
 
 ## Key Features

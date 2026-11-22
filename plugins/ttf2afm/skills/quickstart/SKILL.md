@@ -18,7 +18,7 @@ CLI tool: ttf2afm.
 
 ## Installation
 ```bash
-apt-get install ttf2afm 2>/dev/null || which ttf2afm
+apt-get install texlive-binaries 2>/dev/null || which ttf2afm
 ```
 
 ## Key Features

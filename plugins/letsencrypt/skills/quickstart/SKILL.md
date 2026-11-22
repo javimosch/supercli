@@ -18,7 +18,7 @@ CLI tool: letsencrypt.
 
 ## Installation
 ```bash
-apt-get install letsencrypt 2>/dev/null || which letsencrypt
+apt-get install certbot 2>/dev/null || which letsencrypt
 ```
 
 ## Key Features

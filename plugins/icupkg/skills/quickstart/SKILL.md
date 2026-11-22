@@ -18,7 +18,7 @@ CLI tool: icupkg.
 
 ## Installation
 ```bash
-apt-get install icupkg 2>/dev/null || which icupkg
+apt-get install icu-devtools 2>/dev/null || which icupkg
 ```
 
 ## Key Features

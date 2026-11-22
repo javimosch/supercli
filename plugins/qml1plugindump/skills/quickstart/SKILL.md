@@ -18,7 +18,7 @@ CLI tool: qml1plugindump.
 
 ## Installation
 ```bash
-apt-get install qml1plugindump 2>/dev/null || which qml1plugindump
+apt-get install qtchooser 2>/dev/null || which qml1plugindump
 ```
 
 ## Key Features

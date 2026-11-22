@@ -18,7 +18,7 @@ CLI tool: pyproject-build.
 
 ## Installation
 ```bash
-apt-get install pyproject-build 2>/dev/null || which pyproject-build
+apt-get install python3-build 2>/dev/null || which pyproject-build
 ```
 
 ## Key Features

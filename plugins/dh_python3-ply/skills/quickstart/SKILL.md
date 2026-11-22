@@ -18,7 +18,7 @@ CLI tool: dh_python3-ply.
 
 ## Installation
 ```bash
-apt-get install dh_python3-ply 2>/dev/null || which dh_python3-ply
+apt-get install python3-ply 2>/dev/null || which dh_python3-ply
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mag.
 
 ## Installation
 ```bash
-apt-get install mag 2>/dev/null || which mag
+apt-get install texlive-binaries 2>/dev/null || which mag
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmconvol.
 
 ## Installation
 ```bash
-apt-get install pnmconvol 2>/dev/null || which pnmconvol
+apt-get install netpbm 2>/dev/null || which pnmconvol
 ```
 
 ## Key Features

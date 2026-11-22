@@ -18,7 +18,7 @@ CLI tool: spa-resample.
 
 ## Installation
 ```bash
-apt-get install spa-resample 2>/dev/null || which spa-resample
+apt-get install pipewire-bin 2>/dev/null || which spa-resample
 ```
 
 ## Key Features

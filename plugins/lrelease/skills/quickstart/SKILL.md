@@ -18,7 +18,7 @@ CLI tool: lrelease.
 
 ## Installation
 ```bash
-apt-get install lrelease 2>/dev/null || which lrelease
+apt-get install qtchooser 2>/dev/null || which lrelease
 ```
 
 ## Key Features

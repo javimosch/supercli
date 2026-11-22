@@ -18,7 +18,7 @@ CLI tool: linkicc.
 
 ## Installation
 ```bash
-apt-get install linkicc 2>/dev/null || which linkicc
+apt-get install liblcms2-utils 2>/dev/null || which linkicc
 ```
 
 ## Key Features

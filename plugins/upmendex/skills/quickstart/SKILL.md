@@ -18,7 +18,7 @@ CLI tool: upmendex.
 
 ## Installation
 ```bash
-apt-get install upmendex 2>/dev/null || which upmendex
+apt-get install texlive-binaries 2>/dev/null || which upmendex
 ```
 
 ## Key Features

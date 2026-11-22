@@ -18,7 +18,7 @@ CLI tool: spa-monitor.
 
 ## Installation
 ```bash
-apt-get install spa-monitor 2>/dev/null || which spa-monitor
+apt-get install pipewire-bin 2>/dev/null || which spa-monitor
 ```
 
 ## Key Features

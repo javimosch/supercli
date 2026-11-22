@@ -18,7 +18,7 @@ CLI tool: nm-applet.
 
 ## Installation
 ```bash
-apt-get install nm-applet 2>/dev/null || which nm-applet
+apt-get install network-manager-gnome 2>/dev/null || which nm-applet
 ```
 
 ## Key Features

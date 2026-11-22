@@ -18,7 +18,7 @@ CLI tool: iwspy.
 
 ## Installation
 ```bash
-apt-get install iwspy 2>/dev/null || which iwspy
+apt-get install wireless-tools 2>/dev/null || which iwspy
 ```
 
 ## Key Features

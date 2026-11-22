@@ -18,7 +18,7 @@ CLI tool: ppmbrighten.
 
 ## Installation
 ```bash
-apt-get install ppmbrighten 2>/dev/null || which ppmbrighten
+apt-get install netpbm 2>/dev/null || which ppmbrighten
 ```
 
 ## Key Features

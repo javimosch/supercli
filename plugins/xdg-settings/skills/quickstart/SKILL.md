@@ -18,7 +18,7 @@ CLI tool: xdg-settings.
 
 ## Installation
 ```bash
-apt-get install xdg-settings 2>/dev/null || which xdg-settings
+apt-get install xdg-utils 2>/dev/null || which xdg-settings
 ```
 
 ## Key Features

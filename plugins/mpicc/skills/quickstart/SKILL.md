@@ -18,7 +18,7 @@ CLI tool: mpicc.
 
 ## Installation
 ```bash
-apt-get install mpicc 2>/dev/null || which mpicc
+apt-get install mpich 2>/dev/null || which mpicc
 ```
 
 ## Key Features

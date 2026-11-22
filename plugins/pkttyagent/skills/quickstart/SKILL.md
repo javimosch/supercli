@@ -18,7 +18,7 @@ CLI tool: pkttyagent.
 
 ## Installation
 ```bash
-apt-get install pkttyagent 2>/dev/null || which pkttyagent
+apt-get install polkitd 2>/dev/null || which pkttyagent
 ```
 
 ## Key Features

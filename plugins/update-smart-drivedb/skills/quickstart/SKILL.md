@@ -18,7 +18,7 @@ CLI tool: update-smart-drivedb.
 
 ## Installation
 ```bash
-apt-get install update-smart-drivedb 2>/dev/null || which update-smart-drivedb
+apt-get install smartmontools 2>/dev/null || which update-smart-drivedb
 ```
 
 ## Key Features

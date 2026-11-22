@@ -18,7 +18,7 @@ CLI tool: normalizer.
 
 ## Installation
 ```bash
-apt-get install normalizer 2>/dev/null || which normalizer
+apt-get install python3-charset-normalizer 2>/dev/null || which normalizer
 ```
 
 ## Key Features

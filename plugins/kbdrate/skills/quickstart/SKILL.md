@@ -18,7 +18,7 @@ CLI tool: kbdrate.
 
 ## Installation
 ```bash
-apt-get install kbdrate 2>/dev/null || which kbdrate
+apt-get install kbd 2>/dev/null || which kbdrate
 ```
 
 ## Key Features

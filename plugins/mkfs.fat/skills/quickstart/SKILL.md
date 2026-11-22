@@ -18,7 +18,7 @@ CLI tool: mkfs.fat.
 
 ## Installation
 ```bash
-apt-get install mkfs.fat 2>/dev/null || which mkfs.fat
+apt-get install dosfstools 2>/dev/null || which mkfs.fat
 ```
 
 ## Key Features

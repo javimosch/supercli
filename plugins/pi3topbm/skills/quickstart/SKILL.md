@@ -18,7 +18,7 @@ CLI tool: pi3topbm.
 
 ## Installation
 ```bash
-apt-get install pi3topbm 2>/dev/null || which pi3topbm
+apt-get install netpbm 2>/dev/null || which pi3topbm
 ```
 
 ## Key Features

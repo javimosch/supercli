@@ -18,7 +18,7 @@ CLI tool: update-xmlcatalog.
 
 ## Installation
 ```bash
-apt-get install update-xmlcatalog 2>/dev/null || which update-xmlcatalog
+apt-get install xml-core 2>/dev/null || which update-xmlcatalog
 ```
 
 ## Key Features

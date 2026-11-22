@@ -18,7 +18,7 @@ CLI tool: pack200.
 
 ## Installation
 ```bash
-apt-get install pack200 2>/dev/null || which pack200
+apt-get install openjdk-11-jre-headless 2>/dev/null || which pack200
 ```
 
 ## Key Features

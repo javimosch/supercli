@@ -18,7 +18,7 @@ CLI tool: ppdmerge.
 
 ## Installation
 ```bash
-apt-get install ppdmerge 2>/dev/null || which ppdmerge
+apt-get install cups-ppdc 2>/dev/null || which ppdmerge
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lesskey.
 
 ## Installation
 ```bash
-apt-get install lesskey 2>/dev/null || which lesskey
+apt-get install less 2>/dev/null || which lesskey
 ```
 
 ## Key Features

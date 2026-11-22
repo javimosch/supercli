@@ -18,7 +18,7 @@ CLI tool: hciattach.
 
 ## Installation
 ```bash
-apt-get install hciattach 2>/dev/null || which hciattach
+apt-get install bluez 2>/dev/null || which hciattach
 ```
 
 ## Key Features

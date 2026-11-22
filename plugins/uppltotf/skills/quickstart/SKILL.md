@@ -18,7 +18,7 @@ CLI tool: uppltotf.
 
 ## Installation
 ```bash
-apt-get install uppltotf 2>/dev/null || which uppltotf
+apt-get install texlive-binaries 2>/dev/null || which uppltotf
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pbmtozinc.
 
 ## Installation
 ```bash
-apt-get install pbmtozinc 2>/dev/null || which pbmtozinc
+apt-get install netpbm 2>/dev/null || which pbmtozinc
 ```
 
 ## Key Features

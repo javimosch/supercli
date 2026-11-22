@@ -18,7 +18,7 @@ CLI tool: invoke-rc.d.
 
 ## Installation
 ```bash
-apt-get install invoke-rc.d 2>/dev/null || which invoke-rc.d
+apt-get install init-system-helpers 2>/dev/null || which invoke-rc.d
 ```
 
 ## Key Features

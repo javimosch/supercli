@@ -18,7 +18,7 @@ CLI tool: fiascotopnm.
 
 ## Installation
 ```bash
-apt-get install fiascotopnm 2>/dev/null || which fiascotopnm
+apt-get install netpbm 2>/dev/null || which fiascotopnm
 ```
 
 ## Key Features

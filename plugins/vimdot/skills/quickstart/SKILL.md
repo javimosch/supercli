@@ -18,7 +18,7 @@ CLI tool: vimdot.
 
 ## Installation
 ```bash
-apt-get install vimdot 2>/dev/null || which vimdot
+apt-get install graphviz 2>/dev/null || which vimdot
 ```
 
 ## Key Features

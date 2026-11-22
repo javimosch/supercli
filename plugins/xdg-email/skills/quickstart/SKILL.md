@@ -18,7 +18,7 @@ CLI tool: xdg-email.
 
 ## Installation
 ```bash
-apt-get install xdg-email 2>/dev/null || which xdg-email
+apt-get install xdg-utils 2>/dev/null || which xdg-email
 ```
 
 ## Key Features

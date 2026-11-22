@@ -18,7 +18,7 @@ CLI tool: splitfont.
 
 ## Installation
 ```bash
-apt-get install splitfont 2>/dev/null || which splitfont
+apt-get install kbd 2>/dev/null || which splitfont
 ```
 
 ## Key Features

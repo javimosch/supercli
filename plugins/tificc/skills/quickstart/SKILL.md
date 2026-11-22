@@ -18,7 +18,7 @@ CLI tool: tificc.
 
 ## Installation
 ```bash
-apt-get install tificc 2>/dev/null || which tificc
+apt-get install liblcms2-utils 2>/dev/null || which tificc
 ```
 
 ## Key Features

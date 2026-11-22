@@ -18,7 +18,7 @@ CLI tool: foo2hiperc-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2hiperc-wrapper 2>/dev/null || which foo2hiperc-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2hiperc-wrapper
 ```
 
 ## Key Features

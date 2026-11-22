@@ -18,7 +18,7 @@ CLI tool: sbkeysync.
 
 ## Installation
 ```bash
-apt-get install sbkeysync 2>/dev/null || which sbkeysync
+apt-get install sbsigntool 2>/dev/null || which sbkeysync
 ```
 
 ## Key Features

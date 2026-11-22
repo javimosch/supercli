@@ -18,7 +18,7 @@ CLI tool: vfyserv.
 
 ## Installation
 ```bash
-apt-get install vfyserv 2>/dev/null || which vfyserv
+apt-get install libnss3-tools 2>/dev/null || which vfyserv
 ```
 
 ## Key Features

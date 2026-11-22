@@ -18,7 +18,7 @@ CLI tool: psselect.
 
 ## Installation
 ```bash
-apt-get install psselect 2>/dev/null || which psselect
+apt-get install psutils 2>/dev/null || which psselect
 ```
 
 ## Key Features

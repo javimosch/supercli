@@ -18,7 +18,7 @@ CLI tool: xfce4-screensaver-configure.
 
 ## Installation
 ```bash
-apt-get install xfce4-screensaver-configure 2>/dev/null || which xfce4-screensaver-configure
+apt-get install xfce4-screensaver 2>/dev/null || which xfce4-screensaver-configure
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pydoc3.11.
 
 ## Installation
 ```bash
-apt-get install pydoc3.11 2>/dev/null || which pydoc3.11
+apt-get install python3.11 2>/dev/null || which pydoc3.11
 ```
 
 ## Key Features

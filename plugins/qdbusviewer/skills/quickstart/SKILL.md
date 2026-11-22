@@ -18,7 +18,7 @@ CLI tool: qdbusviewer.
 
 ## Installation
 ```bash
-apt-get install qdbusviewer 2>/dev/null || which qdbusviewer
+apt-get install qtchooser 2>/dev/null || which qdbusviewer
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pfb2pfa.
 
 ## Installation
 ```bash
-apt-get install pfb2pfa 2>/dev/null || which pfb2pfa
+apt-get install texlive-binaries 2>/dev/null || which pfb2pfa
 ```
 
 ## Key Features

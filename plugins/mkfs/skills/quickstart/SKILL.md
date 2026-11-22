@@ -18,7 +18,7 @@ CLI tool: mkfs.
 
 ## Installation
 ```bash
-apt-get install mkfs 2>/dev/null || which mkfs
+apt-get install util-linux 2>/dev/null || which mkfs
 ```
 
 ## Key Features

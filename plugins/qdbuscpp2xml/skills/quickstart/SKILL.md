@@ -18,7 +18,7 @@ CLI tool: qdbuscpp2xml.
 
 ## Installation
 ```bash
-apt-get install qdbuscpp2xml 2>/dev/null || which qdbuscpp2xml
+apt-get install qtchooser 2>/dev/null || which qdbuscpp2xml
 ```
 
 ## Key Features

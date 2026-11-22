@@ -18,7 +18,7 @@ CLI tool: e2scrub_all.
 
 ## Installation
 ```bash
-apt-get install e2scrub_all 2>/dev/null || which e2scrub_all
+apt-get install e2fsprogs 2>/dev/null || which e2scrub_all
 ```
 
 ## Key Features

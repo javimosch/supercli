@@ -18,7 +18,7 @@ CLI tool: neato.
 
 ## Installation
 ```bash
-apt-get install neato 2>/dev/null || which neato
+apt-get install graphviz 2>/dev/null || which neato
 ```
 
 ## Key Features

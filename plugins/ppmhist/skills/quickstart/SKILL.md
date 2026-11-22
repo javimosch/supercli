@@ -18,7 +18,7 @@ CLI tool: ppmhist.
 
 ## Installation
 ```bash
-apt-get install ppmhist 2>/dev/null || which ppmhist
+apt-get install netpbm 2>/dev/null || which ppmhist
 ```
 
 ## Key Features

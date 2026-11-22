@@ -18,7 +18,7 @@ CLI tool: xfce4-mime-helper.
 
 ## Installation
 ```bash
-apt-get install xfce4-mime-helper 2>/dev/null || which xfce4-mime-helper
+apt-get install xfce4-settings 2>/dev/null || which xfce4-mime-helper
 ```
 
 ## Key Features

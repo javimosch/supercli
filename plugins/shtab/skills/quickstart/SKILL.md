@@ -18,7 +18,7 @@ CLI tool: shtab.
 
 ## Installation
 ```bash
-apt-get install shtab 2>/dev/null || which shtab
+apt-get install python3-shtab 2>/dev/null || which shtab
 ```
 
 ## Key Features

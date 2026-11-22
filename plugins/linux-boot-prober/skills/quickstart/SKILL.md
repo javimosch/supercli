@@ -18,7 +18,7 @@ CLI tool: linux-boot-prober.
 
 ## Installation
 ```bash
-apt-get install linux-boot-prober 2>/dev/null || which linux-boot-prober
+apt-get install os-prober 2>/dev/null || which linux-boot-prober
 ```
 
 ## Key Features

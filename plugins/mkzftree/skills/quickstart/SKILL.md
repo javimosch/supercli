@@ -18,7 +18,7 @@ CLI tool: mkzftree.
 
 ## Installation
 ```bash
-apt-get install mkzftree 2>/dev/null || which mkzftree
+apt-get install genisoimage 2>/dev/null || which mkzftree
 ```
 
 ## Key Features

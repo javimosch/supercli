@@ -18,7 +18,7 @@ CLI tool: t1unmac.
 
 ## Installation
 ```bash
-apt-get install t1unmac 2>/dev/null || which t1unmac
+apt-get install t1utils 2>/dev/null || which t1unmac
 ```
 
 ## Key Features

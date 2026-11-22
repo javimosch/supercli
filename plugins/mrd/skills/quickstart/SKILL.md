@@ -18,7 +18,7 @@ CLI tool: mrd.
 
 ## Installation
 ```bash
-apt-get install mrd 2>/dev/null || which mrd
+apt-get install mtools 2>/dev/null || which mrd
 ```
 
 ## Key Features

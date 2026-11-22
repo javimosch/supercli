@@ -18,7 +18,7 @@ CLI tool: droplang.
 
 ## Installation
 ```bash
-apt-get install droplang 2>/dev/null || which droplang
+apt-get install postgresql-client-common 2>/dev/null || which droplang
 ```
 
 ## Key Features

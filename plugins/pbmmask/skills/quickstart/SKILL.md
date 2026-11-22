@@ -18,7 +18,7 @@ CLI tool: pbmmask.
 
 ## Installation
 ```bash
-apt-get install pbmmask 2>/dev/null || which pbmmask
+apt-get install netpbm 2>/dev/null || which pbmmask
 ```
 
 ## Key Features

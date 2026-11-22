@@ -18,7 +18,7 @@ CLI tool: import-im6.
 
 ## Installation
 ```bash
-apt-get install import-im6 2>/dev/null || which import-im6
+apt-get install imagemagick-6.q16 2>/dev/null || which import-im6
 ```
 
 ## Key Features

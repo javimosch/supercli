@@ -18,7 +18,7 @@ CLI tool: pw-link.
 
 ## Installation
 ```bash
-apt-get install pw-link 2>/dev/null || which pw-link
+apt-get install pipewire-bin 2>/dev/null || which pw-link
 ```
 
 ## Key Features

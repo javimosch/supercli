@@ -18,7 +18,7 @@ CLI tool: msgcat.
 
 ## Installation
 ```bash
-apt-get install msgcat 2>/dev/null || which msgcat
+apt-get install gettext 2>/dev/null || which msgcat
 ```
 
 ## Key Features

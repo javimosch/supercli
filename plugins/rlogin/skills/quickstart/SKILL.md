@@ -18,7 +18,7 @@ CLI tool: rlogin.
 
 ## Installation
 ```bash
-apt-get install rlogin 2>/dev/null || which rlogin
+apt-get install rsh-client 2>/dev/null || which rlogin
 ```
 
 ## Key Features

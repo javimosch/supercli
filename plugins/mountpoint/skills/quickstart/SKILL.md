@@ -18,7 +18,7 @@ CLI tool: mountpoint.
 
 ## Installation
 ```bash
-apt-get install mountpoint 2>/dev/null || which mountpoint
+apt-get install util-linux 2>/dev/null || which mountpoint
 ```
 
 ## Key Features

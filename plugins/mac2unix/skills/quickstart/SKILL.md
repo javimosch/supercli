@@ -18,7 +18,7 @@ CLI tool: mac2unix.
 
 ## Installation
 ```bash
-apt-get install mac2unix 2>/dev/null || which mac2unix
+apt-get install dos2unix 2>/dev/null || which mac2unix
 ```
 
 ## Key Features

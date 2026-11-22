@@ -18,7 +18,7 @@ CLI tool: lconvert.
 
 ## Installation
 ```bash
-apt-get install lconvert 2>/dev/null || which lconvert
+apt-get install qtchooser 2>/dev/null || which lconvert
 ```
 
 ## Key Features

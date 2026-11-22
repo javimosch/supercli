@@ -18,7 +18,7 @@ CLI tool: mpif77.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpif77.openmpi 2>/dev/null || which mpif77.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpif77.openmpi
 ```
 
 ## Key Features

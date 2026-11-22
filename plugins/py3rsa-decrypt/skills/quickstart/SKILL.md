@@ -18,7 +18,7 @@ CLI tool: py3rsa-decrypt.
 
 ## Installation
 ```bash
-apt-get install py3rsa-decrypt 2>/dev/null || which py3rsa-decrypt
+apt-get install python3-rsa 2>/dev/null || which py3rsa-decrypt
 ```
 
 ## Key Features

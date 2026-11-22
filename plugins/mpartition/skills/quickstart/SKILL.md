@@ -18,7 +18,7 @@ CLI tool: mpartition.
 
 ## Installation
 ```bash
-apt-get install mpartition 2>/dev/null || which mpartition
+apt-get install mtools 2>/dev/null || which mpartition
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: fmtutil-sys.
 
 ## Installation
 ```bash
-apt-get install fmtutil-sys 2>/dev/null || which fmtutil-sys
+apt-get install texlive-base 2>/dev/null || which fmtutil-sys
 ```
 
 ## Key Features

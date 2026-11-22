@@ -18,7 +18,7 @@ CLI tool: mkfs.vfat.
 
 ## Installation
 ```bash
-apt-get install mkfs.vfat 2>/dev/null || which mkfs.vfat
+apt-get install dosfstools 2>/dev/null || which mkfs.vfat
 ```
 
 ## Key Features

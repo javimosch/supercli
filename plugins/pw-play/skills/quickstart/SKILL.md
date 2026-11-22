@@ -18,7 +18,7 @@ CLI tool: pw-play.
 
 ## Installation
 ```bash
-apt-get install pw-play 2>/dev/null || which pw-play
+apt-get install pipewire-bin 2>/dev/null || which pw-play
 ```
 
 ## Key Features

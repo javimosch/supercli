@@ -18,7 +18,7 @@ CLI tool: skill.
 
 ## Installation
 ```bash
-apt-get install skill 2>/dev/null || which skill
+apt-get install procps 2>/dev/null || which skill
 ```
 
 ## Key Features

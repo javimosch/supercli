@@ -18,7 +18,7 @@ CLI tool: rotatelogs.
 
 ## Installation
 ```bash
-apt-get install rotatelogs 2>/dev/null || which rotatelogs
+apt-get install apache2-utils 2>/dev/null || which rotatelogs
 ```
 
 ## Key Features

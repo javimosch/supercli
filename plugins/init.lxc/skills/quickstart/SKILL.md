@@ -18,7 +18,7 @@ CLI tool: init.lxc.
 
 ## Installation
 ```bash
-apt-get install init.lxc 2>/dev/null || which init.lxc
+apt-get install liblxc-common 2>/dev/null || which init.lxc
 ```
 
 ## Key Features

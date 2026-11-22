@@ -18,7 +18,7 @@ CLI tool: tapestat.
 
 ## Installation
 ```bash
-apt-get install tapestat 2>/dev/null || which tapestat
+apt-get install sysstat 2>/dev/null || which tapestat
 ```
 
 ## Key Features

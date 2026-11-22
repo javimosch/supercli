@@ -18,7 +18,7 @@ CLI tool: msxlint.
 
 ## Installation
 ```bash
-apt-get install msxlint 2>/dev/null || which msxlint
+apt-get install texlive-binaries 2>/dev/null || which msxlint
 ```
 
 ## Key Features

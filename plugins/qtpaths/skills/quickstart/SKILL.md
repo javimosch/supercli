@@ -18,7 +18,7 @@ CLI tool: qtpaths.
 
 ## Installation
 ```bash
-apt-get install qtpaths 2>/dev/null || which qtpaths
+apt-get install qtchooser 2>/dev/null || which qtpaths
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: uuidd.
 
 ## Installation
 ```bash
-apt-get install uuidd 2>/dev/null || which uuidd
+apt-get install uuid-runtime 2>/dev/null || which uuidd
 ```
 
 ## Key Features

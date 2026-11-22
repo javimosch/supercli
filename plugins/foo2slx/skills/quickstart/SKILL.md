@@ -18,7 +18,7 @@ CLI tool: foo2slx.
 
 ## Installation
 ```bash
-apt-get install foo2slx 2>/dev/null || which foo2slx
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2slx
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: py3rsa-encrypt.
 
 ## Installation
 ```bash
-apt-get install py3rsa-encrypt 2>/dev/null || which py3rsa-encrypt
+apt-get install python3-rsa 2>/dev/null || which py3rsa-encrypt
 ```
 
 ## Key Features

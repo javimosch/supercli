@@ -18,7 +18,7 @@ CLI tool: nvidia-detector.
 
 ## Installation
 ```bash
-apt-get install nvidia-detector 2>/dev/null || which nvidia-detector
+apt-get install ubuntu-drivers-common 2>/dev/null || which nvidia-detector
 ```
 
 ## Key Features

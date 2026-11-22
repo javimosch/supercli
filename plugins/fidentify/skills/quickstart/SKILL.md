@@ -18,7 +18,7 @@ CLI tool: fidentify.
 
 ## Installation
 ```bash
-apt-get install fidentify 2>/dev/null || which fidentify
+apt-get install testdisk 2>/dev/null || which fidentify
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xkill.
 
 ## Installation
 ```bash
-apt-get install xkill 2>/dev/null || which xkill
+apt-get install x11-utils 2>/dev/null || which xkill
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: musl-gcc.
 
 ## Installation
 ```bash
-apt-get install musl-gcc 2>/dev/null || which musl-gcc
+apt-get install musl-tools 2>/dev/null || which musl-gcc
 ```
 
 ## Key Features

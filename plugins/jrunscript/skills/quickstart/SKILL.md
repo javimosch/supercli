@@ -18,7 +18,7 @@ CLI tool: jrunscript.
 
 ## Installation
 ```bash
-apt-get install jrunscript 2>/dev/null || which jrunscript
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jrunscript
 ```
 
 ## Key Features

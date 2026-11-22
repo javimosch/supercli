@@ -18,7 +18,7 @@ CLI tool: vpddecode.
 
 ## Installation
 ```bash
-apt-get install vpddecode 2>/dev/null || which vpddecode
+apt-get install dmidecode 2>/dev/null || which vpddecode
 ```
 
 ## Key Features

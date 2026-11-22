@@ -18,7 +18,7 @@ CLI tool: hd.
 
 ## Installation
 ```bash
-apt-get install hd 2>/dev/null || which hd
+apt-get install bsdextrautils 2>/dev/null || which hd
 ```
 
 ## Key Features

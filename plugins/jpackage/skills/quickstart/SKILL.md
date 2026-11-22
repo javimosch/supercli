@@ -18,7 +18,7 @@ CLI tool: jpackage.
 
 ## Installation
 ```bash
-apt-get install jpackage 2>/dev/null || which jpackage
+apt-get install openjdk-17-jre-headless 2>/dev/null || which jpackage
 ```
 
 ## Key Features

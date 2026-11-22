@@ -18,7 +18,7 @@ CLI tool: ping4.
 
 ## Installation
 ```bash
-apt-get install ping4 2>/dev/null || which ping4
+apt-get install iputils-ping 2>/dev/null || which ping4
 ```
 
 ## Key Features

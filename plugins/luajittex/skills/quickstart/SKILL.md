@@ -18,7 +18,7 @@ CLI tool: luajittex.
 
 ## Installation
 ```bash
-apt-get install luajittex 2>/dev/null || which luajittex
+apt-get install texlive-binaries-sse2 2>/dev/null || which luajittex
 ```
 
 ## Key Features

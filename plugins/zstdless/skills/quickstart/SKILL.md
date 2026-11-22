@@ -18,7 +18,7 @@ CLI tool: zstdless.
 
 ## Installation
 ```bash
-apt-get install zstdless 2>/dev/null || which zstdless
+apt-get install zstd 2>/dev/null || which zstdless
 ```
 
 ## Key Features

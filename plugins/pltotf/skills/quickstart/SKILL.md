@@ -18,7 +18,7 @@ CLI tool: pltotf.
 
 ## Installation
 ```bash
-apt-get install pltotf 2>/dev/null || which pltotf
+apt-get install texlive-binaries 2>/dev/null || which pltotf
 ```
 
 ## Key Features

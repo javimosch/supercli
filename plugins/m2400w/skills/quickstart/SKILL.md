@@ -18,7 +18,7 @@ CLI tool: m2400w.
 
 ## Installation
 ```bash
-apt-get install m2400w 2>/dev/null || which m2400w
+apt-get install printer-driver-m2300w 2>/dev/null || which m2400w
 ```
 
 ## Key Features

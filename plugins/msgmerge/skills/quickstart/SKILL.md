@@ -18,7 +18,7 @@ CLI tool: msgmerge.
 
 ## Installation
 ```bash
-apt-get install msgmerge 2>/dev/null || which msgmerge
+apt-get install gettext 2>/dev/null || which msgmerge
 ```
 
 ## Key Features

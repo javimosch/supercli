@@ -18,7 +18,7 @@ CLI tool: psnup.
 
 ## Installation
 ```bash
-apt-get install psnup 2>/dev/null || which psnup
+apt-get install psutils 2>/dev/null || which psnup
 ```
 
 ## Key Features

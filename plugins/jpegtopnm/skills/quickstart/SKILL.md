@@ -18,7 +18,7 @@ CLI tool: jpegtopnm.
 
 ## Installation
 ```bash
-apt-get install jpegtopnm 2>/dev/null || which jpegtopnm
+apt-get install netpbm 2>/dev/null || which jpegtopnm
 ```
 
 ## Key Features

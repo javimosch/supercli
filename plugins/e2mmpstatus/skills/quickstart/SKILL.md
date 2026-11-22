@@ -18,7 +18,7 @@ CLI tool: e2mmpstatus.
 
 ## Installation
 ```bash
-apt-get install e2mmpstatus 2>/dev/null || which e2mmpstatus
+apt-get install e2fsprogs 2>/dev/null || which e2mmpstatus
 ```
 
 ## Key Features

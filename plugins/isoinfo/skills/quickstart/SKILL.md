@@ -18,7 +18,7 @@ CLI tool: isoinfo.
 
 ## Installation
 ```bash
-apt-get install isoinfo 2>/dev/null || which isoinfo
+apt-get install genisoimage 2>/dev/null || which isoinfo
 ```
 
 ## Key Features

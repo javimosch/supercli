@@ -18,7 +18,7 @@ CLI tool: stl2gts.
 
 ## Installation
 ```bash
-apt-get install stl2gts 2>/dev/null || which stl2gts
+apt-get install libgts-bin 2>/dev/null || which stl2gts
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pooltype.
 
 ## Installation
 ```bash
-apt-get install pooltype 2>/dev/null || which pooltype
+apt-get install texlive-binaries 2>/dev/null || which pooltype
 ```
 
 ## Key Features

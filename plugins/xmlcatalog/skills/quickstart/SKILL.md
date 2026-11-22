@@ -18,7 +18,7 @@ CLI tool: xmlcatalog.
 
 ## Installation
 ```bash
-apt-get install xmlcatalog 2>/dev/null || which xmlcatalog
+apt-get install libxml2-utils 2>/dev/null || which xmlcatalog
 ```
 
 ## Key Features

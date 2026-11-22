@@ -18,7 +18,7 @@ CLI tool: systemd-detect-virt.
 
 ## Installation
 ```bash
-apt-get install systemd-detect-virt 2>/dev/null || which systemd-detect-virt
+apt-get install systemd 2>/dev/null || which systemd-detect-virt
 ```
 
 ## Key Features

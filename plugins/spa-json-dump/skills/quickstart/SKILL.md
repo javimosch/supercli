@@ -18,7 +18,7 @@ CLI tool: spa-json-dump.
 
 ## Installation
 ```bash
-apt-get install spa-json-dump 2>/dev/null || which spa-json-dump
+apt-get install pipewire-bin 2>/dev/null || which spa-json-dump
 ```
 
 ## Key Features

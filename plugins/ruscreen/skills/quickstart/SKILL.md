@@ -18,7 +18,7 @@ CLI tool: ruscreen.
 
 ## Installation
 ```bash
-apt-get install ruscreen 2>/dev/null || which ruscreen
+apt-get install autossh 2>/dev/null || which ruscreen
 ```
 
 ## Key Features

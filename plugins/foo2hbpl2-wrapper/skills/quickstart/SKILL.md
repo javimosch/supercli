@@ -18,7 +18,7 @@ CLI tool: foo2hbpl2-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2hbpl2-wrapper 2>/dev/null || which foo2hbpl2-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2hbpl2-wrapper
 ```
 
 ## Key Features

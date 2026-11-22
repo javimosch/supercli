@@ -18,7 +18,7 @@ CLI tool: ypdomainname.
 
 ## Installation
 ```bash
-apt-get install ypdomainname 2>/dev/null || which ypdomainname
+apt-get install hostname 2>/dev/null || which ypdomainname
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: dvitodvi.
 
 ## Installation
 ```bash
-apt-get install dvitodvi 2>/dev/null || which dvitodvi
+apt-get install texlive-binaries 2>/dev/null || which dvitodvi
 ```
 
 ## Key Features

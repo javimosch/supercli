@@ -18,7 +18,7 @@ CLI tool: yuvsplittoppm.
 
 ## Installation
 ```bash
-apt-get install yuvsplittoppm 2>/dev/null || which yuvsplittoppm
+apt-get install netpbm 2>/dev/null || which yuvsplittoppm
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: foo2zjs.
 
 ## Installation
 ```bash
-apt-get install foo2zjs 2>/dev/null || which foo2zjs
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2zjs
 ```
 
 ## Key Features

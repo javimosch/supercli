@@ -18,7 +18,7 @@ CLI tool: setupcon.
 
 ## Installation
 ```bash
-apt-get install setupcon 2>/dev/null || which setupcon
+apt-get install console-setup 2>/dev/null || which setupcon
 ```
 
 ## Key Features

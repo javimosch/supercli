@@ -18,7 +18,7 @@ CLI tool: trial3.
 
 ## Installation
 ```bash
-apt-get install trial3 2>/dev/null || which trial3
+apt-get install python3-twisted 2>/dev/null || which trial3
 ```
 
 ## Key Features

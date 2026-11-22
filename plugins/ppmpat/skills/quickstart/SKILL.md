@@ -18,7 +18,7 @@ CLI tool: ppmpat.
 
 ## Installation
 ```bash
-apt-get install ppmpat 2>/dev/null || which ppmpat
+apt-get install netpbm 2>/dev/null || which ppmpat
 ```
 
 ## Key Features

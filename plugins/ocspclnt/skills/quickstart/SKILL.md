@@ -18,7 +18,7 @@ CLI tool: ocspclnt.
 
 ## Installation
 ```bash
-apt-get install ocspclnt 2>/dev/null || which ocspclnt
+apt-get install libnss3-tools 2>/dev/null || which ocspclnt
 ```
 
 ## Key Features

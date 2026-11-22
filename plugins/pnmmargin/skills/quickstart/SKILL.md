@@ -18,7 +18,7 @@ CLI tool: pnmmargin.
 
 ## Installation
 ```bash
-apt-get install pnmmargin 2>/dev/null || which pnmmargin
+apt-get install netpbm 2>/dev/null || which pnmmargin
 ```
 
 ## Key Features

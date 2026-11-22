@@ -18,7 +18,7 @@ CLI tool: on_ac_power.
 
 ## Installation
 ```bash
-apt-get install on_ac_power 2>/dev/null || which on_ac_power
+apt-get install powermgmt-base 2>/dev/null || which on_ac_power
 ```
 
 ## Key Features

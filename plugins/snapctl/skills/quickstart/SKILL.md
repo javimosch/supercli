@@ -18,7 +18,7 @@ CLI tool: snapctl.
 
 ## Installation
 ```bash
-apt-get install snapctl 2>/dev/null || which snapctl
+apt-get install snapd 2>/dev/null || which snapctl
 ```
 
 ## Key Features

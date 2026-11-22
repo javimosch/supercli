@@ -18,7 +18,7 @@ CLI tool: toe.
 
 ## Installation
 ```bash
-apt-get install toe 2>/dev/null || which toe
+apt-get install ncurses-bin 2>/dev/null || which toe
 ```
 
 ## Key Features

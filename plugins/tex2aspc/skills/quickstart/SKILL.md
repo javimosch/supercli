@@ -18,7 +18,7 @@ CLI tool: tex2aspc.
 
 ## Installation
 ```bash
-apt-get install tex2aspc 2>/dev/null || which tex2aspc
+apt-get install texlive-binaries 2>/dev/null || which tex2aspc
 ```
 
 ## Key Features

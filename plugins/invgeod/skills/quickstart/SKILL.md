@@ -18,7 +18,7 @@ CLI tool: invgeod.
 
 ## Installation
 ```bash
-apt-get install invgeod 2>/dev/null || which invgeod
+apt-get install proj-bin 2>/dev/null || which invgeod
 ```
 
 ## Key Features

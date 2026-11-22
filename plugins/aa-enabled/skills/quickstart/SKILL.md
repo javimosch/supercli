@@ -18,7 +18,7 @@ CLI tool: aa-enabled.
 
 ## Installation
 ```bash
-apt-get install aa-enabled 2>/dev/null || which aa-enabled
+apt-get install apparmor 2>/dev/null || which aa-enabled
 ```
 
 ## Key Features

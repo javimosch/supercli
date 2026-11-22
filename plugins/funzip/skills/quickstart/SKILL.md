@@ -18,7 +18,7 @@ CLI tool: funzip.
 
 ## Installation
 ```bash
-apt-get install funzip 2>/dev/null || which funzip
+apt-get install unzip 2>/dev/null || which funzip
 ```
 
 ## Key Features

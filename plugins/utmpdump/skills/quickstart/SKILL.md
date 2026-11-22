@@ -18,7 +18,7 @@ CLI tool: utmpdump.
 
 ## Installation
 ```bash
-apt-get install utmpdump 2>/dev/null || which utmpdump
+apt-get install util-linux 2>/dev/null || which utmpdump
 ```
 
 ## Key Features

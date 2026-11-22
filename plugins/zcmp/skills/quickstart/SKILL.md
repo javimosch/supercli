@@ -18,7 +18,7 @@ CLI tool: zcmp.
 
 ## Installation
 ```bash
-apt-get install zcmp 2>/dev/null || which zcmp
+apt-get install gzip 2>/dev/null || which zcmp
 ```
 
 ## Key Features

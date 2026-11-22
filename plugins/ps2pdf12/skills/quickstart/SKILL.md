@@ -18,7 +18,7 @@ CLI tool: ps2pdf12.
 
 ## Installation
 ```bash
-apt-get install ps2pdf12 2>/dev/null || which ps2pdf12
+apt-get install ghostscript 2>/dev/null || which ps2pdf12
 ```
 
 ## Key Features

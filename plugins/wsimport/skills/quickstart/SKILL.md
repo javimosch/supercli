@@ -18,7 +18,7 @@ CLI tool: wsimport.
 
 ## Installation
 ```bash
-apt-get install wsimport 2>/dev/null || which wsimport
+apt-get install jaxws 2>/dev/null || which wsimport
 ```
 
 ## Key Features

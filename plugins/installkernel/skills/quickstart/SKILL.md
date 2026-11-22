@@ -18,7 +18,7 @@ CLI tool: installkernel.
 
 ## Installation
 ```bash
-apt-get install installkernel 2>/dev/null || which installkernel
+apt-get install debianutils 2>/dev/null || which installkernel
 ```
 
 ## Key Features

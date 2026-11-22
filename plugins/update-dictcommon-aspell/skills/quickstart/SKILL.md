@@ -18,7 +18,7 @@ CLI tool: update-dictcommon-aspell.
 
 ## Installation
 ```bash
-apt-get install update-dictcommon-aspell 2>/dev/null || which update-dictcommon-aspell
+apt-get install dictionaries-common 2>/dev/null || which update-dictcommon-aspell
 ```
 
 ## Key Features

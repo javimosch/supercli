@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcov-tool-11.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcov-tool-11 2>/dev/null || which x86_64-linux-gnu-gcov-tool-11
+apt-get install gcc-11 2>/dev/null || which x86_64-linux-gnu-gcov-tool-11
 ```
 
 ## Key Features

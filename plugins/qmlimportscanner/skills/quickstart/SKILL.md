@@ -18,7 +18,7 @@ CLI tool: qmlimportscanner.
 
 ## Installation
 ```bash
-apt-get install qmlimportscanner 2>/dev/null || which qmlimportscanner
+apt-get install qtchooser 2>/dev/null || which qmlimportscanner
 ```
 
 ## Key Features

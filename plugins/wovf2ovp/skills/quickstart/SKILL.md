@@ -18,7 +18,7 @@ CLI tool: wovf2ovp.
 
 ## Installation
 ```bash
-apt-get install wovf2ovp 2>/dev/null || which wovf2ovp
+apt-get install texlive-binaries 2>/dev/null || which wovf2ovp
 ```
 
 ## Key Features

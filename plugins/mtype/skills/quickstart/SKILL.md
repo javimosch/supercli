@@ -18,7 +18,7 @@ CLI tool: mtype.
 
 ## Installation
 ```bash
-apt-get install mtype 2>/dev/null || which mtype
+apt-get install mtools 2>/dev/null || which mtype
 ```
 
 ## Key Features

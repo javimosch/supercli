@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-elfedit.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-elfedit 2>/dev/null || which x86_64-linux-gnu-elfedit
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-elfedit
 ```
 
 ## Key Features

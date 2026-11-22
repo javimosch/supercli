@@ -18,7 +18,7 @@ CLI tool: pstopnm.
 
 ## Installation
 ```bash
-apt-get install pstopnm 2>/dev/null || which pstopnm
+apt-get install netpbm 2>/dev/null || which pstopnm
 ```
 
 ## Key Features

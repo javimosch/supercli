@@ -18,7 +18,7 @@ CLI tool: pw-dot.
 
 ## Installation
 ```bash
-apt-get install pw-dot 2>/dev/null || which pw-dot
+apt-get install pipewire-bin 2>/dev/null || which pw-dot
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: trust.
 
 ## Installation
 ```bash
-apt-get install trust 2>/dev/null || which trust
+apt-get install p11-kit 2>/dev/null || which trust
 ```
 
 ## Key Features

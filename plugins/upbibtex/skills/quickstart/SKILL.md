@@ -18,7 +18,7 @@ CLI tool: upbibtex.
 
 ## Installation
 ```bash
-apt-get install upbibtex 2>/dev/null || which upbibtex
+apt-get install texlive-binaries 2>/dev/null || which upbibtex
 ```
 
 ## Key Features

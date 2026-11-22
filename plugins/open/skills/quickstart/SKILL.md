@@ -18,7 +18,7 @@ CLI tool: open.
 
 ## Installation
 ```bash
-apt-get install open 2>/dev/null || which open
+apt-get install mailcap 2>/dev/null || which open
 ```
 
 ## Key Features

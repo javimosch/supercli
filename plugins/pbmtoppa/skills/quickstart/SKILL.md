@@ -18,7 +18,7 @@ CLI tool: pbmtoppa.
 
 ## Installation
 ```bash
-apt-get install pbmtoppa 2>/dev/null || which pbmtoppa
+apt-get install netpbm 2>/dev/null || which pbmtoppa
 ```
 
 ## Key Features

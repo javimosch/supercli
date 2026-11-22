@@ -18,7 +18,7 @@ CLI tool: ldapwhoami.
 
 ## Installation
 ```bash
-apt-get install ldapwhoami 2>/dev/null || which ldapwhoami
+apt-get install ldap-utils 2>/dev/null || which ldapwhoami
 ```
 
 ## Key Features

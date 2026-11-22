@@ -18,7 +18,7 @@ CLI tool: pg_receivexlog.
 
 ## Installation
 ```bash
-apt-get install pg_receivexlog 2>/dev/null || which pg_receivexlog
+apt-get install postgresql-client-common 2>/dev/null || which pg_receivexlog
 ```
 
 ## Key Features

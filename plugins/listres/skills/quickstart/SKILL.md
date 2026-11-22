@@ -18,7 +18,7 @@ CLI tool: listres.
 
 ## Installation
 ```bash
-apt-get install listres 2>/dev/null || which listres
+apt-get install x11-utils 2>/dev/null || which listres
 ```
 
 ## Key Features

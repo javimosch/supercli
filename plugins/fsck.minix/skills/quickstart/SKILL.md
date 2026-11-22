@@ -18,7 +18,7 @@ CLI tool: fsck.minix.
 
 ## Installation
 ```bash
-apt-get install fsck.minix 2>/dev/null || which fsck.minix
+apt-get install util-linux 2>/dev/null || which fsck.minix
 ```
 
 ## Key Features

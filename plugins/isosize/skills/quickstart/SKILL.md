@@ -18,7 +18,7 @@ CLI tool: isosize.
 
 ## Installation
 ```bash
-apt-get install isosize 2>/dev/null || which isosize
+apt-get install util-linux 2>/dev/null || which isosize
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: py3rsa-keygen.
 
 ## Installation
 ```bash
-apt-get install py3rsa-keygen 2>/dev/null || which py3rsa-keygen
+apt-get install python3-rsa 2>/dev/null || which py3rsa-keygen
 ```
 
 ## Key Features

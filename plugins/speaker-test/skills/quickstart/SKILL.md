@@ -18,7 +18,7 @@ CLI tool: speaker-test.
 
 ## Installation
 ```bash
-apt-get install speaker-test 2>/dev/null || which speaker-test
+apt-get install alsa-utils 2>/dev/null || which speaker-test
 ```
 
 ## Key Features

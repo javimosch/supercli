@@ -18,7 +18,7 @@ CLI tool: pip3.11.
 
 ## Installation
 ```bash
-apt-get install pip3.11 2>/dev/null || which pip3.11
+apt-get install python3-pip 2>/dev/null || which pip3.11
 ```
 
 ## Key Features

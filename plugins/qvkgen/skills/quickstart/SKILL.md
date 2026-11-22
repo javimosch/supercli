@@ -18,7 +18,7 @@ CLI tool: qvkgen.
 
 ## Installation
 ```bash
-apt-get install qvkgen 2>/dev/null || which qvkgen
+apt-get install qtchooser 2>/dev/null || which qvkgen
 ```
 
 ## Key Features

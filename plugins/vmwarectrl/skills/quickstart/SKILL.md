@@ -18,7 +18,7 @@ CLI tool: vmwarectrl.
 
 ## Installation
 ```bash
-apt-get install vmwarectrl 2>/dev/null || which vmwarectrl
+apt-get install xserver-xorg-video-vmware 2>/dev/null || which vmwarectrl
 ```
 
 ## Key Features

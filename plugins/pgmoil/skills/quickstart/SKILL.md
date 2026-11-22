@@ -18,7 +18,7 @@ CLI tool: pgmoil.
 
 ## Installation
 ```bash
-apt-get install pgmoil 2>/dev/null || which pgmoil
+apt-get install netpbm 2>/dev/null || which pgmoil
 ```
 
 ## Key Features

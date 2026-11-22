@@ -18,7 +18,7 @@ CLI tool: lxc-usernsexec.
 
 ## Installation
 ```bash
-apt-get install lxc-usernsexec 2>/dev/null || which lxc-usernsexec
+apt-get install lxc-utils 2>/dev/null || which lxc-usernsexec
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mmount.
 
 ## Installation
 ```bash
-apt-get install mmount 2>/dev/null || which mmount
+apt-get install mtools 2>/dev/null || which mmount
 ```
 
 ## Key Features

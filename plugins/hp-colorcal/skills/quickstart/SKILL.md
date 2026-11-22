@@ -18,7 +18,7 @@ CLI tool: hp-colorcal.
 
 ## Installation
 ```bash
-apt-get install hp-colorcal 2>/dev/null || which hp-colorcal
+apt-get install hplip 2>/dev/null || which hp-colorcal
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: jsonschema.
 
 ## Installation
 ```bash
-apt-get install jsonschema 2>/dev/null || which jsonschema
+apt-get install python3-jsonschema 2>/dev/null || which jsonschema
 ```
 
 ## Key Features

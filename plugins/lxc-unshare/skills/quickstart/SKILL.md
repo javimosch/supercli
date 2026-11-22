@@ -18,7 +18,7 @@ CLI tool: lxc-unshare.
 
 ## Installation
 ```bash
-apt-get install lxc-unshare 2>/dev/null || which lxc-unshare
+apt-get install lxc-utils 2>/dev/null || which lxc-unshare
 ```
 
 ## Key Features

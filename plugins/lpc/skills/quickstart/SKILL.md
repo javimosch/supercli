@@ -18,7 +18,7 @@ CLI tool: lpc.
 
 ## Installation
 ```bash
-apt-get install lpc 2>/dev/null || which lpc
+apt-get install cups-bsd 2>/dev/null || which lpc
 ```
 
 ## Key Features

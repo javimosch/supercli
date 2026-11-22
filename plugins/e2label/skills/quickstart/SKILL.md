@@ -18,7 +18,7 @@ CLI tool: e2label.
 
 ## Installation
 ```bash
-apt-get install e2label 2>/dev/null || which e2label
+apt-get install e2fsprogs 2>/dev/null || which e2label
 ```
 
 ## Key Features

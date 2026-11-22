@@ -18,7 +18,7 @@ CLI tool: psicc.
 
 ## Installation
 ```bash
-apt-get install psicc 2>/dev/null || which psicc
+apt-get install liblcms2-utils 2>/dev/null || which psicc
 ```
 
 ## Key Features

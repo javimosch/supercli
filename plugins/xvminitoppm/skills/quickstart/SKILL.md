@@ -18,7 +18,7 @@ CLI tool: xvminitoppm.
 
 ## Installation
 ```bash
-apt-get install xvminitoppm 2>/dev/null || which xvminitoppm
+apt-get install netpbm 2>/dev/null || which xvminitoppm
 ```
 
 ## Key Features

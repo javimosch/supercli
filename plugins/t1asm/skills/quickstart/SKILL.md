@@ -18,7 +18,7 @@ CLI tool: t1asm.
 
 ## Installation
 ```bash
-apt-get install t1asm 2>/dev/null || which t1asm
+apt-get install t1utils 2>/dev/null || which t1asm
 ```
 
 ## Key Features

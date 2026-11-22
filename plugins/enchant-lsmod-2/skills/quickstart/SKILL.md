@@ -18,7 +18,7 @@ CLI tool: enchant-lsmod-2.
 
 ## Installation
 ```bash
-apt-get install enchant-lsmod-2 2>/dev/null || which enchant-lsmod-2
+apt-get install enchant-2 2>/dev/null || which enchant-lsmod-2
 ```
 
 ## Key Features

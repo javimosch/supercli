@@ -18,7 +18,7 @@ CLI tool: pbmlife.
 
 ## Installation
 ```bash
-apt-get install pbmlife 2>/dev/null || which pbmlife
+apt-get install netpbm 2>/dev/null || which pbmlife
 ```
 
 ## Key Features

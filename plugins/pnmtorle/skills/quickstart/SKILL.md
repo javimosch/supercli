@@ -18,7 +18,7 @@ CLI tool: pnmtorle.
 
 ## Installation
 ```bash
-apt-get install pnmtorle 2>/dev/null || which pnmtorle
+apt-get install netpbm 2>/dev/null || which pnmtorle
 ```
 
 ## Key Features

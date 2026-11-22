@@ -18,7 +18,7 @@ CLI tool: selfserv.
 
 ## Installation
 ```bash
-apt-get install selfserv 2>/dev/null || which selfserv
+apt-get install libnss3-tools 2>/dev/null || which selfserv
 ```
 
 ## Key Features

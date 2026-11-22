@@ -18,7 +18,7 @@ CLI tool: mapscrn.
 
 ## Installation
 ```bash
-apt-get install mapscrn 2>/dev/null || which mapscrn
+apt-get install kbd 2>/dev/null || which mapscrn
 ```
 
 ## Key Features

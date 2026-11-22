@@ -18,7 +18,7 @@ CLI tool: resolvconf.
 
 ## Installation
 ```bash
-apt-get install resolvconf 2>/dev/null || which resolvconf
+apt-get install systemd-resolved 2>/dev/null || which resolvconf
 ```
 
 ## Key Features

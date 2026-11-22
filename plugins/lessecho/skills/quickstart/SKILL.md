@@ -18,7 +18,7 @@ CLI tool: lessecho.
 
 ## Installation
 ```bash
-apt-get install lessecho 2>/dev/null || which lessecho
+apt-get install less 2>/dev/null || which lessecho
 ```
 
 ## Key Features

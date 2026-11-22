@@ -18,7 +18,7 @@ CLI tool: namei.
 
 ## Installation
 ```bash
-apt-get install namei 2>/dev/null || which namei
+apt-get install util-linux 2>/dev/null || which namei
 ```
 
 ## Key Features

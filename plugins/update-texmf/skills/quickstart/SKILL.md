@@ -18,7 +18,7 @@ CLI tool: update-texmf.
 
 ## Installation
 ```bash
-apt-get install update-texmf 2>/dev/null || which update-texmf
+apt-get install tex-common 2>/dev/null || which update-texmf
 ```
 
 ## Key Features

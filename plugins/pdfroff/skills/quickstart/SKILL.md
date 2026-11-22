@@ -18,7 +18,7 @@ CLI tool: pdfroff.
 
 ## Installation
 ```bash
-apt-get install pdfroff 2>/dev/null || which pdfroff
+apt-get install groff 2>/dev/null || which pdfroff
 ```
 
 ## Key Features

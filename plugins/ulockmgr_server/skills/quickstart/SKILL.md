@@ -18,7 +18,7 @@ CLI tool: ulockmgr_server.
 
 ## Installation
 ```bash
-apt-get install ulockmgr_server 2>/dev/null || which ulockmgr_server
+apt-get install fuse 2>/dev/null || which ulockmgr_server
 ```
 
 ## Key Features

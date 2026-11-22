@@ -18,7 +18,7 @@ CLI tool: jcmd.
 
 ## Installation
 ```bash
-apt-get install jcmd 2>/dev/null || which jcmd
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jcmd
 ```
 
 ## Key Features

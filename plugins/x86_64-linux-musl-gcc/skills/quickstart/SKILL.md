@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-musl-gcc.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-musl-gcc 2>/dev/null || which x86_64-linux-musl-gcc
+apt-get install musl-dev 2>/dev/null || which x86_64-linux-musl-gcc
 ```
 
 ## Key Features

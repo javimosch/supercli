@@ -18,7 +18,7 @@ CLI tool: systemd-tty-ask-password-agent.
 
 ## Installation
 ```bash
-apt-get install systemd-tty-ask-password-agent 2>/dev/null || which systemd-tty-ask-password-agent
+apt-get install systemd 2>/dev/null || which systemd-tty-ask-password-agent
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: shutdown.
 
 ## Installation
 ```bash
-apt-get install shutdown 2>/dev/null || which shutdown
+apt-get install systemd-sysv 2>/dev/null || which shutdown
 ```
 
 ## Key Features

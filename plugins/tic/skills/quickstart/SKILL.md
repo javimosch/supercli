@@ -18,7 +18,7 @@ CLI tool: tic.
 
 ## Installation
 ```bash
-apt-get install tic 2>/dev/null || which tic
+apt-get install ncurses-bin 2>/dev/null || which tic
 ```
 
 ## Key Features

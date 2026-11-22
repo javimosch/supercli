@@ -18,7 +18,7 @@ CLI tool: ubuntu-core-launcher.
 
 ## Installation
 ```bash
-apt-get install ubuntu-core-launcher 2>/dev/null || which ubuntu-core-launcher
+apt-get install snapd 2>/dev/null || which ubuntu-core-launcher
 ```
 
 ## Key Features

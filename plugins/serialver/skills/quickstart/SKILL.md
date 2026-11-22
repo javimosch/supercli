@@ -18,7 +18,7 @@ CLI tool: serialver.
 
 ## Installation
 ```bash
-apt-get install serialver 2>/dev/null || which serialver
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which serialver
 ```
 
 ## Key Features

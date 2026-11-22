@@ -18,7 +18,7 @@ CLI tool: ppmtorgb3.
 
 ## Installation
 ```bash
-apt-get install ppmtorgb3 2>/dev/null || which ppmtorgb3
+apt-get install netpbm 2>/dev/null || which ppmtorgb3
 ```
 
 ## Key Features

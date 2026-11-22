@@ -18,7 +18,7 @@ CLI tool: iwgetid.
 
 ## Installation
 ```bash
-apt-get install iwgetid 2>/dev/null || which iwgetid
+apt-get install wireless-tools 2>/dev/null || which iwgetid
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: osinfo-install-script.
 
 ## Installation
 ```bash
-apt-get install osinfo-install-script 2>/dev/null || which osinfo-install-script
+apt-get install libosinfo-bin 2>/dev/null || which osinfo-install-script
 ```
 
 ## Key Features

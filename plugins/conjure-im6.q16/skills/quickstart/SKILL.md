@@ -18,7 +18,7 @@ CLI tool: conjure-im6.q16.
 
 ## Installation
 ```bash
-apt-get install conjure-im6.q16 2>/dev/null || which conjure-im6.q16
+apt-get install imagemagick-6.q16 2>/dev/null || which conjure-im6.q16
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: powerprofilesctl.
 
 ## Installation
 ```bash
-apt-get install powerprofilesctl 2>/dev/null || which powerprofilesctl
+apt-get install power-profiles-daemon 2>/dev/null || which powerprofilesctl
 ```
 
 ## Key Features

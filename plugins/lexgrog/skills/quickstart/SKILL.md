@@ -18,7 +18,7 @@ CLI tool: lexgrog.
 
 ## Installation
 ```bash
-apt-get install lexgrog 2>/dev/null || which lexgrog
+apt-get install man-db 2>/dev/null || which lexgrog
 ```
 
 ## Key Features

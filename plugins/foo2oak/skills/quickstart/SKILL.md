@@ -18,7 +18,7 @@ CLI tool: foo2oak.
 
 ## Installation
 ```bash
-apt-get install foo2oak 2>/dev/null || which foo2oak
+apt-get install printer-driver-foo2zjs 2>/dev/null || which foo2oak
 ```
 
 ## Key Features

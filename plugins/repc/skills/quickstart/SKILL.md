@@ -18,7 +18,7 @@ CLI tool: repc.
 
 ## Installation
 ```bash
-apt-get install repc 2>/dev/null || which repc
+apt-get install qtchooser 2>/dev/null || which repc
 ```
 
 ## Key Features

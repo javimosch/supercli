@@ -18,7 +18,7 @@ CLI tool: xfwm4-settings.
 
 ## Installation
 ```bash
-apt-get install xfwm4-settings 2>/dev/null || which xfwm4-settings
+apt-get install xfwm4 2>/dev/null || which xfwm4-settings
 ```
 
 ## Key Features

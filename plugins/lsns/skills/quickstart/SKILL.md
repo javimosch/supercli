@@ -18,7 +18,7 @@ CLI tool: lsns.
 
 ## Installation
 ```bash
-apt-get install lsns 2>/dev/null || which lsns
+apt-get install util-linux 2>/dev/null || which lsns
 ```
 
 ## Key Features

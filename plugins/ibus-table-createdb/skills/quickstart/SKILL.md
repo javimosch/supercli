@@ -18,7 +18,7 @@ CLI tool: ibus-table-createdb.
 
 ## Installation
 ```bash
-apt-get install ibus-table-createdb 2>/dev/null || which ibus-table-createdb
+apt-get install ibus-table 2>/dev/null || which ibus-table-createdb
 ```
 
 ## Key Features

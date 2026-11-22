@@ -18,7 +18,7 @@ CLI tool: pjtoppm.
 
 ## Installation
 ```bash
-apt-get install pjtoppm 2>/dev/null || which pjtoppm
+apt-get install netpbm 2>/dev/null || which pjtoppm
 ```
 
 ## Key Features

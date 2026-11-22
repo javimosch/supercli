@@ -18,7 +18,7 @@ CLI tool: gvpr.
 
 ## Installation
 ```bash
-apt-get install gvpr 2>/dev/null || which gvpr
+apt-get install graphviz 2>/dev/null || which gvpr
 ```
 
 ## Key Features

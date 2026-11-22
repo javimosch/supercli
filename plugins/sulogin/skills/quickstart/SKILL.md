@@ -18,7 +18,7 @@ CLI tool: sulogin.
 
 ## Installation
 ```bash
-apt-get install sulogin 2>/dev/null || which sulogin
+apt-get install util-linux 2>/dev/null || which sulogin
 ```
 
 ## Key Features

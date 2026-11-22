@@ -18,7 +18,7 @@ CLI tool: vgsplit.
 
 ## Installation
 ```bash
-apt-get install vgsplit 2>/dev/null || which vgsplit
+apt-get install lvm2 2>/dev/null || which vgsplit
 ```
 
 ## Key Features

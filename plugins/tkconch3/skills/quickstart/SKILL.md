@@ -18,7 +18,7 @@ CLI tool: tkconch3.
 
 ## Installation
 ```bash
-apt-get install tkconch3 2>/dev/null || which tkconch3
+apt-get install python3-twisted 2>/dev/null || which tkconch3
 ```
 
 ## Key Features

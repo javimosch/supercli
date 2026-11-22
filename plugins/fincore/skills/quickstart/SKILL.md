@@ -18,7 +18,7 @@ CLI tool: fincore.
 
 ## Installation
 ```bash
-apt-get install fincore 2>/dev/null || which fincore
+apt-get install util-linux-extra 2>/dev/null || which fincore
 ```
 
 ## Key Features

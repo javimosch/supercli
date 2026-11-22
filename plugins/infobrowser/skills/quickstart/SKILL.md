@@ -18,7 +18,7 @@ CLI tool: infobrowser.
 
 ## Installation
 ```bash
-apt-get install infobrowser 2>/dev/null || which infobrowser
+apt-get install info 2>/dev/null || which infobrowser
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-icon-caches.
 
 ## Installation
 ```bash
-apt-get install update-icon-caches 2>/dev/null || which update-icon-caches
+apt-get install gtk-update-icon-cache 2>/dev/null || which update-icon-caches
 ```
 
 ## Key Features

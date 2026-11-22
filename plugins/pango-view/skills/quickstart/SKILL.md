@@ -18,7 +18,7 @@ CLI tool: pango-view.
 
 ## Installation
 ```bash
-apt-get install pango-view 2>/dev/null || which pango-view
+apt-get install pango1.0-tools 2>/dev/null || which pango-view
 ```
 
 ## Key Features

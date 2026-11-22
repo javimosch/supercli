@@ -18,7 +18,7 @@ CLI tool: ppmtompeg.
 
 ## Installation
 ```bash
-apt-get install ppmtompeg 2>/dev/null || which ppmtompeg
+apt-get install netpbm 2>/dev/null || which ppmtompeg
 ```
 
 ## Key Features

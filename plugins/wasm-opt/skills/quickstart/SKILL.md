@@ -18,7 +18,7 @@ CLI tool: wasm-opt.
 
 ## Installation
 ```bash
-apt-get install wasm-opt 2>/dev/null || which wasm-opt
+apt-get install binaryen 2>/dev/null || which wasm-opt
 ```
 
 ## Key Features

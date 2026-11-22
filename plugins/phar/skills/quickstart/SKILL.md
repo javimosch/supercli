@@ -18,7 +18,7 @@ CLI tool: phar.
 
 ## Installation
 ```bash
-apt-get install phar 2>/dev/null || which phar
+apt-get install php-cli 2>/dev/null || which phar
 ```
 
 ## Key Features

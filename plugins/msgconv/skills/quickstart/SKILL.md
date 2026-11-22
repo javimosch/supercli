@@ -18,7 +18,7 @@ CLI tool: msgconv.
 
 ## Installation
 ```bash
-apt-get install msgconv 2>/dev/null || which msgconv
+apt-get install gettext 2>/dev/null || which msgconv
 ```
 
 ## Key Features

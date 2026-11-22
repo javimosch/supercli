@@ -18,7 +18,7 @@ CLI tool: pamdeinterlace.
 
 ## Installation
 ```bash
-apt-get install pamdeinterlace 2>/dev/null || which pamdeinterlace
+apt-get install netpbm 2>/dev/null || which pamdeinterlace
 ```
 
 ## Key Features

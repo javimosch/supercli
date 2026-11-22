@@ -18,7 +18,7 @@ CLI tool: aa-exec.
 
 ## Installation
 ```bash
-apt-get install aa-exec 2>/dev/null || which aa-exec
+apt-get install apparmor 2>/dev/null || which aa-exec
 ```
 
 ## Key Features

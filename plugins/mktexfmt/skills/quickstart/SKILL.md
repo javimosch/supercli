@@ -18,7 +18,7 @@ CLI tool: mktexfmt.
 
 ## Installation
 ```bash
-apt-get install mktexfmt 2>/dev/null || which mktexfmt
+apt-get install texlive-base 2>/dev/null || which mktexfmt
 ```
 
 ## Key Features

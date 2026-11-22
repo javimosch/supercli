@@ -18,7 +18,7 @@ CLI tool: ppmtopcx.
 
 ## Installation
 ```bash
-apt-get install ppmtopcx 2>/dev/null || which ppmtopcx
+apt-get install netpbm 2>/dev/null || which ppmtopcx
 ```
 
 ## Key Features

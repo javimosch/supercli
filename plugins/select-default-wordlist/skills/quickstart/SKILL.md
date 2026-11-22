@@ -18,7 +18,7 @@ CLI tool: select-default-wordlist.
 
 ## Installation
 ```bash
-apt-get install select-default-wordlist 2>/dev/null || which select-default-wordlist
+apt-get install dictionaries-common 2>/dev/null || which select-default-wordlist
 ```
 
 ## Key Features

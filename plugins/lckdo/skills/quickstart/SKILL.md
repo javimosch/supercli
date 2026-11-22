@@ -18,7 +18,7 @@ CLI tool: lckdo.
 
 ## Installation
 ```bash
-apt-get install lckdo 2>/dev/null || which lckdo
+apt-get install moreutils 2>/dev/null || which lckdo
 ```
 
 ## Key Features

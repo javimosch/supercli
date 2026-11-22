@@ -18,7 +18,7 @@ CLI tool: icontopbm.
 
 ## Installation
 ```bash
-apt-get install icontopbm 2>/dev/null || which icontopbm
+apt-get install netpbm 2>/dev/null || which icontopbm
 ```
 
 ## Key Features

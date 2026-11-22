@@ -18,7 +18,7 @@ CLI tool: edgepaint.
 
 ## Installation
 ```bash
-apt-get install edgepaint 2>/dev/null || which edgepaint
+apt-get install graphviz 2>/dev/null || which edgepaint
 ```
 
 ## Key Features

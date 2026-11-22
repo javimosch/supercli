@@ -18,7 +18,7 @@ CLI tool: vbox-img.
 
 ## Installation
 ```bash
-apt-get install vbox-img 2>/dev/null || which vbox-img
+apt-get install virtualbox 2>/dev/null || which vbox-img
 ```
 
 ## Key Features

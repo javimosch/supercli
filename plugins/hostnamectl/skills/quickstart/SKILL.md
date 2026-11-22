@@ -18,7 +18,7 @@ CLI tool: hostnamectl.
 
 ## Installation
 ```bash
-apt-get install hostnamectl 2>/dev/null || which hostnamectl
+apt-get install systemd 2>/dev/null || which hostnamectl
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: see.
 
 ## Installation
 ```bash
-apt-get install see 2>/dev/null || which see
+apt-get install mailcap 2>/dev/null || which see
 ```
 
 ## Key Features

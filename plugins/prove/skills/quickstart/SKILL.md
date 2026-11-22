@@ -18,7 +18,7 @@ CLI tool: prove.
 
 ## Installation
 ```bash
-apt-get install prove 2>/dev/null || which prove
+apt-get install perl 2>/dev/null || which prove
 ```
 
 ## Key Features

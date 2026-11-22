@@ -18,7 +18,7 @@ CLI tool: dropuser.
 
 ## Installation
 ```bash
-apt-get install dropuser 2>/dev/null || which dropuser
+apt-get install postgresql-client-common 2>/dev/null || which dropuser
 ```
 
 ## Key Features

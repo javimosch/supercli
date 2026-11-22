@@ -18,7 +18,7 @@ CLI tool: nop.
 
 ## Installation
 ```bash
-apt-get install nop 2>/dev/null || which nop
+apt-get install graphviz 2>/dev/null || which nop
 ```
 
 ## Key Features

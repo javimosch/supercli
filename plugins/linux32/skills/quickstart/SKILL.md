@@ -18,7 +18,7 @@ CLI tool: linux32.
 
 ## Installation
 ```bash
-apt-get install linux32 2>/dev/null || which linux32
+apt-get install util-linux 2>/dev/null || which linux32
 ```
 
 ## Key Features

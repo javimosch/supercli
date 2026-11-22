@@ -18,7 +18,7 @@ CLI tool: tpic2pdftex.
 
 ## Installation
 ```bash
-apt-get install tpic2pdftex 2>/dev/null || which tpic2pdftex
+apt-get install texlive-binaries 2>/dev/null || which tpic2pdftex
 ```
 
 ## Key Features

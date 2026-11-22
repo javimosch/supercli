@@ -18,7 +18,7 @@ CLI tool: ippeveprinter.
 
 ## Installation
 ```bash
-apt-get install ippeveprinter 2>/dev/null || which ippeveprinter
+apt-get install cups-ipp-utils 2>/dev/null || which ippeveprinter
 ```
 
 ## Key Features

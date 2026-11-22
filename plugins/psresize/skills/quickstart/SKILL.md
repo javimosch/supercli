@@ -18,7 +18,7 @@ CLI tool: psresize.
 
 ## Installation
 ```bash
-apt-get install psresize 2>/dev/null || which psresize
+apt-get install psutils 2>/dev/null || which psresize
 ```
 
 ## Key Features

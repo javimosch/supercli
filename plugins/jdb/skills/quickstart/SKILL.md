@@ -18,7 +18,7 @@ CLI tool: jdb.
 
 ## Installation
 ```bash
-apt-get install jdb 2>/dev/null || which jdb
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jdb
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: psfstriptable.
 
 ## Installation
 ```bash
-apt-get install psfstriptable 2>/dev/null || which psfstriptable
+apt-get install kbd 2>/dev/null || which psfstriptable
 ```
 
 ## Key Features

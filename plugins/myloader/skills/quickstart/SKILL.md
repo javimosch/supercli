@@ -18,7 +18,7 @@ CLI tool: myloader.
 
 ## Installation
 ```bash
-apt-get install myloader 2>/dev/null || which myloader
+apt-get install mydumper 2>/dev/null || which myloader
 ```
 
 ## Key Features

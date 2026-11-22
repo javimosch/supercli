@@ -18,7 +18,7 @@ CLI tool: setfont.
 
 ## Installation
 ```bash
-apt-get install setfont 2>/dev/null || which setfont
+apt-get install kbd 2>/dev/null || which setfont
 ```
 
 ## Key Features

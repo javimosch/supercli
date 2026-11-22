@@ -18,7 +18,7 @@ CLI tool: xdriinfo.
 
 ## Installation
 ```bash
-apt-get install xdriinfo 2>/dev/null || which xdriinfo
+apt-get install x11-utils 2>/dev/null || which xdriinfo
 ```
 
 ## Key Features

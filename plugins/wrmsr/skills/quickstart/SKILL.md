@@ -18,7 +18,7 @@ CLI tool: wrmsr.
 
 ## Installation
 ```bash
-apt-get install wrmsr 2>/dev/null || which wrmsr
+apt-get install msr-tools 2>/dev/null || which wrmsr
 ```
 
 ## Key Features

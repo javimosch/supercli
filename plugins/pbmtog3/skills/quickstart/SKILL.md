@@ -18,7 +18,7 @@ CLI tool: pbmtog3.
 
 ## Installation
 ```bash
-apt-get install pbmtog3 2>/dev/null || which pbmtog3
+apt-get install netpbm 2>/dev/null || which pbmtog3
 ```
 
 ## Key Features

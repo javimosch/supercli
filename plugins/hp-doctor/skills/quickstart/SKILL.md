@@ -18,7 +18,7 @@ CLI tool: hp-doctor.
 
 ## Installation
 ```bash
-apt-get install hp-doctor 2>/dev/null || which hp-doctor
+apt-get install hplip 2>/dev/null || which hp-doctor
 ```
 
 ## Key Features

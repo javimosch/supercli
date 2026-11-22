@@ -18,7 +18,7 @@ CLI tool: makeconv.
 
 ## Installation
 ```bash
-apt-get install makeconv 2>/dev/null || which makeconv
+apt-get install icu-devtools 2>/dev/null || which makeconv
 ```
 
 ## Key Features

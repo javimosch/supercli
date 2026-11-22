@@ -18,7 +18,7 @@ CLI tool: nspr-config.
 
 ## Installation
 ```bash
-apt-get install nspr-config 2>/dev/null || which nspr-config
+apt-get install libnspr4-dev 2>/dev/null || which nspr-config
 ```
 
 ## Key Features

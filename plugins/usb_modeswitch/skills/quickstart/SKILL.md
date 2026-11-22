@@ -18,7 +18,7 @@ CLI tool: usb_modeswitch.
 
 ## Installation
 ```bash
-apt-get install usb_modeswitch 2>/dev/null || which usb_modeswitch
+apt-get install usb-modeswitch 2>/dev/null || which usb_modeswitch
 ```
 
 ## Key Features

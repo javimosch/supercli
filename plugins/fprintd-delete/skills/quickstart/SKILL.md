@@ -18,7 +18,7 @@ CLI tool: fprintd-delete.
 
 ## Installation
 ```bash
-apt-get install fprintd-delete 2>/dev/null || which fprintd-delete
+apt-get install fprintd 2>/dev/null || which fprintd-delete
 ```
 
 ## Key Features

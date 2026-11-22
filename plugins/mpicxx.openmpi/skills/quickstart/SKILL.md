@@ -18,7 +18,7 @@ CLI tool: mpicxx.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpicxx.openmpi 2>/dev/null || which mpicxx.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpicxx.openmpi
 ```
 
 ## Key Features

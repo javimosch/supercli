@@ -18,7 +18,7 @@ CLI tool: zfgrep.
 
 ## Installation
 ```bash
-apt-get install zfgrep 2>/dev/null || which zfgrep
+apt-get install gzip 2>/dev/null || which zfgrep
 ```
 
 ## Key Features

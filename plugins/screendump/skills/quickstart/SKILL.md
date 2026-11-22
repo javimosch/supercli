@@ -18,7 +18,7 @@ CLI tool: screendump.
 
 ## Installation
 ```bash
-apt-get install screendump 2>/dev/null || which screendump
+apt-get install kbd 2>/dev/null || which screendump
 ```
 
 ## Key Features

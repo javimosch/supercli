@@ -18,7 +18,7 @@ CLI tool: pf2afm.
 
 ## Installation
 ```bash
-apt-get install pf2afm 2>/dev/null || which pf2afm
+apt-get install ghostscript 2>/dev/null || which pf2afm
 ```
 
 ## Key Features

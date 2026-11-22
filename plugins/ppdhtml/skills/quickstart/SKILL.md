@@ -18,7 +18,7 @@ CLI tool: ppdhtml.
 
 ## Installation
 ```bash
-apt-get install ppdhtml 2>/dev/null || which ppdhtml
+apt-get install cups-ppdc 2>/dev/null || which ppdhtml
 ```
 
 ## Key Features

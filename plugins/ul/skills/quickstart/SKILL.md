@@ -18,7 +18,7 @@ CLI tool: ul.
 
 ## Installation
 ```bash
-apt-get install ul 2>/dev/null || which ul
+apt-get install bsdextrautils 2>/dev/null || which ul
 ```
 
 ## Key Features

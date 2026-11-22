@@ -18,7 +18,7 @@ CLI tool: thinkjettopbm.
 
 ## Installation
 ```bash
-apt-get install thinkjettopbm 2>/dev/null || which thinkjettopbm
+apt-get install netpbm 2>/dev/null || which thinkjettopbm
 ```
 
 ## Key Features

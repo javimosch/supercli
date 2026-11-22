@@ -18,7 +18,7 @@ CLI tool: initex.
 
 ## Installation
 ```bash
-apt-get install initex 2>/dev/null || which initex
+apt-get install texlive-binaries 2>/dev/null || which initex
 ```
 
 ## Key Features

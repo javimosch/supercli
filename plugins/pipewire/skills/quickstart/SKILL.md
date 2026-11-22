@@ -18,7 +18,7 @@ CLI tool: pipewire.
 
 ## Installation
 ```bash
-apt-get install pipewire 2>/dev/null || which pipewire
+apt-get install pipewire-bin 2>/dev/null || which pipewire
 ```
 
 ## Key Features

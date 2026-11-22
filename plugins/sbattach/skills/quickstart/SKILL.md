@@ -18,7 +18,7 @@ CLI tool: sbattach.
 
 ## Installation
 ```bash
-apt-get install sbattach 2>/dev/null || which sbattach
+apt-get install sbsigntool 2>/dev/null || which sbattach
 ```
 
 ## Key Features

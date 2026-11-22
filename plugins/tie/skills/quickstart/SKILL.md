@@ -18,7 +18,7 @@ CLI tool: tie.
 
 ## Installation
 ```bash
-apt-get install tie 2>/dev/null || which tie
+apt-get install texlive-binaries 2>/dev/null || which tie
 ```
 
 ## Key Features

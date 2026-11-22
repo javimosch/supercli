@@ -18,7 +18,7 @@ CLI tool: mcheck.
 
 ## Installation
 ```bash
-apt-get install mcheck 2>/dev/null || which mcheck
+apt-get install mtools 2>/dev/null || which mcheck
 ```
 
 ## Key Features

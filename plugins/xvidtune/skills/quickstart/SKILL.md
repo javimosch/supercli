@@ -18,7 +18,7 @@ CLI tool: xvidtune.
 
 ## Installation
 ```bash
-apt-get install xvidtune 2>/dev/null || which xvidtune
+apt-get install x11-xserver-utils 2>/dev/null || which xvidtune
 ```
 
 ## Key Features

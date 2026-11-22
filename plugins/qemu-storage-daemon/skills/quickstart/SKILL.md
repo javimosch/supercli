@@ -18,7 +18,7 @@ CLI tool: qemu-storage-daemon.
 
 ## Installation
 ```bash
-apt-get install qemu-storage-daemon 2>/dev/null || which qemu-storage-daemon
+apt-get install qemu-utils 2>/dev/null || which qemu-storage-daemon
 ```
 
 ## Key Features

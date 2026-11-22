@@ -18,7 +18,7 @@ CLI tool: ppmnorm.
 
 ## Installation
 ```bash
-apt-get install ppmnorm 2>/dev/null || which ppmnorm
+apt-get install netpbm 2>/dev/null || which ppmnorm
 ```
 
 ## Key Features

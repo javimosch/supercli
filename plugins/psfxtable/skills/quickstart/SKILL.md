@@ -18,7 +18,7 @@ CLI tool: psfxtable.
 
 ## Installation
 ```bash
-apt-get install psfxtable 2>/dev/null || which psfxtable
+apt-get install kbd 2>/dev/null || which psfxtable
 ```
 
 ## Key Features

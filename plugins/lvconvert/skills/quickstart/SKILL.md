@@ -18,7 +18,7 @@ CLI tool: lvconvert.
 
 ## Installation
 ```bash
-apt-get install lvconvert 2>/dev/null || which lvconvert
+apt-get install lvm2 2>/dev/null || which lvconvert
 ```
 
 ## Key Features

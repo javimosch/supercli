@@ -18,7 +18,7 @@ CLI tool: pmpost.
 
 ## Installation
 ```bash
-apt-get install pmpost 2>/dev/null || which pmpost
+apt-get install texlive-binaries 2>/dev/null || which pmpost
 ```
 
 ## Key Features

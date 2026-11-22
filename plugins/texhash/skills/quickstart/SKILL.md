@@ -18,7 +18,7 @@ CLI tool: texhash.
 
 ## Installation
 ```bash
-apt-get install texhash 2>/dev/null || which texhash
+apt-get install texlive-base 2>/dev/null || which texhash
 ```
 
 ## Key Features

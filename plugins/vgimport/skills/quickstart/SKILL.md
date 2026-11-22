@@ -18,7 +18,7 @@ CLI tool: vgimport.
 
 ## Installation
 ```bash
-apt-get install vgimport 2>/dev/null || which vgimport
+apt-get install lvm2 2>/dev/null || which vgimport
 ```
 
 ## Key Features

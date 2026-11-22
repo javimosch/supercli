@@ -18,7 +18,7 @@ CLI tool: parecord.
 
 ## Installation
 ```bash
-apt-get install parecord 2>/dev/null || which parecord
+apt-get install pulseaudio-utils 2>/dev/null || which parecord
 ```
 
 ## Key Features

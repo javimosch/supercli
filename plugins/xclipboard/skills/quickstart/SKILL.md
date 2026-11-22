@@ -18,7 +18,7 @@ CLI tool: xclipboard.
 
 ## Installation
 ```bash
-apt-get install xclipboard 2>/dev/null || which xclipboard
+apt-get install x11-apps 2>/dev/null || which xclipboard
 ```
 
 ## Key Features

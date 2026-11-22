@@ -18,7 +18,7 @@ CLI tool: qmlmin.
 
 ## Installation
 ```bash
-apt-get install qmlmin 2>/dev/null || which qmlmin
+apt-get install qtchooser 2>/dev/null || which qmlmin
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: soelim.
 
 ## Installation
 ```bash
-apt-get install soelim 2>/dev/null || which soelim
+apt-get install groff-base 2>/dev/null || which soelim
 ```
 
 ## Key Features

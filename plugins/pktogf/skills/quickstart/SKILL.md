@@ -18,7 +18,7 @@ CLI tool: pktogf.
 
 ## Installation
 ```bash
-apt-get install pktogf 2>/dev/null || which pktogf
+apt-get install texlive-binaries 2>/dev/null || which pktogf
 ```
 
 ## Key Features

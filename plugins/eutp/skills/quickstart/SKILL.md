@@ -18,7 +18,7 @@ CLI tool: eutp.
 
 ## Installation
 ```bash
-apt-get install eutp 2>/dev/null || which eutp
+apt-get install brltty 2>/dev/null || which eutp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xjc.
 
 ## Installation
 ```bash
-apt-get install xjc 2>/dev/null || which xjc
+apt-get install jaxb 2>/dev/null || which xjc
 ```
 
 ## Key Features

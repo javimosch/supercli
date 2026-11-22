@@ -18,7 +18,7 @@ CLI tool: lsipc.
 
 ## Installation
 ```bash
-apt-get install lsipc 2>/dev/null || which lsipc
+apt-get install util-linux 2>/dev/null || which lsipc
 ```
 
 ## Key Features

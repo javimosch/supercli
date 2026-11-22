@@ -18,7 +18,7 @@ CLI tool: install-printerdriver.
 
 ## Installation
 ```bash
-apt-get install install-printerdriver 2>/dev/null || which install-printerdriver
+apt-get install system-config-printer 2>/dev/null || which install-printerdriver
 ```
 
 ## Key Features

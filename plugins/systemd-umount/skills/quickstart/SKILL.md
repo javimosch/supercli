@@ -18,7 +18,7 @@ CLI tool: systemd-umount.
 
 ## Installation
 ```bash
-apt-get install systemd-umount 2>/dev/null || which systemd-umount
+apt-get install systemd 2>/dev/null || which systemd-umount
 ```
 
 ## Key Features

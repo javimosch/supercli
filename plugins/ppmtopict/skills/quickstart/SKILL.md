@@ -18,7 +18,7 @@ CLI tool: ppmtopict.
 
 ## Installation
 ```bash
-apt-get install ppmtopict 2>/dev/null || which ppmtopict
+apt-get install netpbm 2>/dev/null || which ppmtopict
 ```
 
 ## Key Features

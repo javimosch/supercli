@@ -18,7 +18,7 @@ CLI tool: mm2gv.
 
 ## Installation
 ```bash
-apt-get install mm2gv 2>/dev/null || which mm2gv
+apt-get install graphviz 2>/dev/null || which mm2gv
 ```
 
 ## Key Features

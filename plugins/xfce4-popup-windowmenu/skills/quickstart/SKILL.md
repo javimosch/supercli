@@ -18,7 +18,7 @@ CLI tool: xfce4-popup-windowmenu.
 
 ## Installation
 ```bash
-apt-get install xfce4-popup-windowmenu 2>/dev/null || which xfce4-popup-windowmenu
+apt-get install xfce4-panel 2>/dev/null || which xfce4-popup-windowmenu
 ```
 
 ## Key Features

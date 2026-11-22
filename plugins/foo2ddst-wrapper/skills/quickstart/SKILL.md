@@ -18,7 +18,7 @@ CLI tool: foo2ddst-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2ddst-wrapper 2>/dev/null || which foo2ddst-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2ddst-wrapper
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: jmod.
 
 ## Installation
 ```bash
-apt-get install jmod 2>/dev/null || which jmod
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jmod
 ```
 
 ## Key Features

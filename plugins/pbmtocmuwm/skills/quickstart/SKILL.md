@@ -18,7 +18,7 @@ CLI tool: pbmtocmuwm.
 
 ## Installation
 ```bash
-apt-get install pbmtocmuwm 2>/dev/null || which pbmtocmuwm
+apt-get install netpbm 2>/dev/null || which pbmtocmuwm
 ```
 
 ## Key Features

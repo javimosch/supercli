@@ -18,7 +18,7 @@ CLI tool: pnm2ppa.
 
 ## Installation
 ```bash
-apt-get install pnm2ppa 2>/dev/null || which pnm2ppa
+apt-get install printer-driver-pnm2ppa 2>/dev/null || which pnm2ppa
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pbmupc.
 
 ## Installation
 ```bash
-apt-get install pbmupc 2>/dev/null || which pbmupc
+apt-get install netpbm 2>/dev/null || which pbmupc
 ```
 
 ## Key Features

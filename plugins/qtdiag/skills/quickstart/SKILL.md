@@ -18,7 +18,7 @@ CLI tool: qtdiag.
 
 ## Installation
 ```bash
-apt-get install qtdiag 2>/dev/null || which qtdiag
+apt-get install qtchooser 2>/dev/null || which qtdiag
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: setfacl.
 
 ## Installation
 ```bash
-apt-get install setfacl 2>/dev/null || which setfacl
+apt-get install acl 2>/dev/null || which setfacl
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: ppmtoxpm.
 
 ## Installation
 ```bash
-apt-get install ppmtoxpm 2>/dev/null || which ppmtoxpm
+apt-get install netpbm 2>/dev/null || which ppmtoxpm
 ```
 
 ## Key Features

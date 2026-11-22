@@ -18,7 +18,7 @@ CLI tool: pbmtomacp.
 
 ## Installation
 ```bash
-apt-get install pbmtomacp 2>/dev/null || which pbmtomacp
+apt-get install netpbm 2>/dev/null || which pbmtomacp
 ```
 
 ## Key Features

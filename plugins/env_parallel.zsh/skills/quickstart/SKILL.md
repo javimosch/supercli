@@ -18,7 +18,7 @@ CLI tool: env_parallel.zsh.
 
 ## Installation
 ```bash
-apt-get install env_parallel.zsh 2>/dev/null || which env_parallel.zsh
+apt-get install parallel 2>/dev/null || which env_parallel.zsh
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mount.fuse.sshfs.
 
 ## Installation
 ```bash
-apt-get install mount.fuse.sshfs 2>/dev/null || which mount.fuse.sshfs
+apt-get install sshfs 2>/dev/null || which mount.fuse.sshfs
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: epsffit.
 
 ## Installation
 ```bash
-apt-get install epsffit 2>/dev/null || which epsffit
+apt-get install psutils 2>/dev/null || which epsffit
 ```
 
 ## Key Features

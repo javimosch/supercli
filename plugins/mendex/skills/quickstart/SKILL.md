@@ -18,7 +18,7 @@ CLI tool: mendex.
 
 ## Installation
 ```bash
-apt-get install mendex 2>/dev/null || which mendex
+apt-get install texlive-binaries 2>/dev/null || which mendex
 ```
 
 ## Key Features

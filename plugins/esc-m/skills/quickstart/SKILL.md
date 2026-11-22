@@ -18,7 +18,7 @@ CLI tool: esc-m.
 
 ## Installation
 ```bash
-apt-get install esc-m 2>/dev/null || which esc-m
+apt-get install printer-driver-min12xxw 2>/dev/null || which esc-m
 ```
 
 ## Key Features

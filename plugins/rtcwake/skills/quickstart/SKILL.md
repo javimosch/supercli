@@ -18,7 +18,7 @@ CLI tool: rtcwake.
 
 ## Installation
 ```bash
-apt-get install rtcwake 2>/dev/null || which rtcwake
+apt-get install util-linux 2>/dev/null || which rtcwake
 ```
 
 ## Key Features

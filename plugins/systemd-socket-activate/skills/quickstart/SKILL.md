@@ -18,7 +18,7 @@ CLI tool: systemd-socket-activate.
 
 ## Installation
 ```bash
-apt-get install systemd-socket-activate 2>/dev/null || which systemd-socket-activate
+apt-get install systemd 2>/dev/null || which systemd-socket-activate
 ```
 
 ## Key Features

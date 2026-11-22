@@ -18,7 +18,7 @@ CLI tool: xgettext.
 
 ## Installation
 ```bash
-apt-get install xgettext 2>/dev/null || which xgettext
+apt-get install gettext 2>/dev/null || which xgettext
 ```
 
 ## Key Features

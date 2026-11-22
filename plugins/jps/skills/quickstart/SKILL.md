@@ -18,7 +18,7 @@ CLI tool: jps.
 
 ## Installation
 ```bash
-apt-get install jps 2>/dev/null || which jps
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jps
 ```
 
 ## Key Features

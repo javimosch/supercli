@@ -18,7 +18,7 @@ CLI tool: mpifort.openmpi.
 
 ## Installation
 ```bash
-apt-get install mpifort.openmpi 2>/dev/null || which mpifort.openmpi
+apt-get install openmpi-bin 2>/dev/null || which mpifort.openmpi
 ```
 
 ## Key Features

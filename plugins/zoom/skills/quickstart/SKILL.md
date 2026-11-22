@@ -18,7 +18,7 @@ CLI tool: zoom.
 
 ## Installation
 ```bash
-apt-get install zoom 2>/dev/null || which zoom
+apt-get install zoom-player 2>/dev/null || which zoom
 ```
 
 ## Key Features

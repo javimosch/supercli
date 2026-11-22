@@ -18,7 +18,7 @@ CLI tool: filan.
 
 ## Installation
 ```bash
-apt-get install filan 2>/dev/null || which filan
+apt-get install socat 2>/dev/null || which filan
 ```
 
 ## Key Features

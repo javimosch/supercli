@@ -18,7 +18,7 @@ CLI tool: pdftops.
 
 ## Installation
 ```bash
-apt-get install pdftops 2>/dev/null || which pdftops
+apt-get install poppler-utils 2>/dev/null || which pdftops
 ```
 
 ## Key Features

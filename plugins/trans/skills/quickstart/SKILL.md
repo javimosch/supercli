@@ -18,7 +18,7 @@ CLI tool: trans.
 
 ## Installation
 ```bash
-apt-get install trans 2>/dev/null || which trans
+apt-get install translate-shell 2>/dev/null || which trans
 ```
 
 ## Key Features

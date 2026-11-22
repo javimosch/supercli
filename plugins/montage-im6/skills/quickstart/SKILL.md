@@ -18,7 +18,7 @@ CLI tool: montage-im6.
 
 ## Installation
 ```bash
-apt-get install montage-im6 2>/dev/null || which montage-im6
+apt-get install imagemagick-6.q16 2>/dev/null || which montage-im6
 ```
 
 ## Key Features

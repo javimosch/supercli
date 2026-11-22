@@ -18,7 +18,7 @@ CLI tool: rdiffdir.
 
 ## Installation
 ```bash
-apt-get install rdiffdir 2>/dev/null || which rdiffdir
+apt-get install duplicity 2>/dev/null || which rdiffdir
 ```
 
 ## Key Features

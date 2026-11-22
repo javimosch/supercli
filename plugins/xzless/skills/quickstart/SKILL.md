@@ -18,7 +18,7 @@ CLI tool: xzless.
 
 ## Installation
 ```bash
-apt-get install xzless 2>/dev/null || which xzless
+apt-get install xz-utils 2>/dev/null || which xzless
 ```
 
 ## Key Features

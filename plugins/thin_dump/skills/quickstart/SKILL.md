@@ -18,7 +18,7 @@ CLI tool: thin_dump.
 
 ## Installation
 ```bash
-apt-get install thin_dump 2>/dev/null || which thin_dump
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_dump
 ```
 
 ## Key Features

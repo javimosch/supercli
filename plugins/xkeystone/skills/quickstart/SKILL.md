@@ -18,7 +18,7 @@ CLI tool: xkeystone.
 
 ## Installation
 ```bash
-apt-get install xkeystone 2>/dev/null || which xkeystone
+apt-get install x11-xserver-utils 2>/dev/null || which xkeystone
 ```
 
 ## Key Features

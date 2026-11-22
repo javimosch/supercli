@@ -18,7 +18,7 @@ CLI tool: pkcon.
 
 ## Installation
 ```bash
-apt-get install pkcon 2>/dev/null || which pkcon
+apt-get install packagekit-tools 2>/dev/null || which pkcon
 ```
 
 ## Key Features

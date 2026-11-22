@@ -18,7 +18,7 @@ CLI tool: qdoc.
 
 ## Installation
 ```bash
-apt-get install qdoc 2>/dev/null || which qdoc
+apt-get install qtchooser 2>/dev/null || which qdoc
 ```
 
 ## Key Features

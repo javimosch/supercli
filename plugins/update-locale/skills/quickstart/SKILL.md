@@ -18,7 +18,7 @@ CLI tool: update-locale.
 
 ## Installation
 ```bash
-apt-get install update-locale 2>/dev/null || which update-locale
+apt-get install locales 2>/dev/null || which update-locale
 ```
 
 ## Key Features

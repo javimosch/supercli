@@ -18,7 +18,7 @@ CLI tool: synaptic-pkexec.
 
 ## Installation
 ```bash
-apt-get install synaptic-pkexec 2>/dev/null || which synaptic-pkexec
+apt-get install synaptic 2>/dev/null || which synaptic-pkexec
 ```
 
 ## Key Features

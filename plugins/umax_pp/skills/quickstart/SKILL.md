@@ -18,7 +18,7 @@ CLI tool: umax_pp.
 
 ## Installation
 ```bash
-apt-get install umax_pp 2>/dev/null || which umax_pp
+apt-get install sane-utils 2>/dev/null || which umax_pp
 ```
 
 ## Key Features

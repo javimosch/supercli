@@ -18,7 +18,7 @@ CLI tool: mpifort.
 
 ## Installation
 ```bash
-apt-get install mpifort 2>/dev/null || which mpifort
+apt-get install mpich 2>/dev/null || which mpifort
 ```
 
 ## Key Features

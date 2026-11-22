@@ -18,7 +18,7 @@ CLI tool: lvresize.
 
 ## Installation
 ```bash
-apt-get install lvresize 2>/dev/null || which lvresize
+apt-get install lvm2 2>/dev/null || which lvresize
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: scanimage.
 
 ## Installation
 ```bash
-apt-get install scanimage 2>/dev/null || which scanimage
+apt-get install sane-utils 2>/dev/null || which scanimage
 ```
 
 ## Key Features

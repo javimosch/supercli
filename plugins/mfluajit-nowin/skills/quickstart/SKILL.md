@@ -18,7 +18,7 @@ CLI tool: mfluajit-nowin.
 
 ## Installation
 ```bash
-apt-get install mfluajit-nowin 2>/dev/null || which mfluajit-nowin
+apt-get install texlive-binaries-sse2 2>/dev/null || which mfluajit-nowin
 ```
 
 ## Key Features

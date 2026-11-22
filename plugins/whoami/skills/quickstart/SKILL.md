@@ -18,7 +18,7 @@ CLI tool: whoami.
 
 ## Installation
 ```bash
-apt-get install whoami 2>/dev/null || which whoami
+apt-get install coreutils 2>/dev/null || which whoami
 ```
 
 ## Key Features

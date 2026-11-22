@@ -18,7 +18,7 @@ CLI tool: pnmshear.
 
 ## Installation
 ```bash
-apt-get install pnmshear 2>/dev/null || which pnmshear
+apt-get install netpbm 2>/dev/null || which pnmshear
 ```
 
 ## Key Features

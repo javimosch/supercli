@@ -18,7 +18,7 @@ CLI tool: phpenmod.
 
 ## Installation
 ```bash
-apt-get install phpenmod 2>/dev/null || which phpenmod
+apt-get install php-common 2>/dev/null || which phpenmod
 ```
 
 ## Key Features

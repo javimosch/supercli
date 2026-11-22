@@ -18,7 +18,7 @@ CLI tool: showkey.
 
 ## Installation
 ```bash
-apt-get install showkey 2>/dev/null || which showkey
+apt-get install kbd 2>/dev/null || which showkey
 ```
 
 ## Key Features

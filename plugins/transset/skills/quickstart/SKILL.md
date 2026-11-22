@@ -18,7 +18,7 @@ CLI tool: transset.
 
 ## Installation
 ```bash
-apt-get install transset 2>/dev/null || which transset
+apt-get install x11-apps 2>/dev/null || which transset
 ```
 
 ## Key Features

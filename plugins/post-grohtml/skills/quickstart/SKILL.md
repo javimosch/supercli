@@ -18,7 +18,7 @@ CLI tool: post-grohtml.
 
 ## Installation
 ```bash
-apt-get install post-grohtml 2>/dev/null || which post-grohtml
+apt-get install groff 2>/dev/null || which post-grohtml
 ```
 
 ## Key Features

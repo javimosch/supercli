@@ -18,7 +18,7 @@ CLI tool: zdump.
 
 ## Installation
 ```bash
-apt-get install zdump 2>/dev/null || which zdump
+apt-get install libc-bin 2>/dev/null || which zdump
 ```
 
 ## Key Features

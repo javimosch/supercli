@@ -18,7 +18,7 @@ CLI tool: Xorg.
 
 ## Installation
 ```bash
-apt-get install Xorg 2>/dev/null || which Xorg
+apt-get install xserver-xorg-core 2>/dev/null || which Xorg
 ```
 
 ## Key Features

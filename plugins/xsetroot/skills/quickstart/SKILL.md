@@ -18,7 +18,7 @@ CLI tool: xsetroot.
 
 ## Installation
 ```bash
-apt-get install xsetroot 2>/dev/null || which xsetroot
+apt-get install x11-xserver-utils 2>/dev/null || which xsetroot
 ```
 
 ## Key Features

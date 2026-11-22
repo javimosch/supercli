@@ -18,7 +18,7 @@ CLI tool: zrun.
 
 ## Installation
 ```bash
-apt-get install zrun 2>/dev/null || which zrun
+apt-get install moreutils 2>/dev/null || which zrun
 ```
 
 ## Key Features

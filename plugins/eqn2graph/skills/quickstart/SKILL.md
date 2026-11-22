@@ -18,7 +18,7 @@ CLI tool: eqn2graph.
 
 ## Installation
 ```bash
-apt-get install eqn2graph 2>/dev/null || which eqn2graph
+apt-get install groff 2>/dev/null || which eqn2graph
 ```
 
 ## Key Features

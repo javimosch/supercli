@@ -18,7 +18,7 @@ CLI tool: upgrade-from-grub-legacy.
 
 ## Installation
 ```bash
-apt-get install upgrade-from-grub-legacy 2>/dev/null || which upgrade-from-grub-legacy
+apt-get install grub-pc 2>/dev/null || which upgrade-from-grub-legacy
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pdvitomp.
 
 ## Installation
 ```bash
-apt-get install pdvitomp 2>/dev/null || which pdvitomp
+apt-get install texlive-binaries 2>/dev/null || which pdvitomp
 ```
 
 ## Key Features

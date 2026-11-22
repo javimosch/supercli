@@ -18,7 +18,7 @@ CLI tool: fwupdmgr.
 
 ## Installation
 ```bash
-apt-get install fwupdmgr 2>/dev/null || which fwupdmgr
+apt-get install fwupd 2>/dev/null || which fwupdmgr
 ```
 
 ## Key Features

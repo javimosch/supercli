@@ -18,7 +18,7 @@ CLI tool: lneato.
 
 ## Installation
 ```bash
-apt-get install lneato 2>/dev/null || which lneato
+apt-get install graphviz 2>/dev/null || which lneato
 ```
 
 ## Key Features

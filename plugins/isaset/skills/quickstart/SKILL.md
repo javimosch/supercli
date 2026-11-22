@@ -18,7 +18,7 @@ CLI tool: isaset.
 
 ## Installation
 ```bash
-apt-get install isaset 2>/dev/null || which isaset
+apt-get install lm-sensors 2>/dev/null || which isaset
 ```
 
 ## Key Features

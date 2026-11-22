@@ -18,7 +18,7 @@ CLI tool: podselect.
 
 ## Installation
 ```bash
-apt-get install podselect 2>/dev/null || which podselect
+apt-get install libpod-parser-perl 2>/dev/null || which podselect
 ```
 
 ## Key Features

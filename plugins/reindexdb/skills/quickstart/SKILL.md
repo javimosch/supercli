@@ -18,7 +18,7 @@ CLI tool: reindexdb.
 
 ## Installation
 ```bash
-apt-get install reindexdb 2>/dev/null || which reindexdb
+apt-get install postgresql-client-common 2>/dev/null || which reindexdb
 ```
 
 ## Key Features

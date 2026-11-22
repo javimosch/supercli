@@ -18,7 +18,7 @@ CLI tool: foo2qpdl-wrapper.
 
 ## Installation
 ```bash
-apt-get install foo2qpdl-wrapper 2>/dev/null || which foo2qpdl-wrapper
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which foo2qpdl-wrapper
 ```
 
 ## Key Features

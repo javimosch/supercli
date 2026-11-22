@@ -18,7 +18,7 @@ CLI tool: pstops.
 
 ## Installation
 ```bash
-apt-get install pstops 2>/dev/null || which pstops
+apt-get install psutils 2>/dev/null || which pstops
 ```
 
 ## Key Features

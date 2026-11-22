@@ -18,7 +18,7 @@ CLI tool: fixpsditps.
 
 ## Installation
 ```bash
-apt-get install fixpsditps 2>/dev/null || which fixpsditps
+apt-get install psutils 2>/dev/null || which fixpsditps
 ```
 
 ## Key Features

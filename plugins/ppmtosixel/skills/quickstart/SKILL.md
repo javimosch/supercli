@@ -18,7 +18,7 @@ CLI tool: ppmtosixel.
 
 ## Installation
 ```bash
-apt-get install ppmtosixel 2>/dev/null || which ppmtosixel
+apt-get install netpbm 2>/dev/null || which ppmtosixel
 ```
 
 ## Key Features

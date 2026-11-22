@@ -18,7 +18,7 @@ CLI tool: hp-probe.
 
 ## Installation
 ```bash
-apt-get install hp-probe 2>/dev/null || which hp-probe
+apt-get install hplip 2>/dev/null || which hp-probe
 ```
 
 ## Key Features

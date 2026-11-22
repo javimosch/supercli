@@ -18,7 +18,7 @@ CLI tool: tcltk-depends.
 
 ## Installation
 ```bash
-apt-get install tcltk-depends 2>/dev/null || which tcltk-depends
+apt-get install tcl-dev 2>/dev/null || which tcltk-depends
 ```
 
 ## Key Features

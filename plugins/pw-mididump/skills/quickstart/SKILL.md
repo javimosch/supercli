@@ -18,7 +18,7 @@ CLI tool: pw-mididump.
 
 ## Installation
 ```bash
-apt-get install pw-mididump 2>/dev/null || which pw-mididump
+apt-get install pipewire-bin 2>/dev/null || which pw-mididump
 ```
 
 ## Key Features

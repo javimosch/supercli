@@ -18,7 +18,7 @@ CLI tool: ijs_pxljr.
 
 ## Installation
 ```bash
-apt-get install ijs_pxljr 2>/dev/null || which ijs_pxljr
+apt-get install printer-driver-pxljr 2>/dev/null || which ijs_pxljr
 ```
 
 ## Key Features

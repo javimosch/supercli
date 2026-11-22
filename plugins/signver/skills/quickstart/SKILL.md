@@ -18,7 +18,7 @@ CLI tool: signver.
 
 ## Installation
 ```bash
-apt-get install signver 2>/dev/null || which signver
+apt-get install libnss3-tools 2>/dev/null || which signver
 ```
 
 ## Key Features

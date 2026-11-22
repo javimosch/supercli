@@ -18,7 +18,7 @@ CLI tool: init.
 
 ## Installation
 ```bash
-apt-get install init 2>/dev/null || which init
+apt-get install systemd-sysv 2>/dev/null || which init
 ```
 
 ## Key Features

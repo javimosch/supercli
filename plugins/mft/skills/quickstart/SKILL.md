@@ -18,7 +18,7 @@ CLI tool: mft.
 
 ## Installation
 ```bash
-apt-get install mft 2>/dev/null || which mft
+apt-get install texlive-binaries 2>/dev/null || which mft
 ```
 
 ## Key Features

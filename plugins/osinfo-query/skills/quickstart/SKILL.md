@@ -18,7 +18,7 @@ CLI tool: osinfo-query.
 
 ## Installation
 ```bash
-apt-get install osinfo-query 2>/dev/null || which osinfo-query
+apt-get install libosinfo-bin 2>/dev/null || which osinfo-query
 ```
 
 ## Key Features

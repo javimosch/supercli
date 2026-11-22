@@ -9,7 +9,7 @@ and a quiet mode for scripts.
 
 ```bash
 # Install utimer binary
-sudo apt install utimer
+sudo apt install kiwi-tools
 # Arch: AUR package 'utimer'
 
 # Install supercli plugin

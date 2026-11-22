@@ -18,7 +18,7 @@ CLI tool: pybabel.
 
 ## Installation
 ```bash
-apt-get install pybabel 2>/dev/null || which pybabel
+apt-get install python3-babel 2>/dev/null || which pybabel
 ```
 
 ## Key Features

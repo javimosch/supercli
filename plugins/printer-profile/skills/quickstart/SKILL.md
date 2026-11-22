@@ -18,7 +18,7 @@ CLI tool: printer-profile.
 
 ## Installation
 ```bash
-apt-get install printer-profile 2>/dev/null || which printer-profile
+apt-get install printer-driver-foo2zjs-common 2>/dev/null || which printer-profile
 ```
 
 ## Key Features

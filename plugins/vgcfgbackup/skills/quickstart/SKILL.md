@@ -18,7 +18,7 @@ CLI tool: vgcfgbackup.
 
 ## Installation
 ```bash
-apt-get install vgcfgbackup 2>/dev/null || which vgcfgbackup
+apt-get install lvm2 2>/dev/null || which vgcfgbackup
 ```
 
 ## Key Features

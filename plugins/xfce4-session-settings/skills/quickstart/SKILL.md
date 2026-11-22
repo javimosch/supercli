@@ -18,7 +18,7 @@ CLI tool: xfce4-session-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-session-settings 2>/dev/null || which xfce4-session-settings
+apt-get install xfce4-session 2>/dev/null || which xfce4-session-settings
 ```
 
 ## Key Features

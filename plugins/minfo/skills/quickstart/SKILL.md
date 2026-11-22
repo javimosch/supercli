@@ -18,7 +18,7 @@ CLI tool: minfo.
 
 ## Installation
 ```bash
-apt-get install minfo 2>/dev/null || which minfo
+apt-get install mtools 2>/dev/null || which minfo
 ```
 
 ## Key Features

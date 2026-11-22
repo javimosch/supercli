@@ -18,7 +18,7 @@ CLI tool: ompi_info.
 
 ## Installation
 ```bash
-apt-get install ompi_info 2>/dev/null || which ompi_info
+apt-get install openmpi-bin 2>/dev/null || which ompi_info
 ```
 
 ## Key Features

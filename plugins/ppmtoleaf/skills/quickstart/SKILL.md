@@ -18,7 +18,7 @@ CLI tool: ppmtoleaf.
 
 ## Installation
 ```bash
-apt-get install ppmtoleaf 2>/dev/null || which ppmtoleaf
+apt-get install netpbm 2>/dev/null || which ppmtoleaf
 ```
 
 ## Key Features

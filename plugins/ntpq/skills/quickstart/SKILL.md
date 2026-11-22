@@ -18,7 +18,7 @@ CLI tool: ntpq.
 
 ## Installation
 ```bash
-apt-get install ntpq 2>/dev/null || which ntpq
+apt-get install ntpsec 2>/dev/null || which ntpq
 ```
 
 ## Key Features

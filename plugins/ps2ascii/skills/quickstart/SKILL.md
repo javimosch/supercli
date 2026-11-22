@@ -18,7 +18,7 @@ CLI tool: ps2ascii.
 
 ## Installation
 ```bash
-apt-get install ps2ascii 2>/dev/null || which ps2ascii
+apt-get install ghostscript 2>/dev/null || which ps2ascii
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: dropdb.
 
 ## Installation
 ```bash
-apt-get install dropdb 2>/dev/null || which dropdb
+apt-get install postgresql-client-common 2>/dev/null || which dropdb
 ```
 
 ## Key Features

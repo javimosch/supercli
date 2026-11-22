@@ -18,7 +18,7 @@ CLI tool: jstat.
 
 ## Installation
 ```bash
-apt-get install jstat 2>/dev/null || which jstat
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jstat
 ```
 
 ## Key Features

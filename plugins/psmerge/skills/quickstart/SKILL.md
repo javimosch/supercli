@@ -18,7 +18,7 @@ CLI tool: psmerge.
 
 ## Installation
 ```bash
-apt-get install psmerge 2>/dev/null || which psmerge
+apt-get install psutils 2>/dev/null || which psmerge
 ```
 
 ## Key Features

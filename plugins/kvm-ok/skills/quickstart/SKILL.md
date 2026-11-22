@@ -18,7 +18,7 @@ CLI tool: kvm-ok.
 
 ## Installation
 ```bash
-apt-get install kvm-ok 2>/dev/null || which kvm-ok
+apt-get install cpu-checker 2>/dev/null || which kvm-ok
 ```
 
 ## Key Features

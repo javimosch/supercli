@@ -18,7 +18,7 @@ CLI tool: unopkg.
 
 ## Installation
 ```bash
-apt-get install unopkg 2>/dev/null || which unopkg
+apt-get install libreoffice-common 2>/dev/null || which unopkg
 ```
 
 ## Key Features

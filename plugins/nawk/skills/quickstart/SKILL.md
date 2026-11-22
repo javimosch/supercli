@@ -18,7 +18,7 @@ CLI tool: nawk.
 
 ## Installation
 ```bash
-apt-get install nawk 2>/dev/null || which nawk
+apt-get install gawk 2>/dev/null || which nawk
 ```
 
 ## Key Features

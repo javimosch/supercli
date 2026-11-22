@@ -18,7 +18,7 @@ CLI tool: lslocks.
 
 ## Installation
 ```bash
-apt-get install lslocks 2>/dev/null || which lslocks
+apt-get install util-linux 2>/dev/null || which lslocks
 ```
 
 ## Key Features

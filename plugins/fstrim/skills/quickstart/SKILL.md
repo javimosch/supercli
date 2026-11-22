@@ -18,7 +18,7 @@ CLI tool: fstrim.
 
 ## Installation
 ```bash
-apt-get install fstrim 2>/dev/null || which fstrim
+apt-get install util-linux 2>/dev/null || which fstrim
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: update-language-def.
 
 ## Installation
 ```bash
-apt-get install update-language-def 2>/dev/null || which update-language-def
+apt-get install tex-common 2>/dev/null || which update-language-def
 ```
 
 ## Key Features

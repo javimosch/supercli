@@ -18,7 +18,7 @@ CLI tool: GET.
 
 ## Installation
 ```bash
-apt-get install GET 2>/dev/null || which GET
+apt-get install libwww-perl 2>/dev/null || which GET
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: systemd-ask-password.
 
 ## Installation
 ```bash
-apt-get install systemd-ask-password 2>/dev/null || which systemd-ask-password
+apt-get install systemd 2>/dev/null || which systemd-ask-password
 ```
 
 ## Key Features

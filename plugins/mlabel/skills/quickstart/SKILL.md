@@ -18,7 +18,7 @@ CLI tool: mlabel.
 
 ## Installation
 ```bash
-apt-get install mlabel 2>/dev/null || which mlabel
+apt-get install mtools 2>/dev/null || which mlabel
 ```
 
 ## Key Features

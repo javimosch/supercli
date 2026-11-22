@@ -18,7 +18,7 @@ CLI tool: systemd-cat.
 
 ## Installation
 ```bash
-apt-get install systemd-cat 2>/dev/null || which systemd-cat
+apt-get install systemd 2>/dev/null || which systemd-cat
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xzcmp.
 
 ## Installation
 ```bash
-apt-get install xzcmp 2>/dev/null || which xzcmp
+apt-get install xz-utils 2>/dev/null || which xzcmp
 ```
 
 ## Key Features

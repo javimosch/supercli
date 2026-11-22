@@ -18,7 +18,7 @@ CLI tool: slabtop.
 
 ## Installation
 ```bash
-apt-get install slabtop 2>/dev/null || which slabtop
+apt-get install procps 2>/dev/null || which slabtop
 ```
 
 ## Key Features

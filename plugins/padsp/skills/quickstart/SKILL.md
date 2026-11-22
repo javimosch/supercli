@@ -18,7 +18,7 @@ CLI tool: padsp.
 
 ## Installation
 ```bash
-apt-get install padsp 2>/dev/null || which padsp
+apt-get install pulseaudio-utils 2>/dev/null || which padsp
 ```
 
 ## Key Features

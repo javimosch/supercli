@@ -18,7 +18,7 @@ CLI tool: mysqlanalyze.
 
 ## Installation
 ```bash
-apt-get install mysqlanalyze 2>/dev/null || which mysqlanalyze
+apt-get install mysql-client-8.0 2>/dev/null || which mysqlanalyze
 ```
 
 ## Key Features

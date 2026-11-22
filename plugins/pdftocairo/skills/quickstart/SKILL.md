@@ -18,7 +18,7 @@ CLI tool: pdftocairo.
 
 ## Installation
 ```bash
-apt-get install pdftocairo 2>/dev/null || which pdftocairo
+apt-get install poppler-utils 2>/dev/null || which pdftocairo
 ```
 
 ## Key Features

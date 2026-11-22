@@ -18,7 +18,7 @@ CLI tool: pdfattach.
 
 ## Installation
 ```bash
-apt-get install pdfattach 2>/dev/null || which pdfattach
+apt-get install poppler-utils 2>/dev/null || which pdfattach
 ```
 
 ## Key Features

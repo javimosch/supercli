@@ -18,7 +18,7 @@ CLI tool: pdfetex.
 
 ## Installation
 ```bash
-apt-get install pdfetex 2>/dev/null || which pdfetex
+apt-get install texlive-binaries 2>/dev/null || which pdfetex
 ```
 
 ## Key Features

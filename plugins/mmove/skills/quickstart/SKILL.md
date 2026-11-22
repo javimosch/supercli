@@ -18,7 +18,7 @@ CLI tool: mmove.
 
 ## Installation
 ```bash
-apt-get install mmove 2>/dev/null || which mmove
+apt-get install mtools 2>/dev/null || which mmove
 ```
 
 ## Key Features

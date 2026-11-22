@@ -18,7 +18,7 @@ CLI tool: thin_rmap.
 
 ## Installation
 ```bash
-apt-get install thin_rmap 2>/dev/null || which thin_rmap
+apt-get install thin-provisioning-tools 2>/dev/null || which thin_rmap
 ```
 
 ## Key Features

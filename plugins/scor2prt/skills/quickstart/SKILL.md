@@ -18,7 +18,7 @@ CLI tool: scor2prt.
 
 ## Installation
 ```bash
-apt-get install scor2prt 2>/dev/null || which scor2prt
+apt-get install texlive-binaries 2>/dev/null || which scor2prt
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pnmflip.
 
 ## Installation
 ```bash
-apt-get install pnmflip 2>/dev/null || which pnmflip
+apt-get install netpbm 2>/dev/null || which pnmflip
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: vacuumlo.
 
 ## Installation
 ```bash
-apt-get install vacuumlo 2>/dev/null || which vacuumlo
+apt-get install postgresql-client-common 2>/dev/null || which vacuumlo
 ```
 
 ## Key Features

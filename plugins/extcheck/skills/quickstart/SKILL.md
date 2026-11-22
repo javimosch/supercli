@@ -18,7 +18,7 @@ CLI tool: extcheck.
 
 ## Installation
 ```bash
-apt-get install extcheck 2>/dev/null || which extcheck
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which extcheck
 ```
 
 ## Key Features

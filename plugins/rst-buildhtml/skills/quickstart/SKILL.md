@@ -18,7 +18,7 @@ CLI tool: rst-buildhtml.
 
 ## Installation
 ```bash
-apt-get install rst-buildhtml 2>/dev/null || which rst-buildhtml
+apt-get install python3-docutils 2>/dev/null || which rst-buildhtml
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: lxc-config.
 
 ## Installation
 ```bash
-apt-get install lxc-config 2>/dev/null || which lxc-config
+apt-get install lxc-utils 2>/dev/null || which lxc-config
 ```
 
 ## Key Features

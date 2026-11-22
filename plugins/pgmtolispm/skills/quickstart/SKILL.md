@@ -18,7 +18,7 @@ CLI tool: pgmtolispm.
 
 ## Installation
 ```bash
-apt-get install pgmtolispm 2>/dev/null || which pgmtolispm
+apt-get install netpbm 2>/dev/null || which pgmtolispm
 ```
 
 ## Key Features

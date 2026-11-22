@@ -18,7 +18,7 @@ CLI tool: rst2s5.
 
 ## Installation
 ```bash
-apt-get install rst2s5 2>/dev/null || which rst2s5
+apt-get install python3-docutils 2>/dev/null || which rst2s5
 ```
 
 ## Key Features

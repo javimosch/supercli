@@ -25,7 +25,7 @@ description: Use this skill when the user wants a terminal timer, countdown, or 
 ## Installation
 
 ```bash
-sudo apt install utimer
+sudo apt install kiwi-tools
 ```
 
 ## Examples

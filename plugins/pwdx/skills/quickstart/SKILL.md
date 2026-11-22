@@ -18,7 +18,7 @@ CLI tool: pwdx.
 
 ## Installation
 ```bash
-apt-get install pwdx 2>/dev/null || which pwdx
+apt-get install procps 2>/dev/null || which pwdx
 ```
 
 ## Key Features

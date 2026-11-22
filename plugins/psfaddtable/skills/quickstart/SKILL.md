@@ -18,7 +18,7 @@ CLI tool: psfaddtable.
 
 ## Installation
 ```bash
-apt-get install psfaddtable 2>/dev/null || which psfaddtable
+apt-get install kbd 2>/dev/null || which psfaddtable
 ```
 
 ## Key Features

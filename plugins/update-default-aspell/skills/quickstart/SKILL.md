@@ -18,7 +18,7 @@ CLI tool: update-default-aspell.
 
 ## Installation
 ```bash
-apt-get install update-default-aspell 2>/dev/null || which update-default-aspell
+apt-get install dictionaries-common 2>/dev/null || which update-default-aspell
 ```
 
 ## Key Features

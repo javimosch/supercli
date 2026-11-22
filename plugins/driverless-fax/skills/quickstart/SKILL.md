@@ -18,7 +18,7 @@ CLI tool: driverless-fax.
 
 ## Installation
 ```bash
-apt-get install driverless-fax 2>/dev/null || which driverless-fax
+apt-get install cups-filters 2>/dev/null || which driverless-fax
 ```
 
 ## Key Features

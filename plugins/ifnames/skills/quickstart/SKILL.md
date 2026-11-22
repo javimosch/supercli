@@ -18,7 +18,7 @@ CLI tool: ifnames.
 
 ## Installation
 ```bash
-apt-get install ifnames 2>/dev/null || which ifnames
+apt-get install autoconf 2>/dev/null || which ifnames
 ```
 
 ## Key Features

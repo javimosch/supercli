@@ -18,7 +18,7 @@ CLI tool: fsck.vfat.
 
 ## Installation
 ```bash
-apt-get install fsck.vfat 2>/dev/null || which fsck.vfat
+apt-get install dosfstools 2>/dev/null || which fsck.vfat
 ```
 
 ## Key Features

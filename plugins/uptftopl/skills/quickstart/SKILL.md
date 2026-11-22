@@ -18,7 +18,7 @@ CLI tool: uptftopl.
 
 ## Installation
 ```bash
-apt-get install uptftopl 2>/dev/null || which uptftopl
+apt-get install texlive-binaries 2>/dev/null || which uptftopl
 ```
 
 ## Key Features

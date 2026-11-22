@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcov-dump.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcov-dump 2>/dev/null || which x86_64-linux-gnu-gcov-dump
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcov-dump
 ```
 
 ## Key Features

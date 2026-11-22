@@ -18,7 +18,7 @@ CLI tool: pnmnoraw.
 
 ## Installation
 ```bash
-apt-get install pnmnoraw 2>/dev/null || which pnmnoraw
+apt-get install netpbm 2>/dev/null || which pnmnoraw
 ```
 
 ## Key Features

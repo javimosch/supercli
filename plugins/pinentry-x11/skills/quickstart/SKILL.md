@@ -18,7 +18,7 @@ CLI tool: pinentry-x11.
 
 ## Installation
 ```bash
-apt-get install pinentry-x11 2>/dev/null || which pinentry-x11
+apt-get install pinentry-gnome3 2>/dev/null || which pinentry-x11
 ```
 
 ## Key Features

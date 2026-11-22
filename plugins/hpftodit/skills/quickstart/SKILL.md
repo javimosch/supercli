@@ -18,7 +18,7 @@ CLI tool: hpftodit.
 
 ## Installation
 ```bash
-apt-get install hpftodit 2>/dev/null || which hpftodit
+apt-get install groff 2>/dev/null || which hpftodit
 ```
 
 ## Key Features

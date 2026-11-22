@@ -18,7 +18,7 @@ CLI tool: rst2html4.
 
 ## Installation
 ```bash
-apt-get install rst2html4 2>/dev/null || which rst2html4
+apt-get install python3-docutils 2>/dev/null || which rst2html4
 ```
 
 ## Key Features

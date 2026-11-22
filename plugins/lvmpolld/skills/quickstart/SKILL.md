@@ -18,7 +18,7 @@ CLI tool: lvmpolld.
 
 ## Installation
 ```bash
-apt-get install lvmpolld 2>/dev/null || which lvmpolld
+apt-get install lvm2 2>/dev/null || which lvmpolld
 ```
 
 ## Key Features

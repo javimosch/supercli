@@ -18,7 +18,7 @@ CLI tool: parcat.
 
 ## Installation
 ```bash
-apt-get install parcat 2>/dev/null || which parcat
+apt-get install parallel 2>/dev/null || which parcat
 ```
 
 ## Key Features

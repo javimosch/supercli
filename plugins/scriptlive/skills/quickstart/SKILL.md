@@ -18,7 +18,7 @@ CLI tool: scriptlive.
 
 ## Installation
 ```bash
-apt-get install scriptlive 2>/dev/null || which scriptlive
+apt-get install bsdutils 2>/dev/null || which scriptlive
 ```
 
 ## Key Features

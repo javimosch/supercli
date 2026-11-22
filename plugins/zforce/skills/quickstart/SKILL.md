@@ -18,7 +18,7 @@ CLI tool: zforce.
 
 ## Installation
 ```bash
-apt-get install zforce 2>/dev/null || which zforce
+apt-get install gzip 2>/dev/null || which zforce
 ```
 
 ## Key Features

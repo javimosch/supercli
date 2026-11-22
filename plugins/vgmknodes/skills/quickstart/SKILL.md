@@ -18,7 +18,7 @@ CLI tool: vgmknodes.
 
 ## Installation
 ```bash
-apt-get install vgmknodes 2>/dev/null || which vgmknodes
+apt-get install lvm2 2>/dev/null || which vgmknodes
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: xflock4.
 
 ## Installation
 ```bash
-apt-get install xflock4 2>/dev/null || which xflock4
+apt-get install xfce4-session 2>/dev/null || which xflock4
 ```
 
 ## Key Features

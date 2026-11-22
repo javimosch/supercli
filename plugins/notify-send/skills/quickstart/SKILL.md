@@ -18,7 +18,7 @@ CLI tool: notify-send.
 
 ## Installation
 ```bash
-apt-get install notify-send 2>/dev/null || which notify-send
+apt-get install libnotify-bin 2>/dev/null || which notify-send
 ```
 
 ## Key Features

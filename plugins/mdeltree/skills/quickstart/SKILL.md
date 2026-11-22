@@ -18,7 +18,7 @@ CLI tool: mdeltree.
 
 ## Installation
 ```bash
-apt-get install mdeltree 2>/dev/null || which mdeltree
+apt-get install mtools 2>/dev/null || which mdeltree
 ```
 
 ## Key Features

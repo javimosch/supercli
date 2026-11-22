@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ld.gold.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ld.gold 2>/dev/null || which x86_64-linux-gnu-ld.gold
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-ld.gold
 ```
 
 ## Key Features

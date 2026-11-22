@@ -18,7 +18,7 @@ CLI tool: migrate-pubring-from-classic-gpg.
 
 ## Installation
 ```bash
-apt-get install migrate-pubring-from-classic-gpg 2>/dev/null || which migrate-pubring-from-classic-gpg
+apt-get install gnupg-utils 2>/dev/null || which migrate-pubring-from-classic-gpg
 ```
 
 ## Key Features

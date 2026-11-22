@@ -18,7 +18,7 @@ CLI tool: zipsplit.
 
 ## Installation
 ```bash
-apt-get install zipsplit 2>/dev/null || which zipsplit
+apt-get install zip 2>/dev/null || which zipsplit
 ```
 
 ## Key Features

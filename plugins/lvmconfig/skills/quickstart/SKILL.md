@@ -18,7 +18,7 @@ CLI tool: lvmconfig.
 
 ## Installation
 ```bash
-apt-get install lvmconfig 2>/dev/null || which lvmconfig
+apt-get install lvm2 2>/dev/null || which lvmconfig
 ```
 
 ## Key Features

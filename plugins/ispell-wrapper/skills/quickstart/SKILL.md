@@ -18,7 +18,7 @@ CLI tool: ispell-wrapper.
 
 ## Installation
 ```bash
-apt-get install ispell-wrapper 2>/dev/null || which ispell-wrapper
+apt-get install dictionaries-common 2>/dev/null || which ispell-wrapper
 ```
 
 ## Key Features

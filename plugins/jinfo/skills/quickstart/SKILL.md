@@ -18,7 +18,7 @@ CLI tool: jinfo.
 
 ## Installation
 ```bash
-apt-get install jinfo 2>/dev/null || which jinfo
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jinfo
 ```
 
 ## Key Features

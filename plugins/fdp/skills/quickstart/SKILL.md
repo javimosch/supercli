@@ -18,7 +18,7 @@ CLI tool: fdp.
 
 ## Installation
 ```bash
-apt-get install fdp 2>/dev/null || which fdp
+apt-get install graphviz 2>/dev/null || which fdp
 ```
 
 ## Key Features

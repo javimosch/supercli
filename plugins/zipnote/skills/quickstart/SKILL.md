@@ -18,7 +18,7 @@ CLI tool: zipnote.
 
 ## Installation
 ```bash
-apt-get install zipnote 2>/dev/null || which zipnote
+apt-get install zip 2>/dev/null || which zipnote
 ```
 
 ## Key Features

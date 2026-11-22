@@ -18,7 +18,7 @@ CLI tool: lxc-stop.
 
 ## Installation
 ```bash
-apt-get install lxc-stop 2>/dev/null || which lxc-stop
+apt-get install lxc-utils 2>/dev/null || which lxc-stop
 ```
 
 ## Key Features

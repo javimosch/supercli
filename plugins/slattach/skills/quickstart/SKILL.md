@@ -18,7 +18,7 @@ CLI tool: slattach.
 
 ## Installation
 ```bash
-apt-get install slattach 2>/dev/null || which slattach
+apt-get install net-tools 2>/dev/null || which slattach
 ```
 
 ## Key Features

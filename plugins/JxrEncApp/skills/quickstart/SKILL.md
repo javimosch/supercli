@@ -18,7 +18,7 @@ CLI tool: JxrEncApp.
 
 ## Installation
 ```bash
-apt-get install JxrEncApp 2>/dev/null || which JxrEncApp
+apt-get install libjxr-tools 2>/dev/null || which JxrEncApp
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: mptopdf.
 
 ## Installation
 ```bash
-apt-get install mptopdf 2>/dev/null || which mptopdf
+apt-get install texlive-latex-base 2>/dev/null || which mptopdf
 ```
 
 ## Key Features

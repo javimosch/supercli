@@ -18,7 +18,7 @@ CLI tool: keepassxc-proxy.
 
 ## Installation
 ```bash
-apt-get install keepassxc-proxy 2>/dev/null || which keepassxc-proxy
+apt-get install keepassxc 2>/dev/null || which keepassxc-proxy
 ```
 
 ## Key Features

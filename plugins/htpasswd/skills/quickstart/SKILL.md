@@ -18,7 +18,7 @@ CLI tool: htpasswd.
 
 ## Installation
 ```bash
-apt-get install htpasswd 2>/dev/null || which htpasswd
+apt-get install apache2-utils 2>/dev/null || which htpasswd
 ```
 
 ## Key Features

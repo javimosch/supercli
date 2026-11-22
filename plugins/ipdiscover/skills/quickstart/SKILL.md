@@ -18,7 +18,7 @@ CLI tool: ipdiscover.
 
 ## Installation
 ```bash
-apt-get install ipdiscover 2>/dev/null || which ipdiscover
+apt-get install ocsinventory-agent 2>/dev/null || which ipdiscover
 ```
 
 ## Key Features

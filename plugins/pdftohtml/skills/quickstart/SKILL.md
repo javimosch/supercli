@@ -18,7 +18,7 @@ CLI tool: pdftohtml.
 
 ## Installation
 ```bash
-apt-get install pdftohtml 2>/dev/null || which pdftohtml
+apt-get install poppler-utils 2>/dev/null || which pdftohtml
 ```
 
 ## Key Features

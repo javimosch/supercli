@@ -18,7 +18,7 @@ CLI tool: lvremove.
 
 ## Installation
 ```bash
-apt-get install lvremove 2>/dev/null || which lvremove
+apt-get install lvm2 2>/dev/null || which lvremove
 ```
 
 ## Key Features

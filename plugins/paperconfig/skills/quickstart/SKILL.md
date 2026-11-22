@@ -18,7 +18,7 @@ CLI tool: paperconfig.
 
 ## Installation
 ```bash
-apt-get install paperconfig 2>/dev/null || which paperconfig
+apt-get install libpaper-utils 2>/dev/null || which paperconfig
 ```
 
 ## Key Features

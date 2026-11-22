@@ -18,7 +18,7 @@ CLI tool: env_parallel.mksh.
 
 ## Installation
 ```bash
-apt-get install env_parallel.mksh 2>/dev/null || which env_parallel.mksh
+apt-get install parallel 2>/dev/null || which env_parallel.mksh
 ```
 
 ## Key Features

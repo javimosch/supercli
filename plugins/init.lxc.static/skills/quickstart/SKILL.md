@@ -18,7 +18,7 @@ CLI tool: init.lxc.static.
 
 ## Installation
 ```bash
-apt-get install init.lxc.static 2>/dev/null || which init.lxc.static
+apt-get install liblxc-common 2>/dev/null || which init.lxc.static
 ```
 
 ## Key Features

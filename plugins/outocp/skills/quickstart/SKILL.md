@@ -18,7 +18,7 @@ CLI tool: outocp.
 
 ## Installation
 ```bash
-apt-get install outocp 2>/dev/null || which outocp
+apt-get install texlive-binaries 2>/dev/null || which outocp
 ```
 
 ## Key Features

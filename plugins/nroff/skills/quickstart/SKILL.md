@@ -18,7 +18,7 @@ CLI tool: nroff.
 
 ## Installation
 ```bash
-apt-get install nroff 2>/dev/null || which nroff
+apt-get install groff-base 2>/dev/null || which nroff
 ```
 
 ## Key Features

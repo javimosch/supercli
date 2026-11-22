@@ -18,7 +18,7 @@ CLI tool: word-list-compress.
 
 ## Installation
 ```bash
-apt-get install word-list-compress 2>/dev/null || which word-list-compress
+apt-get install aspell 2>/dev/null || which word-list-compress
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: totem-video-thumbnailer.
 
 ## Installation
 ```bash
-apt-get install totem-video-thumbnailer 2>/dev/null || which totem-video-thumbnailer
+apt-get install totem 2>/dev/null || which totem-video-thumbnailer
 ```
 
 ## Key Features

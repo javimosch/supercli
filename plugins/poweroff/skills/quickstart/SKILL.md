@@ -18,7 +18,7 @@ CLI tool: poweroff.
 
 ## Installation
 ```bash
-apt-get install poweroff 2>/dev/null || which poweroff
+apt-get install systemd-sysv 2>/dev/null || which poweroff
 ```
 
 ## Key Features

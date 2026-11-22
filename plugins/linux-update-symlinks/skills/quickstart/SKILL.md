@@ -18,7 +18,7 @@ CLI tool: linux-update-symlinks.
 
 ## Installation
 ```bash
-apt-get install linux-update-symlinks 2>/dev/null || which linux-update-symlinks
+apt-get install linux-base 2>/dev/null || which linux-update-symlinks
 ```
 
 ## Key Features

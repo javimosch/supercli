@@ -18,7 +18,7 @@ CLI tool: tcptraceroute.db.
 
 ## Installation
 ```bash
-apt-get install tcptraceroute.db 2>/dev/null || which tcptraceroute.db
+apt-get install traceroute 2>/dev/null || which tcptraceroute.db
 ```
 
 ## Key Features

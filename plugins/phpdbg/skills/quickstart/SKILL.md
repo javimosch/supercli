@@ -18,7 +18,7 @@ CLI tool: phpdbg.
 
 ## Installation
 ```bash
-apt-get install phpdbg 2>/dev/null || which phpdbg
+apt-get install php-phpdbg 2>/dev/null || which phpdbg
 ```
 
 ## Key Features

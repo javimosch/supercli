@@ -18,7 +18,7 @@ CLI tool: ubuntu-security-status.
 
 ## Installation
 ```bash
-apt-get install ubuntu-security-status 2>/dev/null || which ubuntu-security-status
+apt-get install update-manager-core 2>/dev/null || which ubuntu-security-status
 ```
 
 ## Key Features

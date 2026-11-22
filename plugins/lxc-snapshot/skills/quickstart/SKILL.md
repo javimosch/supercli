@@ -18,7 +18,7 @@ CLI tool: lxc-snapshot.
 
 ## Installation
 ```bash
-apt-get install lxc-snapshot 2>/dev/null || which lxc-snapshot
+apt-get install lxc-utils 2>/dev/null || which lxc-snapshot
 ```
 
 ## Key Features

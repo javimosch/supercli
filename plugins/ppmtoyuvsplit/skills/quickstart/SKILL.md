@@ -18,7 +18,7 @@ CLI tool: ppmtoyuvsplit.
 
 ## Installation
 ```bash
-apt-get install ppmtoyuvsplit 2>/dev/null || which ppmtoyuvsplit
+apt-get install netpbm 2>/dev/null || which ppmtoyuvsplit
 ```
 
 ## Key Features

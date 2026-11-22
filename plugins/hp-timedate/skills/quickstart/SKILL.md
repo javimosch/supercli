@@ -18,7 +18,7 @@ CLI tool: hp-timedate.
 
 ## Installation
 ```bash
-apt-get install hp-timedate 2>/dev/null || which hp-timedate
+apt-get install hplip 2>/dev/null || which hp-timedate
 ```
 
 ## Key Features

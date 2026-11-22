@@ -18,7 +18,7 @@ CLI tool: dockerd.
 
 ## Installation
 ```bash
-apt-get install dockerd 2>/dev/null || which dockerd
+apt-get install docker.io 2>/dev/null || which dockerd
 ```
 
 ## Key Features

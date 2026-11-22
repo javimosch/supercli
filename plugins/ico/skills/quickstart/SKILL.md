@@ -18,7 +18,7 @@ CLI tool: ico.
 
 ## Installation
 ```bash
-apt-get install ico 2>/dev/null || which ico
+apt-get install x11-apps 2>/dev/null || which ico
 ```
 
 ## Key Features

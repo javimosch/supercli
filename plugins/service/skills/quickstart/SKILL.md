@@ -18,7 +18,7 @@ CLI tool: service.
 
 ## Installation
 ```bash
-apt-get install service 2>/dev/null || which service
+apt-get install init-system-helpers 2>/dev/null || which service
 ```
 
 ## Key Features

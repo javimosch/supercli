@@ -18,7 +18,7 @@ CLI tool: plipconfig.
 
 ## Installation
 ```bash
-apt-get install plipconfig 2>/dev/null || which plipconfig
+apt-get install net-tools 2>/dev/null || which plipconfig
 ```
 
 ## Key Features

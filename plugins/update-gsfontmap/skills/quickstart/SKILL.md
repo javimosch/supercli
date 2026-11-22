@@ -18,7 +18,7 @@ CLI tool: update-gsfontmap.
 
 ## Installation
 ```bash
-apt-get install update-gsfontmap 2>/dev/null || which update-gsfontmap
+apt-get install ghostscript 2>/dev/null || which update-gsfontmap
 ```
 
 ## Key Features

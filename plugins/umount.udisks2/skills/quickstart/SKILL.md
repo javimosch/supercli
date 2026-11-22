@@ -18,7 +18,7 @@ CLI tool: umount.udisks2.
 
 ## Installation
 ```bash
-apt-get install umount.udisks2 2>/dev/null || which umount.udisks2
+apt-get install udisks2 2>/dev/null || which umount.udisks2
 ```
 
 ## Key Features

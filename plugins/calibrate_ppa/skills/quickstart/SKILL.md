@@ -18,7 +18,7 @@ CLI tool: calibrate_ppa.
 
 ## Installation
 ```bash
-apt-get install calibrate_ppa 2>/dev/null || which calibrate_ppa
+apt-get install printer-driver-pnm2ppa 2>/dev/null || which calibrate_ppa
 ```
 
 ## Key Features

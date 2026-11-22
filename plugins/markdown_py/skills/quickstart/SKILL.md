@@ -18,7 +18,7 @@ CLI tool: markdown_py.
 
 ## Installation
 ```bash
-apt-get install markdown_py 2>/dev/null || which markdown_py
+apt-get install python3-markdown 2>/dev/null || which markdown_py
 ```
 
 ## Key Features

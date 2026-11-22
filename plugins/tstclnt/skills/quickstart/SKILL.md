@@ -18,7 +18,7 @@ CLI tool: tstclnt.
 
 ## Installation
 ```bash
-apt-get install tstclnt 2>/dev/null || which tstclnt
+apt-get install libnss3-tools 2>/dev/null || which tstclnt
 ```
 
 ## Key Features

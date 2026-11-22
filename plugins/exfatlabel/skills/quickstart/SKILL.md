@@ -18,7 +18,7 @@ CLI tool: exfatlabel.
 
 ## Installation
 ```bash
-apt-get install exfatlabel 2>/dev/null || which exfatlabel
+apt-get install exfatprogs 2>/dev/null || which exfatlabel
 ```
 
 ## Key Features

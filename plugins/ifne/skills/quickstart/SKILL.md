@@ -18,7 +18,7 @@ CLI tool: ifne.
 
 ## Installation
 ```bash
-apt-get install ifne 2>/dev/null || which ifne
+apt-get install moreutils 2>/dev/null || which ifne
 ```
 
 ## Key Features

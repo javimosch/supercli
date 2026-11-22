@@ -18,7 +18,7 @@ CLI tool: psidtopgm.
 
 ## Installation
 ```bash
-apt-get install psidtopgm 2>/dev/null || which psidtopgm
+apt-get install netpbm 2>/dev/null || which psidtopgm
 ```
 
 ## Key Features

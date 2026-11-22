@@ -18,7 +18,7 @@ CLI tool: myisam_ftdump.
 
 ## Installation
 ```bash
-apt-get install myisam_ftdump 2>/dev/null || which myisam_ftdump
+apt-get install mysql-client-core-8.0 2>/dev/null || which myisam_ftdump
 ```
 
 ## Key Features

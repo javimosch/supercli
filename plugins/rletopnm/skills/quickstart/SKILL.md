@@ -18,7 +18,7 @@ CLI tool: rletopnm.
 
 ## Installation
 ```bash
-apt-get install rletopnm 2>/dev/null || which rletopnm
+apt-get install netpbm 2>/dev/null || which rletopnm
 ```
 
 ## Key Features

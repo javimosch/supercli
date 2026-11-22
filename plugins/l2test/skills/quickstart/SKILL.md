@@ -18,7 +18,7 @@ CLI tool: l2test.
 
 ## Installation
 ```bash
-apt-get install l2test 2>/dev/null || which l2test
+apt-get install bluez 2>/dev/null || which l2test
 ```
 
 ## Key Features

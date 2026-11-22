@@ -18,7 +18,7 @@ CLI tool: py.test-benchmark.
 
 ## Installation
 ```bash
-apt-get install py.test-benchmark 2>/dev/null || which py.test-benchmark
+apt-get install pytest-benchmark 2>/dev/null || which py.test-benchmark
 ```
 
 ## Key Features

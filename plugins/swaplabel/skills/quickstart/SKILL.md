@@ -18,7 +18,7 @@ CLI tool: swaplabel.
 
 ## Installation
 ```bash
-apt-get install swaplabel 2>/dev/null || which swaplabel
+apt-get install util-linux 2>/dev/null || which swaplabel
 ```
 
 ## Key Features

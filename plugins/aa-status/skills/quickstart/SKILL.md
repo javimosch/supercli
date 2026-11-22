@@ -18,7 +18,7 @@ CLI tool: aa-status.
 
 ## Installation
 ```bash
-apt-get install aa-status 2>/dev/null || which aa-status
+apt-get install apparmor 2>/dev/null || which aa-status
 ```
 
 ## Key Features

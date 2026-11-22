@@ -18,7 +18,7 @@ CLI tool: ptftopl.
 
 ## Installation
 ```bash
-apt-get install ptftopl 2>/dev/null || which ptftopl
+apt-get install texlive-binaries 2>/dev/null || which ptftopl
 ```
 
 ## Key Features

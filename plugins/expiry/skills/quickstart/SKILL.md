@@ -18,7 +18,7 @@ CLI tool: expiry.
 
 ## Installation
 ```bash
-apt-get install expiry 2>/dev/null || which expiry
+apt-get install passwd 2>/dev/null || which expiry
 ```
 
 ## Key Features

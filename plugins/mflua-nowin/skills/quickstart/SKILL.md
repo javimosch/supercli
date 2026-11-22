@@ -18,7 +18,7 @@ CLI tool: mflua-nowin.
 
 ## Installation
 ```bash
-apt-get install mflua-nowin 2>/dev/null || which mflua-nowin
+apt-get install texlive-binaries 2>/dev/null || which mflua-nowin
 ```
 
 ## Key Features

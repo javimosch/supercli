@@ -18,7 +18,7 @@ CLI tool: X11.
 
 ## Installation
 ```bash
-apt-get install X11 2>/dev/null || which X11
+apt-get install x11-common 2>/dev/null || which X11
 ```
 
 ## Key Features

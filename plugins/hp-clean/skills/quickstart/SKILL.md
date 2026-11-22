@@ -18,7 +18,7 @@ CLI tool: hp-clean.
 
 ## Installation
 ```bash
-apt-get install hp-clean 2>/dev/null || which hp-clean
+apt-get install hplip 2>/dev/null || which hp-clean
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: jimage.
 
 ## Installation
 ```bash
-apt-get install jimage 2>/dev/null || which jimage
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jimage
 ```
 
 ## Key Features

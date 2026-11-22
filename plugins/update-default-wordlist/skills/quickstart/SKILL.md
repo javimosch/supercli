@@ -18,7 +18,7 @@ CLI tool: update-default-wordlist.
 
 ## Installation
 ```bash
-apt-get install update-default-wordlist 2>/dev/null || which update-default-wordlist
+apt-get install dictionaries-common 2>/dev/null || which update-default-wordlist
 ```
 
 ## Key Features

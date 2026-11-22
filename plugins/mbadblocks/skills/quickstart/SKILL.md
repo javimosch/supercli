@@ -18,7 +18,7 @@ CLI tool: mbadblocks.
 
 ## Installation
 ```bash
-apt-get install mbadblocks 2>/dev/null || which mbadblocks
+apt-get install mtools 2>/dev/null || which mbadblocks
 ```
 
 ## Key Features

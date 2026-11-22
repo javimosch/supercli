@@ -18,7 +18,7 @@ CLI tool: localectl.
 
 ## Installation
 ```bash
-apt-get install localectl 2>/dev/null || which localectl
+apt-get install systemd 2>/dev/null || which localectl
 ```
 
 ## Key Features

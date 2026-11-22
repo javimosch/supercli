@@ -18,7 +18,7 @@ CLI tool: pidwait.
 
 ## Installation
 ```bash
-apt-get install pidwait 2>/dev/null || which pidwait
+apt-get install procps 2>/dev/null || which pidwait
 ```
 
 ## Key Features

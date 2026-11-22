@@ -18,7 +18,7 @@ CLI tool: recode-sr-latin.
 
 ## Installation
 ```bash
-apt-get install recode-sr-latin 2>/dev/null || which recode-sr-latin
+apt-get install gettext 2>/dev/null || which recode-sr-latin
 ```
 
 ## Key Features

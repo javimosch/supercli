@@ -18,7 +18,7 @@ CLI tool: t1disasm.
 
 ## Installation
 ```bash
-apt-get install t1disasm 2>/dev/null || which t1disasm
+apt-get install t1utils 2>/dev/null || which t1disasm
 ```
 
 ## Key Features

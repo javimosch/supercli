@@ -18,7 +18,7 @@ CLI tool: hp-check.
 
 ## Installation
 ```bash
-apt-get install hp-check 2>/dev/null || which hp-check
+apt-get install hplip 2>/dev/null || which hp-check
 ```
 
 ## Key Features

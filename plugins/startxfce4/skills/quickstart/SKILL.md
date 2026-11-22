@@ -18,7 +18,7 @@ CLI tool: startxfce4.
 
 ## Installation
 ```bash
-apt-get install startxfce4 2>/dev/null || which startxfce4
+apt-get install xfce4-session 2>/dev/null || which startxfce4
 ```
 
 ## Key Features

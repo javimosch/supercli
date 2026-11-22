@@ -18,7 +18,7 @@ CLI tool: ctest.
 
 ## Installation
 ```bash
-apt-get install ctest 2>/dev/null || which ctest
+apt-get install cmake 2>/dev/null || which ctest
 ```
 
 ## Key Features

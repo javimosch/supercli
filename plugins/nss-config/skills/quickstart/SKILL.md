@@ -18,7 +18,7 @@ CLI tool: nss-config.
 
 ## Installation
 ```bash
-apt-get install nss-config 2>/dev/null || which nss-config
+apt-get install libnss3-dev 2>/dev/null || which nss-config
 ```
 
 ## Key Features

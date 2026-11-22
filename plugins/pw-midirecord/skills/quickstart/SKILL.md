@@ -18,7 +18,7 @@ CLI tool: pw-midirecord.
 
 ## Installation
 ```bash
-apt-get install pw-midirecord 2>/dev/null || which pw-midirecord
+apt-get install pipewire-bin 2>/dev/null || which pw-midirecord
 ```
 
 ## Key Features

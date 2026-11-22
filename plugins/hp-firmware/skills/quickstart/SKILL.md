@@ -18,7 +18,7 @@ CLI tool: hp-firmware.
 
 ## Installation
 ```bash
-apt-get install hp-firmware 2>/dev/null || which hp-firmware
+apt-get install hplip 2>/dev/null || which hp-firmware
 ```
 
 ## Key Features

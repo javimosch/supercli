@@ -18,7 +18,7 @@ CLI tool: update-perl-sax-parsers.
 
 ## Installation
 ```bash
-apt-get install update-perl-sax-parsers 2>/dev/null || which update-perl-sax-parsers
+apt-get install libxml-sax-perl 2>/dev/null || which update-perl-sax-parsers
 ```
 
 ## Key Features

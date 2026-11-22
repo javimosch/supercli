@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcov.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcov 2>/dev/null || which x86_64-linux-gnu-gcov
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcov
 ```
 
 ## Key Features

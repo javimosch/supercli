@@ -18,7 +18,7 @@ CLI tool: transform.
 
 ## Installation
 ```bash
-apt-get install transform 2>/dev/null || which transform
+apt-get install libgts-bin 2>/dev/null || which transform
 ```
 
 ## Key Features

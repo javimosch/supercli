@@ -18,7 +18,7 @@ CLI tool: a2disconf.
 
 ## Installation
 ```bash
-apt-get install a2disconf 2>/dev/null || which a2disconf
+apt-get install apache2 2>/dev/null || which a2disconf
 ```
 
 ## Key Features

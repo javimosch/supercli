@@ -18,7 +18,7 @@ CLI tool: pdata_tools.
 
 ## Installation
 ```bash
-apt-get install pdata_tools 2>/dev/null || which pdata_tools
+apt-get install thin-provisioning-tools 2>/dev/null || which pdata_tools
 ```
 
 ## Key Features

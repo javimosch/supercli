@@ -18,7 +18,7 @@ CLI tool: wg.
 
 ## Installation
 ```bash
-apt-get install wg 2>/dev/null || which wg
+apt-get install wireguard-tools 2>/dev/null || which wg
 ```
 
 ## Key Features

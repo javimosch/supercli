@@ -18,7 +18,7 @@ CLI tool: sudo_logsrvd.
 
 ## Installation
 ```bash
-apt-get install sudo_logsrvd 2>/dev/null || which sudo_logsrvd
+apt-get install sudo 2>/dev/null || which sudo_logsrvd
 ```
 
 ## Key Features

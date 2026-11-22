@@ -18,7 +18,7 @@ CLI tool: ipod-read-sysinfo-extended.
 
 ## Installation
 ```bash
-apt-get install ipod-read-sysinfo-extended 2>/dev/null || which ipod-read-sysinfo-extended
+apt-get install libgpod-common 2>/dev/null || which ipod-read-sysinfo-extended
 ```
 
 ## Key Features

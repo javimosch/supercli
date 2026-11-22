@@ -18,7 +18,7 @@ CLI tool: qdoc3.
 
 ## Installation
 ```bash
-apt-get install qdoc3 2>/dev/null || which qdoc3
+apt-get install qtchooser 2>/dev/null || which qdoc3
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: elfedit.
 
 ## Installation
 ```bash
-apt-get install elfedit 2>/dev/null || which elfedit
+apt-get install binutils 2>/dev/null || which elfedit
 ```
 
 ## Key Features

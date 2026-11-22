@@ -18,7 +18,7 @@ CLI tool: upmpost.
 
 ## Installation
 ```bash
-apt-get install upmpost 2>/dev/null || which upmpost
+apt-get install texlive-binaries 2>/dev/null || which upmpost
 ```
 
 ## Key Features

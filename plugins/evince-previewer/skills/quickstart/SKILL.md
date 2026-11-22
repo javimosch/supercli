@@ -18,7 +18,7 @@ CLI tool: evince-previewer.
 
 ## Installation
 ```bash
-apt-get install evince-previewer 2>/dev/null || which evince-previewer
+apt-get install evince 2>/dev/null || which evince-previewer
 ```
 
 ## Key Features

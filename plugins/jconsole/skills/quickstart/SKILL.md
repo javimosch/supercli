@@ -18,7 +18,7 @@ CLI tool: jconsole.
 
 ## Installation
 ```bash
-apt-get install jconsole 2>/dev/null || which jconsole
+apt-get install openjdk-17-jdk 2>/dev/null || which jconsole
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: pbmtoepson.
 
 ## Installation
 ```bash
-apt-get install pbmtoepson 2>/dev/null || which pbmtoepson
+apt-get install netpbm 2>/dev/null || which pbmtoepson
 ```
 
 ## Key Features

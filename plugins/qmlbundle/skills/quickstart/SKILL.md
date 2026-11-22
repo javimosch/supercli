@@ -18,7 +18,7 @@ CLI tool: qmlbundle.
 
 ## Installation
 ```bash
-apt-get install qmlbundle 2>/dev/null || which qmlbundle
+apt-get install qtchooser 2>/dev/null || which qmlbundle
 ```
 
 ## Key Features

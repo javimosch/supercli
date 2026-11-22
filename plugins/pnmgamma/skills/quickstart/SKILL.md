@@ -18,7 +18,7 @@ CLI tool: pnmgamma.
 
 ## Installation
 ```bash
-apt-get install pnmgamma 2>/dev/null || which pnmgamma
+apt-get install netpbm 2>/dev/null || which pnmgamma
 ```
 
 ## Key Features

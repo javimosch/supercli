@@ -18,7 +18,7 @@ CLI tool: parec.
 
 ## Installation
 ```bash
-apt-get install parec 2>/dev/null || which parec
+apt-get install pulseaudio-utils 2>/dev/null || which parec
 ```
 
 ## Key Features

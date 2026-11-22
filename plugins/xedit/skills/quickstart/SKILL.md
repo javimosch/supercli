@@ -18,7 +18,7 @@ CLI tool: xedit.
 
 ## Installation
 ```bash
-apt-get install xedit 2>/dev/null || which xedit
+apt-get install x11-apps 2>/dev/null || which xedit
 ```
 
 ## Key Features

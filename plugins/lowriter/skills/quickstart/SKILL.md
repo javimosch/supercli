@@ -18,7 +18,7 @@ CLI tool: lowriter.
 
 ## Installation
 ```bash
-apt-get install lowriter 2>/dev/null || which lowriter
+apt-get install libreoffice-writer 2>/dev/null || which lowriter
 ```
 
 ## Key Features

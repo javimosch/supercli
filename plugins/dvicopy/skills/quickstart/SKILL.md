@@ -18,7 +18,7 @@ CLI tool: dvicopy.
 
 ## Installation
 ```bash
-apt-get install dvicopy 2>/dev/null || which dvicopy
+apt-get install texlive-binaries 2>/dev/null || which dvicopy
 ```
 
 ## Key Features

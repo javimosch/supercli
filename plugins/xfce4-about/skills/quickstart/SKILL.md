@@ -18,7 +18,7 @@ CLI tool: xfce4-about.
 
 ## Installation
 ```bash
-apt-get install xfce4-about 2>/dev/null || which xfce4-about
+apt-get install libxfce4ui-utils 2>/dev/null || which xfce4-about
 ```
 
 ## Key Features

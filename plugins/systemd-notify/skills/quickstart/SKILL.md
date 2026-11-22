@@ -18,7 +18,7 @@ CLI tool: systemd-notify.
 
 ## Installation
 ```bash
-apt-get install systemd-notify 2>/dev/null || which systemd-notify
+apt-get install systemd 2>/dev/null || which systemd-notify
 ```
 
 ## Key Features

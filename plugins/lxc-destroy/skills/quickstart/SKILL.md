@@ -18,7 +18,7 @@ CLI tool: lxc-destroy.
 
 ## Installation
 ```bash
-apt-get install lxc-destroy 2>/dev/null || which lxc-destroy
+apt-get install lxc-utils 2>/dev/null || which lxc-destroy
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: setleds.
 
 ## Installation
 ```bash
-apt-get install setleds 2>/dev/null || which setleds
+apt-get install kbd 2>/dev/null || which setleds
 ```
 
 ## Key Features

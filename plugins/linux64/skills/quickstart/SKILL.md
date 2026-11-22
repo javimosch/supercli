@@ -18,7 +18,7 @@ CLI tool: linux64.
 
 ## Installation
 ```bash
-apt-get install linux64 2>/dev/null || which linux64
+apt-get install util-linux 2>/dev/null || which linux64
 ```
 
 ## Key Features

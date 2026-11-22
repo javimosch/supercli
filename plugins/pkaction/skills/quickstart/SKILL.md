@@ -18,7 +18,7 @@ CLI tool: pkaction.
 
 ## Installation
 ```bash
-apt-get install pkaction 2>/dev/null || which pkaction
+apt-get install polkitd 2>/dev/null || which pkaction
 ```
 
 ## Key Features

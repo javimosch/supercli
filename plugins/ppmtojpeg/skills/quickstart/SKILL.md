@@ -18,7 +18,7 @@ CLI tool: ppmtojpeg.
 
 ## Installation
 ```bash
-apt-get install ppmtojpeg 2>/dev/null || which ppmtojpeg
+apt-get install netpbm 2>/dev/null || which ppmtojpeg
 ```
 
 ## Key Features

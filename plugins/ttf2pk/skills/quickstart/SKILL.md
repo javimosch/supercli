@@ -18,7 +18,7 @@ CLI tool: ttf2pk.
 
 ## Installation
 ```bash
-apt-get install ttf2pk 2>/dev/null || which ttf2pk
+apt-get install texlive-binaries 2>/dev/null || which ttf2pk
 ```
 
 ## Key Features

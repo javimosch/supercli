@@ -18,7 +18,7 @@ CLI tool: kmodsign.
 
 ## Installation
 ```bash
-apt-get install kmodsign 2>/dev/null || which kmodsign
+apt-get install sbsigntool 2>/dev/null || which kmodsign
 ```
 
 ## Key Features

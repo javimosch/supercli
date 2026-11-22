@@ -18,7 +18,7 @@ CLI tool: mysqldumpslow.
 
 ## Installation
 ```bash
-apt-get install mysqldumpslow 2>/dev/null || which mysqldumpslow
+apt-get install mysql-client-core-8.0 2>/dev/null || which mysqldumpslow
 ```
 
 ## Key Features

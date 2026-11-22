@@ -18,7 +18,7 @@ CLI tool: ld.gold.
 
 ## Installation
 ```bash
-apt-get install ld.gold 2>/dev/null || which ld.gold
+apt-get install binutils 2>/dev/null || which ld.gold
 ```
 
 ## Key Features

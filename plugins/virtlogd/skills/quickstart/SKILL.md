@@ -18,7 +18,7 @@ CLI tool: virtlogd.
 
 ## Installation
 ```bash
-apt-get install virtlogd 2>/dev/null || which virtlogd
+apt-get install libvirt-daemon 2>/dev/null || which virtlogd
 ```
 
 ## Key Features

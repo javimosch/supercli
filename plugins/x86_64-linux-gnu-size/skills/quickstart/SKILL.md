@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-size.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-size 2>/dev/null || which x86_64-linux-gnu-size
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-size
 ```
 
 ## Key Features

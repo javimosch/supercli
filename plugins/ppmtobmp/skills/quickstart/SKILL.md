@@ -18,7 +18,7 @@ CLI tool: ppmtobmp.
 
 ## Installation
 ```bash
-apt-get install ppmtobmp 2>/dev/null || which ppmtobmp
+apt-get install netpbm 2>/dev/null || which ppmtobmp
 ```
 
 ## Key Features

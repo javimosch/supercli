@@ -18,7 +18,7 @@ CLI tool: ppmcolors.
 
 ## Installation
 ```bash
-apt-get install ppmcolors 2>/dev/null || which ppmcolors
+apt-get install netpbm 2>/dev/null || which ppmcolors
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: msexpand.
 
 ## Installation
 ```bash
-apt-get install msexpand 2>/dev/null || which msexpand
+apt-get install mscompress 2>/dev/null || which msexpand
 ```
 
 ## Key Features

@@ -18,7 +18,7 @@ CLI tool: rls.
 
 ## Installation
 ```bash
-apt-get install rls 2>/dev/null || which rls
+apt-get install rustup 2>/dev/null || which rls
 ```
 
 ## Key Features

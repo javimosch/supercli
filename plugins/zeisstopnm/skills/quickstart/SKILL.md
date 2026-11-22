@@ -18,7 +18,7 @@ CLI tool: zeisstopnm.
 
 ## Installation
 ```bash
-apt-get install zeisstopnm 2>/dev/null || which zeisstopnm
+apt-get install netpbm 2>/dev/null || which zeisstopnm
 ```
 
 ## Key Features

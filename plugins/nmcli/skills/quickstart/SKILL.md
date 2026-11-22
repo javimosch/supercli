@@ -18,7 +18,7 @@ CLI tool: nmcli.
 
 ## Installation
 ```bash
-apt-get install nmcli 2>/dev/null || which nmcli
+apt-get install network-manager 2>/dev/null || which nmcli
 ```
 
 ## Key Features

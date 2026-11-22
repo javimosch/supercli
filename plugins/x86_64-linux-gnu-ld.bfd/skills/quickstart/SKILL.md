@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ld.bfd.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ld.bfd 2>/dev/null || which x86_64-linux-gnu-ld.bfd
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-ld.bfd
 ```
 
 ## Key Features

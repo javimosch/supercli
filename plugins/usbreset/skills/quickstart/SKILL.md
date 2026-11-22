@@ -18,7 +18,7 @@ CLI tool: usbreset.
 
 ## Installation
 ```bash
-apt-get install usbreset 2>/dev/null || which usbreset
+apt-get install usbutils 2>/dev/null || which usbreset
 ```
 
 ## Key Features

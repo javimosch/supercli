@@ -18,7 +18,7 @@ CLI tool: jfr.
 
 ## Installation
 ```bash
-apt-get install jfr 2>/dev/null || which jfr
+apt-get install openjdk-17-jdk-headless 2>/dev/null || which jfr
 ```
 
 ## Key Features

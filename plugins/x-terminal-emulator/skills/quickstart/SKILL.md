@@ -18,7 +18,7 @@ CLI tool: x-terminal-emulator.
 
 ## Installation
 ```bash
-apt-get install x-terminal-emulator 2>/dev/null || which x-terminal-emulator
+apt-get install gnome-terminal 2>/dev/null || which x-terminal-emulator
 ```
 
 ## Key Features
