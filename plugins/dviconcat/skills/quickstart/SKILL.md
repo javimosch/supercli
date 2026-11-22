@@ -1,11 +1,11 @@
 ---
 name: dviconcat
-description: Use this skill when the user wants to use dviconcat, cli tool: dviconcat.
+description: Use this skill when the user wants to use dviconcat, Binaries for TeX Live.
 ---
 
 # dviconcat Plugin
 
-CLI tool: dviconcat.
+dviconcat — Binaries for TeX Live.
 
 ## Commands
 - `dviconcat <resource> <action>` — Execute dviconcat commands
@@ -18,7 +18,7 @@ CLI tool: dviconcat.
 
 ## Installation
 ```bash
-apt-get install dviconcat 2>/dev/null || which dviconcat
+apt-get install texlive-binaries 2>/dev/null || which dviconcat
 ```
 
 ## Key Features

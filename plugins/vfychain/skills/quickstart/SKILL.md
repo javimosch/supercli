@@ -1,11 +1,11 @@
 ---
 name: vfychain
-description: Use this skill when the user wants to use vfychain, cli tool: vfychain.
+description: Use this skill when the user wants to use vfychain, Network Security Service tools.
 ---
 
 # vfychain Plugin
 
-CLI tool: vfychain.
+vfychain — Network Security Service tools.
 
 ## Commands
 - `vfychain <resource> <action>` — Execute vfychain commands
@@ -18,7 +18,7 @@ CLI tool: vfychain.
 
 ## Installation
 ```bash
-apt-get install vfychain 2>/dev/null || which vfychain
+apt-get install libnss3-tools 2>/dev/null || which vfychain
 ```
 
 ## Key Features

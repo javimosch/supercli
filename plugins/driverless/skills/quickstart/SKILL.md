@@ -1,11 +1,11 @@
 ---
 name: driverless
-description: Use this skill when the user wants to use driverless, cli tool: driverless.
+description: Use this skill when the user wants to use driverless, OpenPrinting CUPS Filters - Driverless printing.
 ---
 
 # driverless Plugin
 
-CLI tool: driverless.
+driverless — OpenPrinting CUPS Filters - Driverless printing.
 
 ## Commands
 - `driverless <resource> <action>` — Execute driverless commands
@@ -18,7 +18,7 @@ CLI tool: driverless.
 
 ## Installation
 ```bash
-apt-get install driverless 2>/dev/null || which driverless
+apt-get install cups-filters-core-drivers 2>/dev/null || which driverless
 ```
 
 ## Key Features

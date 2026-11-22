@@ -1,11 +1,11 @@
 ---
 name: dvipdft
-description: Use this skill when the user wants to use dvipdft, cli tool: dvipdft.
+description: Use this skill when the user wants to use dvipdft, Binaries for TeX Live.
 ---
 
 # dvipdft Plugin
 
-CLI tool: dvipdft.
+dvipdft — Binaries for TeX Live.
 
 ## Commands
 - `dvipdft <resource> <action>` — Execute dvipdft commands
@@ -18,7 +18,7 @@ CLI tool: dvipdft.
 
 ## Installation
 ```bash
-apt-get install dvipdft 2>/dev/null || which dvipdft
+apt-get install texlive-binaries 2>/dev/null || which dvipdft
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: dvitodvi
-description: Use this skill when the user wants to use dvitodvi, cli tool: dvitodvi.
+description: Use this skill when the user wants to use dvitodvi, Binaries for TeX Live.
 ---
 
 # dvitodvi Plugin
 
-CLI tool: dvitodvi.
+dvitodvi — Binaries for TeX Live.
 
 ## Commands
 - `dvitodvi <resource> <action>` — Execute dvitodvi commands
@@ -18,7 +18,7 @@ CLI tool: dvitodvi.
 
 ## Installation
 ```bash
-apt-get install dvitodvi 2>/dev/null || which dvitodvi
+apt-get install texlive-binaries 2>/dev/null || which dvitodvi
 ```
 
 ## Key Features

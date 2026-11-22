@@ -1,11 +1,11 @@
 ---
 name: dvitomp
-description: Use this skill when the user wants to use dvitomp, cli tool: dvitomp.
+description: Use this skill when the user wants to use dvitomp, Binaries for TeX Live.
 ---
 
 # dvitomp Plugin
 
-CLI tool: dvitomp.
+dvitomp — Binaries for TeX Live.
 
 ## Commands
 - `dvitomp <resource> <action>` — Execute dvitomp commands
@@ -18,7 +18,7 @@ CLI tool: dvitomp.
 
 ## Installation
 ```bash
-apt-get install dvitomp 2>/dev/null || which dvitomp
+apt-get install texlive-binaries 2>/dev/null || which dvitomp
 ```
 
 ## Key Features

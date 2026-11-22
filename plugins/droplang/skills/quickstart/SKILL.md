@@ -1,11 +1,11 @@
 ---
 name: droplang
-description: Use this skill when the user wants to use droplang, cli tool: droplang.
+description: Use this skill when the user wants to use droplang, manager for multiple PostgreSQL client versions.
 ---
 
 # droplang Plugin
 
-CLI tool: droplang.
+droplang — manager for multiple PostgreSQL client versions.
 
 ## Commands
 - `droplang <resource> <action>` — Execute droplang commands
@@ -18,7 +18,7 @@ CLI tool: droplang.
 
 ## Installation
 ```bash
-apt-get install droplang 2>/dev/null || which droplang
+apt-get install postgresql-client-common 2>/dev/null || which droplang
 ```
 
 ## Key Features

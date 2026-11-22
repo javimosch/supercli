@@ -1,11 +1,11 @@
 ---
 name: dpkg-reconfigure
-description: Use this skill when the user wants to use dpkg-reconfigure, cli tool: dpkg-reconfigure.
+description: Use this skill when the user wants to use dpkg-reconfigure, Debian configuration management system.
 ---
 
 # dpkg-reconfigure Plugin
 
-CLI tool: dpkg-reconfigure.
+dpkg-reconfigure — Debian configuration management system.
 
 ## Commands
 - `dpkg-reconfigure <resource> <action>` — Execute dpkg-reconfigure commands
@@ -18,7 +18,7 @@ CLI tool: dpkg-reconfigure.
 
 ## Installation
 ```bash
-apt-get install dpkg-reconfigure 2>/dev/null || which dpkg-reconfigure
+apt-get install debconf 2>/dev/null || which dpkg-reconfigure
 ```
 
 ## Key Features

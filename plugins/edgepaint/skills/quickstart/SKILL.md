@@ -1,11 +1,11 @@
 ---
 name: edgepaint
-description: Use this skill when the user wants to use edgepaint, cli tool: edgepaint.
+description: Use this skill when the user wants to use edgepaint, rich set of graph drawing tools.
 ---
 
 # edgepaint Plugin
 
-CLI tool: edgepaint.
+edgepaint — rich set of graph drawing tools.
 
 ## Commands
 - `edgepaint <resource> <action>` — Execute edgepaint commands
@@ -18,7 +18,7 @@ CLI tool: edgepaint.
 
 ## Installation
 ```bash
-apt-get install edgepaint 2>/dev/null || which edgepaint
+apt-get install graphviz 2>/dev/null || which edgepaint
 ```
 
 ## Key Features

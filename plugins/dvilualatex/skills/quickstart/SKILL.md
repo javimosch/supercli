@@ -1,11 +1,11 @@
 ---
 name: dvilualatex
-description: Use this skill when the user wants to use dvilualatex, cli tool: dvilualatex.
+description: Use this skill when the user wants to use dvilualatex, TeX Live: LaTeX fundamental packages.
 ---
 
 # dvilualatex Plugin
 
-CLI tool: dvilualatex.
+dvilualatex — TeX Live: LaTeX fundamental packages.
 
 ## Commands
 - `dvilualatex <resource> <action>` — Execute dvilualatex commands
@@ -18,7 +18,7 @@ CLI tool: dvilualatex.
 
 ## Installation
 ```bash
-apt-get install dvilualatex 2>/dev/null || which dvilualatex
+apt-get install texlive-latex-base 2>/dev/null || which dvilualatex
 ```
 
 ## Key Features

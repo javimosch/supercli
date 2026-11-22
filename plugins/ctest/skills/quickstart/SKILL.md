@@ -1,11 +1,11 @@
 ---
 name: ctest
-description: Use this skill when the user wants to use ctest, cli tool: ctest.
+description: Use this skill when the user wants to use ctest, cross-platform, open-source make system.
 ---
 
 # ctest Plugin
 
-CLI tool: ctest.
+ctest — cross-platform, open-source make system.
 
 ## Commands
 - `ctest <resource> <action>` — Execute ctest commands
@@ -18,7 +18,7 @@ CLI tool: ctest.
 
 ## Installation
 ```bash
-apt-get install ctest 2>/dev/null || which ctest
+apt-get install cmake 2>/dev/null || which ctest
 ```
 
 ## Key Features

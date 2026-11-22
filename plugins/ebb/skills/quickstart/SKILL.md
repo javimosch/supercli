@@ -1,11 +1,11 @@
 ---
 name: ebb
-description: Use this skill when the user wants to use ebb, cli tool: ebb.
+description: Use this skill when the user wants to use ebb, Binaries for TeX Live.
 ---
 
 # ebb Plugin
 
-CLI tool: ebb.
+ebb — Binaries for TeX Live.
 
 ## Commands
 - `ebb <resource> <action>` — Execute ebb commands
@@ -18,7 +18,7 @@ CLI tool: ebb.
 
 ## Installation
 ```bash
-apt-get install ebb 2>/dev/null || which ebb
+apt-get install texlive-binaries 2>/dev/null || which ebb
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: dumpsexp
-description: Use this skill when the user wants to use dumpsexp, cli tool: dumpsexp.
+description: Use this skill when the user wants to use dumpsexp, LGPL Crypto library - development files.
 ---
 
 # dumpsexp Plugin
 
-CLI tool: dumpsexp.
+dumpsexp — LGPL Crypto library - development files.
 
 ## Commands
 - `dumpsexp <resource> <action>` — Execute dumpsexp commands
@@ -18,7 +18,7 @@ CLI tool: dumpsexp.
 
 ## Installation
 ```bash
-apt-get install dumpsexp 2>/dev/null || which dumpsexp
+apt-get install libgcrypt20-dev 2>/dev/null || which dumpsexp
 ```
 
 ## Key Features
