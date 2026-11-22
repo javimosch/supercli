@@ -1,11 +1,11 @@
 ---
 name: Xorg
-description: Use this skill when the user wants to use Xorg, cli tool: xorg.
+description: Use this skill when the user wants to use Xorg, Xorg X server - core server.
 ---
 
 # Xorg Plugin
 
-CLI tool: Xorg.
+Xorg — Xorg X server - core server.
 
 ## Commands
 - `Xorg <resource> <action>` — Execute Xorg commands
@@ -18,7 +18,7 @@ CLI tool: Xorg.
 
 ## Installation
 ```bash
-apt-get install Xorg 2>/dev/null || which Xorg
+apt-get install xserver-xorg-core 2>/dev/null || which Xorg
 ```
 
 ## Key Features

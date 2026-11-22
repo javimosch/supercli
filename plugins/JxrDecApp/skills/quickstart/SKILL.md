@@ -1,11 +1,11 @@
 ---
 name: JxrDecApp
-description: Use this skill when the user wants to use JxrDecApp, cli tool: jxrdecapp.
+description: Use this skill when the user wants to use JxrDecApp, JPEG-XR lib - command line apps.
 ---
 
 # JxrDecApp Plugin
 
-CLI tool: JxrDecApp.
+JxrDecApp — JPEG-XR lib - command line apps.
 
 ## Commands
 - `JxrDecApp <resource> <action>` — Execute JxrDecApp commands
@@ -18,7 +18,7 @@ CLI tool: JxrDecApp.
 
 ## Installation
 ```bash
-apt-get install JxrDecApp 2>/dev/null || which JxrDecApp
+apt-get install libjxr-tools 2>/dev/null || which JxrDecApp
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: bibtex.original
-description: Use this skill when the user wants to use bibtex.original, cli tool: bibtex.original.
+description: Use this skill when the user wants to use bibtex.original, Binaries for TeX Live.
 ---
 
 # bibtex.original Plugin
 
-CLI tool: bibtex.original.
+bibtex.original — Binaries for TeX Live.
 
 ## Commands
 - `bibtex.original <resource> <action>` — Execute bibtex.original commands
@@ -18,7 +18,7 @@ CLI tool: bibtex.original.
 
 ## Installation
 ```bash
-apt-get install bibtex.original 2>/dev/null || which bibtex.original
+apt-get install texlive-binaries 2>/dev/null || which bibtex.original
 ```
 
 ## Key Features
