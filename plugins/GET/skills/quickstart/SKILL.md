@@ -1,11 +1,11 @@
 ---
 name: GET
-description: Use this skill when the user wants to use GET, cli tool: get.
+description: Use this skill when the user wants to use GET, simple and consistent interface to the world-wide web.
 ---
 
 # GET Plugin
 
-CLI tool: GET.
+GET — simple and consistent interface to the world-wide web.
 
 ## Commands
 - `GET <resource> <action>` — Execute GET commands
@@ -18,7 +18,7 @@ CLI tool: GET.
 
 ## Installation
 ```bash
-apt-get install GET 2>/dev/null || which GET
+apt-get install libwww-perl 2>/dev/null || which GET
 ```
 
 ## Key Features

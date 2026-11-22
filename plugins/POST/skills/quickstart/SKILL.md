@@ -1,11 +1,11 @@
 ---
 name: POST
-description: Use this skill when the user wants to use POST, cli tool: post.
+description: Use this skill when the user wants to use POST, simple and consistent interface to the world-wide web.
 ---
 
 # POST Plugin
 
-CLI tool: POST.
+POST — simple and consistent interface to the world-wide web.
 
 ## Commands
 - `POST <resource> <action>` — Execute POST commands
@@ -18,7 +18,7 @@ CLI tool: POST.
 
 ## Installation
 ```bash
-apt-get install POST 2>/dev/null || which POST
+apt-get install libwww-perl 2>/dev/null || which POST
 ```
 
 ## Key Features

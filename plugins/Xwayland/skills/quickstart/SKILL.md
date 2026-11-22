@@ -1,11 +1,11 @@
 ---
 name: Xwayland
-description: Use this skill when the user wants to use Xwayland, cli tool: xwayland.
+description: Use this skill when the user wants to use Xwayland, X server for running X clients under Wayland.
 ---
 
 # Xwayland Plugin
 
-CLI tool: Xwayland.
+Xwayland — X server for running X clients under Wayland.
 
 ## Commands
 - `Xwayland <resource> <action>` — Execute Xwayland commands
@@ -18,7 +18,7 @@ CLI tool: Xwayland.
 
 ## Installation
 ```bash
-apt-get install Xwayland 2>/dev/null || which Xwayland
+apt-get install xwayland 2>/dev/null || which Xwayland
 ```
 
 ## Key Features

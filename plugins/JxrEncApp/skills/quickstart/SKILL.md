@@ -1,11 +1,11 @@
 ---
 name: JxrEncApp
-description: Use this skill when the user wants to use JxrEncApp, cli tool: jxrencapp.
+description: Use this skill when the user wants to use JxrEncApp, JPEG-XR lib - command line apps.
 ---
 
 # JxrEncApp Plugin
 
-CLI tool: JxrEncApp.
+JxrEncApp — JPEG-XR lib - command line apps.
 
 ## Commands
 - `JxrEncApp <resource> <action>` — Execute JxrEncApp commands
@@ -18,7 +18,7 @@ CLI tool: JxrEncApp.
 
 ## Installation
 ```bash
-apt-get install JxrEncApp 2>/dev/null || which JxrEncApp
+apt-get install libjxr-tools 2>/dev/null || which JxrEncApp
 ```
 
 ## Key Features

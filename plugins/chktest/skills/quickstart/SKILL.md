@@ -1,11 +1,11 @@
 ---
 name: chktest
-description: Use this skill when the user wants to use chktest, cli tool: chktest.
+description: Use this skill when the user wants to use chktest, Network Security Service tools.
 ---
 
 # chktest Plugin
 
-CLI tool: chktest.
+chktest — Network Security Service tools.
 
 ## Commands
 - `chktest <resource> <action>` — Execute chktest commands
@@ -18,7 +18,7 @@ CLI tool: chktest.
 
 ## Installation
 ```bash
-apt-get install chktest 2>/dev/null || which chktest
+apt-get install libnss3-tools 2>/dev/null || which chktest
 ```
 
 ## Key Features

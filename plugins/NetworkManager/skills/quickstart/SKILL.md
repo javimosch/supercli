@@ -1,11 +1,11 @@
 ---
 name: NetworkManager
-description: Use this skill when the user wants to use NetworkManager, cli tool: networkmanager.
+description: Use this skill when the user wants to use NetworkManager, network management framework (daemon and userspace tools).
 ---
 
 # NetworkManager Plugin
 
-CLI tool: NetworkManager.
+NetworkManager — network management framework (daemon and userspace tools).
 
 ## Commands
 - `NetworkManager <resource> <action>` — Execute NetworkManager commands
@@ -18,7 +18,7 @@ CLI tool: NetworkManager.
 
 ## Installation
 ```bash
-apt-get install NetworkManager 2>/dev/null || which NetworkManager
+apt-get install network-manager 2>/dev/null || which NetworkManager
 ```
 
 ## Key Features

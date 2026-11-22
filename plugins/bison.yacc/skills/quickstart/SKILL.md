@@ -1,11 +1,11 @@
 ---
 name: bison.yacc
-description: Use this skill when the user wants to use bison.yacc, cli tool: bison.yacc.
+description: Use this skill when the user wants to use bison.yacc, YACC-compatible parser generator.
 ---
 
 # bison.yacc Plugin
 
-CLI tool: bison.yacc.
+bison.yacc — YACC-compatible parser generator.
 
 ## Commands
 - `bison.yacc <resource> <action>` — Execute bison.yacc commands
@@ -18,7 +18,7 @@ CLI tool: bison.yacc.
 
 ## Installation
 ```bash
-apt-get install bison.yacc 2>/dev/null || which bison.yacc
+apt-get install bison 2>/dev/null || which bison.yacc
 ```
 
 ## Key Features

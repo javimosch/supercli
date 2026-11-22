@@ -1,11 +1,11 @@
 ---
 name: amuFormat.sh
-description: Use this skill when the user wants to use amuFormat.sh, cli tool: amuformat.sh.
+description: Use this skill when the user wants to use amuFormat.sh, Tools for manipulating MSDOS files.
 ---
 
 # amuFormat.sh Plugin
 
-CLI tool: amuFormat.sh.
+amuFormat.sh — Tools for manipulating MSDOS files.
 
 ## Commands
 - `amuFormat.sh <resource> <action>` — Execute amuFormat.sh commands
@@ -18,7 +18,7 @@ CLI tool: amuFormat.sh.
 
 ## Installation
 ```bash
-apt-get install amuFormat.sh 2>/dev/null || which amuFormat.sh
+apt-get install mtools 2>/dev/null || which amuFormat.sh
 ```
 
 ## Key Features
