@@ -1,11 +1,11 @@
 ---
 name: dvilj
-description: Use this skill when the user wants to use dvilj, cli tool: dvilj.
+description: Use this skill when the user wants to use dvilj, Binaries for TeX Live.
 ---
 
 # dvilj Plugin
 
-CLI tool: dvilj.
+dvilj — Binaries for TeX Live.
 
 ## Commands
 - `dvilj <resource> <action>` — Execute dvilj commands
@@ -18,7 +18,7 @@ CLI tool: dvilj.
 
 ## Installation
 ```bash
-apt-get install dvilj 2>/dev/null || which dvilj
+apt-get install texlive-binaries 2>/dev/null || which dvilj
 ```
 
 ## Key Features

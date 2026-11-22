@@ -1,11 +1,11 @@
 ---
 name: dvilj4
-description: Use this skill when the user wants to use dvilj4, cli tool: dvilj4.
+description: Use this skill when the user wants to use dvilj4, Binaries for TeX Live.
 ---
 
 # dvilj4 Plugin
 
-CLI tool: dvilj4.
+dvilj4 — Binaries for TeX Live.
 
 ## Commands
 - `dvilj4 <resource> <action>` — Execute dvilj4 commands
@@ -18,7 +18,7 @@ CLI tool: dvilj4.
 
 ## Installation
 ```bash
-apt-get install dvilj4 2>/dev/null || which dvilj4
+apt-get install texlive-binaries 2>/dev/null || which dvilj4
 ```
 
 ## Key Features

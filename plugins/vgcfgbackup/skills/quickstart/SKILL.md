@@ -1,11 +1,11 @@
 ---
 name: vgcfgbackup
-description: Use this skill when the user wants to use vgcfgbackup, cli tool: vgcfgbackup.
+description: Use this skill when the user wants to use vgcfgbackup, Linux Logical Volume Manager.
 ---
 
 # vgcfgbackup Plugin
 
-CLI tool: vgcfgbackup.
+vgcfgbackup — Linux Logical Volume Manager.
 
 ## Commands
 - `vgcfgbackup <resource> <action>` — Execute vgcfgbackup commands
@@ -18,7 +18,7 @@ CLI tool: vgcfgbackup.
 
 ## Installation
 ```bash
-apt-get install vgcfgbackup 2>/dev/null || which vgcfgbackup
+apt-get install lvm2 2>/dev/null || which vgcfgbackup
 ```
 
 ## Key Features

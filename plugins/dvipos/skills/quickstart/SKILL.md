@@ -1,11 +1,11 @@
 ---
 name: dvipos
-description: Use this skill when the user wants to use dvipos, cli tool: dvipos.
+description: Use this skill when the user wants to use dvipos, Binaries for TeX Live.
 ---
 
 # dvipos Plugin
 
-CLI tool: dvipos.
+dvipos — Binaries for TeX Live.
 
 ## Commands
 - `dvipos <resource> <action>` — Execute dvipos commands
@@ -18,7 +18,7 @@ CLI tool: dvipos.
 
 ## Installation
 ```bash
-apt-get install dvipos 2>/dev/null || which dvipos
+apt-get install texlive-binaries 2>/dev/null || which dvipos
 ```
 
 ## Key Features

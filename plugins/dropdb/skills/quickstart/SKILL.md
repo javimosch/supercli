@@ -1,11 +1,11 @@
 ---
 name: dropdb
-description: Use this skill when the user wants to use dropdb, cli tool: dropdb.
+description: Use this skill when the user wants to use dropdb, manager for multiple PostgreSQL client versions.
 ---
 
 # dropdb Plugin
 
-CLI tool: dropdb.
+dropdb — manager for multiple PostgreSQL client versions.
 
 ## Commands
 - `dropdb <resource> <action>` — Execute dropdb commands
@@ -18,7 +18,7 @@ CLI tool: dropdb.
 
 ## Installation
 ```bash
-apt-get install dropdb 2>/dev/null || which dropdb
+apt-get install postgresql-client-common 2>/dev/null || which dropdb
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: dotty
-description: Use this skill when the user wants to use dotty, cli tool: dotty.
+description: Use this skill when the user wants to use dotty, rich set of graph drawing tools.
 ---
 
 # dotty Plugin
 
-CLI tool: dotty.
+dotty — rich set of graph drawing tools.
 
 ## Commands
 - `dotty <resource> <action>` — Execute dotty commands
@@ -18,7 +18,7 @@ CLI tool: dotty.
 
 ## Installation
 ```bash
-apt-get install dotty 2>/dev/null || which dotty
+apt-get install graphviz 2>/dev/null || which dotty
 ```
 
 ## Key Features

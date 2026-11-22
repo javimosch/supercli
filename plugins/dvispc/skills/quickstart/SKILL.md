@@ -1,11 +1,11 @@
 ---
 name: dvispc
-description: Use this skill when the user wants to use dvispc, cli tool: dvispc.
+description: Use this skill when the user wants to use dvispc, Binaries for TeX Live.
 ---
 
 # dvispc Plugin
 
-CLI tool: dvispc.
+dvispc — Binaries for TeX Live.
 
 ## Commands
 - `dvispc <resource> <action>` — Execute dvispc commands
@@ -18,7 +18,7 @@ CLI tool: dvispc.
 
 ## Installation
 ```bash
-apt-get install dvispc 2>/dev/null || which dvispc
+apt-get install texlive-binaries 2>/dev/null || which dvispc
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: vgcfgrestore
-description: Use this skill when the user wants to use vgcfgrestore, cli tool: vgcfgrestore.
+description: Use this skill when the user wants to use vgcfgrestore, Linux Logical Volume Manager.
 ---
 
 # vgcfgrestore Plugin
 
-CLI tool: vgcfgrestore.
+vgcfgrestore — Linux Logical Volume Manager.
 
 ## Commands
 - `vgcfgrestore <resource> <action>` — Execute vgcfgrestore commands
@@ -18,7 +18,7 @@ CLI tool: vgcfgrestore.
 
 ## Installation
 ```bash
-apt-get install vgcfgrestore 2>/dev/null || which vgcfgrestore
+apt-get install lvm2 2>/dev/null || which vgcfgrestore
 ```
 
 ## Key Features

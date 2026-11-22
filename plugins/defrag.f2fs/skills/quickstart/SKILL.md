@@ -1,11 +1,11 @@
 ---
 name: defrag.f2fs
-description: Use this skill when the user wants to use defrag.f2fs, cli tool: defrag.f2fs.
+description: Use this skill when the user wants to use defrag.f2fs, Tools for Flash-Friendly File System.
 ---
 
 # defrag.f2fs Plugin
 
-CLI tool: defrag.f2fs.
+defrag.f2fs — Tools for Flash-Friendly File System.
 
 ## Commands
 - `defrag.f2fs <resource> <action>` — Execute defrag.f2fs commands
@@ -18,7 +18,7 @@ CLI tool: defrag.f2fs.
 
 ## Installation
 ```bash
-apt-get install defrag.f2fs 2>/dev/null || which defrag.f2fs
+apt-get install f2fs-tools 2>/dev/null || which defrag.f2fs
 ```
 
 ## Key Features

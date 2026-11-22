@@ -1,11 +1,11 @@
 ---
 name: dh_python3-ply
-description: Use this skill when the user wants to use dh_python3-ply, cli tool: dh_python3-ply.
+description: Use this skill when the user wants to use dh_python3-ply, Lex and Yacc implementation for Python3.
 ---
 
 # dh_python3-ply Plugin
 
-CLI tool: dh_python3-ply.
+dh_python3-ply — Lex and Yacc implementation for Python3.
 
 ## Commands
 - `dh_python3-ply <resource> <action>` — Execute dh_python3-ply commands
@@ -18,7 +18,7 @@ CLI tool: dh_python3-ply.
 
 ## Installation
 ```bash
-apt-get install dh_python3-ply 2>/dev/null || which dh_python3-ply
+apt-get install python3-ply 2>/dev/null || which dh_python3-ply
 ```
 
 ## Key Features

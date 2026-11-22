@@ -1,11 +1,11 @@
 ---
 name: dviluatex
-description: Use this skill when the user wants to use dviluatex, cli tool: dviluatex.
+description: Use this skill when the user wants to use dviluatex, TeX Live: Essential programs and files.
 ---
 
 # dviluatex Plugin
 
-CLI tool: dviluatex.
+dviluatex — TeX Live: Essential programs and files.
 
 ## Commands
 - `dviluatex <resource> <action>` — Execute dviluatex commands
@@ -18,7 +18,7 @@ CLI tool: dviluatex.
 
 ## Installation
 ```bash
-apt-get install dviluatex 2>/dev/null || which dviluatex
+apt-get install texlive-base 2>/dev/null || which dviluatex
 ```
 
 ## Key Features

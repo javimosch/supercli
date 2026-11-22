@@ -1,11 +1,11 @@
 ---
 name: dot2gxl
-description: Use this skill when the user wants to use dot2gxl, cli tool: dot2gxl.
+description: Use this skill when the user wants to use dot2gxl, rich set of graph drawing tools.
 ---
 
 # dot2gxl Plugin
 
-CLI tool: dot2gxl.
+dot2gxl — rich set of graph drawing tools.
 
 ## Commands
 - `dot2gxl <resource> <action>` — Execute dot2gxl commands
@@ -18,7 +18,7 @@ CLI tool: dot2gxl.
 
 ## Installation
 ```bash
-apt-get install dot2gxl 2>/dev/null || which dot2gxl
+apt-get install graphviz 2>/dev/null || which dot2gxl
 ```
 
 ## Key Features

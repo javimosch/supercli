@@ -1,11 +1,11 @@
 ---
 name: vgchange
-description: Use this skill when the user wants to use vgchange, cli tool: vgchange.
+description: Use this skill when the user wants to use vgchange, Linux Logical Volume Manager.
 ---
 
 # vgchange Plugin
 
-CLI tool: vgchange.
+vgchange — Linux Logical Volume Manager.
 
 ## Commands
 - `vgchange <resource> <action>` — Execute vgchange commands
@@ -18,7 +18,7 @@ CLI tool: vgchange.
 
 ## Installation
 ```bash
-apt-get install vgchange 2>/dev/null || which vgchange
+apt-get install lvm2 2>/dev/null || which vgchange
 ```
 
 ## Key Features

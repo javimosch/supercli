@@ -1,11 +1,11 @@
 ---
 name: driverless-fax
-description: Use this skill when the user wants to use driverless-fax, cli tool: driverless-fax.
+description: Use this skill when the user wants to use driverless-fax, OpenPrinting CUPS Filters - Main Package.
 ---
 
 # driverless-fax Plugin
 
-CLI tool: driverless-fax.
+driverless-fax — OpenPrinting CUPS Filters - Main Package.
 
 ## Commands
 - `driverless-fax <resource> <action>` — Execute driverless-fax commands
@@ -18,7 +18,7 @@ CLI tool: driverless-fax.
 
 ## Installation
 ```bash
-apt-get install driverless-fax 2>/dev/null || which driverless-fax
+apt-get install cups-filters 2>/dev/null || which driverless-fax
 ```
 
 ## Key Features

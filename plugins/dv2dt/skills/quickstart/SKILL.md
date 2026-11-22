@@ -1,11 +1,11 @@
 ---
 name: dv2dt
-description: Use this skill when the user wants to use dv2dt, cli tool: dv2dt.
+description: Use this skill when the user wants to use dv2dt, Binaries for TeX Live.
 ---
 
 # dv2dt Plugin
 
-CLI tool: dv2dt.
+dv2dt — Binaries for TeX Live.
 
 ## Commands
 - `dv2dt <resource> <action>` — Execute dv2dt commands
@@ -18,7 +18,7 @@ CLI tool: dv2dt.
 
 ## Installation
 ```bash
-apt-get install dv2dt 2>/dev/null || which dv2dt
+apt-get install texlive-binaries 2>/dev/null || which dv2dt
 ```
 
 ## Key Features

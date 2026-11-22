@@ -1,11 +1,11 @@
 ---
 name: dump.f2fs
-description: Use this skill when the user wants to use dump.f2fs, cli tool: dump.f2fs.
+description: Use this skill when the user wants to use dump.f2fs, Tools for Flash-Friendly File System.
 ---
 
 # dump.f2fs Plugin
 
-CLI tool: dump.f2fs.
+dump.f2fs — Tools for Flash-Friendly File System.
 
 ## Commands
 - `dump.f2fs <resource> <action>` — Execute dump.f2fs commands
@@ -18,7 +18,7 @@ CLI tool: dump.f2fs.
 
 ## Installation
 ```bash
-apt-get install dump.f2fs 2>/dev/null || which dump.f2fs
+apt-get install f2fs-tools 2>/dev/null || which dump.f2fs
 ```
 
 ## Key Features
