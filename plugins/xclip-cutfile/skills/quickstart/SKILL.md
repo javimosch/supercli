@@ -1,11 +1,11 @@
 ---
 name: xclip-cutfile
-description: Use this skill when the user wants to use xclip-cutfile, cli tool: xclip-cutfile.
+description: Use this skill when the user wants to use xclip-cutfile, command line interface to X selections.
 ---
 
 # xclip-cutfile Plugin
 
-CLI tool: xclip-cutfile.
+xclip-cutfile — command line interface to X selections.
 
 ## Commands
 - `xclip-cutfile <resource> <action>` — Execute xclip-cutfile commands
@@ -18,7 +18,7 @@ CLI tool: xclip-cutfile.
 
 ## Installation
 ```bash
-apt-get install xclip-cutfile 2>/dev/null || which xclip-cutfile
+apt-get install xclip 2>/dev/null || which xclip-cutfile
 ```
 
 ## Key Features

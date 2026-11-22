@@ -1,11 +1,11 @@
 ---
 name: wovp2ovf
-description: Use this skill when the user wants to use wovp2ovf, cli tool: wovp2ovf.
+description: Use this skill when the user wants to use wovp2ovf, Binaries for TeX Live.
 ---
 
 # wovp2ovf Plugin
 
-CLI tool: wovp2ovf.
+wovp2ovf — Binaries for TeX Live.
 
 ## Commands
 - `wovp2ovf <resource> <action>` — Execute wovp2ovf commands
@@ -18,7 +18,7 @@ CLI tool: wovp2ovf.
 
 ## Installation
 ```bash
-apt-get install wovp2ovf 2>/dev/null || which wovp2ovf
+apt-get install texlive-binaries 2>/dev/null || which wovp2ovf
 ```
 
 ## Key Features

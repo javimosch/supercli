@@ -1,11 +1,11 @@
 ---
 name: vim.tiny
-description: Use this skill when the user wants to use vim.tiny, cli tool: vim.tiny.
+description: Use this skill when the user wants to use vim.tiny, Vi IMproved - enhanced vi editor - compact version.
 ---
 
 # vim.tiny Plugin
 
-CLI tool: vim.tiny.
+vim.tiny — Vi IMproved - enhanced vi editor - compact version.
 
 ## Commands
 - `vim.tiny <resource> <action>` — Execute vim.tiny commands
@@ -18,7 +18,7 @@ CLI tool: vim.tiny.
 
 ## Installation
 ```bash
-apt-get install vim.tiny 2>/dev/null || which vim.tiny
+apt-get install vim-tiny 2>/dev/null || which vim.tiny
 ```
 
 ## Key Features

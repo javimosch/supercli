@@ -1,11 +1,11 @@
 ---
 name: view
-description: Use this skill when the user wants to use view, cli tool: view.
+description: Use this skill when the user wants to use view, Vi IMproved - enhanced vi editor.
 ---
 
 # view Plugin
 
-CLI tool: view.
+view — Vi IMproved - enhanced vi editor.
 
 ## Commands
 - `view <resource> <action>` — Execute view commands
@@ -18,7 +18,7 @@ CLI tool: view.
 
 ## Installation
 ```bash
-apt-get install view 2>/dev/null || which view
+apt-get install vim 2>/dev/null || which view
 ```
 
 ## Key Features

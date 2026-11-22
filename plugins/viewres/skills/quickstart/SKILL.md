@@ -1,11 +1,11 @@
 ---
 name: viewres
-description: Use this skill when the user wants to use viewres, cli tool: viewres.
+description: Use this skill when the user wants to use viewres, X11 utilities.
 ---
 
 # viewres Plugin
 
-CLI tool: viewres.
+viewres — X11 utilities.
 
 ## Commands
 - `viewres <resource> <action>` — Execute viewres commands
@@ -18,7 +18,7 @@ CLI tool: viewres.
 
 ## Installation
 ```bash
-apt-get install viewres 2>/dev/null || which viewres
+apt-get install x11-utils 2>/dev/null || which viewres
 ```
 
 ## Key Features

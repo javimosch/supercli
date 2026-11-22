@@ -1,11 +1,11 @@
 ---
 name: wg-quick
-description: Use this skill when the user wants to use wg-quick, cli tool: wg-quick.
+description: Use this skill when the user wants to use wg-quick, fast, modern, secure kernel VPN tunnel (userland utilities).
 ---
 
 # wg-quick Plugin
 
-CLI tool: wg-quick.
+wg-quick — fast, modern, secure kernel VPN tunnel (userland utilities).
 
 ## Commands
 - `wg-quick <resource> <action>` — Execute wg-quick commands
@@ -18,7 +18,7 @@ CLI tool: wg-quick.
 
 ## Installation
 ```bash
-apt-get install wg-quick 2>/dev/null || which wg-quick
+apt-get install wireguard-tools 2>/dev/null || which wg-quick
 ```
 
 ## Key Features

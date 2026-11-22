@@ -1,11 +1,11 @@
 ---
 name: vptovf
-description: Use this skill when the user wants to use vptovf, cli tool: vptovf.
+description: Use this skill when the user wants to use vptovf, Binaries for TeX Live.
 ---
 
 # vptovf Plugin
 
-CLI tool: vptovf.
+vptovf — Binaries for TeX Live.
 
 ## Commands
 - `vptovf <resource> <action>` — Execute vptovf commands
@@ -18,7 +18,7 @@ CLI tool: vptovf.
 
 ## Installation
 ```bash
-apt-get install vptovf 2>/dev/null || which vptovf
+apt-get install texlive-binaries 2>/dev/null || which vptovf
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xdg-settings
-description: Use this skill when the user wants to use xdg-settings, cli tool: xdg-settings.
+description: Use this skill when the user wants to use xdg-settings, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-settings Plugin
 
-CLI tool: xdg-settings.
+xdg-settings — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-settings <resource> <action>` — Execute xdg-settings commands
@@ -18,7 +18,7 @@ CLI tool: xdg-settings.
 
 ## Installation
 ```bash
-apt-get install xdg-settings 2>/dev/null || which xdg-settings
+apt-get install xdg-utils 2>/dev/null || which xdg-settings
 ```
 
 ## Key Features

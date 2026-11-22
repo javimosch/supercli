@@ -1,11 +1,11 @@
 ---
 name: wheel
-description: Use this skill when the user wants to use wheel, cli tool: wheel.
+description: Use this skill when the user wants to use wheel, built-package format for Python (command-line scripts).
 ---
 
 # wheel Plugin
 
-CLI tool: wheel.
+wheel — built-package format for Python (command-line scripts).
 
 ## Commands
 - `wheel <resource> <action>` — Execute wheel commands
@@ -18,7 +18,7 @@ CLI tool: wheel.
 
 ## Installation
 ```bash
-apt-get install wheel 2>/dev/null || which wheel
+apt-get install python-wheel-common 2>/dev/null || which wheel
 ```
 
 ## Key Features

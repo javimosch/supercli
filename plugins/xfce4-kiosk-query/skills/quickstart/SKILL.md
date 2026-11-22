@@ -1,11 +1,11 @@
 ---
 name: xfce4-kiosk-query
-description: Use this skill when the user wants to use xfce4-kiosk-query, cli tool: xfce4-kiosk-query.
+description: Use this skill when the user wants to use xfce4-kiosk-query, tools for libxfce4util.
 ---
 
 # xfce4-kiosk-query Plugin
 
-CLI tool: xfce4-kiosk-query.
+xfce4-kiosk-query — tools for libxfce4util.
 
 ## Commands
 - `xfce4-kiosk-query <resource> <action>` — Execute xfce4-kiosk-query commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-kiosk-query.
 
 ## Installation
 ```bash
-apt-get install xfce4-kiosk-query 2>/dev/null || which xfce4-kiosk-query
+apt-get install libxfce4util-bin 2>/dev/null || which xfce4-kiosk-query
 ```
 
 ## Key Features

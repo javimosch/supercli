@@ -1,11 +1,11 @@
 ---
 name: weave
-description: Use this skill when the user wants to use weave, cli tool: weave.
+description: Use this skill when the user wants to use weave, Binaries for TeX Live.
 ---
 
 # weave Plugin
 
-CLI tool: weave.
+weave — Binaries for TeX Live.
 
 ## Commands
 - `weave <resource> <action>` — Execute weave commands
@@ -18,7 +18,7 @@ CLI tool: weave.
 
 ## Installation
 ```bash
-apt-get install weave 2>/dev/null || which weave
+apt-get install texlive-binaries 2>/dev/null || which weave
 ```
 
 ## Key Features

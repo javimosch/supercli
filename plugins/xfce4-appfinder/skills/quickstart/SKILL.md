@@ -1,11 +1,11 @@
 ---
 name: xfce4-appfinder
-description: Use this skill when the user wants to use xfce4-appfinder, cli tool: xfce4-appfinder.
+description: Use this skill when the user wants to use xfce4-appfinder, Application finder for the Xfce4 desktop environment.
 ---
 
 # xfce4-appfinder Plugin
 
-CLI tool: xfce4-appfinder.
+Application finder for the Xfce4 desktop environment.
 
 ## Commands
 - `xfce4-appfinder <resource> <action>` — Execute xfce4-appfinder commands

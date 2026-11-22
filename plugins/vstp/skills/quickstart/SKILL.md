@@ -1,11 +1,11 @@
 ---
 name: vstp
-description: Use this skill when the user wants to use vstp, cli tool: vstp.
+description: Use this skill when the user wants to use vstp, Access software for a blind person using a braille display.
 ---
 
 # vstp Plugin
 
-CLI tool: vstp.
+vstp — Access software for a blind person using a braille display.
 
 ## Commands
 - `vstp <resource> <action>` — Execute vstp commands
@@ -18,7 +18,7 @@ CLI tool: vstp.
 
 ## Installation
 ```bash
-apt-get install vstp 2>/dev/null || which vstp
+apt-get install brltty 2>/dev/null || which vstp
 ```
 
 ## Key Features

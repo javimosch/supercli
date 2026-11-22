@@ -1,11 +1,11 @@
 ---
 name: vgimport
-description: Use this skill when the user wants to use vgimport, cli tool: vgimport.
+description: Use this skill when the user wants to use vgimport, Linux Logical Volume Manager.
 ---
 
 # vgimport Plugin
 
-CLI tool: vgimport.
+vgimport — Linux Logical Volume Manager.
 
 ## Commands
 - `vgimport <resource> <action>` — Execute vgimport commands
@@ -18,7 +18,7 @@ CLI tool: vgimport.
 
 ## Installation
 ```bash
-apt-get install vgimport 2>/dev/null || which vgimport
+apt-get install lvm2 2>/dev/null || which vgimport
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xfce4-appearance-settings
-description: Use this skill when the user wants to use xfce4-appearance-settings, cli tool: xfce4-appearance-settings.
+description: Use this skill when the user wants to use xfce4-appearance-settings, graphical application for managing Xfce settings.
 ---
 
 # xfce4-appearance-settings Plugin
 
-CLI tool: xfce4-appearance-settings.
+xfce4-appearance-settings — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-appearance-settings <resource> <action>` — Execute xfce4-appearance-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-appearance-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-appearance-settings 2>/dev/null || which xfce4-appearance-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-appearance-settings
 ```
 
 ## Key Features

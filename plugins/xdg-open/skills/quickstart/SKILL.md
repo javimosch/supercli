@@ -1,11 +1,11 @@
 ---
 name: xdg-open
-description: Use this skill when the user wants to use xdg-open, cli tool: xdg-open.
+description: Use this skill when the user wants to use xdg-open, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-open Plugin
 
-CLI tool: xdg-open.
+xdg-open — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-open <resource> <action>` — Execute xdg-open commands
@@ -18,7 +18,7 @@ CLI tool: xdg-open.
 
 ## Installation
 ```bash
-apt-get install xdg-open 2>/dev/null || which xdg-open
+apt-get install xdg-utils 2>/dev/null || which xdg-open
 ```
 
 ## Key Features

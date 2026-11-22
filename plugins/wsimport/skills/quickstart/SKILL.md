@@ -1,11 +1,11 @@
 ---
 name: wsimport
-description: Use this skill when the user wants to use wsimport, cli tool: wsimport.
+description: Use this skill when the user wants to use wsimport, OpenJDK Development Kit (JDK) (headless).
 ---
 
 # wsimport Plugin
 
-CLI tool: wsimport.
+wsimport — OpenJDK Development Kit (JDK) (headless).
 
 ## Commands
 - `wsimport <resource> <action>` — Execute wsimport commands
@@ -18,7 +18,7 @@ CLI tool: wsimport.
 
 ## Installation
 ```bash
-apt-get install wsimport 2>/dev/null || which wsimport
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which wsimport
 ```
 
 ## Key Features

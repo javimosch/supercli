@@ -1,11 +1,11 @@
 ---
 name: xconsole
-description: Use this skill when the user wants to use xconsole, cli tool: xconsole.
+description: Use this skill when the user wants to use xconsole, X applications.
 ---
 
 # xconsole Plugin
 
-CLI tool: xconsole.
+xconsole — X applications.
 
 ## Commands
 - `xconsole <resource> <action>` — Execute xconsole commands
@@ -18,7 +18,7 @@ CLI tool: xconsole.
 
 ## Installation
 ```bash
-apt-get install xconsole 2>/dev/null || which xconsole
+apt-get install x11-apps 2>/dev/null || which xconsole
 ```
 
 ## Key Features

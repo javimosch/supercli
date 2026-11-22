@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-ld.bfd
-description: Use this skill when the user wants to use x86_64-linux-gnu-ld.bfd, cli tool: x86_64-linux-gnu-ld.bfd.
+description: Use this skill when the user wants to use x86_64-linux-gnu-ld.bfd, GNU binary utilities, for x86-64-linux-gnu target.
 ---
 
 # x86_64-linux-gnu-ld.bfd Plugin
 
-CLI tool: x86_64-linux-gnu-ld.bfd.
+x86_64-linux-gnu-ld.bfd — GNU binary utilities, for x86-64-linux-gnu target.
 
 ## Commands
 - `x86_64-linux-gnu-ld.bfd <resource> <action>` — Execute x86_64-linux-gnu-ld.bfd commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ld.bfd.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ld.bfd 2>/dev/null || which x86_64-linux-gnu-ld.bfd
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-ld.bfd
 ```
 
 ## Key Features

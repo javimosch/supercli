@@ -1,11 +1,11 @@
 ---
 name: xfce4-mime-helper
-description: Use this skill when the user wants to use xfce4-mime-helper, cli tool: xfce4-mime-helper.
+description: Use this skill when the user wants to use xfce4-mime-helper, graphical application for managing Xfce settings.
 ---
 
 # xfce4-mime-helper Plugin
 
-CLI tool: xfce4-mime-helper.
+xfce4-mime-helper — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-mime-helper <resource> <action>` — Execute xfce4-mime-helper commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-mime-helper.
 
 ## Installation
 ```bash
-apt-get install xfce4-mime-helper 2>/dev/null || which xfce4-mime-helper
+apt-get install xfce4-settings 2>/dev/null || which xfce4-mime-helper
 ```
 
 ## Key Features

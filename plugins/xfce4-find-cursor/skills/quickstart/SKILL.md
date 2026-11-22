@@ -1,11 +1,11 @@
 ---
 name: xfce4-find-cursor
-description: Use this skill when the user wants to use xfce4-find-cursor, cli tool: xfce4-find-cursor.
+description: Use this skill when the user wants to use xfce4-find-cursor, graphical application for managing Xfce settings.
 ---
 
 # xfce4-find-cursor Plugin
 
-CLI tool: xfce4-find-cursor.
+xfce4-find-cursor — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-find-cursor <resource> <action>` — Execute xfce4-find-cursor commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-find-cursor.
 
 ## Installation
 ```bash
-apt-get install xfce4-find-cursor 2>/dev/null || which xfce4-find-cursor
+apt-get install xfce4-settings 2>/dev/null || which xfce4-find-cursor
 ```
 
 ## Key Features

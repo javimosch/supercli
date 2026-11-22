@@ -1,11 +1,11 @@
 ---
 name: vgconvert
-description: Use this skill when the user wants to use vgconvert, cli tool: vgconvert.
+description: Use this skill when the user wants to use vgconvert, Linux Logical Volume Manager.
 ---
 
 # vgconvert Plugin
 
-CLI tool: vgconvert.
+vgconvert — Linux Logical Volume Manager.
 
 ## Commands
 - `vgconvert <resource> <action>` — Execute vgconvert commands
@@ -18,7 +18,7 @@ CLI tool: vgconvert.
 
 ## Installation
 ```bash
-apt-get install vgconvert 2>/dev/null || which vgconvert
+apt-get install lvm2 2>/dev/null || which vgconvert
 ```
 
 ## Key Features

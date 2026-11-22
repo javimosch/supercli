@@ -1,11 +1,11 @@
 ---
 name: x86_energy_perf_policy
-description: Use this skill when the user wants to use x86_energy_perf_policy, cli tool: x86_energy_perf_policy.
+description: Use this skill when the user wants to use x86_energy_perf_policy, Linux kernel version specific tools for version 6.8.0.
 ---
 
 # x86_energy_perf_policy Plugin
 
-CLI tool: x86_energy_perf_policy.
+x86_energy_perf_policy — Linux kernel version specific tools for version 6.8.0.
 
 ## Commands
 - `x86_energy_perf_policy <resource> <action>` — Execute x86_energy_perf_policy commands
@@ -18,7 +18,7 @@ CLI tool: x86_energy_perf_policy.
 
 ## Installation
 ```bash
-apt-get install x86_energy_perf_policy 2>/dev/null || which x86_energy_perf_policy
+apt-get install linux-tools-common 2>/dev/null || which x86_energy_perf_policy
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-ld
-description: Use this skill when the user wants to use x86_64-linux-gnu-ld, cli tool: x86_64-linux-gnu-ld.
+description: Use this skill when the user wants to use x86_64-linux-gnu-ld, GNU binary utilities, for x86-64-linux-gnu target.
 ---
 
 # x86_64-linux-gnu-ld Plugin
 
-CLI tool: x86_64-linux-gnu-ld.
+x86_64-linux-gnu-ld — GNU binary utilities, for x86-64-linux-gnu target.
 
 ## Commands
 - `x86_64-linux-gnu-ld <resource> <action>` — Execute x86_64-linux-gnu-ld commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ld.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ld 2>/dev/null || which x86_64-linux-gnu-ld
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-ld
 ```
 
 ## Key Features

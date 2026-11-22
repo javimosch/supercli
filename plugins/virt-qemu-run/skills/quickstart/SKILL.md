@@ -1,11 +1,11 @@
 ---
 name: virt-qemu-run
-description: Use this skill when the user wants to use virt-qemu-run, cli tool: virt-qemu-run.
+description: Use this skill when the user wants to use virt-qemu-run, Virtualization daemon QEMU connection driver.
 ---
 
 # virt-qemu-run Plugin
 
-CLI tool: virt-qemu-run.
+virt-qemu-run — Virtualization daemon QEMU connection driver.
 
 ## Commands
 - `virt-qemu-run <resource> <action>` — Execute virt-qemu-run commands
@@ -18,7 +18,7 @@ CLI tool: virt-qemu-run.
 
 ## Installation
 ```bash
-apt-get install virt-qemu-run 2>/dev/null || which virt-qemu-run
+apt-get install libvirt-daemon-driver-qemu 2>/dev/null || which virt-qemu-run
 ```
 
 ## Key Features

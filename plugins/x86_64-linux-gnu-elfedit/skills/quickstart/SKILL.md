@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-elfedit
-description: Use this skill when the user wants to use x86_64-linux-gnu-elfedit, cli tool: x86_64-linux-gnu-elfedit.
+description: Use this skill when the user wants to use x86_64-linux-gnu-elfedit, GNU binary utilities, for x86-64-linux-gnu target.
 ---
 
 # x86_64-linux-gnu-elfedit Plugin
 
-CLI tool: x86_64-linux-gnu-elfedit.
+x86_64-linux-gnu-elfedit — GNU binary utilities, for x86-64-linux-gnu target.
 
 ## Commands
 - `x86_64-linux-gnu-elfedit <resource> <action>` — Execute x86_64-linux-gnu-elfedit commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-elfedit.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-elfedit 2>/dev/null || which x86_64-linux-gnu-elfedit
+apt-get install binutils-x86-64-linux-gnu 2>/dev/null || which x86_64-linux-gnu-elfedit
 ```
 
 ## Key Features

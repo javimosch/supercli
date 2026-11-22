@@ -1,11 +1,11 @@
 ---
 name: xclip-copyfile
-description: Use this skill when the user wants to use xclip-copyfile, cli tool: xclip-copyfile.
+description: Use this skill when the user wants to use xclip-copyfile, command line interface to X selections.
 ---
 
 # xclip-copyfile Plugin
 
-CLI tool: xclip-copyfile.
+xclip-copyfile — command line interface to X selections.
 
 ## Commands
 - `xclip-copyfile <resource> <action>` — Execute xclip-copyfile commands
@@ -18,7 +18,7 @@ CLI tool: xclip-copyfile.
 
 ## Installation
 ```bash
-apt-get install xclip-copyfile 2>/dev/null || which xclip-copyfile
+apt-get install xclip 2>/dev/null || which xclip-copyfile
 ```
 
 ## Key Features

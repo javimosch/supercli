@@ -1,11 +1,11 @@
 ---
 name: x11perfcomp
-description: Use this skill when the user wants to use x11perfcomp, cli tool: x11perfcomp.
+description: Use this skill when the user wants to use x11perfcomp, X applications.
 ---
 
 # x11perfcomp Plugin
 
-CLI tool: x11perfcomp.
+x11perfcomp — X applications.
 
 ## Commands
 - `x11perfcomp <resource> <action>` — Execute x11perfcomp commands
@@ -18,7 +18,7 @@ CLI tool: x11perfcomp.
 
 ## Installation
 ```bash
-apt-get install x11perfcomp 2>/dev/null || which x11perfcomp
+apt-get install x11-apps 2>/dev/null || which x11perfcomp
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-cpp-11
-description: Use this skill when the user wants to use x86_64-linux-gnu-cpp-11, cli tool: x86_64-linux-gnu-cpp-11.
+description: Use this skill when the user wants to use x86_64-linux-gnu-cpp-11, GNU C preprocessor.
 ---
 
 # x86_64-linux-gnu-cpp-11 Plugin
 
-CLI tool: x86_64-linux-gnu-cpp-11.
+x86_64-linux-gnu-cpp-11 — GNU C preprocessor.
 
 ## Commands
 - `x86_64-linux-gnu-cpp-11 <resource> <action>` — Execute x86_64-linux-gnu-cpp-11 commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-cpp-11.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-cpp-11 2>/dev/null || which x86_64-linux-gnu-cpp-11
+apt-get install cpp-11 2>/dev/null || which x86_64-linux-gnu-cpp-11
 ```
 
 ## Key Features

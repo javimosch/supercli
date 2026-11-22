@@ -1,11 +1,11 @@
 ---
 name: xfce4-panel
-description: Use this skill when the user wants to use xfce4-panel, cli tool: xfce4-panel.
+description: Use this skill when the user wants to use xfce4-panel, panel for Xfce4 desktop environment.
 ---
 
 # xfce4-panel Plugin
 
-CLI tool: xfce4-panel.
+panel for Xfce4 desktop environment.
 
 ## Commands
 - `xfce4-panel <resource> <action>` — Execute xfce4-panel commands

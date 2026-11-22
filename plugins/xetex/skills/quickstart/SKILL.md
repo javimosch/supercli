@@ -1,11 +1,11 @@
 ---
 name: xetex
-description: Use this skill when the user wants to use xetex, cli tool: xetex.
+description: Use this skill when the user wants to use xetex, Binaries for TeX Live.
 ---
 
 # xetex Plugin
 
-CLI tool: xetex.
+xetex — Binaries for TeX Live.
 
 ## Commands
 - `xetex <resource> <action>` — Execute xetex commands
@@ -18,7 +18,7 @@ CLI tool: xetex.
 
 ## Installation
 ```bash
-apt-get install xetex 2>/dev/null || which xetex
+apt-get install texlive-binaries 2>/dev/null || which xetex
 ```
 
 ## Key Features

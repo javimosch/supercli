@@ -1,11 +1,11 @@
 ---
 name: xdg-desktop-icon
-description: Use this skill when the user wants to use xdg-desktop-icon, cli tool: xdg-desktop-icon.
+description: Use this skill when the user wants to use xdg-desktop-icon, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-desktop-icon Plugin
 
-CLI tool: xdg-desktop-icon.
+xdg-desktop-icon — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-desktop-icon <resource> <action>` — Execute xdg-desktop-icon commands
@@ -18,7 +18,7 @@ CLI tool: xdg-desktop-icon.
 
 ## Installation
 ```bash
-apt-get install xdg-desktop-icon 2>/dev/null || which xdg-desktop-icon
+apt-get install xdg-utils 2>/dev/null || which xdg-desktop-icon
 ```
 
 ## Key Features

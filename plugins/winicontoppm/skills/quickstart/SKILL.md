@@ -1,11 +1,11 @@
 ---
 name: winicontoppm
-description: Use this skill when the user wants to use winicontoppm, cli tool: winicontoppm.
+description: Use this skill when the user wants to use winicontoppm, Graphics conversion tools between image formats.
 ---
 
 # winicontoppm Plugin
 
-CLI tool: winicontoppm.
+winicontoppm — Graphics conversion tools between image formats.
 
 ## Commands
 - `winicontoppm <resource> <action>` — Execute winicontoppm commands
@@ -18,7 +18,7 @@ CLI tool: winicontoppm.
 
 ## Installation
 ```bash
-apt-get install winicontoppm 2>/dev/null || which winicontoppm
+apt-get install netpbm 2>/dev/null || which winicontoppm
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-ar
-description: Use this skill when the user wants to use x86_64-linux-gnu-ar, cli tool: x86_64-linux-gnu-ar.
+description: Use this skill when the user wants to use x86_64-linux-gnu-ar, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-ar Plugin
 
-CLI tool: x86_64-linux-gnu-ar.
+x86_64-linux-gnu-ar — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-ar <resource> <action>` — Execute x86_64-linux-gnu-ar commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ar.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ar 2>/dev/null || which x86_64-linux-gnu-ar
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-ar
 ```
 
 ## Key Features

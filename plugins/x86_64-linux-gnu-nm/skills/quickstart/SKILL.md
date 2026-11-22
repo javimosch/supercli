@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-nm
-description: Use this skill when the user wants to use x86_64-linux-gnu-nm, cli tool: x86_64-linux-gnu-nm.
+description: Use this skill when the user wants to use x86_64-linux-gnu-nm, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-nm Plugin
 
-CLI tool: x86_64-linux-gnu-nm.
+x86_64-linux-gnu-nm — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-nm <resource> <action>` — Execute x86_64-linux-gnu-nm commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-nm.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-nm 2>/dev/null || which x86_64-linux-gnu-nm
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-nm
 ```
 
 ## Key Features

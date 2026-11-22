@@ -1,11 +1,11 @@
 ---
 name: vgimportclone
-description: Use this skill when the user wants to use vgimportclone, cli tool: vgimportclone.
+description: Use this skill when the user wants to use vgimportclone, Linux Logical Volume Manager.
 ---
 
 # vgimportclone Plugin
 
-CLI tool: vgimportclone.
+vgimportclone — Linux Logical Volume Manager.
 
 ## Commands
 - `vgimportclone <resource> <action>` — Execute vgimportclone commands
@@ -18,7 +18,7 @@ CLI tool: vgimportclone.
 
 ## Installation
 ```bash
-apt-get install vgimportclone 2>/dev/null || which vgimportclone
+apt-get install lvm2 2>/dev/null || which vgimportclone
 ```
 
 ## Key Features

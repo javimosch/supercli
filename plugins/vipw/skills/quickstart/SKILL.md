@@ -1,11 +1,11 @@
 ---
 name: vipw
-description: Use this skill when the user wants to use vipw, cli tool: vipw.
+description: Use this skill when the user wants to use vipw, change and administer password and group data.
 ---
 
 # vipw Plugin
 
-CLI tool: vipw.
+vipw — change and administer password and group data.
 
 ## Commands
 - `vipw <resource> <action>` — Execute vipw commands
@@ -18,7 +18,7 @@ CLI tool: vipw.
 
 ## Installation
 ```bash
-apt-get install vipw 2>/dev/null || which vipw
+apt-get install passwd 2>/dev/null || which vipw
 ```
 
 ## Key Features

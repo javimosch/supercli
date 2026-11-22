@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-strip
-description: Use this skill when the user wants to use x86_64-linux-gnu-strip, cli tool: x86_64-linux-gnu-strip.
+description: Use this skill when the user wants to use x86_64-linux-gnu-strip, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-strip Plugin
 
-CLI tool: x86_64-linux-gnu-strip.
+x86_64-linux-gnu-strip — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-strip <resource> <action>` — Execute x86_64-linux-gnu-strip commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-strip.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-strip 2>/dev/null || which x86_64-linux-gnu-strip
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-strip
 ```
 
 ## Key Features

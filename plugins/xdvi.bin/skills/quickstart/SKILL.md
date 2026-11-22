@@ -1,11 +1,11 @@
 ---
 name: xdvi.bin
-description: Use this skill when the user wants to use xdvi.bin, cli tool: xdvi.bin.
+description: Use this skill when the user wants to use xdvi.bin, Binaries for TeX Live.
 ---
 
 # xdvi.bin Plugin
 
-CLI tool: xdvi.bin.
+xdvi.bin — Binaries for TeX Live.
 
 ## Commands
 - `xdvi.bin <resource> <action>` — Execute xdvi.bin commands
@@ -18,7 +18,7 @@ CLI tool: xdvi.bin.
 
 ## Installation
 ```bash
-apt-get install xdvi.bin 2>/dev/null || which xdvi.bin
+apt-get install texlive-binaries 2>/dev/null || which xdvi.bin
 ```
 
 ## Key Features

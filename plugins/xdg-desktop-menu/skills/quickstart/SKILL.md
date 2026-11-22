@@ -1,11 +1,11 @@
 ---
 name: xdg-desktop-menu
-description: Use this skill when the user wants to use xdg-desktop-menu, cli tool: xdg-desktop-menu.
+description: Use this skill when the user wants to use xdg-desktop-menu, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-desktop-menu Plugin
 
-CLI tool: xdg-desktop-menu.
+xdg-desktop-menu — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-desktop-menu <resource> <action>` — Execute xdg-desktop-menu commands
@@ -18,7 +18,7 @@ CLI tool: xdg-desktop-menu.
 
 ## Installation
 ```bash
-apt-get install xdg-desktop-menu 2>/dev/null || which xdg-desktop-menu
+apt-get install xdg-utils 2>/dev/null || which xdg-desktop-menu
 ```
 
 ## Key Features

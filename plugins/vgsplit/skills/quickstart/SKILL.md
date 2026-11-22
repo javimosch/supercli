@@ -1,11 +1,11 @@
 ---
 name: vgsplit
-description: Use this skill when the user wants to use vgsplit, cli tool: vgsplit.
+description: Use this skill when the user wants to use vgsplit, Linux Logical Volume Manager.
 ---
 
 # vgsplit Plugin
 
-CLI tool: vgsplit.
+vgsplit — Linux Logical Volume Manager.
 
 ## Commands
 - `vgsplit <resource> <action>` — Execute vgsplit commands
@@ -18,7 +18,7 @@ CLI tool: vgsplit.
 
 ## Installation
 ```bash
-apt-get install vgsplit 2>/dev/null || which vgsplit
+apt-get install lvm2 2>/dev/null || which vgsplit
 ```
 
 ## Key Features

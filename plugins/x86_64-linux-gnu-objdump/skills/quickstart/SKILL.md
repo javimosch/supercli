@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-objdump
-description: Use this skill when the user wants to use x86_64-linux-gnu-objdump, cli tool: x86_64-linux-gnu-objdump.
+description: Use this skill when the user wants to use x86_64-linux-gnu-objdump, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-objdump Plugin
 
-CLI tool: x86_64-linux-gnu-objdump.
+x86_64-linux-gnu-objdump — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-objdump <resource> <action>` — Execute x86_64-linux-gnu-objdump commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-objdump.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-objdump 2>/dev/null || which x86_64-linux-gnu-objdump
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-objdump
 ```
 
 ## Key Features

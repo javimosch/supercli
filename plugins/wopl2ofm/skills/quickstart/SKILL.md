@@ -1,11 +1,11 @@
 ---
 name: wopl2ofm
-description: Use this skill when the user wants to use wopl2ofm, cli tool: wopl2ofm.
+description: Use this skill when the user wants to use wopl2ofm, Binaries for TeX Live.
 ---
 
 # wopl2ofm Plugin
 
-CLI tool: wopl2ofm.
+wopl2ofm — Binaries for TeX Live.
 
 ## Commands
 - `wopl2ofm <resource> <action>` — Execute wopl2ofm commands
@@ -18,7 +18,7 @@ CLI tool: wopl2ofm.
 
 ## Installation
 ```bash
-apt-get install wopl2ofm 2>/dev/null || which wopl2ofm
+apt-get install texlive-binaries 2>/dev/null || which wopl2ofm
 ```
 
 ## Key Features

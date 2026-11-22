@@ -1,11 +1,11 @@
 ---
 name: wish
-description: Use this skill when the user wants to use wish, cli tool: wish.
+description: Use this skill when the user wants to use wish, Toolkit for Tcl and X11 (default version) - windowing shell.
 ---
 
 # wish Plugin
 
-CLI tool: wish.
+wish — Toolkit for Tcl and X11 (default version) - windowing shell.
 
 ## Commands
 - `wish <resource> <action>` — Execute wish commands
@@ -18,7 +18,7 @@ CLI tool: wish.
 
 ## Installation
 ```bash
-apt-get install wish 2>/dev/null || which wish
+apt-get install tk 2>/dev/null || which wish
 ```
 
 ## Key Features

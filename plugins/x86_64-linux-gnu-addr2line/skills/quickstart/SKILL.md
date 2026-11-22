@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-addr2line
-description: Use this skill when the user wants to use x86_64-linux-gnu-addr2line, cli tool: x86_64-linux-gnu-addr2line.
+description: Use this skill when the user wants to use x86_64-linux-gnu-addr2line, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-addr2line Plugin
 
-CLI tool: x86_64-linux-gnu-addr2line.
+x86_64-linux-gnu-addr2line — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-addr2line <resource> <action>` — Execute x86_64-linux-gnu-addr2line commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-addr2line.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-addr2line 2>/dev/null || which x86_64-linux-gnu-addr2line
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-addr2line
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64
-description: Use this skill when the user wants to use x86_64, cli tool: x86_64.
+description: Use this skill when the user wants to use x86_64, miscellaneous system utilities.
 ---
 
 # x86_64 Plugin
 
-CLI tool: x86_64.
+x86_64 — miscellaneous system utilities.
 
 ## Commands
 - `x86_64 <resource> <action>` — Execute x86_64 commands
@@ -18,7 +18,7 @@ CLI tool: x86_64.
 
 ## Installation
 ```bash
-apt-get install x86_64 2>/dev/null || which x86_64
+apt-get install util-linux 2>/dev/null || which x86_64
 ```
 
 ## Key Features
