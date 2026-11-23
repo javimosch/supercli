@@ -1,0 +1,618 @@
+{
+  "name": "linux-use",
+  "version": "0.7.1",
+  "description": "Agent-first GUI control for Linux desktops: AT-SPI2 perception and widget-level actuation plus a ~60ms CDP DOM fast path. Single 229 KB static binary, zero runtime deps. The Linux answer to Windows-Use.",
+  "source": "https://github.com/javimosch/linux-use",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "linux-use"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "linux-use",
+    "binary": "linux-use",
+    "check": "which linux-use",
+    "install_steps": [
+      "Download the latest binary from https://github.com/javimosch/linux-use/releases/latest or build from source: git clone https://github.com/javimosch/linux-use && cd linux-use && ./build.sh",
+      "System deps for building: sudo apt install libatspi2.0-dev libxtst-dev libx11-dev libglib2.0-dev",
+      "Enable the accessibility bus: gsettings set org.gnome.desktop.interface toolkit-accessibility true",
+      "Verify: linux-use doctor",
+      "supercli plugins install ./plugins/linux-use --on-conflict replace --json"
+    ]
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
+  "commands": [
+    {
+      "namespace": "linux-use",
+      "resource": "self",
+      "action": "version",
+      "description": "Print linux-use version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "version"
+        ],
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "app",
+      "action": "list",
+      "description": "List applications exposing accessibility, with pid, toolkit and window count",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "apps"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "window",
+      "action": "list",
+      "description": "List top-level windows with geometry, title and active state",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "windows"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "app",
+          "type": "string",
+          "required": false,
+          "description": "Limit to one application name"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "element",
+      "action": "state",
+      "description": "Dump interactive elements of an app with actable refs; --expand sweeps below the fold, --via cdp reads the whole DOM in ~60ms (debug-port browsers), --format lines is compact",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "state"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "app",
+          "type": "string",
+          "required": true,
+          "description": "Application name, e.g. gnome-calculator or 'Microsoft Edge#pid123'"
+        },
+        {
+          "name": "pid",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": false,
+          "description": "Filter by AT-SPI role (see linux-use roles)"
+        },
+        {
+          "name": "depth",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "name": "all",
+          "type": "boolean",
+          "required": false,
+          "description": "Include non-interactive nodes"
+        },
+        {
+          "name": "expand",
+          "type": "boolean",
+          "required": false,
+          "description": "Scroll-sweep to realize below-fold widgets"
+        },
+        {
+          "name": "via",
+          "type": "string",
+          "required": false,
+          "description": "cdp = one DOM query on a debug-port browser"
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "json (default) or lines"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "element",
+      "action": "find",
+      "description": "Search elements by name substring; --expand sweeps below the fold (requires --app)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "find"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "query",
+          "type": "string",
+          "required": true,
+          "description": "Name substring to search",
+          "positional": true
+        },
+        {
+          "name": "app",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "depth",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "name": "expand",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "format",
+          "type": "string",
+          "required": false,
+          "description": "json or lines"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "element",
+      "action": "act",
+      "description": "Invoke a ref's accessible action (preferred actuation; cdp: refs fire a real DOM click)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "act"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "ref",
+          "type": "string",
+          "required": true,
+          "description": "Element ref from state/find output",
+          "positional": true
+        },
+        {
+          "name": "action",
+          "type": "integer",
+          "required": false,
+          "description": "Action index when the element has several"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "element",
+      "action": "read",
+      "description": "Read an element's text, name and description",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "read"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "ref",
+          "type": "string",
+          "required": true,
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "element",
+      "action": "type",
+      "description": "Insert text into an editable element via the editable-text interface",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "type"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "ref",
+          "type": "string",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "replace",
+          "type": "boolean",
+          "required": false
+        },
+        {
+          "name": "allow-password",
+          "type": "boolean",
+          "required": false,
+          "description": "Required to type into password fields"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "text",
+      "action": "paste",
+      "description": "Put text on the clipboard and ctrl+v it \u2014 the safe way to type into Chromium",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "paste"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "no-restore",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "text",
+      "action": "send",
+      "description": "Type a literal string at current focus (no ref; works without a11y)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "sendtext"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "via",
+          "type": "string",
+          "required": false,
+          "description": "auto (default), clipboard or atspi"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "input",
+      "action": "key",
+      "description": "Send a key combo via XTEST, e.g. ctrl+shift+t",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "key"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "combo",
+          "type": "string",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "dry-run",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "input",
+      "action": "click",
+      "description": "Synthetic pointer click at an element ref or coordinates (XTEST)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "click"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "ref",
+          "type": "string",
+          "required": false,
+          "positional": true
+        },
+        {
+          "name": "x",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "name": "y",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "name": "button",
+          "type": "integer",
+          "required": false,
+          "description": "1 left, 3 right, 4/5 wheel"
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "app",
+      "action": "launch",
+      "description": "Spawn a program, optionally waiting for it to register on the a11y bus",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "launch"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "command",
+          "type": "string",
+          "required": true,
+          "positional": true
+        },
+        {
+          "name": "wait-for",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "timeout",
+          "type": "integer",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "event",
+      "action": "watch",
+      "description": "Stream AT-SPI events as NDJSON \u2014 block on UI change instead of polling",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "watch"
+        ],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "app",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "role",
+          "type": "string",
+          "required": false
+        },
+        {
+          "name": "events",
+          "type": "string",
+          "required": false,
+          "description": "Comma-separated event types"
+        },
+        {
+          "name": "max-events",
+          "type": "integer",
+          "required": false
+        },
+        {
+          "name": "duration",
+          "type": "integer",
+          "required": false,
+          "description": "Milliseconds"
+        },
+        {
+          "name": "max-rss",
+          "type": "integer",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "input",
+      "action": "pointer",
+      "description": "Current pointer position",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "pointer"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "element",
+      "action": "roles",
+      "description": "List every valid --role name and which are interactive by default",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "roles"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "self",
+      "action": "doctor",
+      "description": "Environment health: session type, a11y bus, XTEST",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "doctor"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "self",
+      "action": "stats",
+      "description": "Aggregate ~/.cache/linux-use/metrics.jsonl \u2014 per-op calls and min/avg/max ms",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "stats"
+        ],
+        "cwd": "invoke_cwd",
+        "parseJson": true,
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "last",
+          "type": "integer",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "self",
+      "action": "guide",
+      "description": "The full embedded operator manual (JSON; --human for prose)",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "baseArgs": [
+          "guide"
+        ],
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": [
+        {
+          "name": "human",
+          "type": "boolean",
+          "required": false
+        }
+      ]
+    },
+    {
+      "namespace": "linux-use",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to the linux-use CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "linux-use",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install linux-use from https://github.com/javimosch/linux-use/releases/latest"
+      },
+      "args": []
+    }
+  ]
+}
