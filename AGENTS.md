@@ -20,7 +20,7 @@ There are three implementations of `sc`. Pick the one that fits your use case:
 
 **When to use which:**
 - **`sc-zig`** — default for plugin discovery and command execution. Fastest, single binary, no runtime needed.
-- **`sc` (Node.js)** — when you need MCP client adapter, HTTP adapter, or plugin installs (sc-zig delegates to it).
+- **`sc` (Node.js)** — when you need MCP client adapter, HTTP adapter, or plugin installs (sc-zig delegates to it). Also installed as `sc-node` so all three names match the `sc-<impl>` convention.
 - **`sc-machin`** — when you need an MCP **server** exposing all SuperCLI commands to AI agents (Claude Code, Claude Desktop). Also has built-in `skills.match` (semantic skill discovery) and `rtk` passthrough (token-reduced directory/git ops). See skill: `sc-machin-mcp`.
 
 **If stuck on one implementation, try another:**
