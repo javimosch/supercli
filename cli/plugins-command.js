@@ -13,6 +13,19 @@ const { listRegistryPlugins } = require("./plugins-registry")
 const { loadConfig } = require("./config")
 const { getPluginLearn } = require("./plugins-learn")
 const { updatePlugins } = require("./plugins-update")
+const fs = require("fs")
+const { REMOTE_CATALOG_FILE } = require("./plugins-store")
+
+// Days since `plugins update` last wrote the local catalog copy — the honest
+// staleness signal: null means the catalog was never fetched.
+function catalogAgeDays() {
+  try {
+    return Math.floor((Date.now() - fs.statSync(REMOTE_CATALOG_FILE).mtimeMs) / 86400000)
+  } catch {
+    return null
+  }
+}
+const CATALOG_STALE_DAYS = 14
 
 async function handlePluginsCommand(options) {
   const { positional, humanMode, output, outputHumanTable, outputError } = options
@@ -163,6 +176,13 @@ async function handlePluginsCommand(options) {
         ]
       : []
 
+    const catAge = catalogAgeDays()
+    if (catAge !== null && catAge > CATALOG_STALE_DAYS) {
+      suggestions.push(`plugin catalog is ${catAge} days old - refresh: sc plugins update`)
+    } else if (catAge === null) {
+      suggestions.push("plugin catalog never fetched - run: sc plugins update")
+    }
+
     if (humanMode) {
       console.log("\n  ⚡ Plugin Registry\n")
       outputHumanTable(plugins, [
@@ -174,7 +194,7 @@ async function handlePluginsCommand(options) {
         { key: "description", label: "Description" }
       ])
       if (suggestions.length > 0) {
-        process.stderr.write("  \u{1f4a1} No plugins matched your filters.\n")
+        if (total === 0 && hadFilters) process.stderr.write("  \u{1f4a1} No plugins matched your filters.\n")
         suggestions.forEach(s => process.stderr.write("     " + s + "\n"))
       }
       console.log("")
@@ -194,6 +214,7 @@ async function handlePluginsCommand(options) {
         }
       }
       if (limitAuto && returned < total) result._warning = "--limit 50 applied to avoid context bloat. Use --limit <n> and --offset <n> for pagination."
+      if (catAge !== null) result.catalog_age_days = catAge
       if (suggestions.length > 0) result.suggestions = suggestions
       output(result)
     }

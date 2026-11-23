@@ -10,6 +10,7 @@ There are three implementations of `sc`. Pick the one that fits your use case:
 | Plugin discover / explore | ✅ | ✅ | ✅ |
 | Execute plugin commands | ✅ | ✅ | ✅ |
 | Plugin install | ✅ (delegates to `sc`) | ✅ native | ✅ (delegates to `sc`) |
+| Plugin update (`plugins update`) | ✅ native | ✅ native | ✅ (delegates to `sc`) |
 | MCP server (`mcp serve`) | ❌ | ✅ | ✅ |
 | MCP client adapter | ❌ | ✅ | ❌ |
 | HTTP adapter | ❌ | ✅ | ❌ |
@@ -41,6 +42,26 @@ cd supercli-machin-cli && bash build.sh
 # Then register with Claude Code:
 # claude mcp add supercli -s user -- "$(pwd)/sc-machin" mcp serve
 ```
+
+## Plugin registry sync (no auto-sync)
+
+The plugin catalog is **not** auto-synced on startup, `explore`, or `install`.
+An old `sc` binary can still fetch new plugins — registry content is
+decoupled from the CLI version — but you must update explicitly:
+
+```bash
+sc plugins update            # fetch remote catalog + extract changed plugins
+sc plugins update --check    # dry run: report what would change
+```
+
+It fetches `plugins/catalog.json` from GitHub `master`, diffs checksums vs
+`~/.supercli/plugins/remote-catalog.json`, then downloads the repo tarball
+and extracts only added/changed plugin dirs into
+`~/.supercli/plugins/bundled/`.
+
+`plugins explore` emits a staleness hint when the local catalog is missing
+or older than 14 days (`catalog_age_days` + `suggestion` in JSON, stderr
+line in human mode) — implemented identically in all three binaries.
 
 ## Using SuperCLI (for agents)
 

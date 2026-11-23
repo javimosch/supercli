@@ -3,17 +3,35 @@
 // stdio, so sc's own output/exit code pass straight through) — same
 // division of labor as supercli-zig-cli ("Plugin install (delegates to sc)").
 
+// catalog_age_days: days since `plugins update` last wrote the local
+// catalog copy; -1 means the catalog was never fetched. No file-stat
+// builtin in MFL, so stat(1) via exec (always present on Linux).
+func catalog_age_days() (days) {
+    days = -1
+    code, out, _ := exec("stat -c %Y \"$HOME/.supercli/plugins/remote-catalog.json\" 2>/dev/null")
+    if code != 0 { return }
+    mtime := parse_int(trim(out))
+    if mtime <= 0 { return }
+    age := now() - mtime
+    if age < 0 { age = 0 }
+    days = age / 86400
+}
+
+// catalog_stale_hint returns "" when the catalog is fresh, else the nudge.
+func catalog_stale_hint(days) (hint) {
+    hint = ""
+    if days < 0 { hint = "plugin catalog never fetched - run: sc-machin plugins update" }
+    if days > 14 { hint = "plugin catalog is " + str(days) + " days old - refresh: sc-machin plugins update" }
+}
+
 func render_plugins_list_human(lock) {
     names := plugin_names(lock)
     println("")
     println("  Installed Plugins")
     println("")
-    i := 0
-    n := len(names)
-    for i < n {
-        p := lock.installed[names[i]]
+    for pname, p := range lock.installed {
+        _ = pname
         println("  " + p.name + "  v" + p.version + "  " + p.description)
-        i = i + 1
     }
     println("")
 }
@@ -21,12 +39,9 @@ func render_plugins_list_human(lock) {
 func render_plugins_list_json(lock) {
     names := plugin_names(lock)
     parts := []string{}
-    i := 0
-    n := len(names)
-    for i < n {
-        p := lock.installed[names[i]]
+    for pname, p := range lock.installed {
+        _ = pname
         parts = append(parts, "{\"name\":" + json_str(p.name) + ",\"version\":" + json_str(p.version) + ",\"description\":" + json_str(p.description) + ",\"commands\":" + str(len(p.commands)) + "}")
-        i = i + 1
     }
     println("{\"version\":\"1.0\",\"total\":" + str(len(names)) + ",\"plugins\":[" + join(parts, ",") + "]}")
 }
@@ -46,6 +61,8 @@ func render_explore_human(results) {
     }
     println("")
     println("  Install: sc-machin plugins install <name>")
+    hint := catalog_stale_hint(catalog_age_days())
+    if len(hint) > 0 { write(2, "  " + hint + "\n") }
 }
 
 func render_explore_json(results) {
@@ -57,7 +74,13 @@ func render_explore_json(results) {
         parts = append(parts, "{\"name\":" + json_str(r.name) + ",\"description\":" + json_str(r.description) + ",\"tags\":" + str_slice_json(r.tags) + ",\"has_learn\":" + json_bool(r.has_learn) + ",\"installed\":" + json_bool(r.installed) + "}")
         i = i + 1
     }
-    println("{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"plugins\":[" + join(parts, ",") + "]}")
+    age := catalog_age_days()
+    out := "{\"version\":\"1.0\",\"total\":" + str(len(results)) + ",\"plugins\":[" + join(parts, ",") + "]"
+    if age >= 0 { out = out + ",\"catalog_age_days\":" + str(age) }
+    hint := catalog_stale_hint(age)
+    if len(hint) > 0 { out = out + ",\"suggestion\":" + json_str(hint) }
+    out = out + "}"
+    println(out)
 }
 
 // install_plugin delegates to `sc plugins install <name>` — Node.js sc

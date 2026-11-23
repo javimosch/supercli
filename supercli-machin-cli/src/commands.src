@@ -16,21 +16,16 @@ func command_matches(c, query) (out) {
 
 func list_commands(lock, query) (results) {
     results = []CommandListItem{}
-    names := keys(lock.installed)
-    i := 0
-    n := len(names)
-    for i < n {
-        p := lock.installed[names[i]]
+    for pname, p := range lock.installed {
         j := 0
         cn := len(p.commands)
         for j < cn {
             c := p.commands[j]
             if command_matches(c, query) {
-                results = append(results, CommandListItem{namespace: c.namespace, resource: c.resource, action: c.action, description: c.description, plugin: p.name})
+                results = append(results, CommandListItem{namespace: c.namespace, resource: c.resource, action: c.action, description: c.description, plugin: pname})
             }
             j = j + 1
         }
-        i = i + 1
     }
 }
 

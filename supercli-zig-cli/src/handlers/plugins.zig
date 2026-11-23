@@ -36,6 +36,32 @@ pub fn bundledPluginsDir(gpa: std.mem.Allocator, io: std.Io, home: []const u8) !
     return try gpa.dupe(u8, "plugins");
 }
 
+const CATALOG_STALE_DAYS: i64 = 14;
+
+/// Days since `plugins update` last wrote the local catalog copy; null if
+/// the catalog was never fetched.
+fn catalogAgeDays(io: std.Io, gpa: std.mem.Allocator, home: []const u8) ?i64 {
+    const path = std.fmt.allocPrint(gpa, "{s}/.supercli/plugins/remote-catalog.json", .{home}) catch return null;
+    defer gpa.free(path);
+    const stat = std.Io.Dir.cwd().statFile(io, path, .{}) catch return null;
+    const now = std.Io.Timestamp.now(io, .real);
+    return @divTrunc(stat.mtime.durationTo(now).toSeconds(), 86400);
+}
+
+fn writeCatalogHint(mode: output.Mode, cat_age: ?i64) void {
+    const msg = if (cat_age == null)
+        "plugin catalog never fetched - run: sc-zig plugins update"
+    else if (cat_age.? > CATALOG_STALE_DAYS)
+        "plugin catalog is stale - refresh: sc-zig plugins update"
+    else
+        return;
+    if (mode == .human) {
+        output.writeRawErr("  ");
+        output.writeRawErr(msg);
+        output.writeRawErr("\n");
+    }
+}
+
 pub fn handlePluginsList(gpa: std.mem.Allocator, lock: *const config.Lock, mode: output.Mode) void {
     if (mode == .human) {
         output.writeLine("\n  Installed Plugins\n");
@@ -156,6 +182,7 @@ pub fn handlePluginsExplore(
 ) !void {
     const plugins_path = try bundledPluginsDir(gpa, io, home);
     const all_plugins = try registry.discoverPluginsInDir(io, gpa, plugins_path);
+    const cat_age = catalogAgeDays(io, gpa, home);
 
     const name_query = flags.get("name") orelse "";
     const tags_query = flags.get("tags") orelse "";
@@ -231,6 +258,10 @@ pub fn handlePluginsExplore(
         jw.objectField("tags") catch return;
         jw.write(tags_query) catch return;
         jw.endObject() catch return;
+        if (cat_age) |age| {
+            jw.objectField("catalog_age_days") catch return;
+            jw.write(age) catch return;
+        }
         jw.objectField("suggestion") catch return;
         jw.write("Run: sc-zig plugins update") catch return;
         jw.endObject() catch return;
@@ -277,6 +308,7 @@ pub fn handlePluginsExplore(
         var buf2: [64]u8 = undefined;
         const summary = std.fmt.bufPrint(&buf2, "  Returned: {d}/{d}  (offset: {d})\n\n", .{ returned_count, filtered.len, start }) catch "";
         output.writeRaw(summary);
+        writeCatalogHint(mode, cat_age);
         return;
     }
 
@@ -326,6 +358,17 @@ pub fn handlePluginsExplore(
     jw.objectField("offset") catch return;
     jw.write(start) catch return;
     jw.endObject() catch return;
+    if (cat_age) |age| {
+        jw.objectField("catalog_age_days") catch return;
+        jw.write(age) catch return;
+        if (age > CATALOG_STALE_DAYS) {
+            jw.objectField("suggestion") catch return;
+            jw.write("plugin catalog is stale - refresh: sc-zig plugins update") catch return;
+        }
+    } else {
+        jw.objectField("suggestion") catch return;
+        jw.write("plugin catalog never fetched - run: sc-zig plugins update") catch return;
+    }
     jw.endObject() catch return;
     output.writeRaw(out.written());
     output.writeRaw("\n");
