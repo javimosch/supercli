@@ -18,7 +18,6 @@ const run = @import("handlers/run.zig");
 const doctor = @import("handlers/doctor.zig");
 const onboard = @import("handlers/onboard.zig");
 const misc = @import("handlers/misc.zig");
-const daemon = @import("handlers/daemon.zig");
 const guide = @import("handlers/guide.zig");
 const telemetry = @import("telemetry.zig");
 const selfupdate = @import("selfupdate.zig");
@@ -245,12 +244,6 @@ fn realMain(init: std.process.Init) !void {
         return;
     }
 
-    // ----- daemon <start|stop|status> -----
-    if (std.mem.eql(u8, pos[0], "daemon")) {
-        try daemon.handleDaemon(io, gpa, mode, pos, home);
-        return;
-    }
-
     // ----- discover --intent -----
     if (std.mem.eql(u8, pos[0], "discover")) {
         try discover.handleDiscover(io, gpa, mode, parsed.flags, home);
@@ -472,7 +465,6 @@ test {
     _ = @import("handlers/doctor.zig");
     _ = @import("handlers/onboard.zig");
     _ = @import("handlers/misc.zig");
-    _ = @import("handlers/daemon.zig");
     _ = @import("handlers/guide.zig");
     _ = @import("telemetry.zig");
     _ = @import("selfupdate.zig");

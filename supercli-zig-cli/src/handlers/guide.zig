@@ -81,9 +81,6 @@ fn handleGuideJson(gpa: std.mem.Allocator) void {
     jw.objectField("discover") catch return;
     jw.write("Find plugins for a task via --intent") catch return;
 
-    jw.objectField("daemon") catch return;
-    jw.write("Subcommands: start, stop, status (PID-file management)") catch return;
-
     jw.objectField("telemetry") catch return;
     jw.write("Print the anonymous usage payload and on/off state (--off persists opt-out)") catch return;
 
@@ -156,7 +153,6 @@ fn handleGuideHuman() void {
     output.writeLine("  inspect      Show schema for a specific command");
     output.writeLine("  plugins      list|explore|install|remove|show|learn|doctor|update");
     output.writeLine("  discover     Find plugins for a task (--intent)");
-    output.writeLine("  daemon       start|stop|status");
     output.writeLine("  telemetry    Inspect anonymous telemetry + on/off state (--off)");
     output.writeLine("  feedback     feedback <msg> — report a bug or idea to the shared relay");
     output.writeLine("  update       update [--check] [--force] — self-update (--check exits 5)");
