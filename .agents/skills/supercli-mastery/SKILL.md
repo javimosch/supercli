@@ -1,217 +1,124 @@
 ---
 name: supercli-mastery
-description: Master the supercli capability router. Covers the full agent workflow — discover plugins, inspect commands, preview with plan, execute safely, use skills, interpret output and exit codes.
+description: Use SuperCLI to route tasks to external CLIs. Picks the right binary (sc-machin/sc-zig/sc) — 100x faster starts than defaulting to Node — then the discover → inspect → plan → execute workflow, federation, daemon, and update surfaces.
+tags: supercli,cli,routing,plugins
 ---
 
 # supercli-mastery — Agent's Guide to SuperCLI
 
-## What SuperCLI Is
+SuperCLI is a **capability router**: it wraps external CLIs ("plugins") behind a
+uniform `namespace.resource.action` command model, JSON output, and semantic
+exit codes. Three interchangeable binaries implement it on this machine.
 
-SuperCLI is a **capability router**. It wraps external CLIs (plugins) behind a uniform `namespace.resource.action` command model. Every command follows the same pattern:
+## Pick the right binary first
+
+| | `sc-machin` | `sc-zig` | `sc` (Node) |
+|---|---|---|---|
+| Binary | 100 KB static | 372 KB static | node + JS tree |
+| Cold start | **~1 ms** | ~1 ms | ~130 ms |
+| `--json` bootstrap | 2 ms | 2 ms | 146 ms |
+| `plugins explore` | **18 ms** | 484 ms | ~1.1 s |
+| `commands --query` | **6 ms** | 14 ms | 119 ms |
+| `inspect` | 6 ms | 2 ms | 91 ms |
+| `discover --intent` | — | yes | yes |
+| `plugins install/update` | delegates to `sc` | native | native |
+| `daemon` lifecycle | — | yes | yes |
+| `mcp` client adapter / `ask` / `skills` | — | — | **only here** |
+| `mcp serve` (stdio MCP server) | yes | — | — |
+| `--server` hub / `server` CRUD / `sync` | — | — | **only here** |
+
+**Rule of thumb: default to `sc-machin` for reads and discovery** (`--json`,
+`commands --query`, `plugins explore`, `inspect`, command execution). It is
+10–60x faster than Node `sc` on every measured verb, and faster than `sc-zig`
+on catalog queries. Reach for `sc` only when the verb doesn't exist elsewhere
+(`mcp` client calls, `ask`, `skills`, `server`, `sync`, `--server`); `sc-zig`
+when you need `discover --intent`, plugin installs, or the daemon without Node.
+
+`sc-machin plugins install`/`update` transparently delegate to Node `sc`
+(`system()` passthrough) — safe to use even when that's the goal.
+
+All three read the same `~/.supercli/` state (plugins.lock.json, config,
+skills index), so you can mix them freely within one task.
+
+## The workflow
 
 ```
-sc <namespace> <resource> <action> --<arg> <value> --json
+discover → learn → inspect → plan → execute
 ```
 
-The workflow is: `discover → learn → inspect → plan → execute`
-
-## Core Capabilities
-
-| Capability | Description |
-|---|---|
-| `commands` | Query available commands |
-| `plugins` | Plugin management and discovery |
-| `skills` | Agent-facing skill documents |
-| `inspect` | View command schema |
-| `plan` | Preview execution steps before running |
-| `ask` | LLM suggests which commands to run (no execution) |
-| `mcp` | Model Context Protocol adapter |
-
-## Output Conventions
-
-All commands return JSON when `--json` is used (or by default in non-TTY):
-
-```
-sc <ns> <res> <act> --json
-→ { "version": "1.0", "command": "ns.res.act", "data": {...} }
+```bash
+sc-machin --json                                  # bootstrap: what this CLI does
+sc-machin commands --query <keyword> --json       # find a verb
+sc-machin plugins explore --name <topic> --json   # find a plugin
+sc-machin inspect <ns> <res> <act> --json         # schema: required/positional args
+sc <ns> <res> <act> --<args> --json               # execute (any binary)
 ```
 
-- **stdout**: Primary data (JSON envelope)
-- **stderr**: Progress events, warnings, structured errors
-- **Exit code 0**: Success
+- `sc plugins learn <name>` — plugin docs + install guidance (Node only)
+- `sc plan <ns> <res> <act> --args` — dry-run a mutation before executing
+- `sc ask "<task>"` — LLM maps intent to commands (suggests, never executes)
+- `sc discover --intent "<task>"` — intent-driven plugin search (sc/sc-zig)
 
-## Semantic Exit Codes
+## Output contract
 
-| Code | Meaning | Agent action |
+- `--json` on every command (or default in non-TTY): `{version, command, data}`
+- stdout = data, stderr = progress + typed errors
+- Error: `{"error":{"code":N,"type":"...","recoverable":bool,"suggestions":[...]}}`
+
+## Exit codes (semantic, Square-style ranges)
+
+| Code | Meaning | Action |
 |---|---|---|
-| 0 | Success | Proceed |
-| 82 | Validation error | Fix input arguments |
-| 85 | Invalid argument | Fix the args, don't retry |
-| 91 | Safety violation | Non-TTY interactive command blocked |
-| 92 | Resource not found | Use different ID/name |
-| 105 | Integration / API error | Retry with backoff (transient) |
-| 110 | Internal error | Report bug, don't retry |
+| 0 | success | proceed |
+| 3 | steady state: daemon stopped | not an error — branch, don't retry |
+| 5 | steady state: update available | not an error — decide to update |
+| 82 | validation error | fix input |
+| 85 | invalid argument | fix args, don't retry |
+| 91 | safety violation | non-TTY interactive command blocked |
+| 92 | resource not found | different name/id |
+| 105 | integration/API error | retry with backoff |
+| 110 | internal error | report bug |
 
-> Range convention (Square-style): 80-89 input errors, 90-99 resource errors,
-> 100-109 integration errors, 110-119 internal errors. Currently implemented
-> codes listed above; unused slots reserved for future granularity.
-
-## Agent Workflow
-
-### 1. Discover — Find what's available
+## Federation (hub + workers)
 
 ```
-sc --json
-# → lists first_steps with {command, purpose} pairs
-
-sc commands --query backup --limit 50 --json
-# → { commands: [{ namespace, resource, action, description }] }
-
-sc plugins explore --name <tool> --json
-# → { plugins: [{ name, description, tags, installed }] }
+hub:     sc --server            # Express dashboard + /api + /llms.txt, :3000 (PORT env)
+workers: SUPERCLI_SERVER + SUPERCLI_API_KEY env
+         sc sync                # pull command/plugin config down
+         sc daemon start        # ship job logs + heartbeat up
 ```
 
-### 2. Learn — Understand a plugin
+- `GET /api` — hub self-index (route catalog, auth mode). `GET /llms.txt` — agent entry. Both unauthenticated.
+- `sc server status --json` — probe the hub: reachable, auth mode, your client_id.
+- `sc server <resource> ...` — CRUD on hub resources (plugins, commands, adapters, specs, api-keys, jobs, clients).
+- Auth: `X-API-Key` header; mint keys at `/api-keys` on the dashboard.
 
-```
-sc plugins learn <name> --json
-# → plugin metadata, commands, install guidance
+## Daemons — three different surfaces, same word
 
-sc skills get <name> --json
-# → agent-facing SKILL.md content for that tool
-```
-
-### 3. Inspect — See a command's schema before using it
-
-```
-sc inspect <namespace> <resource> <action> --json
-# → { namespace, resource, action, args: [{name, type, required, positional}], adapterConfig }
-```
-
-Inspect tells you:
-- Which `--flags` are required vs optional
-- Which args are positional (marked `"positional": true`)
-- The adapter type (process, http, mcp, shell)
-- Timeout and safety settings
-
-### 4. Plan — Preview before executing mutations
-
-```
-sc plan <namespace> <resource> <action> --<args> --json
-# → { plan_id, command, steps, risk_level, side_effects, persisted }
-```
-
-`plan` does NOT execute — it returns a plan document showing:
-- The 4 execution steps (resolve → validate → adapter → transform)
-- `risk_level`: "safe" for reads, "medium" for mutations
-- `side_effects`: true for write operations
-
-Use plan before any command that modifies state.
-
-### 5. Execute — Run commands
-
-```
-# Direct execution (no server)
-sc <namespace> <resource> <action> --<arg> <value> --json
-
-# Or via persisted plan (with SUPERCLI_SERVER)
-sc plan <ns> <res> <act> --<args> --json
-sc execute <plan_id> --json
-```
-
-### Ask — LLM suggests a plan
-
-```
-sc ask "send an email to user@example.com"
-# → { mode: "ask_suggest", suggested_steps: [{ command, args, dry_run }] }
-```
-
-`ask` uses an LLM to map natural language to supercli commands. It NEVER executes — returns suggestions with `dry_run` strings you can choose to run.
-
-### Daemon lifecycle (sc only)
+| Command | What | Surface |
+|---|---|---|
+| `sc --server` | the hub dashboard (has the UI) | :3000 HTTP |
+| `sc daemon` / `sc serve` | bookkeeper: ships job logs + heartbeat to hub | :8320 `/_health` `/_shutdown` only — **no UI** |
+| `sc mcp daemon` | MCP server process pool | unix socket |
 
 ```bash
-sc daemon start    # spawns 'sc serve' detached on 127.0.0.1:8320 (logs: ~/.supercli/logs/daemon.log)
-sc daemon status   # {"ok":true,"daemon":"running"} exit 0, or "stopped" exit 3 — branch on exit code
-sc daemon stop     # POSTs /_shutdown, confirms the listener dies
-sc serve           # foreground variant — GET /_health (open), POST /_shutdown
+sc daemon status   # {ok,daemon:"running"} exit 0 | "stopped" exit 3 — branch on exit
+sc daemon stop     # POSTs /_shutdown
 ```
 
-Two different daemons share the word: `sc daemon` = the bookkeeper serve (heartbeat + job-log shipping to SUPERCLI_SERVER). `sc mcp daemon` = a separate Unix-socket daemon pooling MCP server processes. The legacy `node cli/daemon.js --daemon` entry was removed — the only path is `sc daemon start`.
-
-## Working with Output
-
-Always use `--json` for machine-readable output:
+## Self-update (all three)
 
 ```bash
-# Pipe to jq for extraction
-sc commands --query backup --json | jq '.commands[].namespace'
-
-# Chain commands
-sc easyredmine issue search "correction" --current-month | \
-  jq -r '.results[].id' | \
-  xargs -I {} sc easyredmine issue show {} --json
+<bin> update --check   # exit 5 = newer version available (steady state, not an error)
+<bin> update [--force]
 ```
 
-Error responses are always on stderr:
+## Token optimization
 
-```
-sc nonexistent command --json
-# stderr: {"error":{"code":92,"type":"resource_not_found","message":"...","recoverable":false,"suggestions":["Run: supercli commands"]}}
-```
+For large outputs: `sc mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '...' --json` (Node `sc` only — `sc-machin mcp serve` is for *exposing* supercli over MCP, not calling other MCP servers).
 
-## Token Optimization
+## Gotchas
 
-For large outputs (50+ files, long command results), use context-mode:
-
-```
-sc mcp call --mcp-server context-mode --tool ctx_batch_execute --input-json '...' --json
-```
-
-See `sc skills get context-mode:quickstart --json` for context-mode usage.
-
-## Skills System
-
-Skills are agent-facing documents that teach you how to use tools:
-
-```
-sc skills sync --json                    # index all skills
-sc skills list --catalog --limit 10      # browse
-sc skills search --query <topic>         # find by topic
-sc skills get <id>                       # read a skill
-```
-
-Skills come from:
-- **plugin_fs**: Bundled with supercli plugins (`plugins/<name>/skills/quickstart/SKILL.md`)
-- **local_fs**: From provider-scanned directories (e.g. `~/.config/opencode/skills/`)
-- **supercli**: Built-in skills shipped with the supercli package itself
-
-## Navigation Pattern
-
-When you don't know a command's namespace:
-
-```
-# 1. Browse capabilities
-sc --json
-
-# 2. Search commands
-sc commands --query <keyword> --json
-
-# 3. Inspect the most promising match
-sc inspect <ns> <res> <act> --json
-
-# 4. Plan if it's a write operation
-sc plan <ns> <res> <act> --args
-
-# 5. Execute
-sc <ns> <res> <act> --args --json
-```
-
-## Key Principles
-
-1. **`--json` everywhere** — all commands support it
-2. **Plan before write** — use `plan` for any command that might have side effects
-3. **Inspect before run** — check `args` and `positional` markers in inspect output
-4. **Errors are structured** — always on stderr with `code`, `type`, `recoverable`, `suggestions`
-5. **Skills teach you** — if you don't know a tool, `sc skills search --query <tool>`
-6. **Exit codes drive decisions** — 85=fix args, 92=try different resource, 105=retry
+- **`sc-zig plugins explore` is slow** (~0.5 s — full catalog parse). Prefer `sc-machin` for plugin browsing.
+- Plugin installs always end up needing Node `sc` (native in sc/sc-zig; `sc-machin` delegates automatically).
+- `sc daemon` on a worker is useless without `SUPERCLI_SERVER` set — it has nowhere to ship.
