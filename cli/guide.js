@@ -21,7 +21,7 @@ function buildGuide() {
       adapter: "The execution backend for a command. 'process' runs an external binary. 'mcp' calls an MCP server tool. 'http' calls an HTTP endpoint. The adapter config includes the binary name, base args, and missingDependencyHelp.",
       namespace_browse: "sc <ns> with no resource/action lists all commands in that namespace. sc <ns> <res> lists actions under that resource.",
       passthrough: "A plugin can declare a passthrough command (resource='_', action='_') that forwards all args to the underlying binary verbatim.",
-      server: "SUPERCLI_SERVER env var points to a remote supercli server for centralized plugin management, MCP registry, and CLI adapters. Optional — sc works fully offline with local plugins.",
+      server: "SUPERCLI_SERVER env var points to a remote supercli server for centralized plugin management, MCP registry, and CLI adapters. Host one with 'sc --server' (PORT env, default 3000). Optional — sc works fully offline with local plugins.",
     },
     commands: {
       "help-json": "Print the machine-readable command catalog with exit codes",
@@ -63,6 +63,8 @@ function buildGuide() {
       "The only daemon path is 'sc daemon start' → detached 'sc serve' — the legacy 'node cli/daemon.js --daemon' entry was removed (no /_health, invisible to status/stop)",
       "sc daemon status exits 3 when stopped — branch on the exit code, not JSON parsing",
       "daemon status health_hits_external counts /_health probes NOT from sc itself (curl, monitors) — the signal for whether anything uses the serve surface",
+      "Three 'server' surfaces, different things: 'sc --server' = management dashboard+API (:3000), 'sc serve' = daemon probes only (:8320), 'sc mcp daemon' = MCP pool (unix socket)",
+      "Federation: hub runs 'sc --server'; workers set SUPERCLI_SERVER=http://hub:3000 and SUPERCLI_API_KEY — 'sc sync' pulls config down, 'sc daemon start' ships job logs up to /api/jobs",
     ],
   };
 }
@@ -103,10 +105,13 @@ function buildGuideHuman() {
     "  plan         Create an execution plan",
     "  serve        --host 127.0.0.1 --port 8320 (foreground HTTP: /_health /_shutdown)",
     "  daemon       start|stop|status [--host --port] (status exits 3 when stopped)",
+    "  --server     Boot management dashboard+API on $PORT (default 3000)",
     "",
     "## Gotchas",
     "",
     "- SUPERCLI_SERVER is optional — sc works offline with local plugins",
+    "- 'sc --server' (dashboard :3000) != 'sc serve' (daemon probes :8320) != 'sc mcp daemon' (MCP pool socket)",
+    "- Federation: hub runs 'sc --server'; workers set SUPERCLI_SERVER + SUPERCLI_API_KEY, then 'sc sync' (config down) and 'sc daemon start' (job logs up)",
     "- Config cache may be stale — run 'sc sync' to refresh",
     "- If sc is slow, switch to sc-zig (faster, single binary)",
     "- If sc-zig crashes, fall back to sc (Node.js) — the reference implementation",

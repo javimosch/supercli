@@ -2,6 +2,32 @@
 
 The supercli server provides a web UI for managing custom commands, OpenAPI specs, MCP servers, plugins, and viewing execution history.
 
+## Federation topology
+
+The server is the hub of a multi-machine deployment: one central instance
+holds the command/plugin/spec registry, and workers point at it.
+
+| Machine | Runs | Role |
+|---|---|---|
+| Hub (e.g. cloud VM) | `sc --server` (`PORT` env, default 3000) | Central registry, `/api/jobs` ingest, dashboard |
+| Worker | `SUPERCLI_SERVER=http://hub:3000` + `sc sync` | Pulls command/plugin config down |
+| Worker | `sc daemon start` | Bookkeeper ships `~/.supercli/logs/*.jsonl` up to `POST /api/jobs` |
+
+Data flow: config (commands, specs, MCP, adapters) flows **down** via
+`sc sync`; execution history flows **up** via the daemon's job shipping.
+Workers authenticate to the API with `SUPERCLI_API_KEY` (sent as the
+`X-API-Key` header); mint keys on the hub at `/api-keys`. Without an API
+key requirement (`admin_mode_enabled` or `public_access` in settings),
+all API routes are open.
+
+The dashboard at `/` is an operator convenience — browser navigation is
+unauthenticated HTML, while the same operations are JSON routes under
+`/api/*`, so agents can drive the hub without the UI.
+
+Without `SUPERCLI_SERVER` set on a worker, `sc` works fully offline —
+the daemon's sync loop simply has nowhere to ship, and the serve surface
+still answers `/_health`/`/_shutdown` for lifecycle management.
+
 ## Commands
 
 Create and manage custom commands through the server UI at `/commands`. Commands are indexed as `namespace.resource.action` and sync to the CLI via `supercli sync`.

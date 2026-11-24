@@ -63,7 +63,8 @@ function buildCapabilities(config, hasServer) {
       "--schema": "Show input/output schema for a command",
       "--help-json": "Machine-readable capability discovery",
       "--show-dag": "Include execution DAG in output",
-      "--format": "Output format for selected commands"
+      "--format": "Output format for selected commands",
+      "--server": "Boot the management server (dashboard + /api/* JSON routes) on $PORT (default 3000) — the federation hub workers point SUPERCLI_SERVER at"
     },
     exit_codes: {
       "0": "success",
