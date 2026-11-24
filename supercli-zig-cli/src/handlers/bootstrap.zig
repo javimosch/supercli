@@ -2,11 +2,11 @@
 const std = @import("std");
 const output = @import("../output.zig");
 
-const VERSION = "0.1.0";
+const VERSION = "0.1.2";
 
 pub fn handleBootstrap(gpa: std.mem.Allocator, mode: output.Mode) void {
     if (mode == .human) {
-        output.writeLine("\n  SuperCLI (Zig) v0.1.0\n");
+        output.writeLine("\n  SuperCLI (Zig) v0.1.2\n");
         output.writeLine("  Fast single-binary implementation of the SuperCLI core.");
         output.writeLine("  Reads ~/.supercli/plugins/plugins.lock.json\n");
         output.writeLine("  Usage: sc-zig <namespace> <resource> <action> [--flags]");
@@ -74,7 +74,7 @@ pub fn handleBootstrap(gpa: std.mem.Allocator, mode: output.Mode) void {
 
 pub fn handleVersionInfo(gpa: std.mem.Allocator, mode: output.Mode) void {
     if (mode == .human) {
-        output.writeLine("SuperCLI (Zig) v0.1.0");
+        output.writeLine("SuperCLI (Zig) v0.1.2");
         output.writeLine("Implementation: Zig 0.16.0");
         output.writeLine("Binary: sc-zig");
         return;
@@ -121,7 +121,7 @@ pub fn handleInstallAsSc(io: std.Io, gpa: std.mem.Allocator, mode: output.Mode) 
         output.writeLine(" /usr/local/bin/sc");
         output.writeLine("");
         output.writeLine("  Or use the curl install script with --replace flag:");
-        output.writeLine("    curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash -s -- --replace");
+        output.writeLine("    curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.2-zig/install.sh | bash -s -- --replace");
     } else {
         var out: std.Io.Writer.Allocating = .init(gpa);
         defer out.deinit();
