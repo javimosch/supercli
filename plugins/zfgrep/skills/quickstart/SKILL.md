@@ -1,11 +1,11 @@
 ---
 name: zfgrep
-description: Use this skill when the user wants to use zfgrep, cli tool: zfgrep.
+description: Use this skill when the user wants to use zfgrep, GNU compression utilities.
 ---
 
 # zfgrep Plugin
 
-CLI tool: zfgrep.
+zfgrep — GNU compression utilities.
 
 ## Commands
 - `zfgrep <resource> <action>` — Execute zfgrep commands
@@ -18,7 +18,7 @@ CLI tool: zfgrep.
 
 ## Installation
 ```bash
-apt-get install zfgrep 2>/dev/null || which zfgrep
+apt-get install gzip 2>/dev/null || which zfgrep
 ```
 
 ## Key Features

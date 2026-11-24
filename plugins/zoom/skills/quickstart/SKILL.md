@@ -1,11 +1,11 @@
 ---
 name: zoom
-description: Use this skill when the user wants to use zoom, cli tool: zoom.
+description: Use this skill when the user wants to use zoom, player for Z-Code stories or games.
 ---
 
 # zoom Plugin
 
-CLI tool: zoom.
+zoom — player for Z-Code stories or games.
 
 ## Commands
 - `zoom <resource> <action>` — Execute zoom commands
@@ -18,7 +18,7 @@ CLI tool: zoom.
 
 ## Installation
 ```bash
-apt-get install zoom 2>/dev/null || which zoom
+apt-get install zoom-player 2>/dev/null || which zoom
 ```
 
 ## Key Features

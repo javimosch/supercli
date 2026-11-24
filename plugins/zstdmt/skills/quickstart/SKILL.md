@@ -1,11 +1,11 @@
 ---
 name: zstdmt
-description: Use this skill when the user wants to use zstdmt, cli tool: zstdmt.
+description: Use this skill when the user wants to use zstdmt, fast lossless compression algorithm -- CLI tool.
 ---
 
 # zstdmt Plugin
 
-CLI tool: zstdmt.
+zstdmt — fast lossless compression algorithm -- CLI tool.
 
 ## Commands
 - `zstdmt <resource> <action>` — Execute zstdmt commands
@@ -18,7 +18,7 @@ CLI tool: zstdmt.
 
 ## Installation
 ```bash
-apt-get install zstdmt 2>/dev/null || which zstdmt
+apt-get install zstd 2>/dev/null || which zstdmt
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: zforce
-description: Use this skill when the user wants to use zforce, cli tool: zforce.
+description: Use this skill when the user wants to use zforce, GNU compression utilities.
 ---
 
 # zforce Plugin
 
-CLI tool: zforce.
+zforce — GNU compression utilities.
 
 ## Commands
 - `zforce <resource> <action>` — Execute zforce commands
@@ -18,7 +18,7 @@ CLI tool: zforce.
 
 ## Installation
 ```bash
-apt-get install zforce 2>/dev/null || which zforce
+apt-get install gzip 2>/dev/null || which zforce
 ```
 
 ## Key Features

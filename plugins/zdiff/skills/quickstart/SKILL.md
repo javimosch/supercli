@@ -1,11 +1,11 @@
 ---
 name: zdiff
-description: Use this skill when the user wants to use zdiff, cli tool: zdiff.
+description: Use this skill when the user wants to use zdiff, GNU compression utilities.
 ---
 
 # zdiff Plugin
 
-CLI tool: zdiff.
+zdiff — GNU compression utilities.
 
 ## Commands
 - `zdiff <resource> <action>` — Execute zdiff commands
@@ -18,7 +18,7 @@ CLI tool: zdiff.
 
 ## Installation
 ```bash
-apt-get install zdiff 2>/dev/null || which zdiff
+apt-get install gzip 2>/dev/null || which zdiff
 ```
 
 ## Key Features

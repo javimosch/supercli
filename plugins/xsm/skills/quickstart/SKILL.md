@@ -1,11 +1,11 @@
 ---
 name: xsm
-description: Use this skill when the user wants to use xsm, cli tool: xsm.
+description: Use this skill when the user wants to use xsm, X session utilities.
 ---
 
 # xsm Plugin
 
-CLI tool: xsm.
+xsm — X session utilities.
 
 ## Commands
 - `xsm <resource> <action>` — Execute xsm commands
@@ -18,7 +18,7 @@ CLI tool: xsm.
 
 ## Installation
 ```bash
-apt-get install xsm 2>/dev/null || which xsm
+apt-get install x11-session-utils 2>/dev/null || which xsm
 ```
 
 ## Key Features

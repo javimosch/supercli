@@ -1,11 +1,11 @@
 ---
 name: xtables-legacy-multi
-description: Use this skill when the user wants to use xtables-legacy-multi, cli tool: xtables-legacy-multi.
+description: Use this skill when the user wants to use xtables-legacy-multi, administration tools for packet filtering and NAT.
 ---
 
 # xtables-legacy-multi Plugin
 
-CLI tool: xtables-legacy-multi.
+xtables-legacy-multi — administration tools for packet filtering and NAT.
 
 ## Commands
 - `xtables-legacy-multi <resource> <action>` — Execute xtables-legacy-multi commands
@@ -18,7 +18,7 @@ CLI tool: xtables-legacy-multi.
 
 ## Installation
 ```bash
-apt-get install xtables-legacy-multi 2>/dev/null || which xtables-legacy-multi
+apt-get install iptables 2>/dev/null || which xtables-legacy-multi
 ```
 
 ## Key Features

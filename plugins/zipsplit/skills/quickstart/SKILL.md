@@ -1,11 +1,11 @@
 ---
 name: zipsplit
-description: Use this skill when the user wants to use zipsplit, cli tool: zipsplit.
+description: Use this skill when the user wants to use zipsplit, Archiver for .zip files.
 ---
 
 # zipsplit Plugin
 
-CLI tool: zipsplit.
+zipsplit — Archiver for .zip files.
 
 ## Commands
 - `zipsplit <resource> <action>` — Execute zipsplit commands
@@ -18,7 +18,7 @@ CLI tool: zipsplit.
 
 ## Installation
 ```bash
-apt-get install zipsplit 2>/dev/null || which zipsplit
+apt-get install zip 2>/dev/null || which zipsplit
 ```
 
 ## Key Features

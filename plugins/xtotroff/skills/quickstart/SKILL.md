@@ -1,11 +1,11 @@
 ---
 name: xtotroff
-description: Use this skill when the user wants to use xtotroff, cli tool: xtotroff.
+description: Use this skill when the user wants to use xtotroff, GNU troff text-formatting system.
 ---
 
 # xtotroff Plugin
 
-CLI tool: xtotroff.
+xtotroff — GNU troff text-formatting system.
 
 ## Commands
 - `xtotroff <resource> <action>` — Execute xtotroff commands
@@ -18,7 +18,7 @@ CLI tool: xtotroff.
 
 ## Installation
 ```bash
-apt-get install xtotroff 2>/dev/null || which xtotroff
+apt-get install groff 2>/dev/null || which xtotroff
 ```
 
 ## Key Features

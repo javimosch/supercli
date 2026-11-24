@@ -1,11 +1,11 @@
 ---
 name: xlsatoms
-description: Use this skill when the user wants to use xlsatoms, cli tool: xlsatoms.
+description: Use this skill when the user wants to use xlsatoms, X11 utilities.
 ---
 
 # xlsatoms Plugin
 
-CLI tool: xlsatoms.
+xlsatoms — X11 utilities.
 
 ## Commands
 - `xlsatoms <resource> <action>` — Execute xlsatoms commands
@@ -18,7 +18,7 @@ CLI tool: xlsatoms.
 
 ## Installation
 ```bash
-apt-get install xlsatoms 2>/dev/null || which xlsatoms
+apt-get install x11-utils 2>/dev/null || which xlsatoms
 ```
 
 ## Key Features

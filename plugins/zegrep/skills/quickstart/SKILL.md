@@ -1,11 +1,11 @@
 ---
 name: zegrep
-description: Use this skill when the user wants to use zegrep, cli tool: zegrep.
+description: Use this skill when the user wants to use zegrep, GNU compression utilities.
 ---
 
 # zegrep Plugin
 
-CLI tool: zegrep.
+zegrep — GNU compression utilities.
 
 ## Commands
 - `zegrep <resource> <action>` — Execute zegrep commands
@@ -18,7 +18,7 @@ CLI tool: zegrep.
 
 ## Installation
 ```bash
-apt-get install zegrep 2>/dev/null || which zegrep
+apt-get install gzip 2>/dev/null || which zegrep
 ```
 
 ## Key Features

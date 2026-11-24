@@ -1,11 +1,11 @@
 ---
 name: xmlsec1-config
-description: Use this skill when the user wants to use xmlsec1-config, cli tool: xmlsec1-config.
+description: Use this skill when the user wants to use xmlsec1-config, Development files for the XML security library.
 ---
 
 # xmlsec1-config Plugin
 
-CLI tool: xmlsec1-config.
+xmlsec1-config — Development files for the XML security library.
 
 ## Commands
 - `xmlsec1-config <resource> <action>` — Execute xmlsec1-config commands
@@ -18,7 +18,7 @@ CLI tool: xmlsec1-config.
 
 ## Installation
 ```bash
-apt-get install xmlsec1-config 2>/dev/null || which xmlsec1-config
+apt-get install libxmlsec1-dev 2>/dev/null || which xmlsec1-config
 ```
 
 ## Key Features

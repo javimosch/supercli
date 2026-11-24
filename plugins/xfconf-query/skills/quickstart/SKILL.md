@@ -1,11 +1,11 @@
 ---
 name: xfconf-query
-description: Use this skill when the user wants to use xfconf-query, cli tool: xfconf-query.
+description: Use this skill when the user wants to use xfconf-query, utilities for managing settings in Xfce.
 ---
 
 # xfconf-query Plugin
 
-CLI tool: xfconf-query.
+xfconf-query — utilities for managing settings in Xfce.
 
 ## Commands
 - `xfconf-query <resource> <action>` — Execute xfconf-query commands
@@ -18,7 +18,7 @@ CLI tool: xfconf-query.
 
 ## Installation
 ```bash
-apt-get install xfconf-query 2>/dev/null || which xfconf-query
+apt-get install xfconf 2>/dev/null || which xfconf-query
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: zipcloak
-description: Use this skill when the user wants to use zipcloak, cli tool: zipcloak.
+description: Use this skill when the user wants to use zipcloak, Archiver for .zip files.
 ---
 
 # zipcloak Plugin
 
-CLI tool: zipcloak.
+zipcloak — Archiver for .zip files.
 
 ## Commands
 - `zipcloak <resource> <action>` — Execute zipcloak commands
@@ -18,7 +18,7 @@ CLI tool: zipcloak.
 
 ## Installation
 ```bash
-apt-get install zipcloak 2>/dev/null || which zipcloak
+apt-get install zip 2>/dev/null || which zipcloak
 ```
 
 ## Key Features

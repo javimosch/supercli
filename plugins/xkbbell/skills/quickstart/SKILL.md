@@ -1,11 +1,11 @@
 ---
 name: xkbbell
-description: Use this skill when the user wants to use xkbbell, cli tool: xkbbell.
+description: Use this skill when the user wants to use xkbbell, X11 XKB utilities.
 ---
 
 # xkbbell Plugin
 
-CLI tool: xkbbell.
+xkbbell — X11 XKB utilities.
 
 ## Commands
 - `xkbbell <resource> <action>` — Execute xkbbell commands
@@ -18,7 +18,7 @@ CLI tool: xkbbell.
 
 ## Installation
 ```bash
-apt-get install xkbbell 2>/dev/null || which xkbbell
+apt-get install x11-xkb-utils 2>/dev/null || which xkbbell
 ```
 
 ## Key Features

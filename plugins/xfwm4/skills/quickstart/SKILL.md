@@ -1,11 +1,11 @@
 ---
 name: xfwm4
-description: Use this skill when the user wants to use xfwm4, cli tool: xfwm4.
+description: Use this skill when the user wants to use xfwm4, window manager of the Xfce project.
 ---
 
 # xfwm4 Plugin
 
-CLI tool: xfwm4.
+window manager of the Xfce project.
 
 ## Commands
 - `xfwm4 <resource> <action>` — Execute xfwm4 commands

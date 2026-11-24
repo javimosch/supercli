@@ -1,11 +1,11 @@
 ---
 name: xfdesktop
-description: Use this skill when the user wants to use xfdesktop, cli tool: xfdesktop.
+description: Use this skill when the user wants to use xfdesktop, Xfce desktop background, icons and root menu manager.
 ---
 
 # xfdesktop Plugin
 
-CLI tool: xfdesktop.
+xfdesktop — Xfce desktop background, icons and root menu manager.
 
 ## Commands
 - `xfdesktop <resource> <action>` — Execute xfdesktop commands
@@ -18,7 +18,7 @@ CLI tool: xfdesktop.
 
 ## Installation
 ```bash
-apt-get install xfdesktop 2>/dev/null || which xfdesktop
+apt-get install xfdesktop4 2>/dev/null || which xfdesktop
 ```
 
 ## Key Features

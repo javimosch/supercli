@@ -1,11 +1,11 @@
 ---
 name: xvfb-run
-description: Use this skill when the user wants to use xvfb-run, cli tool: xvfb-run.
+description: Use this skill when the user wants to use xvfb-run, Virtual Framebuffer 'fake' X server.
 ---
 
 # xvfb-run Plugin
 
-CLI tool: xvfb-run.
+xvfb-run — Virtual Framebuffer 'fake' X server.
 
 ## Commands
 - `xvfb-run <resource> <action>` — Execute xvfb-run commands
@@ -18,7 +18,7 @@ CLI tool: xvfb-run.
 
 ## Installation
 ```bash
-apt-get install xvfb-run 2>/dev/null || which xvfb-run
+apt-get install xvfb 2>/dev/null || which xvfb-run
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xsetroot
-description: Use this skill when the user wants to use xsetroot, cli tool: xsetroot.
+description: Use this skill when the user wants to use xsetroot, X server utilities.
 ---
 
 # xsetroot Plugin
 
-CLI tool: xsetroot.
+xsetroot — X server utilities.
 
 ## Commands
 - `xsetroot <resource> <action>` — Execute xsetroot commands
@@ -18,7 +18,7 @@ CLI tool: xsetroot.
 
 ## Installation
 ```bash
-apt-get install xsetroot 2>/dev/null || which xsetroot
+apt-get install x11-xserver-utils 2>/dev/null || which xsetroot
 ```
 
 ## Key Features

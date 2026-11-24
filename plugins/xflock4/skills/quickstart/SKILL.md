@@ -1,11 +1,11 @@
 ---
 name: xflock4
-description: Use this skill when the user wants to use xflock4, cli tool: xflock4.
+description: Use this skill when the user wants to use xflock4, Xfce4 Session Manager.
 ---
 
 # xflock4 Plugin
 
-CLI tool: xflock4.
+xflock4 — Xfce4 Session Manager.
 
 ## Commands
 - `xflock4 <resource> <action>` — Execute xflock4 commands
@@ -18,7 +18,7 @@ CLI tool: xflock4.
 
 ## Installation
 ```bash
-apt-get install xflock4 2>/dev/null || which xflock4
+apt-get install xfce4-session 2>/dev/null || which xflock4
 ```
 
 ## Key Features

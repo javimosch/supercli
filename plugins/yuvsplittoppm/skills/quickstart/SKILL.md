@@ -1,11 +1,11 @@
 ---
 name: yuvsplittoppm
-description: Use this skill when the user wants to use yuvsplittoppm, cli tool: yuvsplittoppm.
+description: Use this skill when the user wants to use yuvsplittoppm, Graphics conversion tools between image formats.
 ---
 
 # yuvsplittoppm Plugin
 
-CLI tool: yuvsplittoppm.
+yuvsplittoppm — Graphics conversion tools between image formats.
 
 ## Commands
 - `yuvsplittoppm <resource> <action>` — Execute yuvsplittoppm commands
@@ -18,7 +18,7 @@ CLI tool: yuvsplittoppm.
 
 ## Installation
 ```bash
-apt-get install yuvsplittoppm 2>/dev/null || which yuvsplittoppm
+apt-get install netpbm 2>/dev/null || which yuvsplittoppm
 ```
 
 ## Key Features

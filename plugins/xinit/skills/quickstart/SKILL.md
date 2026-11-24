@@ -1,11 +1,11 @@
 ---
 name: xinit
-description: Use this skill when the user wants to use xinit, cli tool: xinit.
+description: Use this skill when the user wants to use xinit, X server initialisation tool.
 ---
 
 # xinit Plugin
 
-CLI tool: xinit.
+X server initialisation tool.
 
 ## Commands
 - `xinit <resource> <action>` — Execute xinit commands

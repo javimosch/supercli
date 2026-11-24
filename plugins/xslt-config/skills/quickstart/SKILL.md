@@ -1,11 +1,11 @@
 ---
 name: xslt-config
-description: Use this skill when the user wants to use xslt-config, cli tool: xslt-config.
+description: Use this skill when the user wants to use xslt-config, XSLT 1.0 processing library - development kit.
 ---
 
 # xslt-config Plugin
 
-CLI tool: xslt-config.
+xslt-config — XSLT 1.0 processing library - development kit.
 
 ## Commands
 - `xslt-config <resource> <action>` — Execute xslt-config commands
@@ -18,7 +18,7 @@ CLI tool: xslt-config.
 
 ## Installation
 ```bash
-apt-get install xslt-config 2>/dev/null || which xslt-config
+apt-get install libxslt1-dev 2>/dev/null || which xslt-config
 ```
 
 ## Key Features

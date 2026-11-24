@@ -1,11 +1,11 @@
 ---
 name: zramctl
-description: Use this skill when the user wants to use zramctl, cli tool: zramctl.
+description: Use this skill when the user wants to use zramctl, miscellaneous system utilities.
 ---
 
 # zramctl Plugin
 
-CLI tool: zramctl.
+zramctl — miscellaneous system utilities.
 
 ## Commands
 - `zramctl <resource> <action>` — Execute zramctl commands
@@ -18,7 +18,7 @@ CLI tool: zramctl.
 
 ## Installation
 ```bash
-apt-get install zramctl 2>/dev/null || which zramctl
+apt-get install util-linux 2>/dev/null || which zramctl
 ```
 
 ## Key Features

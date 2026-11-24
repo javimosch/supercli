@@ -1,11 +1,11 @@
 ---
 name: xzfgrep
-description: Use this skill when the user wants to use xzfgrep, cli tool: xzfgrep.
+description: Use this skill when the user wants to use xzfgrep, XZ-format compression utilities.
 ---
 
 # xzfgrep Plugin
 
-CLI tool: xzfgrep.
+xzfgrep — XZ-format compression utilities.
 
 ## Commands
 - `xzfgrep <resource> <action>` — Execute xzfgrep commands
@@ -18,7 +18,7 @@ CLI tool: xzfgrep.
 
 ## Installation
 ```bash
-apt-get install xzfgrep 2>/dev/null || which xzfgrep
+apt-get install xz-utils 2>/dev/null || which xzfgrep
 ```
 
 ## Key Features

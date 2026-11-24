@@ -1,11 +1,11 @@
 ---
 name: xfdesktop-settings
-description: Use this skill when the user wants to use xfdesktop-settings, cli tool: xfdesktop-settings.
+description: Use this skill when the user wants to use xfdesktop-settings, Xfce desktop background, icons and root menu manager.
 ---
 
 # xfdesktop-settings Plugin
 
-CLI tool: xfdesktop-settings.
+xfdesktop-settings — Xfce desktop background, icons and root menu manager.
 
 ## Commands
 - `xfdesktop-settings <resource> <action>` — Execute xfdesktop-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfdesktop-settings.
 
 ## Installation
 ```bash
-apt-get install xfdesktop-settings 2>/dev/null || which xfdesktop-settings
+apt-get install xfdesktop4 2>/dev/null || which xfdesktop-settings
 ```
 
 ## Key Features

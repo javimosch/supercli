@@ -1,11 +1,11 @@
 ---
 name: xload
-description: Use this skill when the user wants to use xload, cli tool: xload.
+description: Use this skill when the user wants to use xload, X applications.
 ---
 
 # xload Plugin
 
-CLI tool: xload.
+xload — X applications.
 
 ## Commands
 - `xload <resource> <action>` — Execute xload commands
@@ -18,7 +18,7 @@ CLI tool: xload.
 
 ## Installation
 ```bash
-apt-get install xload 2>/dev/null || which xload
+apt-get install x11-apps 2>/dev/null || which xload
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xfrun4
-description: Use this skill when the user wants to use xfrun4, cli tool: xfrun4.
+description: Use this skill when the user wants to use xfrun4, Application finder for the Xfce4 desktop environment.
 ---
 
 # xfrun4 Plugin
 
-CLI tool: xfrun4.
+xfrun4 — Application finder for the Xfce4 desktop environment.
 
 ## Commands
 - `xfrun4 <resource> <action>` — Execute xfrun4 commands
@@ -18,7 +18,7 @@ CLI tool: xfrun4.
 
 ## Installation
 ```bash
-apt-get install xfrun4 2>/dev/null || which xfrun4
+apt-get install xfce4-appfinder 2>/dev/null || which xfrun4
 ```
 
 ## Key Features

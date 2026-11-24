@@ -1,11 +1,11 @@
 ---
 name: xsetpointer
-description: Use this skill when the user wants to use xsetpointer, cli tool: xsetpointer.
+description: Use this skill when the user wants to use xsetpointer, X server utilities.
 ---
 
 # xsetpointer Plugin
 
-CLI tool: xsetpointer.
+xsetpointer — X server utilities.
 
 ## Commands
 - `xsetpointer <resource> <action>` — Execute xsetpointer commands
@@ -18,7 +18,7 @@ CLI tool: xsetpointer.
 
 ## Installation
 ```bash
-apt-get install xsetpointer 2>/dev/null || which xsetpointer
+apt-get install x11-xserver-utils 2>/dev/null || which xsetpointer
 ```
 
 ## Key Features

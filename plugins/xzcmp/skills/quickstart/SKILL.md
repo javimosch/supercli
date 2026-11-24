@@ -1,11 +1,11 @@
 ---
 name: xzcmp
-description: Use this skill when the user wants to use xzcmp, cli tool: xzcmp.
+description: Use this skill when the user wants to use xzcmp, XZ-format compression utilities.
 ---
 
 # xzcmp Plugin
 
-CLI tool: xzcmp.
+xzcmp — XZ-format compression utilities.
 
 ## Commands
 - `xzcmp <resource> <action>` — Execute xzcmp commands
@@ -18,7 +18,7 @@ CLI tool: xzcmp.
 
 ## Installation
 ```bash
-apt-get install xzcmp 2>/dev/null || which xzcmp
+apt-get install xz-utils 2>/dev/null || which xzcmp
 ```
 
 ## Key Features

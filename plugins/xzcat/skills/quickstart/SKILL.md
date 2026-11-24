@@ -1,11 +1,11 @@
 ---
 name: xzcat
-description: Use this skill when the user wants to use xzcat, cli tool: xzcat.
+description: Use this skill when the user wants to use xzcat, XZ-format compression utilities.
 ---
 
 # xzcat Plugin
 
-CLI tool: xzcat.
+xzcat — XZ-format compression utilities.
 
 ## Commands
 - `xzcat <resource> <action>` — Execute xzcat commands
@@ -18,7 +18,7 @@ CLI tool: xzcat.
 
 ## Installation
 ```bash
-apt-get install xzcat 2>/dev/null || which xzcat
+apt-get install xz-utils 2>/dev/null || which xzcat
 ```
 
 ## Key Features

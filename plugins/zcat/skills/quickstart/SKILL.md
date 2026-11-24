@@ -1,11 +1,11 @@
 ---
 name: zcat
-description: Use this skill when the user wants to use zcat, cli tool: zcat.
+description: Use this skill when the user wants to use zcat, GNU compression utilities.
 ---
 
 # zcat Plugin
 
-CLI tool: zcat.
+zcat — GNU compression utilities.
 
 ## Commands
 - `zcat <resource> <action>` — Execute zcat commands
@@ -18,7 +18,7 @@ CLI tool: zcat.
 
 ## Installation
 ```bash
-apt-get install zcat 2>/dev/null || which zcat
+apt-get install gzip 2>/dev/null || which zcat
 ```
 
 ## Key Features

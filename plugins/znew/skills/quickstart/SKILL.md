@@ -1,11 +1,11 @@
 ---
 name: znew
-description: Use this skill when the user wants to use znew, cli tool: znew.
+description: Use this skill when the user wants to use znew, GNU compression utilities.
 ---
 
 # znew Plugin
 
-CLI tool: znew.
+znew — GNU compression utilities.
 
 ## Commands
 - `znew <resource> <action>` — Execute znew commands
@@ -18,7 +18,7 @@ CLI tool: znew.
 
 ## Installation
 ```bash
-apt-get install znew 2>/dev/null || which znew
+apt-get install gzip 2>/dev/null || which znew
 ```
 
 ## Key Features

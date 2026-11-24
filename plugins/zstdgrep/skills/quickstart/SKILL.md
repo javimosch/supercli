@@ -1,11 +1,11 @@
 ---
 name: zstdgrep
-description: Use this skill when the user wants to use zstdgrep, cli tool: zstdgrep.
+description: Use this skill when the user wants to use zstdgrep, fast lossless compression algorithm -- CLI tool.
 ---
 
 # zstdgrep Plugin
 
-CLI tool: zstdgrep.
+zstdgrep — fast lossless compression algorithm -- CLI tool.
 
 ## Commands
 - `zstdgrep <resource> <action>` — Execute zstdgrep commands
@@ -18,7 +18,7 @@ CLI tool: zstdgrep.
 
 ## Installation
 ```bash
-apt-get install zstdgrep 2>/dev/null || which zstdgrep
+apt-get install zstd 2>/dev/null || which zstdgrep
 ```
 
 ## Key Features

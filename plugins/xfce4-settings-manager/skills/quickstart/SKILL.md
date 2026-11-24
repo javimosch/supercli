@@ -1,11 +1,11 @@
 ---
 name: xfce4-settings-manager
-description: Use this skill when the user wants to use xfce4-settings-manager, cli tool: xfce4-settings-manager.
+description: Use this skill when the user wants to use xfce4-settings-manager, graphical application for managing Xfce settings.
 ---
 
 # xfce4-settings-manager Plugin
 
-CLI tool: xfce4-settings-manager.
+xfce4-settings-manager — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-settings-manager <resource> <action>` — Execute xfce4-settings-manager commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-settings-manager.
 
 ## Installation
 ```bash
-apt-get install xfce4-settings-manager 2>/dev/null || which xfce4-settings-manager
+apt-get install xfce4-settings 2>/dev/null || which xfce4-settings-manager
 ```
 
 ## Key Features

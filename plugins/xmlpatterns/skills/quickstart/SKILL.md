@@ -1,11 +1,11 @@
 ---
 name: xmlpatterns
-description: Use this skill when the user wants to use xmlpatterns, cli tool: xmlpatterns.
+description: Use this skill when the user wants to use xmlpatterns, Wrapper to select between Qt development binary versions.
 ---
 
 # xmlpatterns Plugin
 
-CLI tool: xmlpatterns.
+xmlpatterns — Wrapper to select between Qt development binary versions.
 
 ## Commands
 - `xmlpatterns <resource> <action>` — Execute xmlpatterns commands
@@ -18,7 +18,7 @@ CLI tool: xmlpatterns.
 
 ## Installation
 ```bash
-apt-get install xmlpatterns 2>/dev/null || which xmlpatterns
+apt-get install qtchooser 2>/dev/null || which xmlpatterns
 ```
 
 ## Key Features

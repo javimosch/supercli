@@ -1,11 +1,11 @@
 ---
 name: xgc
-description: Use this skill when the user wants to use xgc, cli tool: xgc.
+description: Use this skill when the user wants to use xgc, X applications.
 ---
 
 # xgc Plugin
 
-CLI tool: xgc.
+xgc — X applications.
 
 ## Commands
 - `xgc <resource> <action>` — Execute xgc commands
@@ -18,7 +18,7 @@ CLI tool: xgc.
 
 ## Installation
 ```bash
-apt-get install xgc 2>/dev/null || which xgc
+apt-get install x11-apps 2>/dev/null || which xgc
 ```
 
 ## Key Features
