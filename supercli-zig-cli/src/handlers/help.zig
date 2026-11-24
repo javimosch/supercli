@@ -55,6 +55,14 @@ pub fn handleHelpJson(gpa: std.mem.Allocator) void {
     jw.objectField("name") catch return; jw.write("daemon") catch return;
     jw.objectField("description") catch return; jw.write("start|stop|status") catch return;
     jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("telemetry") catch return;
+    jw.objectField("description") catch return; jw.write("Inspect anonymous telemetry + on/off state (--off)") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("feedback") catch return;
+    jw.objectField("description") catch return; jw.write("feedback <msg> [--kind] [--context] — report a bug or idea") catch return;
+    jw.endObject() catch return;
     jw.endArray() catch return;
 
     jw.objectField("core_commands") catch return;

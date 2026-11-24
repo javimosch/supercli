@@ -84,6 +84,12 @@ fn handleGuideJson(gpa: std.mem.Allocator) void {
     jw.objectField("daemon") catch return;
     jw.write("Subcommands: start, stop, status (PID-file management)") catch return;
 
+    jw.objectField("telemetry") catch return;
+    jw.write("Print the anonymous usage payload and on/off state (--off persists opt-out)") catch return;
+
+    jw.objectField("feedback") catch return;
+    jw.write("feedback <msg> [--kind] [--context] — report a bug or idea to the shared relay") catch return;
+
     jw.endObject() catch return;
 
     jw.objectField("examples") catch return;
@@ -102,6 +108,7 @@ fn handleGuideJson(gpa: std.mem.Allocator) void {
     jw.write("Flags use --flag value (space-separated), not --flag=value") catch return;
     jw.write("Positional args are marked in inspect output with positional:true — pass them as bare values before named flags") catch return;
     jw.write("If sc-zig crashes or is missing a feature, fall back to sc (Node.js) — the reference implementation") catch return;
+    jw.write("Telemetry consolidates in ~/.supercli/telemetry.jsonl and flushes at most once per hour as one batched POST — disable: SUPERCLI_TELEMETRY=0, DO_NOT_TRACK=1, or `sc-zig telemetry --off`. Inspect: `sc-zig telemetry`") catch return;
     jw.endArray() catch return;
 
     jw.endObject() catch return;
@@ -141,6 +148,8 @@ fn handleGuideHuman() void {
     output.writeLine("  plugins      list|explore|install|remove|show|learn|doctor|update");
     output.writeLine("  discover     Find plugins for a task (--intent)");
     output.writeLine("  daemon       start|stop|status");
+    output.writeLine("  telemetry    Inspect anonymous telemetry + on/off state (--off)");
+    output.writeLine("  feedback     feedback <msg> — report a bug or idea to the shared relay");
     output.writeLine("");
     output.writeLine("## Gotchas");
     output.writeLine("");

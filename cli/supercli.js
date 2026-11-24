@@ -29,6 +29,8 @@ const { displayJsonHelp, displayComprehensiveHelp, renderTopLevelHelp } = requir
 const { handleCommandsQuery, handleInspect, handleSchema, handleNamespaceBrowse } = require("./commands-handler");
 const { handleExecute, handlePlan, handleExecutePlan } = require("./execute-handler");
 const { buildGuide, buildGuideHuman } = require("./guide");
+const telemetry = require("./telemetry");
+const { sendFeedback } = require("./feedback");
 
 const SERVER = process.env.SUPERCLI_SERVER;
 const hasServer = !!SERVER;
@@ -37,6 +39,8 @@ const humanMode = !!flags.human;
 const compactMode = !!flags.compact;
 const output = makeOutput({ humanMode, compactMode });
 const outputError = makeOutputError({ humanMode, compactMode });
+
+telemetry.init(positional[0] || "none");
 
 function requireServer(message) {
   if (hasServer) return true;
@@ -177,6 +181,22 @@ async function main() {
       } else {
         output({ name: "SuperCLI", implementation: "JavaScript", version: CLI_VERSION, node_version: process.version, binary_name: "supercli" });
       }
+      return;
+    }
+
+    if (positional[0] === "telemetry") {
+      output(telemetry.cmdTelemetry(!!flags.off));
+      return;
+    }
+
+    if (positional[0] === "feedback") {
+      const message = positional.slice(1).join(" ");
+      if (!message.trim()) {
+        outputError({ code: 85, type: "invalid_argument", message: "Usage: sc feedback <message> [--kind bug|idea|praise|note] [--context txt]", recoverable: false });
+        return;
+      }
+      const r = await sendFeedback({ message, kind: flags.kind ? String(flags.kind) : "note", context: flags.context ? String(flags.context) : "" });
+      output({ ok: true, data: r });
       return;
     }
 

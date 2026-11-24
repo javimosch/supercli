@@ -110,6 +110,7 @@ pub fn exitWithError(gpa: std.mem.Allocator, mode: Mode, info: ErrorInfo) noretu
         writeRawErr(out.written());
         writeRawErr("\n");
     }
+    @import("telemetry.zig").finish(@intCast(@max(0, @min(info.code, 255))));
     std.process.exit(@intCast(@max(0, @min(info.code, 255))));
 }
 

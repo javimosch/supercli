@@ -36,6 +36,8 @@ function buildGuide() {
       "skills": "SKILL.md catalog: list, get, teach, sync, search",
       "mcp": "MCP server registry: list, add, tools, call, bind, doctor, remove",
       "daemon": "Subcommands: start, stop, status",
+      "telemetry": "Print the anonymous usage payload and on/off state (--off persists opt-out)",
+      "feedback": "feedback <msg> [--kind] [--context] — report a bug or idea to the shared relay",
     },
     examples: [
       "sc plugins explore --name memory  # find memory-related plugins",
@@ -52,6 +54,7 @@ function buildGuide() {
       "If sc is too slow for repeated calls, switch to sc-zig (faster, single binary)",
       "If sc-zig crashes or is missing a feature, fall back to sc (Node.js) — the reference implementation",
       "Use context-mode MCP tool for large outputs (sc commands has 5000+ plugins) to reduce token usage by up to 98%",
+      "Telemetry consolidates in ~/.supercli/telemetry.jsonl and flushes at most once per hour as one batched POST — disable: SUPERCLI_TELEMETRY=0, DO_NOT_TRACK=1, or `sc telemetry --off`. Inspect: `sc telemetry`",
     ],
   };
 }

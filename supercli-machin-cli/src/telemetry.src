@@ -8,7 +8,7 @@
 // Shared files (all three sc binaries read/write the same ones, so the first
 // binary past the hour boundary flushes for everyone):
 //   ~/.supercli/telemetry.jsonl         pending events, one object per line
-//   ~/.supercli/telemetry-flush.ts      unix ts of the last successful flush
+//   ~/.supercli/telemetry-flush.ts      unix ts of the last flush attempt
 //   ~/.supercli/telemetry-off           persisted opt-out (`telemetry --off`)
 //   ~/.supercli/telemetry-notice-shown  one-shot stderr disclosure marker
 //
@@ -83,9 +83,10 @@ func sc_tel_record(event, exit_class) {
 }
 
 // sc_tel_flush posts the pending ledger as one JSON array if an hour has
-// passed since the last successful flush. On failure the ledger is kept for
-// the next window; ledgers over 1000 lines are trimmed to the newest 500 so a
-// long-offline machine cannot build an unbounded backlog.
+// passed since the last ATTEMPT (stamping before the POST bounds retries to
+// <=1/h during outages). On failure the ledger is kept for the next window;
+// ledgers over 1000 lines are trimmed to the newest 500 so a long-offline
+// machine cannot build an unbounded backlog.
 func sc_tel_flush() {
     ledger := sc_tel_dir() + "/telemetry.jsonl"
     body := read_file(ledger)
@@ -105,6 +106,7 @@ func sc_tel_flush() {
     batch := "[" + join(parts, ",") + "]"
     ep := env("SUPERCLI_TELEMETRY_URL")
     if len(ep) == 0 { ep = sc_tel_endpoint }
+    write_file(tf, str(now()))
     resp := https_post(ep, batch)
     rk, rerr := json_get(resp, ".ok")
     if len(rerr) == 0 && strip_quotes(rk) == "true" {
@@ -113,7 +115,6 @@ func sc_tel_flush() {
         } else {
             write_file(ledger, "")
         }
-        write_file(tf, str(now()))
     }
 }
 

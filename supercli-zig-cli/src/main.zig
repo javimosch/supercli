@@ -20,8 +20,18 @@ const onboard = @import("handlers/onboard.zig");
 const misc = @import("handlers/misc.zig");
 const daemon = @import("handlers/daemon.zig");
 const guide = @import("handlers/guide.zig");
+const telemetry = @import("telemetry.zig");
 
 pub fn main(init: std.process.Init) !void {
+    var tel_code: u8 = 0;
+    defer telemetry.finish(tel_code);
+    realMain(init) catch |e| {
+        tel_code = 110;
+        return e;
+    };
+}
+
+fn realMain(init: std.process.Init) !void {
     const gpa = init.gpa;
     const io = init.io;
 
@@ -50,6 +60,7 @@ pub fn main(init: std.process.Init) !void {
     const pos = parsed.positional;
 
     const home = init.environ_map.get("HOME") orelse init.environ_map.get("USERPROFILE") orelse "/tmp";
+    telemetry.init(io, gpa, home, init.environ_map, if (pos.len > 0) pos[0] else "none");
 
     // ----- help / --help / --help-json -----
     if (parsed.flags.get("help-json") != null) {
@@ -81,6 +92,19 @@ pub fn main(init: std.process.Init) !void {
 
     // ----- No args → bootstrap -----
     if (pos.len == 0) { bootstrap.handleBootstrap(gpa, mode); return; }
+
+    // ----- telemetry / feedback -----
+    if (std.mem.eql(u8, pos[0], "telemetry")) {
+        telemetry.handleTelemetry(gpa, io, mode, init.environ_map, parsed.flags.contains("off"));
+        return;
+    }
+    if (std.mem.eql(u8, pos[0], "feedback")) {
+        const msg = if (pos.len > 1) pos[1] else "";
+        const kind = if (parsed.flags.get("kind")) |v| v else "note";
+        const ctx = if (parsed.flags.get("context")) |v| v else "";
+        telemetry.handleFeedback(gpa, io, mode, init.environ_map, msg, kind, ctx);
+        return;
+    }
 
     // ----- install-as-sc -----
     if (std.mem.eql(u8, pos[0], "install-as-sc")) { bootstrap.handleInstallAsSc(io, gpa, mode); return; }
@@ -432,5 +456,6 @@ test {
     _ = @import("handlers/misc.zig");
     _ = @import("handlers/daemon.zig");
     _ = @import("handlers/guide.zig");
+    _ = @import("telemetry.zig");
     _ = @import("tests/all_tests.zig");
 }
