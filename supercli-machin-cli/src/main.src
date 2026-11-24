@@ -28,25 +28,30 @@ func main() {
     argv := args()
     pa := parse_argv(argv, 1)
     want_json := pa_flag_on(pa, "json")
+    if len(pa.positional) > 0 { sc_current_verb = pa.positional[0] } else { sc_current_verb = "none" }
 
     if pa_flag_on(pa, "version") || pa_flag_on(pa, "info") {
         if want_json { render_version_json() } else { render_version_human() }
+        sc_tel_finish("run", 0)
         return
     }
 
     if len(pa.positional) == 0 {
         render_bootstrap_json()
+        sc_tel_finish("run", 0)
         return
     }
 
     if pa.positional[0] == "help" || pa_flag_on(pa, "help") {
         print_help()
+        sc_tel_finish("run", 0)
         return
     }
 
     // ----- cli-spec positional commands (help-json, guide, version) -----
     if pa.positional[0] == "help-json" {
         render_help_json_catalog()
+        sc_tel_finish("run", 0)
         return
     }
     if pa.positional[0] == "guide" {
@@ -55,17 +60,31 @@ func main() {
         } else {
             render_guide_json()
         }
+        sc_tel_finish("run", 0)
         return
     }
     if pa.positional[0] == "version" {
         if want_json { render_version_json() } else { render_version_human() }
+        sc_tel_finish("run", 0)
         return
+    }
+
+    if pa.positional[0] == "telemetry" {
+        sc_tel_finish("run", 0)
+        exit(cmd_telemetry(pa_flag_on(pa, "off")))
+    }
+    if pa.positional[0] == "feedback" {
+        msg := ""
+        if len(pa.positional) > 1 { msg = pa.positional[1] }
+        sc_tel_finish("run", 0)
+        exit(cmd_feedback(msg, pa_flag(pa, "kind"), pa_flag(pa, "context")))
     }
 
     if pa.positional[0] == "install-as-sc" {
         println("Manual install (machin has no reliable self-locate from argv[0]):")
         println("  1. which sc-machin        # confirm its real path")
         println("  2. sudo ln -sf \"$(which sc-machin)\" /usr/local/bin/sc")
+        sc_tel_finish("run", 0)
         return
     }
 
@@ -78,6 +97,7 @@ func main() {
         query := pa_flag(pa, "query")
         cmd_results := list_commands(lock, query)
         if want_json { render_commands_json(cmd_results) } else { render_commands_human(cmd_results) }
+        sc_tel_finish("run", 0)
         return
     }
 
@@ -90,6 +110,7 @@ func main() {
             typed_error(90, "resource_not_found", "command not found", false)
         }
         if want_json { render_inspect_json(cmd, plugin_name) } else { render_inspect_human(cmd, plugin_name) }
+        sc_tel_finish("run", 0)
         return
     }
 
@@ -99,6 +120,7 @@ func main() {
 
         if sub == "list" {
             if want_json { render_plugins_list_json(lock) } else { render_plugins_list_human(lock) }
+            sc_tel_finish("run", 0)
             return
         }
         if sub == "explore" {
@@ -110,6 +132,7 @@ func main() {
             for i < n { installed[names[i]] = true  i = i + 1 }
             explore_results := explore_plugins(dir, pa_flag(pa, "name"), pa_flag(pa, "tags"), installed)
             if want_json { render_explore_json(explore_results) } else { render_explore_human(explore_results) }
+            sc_tel_finish("run", 0)
             return
         }
         if sub == "install" {
@@ -117,10 +140,12 @@ func main() {
                 typed_error(85, "invalid_argument", "usage: sc-machin plugins install <name>", false)
             }
             code := install_plugin(pa.positional[2])
+            sc_tel_finish("run", code)
             exit(code)
         }
         if sub == "update" {
             code := update_plugins(pa_flag_on(pa, "check"))
+            sc_tel_finish("run", code)
             exit(code)
         }
 
@@ -131,6 +156,7 @@ func main() {
         sub := ""
         if len(pa.positional) > 1 { sub = pa.positional[1] }
         if sub == "serve" {
+            sc_tel_finish("run", 0)
             mcp_serve(lock)
             return
         }
@@ -155,6 +181,7 @@ func main() {
 
     result := run_command(cmd.adapterConfig, pa.flag_vals)
     if result.ran_passthrough {
+        sc_tel_finish("run", result.exit_code)
         exit(result.exit_code)
     }
     if want_json {
@@ -162,5 +189,6 @@ func main() {
     } else {
         render_exec_human(result)
     }
+    sc_tel_finish("run", result.exit_code)
     exit(result.exit_code)
 }

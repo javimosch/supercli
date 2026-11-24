@@ -1,0 +1,157 @@
+// telemetry — cli-telemetry-spec, shared-ledger variant.
+//
+// Unlike the vendored per-invocation sender, supercli binaries get invoked a
+// LOT (plugin dispatch, MCP calls, fleet loops), so events consolidate in a
+// local ledger and flush at most once per hour — one POST carrying a JSON
+// array (grange /t accepts batches server-side since 2026-11-23).
+//
+// Shared files (all three sc binaries read/write the same ones, so the first
+// binary past the hour boundary flushes for everyone):
+//   ~/.supercli/telemetry.jsonl         pending events, one object per line
+//   ~/.supercli/telemetry-flush.ts      unix ts of the last successful flush
+//   ~/.supercli/telemetry-off           persisted opt-out (`telemetry --off`)
+//   ~/.supercli/telemetry-notice-shown  one-shot stderr disclosure marker
+//
+// Off-switches checked before any network code: SUPERCLI_TELEMETRY=0,
+// DO_NOT_TRACK=1, the off-file, and CI env vars (off by default in CI).
+
+var sc_tel_endpoint = "https://grange.intrane.fr/t"
+var sc_current_verb = ""
+
+func sc_tel_dir() (d) {
+    h := env("HOME")
+    if len(h) == 0 { h = "/tmp" }
+    d = h + "/.supercli"
+}
+
+func sc_tel_enabled() (ok) {
+    ok = false
+    if env("DO_NOT_TRACK") == "1" { return }
+    t := env("SUPERCLI_TELEMETRY")
+    if t == "0" || t == "false" || t == "off" || t == "no" { return }
+    k, _, _ := stat(sc_tel_dir() + "/telemetry-off")
+    if k == 1 { return }
+    if len(env("CI")) > 0 || len(env("CONTINUOUS_INTEGRATION")) > 0 || len(env("GITHUB_ACTIONS")) > 0 || len(env("GITLAB_CI")) > 0 || len(env("BUILDKITE")) > 0 { return }
+    ok = true
+}
+
+func sc_tel_notice() {
+    nf := sc_tel_dir() + "/telemetry-notice-shown"
+    k, _, _ := stat(nf)
+    if k == 1 { return }
+    write(2, "[telemetry] sc-machin sends anonymous usage counts: tool, version,\n")
+    write(2, "[telemetry] os/arch, which verb ran, and whether it failed. No identity,\n")
+    write(2, "[telemetry] arguments or data. Events consolidate locally and flush at\n")
+    write(2, "[telemetry] most once per hour. See `sc-machin telemetry` for the payload.\n")
+    write(2, "[telemetry] Disable: SUPERCLI_TELEMETRY=0 (or DO_NOT_TRACK=1)\n")
+    system("mkdir -p " + sc_tel_dir())
+    write_file(nf, "1")
+}
+
+func sc_tel_why_disabled() (r) {
+    if env("DO_NOT_TRACK") == "1" { r = "DO_NOT_TRACK=1"  return }
+    t := env("SUPERCLI_TELEMETRY")
+    if t == "0" || t == "false" || t == "off" || t == "no" { r = "SUPERCLI_TELEMETRY=" + t  return }
+    k, _, _ := stat(sc_tel_dir() + "/telemetry-off")
+    if k == 1 { r = "disabled by config (sc-machin telemetry --off)"  return }
+    if len(env("CI")) > 0 || len(env("GITHUB_ACTIONS")) > 0 || len(env("GITLAB_CI")) > 0 || len(env("BUILDKITE")) > 0 { r = "CI detected"  return }
+    r = "unknown"
+}
+
+func sc_tel_event(event, verb, exit_class) (p) {
+    _, osr, _ := exec("uname -s")
+    _, arr, _ := exec("uname -m")
+    p = "{\"tool\":\"sc-machin\",\"version\":\"" + sc_machin_version() + "\",\"event\":\"" + event +
+        "\",\"verb\":\"" + verb + "\",\"os\":\"" + to_lower(trim(osr)) + "\",\"arch\":\"" + trim(arr) +
+        "\",\"exit_class\":" + str(exit_class) + ",\"ts\":\"" + time_format_utc(now(), "%Y-%m-%dT%H:%M:%SZ") + "\"}"
+}
+
+func sc_tel_class(code) (c) {
+    c = 0
+    if code >= 80 && code < 90 { c = 80 }
+    if code >= 90 && code < 100 { c = 90 }
+    if code >= 100 && code < 110 { c = 100 }
+    if code >= 110 { c = 110 }
+}
+
+// sc_tel_record appends one event line to the shared ledger. No network.
+func sc_tel_record(event, exit_class) {
+    system("mkdir -p " + sc_tel_dir())
+    ledger := sc_tel_dir() + "/telemetry.jsonl"
+    prev := read_file(ledger)
+    write_file(ledger, prev + sc_tel_event(event, sc_current_verb, exit_class) + "\n")
+}
+
+// sc_tel_flush posts the pending ledger as one JSON array if an hour has
+// passed since the last successful flush. On failure the ledger is kept for
+// the next window; ledgers over 1000 lines are trimmed to the newest 500 so a
+// long-offline machine cannot build an unbounded backlog.
+func sc_tel_flush() {
+    ledger := sc_tel_dir() + "/telemetry.jsonl"
+    body := read_file(ledger)
+    if len(trim(body)) == 0 { return }
+    tf := sc_tel_dir() + "/telemetry-flush.ts"
+    _, _, last := stat(tf)
+    if last > 0 && now() - last < 3600 { return }
+    parts := split(trim(body), "\n")
+    oversize := false
+    if len(parts) > 1000 {
+        oversize = true
+        tail := []string{}
+        i := len(parts) - 500
+        for i < len(parts) { tail = append(tail, parts[i])  i = i + 1 }
+        parts = tail
+    }
+    batch := "[" + join(parts, ",") + "]"
+    ep := env("SUPERCLI_TELEMETRY_URL")
+    if len(ep) == 0 { ep = sc_tel_endpoint }
+    resp := https_post(ep, batch)
+    rk, rerr := json_get(resp, ".ok")
+    if len(rerr) == 0 && strip_quotes(rk) == "true" {
+        if oversize {
+            write_file(ledger, join(parts, "\n") + "\n")
+        } else {
+            write_file(ledger, "")
+        }
+        write_file(tf, str(now()))
+    }
+}
+
+// sc_tel_finish is called once per invocation with the resolved verb and the
+// final exit code (or its class). Cheap path: append + maybe flush.
+func sc_tel_finish(event, code) {
+    if !sc_tel_enabled() { return }
+    sc_tel_notice()
+    ik, _, _ := stat(sc_tel_dir() + "/telemetry-install-sent")
+    actual := event
+    if ik != 1 {
+        actual = "install"
+        write_file(sc_tel_dir() + "/telemetry-install-sent", "1")
+    }
+    sc_tel_record(actual, sc_tel_class(code))
+    sc_tel_flush()
+}
+
+func cmd_telemetry(off) (code) {
+    code = 0
+    if off {
+        system("mkdir -p " + sc_tel_dir())
+        write_file(sc_tel_dir() + "/telemetry-off", "1")
+        println("{\"ok\":true,\"data\":{\"enabled\":false,\"reason\":\"disabled by config\"}}")
+        return
+    }
+    en := sc_tel_enabled()
+    ens := "false"
+    reason := sc_tel_why_disabled()
+    if en { ens = "true"  reason = "enabled" }
+    ep := env("SUPERCLI_TELEMETRY_URL")
+    if len(ep) == 0 { ep = sc_tel_endpoint }
+    pending := 0
+    body := read_file(sc_tel_dir() + "/telemetry.jsonl")
+    if len(trim(body)) > 0 { pending = len(split(trim(body), "\n")) }
+    println("{\"ok\":true,\"data\":{\"enabled\":" + ens + ",\"reason\":" + json_str(reason) +
+        ",\"endpoint\":" + json_str(ep) + ",\"consolidation\":\"local ledger, flush <= 1/hour\"" +
+        ",\"pending_events\":" + str(pending) +
+        ",\"next_payload\":" + sc_tel_event("run", "telemetry", 0) +
+        ",\"disable\":\"SUPERCLI_TELEMETRY=0\"}}")
+}

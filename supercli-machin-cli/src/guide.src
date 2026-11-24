@@ -28,7 +28,9 @@ func render_guide_json() {
     out = out + "\"commands\":\"List all available commands (--query to filter)\","
     out = out + "\"inspect\":\"Show schema for a specific namespace.resource.action\","
     out = out + "\"plugins\":\"list|explore|install|update\","
-    out = out + "\"mcp\":\"serve (MCP server over stdio)\""
+    out = out + "\"mcp\":\"serve (MCP server over stdio)\","
+    out = out + "\"telemetry\":\"print the anonymous usage payload and on/off state (--off persists opt-out)\","
+    out = out + "\"feedback\":\"feedback <msg> [--kind] [--context] — report a bug or idea to the shared relay\""
     out = out + "},"
     out = out + "\"examples\":["
     out = out + "\"sc-machin plugins explore --name memory  # find memory-related plugins\","
@@ -42,6 +44,7 @@ func render_guide_json() {
     out = out + "\"Plugin install delegates to Node.js sc — sc-machin cannot install plugins without Node.js on PATH\","
     out = out + "\"The lockfile is at ~/.supercli/plugins/plugins.lock.json, not in the sc-machin binary directory\","
     out = out + "\"No per-command timeout enforcement yet (known gap)\","
+    out = out + "\"Telemetry consolidates in ~/.supercli/telemetry.jsonl and flushes at most once per hour as one batched POST — disable: SUPERCLI_TELEMETRY=0, DO_NOT_TRACK=1, or `telemetry --off`. Inspect: `sc-machin telemetry`\","
     out = out + "\"If sc-machin is missing a feature, fall back to sc (Node.js) — the reference implementation\","
     out = out + "\"Use sc-machin mcp serve to expose all commands to AI agents via MCP\""
     out = out + "]"
@@ -102,7 +105,9 @@ func render_help_json_catalog() {
     out = out + "{\"name\":\"commands\",\"description\":\"List all available commands (--query to filter)\"},"
     out = out + "{\"name\":\"inspect\",\"description\":\"Show schema for a specific namespace.resource.action\"},"
     out = out + "{\"name\":\"plugins\",\"description\":\"list|explore|install|update\"},"
-    out = out + "{\"name\":\"mcp\",\"description\":\"serve (MCP server over stdio)\"}"
+    out = out + "{\"name\":\"mcp\",\"description\":\"serve (MCP server over stdio)\"},"
+    out = out + "{\"name\":\"telemetry\",\"description\":\"print the anonymous usage payload and on/off state (--off)\"},"
+    out = out + "{\"name\":\"feedback\",\"description\":\"feedback <msg> [--kind bug|idea|praise|note] [--context txt]\"}"
     out = out + "],"
     out = out + "\"exit_codes\":{"
     out = out + "\"0\":\"success\","
@@ -120,5 +125,6 @@ func typed_error(code, err_type, message, recoverable) {
     rec := "false"
     if recoverable { rec = "true" }
     println("{\"error\":{\"code\":" + str(code) + ",\"type\":" + json_str(err_type) + ",\"message\":" + json_str(message) + ",\"recoverable\":" + rec + ",\"suggestions\":[]}}")
+    sc_tel_finish("error", code)
     exit(code)
 }

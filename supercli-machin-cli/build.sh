@@ -4,7 +4,7 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-SRC_ORDER="src/strutil.src src/pathutil.src src/argv.src src/lockfile.src src/commands.src src/registry.src src/executor.src src/plugins.src src/bootstrap.src src/guide.src src/mcp.src src/main.src"
+SRC_ORDER="src/strutil.src src/pathutil.src src/argv.src src/lockfile.src src/commands.src src/registry.src src/executor.src src/plugins.src src/bootstrap.src src/guide.src src/telemetry.src src/feedback.src src/mcp.src src/main.src"
 
 echo "== encode =="
 machin encode $SRC_ORDER > app.mfl

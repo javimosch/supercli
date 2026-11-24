@@ -1,0 +1,25 @@
+// feedback — cli-feedback-spec, relay-only variant (no local store).
+// Posts {app,version,kind,message,context,reporter,id} to the shared relay.
+// Never fails the caller: relay failure leaves ok:true with relayed:0.
+
+func cmd_feedback(msg, kind, ctx) (code) {
+    code = 0
+    if len(trim(msg)) == 0 {
+        typed_error(85, "invalid_argument", "feedback needs a message", false)
+    }
+    id := to_hex(rand_bytes(8))
+    reporter := env("USER")
+    if len(reporter) == 0 { reporter = "agent" }
+    body := "{" + "\"message\":" + json_str(msg) + ",\"app\":\"sc-machin\",\"version\":" + json_str(sc_machin_version()) +
+        ",\"kind\":" + json_str(kind) + ",\"context\":" + json_str(ctx) +
+        ",\"reporter\":" + json_str(reporter) + ",\"id\":" + json_str(id) + "}"
+    relayed := 0
+    relay := env("FEEDBACK_RELAY")
+    if len(relay) == 0 { relay = "https://feedback.intrane.fr" }
+    if relay != "off" {
+        resp := https_post(relay + "/v1/feedback", body)
+        rk, rerr := json_get(resp, ".ok")
+        if len(rerr) == 0 && strip_quotes(rk) == "true" { relayed = 1 }
+    }
+    println("{\"ok\":true,\"data\":{\"id\":" + json_str(id) + ",\"stored\":0,\"relayed\":" + str(relayed) + "}}")
+}
