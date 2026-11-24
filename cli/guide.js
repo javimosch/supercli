@@ -62,6 +62,7 @@ function buildGuide() {
       "sc daemon manages the bookkeeper serve on 127.0.0.1:8320 — it is NOT the MCP daemon. The MCP server pool is a different daemon: sc mcp daemon",
       "The only daemon path is 'sc daemon start' → detached 'sc serve' — the legacy 'node cli/daemon.js --daemon' entry was removed (no /_health, invisible to status/stop)",
       "sc daemon status exits 3 when stopped — branch on the exit code, not JSON parsing",
+      "daemon status health_hits_external counts /_health probes NOT from sc itself (curl, monitors) — the signal for whether anything uses the serve surface",
     ],
   };
 }
