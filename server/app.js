@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 const { getStorage } = require("./storage/adapter");
 const { registerAllPluginResources, syncPluginResources } = require("./services/pluginResourceService");
+const { getSettings } = require("./services/pluginsService");
 const { requireAuth } = require("./middleware/auth");
 
 const dashboardRouter = require("./routes/dashboard");
@@ -19,6 +20,7 @@ const pluginsRouter = require("./routes/plugins");
 const docsRouter = require("./routes/docs");
 const settingsRouter = require("./routes/settings");
 const clientsRouter = require("./routes/clients");
+const indexRouter = require("./routes/index");
 
 const PORT = process.env.PORT || 3000;
 
@@ -34,6 +36,20 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/docs", express.static(path.join(__dirname, "../docs")));
+
+// Self-describing entry points — unauthenticated by design (discovery surfaces)
+app.get("/llms.txt", (req, res) => {
+  res.type("text/plain").send([
+    "supercli-server — management hub for the supercli federation",
+    "",
+    "Start here: GET /api (JSON route index + auth requirements)",
+    "Dashboard (HTML, unauthenticated): GET /",
+    "Agent/CLI access: X-API-Key header (SUPERCLI_API_KEY env) — mint keys at /api-keys",
+    "Workers: set SUPERCLI_SERVER to this origin — sc sync pulls config, sc daemon ships job logs to POST /api/jobs",
+    "Presence: POST /api/clients/heartbeat {client_id} keeps a worker's last_seen fresh",
+  ].join("\n"));
+});
+app.use("/api", indexRouter); // GET /api exact-match — before settingsRouter catch-all
 
 // API routes (with authentication)
 app.use("/api/dashboard", requireAuth, dashboardRouter);
@@ -108,7 +124,17 @@ async function start() {
     console.log(`[Plugin Resources] Registered ${resourceResults.registeredMcp} MCP servers and ${resourceResults.registeredSpecs} OpenAPI specs`);
 
     app.listen(PORT, () => {
-      console.log(`SUPERCLI server running on http://localhost:${PORT}`);
+      const base = `http://localhost:${PORT}`;
+      console.log(`SUPERCLI server running on ${base}`);
+      console.log(`  dashboard : ${base}/`);
+      console.log(`  api index : ${base}/api`);
+      console.log(`  llms.txt  : ${base}/llms.txt`);
+      getSettings()
+        .then((s) => {
+          const open = s.admin_mode_enabled === true || s.public_access_enabled === true || s.public_access === true;
+          console.log(`  auth      : ${open ? "open (no API key required)" : `X-API-Key required — mint at ${base}/api-keys`}`);
+        })
+        .catch(() => {});
     });
   } catch (err) {
     console.error("Failed to start:", err.message);

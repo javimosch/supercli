@@ -7,18 +7,20 @@ const router = Router()
 async function getDashboardData() {
   const storage = getStorage()
 
-  const [commandKeys, mcpKeys, specKeys, jobKeys] = await Promise.all([
+  const [commandKeys, mcpKeys, specKeys, jobKeys, clientKeys] = await Promise.all([
     storage.listKeys("command:"),
     storage.listKeys("mcp:"),
     storage.listKeys("spec:"),
     storage.listKeys("job:"),
+    storage.listKeys("client:"),
   ])
 
-  const [commands, mcpServers, specs, allJobs] = await Promise.all([
+  const [commands, mcpServers, specs, allJobs, allClients] = await Promise.all([
     Promise.all(commandKeys.map(k => storage.get(k))),
     Promise.all(mcpKeys.map(k => storage.get(k))),
     Promise.all(specKeys.map(k => storage.get(k))),
     Promise.all(jobKeys.map(k => storage.get(k))),
+    Promise.all(clientKeys.map(k => storage.get(k))),
   ])
 
   let plugins = []
@@ -79,7 +81,42 @@ async function getDashboardData() {
     })
   }
 
+  // Federation view: workers = job submitters aggregated by client_id, merged
+  // with the client registry (heartbeats / plugin pushes). A worker is "live"
+  // when it heartbeat or submitted a job within 3 sync cycles (~3 min).
+  const clients = allClients.filter(Boolean)
+  const clientById = {}
+  for (const c of clients) if (c.client_id) clientById[c.client_id] = c
+
+  const jobsByClient = {}
+  for (const job of validJobs) {
+    if (!job.client_id) continue
+    const w = jobsByClient[job.client_id] || (jobsByClient[job.client_id] = { jobs: 0, failed: 0, last_job_at: null })
+    w.jobs++
+    if (job.status === "failed") w.failed++
+    if (!w.last_job_at || new Date(job.timestamp) > new Date(w.last_job_at)) w.last_job_at = job.timestamp
+  }
+
+  const LIVE_WINDOW_MS = 3 * 60 * 1000
+  const workerIds = new Set([...Object.keys(clientById), ...Object.keys(jobsByClient)])
+  const workers = [...workerIds].map((id) => {
+    const reg = clientById[id] || {}
+    const j = jobsByClient[id] || { jobs: 0, failed: 0, last_job_at: null }
+    const lastSeen = reg.last_seen || j.last_job_at
+    return {
+      client_id: id,
+      hostname: reg.hostname || null,
+      sc_version: reg.sc_version || null,
+      live: !!lastSeen && Date.now() - new Date(lastSeen).getTime() < LIVE_WINDOW_MS,
+      last_seen: lastSeen || null,
+      jobs: j.jobs,
+      failed_jobs: j.failed,
+      plugins_pushed: !!reg.plugins,
+    }
+  }).sort((a, b) => new Date(b.last_seen || 0) - new Date(a.last_seen || 0))
+
   return {
+    workers,
     counts: {
       commands: commands.filter(Boolean).length,
       mcpServers: mcpServers.filter(Boolean).length,
@@ -104,6 +141,7 @@ async function getDashboardData() {
 router.get("/", async (req, res) => {
   try {
     const data = await getDashboardData()
+    if (req.query.format === "json") return res.json({ ok: true, ...data })
     res.render("dashboard", data)
   } catch (err) {
     res.status(500).send(err.message)

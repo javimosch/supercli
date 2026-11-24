@@ -24,6 +24,15 @@ The dashboard at `/` is an operator convenience — browser navigation is
 unauthenticated HTML, while the same operations are JSON routes under
 `/api/*`, so agents can drive the hub without the UI.
 
+Discovery surfaces on the hub: `GET /api` returns a JSON route index with
+auth requirements, `GET /llms.txt` a plain-text summary for agents, and
+`GET /api/dashboard?format=json` the aggregated stats (including the
+`workers` list — every client that heartbeat or shipped a job). Workers
+keep presence fresh via `POST /api/clients/heartbeat {client_id,
+hostname, sc_version}`, sent automatically each sync cycle by `sc
+daemon`. `sc server status` probes reachability, auth mode, and the
+worker's own `client_id`.
+
 Without `SUPERCLI_SERVER` set on a worker, `sc` works fully offline —
 the daemon's sync loop simply has nowhere to ship, and the serve surface
 still answers `/_health`/`/_shutdown` for lifecycle management.

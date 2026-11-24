@@ -12,6 +12,34 @@ function handleError(res, err) {
   res.status(status).json({ error });
 }
 
+// Worker heartbeat — upserts the client's last_seen without needing a plugin
+// push. Daemon bookkeepers POST here each sync cycle so the dashboard shows
+// live workers, not just workers that once pushed plugins.
+router.post("/heartbeat", async (req, res) => {
+  try {
+    const { client_id, hostname, sc_version } = req.body || {};
+    if (!client_id) {
+      return res.status(400).json({ error: { code: 400, type: "validation_error", message: "client_id is required" } });
+    }
+    const storage = getStorage();
+    const key = `client:${client_id}`;
+    const existing = (await storage.get(key)) || {};
+    const now = new Date().toISOString();
+    await storage.set(key, {
+      ...existing,
+      client_id,
+      hostname: hostname || existing.hostname || null,
+      sc_version: sc_version || existing.sc_version || null,
+      registered_at: existing.registered_at || now,
+      last_seen: now,
+      last_heartbeat: now,
+    });
+    res.json({ ok: true });
+  } catch (err) {
+    handleError(res, err);
+  }
+});
+
 // List clients endpoint
 router.get("/", requireAuth, async (req, res) => {
   try {

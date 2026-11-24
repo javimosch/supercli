@@ -2,6 +2,7 @@
 
 const fs = require("fs")
 const path = require("path")
+const { getClientId } = require("./config-core")
 
 const SERVER = process.env.SUPERCLI_SERVER
 const API_KEY = process.env.SUPERCLI_API_KEY
@@ -97,16 +98,25 @@ async function handleServerCommand(options) {
 }
 
 async function handleStatus({ humanMode, output }) {
-  const settings = await serverFetch("/api/plugins/settings")
+  const [settings, index] = await Promise.all([
+    serverFetch("/api/settings?format=json"),
+    serverFetch("/api").catch(() => null), // older hubs lack the self-index
+  ])
   const result = {
-    admin_mode: settings.admin_mode_enabled === true,
+    reachable: true,
     server: getServerUrl(),
+    hub: index ? index.name : null,
+    auth_required: index ? index.auth.required : "unknown",
+    dashboard: index ? `${getServerUrl()}${index.dashboard}` : null,
+    admin_mode: settings.admin_mode_enabled === true,
     max_zip_mb: settings.max_zip_mb,
     default_hooks_policy: settings.default_hooks_policy,
+    client_id: getClientId(),
   }
   if (humanMode) {
     console.log(`\n  ⚡ Server Status\n`)
-    console.log(`  Server: ${result.server}`)
+    console.log(`  Server: ${result.server} (reachable)`)
+    console.log(`  Auth: ${result.auth_required === false ? "open" : `X-API-Key${API_KEY ? " (key set)" : " (⚠️ no SUPERCLI_API_KEY set)"}`}`)
     console.log(`  Admin Mode: ${result.admin_mode ? "ENABLED (⚠️ CLI modifications allowed)" : "disabled"}`)
     console.log(`  Max ZIP Size: ${result.max_zip_mb}MB`)
     console.log(`  Hooks Policy: ${result.default_hooks_policy}`)

@@ -38,6 +38,18 @@ function isSelfProbe(req) {
   return ua.includes("undici") || ua.includes("node");
 }
 
+// Where the bookkeeper ships — advertised on /_health so any prober learns
+// where the management dashboard lives. Same resolution as daemon loadConfig:
+// SUPERCLI_SERVER env > ~/.supercli/daemon.json > default.
+function resolveDashboardUrl() {
+  if (process.env.SUPERCLI_SERVER) return process.env.SUPERCLI_SERVER;
+  try {
+    const cfg = JSON.parse(fs.readFileSync(path.join(SUPERCLI_DIR, "daemon.json"), "utf8"));
+    if (cfg.server_url) return cfg.server_url;
+  } catch {}
+  return "http://localhost:3000";
+}
+
 function isLoopback(host) {
   return host === "127.0.0.1" || host === "localhost" || host === "::1";
 }
@@ -82,7 +94,7 @@ async function handleServe(flags, deps) {
     if (req.method === "GET" && url === "/_health") {
       if (isSelfProbe(req)) stats.health_hits_self++; else stats.health_hits_external++;
       writeStats();
-      send(res, 200, { ok: true, service: "sc", pid: process.pid });
+      send(res, 200, { ok: true, service: "sc", pid: process.pid, dashboard: resolveDashboardUrl() });
       return;
     }
     if (req.method === "POST" && url === "/_shutdown") {

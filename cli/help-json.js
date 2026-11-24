@@ -23,7 +23,8 @@ function buildCapabilities(config, hasServer) {
     feedback: { description: "Report a bug or idea to the shared relay", usage: "supercli feedback <msg> [--kind bug|idea|praise|note] [--context txt]" },
     update: { description: "Self-update via npm (--check exits 5 when a newer version exists)", usage: "supercli update [--check] [--force]" },
     serve: { description: "Foreground HTTP daemon (loopback default, /_health + /_shutdown)", usage: "supercli serve [--host 127.0.0.1] [--port 8320]" },
-    daemon: { description: "Daemon lifecycle over the serve HTTP surface", usage: "supercli daemon start|stop|status [--host 127.0.0.1] [--port 8320] — status exits 3 when stopped" }
+    daemon: { description: "Daemon lifecycle over the serve HTTP surface", usage: "supercli daemon start|stop|status [--host 127.0.0.1] [--port 8320] — status exits 3 when stopped" },
+    server: { description: "Federation hub client — requires SUPERCLI_SERVER", subcommands: ["status", "plugins", "mcp", "commands", "specs", "openapi", "jobs", "adapters"], usage: "supercli server status  # reachability + auth mode + your client_id" }
   }
   if (hasServer) commands.sync = { description: "Sync local config from SUPERCLI_SERVER" }
   if (config.features?.ask || process.env.OPENAI_BASE_URL) commands.ask = { description: "Execute natural language queries", usage: "supercli ask \"<query>\"" }

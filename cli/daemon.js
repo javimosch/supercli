@@ -4,6 +4,8 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 const { spawn } = require("child_process");
+const { getClientId } = require("./config-core");
+const { CLI_VERSION } = require("./arg-parser");
 
 const SUPERCLI_DIR = path.join(os.homedir(), ".supercli");
 const LOGS_DIR = path.join(SUPERCLI_DIR, "logs");
@@ -29,18 +31,20 @@ function ensureDirectories() {
   }
 }
 
-// Load daemon configuration
+// Load daemon configuration. SUPERCLI_SERVER env overrides daemon.json —
+// workers in a federation set the env var, they shouldn't have to edit a file.
 function loadConfig() {
   ensureDirectories();
   if (!fs.existsSync(CONFIG_FILE)) {
     fs.writeFileSync(CONFIG_FILE, JSON.stringify(DEFAULT_CONFIG, null, 2));
-    return DEFAULT_CONFIG;
   }
+  let fileConfig = {};
   try {
-    return { ...DEFAULT_CONFIG, ...JSON.parse(fs.readFileSync(CONFIG_FILE, "utf8")) };
-  } catch (err) {
-    return DEFAULT_CONFIG;
-  }
+    fileConfig = JSON.parse(fs.readFileSync(CONFIG_FILE, "utf8"));
+  } catch (err) {}
+  const config = { ...DEFAULT_CONFIG, ...fileConfig };
+  if (process.env.SUPERCLI_SERVER) config.server_url = process.env.SUPERCLI_SERVER;
+  return config;
 }
 
 // Get daily log file path
@@ -331,6 +335,24 @@ function pruneLogs(config) {
   return { pruned };
 }
 
+// Worker presence: POST a heartbeat to the hub each sync cycle so the
+// dashboard shows live workers, not just workers that once pushed plugins.
+async function sendHeartbeat(config) {
+  const headers = { "Content-Type": "application/json" };
+  if (process.env.SUPERCLI_API_KEY) headers["X-API-Key"] = process.env.SUPERCLI_API_KEY;
+  const res = await fetch(`${config.server_url}/api/clients/heartbeat`, {
+    method: "POST",
+    headers,
+    body: JSON.stringify({
+      client_id: getClientId(),
+      hostname: os.hostname(),
+      sc_version: CLI_VERSION,
+    }),
+    signal: AbortSignal.timeout(10000),
+  });
+  if (!res.ok) throw new Error(`heartbeat failed: HTTP ${res.status}`);
+}
+
 // Daemon main loop
 let lastErrEmit = 0;
 async function daemonMain() {
@@ -340,6 +362,7 @@ async function daemonMain() {
   while (true) {
     try {
       writeHeartbeat();
+      await sendHeartbeat(config);
       const syncResult = await syncLogs(config);
       const pruneResult = pruneLogs(config);
 
