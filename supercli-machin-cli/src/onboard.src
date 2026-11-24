@@ -1,0 +1,299 @@
+// onboard — `sc-machin onboard` / `sc-machin offboard`: install the supercli
+// skill into AI harness dirs. Project scope by default (harness dirs under
+// --target or cwd), machine scope with --global (the supercli-mastery skill,
+// runtime matrix included, into HOME-level skill dirs so every agent session
+// on the machine discovers supercli). Mirrors cli/harness-onboard.js and
+// supercli-zig-cli/src/handlers/onboard.zig.
+
+type ObResult struct {
+    harness string
+    path string
+    action string
+    reason string
+}
+
+func ob_project_names() (xs) {
+    xs = []string{"claude", "opencode", "agents", "cursor", "windsurf"}
+}
+
+func ob_global_names() (xs) {
+    xs = []string{"agents", "claude", "opencode"}
+}
+
+func ob_proj_path(h) (p) {
+    p = ""
+    if h == "claude" { p = ".claude/skills/supercli/SKILL.md" }
+    if h == "opencode" { p = ".opencode/skills/supercli/SKILL.md" }
+    if h == "agents" { p = ".agents/skills/supercli/SKILL.md" }
+    if h == "cursor" { p = ".cursor/rules/supercli.mdc" }
+    if h == "windsurf" { p = ".windsurfrules" }
+}
+
+func ob_glob_path(h) (p) {
+    p = ""
+    if h == "agents" { p = ".agents/skills/supercli-mastery/SKILL.md" }
+    if h == "claude" { p = ".claude/skills/supercli-mastery/SKILL.md" }
+    if h == "opencode" { p = ".config/opencode/skills/supercli-mastery/SKILL.md" }
+}
+
+func ob_detect_root(h, glob) (p) {
+    p = ""
+    if glob {
+        if h == "agents" { p = ".agents" }
+        if h == "claude" { p = ".claude" }
+        if h == "opencode" { p = ".config/opencode" }
+    } else {
+        if h == "claude" { p = ".claude" }
+        if h == "opencode" { p = ".opencode" }
+        if h == "agents" { p = ".agents" }
+        if h == "cursor" { p = ".cursor" }
+        if h == "windsurf" { p = ".windsurfrules" }
+    }
+}
+
+func ob_exists(p) (ok) {
+    ok = len(read_file(p)) > 0
+}
+
+func ob_path_exists(p) (ok) {
+    rc, _, _ := exec("test -e " + shell_quote(p))
+    ok = rc == 0
+}
+
+func ob_write_skill(path, content) (ok) {
+    ok = false
+    rc, _, _ := exec("mkdir -p " + shell_quote(path_dirname(path)))
+    if rc != 0 { return }
+    write_file(path, content)
+    ok = true
+}
+
+func ob_remove(path) (ok) {
+    rc, _, _ := exec("rm -f " + shell_quote(path))
+    ok = rc == 0
+}
+
+func ob_strip_frontmatter(content) (out) {
+    out = content
+    lines := split(content, "\n")
+    if len(lines) < 3 { return }
+    if lines[0] != "---" { return }
+    out = ""
+    in_fm := true
+    i := 1
+    n := len(lines)
+    for i < n {
+        if lines[i] == "---" && in_fm {
+            in_fm = false
+            i = i + 1
+            continue
+        }
+        if in_fm == false {
+            out = out + lines[i]
+            if i + 1 < n { out = out + "\n" }
+        }
+        i = i + 1
+    }
+}
+
+// format content per harness. Global mode only targets SKILL.md harnesses.
+func ob_format_content(h, content, glob) (out) {
+    out = content
+    if glob { return }
+    if h == "cursor" {
+        out = "---\ndescription: SuperCLI capability router - discover and execute CLI commands through namespace.resource.action interface\nglobs: [\"**/*\"]\nalways_apply: false\n---\n" + ob_strip_frontmatter(content)
+    }
+    if h == "windsurf" {
+        out = ob_strip_frontmatter(content)
+    }
+}
+
+func ob_detected(target, glob) (names) {
+    names = []string{}
+    candidates := ob_project_names()
+    if glob { candidates = ob_global_names() }
+    i := 0
+    for i < len(candidates) {
+        root := ob_detect_root(candidates[i], glob)
+        if len(root) > 0 {
+            if ob_path_exists(target + "/" + root) {
+                names = append(names, candidates[i])
+            }
+        }
+        i = i + 1
+    }
+}
+
+func ob_names_json(xs) (out) {
+    out = "["
+    i := 0
+    for i < len(xs) {
+        if i > 0 { out = out + "," }
+        out = out + json_str(xs[i])
+        i = i + 1
+    }
+    out = out + "]"
+}
+
+func ob_emit_detect(target, glob) {
+    detected := ob_detected(target, glob)
+    mode_name := "onboard_detect"
+    names := ob_project_names()
+    if glob {
+        mode_name = "onboard_detect_global"
+        names = ob_global_names()
+    }
+    println("{\"mode\":" + json_str(mode_name) + ",\"target\":" + json_str(target) + ",\"detected\":" + ob_names_json(detected) + ",\"all_available\":" + ob_names_json(names) + "}")
+}
+
+func ob_emit_results(mode_name, target, dry_run, results) {
+    inst := 0
+    skip := 0
+    errs := 0
+    j := "{\"mode\":" + json_str(mode_name) + ",\"target\":" + json_str(target) + ",\"dry_run\":" + json_bool(dry_run) + ",\"results\":["
+    i := 0
+    for i < len(results) {
+        r := results[i]
+        if r.action == "installed" || r.action == "would_install" || r.action == "removed" || r.action == "would_remove" {
+            inst = inst + 1
+        } else {
+            if r.action == "error" { errs = errs + 1 } else { skip = skip + 1 }
+        }
+        if i > 0 { j = j + "," }
+        j = j + "{\"harness\":" + json_str(r.harness) + ",\"path\":" + json_str(r.path) + ",\"action\":" + json_str(r.action) + ",\"reason\":" + json_str(r.reason) + "}"
+        i = i + 1
+    }
+    j = j + "],\"summary\":{\"installed\":" + str(inst) + ",\"skipped\":" + str(skip) + ",\"errors\":" + str(errs) + "}}"
+    println(j)
+}
+
+func ob_emit_human(title, results) {
+    println("")
+    println("  " + title)
+    println("")
+    i := 0
+    for i < len(results) {
+        r := results[i]
+        sym := "x"
+        if r.action == "installed" || r.action == "removed" { sym = "+" }
+        if r.action == "skip" { sym = "-" }
+        line := "  " + sym + " " + r.harness + ": " + r.path
+        if len(r.reason) > 0 { line = line + " (" + r.reason + ")" }
+        println(line)
+        i = i + 1
+    }
+    println("")
+}
+
+func cmd_onboard(pa) (code) {
+    code = 0
+    glob := pa_flag_on(pa, "global")
+    want_json := pa_flag_on(pa, "json")
+    target := pa_flag(pa, "target")
+    if len(target) == 0 {
+        if glob { target = env("HOME") } else { target = "." }
+    }
+    dry_run := pa_flag_on(pa, "dry-run")
+    force := pa_flag_on(pa, "force")
+
+    if pa_flag_on(pa, "detect") {
+        ob_emit_detect(target, glob)
+        return
+    }
+
+    names := []string{}
+    hflag := pa_flag(pa, "harness")
+    if len(hflag) > 0 {
+        names = split(hflag, ",")
+    } else {
+        names = ob_detected(target, glob)
+    }
+
+    if len(names) == 0 {
+        typed_error(92, "resource_not_found", "No AI harnesses detected. Use --harness to specify explicitly.", false)
+    }
+
+    results := []ObResult{}
+    i := 0
+    for i < len(names) {
+        h := names[i]
+        sp := ""
+        if glob { sp = ob_glob_path(h) } else { sp = ob_proj_path(h) }
+        if len(sp) == 0 {
+            results = append(results, ObResult{harness: h, path: "", action: "skip", reason: "no global skill path (project-only harness)"})
+            i = i + 1
+            continue
+        }
+        full := target + "/" + sp
+        if ob_exists(full) && force == false {
+            results = append(results, ObResult{harness: h, path: sp, action: "skip", reason: "exists (use --force to overwrite)"})
+        } else {
+            if dry_run {
+                results = append(results, ObResult{harness: h, path: sp, action: "would_install", reason: ""})
+            } else {
+                if ob_write_skill(full, ob_format_content(h, ob_content(glob), glob)) {
+                    results = append(results, ObResult{harness: h, path: sp, action: "installed", reason: ""})
+                } else {
+                    results = append(results, ObResult{harness: h, path: sp, action: "error", reason: "write failed"})
+                }
+            }
+        }
+        i = i + 1
+    }
+
+    if want_json { ob_emit_results("onboard", target, dry_run, results) } else { ob_emit_human("SuperCLI Onboard", results) }
+}
+
+func cmd_offboard(pa) (code) {
+    code = 0
+    glob := pa_flag_on(pa, "global")
+    want_json := pa_flag_on(pa, "json")
+    target := pa_flag(pa, "target")
+    if len(target) == 0 {
+        if glob { target = env("HOME") } else { target = "." }
+    }
+    dry_run := pa_flag_on(pa, "dry-run")
+
+    names := []string{}
+    hflag := pa_flag(pa, "harness")
+    if len(hflag) > 0 {
+        names = split(hflag, ",")
+    } else {
+        if glob { names = ob_global_names() } else { names = ob_project_names() }
+    }
+
+    results := []ObResult{}
+    i := 0
+    for i < len(names) {
+        h := names[i]
+        sp := ""
+        if glob { sp = ob_glob_path(h) } else { sp = ob_proj_path(h) }
+        if len(sp) == 0 {
+            results = append(results, ObResult{harness: h, path: "", action: "skip", reason: "no global skill path (project-only harness)"})
+            i = i + 1
+            continue
+        }
+        full := target + "/" + sp
+        if ob_exists(full) == false {
+            results = append(results, ObResult{harness: h, path: sp, action: "skip", reason: "not_found"})
+        } else {
+            if dry_run {
+                results = append(results, ObResult{harness: h, path: sp, action: "would_remove", reason: ""})
+            } else {
+                if ob_remove(full) {
+                    results = append(results, ObResult{harness: h, path: sp, action: "removed", reason: ""})
+                } else {
+                    results = append(results, ObResult{harness: h, path: sp, action: "error", reason: "delete failed"})
+                }
+            }
+        }
+        i = i + 1
+    }
+
+    if want_json { ob_emit_results("offboard", target, dry_run, results) } else { ob_emit_human("SuperCLI Offboard", results) }
+}
+
+func ob_content(glob) (c) {
+    if glob { c = ob_mastery_content() } else { c = ob_quickstart_content() }
+}
+

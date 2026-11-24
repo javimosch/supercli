@@ -71,6 +71,14 @@ pub fn handleHelpJson(gpa: std.mem.Allocator) void {
     jw.objectField("name") catch return; jw.write("uninstall") catch return;
     jw.objectField("description") catch return; jw.write("uninstall [--prefix dir] — remove an installed copy") catch return;
     jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("onboard") catch return;
+    jw.objectField("description") catch return; jw.write("onboard [--global] [--harness a,b] [--target dir] [--detect] [--dry-run] [--force] — install the supercli skill into agent harness dirs (--global writes supercli-mastery to HOME-level dirs)") catch return;
+    jw.endObject() catch return;
+    jw.beginObject() catch return;
+    jw.objectField("name") catch return; jw.write("offboard") catch return;
+    jw.objectField("description") catch return; jw.write("offboard [--global] [--harness a,b] [--target dir] [--dry-run] — remove onboard-installed skill files") catch return;
+    jw.endObject() catch return;
     jw.endArray() catch return;
 
     jw.objectField("core_commands") catch return;

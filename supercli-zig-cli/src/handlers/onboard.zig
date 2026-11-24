@@ -2,6 +2,14 @@
 // Mirrors cli/harness-onboard.js.
 const std = @import("std");
 const output = @import("../output.zig");
+const ob_content = @import("onboard_content.zig");
+
+const GLOBAL_HARNESS_CONFIGS = [_]HarnessConfig{
+    .{ .name = "agents", .skill_path = ".agents/skills/supercli-mastery/SKILL.md", .detect_patterns = &.{".agents"} },
+    .{ .name = "claude", .skill_path = ".claude/skills/supercli-mastery/SKILL.md", .detect_patterns = &.{".claude"} },
+    .{ .name = "opencode", .skill_path = ".config/opencode/skills/supercli-mastery/SKILL.md", .detect_patterns = &.{".config/opencode"} },
+};
+
 
 const HarnessConfig = struct {
     name: []const u8,
@@ -17,51 +25,43 @@ const HARNESS_CONFIGS = [_]HarnessConfig{
     .{ .name = "windsurf", .skill_path = ".windsurfrules", .detect_patterns = &.{".windsurfrules", ".windsurf"} },
 };
 
-const ONBOARD_SKILL_MARKDOWN =
-    \\---
-    \\skill_name: "supercli"
-    \\description: "SuperCLI agent skill — discover and execute CLI tools via plugins"
-    \\---
-    \\# SuperCLI
-    \\
-    \\SuperCLI is a plugin-based CLI tool manager. Use it to discover, install, and execute CLI tools.
-    \\
-    \\## Discovery
-    \\
-    \\```bash
-    \\sc plugins explore --name <query> --json
-    \\sc discover --intent "I need to convert images" --json
-    \\sc commands --json
-    \\```
-    \\
-    \\## Execution
-    \\
-    \\```bash
-    \\sc <namespace> <resource> <action> --json
-    \\sc run <plugin> <resource> <action> --json
-    \\```
-    \\
-    \\## Skills
-    \\
-    \\```bash
-    \\sc skills list --catalog --json
-    \\sc skills get <provider:skill_id>
-    \\sc skills teach
-    \\```
-;
-
 pub fn handleOnboard(
     io: std.Io,
     gpa: std.mem.Allocator,
     mode: output.Mode,
     flags: std.StringHashMap([]const u8),
+    home: []const u8,
 ) !void {
-    const target_dir = flags.get("target") orelse ".";
+    const global_mode = flags.contains("global");
+    const target_dir = flags.get("target") orelse if (global_mode) home else ".";
     const dry_run = flags.contains("dry-run");
     const force = flags.contains("force");
 
     // --detect mode
     if (flags.contains("detect")) {
+        if (global_mode) {
+            const detected = try detectGlobalHarnesses(io, gpa, target_dir);
+            var out: std.Io.Writer.Allocating = .init(gpa);
+            defer out.deinit();
+            var jw: std.json.Stringify = .{ .writer = &out.writer };
+            jw.beginObject() catch return;
+            jw.objectField("mode") catch return;
+            jw.write("onboard_detect_global") catch return;
+            jw.objectField("target") catch return;
+            jw.write(target_dir) catch return;
+            jw.objectField("detected") catch return;
+            jw.beginArray() catch return;
+            for (detected) |h| jw.write(h) catch return;
+            jw.endArray() catch return;
+            jw.objectField("all_available") catch return;
+            jw.beginArray() catch return;
+            for (GLOBAL_HARNESS_CONFIGS) |hc| jw.write(hc.name) catch return;
+            jw.endArray() catch return;
+            jw.endObject() catch return;
+            output.writeRaw(out.written());
+            output.writeRaw("\n");
+            return;
+        }
         const detected = try detectHarnesses(io, gpa, target_dir);
         if (mode == .human) {
             output.writeLine("\n  Harness Detection\n");
@@ -99,6 +99,9 @@ pub fn handleOnboard(
             const trimmed = std.mem.trim(u8, h, " ");
             if (trimmed.len > 0) try harnesses_to_install.append(gpa, trimmed);
         }
+    } else if (global_mode) {
+        const detected = try detectGlobalHarnesses(io, gpa, target_dir);
+        for (detected) |h| try harnesses_to_install.append(gpa, h);
     } else {
         const detected = try detectHarnesses(io, gpa, target_dir);
         for (detected) |h| try harnesses_to_install.append(gpa, h);
@@ -110,7 +113,10 @@ pub fn handleOnboard(
             .err_type = "resource_not_found",
             .message = "No AI harnesses detected. Use --harness to specify explicitly.",
             .recoverable = false,
-            .suggestions = &.{"sc onboard --harness claude,opencode,agents,cursor,windsurf"},
+            .suggestions = if (global_mode)
+                &.{"sc-zig onboard --global --harness agents,claude,opencode"}
+            else
+                &.{"sc onboard --harness claude,opencode,agents,cursor,windsurf"},
         });
     }
 
@@ -121,9 +127,12 @@ pub fn handleOnboard(
         reason: []const u8 = "",
     }) = .empty;
 
+    const content = if (global_mode) ob_content.MASTERY_SKILL_MARKDOWN else ob_content.ONBOARD_SKILL_MARKDOWN;
+
     for (harnesses_to_install.items) |h_name| {
-        const hc = findHarnessConfig(h_name) orelse {
-            try results.append(gpa, .{ .harness = h_name, .path = "", .action = "skip", .reason = "unknown harness" });
+        const hc = (if (global_mode) findGlobalHarnessConfig(h_name) else findHarnessConfig(h_name)) orelse {
+            const reason = if (global_mode) "no global skill path (project-only harness)" else "unknown harness";
+            try results.append(gpa, .{ .harness = h_name, .path = "", .action = "skip", .reason = reason });
             continue;
         };
 
@@ -140,7 +149,7 @@ pub fn handleOnboard(
         } else {
             if (!dry_run) {
                 // Create directories and write file
-                writeSkillFile(io, full_path, ONBOARD_SKILL_MARKDOWN) catch {
+                writeSkillFile(io, full_path, content) catch {
                     try results.append(gpa, .{ .harness = h_name, .path = hc.skill_path, .action = "error", .reason = "write failed" });
                     continue;
                 };
@@ -206,8 +215,10 @@ pub fn handleOffboard(
     gpa: std.mem.Allocator,
     mode: output.Mode,
     flags: std.StringHashMap([]const u8),
+    home: []const u8,
 ) !void {
-    const target_dir = flags.get("target") orelse ".";
+    const global_mode = flags.contains("global");
+    const target_dir = flags.get("target") orelse if (global_mode) home else ".";
     const dry_run = flags.contains("dry-run");
 
     var harnesses_to_remove: std.ArrayList([]const u8) = .empty;
@@ -217,6 +228,8 @@ pub fn handleOffboard(
             const trimmed = std.mem.trim(u8, h, " ");
             if (trimmed.len > 0) try harnesses_to_remove.append(gpa, trimmed);
         }
+    } else if (global_mode) {
+        for (GLOBAL_HARNESS_CONFIGS) |hc| try harnesses_to_remove.append(gpa, hc.name);
     } else {
         for (HARNESS_CONFIGS) |hc| try harnesses_to_remove.append(gpa, hc.name);
     }
@@ -229,7 +242,12 @@ pub fn handleOffboard(
     }) = .empty;
 
     for (harnesses_to_remove.items) |h_name| {
-        const hc = findHarnessConfig(h_name) orelse continue;
+        const hc = (if (global_mode) findGlobalHarnessConfig(h_name) else findHarnessConfig(h_name)) orelse {
+            if (global_mode) {
+                try results.append(gpa, .{ .harness = h_name, .path = "", .action = "skip", .reason = "no global skill path (project-only harness)" });
+            }
+            continue;
+        };
         const full_path = try std.fmt.allocPrint(gpa, "{s}/{s}", .{ target_dir, hc.skill_path });
 
         const exists = blk: {
@@ -317,6 +335,26 @@ fn detectHarnesses(io: std.Io, gpa: std.mem.Allocator, target_dir: []const u8) !
                 break;
             }
         }
+    }
+    return detected.toOwnedSlice(gpa);
+}
+
+fn findGlobalHarnessConfig(name: []const u8) ?HarnessConfig {
+    for (GLOBAL_HARNESS_CONFIGS) |hc| {
+        if (std.mem.eql(u8, hc.name, name)) return hc;
+    }
+    return null;
+}
+
+fn detectGlobalHarnesses(io: std.Io, gpa: std.mem.Allocator, target_dir: []const u8) ![][]const u8 {
+    var detected: std.ArrayList([]const u8) = .empty;
+    for (GLOBAL_HARNESS_CONFIGS) |hc| {
+        const full_path = try std.fmt.allocPrint(gpa, "{s}/{s}", .{ target_dir, hc.detect_patterns[0] });
+        const exists = blk: {
+            _ = std.Io.Dir.cwd().openDir(io, full_path, .{}) catch break :blk false;
+            break :blk true;
+        };
+        if (exists) try detected.append(gpa, hc.name);
     }
     return detected.toOwnedSlice(gpa);
 }

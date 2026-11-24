@@ -24,6 +24,8 @@ function buildCapabilities(config, hasServer) {
     update: { description: "Self-update via npm (--check exits 5 when a newer version exists)", usage: "supercli update [--check] [--force]" },
     serve: { description: "Foreground HTTP daemon (loopback default, /_health + /_shutdown)", usage: "supercli serve [--host 127.0.0.1] [--port 8320]" },
     daemon: { description: "Daemon lifecycle over the serve HTTP surface", usage: "supercli daemon start|stop|status [--host 127.0.0.1] [--port 8320] — status exits 3 when stopped" },
+    onboard: { description: "Install the supercli skill into AI harness dirs — project scope by default, machine scope with --global (supercli-mastery into ~/.agents, ~/.claude, ~/.config/opencode)", usage: "supercli onboard [--global] [--harness a,b] [--target dir] [--detect] [--dry-run] [--force]" },
+    offboard: { description: "Remove skill files installed by onboard (same flags, --global supported)", usage: "supercli offboard [--global] [--harness a,b] [--target dir] [--dry-run]" },
     server: { description: "Federation hub client — requires SUPERCLI_SERVER", subcommands: ["status", "plugins", "mcp", "commands", "specs", "openapi", "jobs", "adapters"], usage: "supercli server status  # reachability + auth mode + your client_id" }
   }
   if (hasServer) commands.sync = { description: "Sync local config from SUPERCLI_SERVER" }

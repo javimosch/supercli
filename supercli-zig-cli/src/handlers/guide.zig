@@ -158,6 +158,7 @@ fn handleGuideHuman() void {
     output.writeLine("  update       update [--check] [--force] — self-update (--check exits 5)");
     output.writeLine("  install      install [--prefix dir] — copy binary to <prefix>/sc-zig");
     output.writeLine("  uninstall    uninstall [--prefix dir] — remove an installed copy");
+    output.writeLine("  onboard      Install supercli skill into agent harness dirs (--global for HOME)");
     output.writeLine("");
     output.writeLine("## Gotchas");
     output.writeLine("");

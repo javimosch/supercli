@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const SKILL_SOURCE = path.resolve(__dirname, "SKILL.md");
+const MASTERY_SKILL_SOURCE = path.resolve(__dirname, "../supercli-mastery/SKILL.md");
 
 const HARNESS_CONFIGS = {
   claude: {
@@ -23,6 +24,24 @@ const HARNESS_CONFIGS = {
   windsurf: {
     skillPath: ".windsurfrules",
     format: "windsurf",
+  },
+};
+
+// Machine-scope targets for `onboard --global`: the mastery skill (runtime
+// matrix) into each harness's HOME-level skill dir. cursor/windsurf have no
+// file-based global skill path — they report skipped in global mode.
+const GLOBAL_HARNESS_CONFIGS = {
+  agents: {
+    skillPath: ".agents/skills/supercli-mastery/SKILL.md",
+    format: "skill",
+  },
+  claude: {
+    skillPath: ".claude/skills/supercli-mastery/SKILL.md",
+    format: "skill",
+  },
+  opencode: {
+    skillPath: ".config/opencode/skills/supercli-mastery/SKILL.md",
+    format: "skill",
   },
 };
 
@@ -117,11 +136,28 @@ function compileForHarness(harness) {
   return { harness, skillPath, content: formatted };
 }
 
+function compileGlobalForHarness(harness) {
+  const config = GLOBAL_HARNESS_CONFIGS[harness];
+  if (!config) return null;
+  if (!fs.existsSync(MASTERY_SKILL_SOURCE)) {
+    throw new Error(`Skill source not found: ${MASTERY_SKILL_SOURCE}`);
+  }
+  const content = fs.readFileSync(MASTERY_SKILL_SOURCE, "utf-8");
+  return { harness, skillPath: config.skillPath, content: formatForHarness(harness, content) };
+}
+
+function getAllGlobalHarnesses() {
+  return Object.keys(GLOBAL_HARNESS_CONFIGS);
+}
+
 module.exports = {
   compileForHarness,
+  compileGlobalForHarness,
   formatForHarness,
   getAllHarnesses,
+  getAllGlobalHarnesses,
   getSkillPath,
   readSkillSource,
   HARNESS_CONFIGS,
+  GLOBAL_HARNESS_CONFIGS,
 };

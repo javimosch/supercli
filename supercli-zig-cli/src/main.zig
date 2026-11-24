@@ -236,11 +236,11 @@ fn realMain(init: std.process.Init) !void {
 
     // ----- onboard / offboard -----
     if (std.mem.eql(u8, pos[0], "onboard")) {
-        try onboard.handleOnboard(io, gpa, mode, parsed.flags);
+        try onboard.handleOnboard(io, gpa, mode, parsed.flags, home);
         return;
     }
     if (std.mem.eql(u8, pos[0], "offboard")) {
-        try onboard.handleOffboard(io, gpa, mode, parsed.flags);
+        try onboard.handleOffboard(io, gpa, mode, parsed.flags, home);
         return;
     }
 

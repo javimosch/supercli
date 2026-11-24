@@ -1,8 +1,23 @@
 "use strict";
 
 const fs = require("fs");
+const os = require("os");
 const path = require("path");
-const { compileForHarness, getAllHarnesses, HARNESS_CONFIGS } = require("../skills/supercli/compile");
+const { compileForHarness, compileGlobalForHarness, getAllHarnesses, getAllGlobalHarnesses, HARNESS_CONFIGS, GLOBAL_HARNESS_CONFIGS } = require("../skills/supercli/compile");
+
+// Which HOME-relative root proves a harness is installed (for --global --detect
+// and default install set in global mode).
+const GLOBAL_DETECT_ROOTS = {
+  agents: ".agents",
+  claude: ".claude",
+  opencode: ".config/opencode",
+};
+
+function detectGlobalHarnesses(baseDir) {
+  return Object.keys(GLOBAL_DETECT_ROOTS).filter((h) =>
+    fs.existsSync(path.join(baseDir, GLOBAL_DETECT_ROOTS[h]))
+  );
+}
 
 function invalid(message) {
   return Object.assign(new Error(message), {
@@ -55,11 +70,27 @@ function ensureDir(filePath) {
 }
 
 async function handleHarnessOnboard({ positional, flags, humanMode, output, outputError }) {
-  const targetDir = flags.target ? String(flags.target) : process.cwd();
+  const globalMode = !!flags.global;
+  const targetDir = flags.target ? String(flags.target) : globalMode ? os.homedir() : process.cwd();
   const dryRun = !!flags["dry-run"];
   const force = !!flags.force;
 
   if (flags.detect) {
+    if (globalMode) {
+      output({
+        version: "1.0",
+        mode: "onboard_detect_global",
+        description: "Detect AI harnesses under HOME (global skill dirs)",
+        target: targetDir,
+        detected: detectGlobalHarnesses(targetDir),
+        all_available: getAllGlobalHarnesses(),
+        harness_paths: Object.fromEntries(
+          Object.entries(GLOBAL_HARNESS_CONFIGS).map(([h, c]) => [h, c.skillPath])
+        ),
+        detect_roots: GLOBAL_DETECT_ROOTS,
+      });
+      return;
+    }
     const detected = detectHarnesses(targetDir);
     output({
       version: "1.0",
@@ -79,40 +110,52 @@ async function handleHarnessOnboard({ positional, flags, humanMode, output, outp
     return;
   }
 
-  if (!flags.harness && !flags.target) {
+  if (!flags.harness && !flags.target && !globalMode) {
     if (humanMode) {
       console.log("\n  ⚡ SuperCLI Onboard\n");
       console.log("  Install supercli skill document into AI harness directories.\n");
       console.log("  Usage:");
-      console.log("    supercli onboard                              # Auto-detect and install");
+      console.log("    supercli onboard                              # Auto-detect and install (project)");
+      console.log("    supercli onboard --global                     # Install mastery skill to HOME harness dirs");
       console.log("    supercli onboard --detect                     # List detected harnesses");
       console.log("    supercli onboard --harness claude,opencode   # Install to specific harnesses");
       console.log("    supercli onboard --target ./project           # Install to directory");
       console.log("    supercli onboard --dry-run                   # Preview without installing");
       console.log("    supercli onboard --force                     # Overwrite existing\n");
       console.log("  Harnesses:");
-      console.log("    claude, opencode, agents, cursor, windsurf\n");
+      console.log("    project: claude, opencode, agents, cursor, windsurf");
+      console.log("    global:  agents (~/.agents), claude (~/.claude), opencode (~/.config/opencode)\n");
     } else {
       output({
         version: "1.0",
         mode: "onboard_help",
         description: "Install supercli skill document into AI harness directories",
-        usage: "supercli onboard [--harness <harnesses>] [--target <path>] [--detect] [--dry-run] [--force]",
+        usage: "supercli onboard [--global] [--harness <harnesses>] [--target <path>] [--detect] [--dry-run] [--force]",
+        scope: {
+          project: "default — writes skill into harness dirs under --target (default cwd)",
+          global: "--global — installs the supercli-mastery skill (runtime matrix) into HOME-level harness dirs so every agent session on this machine discovers supercli",
+        },
         harnesses: {
           claude: { path: ".claude/skills/supercli/SKILL.md", format: "SKILL.md" },
           opencode: { path: ".opencode/skills/supercli/SKILL.md", format: "SKILL.md" },
           agents: { path: ".agents/skills/supercli/SKILL.md", format: "SKILL.md" },
-          cursor: { path: ".cursor/rules/supercli.mdc", format: ".mdc" },
-          windsurf: { path: ".windsurfrules", format: "markdown" }
+          cursor: { path: ".cursor/rules/supercli.mdc", format: ".mdc", global: false },
+          windsurf: { path: ".windsurfrules", format: "markdown", global: false }
         },
+        global_harnesses: Object.fromEntries(
+          Object.entries(GLOBAL_HARNESS_CONFIGS).map(([h, c]) => [h, { path: `~/` + c.skillPath, format: c.format }])
+        ),
         flags: {
+          "--global": "Install to HOME-level skill dirs (~/.agents, ~/.claude, ~/.config/opencode) instead of a project dir",
           "--harness": "Comma-separated harnesses (claude,opencode,agents,cursor,windsurf)",
-          "--target": "Target directory (default: current directory)",
+          "--target": "Target directory (default: cwd in project mode, $HOME in --global mode)",
           "--detect": "List detected harnesses without installing",
           "--dry-run": "Preview actions without writing files",
           "--force": "Overwrite existing skill files"
         },
         examples: [
+          "supercli onboard --global --json",
+          "supercli onboard --global --harness agents --json",
           "supercli onboard --detect --json",
           "supercli onboard --harness claude --json",
           "supercli onboard --harness claude,opencode,cursor,windsurf --force --json",
@@ -124,16 +167,17 @@ async function handleHarnessOnboard({ positional, flags, humanMode, output, outp
   }
 
   const requestedHarnesses = parseHarnesses(flags.harness);
-  const harnessesToInstall = requestedHarnesses || detectHarnesses(targetDir);
+  const harnessesToInstall = requestedHarnesses ||
+    (globalMode ? detectGlobalHarnesses(targetDir) : detectHarnesses(targetDir));
 
   if (harnessesToInstall.length === 0) {
     outputError({
       code: 92,
       type: "resource_not_found",
       message: "No AI harnesses detected. Use --harness to specify explicitly.",
-      suggestions: [
-        `supercli onboard --harness claude,opencode,cursor,windsurf`,
-      ],
+      suggestions: globalMode
+        ? [`supercli onboard --global --harness agents,claude,opencode`]
+        : [`supercli onboard --harness claude,opencode,cursor,windsurf`],
     });
     return;
   }
@@ -141,7 +185,12 @@ async function handleHarnessOnboard({ positional, flags, humanMode, output, outp
   const results = [];
 
   for (const harness of harnessesToInstall) {
-    const { skillPath, content } = compileForHarness(harness);
+    const compiled = globalMode ? compileGlobalForHarness(harness) : compileForHarness(harness);
+    if (!compiled) {
+      results.push({ harness, path: null, fullPath: null, action: "skip", reason: "no global skill path (project-only harness)" });
+      continue;
+    }
+    const { skillPath, content } = compiled;
     const fullPath = path.join(targetDir, skillPath);
 
     const result = {
@@ -217,18 +266,24 @@ async function handleHarnessOnboard({ positional, flags, humanMode, output, outp
 }
 
 async function handleHarnessOffboard({ positional, flags, humanMode, output, outputError }) {
-  const targetDir = flags.target ? String(flags.target) : process.cwd();
+  const globalMode = !!flags.global;
+  const targetDir = flags.target ? String(flags.target) : globalMode ? os.homedir() : process.cwd();
   const dryRun = !!flags["dry-run"];
   const force = !!flags.force;
 
   const requestedHarnesses = parseHarnesses(flags.harness);
-  const harnessesToRemove = requestedHarnesses || getAllHarnesses();
+  const harnessesToRemove = requestedHarnesses || (globalMode ? getAllGlobalHarnesses() : getAllHarnesses());
 
   const results = [];
 
   for (const harness of harnessesToRemove) {
-    const config = HARNESS_CONFIGS[harness];
-    if (!config) continue;
+    const config = (globalMode ? GLOBAL_HARNESS_CONFIGS : HARNESS_CONFIGS)[harness];
+    if (!config) {
+      if (globalMode) {
+        results.push({ harness, path: null, fullPath: null, action: "skip", reason: "no global skill path (project-only harness)" });
+      }
+      continue;
+    }
 
     const fullPath = path.join(targetDir, config.skillPath);
 

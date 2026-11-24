@@ -17,6 +17,7 @@ func print_help() {
     println("    sc-machin plugins install <name>           (delegates to Node.js sc)")
     println("    sc-machin plugins update [--check]         (delegates to Node.js sc)")
     println("    sc-machin mcp serve                        MCP server over stdio (JSON-RPC 2.0)")
+    println("    sc-machin onboard [--global]               install supercli skill into agent harness dirs")
     println("    sc-machin install-as-sc")
     println("    sc-machin <ns> <res> <act> [--flags]       execute a plugin command")
     println("")
@@ -102,6 +103,16 @@ func main() {
     if pa.positional[0] == "uninstall" {
         sc_tel_finish("run", 0)
         exit(cmd_uninstall(pa_flag(pa, "prefix")))
+    }
+
+    // ----- onboard / offboard (harness skill install, no lock needed) -----
+    if pa.positional[0] == "onboard" {
+        sc_tel_finish("run", 0)
+        exit(cmd_onboard(pa))
+    }
+    if pa.positional[0] == "offboard" {
+        sc_tel_finish("run", 0)
+        exit(cmd_offboard(pa))
     }
 
     lock, lock_ok := load_lock(lock_path())
