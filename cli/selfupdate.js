@@ -20,7 +20,7 @@ const NUDGED = path.join(os.homedir(), ".supercli", "update-sc-nudged");
 
 const NUDGE_SKIP = new Set([
   "update", "install", "uninstall", "version", "help", "help-json",
-  "guide", "telemetry", "feedback", "_update-refresh",
+  "guide", "telemetry", "feedback", "_update-refresh", "serve", "daemon",
 ]);
 
 function output(obj) { console.log(JSON.stringify(obj)); }

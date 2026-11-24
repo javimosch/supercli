@@ -255,12 +255,27 @@ async function main() {
       return;
     }
 
+    if (positional[0] === "serve") {
+      const { handleServe } = require("./serve");
+      const { daemonMain } = require("./daemon");
+      await handleServe(flags, { runLoop: () => daemonMain().catch((e) => console.error("daemon loop:", e)) });
+      return;
+    }
+
     if (positional[0] === "daemon") {
       const sub = positional[1] || "status";
-      if (sub === "start")  { output(startDaemon()); return; }
-      if (sub === "stop")   { output(stopDaemon()); return; }
-      if (sub === "status") { output(getDaemonStatus()); return; }
-      outputError({ code: 85, type: "invalid_argument", message: "Unknown daemon subcommand. Use: start|stop|status", recoverable: false });
+      const r = sub === "start"  ? await startDaemon(flags)
+              : sub === "stop"   ? await stopDaemon(flags)
+              : sub === "status" ? await getDaemonStatus(flags)
+              : null;
+      if (r === null) {
+        outputError({ code: 85, type: "invalid_argument", message: "Unknown daemon subcommand. Use: start|stop|status", recoverable: false });
+        return;
+      }
+      if (!r.ok) { outputError(r.error); return; }
+      delete r.code;
+      output(r);
+      if (sub === "status" && r.daemon === "stopped") process.exitCode = 3;
       return;
     }
 

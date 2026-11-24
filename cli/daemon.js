@@ -78,6 +78,116 @@ function isDaemonRunning() {
   }
 }
 
+// ----- cli-daemon-spec lifecycle (health-probe based) ------------------------
+// `daemon start|stop|status` manage `sc serve` (cli/serve.js) over its HTTP
+// surface rather than the PID file — a probe asks the process itself "are you
+// healthy and are you actually sc", which can't be fooled by PID reuse.
+
+const { resolveBind, TOKEN_FILE } = require("./serve");
+const DAEMON_LOG = path.join(LOGS_DIR, "daemon.log");
+
+async function probeHealth(host, port, timeoutMs = 800) {
+  try {
+    const res = await fetch(`http://${host}:${port}/_health`, {
+      signal: AbortSignal.timeout(timeoutMs),
+    });
+    if (!res.ok) return null;
+    const body = await res.json();
+    return body && body.service === "sc" ? body : null;
+  } catch {
+    return null;
+  }
+}
+
+// Start daemon process — spec §4: detached serve + bounded health poll.
+async function startDaemon(opts = {}) {
+  const { host, port } = resolveBind(opts);
+  if (await probeHealth(host, port)) {
+    return { ok: true, daemon: "already_running", host, port, code: 0 };
+  }
+
+  ensureDirectories();
+  const config = loadConfig();
+  if (!config.enabled) {
+    return { ok: false, error: { code: 80, type: "input_error", message: "Daemon is disabled in config", recoverable: false }, code: 80 };
+  }
+
+  const supercliScript = path.join(__dirname, "supercli.js");
+  const logFd = fs.openSync(DAEMON_LOG, "a");
+  const child = spawn(process.execPath, [supercliScript, "serve", "--host", host, "--port", String(port)], {
+    detached: true,
+    stdio: ["ignore", logFd, logFd],
+  });
+  child.unref();
+  fs.closeSync(logFd);
+
+  const deadline = Date.now() + 5000;
+  while (Date.now() < deadline) {
+    if (await probeHealth(host, port)) {
+      return { ok: true, daemon: "started", host, port, log: DAEMON_LOG, code: 0 };
+    }
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  let tail = "";
+  try {
+    tail = fs.readFileSync(DAEMON_LOG, "utf8").split("\n").filter(Boolean).slice(-5).join("\n");
+  } catch {}
+  return { ok: false, error: { code: 100, type: "external_failure", message: `daemon did not become healthy within 5s${tail ? " — log tail: " + tail : ""}`, recoverable: true }, code: 100 };
+}
+
+// Stop daemon — spec §4: health probe → /_shutdown → confirm dead. Also
+// SIGTERMs a legacy pre-HTTP bookkeeper daemon so upgrades don't orphan it.
+async function stopDaemon(opts = {}) {
+  const { host, port } = resolveBind(opts);
+  const health = await probeHealth(host, port);
+
+  if (!health) {
+    let killedLegacy = false;
+    if (fs.existsSync(PID_FILE)) {
+      try {
+        const pid = parseInt(fs.readFileSync(PID_FILE, "utf8").trim());
+        process.kill(pid, "SIGTERM");
+        killedLegacy = true;
+      } catch {}
+      try { fs.unlinkSync(PID_FILE); } catch {}
+    }
+    return { ok: true, daemon: killedLegacy ? "stopped" : "already_stopped", code: 0 };
+  }
+
+  // Send the token whenever we have it — required off-loopback, harmless on.
+  const headers = {};
+  try { headers.authorization = `Bearer ${fs.readFileSync(TOKEN_FILE, "utf8").trim()}`; } catch {}
+  try {
+    await fetch(`http://${host}:${port}/_shutdown`, {
+      method: "POST",
+      headers,
+      signal: AbortSignal.timeout(2000),
+    });
+  } catch {
+    return { ok: false, error: { code: 110, type: "internal_error", message: "daemon unreachable during shutdown request", recoverable: true }, code: 110 };
+  }
+
+  const deadline = Date.now() + 5000;
+  while (Date.now() < deadline) {
+    if (!(await probeHealth(host, port))) {
+      try { fs.unlinkSync(PID_FILE); } catch {}
+      return { ok: true, daemon: "stopped", code: 0 };
+    }
+    await new Promise((r) => setTimeout(r, 100));
+  }
+  return { ok: false, error: { code: 110, type: "internal_error", message: "daemon still responding 5s after /_shutdown", recoverable: true }, code: 110 };
+}
+
+// Status — spec §4: health probe only, exit 3 when stopped (steady state).
+async function getDaemonStatus(opts = {}) {
+  const { host, port } = resolveBind(opts);
+  const health = await probeHealth(host, port);
+  if (health) {
+    return { ok: true, daemon: "running", host, port, pid: health.pid, code: 0 };
+  }
+  return { ok: true, daemon: "stopped", host, port, code: 3 };
+}
+
 // Write heartbeat timestamp
 function writeHeartbeat() {
   ensureDirectories();
@@ -94,62 +204,6 @@ function getHeartbeat() {
   } catch (err) {
     return null;
   }
-}
-
-// Start daemon process
-function startDaemon() {
-  ensureDirectories();
-  if (isDaemonRunning()) {
-    return { ok: true, message: "Daemon already running" };
-  }
-
-  const config = loadConfig();
-  if (!config.enabled) {
-    return { ok: false, message: "Daemon is disabled in config" };
-  }
-
-  // Spawn daemon as independent process
-  const daemonScript = path.join(__dirname, "daemon.js");
-  const nodePath = process.execPath;
-
-  const child = spawn(nodePath, [daemonScript, "--daemon"], {
-    detached: true,
-    stdio: "ignore",
-  });
-
-  child.unref(); // Allow parent to exit without waiting for child
-
-  return { ok: true, message: "Daemon started" };
-}
-
-// Stop daemon process
-function stopDaemon() {
-  if (!isDaemonRunning()) {
-    return { ok: true, message: "Daemon not running" };
-  }
-
-  try {
-    const pid = parseInt(fs.readFileSync(PID_FILE, "utf8").trim());
-    process.kill(pid, "SIGTERM");
-    fs.unlinkSync(PID_FILE);
-    return { ok: true, message: "Daemon stopped" };
-  } catch (err) {
-    return { ok: false, message: `Failed to stop daemon: ${err.message}` };
-  }
-}
-
-// Get daemon status
-function getDaemonStatus() {
-  const running = isDaemonRunning();
-  const heartbeat = getHeartbeat();
-  const config = loadConfig();
-
-  return {
-    running,
-    enabled: config.enabled,
-    heartbeat: heartbeat ? heartbeat.toISOString() : null,
-    pid: running ? parseInt(fs.readFileSync(PID_FILE, "utf8").trim()) : null,
-  };
 }
 
 // Sync logs to server
@@ -320,20 +374,19 @@ if (require.main === module) {
     // CLI commands
     const command = args[0];
 
-    switch (command) {
-      case "start":
-        console.log(JSON.stringify(startDaemon(), null, 2));
-        break;
-      case "stop":
-        console.log(JSON.stringify(stopDaemon(), null, 2));
-        break;
-      case "status":
-        console.log(JSON.stringify(getDaemonStatus(), null, 2));
-        break;
-      default:
+    const run = async () => {
+      const r = command === "start" ? await startDaemon({})
+              : command === "stop" ? await stopDaemon({})
+              : command === "status" ? await getDaemonStatus({})
+              : null;
+      if (r === null) {
         console.error("Usage: node daemon.js {start|stop|status}");
         process.exit(85);
-    }
+      }
+      console.log(JSON.stringify(r, null, 2));
+      process.exit(r.code || 0);
+    };
+    run().catch((e) => { console.error(e); process.exit(110); });
   }
 }
 
@@ -348,4 +401,5 @@ module.exports = {
   getHeartbeat,
   getDaemonStatus,
   loadConfig,
+  daemonMain,
 };
