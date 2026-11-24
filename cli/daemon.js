@@ -10,7 +10,6 @@ const { CLI_VERSION } = require("./arg-parser");
 const SUPERCLI_DIR = path.join(os.homedir(), ".supercli");
 const LOGS_DIR = path.join(SUPERCLI_DIR, "logs");
 const PID_FILE = path.join(SUPERCLI_DIR, "daemon.pid");
-const HEARTBEAT_FILE = path.join(SUPERCLI_DIR, "daemon.heartbeat");
 const CONFIG_FILE = path.join(SUPERCLI_DIR, "daemon.json");
 
 // Default daemon configuration
@@ -199,13 +198,6 @@ async function getDaemonStatus(opts = {}) {
   return r;
 }
 
-// Write heartbeat timestamp
-function writeHeartbeat() {
-  ensureDirectories();
-  fs.writeFileSync(HEARTBEAT_FILE, new Date().toISOString());
-}
-
-
 // Sync logs to server
 async function syncLogs(config) {
   const logFile = getLogFilePath();
@@ -361,7 +353,6 @@ async function daemonMain() {
 
   while (true) {
     try {
-      writeHeartbeat();
       await sendHeartbeat(config);
       const syncResult = await syncLogs(config);
       const pruneResult = pruneLogs(config);
