@@ -57,27 +57,6 @@ function writeLog(logEntry) {
   fs.appendFileSync(logFile, JSON.stringify(entry) + "\n");
 }
 
-// Check if daemon is running
-function isDaemonRunning() {
-  if (!fs.existsSync(PID_FILE)) {
-    return false;
-  }
-  try {
-    const pid = parseInt(fs.readFileSync(PID_FILE, "utf8").trim());
-    // Check if process is running
-    try {
-      process.kill(pid, 0);
-      return true;
-    } catch (e) {
-      // Process not found, clean up stale PID file
-      fs.unlinkSync(PID_FILE);
-      return false;
-    }
-  } catch (err) {
-    return false;
-  }
-}
-
 // ----- cli-daemon-spec lifecycle (health-probe based) ------------------------
 // `daemon start|stop|status` manage `sc serve` (cli/serve.js) over its HTTP
 // surface rather than the PID file — a probe asks the process itself "are you
@@ -205,17 +184,6 @@ function writeHeartbeat() {
   fs.writeFileSync(HEARTBEAT_FILE, new Date().toISOString());
 }
 
-// Get heartbeat timestamp
-function getHeartbeat() {
-  if (!fs.existsSync(HEARTBEAT_FILE)) {
-    return null;
-  }
-  try {
-    return new Date(fs.readFileSync(HEARTBEAT_FILE, "utf8").trim());
-  } catch (err) {
-    return null;
-  }
-}
 
 // Sync logs to server
 async function syncLogs(config) {
@@ -368,50 +336,15 @@ async function daemonMain() {
   }
 }
 
-// CLI entry point
-if (require.main === module) {
-  const args = process.argv.slice(2);
-
-  if (args.includes("--daemon")) {
-    // Run as daemon process
-    const pid = process.pid;
-    ensureDirectories();
-    process.stderr.write("[deprecated] 'node daemon.js --daemon' is the legacy pre-HTTP path with no /_health — use 'sc daemon start' (spawns 'sc serve') instead.\n");
-    fs.writeFileSync(PID_FILE, pid.toString());
-    daemonMain().catch((err) => {
-      console.error("Daemon fatal error:", err);
-      process.exit(1);
-    });
-  } else {
-    // CLI commands
-    const command = args[0];
-
-    const run = async () => {
-      const r = command === "start" ? await startDaemon({})
-              : command === "stop" ? await stopDaemon({})
-              : command === "status" ? await getDaemonStatus({})
-              : null;
-      if (r === null) {
-        console.error("Usage: node daemon.js {start|stop|status}");
-        process.exit(85);
-      }
-      console.log(JSON.stringify(r, null, 2));
-      process.exit(r.code || 0);
-    };
-    run().catch((e) => { console.error(e); process.exit(110); });
-  }
-}
+// This file is library-only — there is no CLI entry. The legacy
+// 'node daemon.js --daemon' spawn path was removed; the only daemon
+// entry is `sc daemon start` → detached `sc serve` (cli/serve.js).
 
 module.exports = {
   startDaemon,
   stopDaemon,
-  isDaemonRunning,
-  writeLog,
-  syncLogs,
-  pruneLogs,
-  writeHeartbeat,
-  getHeartbeat,
   getDaemonStatus,
+  writeLog,
   loadConfig,
   daemonMain,
 };

@@ -137,7 +137,7 @@ sc daemon stop     # POSTs /_shutdown, confirms the listener dies
 sc serve           # foreground variant — GET /_health (open), POST /_shutdown
 ```
 
-Two different daemons share the word: `sc daemon` = the bookkeeper serve (heartbeat + job-log shipping to SUPERCLI_SERVER). `sc mcp daemon` = a separate Unix-socket daemon pooling MCP server processes. Do NOT spawn `node cli/daemon.js --daemon` directly — legacy path, no `/_health`, invisible to `daemon status`.
+Two different daemons share the word: `sc daemon` = the bookkeeper serve (heartbeat + job-log shipping to SUPERCLI_SERVER). `sc mcp daemon` = a separate Unix-socket daemon pooling MCP server processes. The legacy `node cli/daemon.js --daemon` entry was removed — the only path is `sc daemon start`.
 
 ## Working with Output
 
