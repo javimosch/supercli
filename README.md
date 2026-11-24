@@ -334,27 +334,34 @@ All five modes return JSON by default. Add `--human` for readable display. Agent
 
 Three implementations, all co-exist and share plugin storage at `~/.supercli/plugins/plugins.lock.json`. Pick one (or more):
 
-### Option 1: Zig Version (Fastest, Single Binary)
+### Option 1: Zig Version (Single Binary, Node-Free Installs)
 
 ```bash
 curl -sSL https://github.com/javimosch/supercli/releases/download/v0.1.0-zig/install.sh | bash
 ```
 
-- ✅ Single static binary (~250KB), no Node.js required
-- ✅ Fastest startup, native performance
+- ✅ Single static binary (~372KB), no Node.js required
+- ✅ ~1 ms startup, native `discover --intent` + plugin installs
 - ✅ Reads same `~/.supercli/plugins/plugins.lock.json`
 
-### Option 2: Machin Version (MCP Server, Single Binary)
+### Option 2: Machin Version (Fastest, MCP Server, Single Binary)
 
 ```bash
 curl -sSL https://github.com/javimosch/supercli/releases/download/v0.2.1-machin/install.sh | bash
 ```
 
-- ✅ Single binary (~71KB), no Node.js required
+- ✅ Single binary (~100KB), no Node.js required
+- ✅ **Fastest implementation** — see benchmark below
 - ✅ Built-in MCP server (`sc-machin mcp serve`) — expose all commands to AI agents
 - ✅ `skills.match` built-in tool — semantic skill discovery across all skill dirs
 - ✅ `rtk` passthrough — token-reduced git/ls ops via MCP
 - ✅ Auto-detects OS/arch (linux-amd64, linux-arm64, darwin-arm64)
+
+`sc-machin` exists to dogfood [machin](https://github.com/javimosch/machin) — an
+agent-first language that compiles to small static binaries. Machin's whole
+design assumes the *writer* is an agent: fast iteration, tiny outputs, cheap
+context. SuperCLI is its flagship proof — the fastest binary here is also the
+smallest codebase.
 
 ### Option 3: Node.js Version (npx/npm)
 
@@ -369,7 +376,21 @@ npm install -g superacli
 - ✅ Full feature parity (MCP client, HTTP adapter, plugin installs)
 - ✅ Plugin installation from registry
 
-**Which to choose?** `sc-zig` for daily use (fastest startup), `sc-machin` to expose SuperCLI to AI agents via MCP, `sc` (Node.js) for the reference implementation with full feature parity. All three share the same plugin state — install one, two, or all three.
+**Which to choose?** `sc-machin` for daily agent use (fastest on every read path), `sc-zig` when you need `discover --intent` or plugin installs without Node, `sc` (Node.js) for the reference implementation with the full surface (MCP client, `ask`, `server` CRUD, `--server` hub, `sync`). All three share the same plugin state — install one, two, or all three; `sc-machin` delegates plugin installs to `sc` automatically when present.
+
+### Benchmark (15 runs, median — same machine, same plugin state)
+
+| Verb | `sc` (Node) | `sc-zig` | `sc-machin` |
+|---|---|---|---|
+| `--version` | 129 ms | 1 ms | **1 ms** |
+| `--json` bootstrap | 146 ms | 2 ms | **2 ms** |
+| `commands --query` | 119 ms | 14 ms | **6 ms** |
+| `inspect` | 91 ms | 2 ms | **6 ms** |
+| `plugins explore` | ~1.1 s | 484 ms | **18 ms** |
+| Binary size | node + JS tree | 372 KB | **100 KB** |
+
+The Node tax is ~100–130 ms of interpreter startup on *every* invocation —
+trivial for humans, meaningful for agents that issue dozens of calls per task.
 
 ---
 
