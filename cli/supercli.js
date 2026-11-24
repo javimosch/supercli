@@ -31,6 +31,7 @@ const { handleExecute, handlePlan, handleExecutePlan } = require("./execute-hand
 const { buildGuide, buildGuideHuman } = require("./guide");
 const telemetry = require("./telemetry");
 const { sendFeedback } = require("./feedback");
+const selfupdate = require("./selfupdate");
 
 const SERVER = process.env.SUPERCLI_SERVER;
 const hasServer = !!SERVER;
@@ -41,6 +42,7 @@ const output = makeOutput({ humanMode, compactMode });
 const outputError = makeOutputError({ humanMode, compactMode });
 
 telemetry.init(positional[0] || "none");
+selfupdate.nudge(positional[0] || "none");
 
 function requireServer(message) {
   if (hasServer) return true;
@@ -197,6 +199,16 @@ async function main() {
       }
       const r = await sendFeedback({ message, kind: flags.kind ? String(flags.kind) : "note", context: flags.context ? String(flags.context) : "" });
       output({ ok: true, data: r });
+      return;
+    }
+
+    if (positional[0] === "update") {
+      await selfupdate.handleUpdate(flags);
+      return;
+    }
+
+    if (positional[0] === "_update-refresh") {
+      await selfupdate.refreshCache();
       return;
     }
 

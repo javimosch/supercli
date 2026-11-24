@@ -38,6 +38,7 @@ function buildGuide() {
       "daemon": "Subcommands: start, stop, status",
       "telemetry": "Print the anonymous usage payload and on/off state (--off persists opt-out)",
       "feedback": "feedback <msg> [--kind] [--context] — report a bug or idea to the shared relay",
+      "update": "update [--check] [--force] — self-update via npm (--check exits 5 when newer)",
     },
     examples: [
       "sc plugins explore --name memory  # find memory-related plugins",
@@ -55,6 +56,7 @@ function buildGuide() {
       "If sc-zig crashes or is missing a feature, fall back to sc (Node.js) — the reference implementation",
       "Use context-mode MCP tool for large outputs (sc commands has 5000+ plugins) to reduce token usage by up to 98%",
       "Telemetry consolidates in ~/.supercli/telemetry.jsonl and flushes at most once per hour as one batched POST — disable: SUPERCLI_TELEMETRY=0, DO_NOT_TRACK=1, or `sc telemetry --off`. Inspect: `sc telemetry`",
+      "sc updates via npm (`sc update` → npm install -g superacli@latest) — the npm registry is the version endpoint; SUPERCLI_UPDATE_URL overrides it for tests. Update nudge prints once per new version, disable: SUPERCLI_NO_NUDGE=1",
     ],
   };
 }

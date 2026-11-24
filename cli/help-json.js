@@ -20,7 +20,8 @@ function buildCapabilities(config, hasServer) {
       subcommands: ["list", "get", "teach", "sync", "search", "providers"]
     },
     telemetry: { description: "Print the anonymous usage payload and on/off state", usage: "supercli telemetry [--off]" },
-    feedback: { description: "Report a bug or idea to the shared relay", usage: "supercli feedback <msg> [--kind bug|idea|praise|note] [--context txt]" }
+    feedback: { description: "Report a bug or idea to the shared relay", usage: "supercli feedback <msg> [--kind bug|idea|praise|note] [--context txt]" },
+    update: { description: "Self-update via npm (--check exits 5 when a newer version exists)", usage: "supercli update [--check] [--force]" }
   }
   if (hasServer) commands.sync = { description: "Sync local config from SUPERCLI_SERVER" }
   if (config.features?.ask || process.env.OPENAI_BASE_URL) commands.ask = { description: "Execute natural language queries", usage: "supercli ask \"<query>\"" }
