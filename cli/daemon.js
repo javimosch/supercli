@@ -112,6 +112,17 @@ async function startDaemon(opts = {}) {
     return { ok: false, error: { code: 80, type: "input_error", message: "Daemon is disabled in config", recoverable: false }, code: 80 };
   }
 
+  // A legacy pre-HTTP bookkeeper (daemon.js --daemon) may still be running:
+  // /_health can't see it, and its PID file would make it look stopped while it
+  // keeps shipping logs in parallel with the new serve. SIGTERM it first.
+  if (fs.existsSync(PID_FILE)) {
+    try {
+      const pid = parseInt(fs.readFileSync(PID_FILE, "utf8").trim());
+      process.kill(pid, "SIGTERM");
+    } catch {}
+    try { fs.unlinkSync(PID_FILE); } catch {}
+  }
+
   const supercliScript = path.join(__dirname, "supercli.js");
   const logFd = fs.openSync(DAEMON_LOG, "a");
   const child = spawn(process.execPath, [supercliScript, "serve", "--host", host, "--port", String(port)], {
@@ -365,6 +376,7 @@ if (require.main === module) {
     // Run as daemon process
     const pid = process.pid;
     ensureDirectories();
+    process.stderr.write("[deprecated] 'node daemon.js --daemon' is the legacy pre-HTTP path with no /_health — use 'sc daemon start' (spawns 'sc serve') instead.\n");
     fs.writeFileSync(PID_FILE, pid.toString());
     daemonMain().catch((err) => {
       console.error("Daemon fatal error:", err);

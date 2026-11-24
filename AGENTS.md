@@ -30,6 +30,8 @@ There are three implementations of `sc`. Pick the one that fits your use case:
 - Need to expose SuperCLI to an MCP client → use `sc-machin mcp serve`
 - `sc-machin` missing a feature → fall back to `sc` (Node.js), which has the full adapter set
 
+**Daemons (sc only):** `sc daemon start|stop|status` manages the bookkeeper `serve` on 127.0.0.1:8320 (`/_health`, `/_shutdown`); `status` exits 3 when stopped. `sc mcp daemon` is a DIFFERENT daemon — the MCP server pool over a Unix socket. sc-zig and sc-machin have no `daemon` verb; never spawn `node cli/daemon.js --daemon` directly (legacy, no health endpoint).
+
 **Agent install (no sudo required):**
 ```bash
 # sc-zig (recommended default)

@@ -48,6 +48,7 @@ function buildGuide() {
       "sc inspect rtk git status  # inspect the rtk.git.status command schema",
       "sc plan rtk git status  # preview the execution plan",
       "sc rtk git status  # execute the command",
+      "sc daemon start && sc daemon status  # start bookkeeper daemon; status exits 0 running / 3 stopped",
     ],
     gotchas: [
       "SUPERCLI_SERVER is optional — sc works fully offline with local plugins, but server-only features (sync, remote plugins) need it set",
@@ -58,6 +59,9 @@ function buildGuide() {
       "Use context-mode MCP tool for large outputs (sc commands has 5000+ plugins) to reduce token usage by up to 98%",
       "Telemetry consolidates in ~/.supercli/telemetry.jsonl and flushes at most once per hour as one batched POST — disable: SUPERCLI_TELEMETRY=0, DO_NOT_TRACK=1, or `sc telemetry --off`. Inspect: `sc telemetry`",
       "sc updates via npm (`sc update` → npm install -g superacli@latest) — the npm registry is the version endpoint; SUPERCLI_UPDATE_URL overrides it for tests. Update nudge prints once per new version, disable: SUPERCLI_NO_NUDGE=1",
+      "sc daemon manages the bookkeeper serve on 127.0.0.1:8320 — it is NOT the MCP daemon. The MCP server pool is a different daemon: sc mcp daemon",
+      "Never spawn 'node cli/daemon.js --daemon' directly — the legacy path has no /_health, daemon status/stop cannot see it, and it would ship logs in parallel with a new serve. Lifecycle: sc daemon start → spawns sc serve detached",
+      "sc daemon status exits 3 when stopped — branch on the exit code, not JSON parsing",
     ],
   };
 }

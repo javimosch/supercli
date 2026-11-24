@@ -128,6 +128,17 @@ sc ask "send an email to user@example.com"
 
 `ask` uses an LLM to map natural language to supercli commands. It NEVER executes — returns suggestions with `dry_run` strings you can choose to run.
 
+### Daemon lifecycle (sc only)
+
+```bash
+sc daemon start    # spawns 'sc serve' detached on 127.0.0.1:8320 (logs: ~/.supercli/logs/daemon.log)
+sc daemon status   # {"ok":true,"daemon":"running"} exit 0, or "stopped" exit 3 — branch on exit code
+sc daemon stop     # POSTs /_shutdown, confirms the listener dies
+sc serve           # foreground variant — GET /_health (open), POST /_shutdown
+```
+
+Two different daemons share the word: `sc daemon` = the bookkeeper serve (heartbeat + job-log shipping to SUPERCLI_SERVER). `sc mcp daemon` = a separate Unix-socket daemon pooling MCP server processes. Do NOT spawn `node cli/daemon.js --daemon` directly — legacy path, no `/_health`, invisible to `daemon status`.
+
 ## Working with Output
 
 Always use `--json` for machine-readable output:

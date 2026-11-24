@@ -67,7 +67,10 @@ function buildCapabilities(config, hasServer) {
     },
     exit_codes: {
       "0": "success",
+      "3": "steady_state — daemon status: stopped; not an error",
+      "5": "update available (supercli update --check)",
       "91": "safety_violation",
+      "100": "external_failure — e.g. daemon start health-timeout",
       "82": "validation_error",
       "85": "invalid_argument",
       "92": "resource_not_found",
