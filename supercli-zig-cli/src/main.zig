@@ -21,6 +21,7 @@ const misc = @import("handlers/misc.zig");
 const daemon = @import("handlers/daemon.zig");
 const guide = @import("handlers/guide.zig");
 const telemetry = @import("telemetry.zig");
+const selfupdate = @import("selfupdate.zig");
 
 pub fn main(init: std.process.Init) !void {
     var tel_code: u8 = 0;
@@ -47,6 +48,7 @@ fn realMain(init: std.process.Init) !void {
         if (std.mem.eql(u8, arg, "--json")) has_json_flag = true;
     }
     const raw_argv = try args_list.toOwnedSlice(gpa);
+    defer gpa.free(raw_argv);
 
     if (has_version_flag) {
         const mode = if (has_json_flag) output.Mode.json else output.Mode.human;
@@ -61,6 +63,7 @@ fn realMain(init: std.process.Init) !void {
 
     const home = init.environ_map.get("HOME") orelse init.environ_map.get("USERPROFILE") orelse "/tmp";
     telemetry.init(io, gpa, home, init.environ_map, if (pos.len > 0) pos[0] else "none");
+    selfupdate.nudge(gpa, io, home, init.environ_map, if (pos.len > 0) pos[0] else "none");
 
     // ----- help / --help / --help-json -----
     if (parsed.flags.get("help-json") != null) {
@@ -92,6 +95,21 @@ fn realMain(init: std.process.Init) !void {
 
     // ----- No args → bootstrap -----
     if (pos.len == 0) { bootstrap.handleBootstrap(gpa, mode); return; }
+
+    // ----- update / install / uninstall (cli-update-spec) -----
+    if (std.mem.eql(u8, pos[0], "update")) {
+        selfupdate.handleUpdate(gpa, io, mode, init.environ_map, parsed.flags.contains("check"), parsed.flags.contains("force"));
+    }
+    if (std.mem.eql(u8, pos[0], "install")) {
+        const prefix = if (parsed.flags.get("prefix")) |v| v else "";
+        selfupdate.handleInstall(gpa, io, mode, init.environ_map, home, prefix);
+        return;
+    }
+    if (std.mem.eql(u8, pos[0], "uninstall")) {
+        const prefix = if (parsed.flags.get("prefix")) |v| v else "";
+        selfupdate.handleUninstall(gpa, io, mode, home, prefix);
+        return;
+    }
 
     // ----- telemetry / feedback -----
     if (std.mem.eql(u8, pos[0], "telemetry")) {
@@ -457,5 +475,6 @@ test {
     _ = @import("handlers/daemon.zig");
     _ = @import("handlers/guide.zig");
     _ = @import("telemetry.zig");
+    _ = @import("selfupdate.zig");
     _ = @import("tests/all_tests.zig");
 }

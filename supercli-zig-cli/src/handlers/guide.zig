@@ -90,6 +90,15 @@ fn handleGuideJson(gpa: std.mem.Allocator) void {
     jw.objectField("feedback") catch return;
     jw.write("feedback <msg> [--kind] [--context] — report a bug or idea to the shared relay") catch return;
 
+    jw.objectField("update") catch return;
+    jw.write("update [--check] [--force] — self-update to the released binary (content-hash versioned, .bak kept); --check exits 5 when newer") catch return;
+
+    jw.objectField("install") catch return;
+    jw.write("install [--prefix dir] — copy this binary to <prefix>/sc-zig (default ~/.local/bin)") catch return;
+
+    jw.objectField("uninstall") catch return;
+    jw.write("uninstall [--prefix dir] — remove an installed copy") catch return;
+
     jw.endObject() catch return;
 
     jw.objectField("examples") catch return;
@@ -150,6 +159,9 @@ fn handleGuideHuman() void {
     output.writeLine("  daemon       start|stop|status");
     output.writeLine("  telemetry    Inspect anonymous telemetry + on/off state (--off)");
     output.writeLine("  feedback     feedback <msg> — report a bug or idea to the shared relay");
+    output.writeLine("  update       update [--check] [--force] — self-update (--check exits 5)");
+    output.writeLine("  install      install [--prefix dir] — copy binary to <prefix>/sc-zig");
+    output.writeLine("  uninstall    uninstall [--prefix dir] — remove an installed copy");
     output.writeLine("");
     output.writeLine("## Gotchas");
     output.writeLine("");

@@ -98,8 +98,11 @@ fn exitClass(code: u8) i64 {
 /// Called once from main() — stores allocator/io for later hooks (including
 /// output.exitWithError, which receives neither) and resolves on/off state.
 pub fn init(io: std.Io, gpa: std.mem.Allocator, home: []const u8, env: *const std.process.Environ.Map, verb: []const u8) void {
+    _ = gpa;
     g_io = io;
-    g_gpa = gpa;
+    // page_allocator: scratch strings in a short-lived CLI — keeps the
+    // SafeAllocator leak report on stderr quiet.
+    g_gpa = std.heap.page_allocator;
     g_ready = true;
     g_home = home;
     g_verb = if (verb.len > 0) verb else "none";
@@ -200,6 +203,7 @@ fn pendingCount(gpa: std.mem.Allocator, io: std.Io) usize {
 }
 
 pub fn handleTelemetry(gpa: std.mem.Allocator, io: std.Io, mode: output.Mode, env: *const std.process.Environ.Map, off: bool) void {
+    _ = gpa;
     const a = std.heap.page_allocator;
     if (off) {
         std.Io.Dir.cwd().createDirPath(io, pathJoin(a, "..")) catch {};
@@ -213,7 +217,6 @@ pub fn handleTelemetry(gpa: std.mem.Allocator, io: std.Io, mode: output.Mode, en
     const json = std.fmt.allocPrint(a,
         "{{\"ok\":true,\"data\":{{\"enabled\":{s},\"reason\":\"{s}\",\"endpoint\":\"{s}\",\"consolidation\":\"local ledger, flush <= 1/hour\",\"pending_events\":{d},\"next_payload\":{s},\"disable\":\"SUPERCLI_TELEMETRY=0\"}}}}\n",
         .{ if (g_enabled) "true" else "false", reason, g_endpoint, pending, sample }) catch return;
-    _ = gpa;
     _ = env;
     _ = mode;
     output.writeRaw(json);
@@ -243,7 +246,9 @@ fn jsonEscape(gpa: std.mem.Allocator, s: []const u8) []const u8 {
 }
 
 // feedback — cli-feedback-spec, relay-only. curl does TLS; never fails caller.
-pub fn handleFeedback(gpa: std.mem.Allocator, io: std.Io, mode: output.Mode, env: *const std.process.Environ.Map, message: []const u8, kind: []const u8, context: []const u8) void {
+pub fn handleFeedback(gpa0: std.mem.Allocator, io: std.Io, mode: output.Mode, env: *const std.process.Environ.Map, message: []const u8, kind: []const u8, context: []const u8) void {
+    const gpa = std.heap.page_allocator;
+    _ = gpa0;
     if (std.mem.trim(u8, message, " \t\r\n").len == 0) {
         output.exitWithError(gpa, mode, .{
             .code = 85,
