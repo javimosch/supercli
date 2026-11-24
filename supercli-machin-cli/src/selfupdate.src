@@ -1,0 +1,200 @@
+// selfupdate — cli-update-spec: `sc-machin update|install|uninstall` + hourly
+// nudge. Version endpoint is a committed docs/version-machin-<plat>.json served
+// via raw.githubusercontent.com: {ok,version=sha256[:12],download,sha256}.
+// Local version = sha256[:12] of the running binary — matches iff this binary
+// is the released artifact. SUPERCLI_UPDATE_URL overrides for tests.
+
+var sc_up_tmpl = "https://raw.githubusercontent.com/javimosch/supercli/master/docs/version-machin-PLAT.json"
+
+func sc_up_plat() (p) {
+    _, osr, _ := exec("uname -s")
+    _, arr, _ := exec("uname -m")
+    o := to_lower(trim(osr))
+    a := trim(arr)
+    if o == "darwin" { o = "darwin" }
+    if a == "x86_64" { a = "amd64" }
+    if a == "aarch64" || a == "arm64" { a = "arm64" }
+    p = o + "-" + a
+}
+
+func sc_up_url() (u) {
+    u = env("SUPERCLI_UPDATE_URL")
+    if len(u) == 0 { u = replace(sc_up_tmpl, "PLAT", sc_up_plat()) }
+}
+
+// exec() spawns `sh -c` as our direct child, so /proc/$PPID/exe in that shell
+// is THIS binary — /proc/self/exe would resolve to the shell instead.
+func sc_up_self() (s) {
+    _, out, _ := exec("readlink -f /proc/$PPID/exe")
+    s = trim(out)
+}
+
+func sc_up_sha(path, n) (h) {
+    _, out, _ := exec("sha256sum '" + path + "' | cut -c1-" + str(n))
+    h = trim(out)
+}
+
+// fetchRemote → "version|download|sha256" or "" on failure.
+func sc_up_fetch(url) (r) {
+    _, body, _ := exec("curl -sfSL -m 8 '" + url + "'")
+    r = ""
+    if len(trim(body)) == 0 { return }
+    ok, e1 := json_get(body, ".ok")
+    v, e2 := json_get(body, ".version")
+    d, e3 := json_get(body, ".download")
+    sh, e4 := json_get(body, ".sha256")
+    if len(e1) > 0 || len(e2) > 0 || len(e3) > 0 { return }
+    if strip_quotes(ok) != "true" { return }
+    sv := strip_quotes(v)
+    sd := strip_quotes(d)
+    if len(sv) == 0 || len(sd) == 0 { return }
+    ss := ""
+    if len(e4) == 0 { ss = strip_quotes(sh) }
+    r = sv + "|" + sd + "|" + ss
+}
+
+func sc_up_split(r, i) (f) {
+    parts := split(r, "|")
+    f = ""
+    if i < len(parts) { f = parts[i] }
+}
+
+func cmd_update(check, force) (code) {
+    self := sc_up_self()
+    if len(self) == 0 { typed_error(110, "internal_error", "cannot resolve /proc/self/exe", false) }
+    local := sc_up_sha(self, 12)
+    remote := sc_up_fetch(sc_up_url())
+    if len(remote) == 0 { typed_error(100, "external_failure", "version endpoint unreachable", true) }
+    rv := sc_up_split(remote, 0)
+    dl := sc_up_split(remote, 1)
+    rsha := sc_up_split(remote, 2)
+
+    if !force && local == rv {
+        println("{\"ok\":true,\"data\":{\"up_to_date\":true,\"version\":" + json_str(local) + "}}")
+        code = 0  return
+    }
+    if check {
+        println("{\"ok\":true,\"data\":{\"up_to_date\":false,\"current\":" + json_str(local) +
+            ",\"available\":" + json_str(rv) + ",\"download\":" + json_str(dl) + "}}")
+        code = 5  return
+    }
+
+    // download → verify → smoke test → atomic swap with .bak
+    _, pid_s, _ := exec("echo $$")
+    tmp := self + ".new-" + trim(pid_s)
+    bak := self + ".bak"
+    _, _, _ := exec("curl -fsSL -m 60 -o '" + tmp + "' '" + dl + "'")
+    k, _, _ := stat(tmp)
+    if k != 1 { typed_error(100, "external_failure", "download failed", true) }
+    if len(rsha) == 64 {
+        got := sc_up_sha(tmp, 64)
+        if got != rsha {
+            remove(tmp)
+            typed_error(100, "external_failure", "sha256 mismatch — download corrupt or tampered", false)
+        }
+    }
+    _, _, _ := exec("chmod +x '" + tmp + "'")
+    rc, _, _ := exec("'" + tmp + "' --version >/dev/null 2>&1")
+    if rc != 0 {
+        remove(tmp)
+        typed_error(100, "external_failure", "smoke test failed — downloaded binary does not run", false)
+    }
+    rc, _, _ = exec("mv '" + self + "' '" + bak + "'")
+    if rc != 0 {
+        remove(tmp)
+        typed_error(90, "permission", "cannot move current binary aside (permission denied?)", false)
+    }
+    rc, _, _ = exec("mv '" + tmp + "' '" + self + "'")
+    if rc != 0 {
+        _, _, _ := exec("mv '" + bak + "' '" + self + "'")
+        typed_error(100, "external_failure", "swap failed — previous binary restored from .bak", false)
+    }
+    println("{\"ok\":true,\"data\":{\"updated\":true,\"previous\":" + json_str(local) +
+        ",\"version\":" + json_str(rv) + ",\"backup\":" + json_str(bak) + "}}")
+    code = 0
+}
+
+func sc_up_prefix(flag) (p) {
+    p = flag
+    if len(p) == 0 { p = env("HOME") + "/.local/bin" }
+}
+
+func cmd_install(prefix_flag) (code) {
+    code = 0
+    prefix := sc_up_prefix(prefix_flag)
+    self := sc_up_self()
+    if len(self) == 0 { typed_error(110, "internal_error", "cannot resolve /proc/self/exe", false) }
+    dest := prefix + "/sc-machin"
+    rc, _, _ := exec("mkdir -p '" + prefix + "'")
+    if rc != 0 { typed_error(90, "permission", "cannot create --prefix directory", false) }
+    rc, _, _ = exec("cp '" + self + "' '" + dest + "' && chmod +x '" + dest + "'")
+    if rc != 0 { typed_error(90, "permission", "cannot write to --prefix (permission denied)", false) }
+    println("{\"ok\":true,\"installed\":" + json_str(dest) + "}")
+}
+
+func cmd_uninstall(prefix_flag) (code) {
+    code = 0
+    prefix := sc_up_prefix(prefix_flag)
+    dest := prefix + "/sc-machin"
+    removed := "false"
+    k, _, _ := stat(dest)
+    if k == 1 {
+        remove(dest)
+        removed = "true"
+    }
+    println("{\"ok\":true,\"removed\":" + removed + ",\"path\":" + json_str(dest) + "}")
+}
+
+// ----- passive nudge -------------------------------------------------------
+// ~/.supercli/update-cache-machin.json refreshed detached <=1/h; the nudge
+// itself is one stat + (first time per version) a cached self-hash.
+
+var sc_up_nudge_skip = ",update,install,uninstall,version,help,help-json,guide,telemetry,feedback,install-as-sc,"
+
+func sc_up_nudge(verb) {
+    if contains(sc_up_nudge_skip, "," + verb + ",") { return }
+    if len(env("SUPERCLI_NO_NUDGE")) > 0 { return }
+    dir := sc_tel_dir()
+    cache := dir + "/update-cache-machin.json"
+    _, _, mtime := stat(cache)
+    if mtime == 0 {
+        sc_up_refresh(dir, cache)
+        return
+    }
+    if now() - mtime >= 3600 { sc_up_refresh(dir, cache) }
+
+    body := read_file(cache)
+    remote := ""
+    v, e1 := json_get(body, ".version")
+    if len(e1) == 0 { remote = strip_quotes(v) }
+    if len(remote) == 0 { return }
+
+    nudged := dir + "/update-machin-nudged"
+    if trim(read_file(nudged)) == remote { return }
+
+    self := sc_up_self()
+    local := sc_up_localhash(dir, self)
+    if len(local) == 0 || local == remote { return }
+
+    write_file(nudged, remote)
+    write(2, "[update] a newer sc-machin is available (" + local + " -> " + remote + "). Run: sc-machin update\n")
+}
+
+// Refreshes the cache in a detached shell (exec waits, so nohup & it).
+func sc_up_refresh(dir, cache) {
+    url := sc_up_url()
+    _, _, _ := exec("nohup sh -c \"mkdir -p '" + dir + "' && curl -sfSL -m 8 '" + url + "' -o '" + cache + ".tmp' && mv '" + cache + ".tmp' '" + cache + "'\" >/dev/null 2>&1 &")
+}
+
+func sc_up_localhash(dir, self) (h) {
+    k, size, mtime := stat(self)
+    h = ""
+    if k != 1 { return }
+    stamp := str(size) + ":" + str(mtime)
+    cf := dir + "/update-machin-localhash"
+    prev := trim(read_file(cf))
+    parts := split(prev, ":")
+    if len(parts) == 3 && parts[0] + ":" + parts[1] == stamp { h = parts[2]  return }
+    h = sc_up_sha(self, 12)
+    if len(h) > 0 { write_file(cf, stamp + ":" + h) }
+}

@@ -29,6 +29,7 @@ func main() {
     pa := parse_argv(argv, 1)
     want_json := pa_flag_on(pa, "json")
     if len(pa.positional) > 0 { sc_current_verb = pa.positional[0] } else { sc_current_verb = "none" }
+    sc_up_nudge(sc_current_verb)
 
     if pa_flag_on(pa, "version") || pa_flag_on(pa, "info") {
         if want_json { render_version_json() } else { render_version_human() }
@@ -86,6 +87,21 @@ func main() {
         println("  2. sudo ln -sf \"$(which sc-machin)\" /usr/local/bin/sc")
         sc_tel_finish("run", 0)
         return
+    }
+
+    if pa.positional[0] == "update" {
+        sc_tel_finish("run", 0)
+        exit(cmd_update(pa_flag_on(pa, "check"), pa_flag_on(pa, "force")))
+    }
+
+    if pa.positional[0] == "install" {
+        sc_tel_finish("run", 0)
+        exit(cmd_install(pa_flag(pa, "prefix")))
+    }
+
+    if pa.positional[0] == "uninstall" {
+        sc_tel_finish("run", 0)
+        exit(cmd_uninstall(pa_flag(pa, "prefix")))
     }
 
     lock, lock_ok := load_lock(lock_path())
