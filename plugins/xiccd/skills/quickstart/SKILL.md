@@ -1,11 +1,11 @@
 ---
 name: xiccd
-description: Use this skill when the user wants to use xiccd, cli tool: xiccd.
+description: Use this skill when the user wants to use xiccd, X color management daemon.
 ---
 
 # xiccd Plugin
 
-CLI tool: xiccd.
+X color management daemon.
 
 ## Commands
 - `xiccd <resource> <action>` — Execute xiccd commands

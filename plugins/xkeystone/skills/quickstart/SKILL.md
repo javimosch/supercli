@@ -1,11 +1,11 @@
 ---
 name: xkeystone
-description: Use this skill when the user wants to use xkeystone, cli tool: xkeystone.
+description: Use this skill when the user wants to use xkeystone, X server utilities.
 ---
 
 # xkeystone Plugin
 
-CLI tool: xkeystone.
+xkeystone — X server utilities.
 
 ## Commands
 - `xkeystone <resource> <action>` — Execute xkeystone commands
@@ -18,7 +18,7 @@ CLI tool: xkeystone.
 
 ## Installation
 ```bash
-apt-get install xkeystone 2>/dev/null || which xkeystone
+apt-get install x11-xserver-utils 2>/dev/null || which xkeystone
 ```
 
 ## Key Features

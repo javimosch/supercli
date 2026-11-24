@@ -1,11 +1,11 @@
 ---
 name: xvidtune
-description: Use this skill when the user wants to use xvidtune, cli tool: xvidtune.
+description: Use this skill when the user wants to use xvidtune, X server utilities.
 ---
 
 # xvidtune Plugin
 
-CLI tool: xvidtune.
+xvidtune — X server utilities.
 
 ## Commands
 - `xvidtune <resource> <action>` — Execute xvidtune commands
@@ -18,7 +18,7 @@ CLI tool: xvidtune.
 
 ## Installation
 ```bash
-apt-get install xvidtune 2>/dev/null || which xvidtune
+apt-get install x11-xserver-utils 2>/dev/null || which xvidtune
 ```
 
 ## Key Features

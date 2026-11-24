@@ -1,11 +1,11 @@
 ---
 name: xqxdecode
-description: Use this skill when the user wants to use xqxdecode, cli tool: xqxdecode.
+description: Use this skill when the user wants to use xqxdecode, printer driver for ZjStream-based printers.
 ---
 
 # xqxdecode Plugin
 
-CLI tool: xqxdecode.
+xqxdecode — printer driver for ZjStream-based printers.
 
 ## Commands
 - `xqxdecode <resource> <action>` — Execute xqxdecode commands
@@ -18,7 +18,7 @@ CLI tool: xqxdecode.
 
 ## Installation
 ```bash
-apt-get install xqxdecode 2>/dev/null || which xqxdecode
+apt-get install printer-driver-foo2zjs 2>/dev/null || which xqxdecode
 ```
 
 ## Key Features

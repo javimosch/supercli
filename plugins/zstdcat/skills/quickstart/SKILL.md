@@ -1,11 +1,11 @@
 ---
 name: zstdcat
-description: Use this skill when the user wants to use zstdcat, cli tool: zstdcat.
+description: Use this skill when the user wants to use zstdcat, fast lossless compression algorithm -- CLI tool.
 ---
 
 # zstdcat Plugin
 
-CLI tool: zstdcat.
+zstdcat — fast lossless compression algorithm -- CLI tool.
 
 ## Commands
 - `zstdcat <resource> <action>` — Execute zstdcat commands
@@ -18,7 +18,7 @@ CLI tool: zstdcat.
 
 ## Installation
 ```bash
-apt-get install zstdcat 2>/dev/null || which zstdcat
+apt-get install zstd 2>/dev/null || which zstdcat
 ```
 
 ## Key Features

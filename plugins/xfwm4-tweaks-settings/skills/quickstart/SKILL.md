@@ -1,11 +1,11 @@
 ---
 name: xfwm4-tweaks-settings
-description: Use this skill when the user wants to use xfwm4-tweaks-settings, cli tool: xfwm4-tweaks-settings.
+description: Use this skill when the user wants to use xfwm4-tweaks-settings, window manager of the Xfce project.
 ---
 
 # xfwm4-tweaks-settings Plugin
 
-CLI tool: xfwm4-tweaks-settings.
+xfwm4-tweaks-settings — window manager of the Xfce project.
 
 ## Commands
 - `xfwm4-tweaks-settings <resource> <action>` — Execute xfwm4-tweaks-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfwm4-tweaks-settings.
 
 ## Installation
 ```bash
-apt-get install xfwm4-tweaks-settings 2>/dev/null || which xfwm4-tweaks-settings
+apt-get install xfwm4 2>/dev/null || which xfwm4-tweaks-settings
 ```
 
 ## Key Features

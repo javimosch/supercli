@@ -1,11 +1,11 @@
 ---
 name: yuvtoppm
-description: Use this skill when the user wants to use yuvtoppm, cli tool: yuvtoppm.
+description: Use this skill when the user wants to use yuvtoppm, Graphics conversion tools between image formats.
 ---
 
 # yuvtoppm Plugin
 
-CLI tool: yuvtoppm.
+yuvtoppm — Graphics conversion tools between image formats.
 
 ## Commands
 - `yuvtoppm <resource> <action>` — Execute yuvtoppm commands
@@ -18,7 +18,7 @@ CLI tool: yuvtoppm.
 
 ## Installation
 ```bash
-apt-get install yuvtoppm 2>/dev/null || which yuvtoppm
+apt-get install netpbm 2>/dev/null || which yuvtoppm
 ```
 
 ## Key Features

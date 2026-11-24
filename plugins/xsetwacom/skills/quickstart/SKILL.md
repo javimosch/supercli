@@ -1,11 +1,11 @@
 ---
 name: xsetwacom
-description: Use this skill when the user wants to use xsetwacom, cli tool: xsetwacom.
+description: Use this skill when the user wants to use xsetwacom, X.Org X server -- Wacom input driver.
 ---
 
 # xsetwacom Plugin
 
-CLI tool: xsetwacom.
+xsetwacom — X.Org X server -- Wacom input driver.
 
 ## Commands
 - `xsetwacom <resource> <action>` — Execute xsetwacom commands
@@ -18,7 +18,7 @@ CLI tool: xsetwacom.
 
 ## Installation
 ```bash
-apt-get install xsetwacom 2>/dev/null || which xsetwacom
+apt-get install xserver-xorg-input-wacom 2>/dev/null || which xsetwacom
 ```
 
 ## Key Features

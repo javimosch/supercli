@@ -1,11 +1,11 @@
 ---
 name: yelp
-description: Use this skill when the user wants to use yelp, cli tool: yelp.
+description: Use this skill when the user wants to use yelp, Help browser for GNOME.
 ---
 
 # yelp Plugin
 
-CLI tool: yelp.
+Help browser for GNOME.
 
 ## Commands
 - `yelp <resource> <action>` — Execute yelp commands

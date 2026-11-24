@@ -1,11 +1,11 @@
 ---
 name: zipnote
-description: Use this skill when the user wants to use zipnote, cli tool: zipnote.
+description: Use this skill when the user wants to use zipnote, Archiver for .zip files.
 ---
 
 # zipnote Plugin
 
-CLI tool: zipnote.
+zipnote — Archiver for .zip files.
 
 ## Commands
 - `zipnote <resource> <action>` — Execute zipnote commands
@@ -18,7 +18,7 @@ CLI tool: zipnote.
 
 ## Installation
 ```bash
-apt-get install zipnote 2>/dev/null || which zipnote
+apt-get install zip 2>/dev/null || which zipnote
 ```
 
 ## Key Features

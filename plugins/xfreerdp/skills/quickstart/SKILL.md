@@ -1,11 +1,11 @@
 ---
 name: xfreerdp
-description: Use this skill when the user wants to use xfreerdp, cli tool: xfreerdp.
+description: Use this skill when the user wants to use xfreerdp, RDP client for Windows Terminal Services (X11 client).
 ---
 
 # xfreerdp Plugin
 
-CLI tool: xfreerdp.
+xfreerdp — RDP client for Windows Terminal Services (X11 client).
 
 ## Commands
 - `xfreerdp <resource> <action>` — Execute xfreerdp commands
@@ -18,7 +18,7 @@ CLI tool: xfreerdp.
 
 ## Installation
 ```bash
-apt-get install xfreerdp 2>/dev/null || which xfreerdp
+apt-get install freerdp2-x11 2>/dev/null || which xfreerdp
 ```
 
 ## Key Features

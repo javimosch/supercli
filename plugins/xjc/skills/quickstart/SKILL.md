@@ -1,11 +1,11 @@
 ---
 name: xjc
-description: Use this skill when the user wants to use xjc, cli tool: xjc.
+description: Use this skill when the user wants to use xjc, OpenJDK Development Kit (JDK) (headless).
 ---
 
 # xjc Plugin
 
-CLI tool: xjc.
+xjc — OpenJDK Development Kit (JDK) (headless).
 
 ## Commands
 - `xjc <resource> <action>` — Execute xjc commands
@@ -18,7 +18,7 @@ CLI tool: xjc.
 
 ## Installation
 ```bash
-apt-get install xjc 2>/dev/null || which xjc
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which xjc
 ```
 
 ## Key Features

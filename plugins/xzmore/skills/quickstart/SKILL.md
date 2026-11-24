@@ -1,11 +1,11 @@
 ---
 name: xzmore
-description: Use this skill when the user wants to use xzmore, cli tool: xzmore.
+description: Use this skill when the user wants to use xzmore, XZ-format compression utilities.
 ---
 
 # xzmore Plugin
 
-CLI tool: xzmore.
+xzmore — XZ-format compression utilities.
 
 ## Commands
 - `xzmore <resource> <action>` — Execute xzmore commands
@@ -18,7 +18,7 @@ CLI tool: xzmore.
 
 ## Installation
 ```bash
-apt-get install xzmore 2>/dev/null || which xzmore
+apt-get install xz-utils 2>/dev/null || which xzmore
 ```
 
 ## Key Features

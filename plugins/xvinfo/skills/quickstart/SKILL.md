@@ -1,11 +1,11 @@
 ---
 name: xvinfo
-description: Use this skill when the user wants to use xvinfo, cli tool: xvinfo.
+description: Use this skill when the user wants to use xvinfo, X11 utilities.
 ---
 
 # xvinfo Plugin
 
-CLI tool: xvinfo.
+xvinfo — X11 utilities.
 
 ## Commands
 - `xvinfo <resource> <action>` — Execute xvinfo commands
@@ -18,7 +18,7 @@ CLI tool: xvinfo.
 
 ## Installation
 ```bash
-apt-get install xvinfo 2>/dev/null || which xvinfo
+apt-get install x11-utils 2>/dev/null || which xvinfo
 ```
 
 ## Key Features

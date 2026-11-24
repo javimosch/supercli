@@ -1,11 +1,11 @@
 ---
 name: xkbwatch
-description: Use this skill when the user wants to use xkbwatch, cli tool: xkbwatch.
+description: Use this skill when the user wants to use xkbwatch, X11 XKB utilities.
 ---
 
 # xkbwatch Plugin
 
-CLI tool: xkbwatch.
+xkbwatch — X11 XKB utilities.
 
 ## Commands
 - `xkbwatch <resource> <action>` — Execute xkbwatch commands
@@ -18,7 +18,7 @@ CLI tool: xkbwatch.
 
 ## Installation
 ```bash
-apt-get install xkbwatch 2>/dev/null || which xkbwatch
+apt-get install x11-xkb-utils 2>/dev/null || which xkbwatch
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xfhelp4
-description: Use this skill when the user wants to use xfhelp4, cli tool: xfhelp4.
+description: Use this skill when the user wants to use xfhelp4, Utility files for libxfce4ui.
 ---
 
 # xfhelp4 Plugin
 
-CLI tool: xfhelp4.
+xfhelp4 — Utility files for libxfce4ui.
 
 ## Commands
 - `xfhelp4 <resource> <action>` — Execute xfhelp4 commands
@@ -18,7 +18,7 @@ CLI tool: xfhelp4.
 
 ## Installation
 ```bash
-apt-get install xfhelp4 2>/dev/null || which xfhelp4
+apt-get install libxfce4ui-utils 2>/dev/null || which xfhelp4
 ```
 
 ## Key Features

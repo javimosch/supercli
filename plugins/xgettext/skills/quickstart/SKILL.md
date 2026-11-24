@@ -1,11 +1,11 @@
 ---
 name: xgettext
-description: Use this skill when the user wants to use xgettext, cli tool: xgettext.
+description: Use this skill when the user wants to use xgettext, GNU Internationalization utilities.
 ---
 
 # xgettext Plugin
 
-CLI tool: xgettext.
+xgettext — GNU Internationalization utilities.
 
 ## Commands
 - `xgettext <resource> <action>` — Execute xgettext commands
@@ -18,7 +18,7 @@ CLI tool: xgettext.
 
 ## Installation
 ```bash
-apt-get install xgettext 2>/dev/null || which xgettext
+apt-get install gettext 2>/dev/null || which xgettext
 ```
 
 ## Key Features

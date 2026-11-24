@@ -1,11 +1,11 @@
 ---
 name: xwdtopnm
-description: Use this skill when the user wants to use xwdtopnm, cli tool: xwdtopnm.
+description: Use this skill when the user wants to use xwdtopnm, Graphics conversion tools between image formats.
 ---
 
 # xwdtopnm Plugin
 
-CLI tool: xwdtopnm.
+xwdtopnm — Graphics conversion tools between image formats.
 
 ## Commands
 - `xwdtopnm <resource> <action>` — Execute xwdtopnm commands
@@ -18,7 +18,7 @@ CLI tool: xwdtopnm.
 
 ## Installation
 ```bash
-apt-get install xwdtopnm 2>/dev/null || which xwdtopnm
+apt-get install netpbm 2>/dev/null || which xwdtopnm
 ```
 
 ## Key Features

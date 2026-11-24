@@ -1,11 +1,11 @@
 ---
 name: ypdomainname
-description: Use this skill when the user wants to use ypdomainname, cli tool: ypdomainname.
+description: Use this skill when the user wants to use ypdomainname, utility to set/show the host name or domain name.
 ---
 
 # ypdomainname Plugin
 
-CLI tool: ypdomainname.
+ypdomainname — utility to set/show the host name or domain name.
 
 ## Commands
 - `ypdomainname <resource> <action>` — Execute ypdomainname commands
@@ -18,7 +18,7 @@ CLI tool: ypdomainname.
 
 ## Installation
 ```bash
-apt-get install ypdomainname 2>/dev/null || which ypdomainname
+apt-get install hostname 2>/dev/null || which ypdomainname
 ```
 
 ## Key Features

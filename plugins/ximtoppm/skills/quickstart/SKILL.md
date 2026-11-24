@@ -1,11 +1,11 @@
 ---
 name: ximtoppm
-description: Use this skill when the user wants to use ximtoppm, cli tool: ximtoppm.
+description: Use this skill when the user wants to use ximtoppm, Graphics conversion tools between image formats.
 ---
 
 # ximtoppm Plugin
 
-CLI tool: ximtoppm.
+ximtoppm — Graphics conversion tools between image formats.
 
 ## Commands
 - `ximtoppm <resource> <action>` — Execute ximtoppm commands
@@ -18,7 +18,7 @@ CLI tool: ximtoppm.
 
 ## Installation
 ```bash
-apt-get install ximtoppm 2>/dev/null || which ximtoppm
+apt-get install netpbm 2>/dev/null || which ximtoppm
 ```
 
 ## Key Features

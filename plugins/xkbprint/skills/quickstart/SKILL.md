@@ -1,11 +1,11 @@
 ---
 name: xkbprint
-description: Use this skill when the user wants to use xkbprint, cli tool: xkbprint.
+description: Use this skill when the user wants to use xkbprint, X11 XKB utilities.
 ---
 
 # xkbprint Plugin
 
-CLI tool: xkbprint.
+xkbprint — X11 XKB utilities.
 
 ## Commands
 - `xkbprint <resource> <action>` — Execute xkbprint commands
@@ -18,7 +18,7 @@ CLI tool: xkbprint.
 
 ## Installation
 ```bash
-apt-get install xkbprint 2>/dev/null || which xkbprint
+apt-get install x11-xkb-utils 2>/dev/null || which xkbprint
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xtables-monitor
-description: Use this skill when the user wants to use xtables-monitor, cli tool: xtables-monitor.
+description: Use this skill when the user wants to use xtables-monitor, administration tools for packet filtering and NAT.
 ---
 
 # xtables-monitor Plugin
 
-CLI tool: xtables-monitor.
+xtables-monitor — administration tools for packet filtering and NAT.
 
 ## Commands
 - `xtables-monitor <resource> <action>` — Execute xtables-monitor commands
@@ -18,7 +18,7 @@ CLI tool: xtables-monitor.
 
 ## Installation
 ```bash
-apt-get install xtables-monitor 2>/dev/null || which xtables-monitor
+apt-get install iptables 2>/dev/null || which xtables-monitor
 ```
 
 ## Key Features

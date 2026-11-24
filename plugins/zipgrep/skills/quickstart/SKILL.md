@@ -1,11 +1,11 @@
 ---
 name: zipgrep
-description: Use this skill when the user wants to use zipgrep, cli tool: zipgrep.
+description: Use this skill when the user wants to use zipgrep, De-archiver for .zip files.
 ---
 
 # zipgrep Plugin
 
-CLI tool: zipgrep.
+zipgrep — De-archiver for .zip files.
 
 ## Commands
 - `zipgrep <resource> <action>` — Execute zipgrep commands
@@ -18,7 +18,7 @@ CLI tool: zipgrep.
 
 ## Installation
 ```bash
-apt-get install zipgrep 2>/dev/null || which zipgrep
+apt-get install unzip 2>/dev/null || which zipgrep
 ```
 
 ## Key Features

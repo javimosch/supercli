@@ -1,11 +1,11 @@
 ---
 name: xzegrep
-description: Use this skill when the user wants to use xzegrep, cli tool: xzegrep.
+description: Use this skill when the user wants to use xzegrep, XZ-format compression utilities.
 ---
 
 # xzegrep Plugin
 
-CLI tool: xzegrep.
+xzegrep — XZ-format compression utilities.
 
 ## Commands
 - `xzegrep <resource> <action>` — Execute xzegrep commands
@@ -18,7 +18,7 @@ CLI tool: xzegrep.
 
 ## Installation
 ```bash
-apt-get install xzegrep 2>/dev/null || which xzegrep
+apt-get install xz-utils 2>/dev/null || which xzegrep
 ```
 
 ## Key Features

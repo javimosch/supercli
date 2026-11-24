@@ -1,11 +1,11 @@
 ---
 name: xlsclients
-description: Use this skill when the user wants to use xlsclients, cli tool: xlsclients.
+description: Use this skill when the user wants to use xlsclients, X11 utilities.
 ---
 
 # xlsclients Plugin
 
-CLI tool: xlsclients.
+xlsclients — X11 utilities.
 
 ## Commands
 - `xlsclients <resource> <action>` — Execute xlsclients commands
@@ -18,7 +18,7 @@ CLI tool: xlsclients.
 
 ## Installation
 ```bash
-apt-get install xlsclients 2>/dev/null || which xlsclients
+apt-get install x11-utils 2>/dev/null || which xlsclients
 ```
 
 ## Key Features

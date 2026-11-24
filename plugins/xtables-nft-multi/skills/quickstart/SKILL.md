@@ -1,11 +1,11 @@
 ---
 name: xtables-nft-multi
-description: Use this skill when the user wants to use xtables-nft-multi, cli tool: xtables-nft-multi.
+description: Use this skill when the user wants to use xtables-nft-multi, administration tools for packet filtering and NAT.
 ---
 
 # xtables-nft-multi Plugin
 
-CLI tool: xtables-nft-multi.
+xtables-nft-multi — administration tools for packet filtering and NAT.
 
 ## Commands
 - `xtables-nft-multi <resource> <action>` — Execute xtables-nft-multi commands
@@ -18,7 +18,7 @@ CLI tool: xtables-nft-multi.
 
 ## Installation
 ```bash
-apt-get install xtables-nft-multi 2>/dev/null || which xtables-nft-multi
+apt-get install iptables 2>/dev/null || which xtables-nft-multi
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xmag
-description: Use this skill when the user wants to use xmag, cli tool: xmag.
+description: Use this skill when the user wants to use xmag, X applications.
 ---
 
 # xmag Plugin
 
-CLI tool: xmag.
+xmag — X applications.
 
 ## Commands
 - `xmag <resource> <action>` — Execute xmag commands
@@ -18,7 +18,7 @@ CLI tool: xmag.
 
 ## Installation
 ```bash
-apt-get install xmag 2>/dev/null || which xmag
+apt-get install x11-apps 2>/dev/null || which xmag
 ```
 
 ## Key Features

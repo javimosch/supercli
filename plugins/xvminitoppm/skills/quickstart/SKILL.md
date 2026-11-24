@@ -1,11 +1,11 @@
 ---
 name: xvminitoppm
-description: Use this skill when the user wants to use xvminitoppm, cli tool: xvminitoppm.
+description: Use this skill when the user wants to use xvminitoppm, Graphics conversion tools between image formats.
 ---
 
 # xvminitoppm Plugin
 
-CLI tool: xvminitoppm.
+xvminitoppm — Graphics conversion tools between image formats.
 
 ## Commands
 - `xvminitoppm <resource> <action>` — Execute xvminitoppm commands
@@ -18,7 +18,7 @@ CLI tool: xvminitoppm.
 
 ## Installation
 ```bash
-apt-get install xvminitoppm 2>/dev/null || which xvminitoppm
+apt-get install netpbm 2>/dev/null || which xvminitoppm
 ```
 
 ## Key Features

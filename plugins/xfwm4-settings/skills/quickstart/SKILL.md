@@ -1,11 +1,11 @@
 ---
 name: xfwm4-settings
-description: Use this skill when the user wants to use xfwm4-settings, cli tool: xfwm4-settings.
+description: Use this skill when the user wants to use xfwm4-settings, window manager of the Xfce project.
 ---
 
 # xfwm4-settings Plugin
 
-CLI tool: xfwm4-settings.
+xfwm4-settings — window manager of the Xfce project.
 
 ## Commands
 - `xfwm4-settings <resource> <action>` — Execute xfwm4-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfwm4-settings.
 
 ## Installation
 ```bash
-apt-get install xfwm4-settings 2>/dev/null || which xfwm4-settings
+apt-get install xfwm4 2>/dev/null || which xfwm4-settings
 ```
 
 ## Key Features
