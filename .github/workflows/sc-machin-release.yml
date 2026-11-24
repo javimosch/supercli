@@ -47,9 +47,13 @@ jobs:
         working-directory: ./supercli-machin-cli
         run: |
           if [ "${{ matrix.os }}" = "linux" ]; then
-            sudo apt-get update && sudo apt-get install -y musl-tools
+            sudo apt-get update && sudo apt-get install -y musl-tools libssl-dev
             CC=musl-gcc bash build.sh --static
           else
+            brew install openssl@3
+            export OPENSSL_ROOT="$(brew --prefix openssl@3)"
+            export CPATH="$OPENSSL_ROOT/include"
+            export LIBRARY_PATH="$OPENSSL_ROOT/lib"
             bash build.sh
           fi
           mv sc-machin "sc-machin-${{ matrix.os }}-${{ matrix.arch }}"
