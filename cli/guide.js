@@ -70,55 +70,36 @@ function buildGuide() {
   };
 }
 
+// Renders buildGuide() — the JSON guide is the single source of truth; the
+// human flavor can never drift from it.
 function buildGuideHuman() {
-  return [
+  const g = buildGuide();
+  const lines = [
     "# supercli — agent guide",
     "",
-    "Capability router that wraps external CLIs behind namespace.resource.action",
-    "commands — discover, inspect, plan, execute.",
+    g.one_liner + ".",
     "",
     "## Model",
     "",
-    "SuperCLI is a deterministic capability router, not an LLM. It wraps external CLIs",
-    "behind a uniform namespace.resource.action interface. Plugins declare their",
-    "commands in plugin.json manifests; sc reads ~/.supercli/ config to discover and",
-    "dispatch them. No inference, no guessing — the agent discovers commands,",
-    "inspects their schema, plans execution, then runs.",
+    g.model,
     "",
     "## Loop",
     "",
-    "  sc plugins explore --name <topic>  # find plugins by keyword",
-    "  sc plugins install <name>           # install a plugin",
-    "  sc commands --query <keyword>       # list matching commands",
-    "  sc inspect <ns> <res> <act>         # inspect command schema",
-    "  sc plan <ns> <res> <act>            # preview execution plan",
-    "  sc <ns> <res> <act> --flag val      # execute command",
+    ...g.loop.map((l) => `  ${l}`),
     "",
     "## Commands",
     "",
-    "  help-json    Print the machine-readable command catalog",
-    "  guide        Print this guide (JSON or --human markdown)",
-    "  version      Print version info",
-    "  commands     List all available commands (--query to filter)",
-    "  inspect      Show schema for a specific command",
-    "  plugins      list|explore|install|remove|show|learn|doctor",
-    "  discover     Find plugins for a task (--intent)",
-    "  plan         Create an execution plan",
-    "  serve        --host 127.0.0.1 --port 8320 (foreground HTTP: /_health /_shutdown)",
-    "  daemon       start|stop|status [--host --port] (status exits 3 when stopped)",
-    "  --server     Boot management dashboard+API on $PORT (default 3000)",
-    "  server       status|plugins|mcp|commands|specs|jobs|adapters (needs SUPERCLI_SERVER)",
-    "",
-    "## Gotchas",
-    "",
-    "- SUPERCLI_SERVER is optional — sc works offline with local plugins",
-    "- 'sc --server' (dashboard :3000) != 'sc serve' (daemon probes :8320) != 'sc mcp daemon' (MCP pool socket)",
-    "- Federation: hub runs 'sc --server'; workers set SUPERCLI_SERVER + SUPERCLI_API_KEY, then 'sc sync' (config down) and 'sc daemon start' (job logs up)",
-    "- Config cache may be stale — run 'sc sync' to refresh",
-    "- If sc is slow, switch to sc-zig (faster, single binary)",
-    "- If sc-zig crashes, fall back to sc (Node.js) — the reference implementation",
-    "",
-  ].join("\n");
+  ];
+  const width = Math.max(...Object.keys(g.commands).map((k) => k.length));
+  for (const [name, desc] of Object.entries(g.commands)) {
+    lines.push(`  ${name.padEnd(width)}  ${desc}`);
+  }
+  lines.push("", "  --server     Boot management dashboard+API on $PORT (default 3000)", "", "## Examples", "");
+  for (const ex of g.examples) lines.push(`  ${ex}`);
+  lines.push("", "## Gotchas", "");
+  for (const gotcha of g.gotchas) lines.push(`- ${gotcha}`);
+  lines.push("");
+  return lines.join("\n");
 }
 
 module.exports = { buildGuide, buildGuideHuman, CLI_VERSION };

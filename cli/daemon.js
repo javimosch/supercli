@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const os = require("os");
 const { spawn } = require("child_process");
-const { getClientId } = require("./config-core");
+const { getClientId, hubAuthHeaders } = require("./config-core");
 const { CLI_VERSION } = require("./arg-parser");
 
 const SUPERCLI_DIR = path.join(os.homedir(), ".supercli");
@@ -32,7 +32,8 @@ function ensureDirectories() {
 
 // Load daemon configuration. SUPERCLI_SERVER env overrides daemon.json —
 // workers in a federation set the env var, they shouldn't have to edit a file.
-function loadConfig() {
+// (Named loadDaemonConfig to distinguish from config-core's cache loadConfig.)
+function loadDaemonConfig() {
   ensureDirectories();
   if (!fs.existsSync(CONFIG_FILE)) {
     fs.writeFileSync(CONFIG_FILE, JSON.stringify(DEFAULT_CONFIG, null, 2));
@@ -90,7 +91,7 @@ async function startDaemon(opts = {}) {
   }
 
   ensureDirectories();
-  const config = loadConfig();
+  const config = loadDaemonConfig();
   if (!config.enabled) {
     return { ok: false, error: { code: 80, type: "input_error", message: "Daemon is disabled in config", recoverable: false }, code: 80 };
   }
@@ -229,15 +230,9 @@ async function syncLogs(config) {
   // Upload logs one at a time (server expects single job object)
   for (const log of unsyncedLogs) {
     try {
-      const headers = { "Content-Type": "application/json" };
-      const apiKey = process.env.SUPERCLI_API_KEY;
-      if (apiKey) {
-        headers["X-API-Key"] = apiKey;
-      }
-
       const response = await fetch(`${config.server_url}/api/jobs`, {
         method: "POST",
-        headers,
+        headers: hubAuthHeaders(),
         body: JSON.stringify({
           command: log.command,
           args: log.args,
@@ -330,11 +325,9 @@ function pruneLogs(config) {
 // Worker presence: POST a heartbeat to the hub each sync cycle so the
 // dashboard shows live workers, not just workers that once pushed plugins.
 async function sendHeartbeat(config) {
-  const headers = { "Content-Type": "application/json" };
-  if (process.env.SUPERCLI_API_KEY) headers["X-API-Key"] = process.env.SUPERCLI_API_KEY;
   const res = await fetch(`${config.server_url}/api/clients/heartbeat`, {
     method: "POST",
-    headers,
+    headers: hubAuthHeaders(),
     body: JSON.stringify({
       client_id: getClientId(),
       hostname: os.hostname(),
@@ -348,7 +341,7 @@ async function sendHeartbeat(config) {
 // Daemon main loop
 let lastErrEmit = 0;
 async function daemonMain() {
-  const config = loadConfig();
+  const config = loadDaemonConfig();
   console.error("Daemon started, syncing every", config.sync_interval_seconds, "seconds");
 
   while (true) {
@@ -383,6 +376,7 @@ module.exports = {
   stopDaemon,
   getDaemonStatus,
   writeLog,
-  loadConfig,
+  loadDaemonConfig,
+  loadConfig: loadDaemonConfig, // back-compat alias (tests)
   daemonMain,
 };

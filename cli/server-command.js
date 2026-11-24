@@ -2,7 +2,7 @@
 
 const fs = require("fs")
 const path = require("path")
-const { getClientId } = require("./config-core")
+const { getClientId, hubAuthHeaders } = require("./config-core")
 
 const SERVER = process.env.SUPERCLI_SERVER
 const API_KEY = process.env.SUPERCLI_API_KEY
@@ -17,14 +17,7 @@ async function serverFetch(endpoint, options = {}) {
     throw new Error("SUPERCLI_SERVER not set. Set it to your server URL.")
   }
   const url = `${base}${endpoint}`
-  const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    ...options.headers,
-  }
-  if (API_KEY) {
-    headers["X-API-Key"] = API_KEY
-  }
+  const headers = hubAuthHeaders({ "Accept": "application/json", ...options.headers })
   const res = await fetch(url, {
     ...options,
     headers,

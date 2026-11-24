@@ -115,8 +115,17 @@ function cacheFilePath() {
   return CACHE_FILE;
 }
 
+// Shared hub-auth headers — every worker→hub POST uses the same
+// X-API-Key convention (syncLogs, heartbeats, server-command fetches).
+function hubAuthHeaders(extra) {
+  const headers = { "Content-Type": "application/json", ...extra };
+  if (process.env.SUPERCLI_API_KEY) headers["X-API-Key"] = process.env.SUPERCLI_API_KEY;
+  return headers;
+}
+
 module.exports = {
   getClientId,
+  hubAuthHeaders,
   ensureCacheDir,
   emptyConfig,
   normalizeMcpServerEntry,
