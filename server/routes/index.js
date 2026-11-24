@@ -9,7 +9,7 @@ const ROUTES = {
   "GET /api": "this index — start here",
   "GET /llms.txt": "plain-text endpoint summary for agents",
   "GET /api/plugins": "plugin catalog pulled by workers (open)",
-  "GET /api/plugins/settings": "server settings (used by sc server status)",
+  "GET /api/settings": "server settings (?format=json — used by sc server status)",
   "POST /api/clients/heartbeat": "worker heartbeat — upserts client last_seen",
   "GET /api/clients": "registered workers",
   "POST /api/jobs": "ingest one job-log entry (worker daemon ships here)",
