@@ -62,7 +62,8 @@ function writeLog(logEntry) {
 // surface rather than the PID file — a probe asks the process itself "are you
 // healthy and are you actually sc", which can't be fooled by PID reuse.
 
-const { resolveBind, TOKEN_FILE } = require("./serve");
+const { resolveBind, TOKEN_FILE, STATS_FILE } = require("./serve");
+const telemetry = require("./telemetry");
 const DAEMON_LOG = path.join(LOGS_DIR, "daemon.log");
 
 async function probeHealth(host, port, timeoutMs = 800) {
@@ -169,13 +170,29 @@ async function stopDaemon(opts = {}) {
 }
 
 // Status — spec §4: health probe only, exit 3 when stopped (steady state).
+// Merges the serve-written daemon-stats.json (local observability — is anything
+// external probing the HTTP surface?) so `daemon status` shows usage, not just liveness.
+function readStats() {
+  try { return JSON.parse(fs.readFileSync(STATS_FILE, "utf8")); } catch { return null; }
+}
+
 async function getDaemonStatus(opts = {}) {
   const { host, port } = resolveBind(opts);
   const health = await probeHealth(host, port);
+  const stats = readStats();
   if (health) {
-    return { ok: true, daemon: "running", host, port, pid: health.pid, code: 0 };
+    const r = { ok: true, daemon: "running", host, port, pid: health.pid, code: 0 };
+    if (stats && stats.started_at) {
+      r.uptime_s = Math.floor((Date.now() - new Date(stats.started_at).getTime()) / 1000);
+      r.health_hits_self = stats.health_hits_self;
+      r.health_hits_external = stats.health_hits_external;
+      r.shutdown_reqs = stats.shutdown_reqs;
+    }
+    return r;
   }
-  return { ok: true, daemon: "stopped", host, port, code: 3 };
+  const r = { ok: true, daemon: "stopped", host, port, code: 3 };
+  if (stats && stats.started_at) r.last_run = stats;
+  return r;
 }
 
 // Write heartbeat timestamp
@@ -315,6 +332,7 @@ function pruneLogs(config) {
 }
 
 // Daemon main loop
+let lastErrEmit = 0;
 async function daemonMain() {
   const config = loadConfig();
   console.error("Daemon started, syncing every", config.sync_interval_seconds, "seconds");
@@ -330,6 +348,12 @@ async function daemonMain() {
       }
     } catch (err) {
       console.error("Daemon error:", err);
+      // error telemetry throttled <=1/h — a serve running for days with a bad
+      // SUPERCLI_SERVER would otherwise flood the shared ledger.
+      if (Date.now() - lastErrEmit >= 3600 * 1000) {
+        lastErrEmit = Date.now();
+        telemetry.record("error", 110);
+      }
     }
 
     await new Promise((resolve) => setTimeout(resolve, config.sync_interval_seconds * 1000));

@@ -163,7 +163,10 @@ function init(verb) {
   maybeNotice();
   maybeInstall();
   process.on("exit", (code) => {
-    record(code === 0 ? "run" : "error", code);
+    // Spec steady-state exits are successes, not errors: 3 = daemon stopped,
+    // 5 = update available. Recording them as errors would corrupt the error KPI.
+    const steady = code === 0 || code === 3 || code === 5;
+    record(steady ? "run" : "error", steady ? 0 : code);
     if (flushDue()) spawnFlush();
   });
 }
@@ -198,4 +201,4 @@ if (require.main === module && process.argv.includes("--flush")) {
   flushNow().then(() => process.exit(0)).catch(() => process.exit(0));
 }
 
-module.exports = { init, cmdTelemetry, enabled, offReason };
+module.exports = { init, cmdTelemetry, enabled, offReason, record };

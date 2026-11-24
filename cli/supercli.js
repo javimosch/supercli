@@ -41,7 +41,12 @@ const compactMode = !!flags.compact;
 const output = makeOutput({ humanMode, compactMode });
 const outputError = makeOutputError({ humanMode, compactMode });
 
-telemetry.init(positional[0] || "none");
+// Telemetry verbs distinguish lifecycle subcommands: daemon-start/stop/status
+// and mcp-daemon (the MCP pool daemon — a different daemon from `sc daemon`).
+const telemetryVerb = positional[0] === "daemon" ? `daemon-${positional[1] || "status"}`
+  : positional[0] === "mcp" && positional[1] === "daemon" ? "mcp-daemon"
+  : positional[0] || "none";
+telemetry.init(telemetryVerb);
 selfupdate.nudge(positional[0] || "none");
 
 function requireServer(message) {

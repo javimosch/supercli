@@ -15,8 +15,28 @@ const crypto = require("crypto");
 const SUPERCLI_DIR = path.join(os.homedir(), ".supercli");
 const PID_FILE = path.join(SUPERCLI_DIR, "daemon.pid");
 const TOKEN_FILE = path.join(SUPERCLI_DIR, "shutdown.token");
+const STATS_FILE = path.join(SUPERCLI_DIR, "daemon-stats.json");
 const DEFAULT_PORT = 8320;
 const SHUTDOWN_GRACE_MS = 2000;
+
+// Local observability (not telemetry — cli-telemetry-spec forbids per-request
+// events): is anything besides our own CLI probing this server? Our fetch
+// (undici) identifies itself in the UA; anything else counts as external.
+const stats = { started_at: null, last_stopped_at: null, health_hits_self: 0, health_hits_external: 0, shutdown_reqs: 0 };
+let statsTimer = null;
+
+function writeStats() {
+  try {
+    fs.mkdirSync(SUPERCLI_DIR, { recursive: true });
+    fs.writeFileSync(STATS_FILE + ".tmp", JSON.stringify(stats));
+    fs.renameSync(STATS_FILE + ".tmp", STATS_FILE);
+  } catch {}
+}
+
+function isSelfProbe(req) {
+  const ua = String(req.headers["user-agent"] || "");
+  return ua.includes("undici") || ua.includes("node");
+}
 
 function isLoopback(host) {
   return host === "127.0.0.1" || host === "localhost" || host === "::1";
@@ -60,10 +80,14 @@ async function handleServe(flags, deps) {
   const server = http.createServer((req, res) => {
     const url = (req.url || "").split("?")[0];
     if (req.method === "GET" && url === "/_health") {
+      if (isSelfProbe(req)) stats.health_hits_self++; else stats.health_hits_external++;
+      writeStats();
       send(res, 200, { ok: true, service: "sc", pid: process.pid });
       return;
     }
     if (req.method === "POST" && url === "/_shutdown") {
+      stats.shutdown_reqs++;
+      writeStats();
       if (gated) {
         const auth = req.headers.authorization || "";
         if (auth !== `Bearer ${token}`) {
@@ -85,6 +109,11 @@ async function handleServe(flags, deps) {
 
   process.stderr.write(`[serve] listening on http://${host}:${port}\n`);
 
+  stats.started_at = new Date().toISOString();
+  writeStats();
+  statsTimer = setInterval(writeStats, 30000);
+  statsTimer.unref();
+
   const cleanup = () => shutdown(server);
   process.on("SIGTERM", cleanup);
   process.on("SIGINT", cleanup);
@@ -94,9 +123,12 @@ async function handleServe(flags, deps) {
 }
 
 function shutdown(server) {
+  stats.last_stopped_at = new Date().toISOString();
+  writeStats();
+  if (statsTimer) clearInterval(statsTimer);
   try { fs.unlinkSync(PID_FILE); } catch {}
   server.close();
   setTimeout(() => process.exit(0), SHUTDOWN_GRACE_MS).unref();
 }
 
-module.exports = { handleServe, resolveBind, isLoopback, DEFAULT_PORT, PID_FILE, TOKEN_FILE };
+module.exports = { handleServe, resolveBind, isLoopback, DEFAULT_PORT, PID_FILE, TOKEN_FILE, STATS_FILE };

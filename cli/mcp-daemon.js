@@ -8,6 +8,7 @@ const path = require("path");
 const os = require("os");
 const fs = require("fs");
 const { spawn } = require("child_process");
+const telemetry = require("./telemetry");
 
 const SOCKET_PATH = path.join(os.homedir(), ".supercli", "mcp-daemon.sock");
 const PID_FILE = path.join(os.homedir(), ".supercli", "mcp-daemon.pid");
@@ -30,6 +31,7 @@ function log(msg) {
 // ─── Process Pool ─────────────────────────────────────────────────────────────
 
 const pool = new Map(); // name → { child, state, nextId, pending, stderr, wireMode }
+let lastCrashEmit = 0;
 
 function frameMessage(obj, wireMode) {
   const body = JSON.stringify(obj);
@@ -175,6 +177,12 @@ async function getOrSpawnServer(name, serverConfig) {
     log(`MCP server '${name}' exited with code ${code}`);
     if (entry.state !== "stopped") {
       entry.state = "crashed";
+      // Pool-child crash telemetry, throttled <=1/h — a crash-looping server
+      // must not flood the shared ledger.
+      if (Date.now() - lastCrashEmit >= 3600 * 1000) {
+        lastCrashEmit = Date.now();
+        telemetry.record("error", 110);
+      }
       for (const p of entry.pending.values()) {
         p.rej(new Error(`MCP server '${name}' exited unexpectedly (code ${code})`));
       }
@@ -373,6 +381,7 @@ function checkDaemonRunning(socketPath) {
 
 async function main() {
   ensureDir();
+  telemetry.init("mcp-daemon"); // one run event at process exit = one pool lifetime
 
   // Remove stale socket (only if daemon is not actively running)
   const socketPath = module.exports.SOCKET_PATH || SOCKET_PATH;
