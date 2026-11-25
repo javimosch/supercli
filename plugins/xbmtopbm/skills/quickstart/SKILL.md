@@ -1,11 +1,11 @@
 ---
 name: xbmtopbm
-description: Use this skill when the user wants to use xbmtopbm, cli tool: xbmtopbm.
+description: Use this skill when the user wants to use xbmtopbm, Graphics conversion tools between image formats.
 ---
 
 # xbmtopbm Plugin
 
-CLI tool: xbmtopbm.
+xbmtopbm — Graphics conversion tools between image formats.
 
 ## Commands
 - `xbmtopbm <resource> <action>` — Execute xbmtopbm commands
@@ -18,7 +18,7 @@ CLI tool: xbmtopbm.
 
 ## Installation
 ```bash
-apt-get install xbmtopbm 2>/dev/null || which xbmtopbm
+apt-get install netpbm 2>/dev/null || which xbmtopbm
 ```
 
 ## Key Features

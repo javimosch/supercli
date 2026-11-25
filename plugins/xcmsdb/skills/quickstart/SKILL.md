@@ -1,11 +1,11 @@
 ---
 name: xcmsdb
-description: Use this skill when the user wants to use xcmsdb, cli tool: xcmsdb.
+description: Use this skill when the user wants to use xcmsdb, X server utilities.
 ---
 
 # xcmsdb Plugin
 
-CLI tool: xcmsdb.
+xcmsdb — X server utilities.
 
 ## Commands
 - `xcmsdb <resource> <action>` — Execute xcmsdb commands
@@ -18,7 +18,7 @@ CLI tool: xcmsdb.
 
 ## Installation
 ```bash
-apt-get install xcmsdb 2>/dev/null || which xcmsdb
+apt-get install x11-xserver-utils 2>/dev/null || which xcmsdb
 ```
 
 ## Key Features

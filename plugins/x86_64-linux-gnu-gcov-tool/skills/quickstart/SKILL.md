@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gcov-tool
-description: Use this skill when the user wants to use x86_64-linux-gnu-gcov-tool, cli tool: x86_64-linux-gnu-gcov-tool.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gcov-tool, GNU C compiler.
 ---
 
 # x86_64-linux-gnu-gcov-tool Plugin
 
-CLI tool: x86_64-linux-gnu-gcov-tool.
+x86_64-linux-gnu-gcov-tool — GNU C compiler.
 
 ## Commands
 - `x86_64-linux-gnu-gcov-tool <resource> <action>` — Execute x86_64-linux-gnu-gcov-tool commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcov-tool.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcov-tool 2>/dev/null || which x86_64-linux-gnu-gcov-tool
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcov-tool
 ```
 
 ## Key Features

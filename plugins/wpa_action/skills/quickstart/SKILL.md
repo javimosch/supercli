@@ -1,11 +1,11 @@
 ---
 name: wpa_action
-description: Use this skill when the user wants to use wpa_action, cli tool: wpa_action.
+description: Use this skill when the user wants to use wpa_action, client support for WPA and WPA2 (IEEE 802.11i).
 ---
 
 # wpa_action Plugin
 
-CLI tool: wpa_action.
+wpa_action — client support for WPA and WPA2 (IEEE 802.11i).
 
 ## Commands
 - `wpa_action <resource> <action>` — Execute wpa_action commands
@@ -18,7 +18,7 @@ CLI tool: wpa_action.
 
 ## Installation
 ```bash
-apt-get install wpa_action 2>/dev/null || which wpa_action
+apt-get install wpasupplicant 2>/dev/null || which wpa_action
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gcc-ranlib
-description: Use this skill when the user wants to use x86_64-linux-gnu-gcc-ranlib, cli tool: x86_64-linux-gnu-gcc-ranlib.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gcc-ranlib, GNU C compiler.
 ---
 
 # x86_64-linux-gnu-gcc-ranlib Plugin
 
-CLI tool: x86_64-linux-gnu-gcc-ranlib.
+x86_64-linux-gnu-gcc-ranlib — GNU C compiler.
 
 ## Commands
 - `x86_64-linux-gnu-gcc-ranlib <resource> <action>` — Execute x86_64-linux-gnu-gcc-ranlib commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcc-ranlib.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcc-ranlib 2>/dev/null || which x86_64-linux-gnu-gcc-ranlib
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcc-ranlib
 ```
 
 ## Key Features

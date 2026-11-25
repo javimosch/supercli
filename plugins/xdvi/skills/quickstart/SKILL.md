@@ -1,11 +1,11 @@
 ---
 name: xdvi
-description: Use this skill when the user wants to use xdvi, cli tool: xdvi.
+description: Use this skill when the user wants to use xdvi, Binaries for TeX Live.
 ---
 
 # xdvi Plugin
 
-CLI tool: xdvi.
+xdvi — Binaries for TeX Live.
 
 ## Commands
 - `xdvi <resource> <action>` — Execute xdvi commands
@@ -18,7 +18,7 @@ CLI tool: xdvi.
 
 ## Installation
 ```bash
-apt-get install xdvi 2>/dev/null || which xdvi
+apt-get install texlive-binaries 2>/dev/null || which xdvi
 ```
 
 ## Key Features

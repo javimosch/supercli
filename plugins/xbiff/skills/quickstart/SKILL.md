@@ -1,11 +1,11 @@
 ---
 name: xbiff
-description: Use this skill when the user wants to use xbiff, cli tool: xbiff.
+description: Use this skill when the user wants to use xbiff, X applications.
 ---
 
 # xbiff Plugin
 
-CLI tool: xbiff.
+xbiff — X applications.
 
 ## Commands
 - `xbiff <resource> <action>` — Execute xbiff commands
@@ -18,7 +18,7 @@ CLI tool: xbiff.
 
 ## Installation
 ```bash
-apt-get install xbiff 2>/dev/null || which xbiff
+apt-get install x11-apps 2>/dev/null || which xbiff
 ```
 
 ## Key Features

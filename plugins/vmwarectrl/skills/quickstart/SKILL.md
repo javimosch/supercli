@@ -1,11 +1,11 @@
 ---
 name: vmwarectrl
-description: Use this skill when the user wants to use vmwarectrl, cli tool: vmwarectrl.
+description: Use this skill when the user wants to use vmwarectrl, X.Org X server -- VMware display driver.
 ---
 
 # vmwarectrl Plugin
 
-CLI tool: vmwarectrl.
+vmwarectrl — X.Org X server -- VMware display driver.
 
 ## Commands
 - `vmwarectrl <resource> <action>` — Execute vmwarectrl commands
@@ -18,7 +18,7 @@ CLI tool: vmwarectrl.
 
 ## Installation
 ```bash
-apt-get install vmwarectrl 2>/dev/null || which vmwarectrl
+apt-get install xserver-xorg-video-vmware 2>/dev/null || which vmwarectrl
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xclipboard
-description: Use this skill when the user wants to use xclipboard, cli tool: xclipboard.
+description: Use this skill when the user wants to use xclipboard, X applications.
 ---
 
 # xclipboard Plugin
 
-CLI tool: xclipboard.
+xclipboard — X applications.
 
 ## Commands
 - `xclipboard <resource> <action>` — Execute xclipboard commands
@@ -18,7 +18,7 @@ CLI tool: xclipboard.
 
 ## Installation
 ```bash
-apt-get install xclipboard 2>/dev/null || which xclipboard
+apt-get install x11-apps 2>/dev/null || which xclipboard
 ```
 
 ## Key Features

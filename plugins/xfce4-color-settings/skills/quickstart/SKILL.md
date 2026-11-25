@@ -1,11 +1,11 @@
 ---
 name: xfce4-color-settings
-description: Use this skill when the user wants to use xfce4-color-settings, cli tool: xfce4-color-settings.
+description: Use this skill when the user wants to use xfce4-color-settings, graphical application for managing Xfce settings.
 ---
 
 # xfce4-color-settings Plugin
 
-CLI tool: xfce4-color-settings.
+xfce4-color-settings — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-color-settings <resource> <action>` — Execute xfce4-color-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-color-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-color-settings 2>/dev/null || which xfce4-color-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-color-settings
 ```
 
 ## Key Features

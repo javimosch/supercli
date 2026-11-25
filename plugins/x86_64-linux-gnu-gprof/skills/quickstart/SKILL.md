@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gprof
-description: Use this skill when the user wants to use x86_64-linux-gnu-gprof, cli tool: x86_64-linux-gnu-gprof.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gprof, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-gprof Plugin
 
-CLI tool: x86_64-linux-gnu-gprof.
+x86_64-linux-gnu-gprof — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-gprof <resource> <action>` — Execute x86_64-linux-gnu-gprof commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gprof.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gprof 2>/dev/null || which x86_64-linux-gnu-gprof
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-gprof
 ```
 
 ## Key Features

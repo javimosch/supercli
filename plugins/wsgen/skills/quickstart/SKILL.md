@@ -1,11 +1,11 @@
 ---
 name: wsgen
-description: Use this skill when the user wants to use wsgen, cli tool: wsgen.
+description: Use this skill when the user wants to use wsgen, OpenJDK Development Kit (JDK) (headless).
 ---
 
 # wsgen Plugin
 
-CLI tool: wsgen.
+wsgen — OpenJDK Development Kit (JDK) (headless).
 
 ## Commands
 - `wsgen <resource> <action>` — Execute wsgen commands
@@ -18,7 +18,7 @@ CLI tool: wsgen.
 
 ## Installation
 ```bash
-apt-get install wsgen 2>/dev/null || which wsgen
+apt-get install openjdk-8-jdk-headless 2>/dev/null || which wsgen
 ```
 
 ## Key Features

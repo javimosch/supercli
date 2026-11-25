@@ -1,11 +1,11 @@
 ---
 name: vigr
-description: Use this skill when the user wants to use vigr, cli tool: vigr.
+description: Use this skill when the user wants to use vigr, change and administer password and group data.
 ---
 
 # vigr Plugin
 
-CLI tool: vigr.
+vigr — change and administer password and group data.
 
 ## Commands
 - `vigr <resource> <action>` — Execute vigr commands
@@ -18,7 +18,7 @@ CLI tool: vigr.
 
 ## Installation
 ```bash
-apt-get install vigr 2>/dev/null || which vigr
+apt-get install passwd 2>/dev/null || which vigr
 ```
 
 ## Key Features

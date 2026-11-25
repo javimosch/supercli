@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-readelf
-description: Use this skill when the user wants to use x86_64-linux-gnu-readelf, cli tool: x86_64-linux-gnu-readelf.
+description: Use this skill when the user wants to use x86_64-linux-gnu-readelf, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-readelf Plugin
 
-CLI tool: x86_64-linux-gnu-readelf.
+x86_64-linux-gnu-readelf — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-readelf <resource> <action>` — Execute x86_64-linux-gnu-readelf commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-readelf.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-readelf 2>/dev/null || which x86_64-linux-gnu-readelf
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-readelf
 ```
 
 ## Key Features

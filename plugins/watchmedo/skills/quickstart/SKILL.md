@@ -1,11 +1,11 @@
 ---
 name: watchmedo
-description: Use this skill when the user wants to use watchmedo, cli tool: watchmedo.
+description: Use this skill when the user wants to use watchmedo, Python API and shell utilities to monitor file system events.
 ---
 
 # watchmedo Plugin
 
-CLI tool: watchmedo.
+watchmedo — Python API and shell utilities to monitor file system events.
 
 ## Commands
 - `watchmedo <resource> <action>` — Execute watchmedo commands
@@ -18,7 +18,7 @@ CLI tool: watchmedo.
 
 ## Installation
 ```bash
-apt-get install watchmedo 2>/dev/null || which watchmedo
+apt-get install python3-watchdog 2>/dev/null || which watchmedo
 ```
 
 ## Key Features

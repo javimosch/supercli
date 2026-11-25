@@ -1,11 +1,11 @@
 ---
 name: virtlockd
-description: Use this skill when the user wants to use virtlockd, cli tool: virtlockd.
+description: Use this skill when the user wants to use virtlockd, Virtualization daemon.
 ---
 
 # virtlockd Plugin
 
-CLI tool: virtlockd.
+virtlockd — Virtualization daemon.
 
 ## Commands
 - `virtlockd <resource> <action>` — Execute virtlockd commands
@@ -18,7 +18,7 @@ CLI tool: virtlockd.
 
 ## Installation
 ```bash
-apt-get install virtlockd 2>/dev/null || which virtlockd
+apt-get install libvirt-daemon 2>/dev/null || which virtlockd
 ```
 
 ## Key Features

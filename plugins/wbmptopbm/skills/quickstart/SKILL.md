@@ -1,11 +1,11 @@
 ---
 name: wbmptopbm
-description: Use this skill when the user wants to use wbmptopbm, cli tool: wbmptopbm.
+description: Use this skill when the user wants to use wbmptopbm, Graphics conversion tools between image formats.
 ---
 
 # wbmptopbm Plugin
 
-CLI tool: wbmptopbm.
+wbmptopbm — Graphics conversion tools between image formats.
 
 ## Commands
 - `wbmptopbm <resource> <action>` — Execute wbmptopbm commands
@@ -18,7 +18,7 @@ CLI tool: wbmptopbm.
 
 ## Installation
 ```bash
-apt-get install wbmptopbm 2>/dev/null || which wbmptopbm
+apt-get install netpbm 2>/dev/null || which wbmptopbm
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xfce4-mime-settings
-description: Use this skill when the user wants to use xfce4-mime-settings, cli tool: xfce4-mime-settings.
+description: Use this skill when the user wants to use xfce4-mime-settings, graphical application for managing Xfce settings.
 ---
 
 # xfce4-mime-settings Plugin
 
-CLI tool: xfce4-mime-settings.
+xfce4-mime-settings — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-mime-settings <resource> <action>` — Execute xfce4-mime-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-mime-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-mime-settings 2>/dev/null || which xfce4-mime-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-mime-settings
 ```
 
 ## Key Features

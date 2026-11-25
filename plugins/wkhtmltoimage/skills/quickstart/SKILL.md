@@ -1,11 +1,11 @@
 ---
 name: wkhtmltoimage
-description: Use this skill when the user wants to use wkhtmltoimage, cli tool: wkhtmltoimage.
+description: Use this skill when the user wants to use wkhtmltoimage, Command line utilities to convert html to pdf or image using WebKit.
 ---
 
 # wkhtmltoimage Plugin
 
-CLI tool: wkhtmltoimage.
+wkhtmltoimage — Command line utilities to convert html to pdf or image using WebKit.
 
 ## Commands
 - `wkhtmltoimage <resource> <action>` — Execute wkhtmltoimage commands
@@ -18,7 +18,7 @@ CLI tool: wkhtmltoimage.
 
 ## Installation
 ```bash
-apt-get install wkhtmltoimage 2>/dev/null || which wkhtmltoimage
+apt-get install wkhtmltopdf 2>/dev/null || which wkhtmltoimage
 ```
 
 ## Key Features

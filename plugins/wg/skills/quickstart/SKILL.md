@@ -1,11 +1,11 @@
 ---
 name: wg
-description: Use this skill when the user wants to use wg, cli tool: wg.
+description: Use this skill when the user wants to use wg, fast, modern, secure kernel VPN tunnel (userland utilities).
 ---
 
 # wg Plugin
 
-CLI tool: wg.
+wg — fast, modern, secure kernel VPN tunnel (userland utilities).
 
 ## Commands
 - `wg <resource> <action>` — Execute wg commands
@@ -18,7 +18,7 @@ CLI tool: wg.
 
 ## Installation
 ```bash
-apt-get install wg 2>/dev/null || which wg
+apt-get install wireguard-tools 2>/dev/null || which wg
 ```
 
 ## Key Features

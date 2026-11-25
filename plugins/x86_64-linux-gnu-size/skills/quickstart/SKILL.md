@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-size
-description: Use this skill when the user wants to use x86_64-linux-gnu-size, cli tool: x86_64-linux-gnu-size.
+description: Use this skill when the user wants to use x86_64-linux-gnu-size, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-size Plugin
 
-CLI tool: x86_64-linux-gnu-size.
+x86_64-linux-gnu-size — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-size <resource> <action>` — Execute x86_64-linux-gnu-size commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-size.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-size 2>/dev/null || which x86_64-linux-gnu-size
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-size
 ```
 
 ## Key Features

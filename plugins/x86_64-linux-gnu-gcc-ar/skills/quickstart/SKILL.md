@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gcc-ar
-description: Use this skill when the user wants to use x86_64-linux-gnu-gcc-ar, cli tool: x86_64-linux-gnu-gcc-ar.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gcc-ar, GNU C compiler.
 ---
 
 # x86_64-linux-gnu-gcc-ar Plugin
 
-CLI tool: x86_64-linux-gnu-gcc-ar.
+x86_64-linux-gnu-gcc-ar — GNU C compiler.
 
 ## Commands
 - `x86_64-linux-gnu-gcc-ar <resource> <action>` — Execute x86_64-linux-gnu-gcc-ar commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcc-ar.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcc-ar 2>/dev/null || which x86_64-linux-gnu-gcc-ar
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcc-ar
 ```
 
 ## Key Features

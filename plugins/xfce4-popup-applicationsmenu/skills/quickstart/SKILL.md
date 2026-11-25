@@ -1,11 +1,11 @@
 ---
 name: xfce4-popup-applicationsmenu
-description: Use this skill when the user wants to use xfce4-popup-applicationsmenu, cli tool: xfce4-popup-applicationsmenu.
+description: Use this skill when the user wants to use xfce4-popup-applicationsmenu, panel for Xfce4 desktop environment.
 ---
 
 # xfce4-popup-applicationsmenu Plugin
 
-CLI tool: xfce4-popup-applicationsmenu.
+xfce4-popup-applicationsmenu — panel for Xfce4 desktop environment.
 
 ## Commands
 - `xfce4-popup-applicationsmenu <resource> <action>` — Execute xfce4-popup-applicationsmenu commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-popup-applicationsmenu.
 
 ## Installation
 ```bash
-apt-get install xfce4-popup-applicationsmenu 2>/dev/null || which xfce4-popup-applicationsmenu
+apt-get install xfce4-panel 2>/dev/null || which xfce4-popup-applicationsmenu
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: virtualbox
-description: Use this skill when the user wants to use virtualbox, cli tool: virtualbox.
+description: Use this skill when the user wants to use virtualbox, x86 virtualization solution - Qt based user interface.
 ---
 
 # virtualbox Plugin
 
-CLI tool: virtualbox.
+virtualbox — x86 virtualization solution - Qt based user interface.
 
 ## Commands
 - `virtualbox <resource> <action>` — Execute virtualbox commands
@@ -18,7 +18,7 @@ CLI tool: virtualbox.
 
 ## Installation
 ```bash
-apt-get install virtualbox 2>/dev/null || which virtualbox
+apt-get install virtualbox-qt 2>/dev/null || which virtualbox
 ```
 
 ## Key Features

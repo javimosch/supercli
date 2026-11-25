@@ -1,11 +1,11 @@
 ---
 name: virtlogd
-description: Use this skill when the user wants to use virtlogd, cli tool: virtlogd.
+description: Use this skill when the user wants to use virtlogd, Virtualization daemon.
 ---
 
 # virtlogd Plugin
 
-CLI tool: virtlogd.
+virtlogd — Virtualization daemon.
 
 ## Commands
 - `virtlogd <resource> <action>` — Execute virtlogd commands
@@ -18,7 +18,7 @@ CLI tool: virtlogd.
 
 ## Installation
 ```bash
-apt-get install virtlogd 2>/dev/null || which virtlogd
+apt-get install libvirt-daemon 2>/dev/null || which virtlogd
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: xeyes
-description: Use this skill when the user wants to use xeyes, cli tool: xeyes.
+description: Use this skill when the user wants to use xeyes, X applications.
 ---
 
 # xeyes Plugin
 
-CLI tool: xeyes.
+xeyes — X applications.
 
 ## Commands
 - `xeyes <resource> <action>` — Execute xeyes commands
@@ -18,7 +18,7 @@ CLI tool: xeyes.
 
 ## Installation
 ```bash
-apt-get install xeyes 2>/dev/null || which xeyes
+apt-get install x11-apps 2>/dev/null || which xeyes
 ```
 
 ## Key Features

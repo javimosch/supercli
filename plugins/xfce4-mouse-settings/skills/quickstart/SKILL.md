@@ -1,11 +1,11 @@
 ---
 name: xfce4-mouse-settings
-description: Use this skill when the user wants to use xfce4-mouse-settings, cli tool: xfce4-mouse-settings.
+description: Use this skill when the user wants to use xfce4-mouse-settings, graphical application for managing Xfce settings.
 ---
 
 # xfce4-mouse-settings Plugin
 
-CLI tool: xfce4-mouse-settings.
+xfce4-mouse-settings — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-mouse-settings <resource> <action>` — Execute xfce4-mouse-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-mouse-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-mouse-settings 2>/dev/null || which xfce4-mouse-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-mouse-settings
 ```
 
 ## Key Features

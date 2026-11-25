@@ -1,11 +1,11 @@
 ---
 name: xclip-pastefile
-description: Use this skill when the user wants to use xclip-pastefile, cli tool: xclip-pastefile.
+description: Use this skill when the user wants to use xclip-pastefile, command line interface to X selections.
 ---
 
 # xclip-pastefile Plugin
 
-CLI tool: xclip-pastefile.
+xclip-pastefile — command line interface to X selections.
 
 ## Commands
 - `xclip-pastefile <resource> <action>` — Execute xclip-pastefile commands
@@ -18,7 +18,7 @@ CLI tool: xclip-pastefile.
 
 ## Installation
 ```bash
-apt-get install xclip-pastefile 2>/dev/null || which xclip-pastefile
+apt-get install xclip 2>/dev/null || which xclip-pastefile
 ```
 
 ## Key Features

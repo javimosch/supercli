@@ -1,11 +1,11 @@
 ---
 name: xditview
-description: Use this skill when the user wants to use xditview, cli tool: xditview.
+description: Use this skill when the user wants to use xditview, X applications.
 ---
 
 # xditview Plugin
 
-CLI tool: xditview.
+xditview — X applications.
 
 ## Commands
 - `xditview <resource> <action>` — Execute xditview commands
@@ -18,7 +18,7 @@ CLI tool: xditview.
 
 ## Installation
 ```bash
-apt-get install xditview 2>/dev/null || which xditview
+apt-get install x11-apps 2>/dev/null || which xditview
 ```
 
 ## Key Features

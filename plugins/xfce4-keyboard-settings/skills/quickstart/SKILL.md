@@ -1,11 +1,11 @@
 ---
 name: xfce4-keyboard-settings
-description: Use this skill when the user wants to use xfce4-keyboard-settings, cli tool: xfce4-keyboard-settings.
+description: Use this skill when the user wants to use xfce4-keyboard-settings, graphical application for managing Xfce settings.
 ---
 
 # xfce4-keyboard-settings Plugin
 
-CLI tool: xfce4-keyboard-settings.
+xfce4-keyboard-settings — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-keyboard-settings <resource> <action>` — Execute xfce4-keyboard-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-keyboard-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-keyboard-settings 2>/dev/null || which xfce4-keyboard-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-keyboard-settings
 ```
 
 ## Key Features

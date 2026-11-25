@@ -1,11 +1,11 @@
 ---
 name: watchgnupg
-description: Use this skill when the user wants to use watchgnupg, cli tool: watchgnupg.
+description: Use this skill when the user wants to use watchgnupg, GNU privacy guard - utility programs.
 ---
 
 # watchgnupg Plugin
 
-CLI tool: watchgnupg.
+watchgnupg — GNU privacy guard - utility programs.
 
 ## Commands
 - `watchgnupg <resource> <action>` — Execute watchgnupg commands
@@ -18,7 +18,7 @@ CLI tool: watchgnupg.
 
 ## Installation
 ```bash
-apt-get install watchgnupg 2>/dev/null || which watchgnupg
+apt-get install gnupg-utils 2>/dev/null || which watchgnupg
 ```
 
 ## Key Features

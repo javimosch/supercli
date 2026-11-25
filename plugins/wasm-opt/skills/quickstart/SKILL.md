@@ -1,11 +1,11 @@
 ---
 name: wasm-opt
-description: Use this skill when the user wants to use wasm-opt, cli tool: wasm-opt.
+description: Use this skill when the user wants to use wasm-opt, compiler and toolchain infrastructure library for WebAssembly.
 ---
 
 # wasm-opt Plugin
 
-CLI tool: wasm-opt.
+wasm-opt — compiler and toolchain infrastructure library for WebAssembly.
 
 ## Commands
 - `wasm-opt <resource> <action>` — Execute wasm-opt commands
@@ -18,7 +18,7 @@ CLI tool: wasm-opt.
 
 ## Installation
 ```bash
-apt-get install wasm-opt 2>/dev/null || which wasm-opt
+apt-get install binaryen 2>/dev/null || which wasm-opt
 ```
 
 ## Key Features

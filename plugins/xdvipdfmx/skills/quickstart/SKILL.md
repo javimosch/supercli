@@ -1,11 +1,11 @@
 ---
 name: xdvipdfmx
-description: Use this skill when the user wants to use xdvipdfmx, cli tool: xdvipdfmx.
+description: Use this skill when the user wants to use xdvipdfmx, Binaries for TeX Live.
 ---
 
 # xdvipdfmx Plugin
 
-CLI tool: xdvipdfmx.
+xdvipdfmx — Binaries for TeX Live.
 
 ## Commands
 - `xdvipdfmx <resource> <action>` — Execute xdvipdfmx commands
@@ -18,7 +18,7 @@ CLI tool: xdvipdfmx.
 
 ## Installation
 ```bash
-apt-get install xdvipdfmx 2>/dev/null || which xdvipdfmx
+apt-get install texlive-binaries 2>/dev/null || which xdvipdfmx
 ```
 
 ## Key Features

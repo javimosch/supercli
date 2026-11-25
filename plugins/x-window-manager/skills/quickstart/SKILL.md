@@ -1,11 +1,11 @@
 ---
 name: x-window-manager
-description: Use this skill when the user wants to use x-window-manager, cli tool: x-window-manager.
+description: Use this skill when the user wants to use x-window-manager, Example window manager using GNOME's window manager library.
 ---
 
 # x-window-manager Plugin
 
-CLI tool: x-window-manager.
+x-window-manager — Example window manager using GNOME's window manager library.
 
 ## Commands
 - `x-window-manager <resource> <action>` — Execute x-window-manager commands
@@ -18,7 +18,7 @@ CLI tool: x-window-manager.
 
 ## Installation
 ```bash
-apt-get install x-window-manager 2>/dev/null || which x-window-manager
+apt-get install mutter 2>/dev/null || which x-window-manager
 ```
 
 ## Key Features

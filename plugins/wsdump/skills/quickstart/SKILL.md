@@ -1,11 +1,11 @@
 ---
 name: wsdump
-description: Use this skill when the user wants to use wsdump, cli tool: wsdump.
+description: Use this skill when the user wants to use wsdump, WebSocket client library - Python 3.x.
 ---
 
 # wsdump Plugin
 
-CLI tool: wsdump.
+wsdump — WebSocket client library - Python 3.x.
 
 ## Commands
 - `wsdump <resource> <action>` — Execute wsdump commands
@@ -18,7 +18,7 @@ CLI tool: wsdump.
 
 ## Installation
 ```bash
-apt-get install wsdump 2>/dev/null || which wsdump
+apt-get install python3-websocket 2>/dev/null || which wsdump
 ```
 
 ## Key Features

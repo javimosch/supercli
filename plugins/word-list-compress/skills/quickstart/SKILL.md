@@ -1,11 +1,11 @@
 ---
 name: word-list-compress
-description: Use this skill when the user wants to use word-list-compress, cli tool: word-list-compress.
+description: Use this skill when the user wants to use word-list-compress, GNU Aspell spell-checker.
 ---
 
 # word-list-compress Plugin
 
-CLI tool: word-list-compress.
+word-list-compress — GNU Aspell spell-checker.
 
 ## Commands
 - `word-list-compress <resource> <action>` — Execute word-list-compress commands
@@ -18,7 +18,7 @@ CLI tool: word-list-compress.
 
 ## Installation
 ```bash
-apt-get install word-list-compress 2>/dev/null || which word-list-compress
+apt-get install aspell 2>/dev/null || which word-list-compress
 ```
 
 ## Key Features

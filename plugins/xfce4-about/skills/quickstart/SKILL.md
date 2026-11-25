@@ -1,11 +1,11 @@
 ---
 name: xfce4-about
-description: Use this skill when the user wants to use xfce4-about, cli tool: xfce4-about.
+description: Use this skill when the user wants to use xfce4-about, Utility files for libxfce4ui.
 ---
 
 # xfce4-about Plugin
 
-CLI tool: xfce4-about.
+xfce4-about — Utility files for libxfce4ui.
 
 ## Commands
 - `xfce4-about <resource> <action>` — Execute xfce4-about commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-about.
 
 ## Installation
 ```bash
-apt-get install xfce4-about 2>/dev/null || which xfce4-about
+apt-get install libxfce4ui-utils 2>/dev/null || which xfce4-about
 ```
 
 ## Key Features

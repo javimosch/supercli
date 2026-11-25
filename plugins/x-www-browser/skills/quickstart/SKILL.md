@@ -1,11 +1,11 @@
 ---
 name: x-www-browser
-description: Use this skill when the user wants to use x-www-browser, cli tool: x-www-browser.
+description: Use this skill when the user wants to use x-www-browser, Intuitive GNOME web browser.
 ---
 
 # x-www-browser Plugin
 
-CLI tool: x-www-browser.
+x-www-browser — Intuitive GNOME web browser.
 
 ## Commands
 - `x-www-browser <resource> <action>` — Execute x-www-browser commands
@@ -18,7 +18,7 @@ CLI tool: x-www-browser.
 
 ## Installation
 ```bash
-apt-get install x-www-browser 2>/dev/null || which x-www-browser
+apt-get install epiphany-browser 2>/dev/null || which x-www-browser
 ```
 
 ## Key Features

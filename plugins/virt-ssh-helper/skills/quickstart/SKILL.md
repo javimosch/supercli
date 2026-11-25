@@ -1,11 +1,11 @@
 ---
 name: virt-ssh-helper
-description: Use this skill when the user wants to use virt-ssh-helper, cli tool: virt-ssh-helper.
+description: Use this skill when the user wants to use virt-ssh-helper, Virtualization daemon.
 ---
 
 # virt-ssh-helper Plugin
 
-CLI tool: virt-ssh-helper.
+virt-ssh-helper — Virtualization daemon.
 
 ## Commands
 - `virt-ssh-helper <resource> <action>` — Execute virt-ssh-helper commands
@@ -18,7 +18,7 @@ CLI tool: virt-ssh-helper.
 
 ## Installation
 ```bash
-apt-get install virt-ssh-helper 2>/dev/null || which virt-ssh-helper
+apt-get install libvirt-daemon 2>/dev/null || which virt-ssh-helper
 ```
 
 ## Key Features

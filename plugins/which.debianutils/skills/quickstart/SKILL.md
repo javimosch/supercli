@@ -1,11 +1,11 @@
 ---
 name: which.debianutils
-description: Use this skill when the user wants to use which.debianutils, cli tool: which.debianutils.
+description: Use this skill when the user wants to use which.debianutils, Miscellaneous utilities specific to Debian.
 ---
 
 # which.debianutils Plugin
 
-CLI tool: which.debianutils.
+which.debianutils — Miscellaneous utilities specific to Debian.
 
 ## Commands
 - `which.debianutils <resource> <action>` — Execute which.debianutils commands
@@ -18,7 +18,7 @@ CLI tool: which.debianutils.
 
 ## Installation
 ```bash
-apt-get install which.debianutils 2>/dev/null || which which.debianutils
+apt-get install debianutils 2>/dev/null || which which.debianutils
 ```
 
 ## Key Features

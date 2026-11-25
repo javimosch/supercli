@@ -1,11 +1,11 @@
 ---
 name: wpa_passphrase
-description: Use this skill when the user wants to use wpa_passphrase, cli tool: wpa_passphrase.
+description: Use this skill when the user wants to use wpa_passphrase, client support for WPA and WPA2 (IEEE 802.11i).
 ---
 
 # wpa_passphrase Plugin
 
-CLI tool: wpa_passphrase.
+wpa_passphrase — client support for WPA and WPA2 (IEEE 802.11i).
 
 ## Commands
 - `wpa_passphrase <resource> <action>` — Execute wpa_passphrase commands
@@ -18,7 +18,7 @@ CLI tool: wpa_passphrase.
 
 ## Installation
 ```bash
-apt-get install wpa_passphrase 2>/dev/null || which wpa_passphrase
+apt-get install wpasupplicant 2>/dev/null || which wpa_passphrase
 ```
 
 ## Key Features

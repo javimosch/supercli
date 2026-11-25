@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-gcov-dump
-description: Use this skill when the user wants to use x86_64-linux-gnu-gcov-dump, cli tool: x86_64-linux-gnu-gcov-dump.
+description: Use this skill when the user wants to use x86_64-linux-gnu-gcov-dump, GNU C compiler.
 ---
 
 # x86_64-linux-gnu-gcov-dump Plugin
 
-CLI tool: x86_64-linux-gnu-gcov-dump.
+x86_64-linux-gnu-gcov-dump — GNU C compiler.
 
 ## Commands
 - `x86_64-linux-gnu-gcov-dump <resource> <action>` — Execute x86_64-linux-gnu-gcov-dump commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-gcov-dump.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-gcov-dump 2>/dev/null || which x86_64-linux-gnu-gcov-dump
+apt-get install gcc 2>/dev/null || which x86_64-linux-gnu-gcov-dump
 ```
 
 ## Key Features

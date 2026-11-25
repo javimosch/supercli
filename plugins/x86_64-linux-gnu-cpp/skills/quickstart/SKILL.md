@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-cpp
-description: Use this skill when the user wants to use x86_64-linux-gnu-cpp, cli tool: x86_64-linux-gnu-cpp.
+description: Use this skill when the user wants to use x86_64-linux-gnu-cpp, GNU C preprocessor (cpp).
 ---
 
 # x86_64-linux-gnu-cpp Plugin
 
-CLI tool: x86_64-linux-gnu-cpp.
+x86_64-linux-gnu-cpp — GNU C preprocessor (cpp).
 
 ## Commands
 - `x86_64-linux-gnu-cpp <resource> <action>` — Execute x86_64-linux-gnu-cpp commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-cpp.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-cpp 2>/dev/null || which x86_64-linux-gnu-cpp
+apt-get install cpp 2>/dev/null || which x86_64-linux-gnu-cpp
 ```
 
 ## Key Features

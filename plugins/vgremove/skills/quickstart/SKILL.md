@@ -1,11 +1,11 @@
 ---
 name: vgremove
-description: Use this skill when the user wants to use vgremove, cli tool: vgremove.
+description: Use this skill when the user wants to use vgremove, Linux Logical Volume Manager.
 ---
 
 # vgremove Plugin
 
-CLI tool: vgremove.
+vgremove — Linux Logical Volume Manager.
 
 ## Commands
 - `vgremove <resource> <action>` — Execute vgremove commands
@@ -18,7 +18,7 @@ CLI tool: vgremove.
 
 ## Installation
 ```bash
-apt-get install vgremove 2>/dev/null || which vgremove
+apt-get install lvm2 2>/dev/null || which vgremove
 ```
 
 ## Key Features

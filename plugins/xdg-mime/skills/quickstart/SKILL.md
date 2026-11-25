@@ -1,11 +1,11 @@
 ---
 name: xdg-mime
-description: Use this skill when the user wants to use xdg-mime, cli tool: xdg-mime.
+description: Use this skill when the user wants to use xdg-mime, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-mime Plugin
 
-CLI tool: xdg-mime.
+xdg-mime — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-mime <resource> <action>` — Execute xdg-mime commands
@@ -18,7 +18,7 @@ CLI tool: xdg-mime.
 
 ## Installation
 ```bash
-apt-get install xdg-mime 2>/dev/null || which xdg-mime
+apt-get install xdg-utils 2>/dev/null || which xdg-mime
 ```
 
 ## Key Features

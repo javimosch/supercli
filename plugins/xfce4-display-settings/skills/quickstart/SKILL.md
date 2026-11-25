@@ -1,11 +1,11 @@
 ---
 name: xfce4-display-settings
-description: Use this skill when the user wants to use xfce4-display-settings, cli tool: xfce4-display-settings.
+description: Use this skill when the user wants to use xfce4-display-settings, graphical application for managing Xfce settings.
 ---
 
 # xfce4-display-settings Plugin
 
-CLI tool: xfce4-display-settings.
+xfce4-display-settings — graphical application for managing Xfce settings.
 
 ## Commands
 - `xfce4-display-settings <resource> <action>` — Execute xfce4-display-settings commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-display-settings.
 
 ## Installation
 ```bash
-apt-get install xfce4-display-settings 2>/dev/null || which xfce4-display-settings
+apt-get install xfce4-settings 2>/dev/null || which xfce4-display-settings
 ```
 
 ## Key Features

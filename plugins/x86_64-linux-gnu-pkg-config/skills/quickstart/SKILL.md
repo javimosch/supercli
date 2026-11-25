@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-pkg-config
-description: Use this skill when the user wants to use x86_64-linux-gnu-pkg-config, cli tool: x86_64-linux-gnu-pkg-config.
+description: Use this skill when the user wants to use x86_64-linux-gnu-pkg-config, manage compile and link flags for libraries.
 ---
 
 # x86_64-linux-gnu-pkg-config Plugin
 
-CLI tool: x86_64-linux-gnu-pkg-config.
+x86_64-linux-gnu-pkg-config — manage compile and link flags for libraries.
 
 ## Commands
 - `x86_64-linux-gnu-pkg-config <resource> <action>` — Execute x86_64-linux-gnu-pkg-config commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-pkg-config.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-pkg-config 2>/dev/null || which x86_64-linux-gnu-pkg-config
+apt-get install pkgconf 2>/dev/null || which x86_64-linux-gnu-pkg-config
 ```
 
 ## Key Features

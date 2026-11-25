@@ -1,11 +1,11 @@
 ---
 name: vgextend
-description: Use this skill when the user wants to use vgextend, cli tool: vgextend.
+description: Use this skill when the user wants to use vgextend, Linux Logical Volume Manager.
 ---
 
 # vgextend Plugin
 
-CLI tool: vgextend.
+vgextend — Linux Logical Volume Manager.
 
 ## Commands
 - `vgextend <resource> <action>` — Execute vgextend commands
@@ -18,7 +18,7 @@ CLI tool: vgextend.
 
 ## Installation
 ```bash
-apt-get install vgextend 2>/dev/null || which vgextend
+apt-get install lvm2 2>/dev/null || which vgextend
 ```
 
 ## Key Features

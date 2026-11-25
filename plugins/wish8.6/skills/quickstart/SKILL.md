@@ -1,11 +1,11 @@
 ---
 name: wish8.6
-description: Use this skill when the user wants to use wish8.6, cli tool: wish8.6.
+description: Use this skill when the user wants to use wish8.6, Tk toolkit for Tcl and X11 v8.6 - windowing shell.
 ---
 
 # wish8.6 Plugin
 
-CLI tool: wish8.6.
+wish8.6 — Tk toolkit for Tcl and X11 v8.6 - windowing shell.
 
 ## Commands
 - `wish8.6 <resource> <action>` — Execute wish8.6 commands
@@ -18,7 +18,7 @@ CLI tool: wish8.6.
 
 ## Installation
 ```bash
-apt-get install wish8.6 2>/dev/null || which wish8.6
+apt-get install tk8.6 2>/dev/null || which wish8.6
 ```
 
 ## Key Features

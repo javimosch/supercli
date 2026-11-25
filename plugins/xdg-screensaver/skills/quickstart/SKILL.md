@@ -1,11 +1,11 @@
 ---
 name: xdg-screensaver
-description: Use this skill when the user wants to use xdg-screensaver, cli tool: xdg-screensaver.
+description: Use this skill when the user wants to use xdg-screensaver, desktop integration utilities from freedesktop.org.
 ---
 
 # xdg-screensaver Plugin
 
-CLI tool: xdg-screensaver.
+xdg-screensaver — desktop integration utilities from freedesktop.org.
 
 ## Commands
 - `xdg-screensaver <resource> <action>` — Execute xdg-screensaver commands
@@ -18,7 +18,7 @@ CLI tool: xdg-screensaver.
 
 ## Installation
 ```bash
-apt-get install xdg-screensaver 2>/dev/null || which xdg-screensaver
+apt-get install xdg-utils 2>/dev/null || which xdg-screensaver
 ```
 
 ## Key Features

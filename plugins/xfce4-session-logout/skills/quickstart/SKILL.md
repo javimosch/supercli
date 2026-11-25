@@ -1,11 +1,11 @@
 ---
 name: xfce4-session-logout
-description: Use this skill when the user wants to use xfce4-session-logout, cli tool: xfce4-session-logout.
+description: Use this skill when the user wants to use xfce4-session-logout, Xfce4 Session Manager.
 ---
 
 # xfce4-session-logout Plugin
 
-CLI tool: xfce4-session-logout.
+xfce4-session-logout — Xfce4 Session Manager.
 
 ## Commands
 - `xfce4-session-logout <resource> <action>` — Execute xfce4-session-logout commands
@@ -18,7 +18,7 @@ CLI tool: xfce4-session-logout.
 
 ## Installation
 ```bash
-apt-get install xfce4-session-logout 2>/dev/null || which xfce4-session-logout
+apt-get install xfce4-session 2>/dev/null || which xfce4-session-logout
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: vpddecode
-description: Use this skill when the user wants to use vpddecode, cli tool: vpddecode.
+description: Use this skill when the user wants to use vpddecode, SMBIOS/DMI table decoder.
 ---
 
 # vpddecode Plugin
 
-CLI tool: vpddecode.
+vpddecode — SMBIOS/DMI table decoder.
 
 ## Commands
 - `vpddecode <resource> <action>` — Execute vpddecode commands
@@ -18,7 +18,7 @@ CLI tool: vpddecode.
 
 ## Installation
 ```bash
-apt-get install vpddecode 2>/dev/null || which vpddecode
+apt-get install dmidecode 2>/dev/null || which vpddecode
 ```
 
 ## Key Features

@@ -1,11 +1,11 @@
 ---
 name: x86_64-linux-gnu-ranlib
-description: Use this skill when the user wants to use x86_64-linux-gnu-ranlib, cli tool: x86_64-linux-gnu-ranlib.
+description: Use this skill when the user wants to use x86_64-linux-gnu-ranlib, Binary utilities that support multi-arch targets.
 ---
 
 # x86_64-linux-gnu-ranlib Plugin
 
-CLI tool: x86_64-linux-gnu-ranlib.
+x86_64-linux-gnu-ranlib — Binary utilities that support multi-arch targets.
 
 ## Commands
 - `x86_64-linux-gnu-ranlib <resource> <action>` — Execute x86_64-linux-gnu-ranlib commands
@@ -18,7 +18,7 @@ CLI tool: x86_64-linux-gnu-ranlib.
 
 ## Installation
 ```bash
-apt-get install x86_64-linux-gnu-ranlib 2>/dev/null || which x86_64-linux-gnu-ranlib
+apt-get install binutils-multiarch 2>/dev/null || which x86_64-linux-gnu-ranlib
 ```
 
 ## Key Features

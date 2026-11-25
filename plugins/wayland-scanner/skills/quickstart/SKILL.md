@@ -1,11 +1,11 @@
 ---
 name: wayland-scanner
-description: Use this skill when the user wants to use wayland-scanner, cli tool: wayland-scanner.
+description: Use this skill when the user wants to use wayland-scanner, wayland compositor infrastructure - binary utilities.
 ---
 
 # wayland-scanner Plugin
 
-CLI tool: wayland-scanner.
+wayland-scanner — wayland compositor infrastructure - binary utilities.
 
 ## Commands
 - `wayland-scanner <resource> <action>` — Execute wayland-scanner commands
@@ -18,7 +18,7 @@ CLI tool: wayland-scanner.
 
 ## Installation
 ```bash
-apt-get install wayland-scanner 2>/dev/null || which wayland-scanner
+apt-get install libwayland-bin 2>/dev/null || which wayland-scanner
 ```
 
 ## Key Features

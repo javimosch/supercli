@@ -1,11 +1,11 @@
 ---
 name: whoopsie-preferences
-description: Use this skill when the user wants to use whoopsie-preferences, cli tool: whoopsie-preferences.
+description: Use this skill when the user wants to use whoopsie-preferences, System preferences for error reporting.
 ---
 
 # whoopsie-preferences Plugin
 
-CLI tool: whoopsie-preferences.
+System preferences for error reporting.
 
 ## Commands
 - `whoopsie-preferences <resource> <action>` — Execute whoopsie-preferences commands

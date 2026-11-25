@@ -1,11 +1,11 @@
 ---
 name: wakeonlan
-description: Use this skill when the user wants to use wakeonlan, cli tool: wakeonlan.
+description: Use this skill when the user wants to use wakeonlan, Sends 'magic packets' to wake-on-LAN enabled ethernet adapters.
 ---
 
 # wakeonlan Plugin
 
-CLI tool: wakeonlan.
+Sends 'magic packets' to wake-on-LAN enabled ethernet adapters.
 
 ## Commands
 - `wakeonlan <resource> <action>` — Execute wakeonlan commands
