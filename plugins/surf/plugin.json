@@ -2,26 +2,122 @@
   "name": "surf",
   "version": "1.0.0",
   "description": "CLI for AI agents to control Chrome",
+  "source": "https://www.npmjs.com/package/surf-cli",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "surf"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "surf",
+    "binary": "surf",
+    "check": "surf --version",
+    "install_steps": [
+      "npm install -g surf-cli"
+    ],
+    "note": "Requires Node.js and npm installed globally"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
   "commands": [
     {
-      "name": "version",
-      "description": "Get surf CLI version",
-      "command": "surf --version"
-    },
-    {
-      "name": "browse",
+      "namespace": "surf",
+      "resource": "page",
+      "action": "browse",
       "description": "Navigate to a URL",
-      "command": "surf browse <url>"
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "surf",
+        "baseArgs": [
+          "browse"
+        ],
+        "positionalArgs": [
+          "url"
+        ],
+        "missingDependencyHelp": "Install surf: npm install -g surf-cli"
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "URL to open",
+          "positional": true
+        }
+      ]
     },
     {
-      "name": "screenshot",
+      "namespace": "surf",
+      "resource": "page",
+      "action": "screenshot",
       "description": "Take a screenshot of the current page",
-      "command": "surf screenshot"
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "surf",
+        "baseArgs": [
+          "screenshot"
+        ],
+        "timeout_ms": 60000,
+        "missingDependencyHelp": "Install surf: npm install -g surf-cli"
+      },
+      "args": []
     },
     {
-      "name": "evaluate",
+      "namespace": "surf",
+      "resource": "page",
+      "action": "evaluate",
       "description": "Execute JavaScript in the browser",
-      "command": "surf evaluate <script>"
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "surf",
+        "baseArgs": [
+          "evaluate"
+        ],
+        "positionalArgs": [
+          "script"
+        ],
+        "missingDependencyHelp": "Install surf: npm install -g surf-cli"
+      },
+      "args": [
+        {
+          "name": "script",
+          "type": "string",
+          "required": true,
+          "description": "JavaScript to evaluate",
+          "positional": true
+        }
+      ]
+    },
+    {
+      "namespace": "surf",
+      "resource": "self",
+      "action": "version",
+      "description": "Print surf version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "surf",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install surf: npm install -g surf-cli"
+      },
+      "args": []
+    },
+    {
+      "namespace": "surf",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to surf CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "surf",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install surf: npm install -g surf-cli"
+      },
+      "args": []
     }
   ]
 }

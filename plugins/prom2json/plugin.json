@@ -2,48 +2,177 @@
   "name": "prom2json",
   "version": "1.0.0",
   "description": "Convert Prometheus metrics to JSON format for parsing and processing",
+  "source": "https://github.com/prometheus/prom2json",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "prom2json",
+      "args": [
+        "version"
+      ]
+    }
+  ],
+  "install_guidance": {
+    "plugin": "prom2json",
+    "binary": "prom2json",
+    "check": "prom2json version",
+    "install_steps": [
+      "go install github.com/prometheus/prom2json/cmd/prom2json@latest",
+      "Or download from: https://github.com/prometheus/prom2json/releases"
+    ],
+    "note": "prom2json is a Prometheus tool that scrapes metrics endpoints and converts them to JSON format for easier processing"
+  },
+  "learn": {
+    "file": "skills/quickstart/SKILL.md"
+  },
   "commands": [
     {
-      "name": "convert",
+      "namespace": "prom2json",
+      "resource": "metrics",
+      "action": "convert",
       "description": "Convert Prometheus metrics URL to JSON",
-      "binary": "prom2json",
-      "args": ["{{.url}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "prom2json \"{{url}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Metrics endpoint URL"
+        }
+      ]
     },
     {
-      "name": "convert-file",
+      "namespace": "prom2json",
+      "resource": "metrics",
+      "action": "convert-file",
       "description": "Convert Prometheus metrics file to JSON",
-      "binary": "prom2json",
-      "args": ["{{.file}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "prom2json \"{{file}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "file",
+          "type": "string",
+          "required": true,
+          "description": "Metrics file path"
+        }
+      ]
     },
     {
-      "name": "convert-stdin",
+      "namespace": "prom2json",
+      "resource": "metrics",
+      "action": "convert-stdin",
       "description": "Convert Prometheus metrics from stdin to JSON",
-      "binary": "prom2json",
-      "args": [],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "prom2json",
+        "unsafe": true
+      },
+      "args": []
     },
     {
-      "name": "convert-tls",
+      "namespace": "prom2json",
+      "resource": "metrics",
+      "action": "convert-tls",
       "description": "Convert HTTPS metrics with TLS client authentication",
-      "binary": "prom2json",
-      "args": ["--cert", "{{.cert}}", "--key", "{{.key}}", "{{.url}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "prom2json --cert \"{{cert}}\" --key \"{{key}}\" \"{{url}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "cert",
+          "type": "string",
+          "required": true,
+          "description": "TLS client certificate path"
+        },
+        {
+          "name": "key",
+          "type": "string",
+          "required": true,
+          "description": "TLS client key path"
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Metrics endpoint URL"
+        }
+      ]
     },
     {
-      "name": "convert-insecure",
+      "namespace": "prom2json",
+      "resource": "metrics",
+      "action": "convert-insecure",
       "description": "Convert HTTPS metrics without TLS validation (testing only)",
-      "binary": "prom2json",
-      "args": ["--accept-invalid-cert", "{{.url}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "prom2json --accept-invalid-cert \"{{url}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Metrics endpoint URL"
+        }
+      ]
     },
     {
-      "name": "convert-utf8",
+      "namespace": "prom2json",
+      "resource": "metrics",
+      "action": "convert-utf8",
       "description": "Convert metrics with UTF-8 escaping scheme",
-      "binary": "prom2json",
-      "args": ["--escaping", "allow-utf-8", "{{.url}}"],
-      "output_format": "json"
+      "adapter": "shell",
+      "adapterConfig": {
+        "script": "prom2json --escaping allow-utf-8 \"{{url}}\"",
+        "unsafe": true
+      },
+      "args": [
+        {
+          "name": "url",
+          "type": "string",
+          "required": true,
+          "description": "Metrics endpoint URL"
+        }
+      ]
+    },
+    {
+      "namespace": "prom2json",
+      "resource": "self",
+      "action": "version",
+      "description": "Print prom2json version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prom2json",
+        "baseArgs": [
+          "version"
+        ],
+        "missingDependencyHelp": "Install prom2json: go install github.com/prometheus/prom2json/cmd/prom2json@latest"
+      },
+      "args": []
+    },
+    {
+      "namespace": "prom2json",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to prom2json CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "prom2json",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install prom2json: go install github.com/prometheus/prom2json/cmd/prom2json@latest"
+      },
+      "args": []
     }
   ]
 }

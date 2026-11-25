@@ -2,5 +2,52 @@
   "name": "fd-find",
   "version": "0.1.0",
   "description": "Fast file finder alternative to find command",
-  "source": "https://github.com/sharkdp/fd"
+  "source": "https://github.com/sharkdp/fd",
+  "checks": [
+    {
+      "type": "binary",
+      "name": "fd"
+    }
+  ],
+  "install_guidance": {
+    "plugin": "fd-find",
+    "binary": "fd",
+    "check": "which fd",
+    "install_steps": [
+      "brew install fd",
+      "Verify: fd --version",
+      "supercli plugins install ./plugins/fd-find --on-conflict replace --json"
+    ]
+  },
+  "commands": [
+    {
+      "namespace": "fd-find",
+      "resource": "self",
+      "action": "version",
+      "description": "Print fd version",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "baseArgs": [
+          "--version"
+        ],
+        "missingDependencyHelp": "Install fd: brew install fd"
+      },
+      "args": []
+    },
+    {
+      "namespace": "fd-find",
+      "resource": "_",
+      "action": "_",
+      "description": "Passthrough to fd CLI",
+      "adapter": "process",
+      "adapterConfig": {
+        "command": "fd",
+        "passthrough": true,
+        "cwd": "invoke_cwd",
+        "missingDependencyHelp": "Install fd: brew install fd"
+      },
+      "args": []
+    }
+  ]
 }
