@@ -1,1 +1,18 @@
----\nname: hextazy\ndescription: Use this skill for hextazy operations.\n---\n# hextazy Plugin\nCLI tool for hextazy.\n## Commands\n- `hextazy _ _` — Passthrough\n## Installation\n```bash\ncargo install hextazy\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: hextazy
+description: Use this skill for hextazy operations.
+---
+# hextazy Plugin
+CLI tool for hextazy.
+
+## Commands
+- `hextazy <resource> <action>` — Execute hextazy commands
+- `hextazy _ _` — Passthrough to hextazy CLI
+
+## Installation
+```bash
+cargo install hextazy
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

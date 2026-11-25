@@ -7,6 +7,11 @@ description: Use this skill when the user wants to interact with Venice.ai API c
 
 Agent Skills for the Venice.ai API. SKILL.md files for AI agent runtimes covering Venice.ai's capabilities.
 
+## Commands
+- `veniceai-skills <resource> <action>` — Execute veniceai-skills commands
+- `veniceai-skills self version` — Print info
+- `veniceai-skills _ _` — Passthrough
+
 ## Installation
 ```bash
 git clone https://github.com/veniceai/skills.git

@@ -4,3 +4,7 @@ description: text-box — draw text in ASCII art boxes. Styles: single, double, 
 ---
 # text-box
 text-box — draw text in ASCII art boxes. Styles: single, double, round, thick. Reads stdin or accepts text as args.
+
+## Commands
+- `text-box <resource> <action>` — Execute text-box commands
+- `text box run` — text-box — draw text in ASCII art boxes. Styles: single, double, round, thick. Reads stdin or accepts text as args.

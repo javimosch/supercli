@@ -1,1 +1,10 @@
----\nname: xelatex\ndescription: XeLaTeX typesetter\n---\n# xelatex Plugin\nXeLaTeX typesetter
+---
+name: xelatex
+description: XeLaTeX typesetter
+---
+# xelatex Plugin
+XeLaTeX typesetter
+
+## Commands
+- `xelatex <resource> <action>` — Execute xelatex commands
+- `xelatex _ _` — Passthrough to xelatex

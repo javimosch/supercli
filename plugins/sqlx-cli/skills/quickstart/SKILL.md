@@ -2,6 +2,12 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `sqlx-cli <resource> <action>` — Execute sqlx-cli commands
+- `sqlx self version` — Print sqlx version
+- `sqlx migrate run` — Run database migrations
+- `sqlx _ _` — Passthrough to sqlx CLI
+
 ## Installation
 
 ```bash

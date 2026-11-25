@@ -1,5 +1,12 @@
 # streamlink - Video Stream CLI
 
+## Commands
+- `streamlink <resource> <action>` — Execute streamlink commands
+- `streamlink stream url` — Stream video from URL to player
+- `streamlink list qualities` — List available stream qualities in JSON format
+- `streamlink download stream` — Download stream to file
+- `streamlink _ _` — Passthrough to streamlink CLI
+
 ## Overview
 streamlink is a CLI utility that extracts streams from various services (Twitch, YouTube, etc.) and pipes them to video players or files. It supports JSON output for automation and integration with other tools.
 

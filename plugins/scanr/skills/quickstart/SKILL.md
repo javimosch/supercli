@@ -1,1 +1,18 @@
----\nname: scanr\ndescription: Use this skill for scanr operations.\n---\n# scanr Plugin\nCLI tool for scanr.\n## Commands\n- `scanr _ _` — Passthrough\n## Installation\n```bash\ncargo install scanr\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: scanr
+description: Use this skill for scanr operations.
+---
+# scanr Plugin
+CLI tool for scanr.
+
+## Commands
+- `scanr <resource> <action>` — Execute scanr commands
+- `scanr _ _` — Passthrough to scanr CLI
+
+## Installation
+```bash
+cargo install scanr
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

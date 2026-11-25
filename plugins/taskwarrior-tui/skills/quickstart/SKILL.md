@@ -7,6 +7,10 @@ description: Use this skill when the user wants a terminal UI for Taskwarrior �
 
 Interactive TUI front-end for [Taskwarrior](https://taskwarrior.org/). View pending tasks, apply filters, and navigate your backlog with keyboard-driven workflows.
 
+## Commands
+- `taskwarrior-tui <resource> <action>` — Execute taskwarrior-tui commands
+- `taskwarrior-tui _ _` — Passthrough to taskwarrior-tui CLI
+
 ## Installation
 
 ```bash

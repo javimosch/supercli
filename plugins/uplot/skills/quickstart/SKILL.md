@@ -7,6 +7,14 @@ description: Use this skill when the user wants terminal charts from CSV or TSV 
 
 YouPlot (`uplot`) draws charts directly in the terminal. Pipe CSV/TSV data or pass a file to render bar charts, histograms, scatter plots, and more.
 
+## Commands
+- `uplot <resource> <action>` — Execute uplot commands
+- `uplot self version` — Print uplot version
+- `uplot plot bar` — Draw a bar chart from CSV/TSV data
+- `uplot plot histogram` — Draw a histogram from data
+- `uplot plot scatter` — Draw a scatter plot from CSV/TSV data
+- `uplot _ _` — Passthrough to uplot CLI
+
 ## Installation
 
 ```bash

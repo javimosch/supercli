@@ -1,1 +1,18 @@
----\nname: imdb-id\ndescription: Use this skill for imdb-id operations.\n---\n# imdb-id Plugin\nCLI tool for imdb-id.\n## Commands\n- `imdb-id _ _` — Passthrough\n## Installation\n```bash\ncargo install imdb-id\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: imdb-id
+description: Use this skill for imdb-id operations.
+---
+# imdb-id Plugin
+CLI tool for imdb-id.
+
+## Commands
+- `imdb-id <resource> <action>` — Execute imdb-id commands
+- `imdb-id _ _` — Passthrough to imdb-id CLI
+
+## Installation
+```bash
+cargo install imdb-id
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

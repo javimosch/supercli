@@ -7,6 +7,10 @@ description: Use this skill when the user wants to query structured data with SQ
 
 SQL + jq for structured data. Query CSV, JSON, Excel, Parquet, Postgres, MySQL, SQLite, and more using familiar SQL syntax or jq-style expressions.
 
+## Commands
+- `sq <resource> <action>` — Execute sq commands
+- `sq _ _` — Passthrough to sq CLI
+
 ## Installation
 
 ```bash

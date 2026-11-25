@@ -2,6 +2,12 @@
 
 See GitHub repository for full documentation.
 
+## Commands
+- `telegraf <resource> <action>` — Execute telegraf commands
+- `telegraf self version` — Print telegraf version
+- `telegraf config generate` — Generate sample configuration
+- `telegraf _ _` — Passthrough to telegraf CLI
+
 ## Installation
 
 ```bash

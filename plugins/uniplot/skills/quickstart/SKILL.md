@@ -1,5 +1,10 @@
 # uniplot - Terminal Plotting
 
+## Commands
+- `uniplot <resource> <action>` — Execute uniplot commands
+- `uniplot plot data` — Plot data to terminal
+- `uniplot _ _` — Passthrough to uniplot CLI
+
 ## Overview
 uniplot provides lightweight plotting to the terminal with 4x resolution via Unicode. Create scatter plots, line plots, and histograms directly in the terminal.
 

@@ -1,1 +1,10 @@
----\nname: zig\ndescription: Zig programming language compiler\n---\n# zig Plugin\nZig programming language compiler
+---
+name: zig
+description: Zig programming language compiler
+---
+# zig Plugin
+Zig programming language compiler
+
+## Commands
+- `zig <resource> <action>` — Execute zig commands
+- `zig _ _` — Passthrough to zig CLI

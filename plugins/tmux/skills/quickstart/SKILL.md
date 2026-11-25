@@ -1,1 +1,10 @@
----\nname: tmux\ndescription: Terminal multiplexer\n---\n# tmux Plugin\nTerminal multiplexer
+---
+name: tmux
+description: Terminal multiplexer
+---
+# tmux Plugin
+Terminal multiplexer
+
+## Commands
+- `tmux <resource> <action>` — Execute tmux commands
+- `tmux _ _` — Passthrough to tmux

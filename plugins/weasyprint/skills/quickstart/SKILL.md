@@ -1,1 +1,10 @@
----\nname: weasyprint\ndescription: HTML to PDF converter using CSS\n---\n# weasyprint Plugin\nHTML to PDF converter using CSS
+---
+name: weasyprint
+description: HTML to PDF converter using CSS
+---
+# weasyprint Plugin
+HTML to PDF converter using CSS
+
+## Commands
+- `weasyprint <resource> <action>` — Execute weasyprint commands
+- `weasyprint _ _` — Passthrough to weasyprint CLI

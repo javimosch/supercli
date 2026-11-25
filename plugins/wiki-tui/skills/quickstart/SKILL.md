@@ -4,3 +4,7 @@ description: Wiki-tui — Wikipedia TUI browser
 ---
 # wiki-tui Plugin
 Wiki-tui provides a rich terminal interface for browsing Wikipedia with search, article layers, and table of contents.
+
+## Commands
+- `wiki-tui <resource> <action>` — Execute wiki-tui commands
+- `wiki-tui _ _` — Passthrough to wiki-tui CLI

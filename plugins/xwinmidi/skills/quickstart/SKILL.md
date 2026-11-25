@@ -1,1 +1,10 @@
----\nname: xwinmidi\ndescription: brew install xwinmidi\n---\n# xwinmidi Plugin\nbrew install xwinmidi
+---
+name: xwinmidi
+description: brew install xwinmidi
+---
+# xwinmidi Plugin
+brew install xwinmidi
+
+## Commands
+- `xwinmidi <resource> <action>` — Execute xwinmidi commands
+- `xwinmidi _ _` — Passthrough to X11 MIDI controller

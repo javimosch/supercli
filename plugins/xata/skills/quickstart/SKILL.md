@@ -7,6 +7,10 @@ description: Use this skill when the user wants to manage Xata serverless Postgr
 
 CLI for [Xata](https://xata.io) serverless Postgres. Manage database branches, run migrations, inspect schema, and operate on data without opening the web UI.
 
+## Commands
+- `xata <resource> <action>` — Execute xata commands
+- `xata _ _` — Passthrough to xata CLI
+
 ## Installation
 
 ```bash

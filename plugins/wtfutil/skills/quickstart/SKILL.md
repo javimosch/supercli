@@ -7,6 +7,10 @@ description: Use this skill when the user wants a personal terminal dashboard �
 
 Personal information dashboard for your terminal. Modular widgets show GitHub PRs, Google Calendar, weather, Hacker News, security advisories, and more — all in a single scrollable view.
 
+## Commands
+- `wtfutil <resource> <action>` — Execute wtfutil commands
+- `wtfutil _ _` — Passthrough to wtfutil CLI
+
 ## Installation
 
 ```bash

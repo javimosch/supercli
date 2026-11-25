@@ -1,1 +1,10 @@
----\nname: staticcheck\ndescription: Go static analysis\n---\n# staticcheck Plugin\nGo static analysis
+---
+name: staticcheck
+description: Go static analysis
+---
+# staticcheck Plugin
+Go static analysis
+
+## Commands
+- `staticcheck <resource> <action>` — Execute staticcheck commands
+- `staticcheck _ _` — Passthrough

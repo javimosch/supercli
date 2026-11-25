@@ -5,6 +5,17 @@ description: Manage and query Linux devices, udev events, and device rules
 # udevadm Plugin
 Manage and query Linux devices, udev events, and device rules
 
+## Commands
+- `udevadm <resource> <action>` — Execute udevadm commands
+- `udevadm self version` — Print udevadm version
+- `udevadm device info` — Query sysfs or the udev database for device info
+- `udevadm device tree` — Show device tree
+- `udevadm event trigger` — Trigger uevents from the kernel
+- `udevadm event settle` — Wait for pending udev events to complete
+- `udevadm event monitor` — Listen to kernel and udev events
+- `udevadm rules verify` — Verify udev rules files for syntax errors
+- `udevadm _ _` — Passthrough to udevadm CLI
+
 ## Usage
 - `udevadm self version` — Print udevadm version
 - `udevadm device info <device>` — Query device information

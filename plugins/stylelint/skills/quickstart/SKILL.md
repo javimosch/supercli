@@ -7,6 +7,11 @@ description: Use this skill when the user wants to lint CSS, SCSS, or Less style
 
 stylelint checks stylesheets for errors and consistent formatting.
 
+## Commands
+- `stylelint <resource> <action>` — Execute stylelint commands
+- `stylelint self version` — Print stylelint version
+- `stylelint _ _` — Passthrough to stylelint CLI
+
 ## Usage Examples
 
 - "lint styles.css for errors"

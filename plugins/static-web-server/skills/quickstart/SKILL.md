@@ -6,6 +6,10 @@ description: static-web-server — fast asynchronous static file server (Rust)
 
 static-web-server is a high-performance, asynchronous web server for serving static files, written in Rust.
 
+## Commands
+- `static-web-server <resource> <action>` — Execute static-web-server commands
+- `static-web-server _ _` — Passthrough to static-web-server
+
 ## Usage
 
 Start a server serving files from the `./public` directory on port `8080`:

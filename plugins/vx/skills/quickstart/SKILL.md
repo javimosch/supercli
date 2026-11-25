@@ -8,6 +8,18 @@ vx is a universal development tool manager that auto-installs runtimes on-demand
 - Execute commands in CI/CD without environment setup
 - Enable AI agents to use any tool without configuration
 
+## Commands
+- `vx <resource> <action>` — Execute vx commands
+- `vx self version` — Print vx version
+- `vx tool run` — Execute a tool with auto-installation
+- `vx runtime install` — Install a specific runtime version
+- `vx runtime list` — List all supported runtimes
+- `vx project init` — Initialize project configuration (vx.toml)
+- `vx project setup` — Install all tools defined in vx.toml
+- `vx project dev` — Enter development shell with project tools
+- `vx package install` — Install a global package
+- `vx _ _` — Passthrough to vx CLI
+
 ## Installation
 
 ```bash

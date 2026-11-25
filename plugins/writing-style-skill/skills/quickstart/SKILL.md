@@ -7,6 +7,13 @@ description: Use this skill when the user wants to define, enforce, or auto-lear
 
 Writing style skill template with built-in auto-learning. AI writes → you edit → rules auto-extracted → SKILL.md improves over time. Works with Claude Code + OpenClaw.
 
+## Commands
+- `writing-style-skill <resource> <action>` — Execute writing-style-skill commands
+- `writing-style-skill self version` — Print writing-style-skill info
+- `writing-style-skill observe record` — Record original/final versions for style learning (draft or final)
+- `writing-style-skill improve run` — Auto-extract writing style rules from recorded edits
+- `writing-style-skill _ _` — Passthrough
+
 ## Installation
 
 ```bash

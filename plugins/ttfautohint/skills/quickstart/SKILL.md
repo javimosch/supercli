@@ -1,1 +1,10 @@
----\nname: ttfautohint\ndescription: TrueType font hinting utility\n---\n# ttfautohint Plugin\nTrueType font hinting utility
+---
+name: ttfautohint
+description: TrueType font hinting utility
+---
+# ttfautohint Plugin
+TrueType font hinting utility
+
+## Commands
+- `ttfautohint <resource> <action>` — Execute ttfautohint commands
+- `ttfautohint _ _` — Passthrough to ttfautohint CLI

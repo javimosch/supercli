@@ -2,6 +2,13 @@
 
 vector processes and routes logs and events with minimal overhead.
 
+## Commands
+- `vector <resource> <action>` — Execute vector commands
+- `vector self version` — Print vector version
+- `vector config validate` — Validate configuration file
+- `vector run pipeline` — Run vector pipeline
+- `vector _ _` — Passthrough to vector CLI
+
 ## Installation
 
 ```bash

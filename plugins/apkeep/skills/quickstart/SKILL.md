@@ -1,1 +1,18 @@
----\nname: apkeep\ndescription: Use this skill for apkeep operations.\n---\n# apkeep Plugin\nCLI tool for apkeep.\n## Commands\n- `apkeep _ _` — Passthrough\n## Installation\n```bash\ncargo install apkeep\n```\n## Key Features\n- **Pipeline-ready** — stdin/stdout\n- **CLI-native** — Command line tool\nEOF
+---
+name: apkeep
+description: Use this skill for apkeep operations.
+---
+# apkeep Plugin
+CLI tool for apkeep.
+
+## Commands
+- `apkeep <resource> <action>` — Execute apkeep commands
+- `apkeep _ _` — Passthrough to apkeep CLI
+
+## Installation
+```bash
+cargo install apkeep
+```
+## Key Features
+- **Pipeline-ready** — stdin/stdout
+- **CLI-native** — Command line tool

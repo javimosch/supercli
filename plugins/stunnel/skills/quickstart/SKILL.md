@@ -1,1 +1,10 @@
----\nname: stunnel\ndescription: TLS/SSL tunneling daemon\n---\n# stunnel Plugin\nTLS/SSL tunneling daemon
+---
+name: stunnel
+description: TLS/SSL tunneling daemon
+---
+# stunnel Plugin
+TLS/SSL tunneling daemon
+
+## Commands
+- `stunnel <resource> <action>` — Execute stunnel commands
+- `stunnel _ _` — Passthrough to stunnel CLI

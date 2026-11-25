@@ -1,5 +1,11 @@
 # van-gonography - Steganography Tool
 
+## Commands
+- `van-gonography <resource> <action>` — Execute van-gonography commands
+- `van-gonography encode file` — Encode file into image
+- `van-gonography decode file` — Decode file from image
+- `van-gonography _ _` — Passthrough to van-gonography CLI
+
 ## Overview
 van-gonography hides files of any type inside an image using steganography. Supports encryption, decryption, stealth mode, and CLI operation.
 
